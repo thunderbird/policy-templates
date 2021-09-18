@@ -1,6 +1,7 @@
 **These policies are in active development and so might contain changes that do not work with current versions of Thunderbird.**
 
-**Thunderbird supports the same policies as Firefox, except: AllowedDomainsForApps,
+**Thunderbird supports the same policies as Firefox, except:**
+AllowedDomainsForApps,
 AutoLaunchProtocolsFromOrigins, 
 Bookmarks, 
 DisableDefaultBrowserAgent, 
@@ -43,7 +44,7 @@ ShowHomeButton,
 SupportMenu, 
 UserMessaging, 
 WebsiteFilter, 
-WindowsSSO**
+WindowsSSO
 
 **You should use the [officially released versions](https://github.com/mozilla/policy-templates/releases) if you are deploying changes.**
 
