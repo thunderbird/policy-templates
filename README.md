@@ -2,14 +2,19 @@
 
 **Thunderbird supports the same policies as Firefox (where applicable)**
 
-**You should use the officially released versions (https://github.com/mozilla/policy-templates/releases) if you are deploying changes.**
+**You should use the [officially released versions](https://github.com/mozilla/policy-templates/releases) if you are deploying changes.**
 
 Policies can be specified using the Group Policy templates on Windows (https://github.com/mozilla/policy-templates/tree/master/windows), configuration profiles on macOS (https://github.com/mozilla/policy-templates/tree/master/mac), or by creating a file called `policies.json`. On Windows, create a directory called `distribution` where the EXE is located and place the file there. On Mac, the file goes into `Thunderbird.app/Contents/Resources/distribution`.  On Linux, the file goes into `thunderbird/distribution`, where `thunderbird` is the installation directory for Thunderbird, which varies by distribution.
 
 | Policy Name | Description
 | --- | --- |
-| **[`AppUpdateURL`](#AppUpdateURL)** | Change the URL for application update.
-| **[`Authentication`](#Authentication)** | Configure sites that support integrated authentication.
+| **[`3rdparty`](#3rdparty)** | Set policies that WebExtensions can access via chrome.storage.managed.
+| **[`AllowedDomainsForApps`](#alloweddomainsforapps)** | Define domains allowed to access Google Workspace.
+| **[`AppAutoUpdate`](#appautoupdate)** | Enable or disable automatic application update.
+| **[`AppUpdateURL`](#appupdateurl)** | Change the URL for application update.
+| **[`Authentication`](#authentication)** | Configure sites that support integrated authentication.
+| **[`AutoLaunchProtocolsFromOrigins`](#autolaunchprotocolsfromorigins)** | Define a list of external protocols that can be used from listed origins without prompting the user.
+| **[`BackgroundAppUpdate`](#backgroundappupdate)** | Enable or disable the background updater (Windows only).
 | **[`BlockAboutAddons`](#blockaboutaddons)** | Block access to the Add-ons Manager (about:addons).
 | **[`BlockAboutConfig`](#blockaboutconfig)** | Block access to about:config.
 | **[`BlockAboutProfiles`](#blockaboutprofiles)** | Block access to About Profiles (about:profiles).
@@ -20,10 +25,10 @@ Policies can be specified using the Group Policy templates on Windows (https://g
 | **[`Certificates -> ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | Trust certificates that have been added to the operating system certificate store by a user or administrator.
 | **[`Certificates -> Install`](#certificates--install)** | Install certificates into the Firefox certificate store.
 | **[`Cookies`](#cookies)** | Configure cookie preferences.
-| **[`DisableSetDesktopBackground`](#disablesetdesktopbackground)** | Remove the "Set As Desktop Background..." menuitem when right clicking on an image.
-| **[`DisableMasterPasswordCreation`](#disablemasterpasswordcreation)** | Remove the master password functionality.
 | **[`DisableAppUpdate`](#disableappupdate)** | Turn off application updates.
 | **[`DisableBuiltinPDFViewer`](#disablebuiltinpdfviewer)** | Disable the built in PDF viewer.
+| **[`DisabledCiphers`](#disabledciphers)** | Disable ciphers.
+| **[`DisableDefaultBrowserAgent`](#disabledefaultbrowseragent)** | Prevent the default browser agent from taking any actions (Windows only).
 | **[`DisableDeveloperTools`](#disabledevelopertools)** | Remove access to all developer tools.
 | **[`DisableFeedbackCommands`](#disablefeedbackcommands)** | Disable the menus for reporting sites.
 | **[`DisableFirefoxScreenshots`](#disablefirefoxscreenshots)** | Remove access to Firefox Screenshots.
@@ -31,21 +36,26 @@ Policies can be specified using the Group Policy templates on Windows (https://g
 | **[`DisableFirefoxStudies`](#disablefirefoxstudies)** | Disable Firefox studies (Shield).
 | **[`DisableForgetButton`](#disableforgetbutton)** | Disable the "Forget" button.
 | **[`DisableFormHistory`](#disableformhistory)** | Turn off saving information on web forms and the search bar.
+| **[`DisableMasterPasswordCreation`](#disablemasterpasswordcreation)** | Remove the master password functionality.
+| **[`DisablePasswordReveal`](#disablepasswordreveal)** | Do not allow passwords to be revealed in saved logins.
 | **[`DisablePocket`](#disablepocket)** | Remove Pocket in the Firefox UI.
 | **[`DisablePrivateBrowsing`](#disableprivatebrowsing)** | Remove access to private browsing.
 | **[`DisableProfileImport`](#disableprofileimport)** | Disables the "Import data from another browser" option in the bookmarks window.
 | **[`DisableProfileRefresh`](#disableprofilerefresh)** | Disable the Refresh Firefox button on about:support and support.mozilla.org
 | **[`DisableSafeMode`](#disablesafemode)** | Disable safe mode within the browser.
 | **[`DisableSecurityBypass`](#disablesecuritybypass)** | Prevent the user from bypassing security in certain cases.
+| **[`DisableSetDesktopBackground`](#disablesetdesktopbackground)** | Remove the "Set As Desktop Background..." menuitem when right clicking on an image.
 | **[`DisableSystemAddonUpdate`](#disablesystemaddonupdate)** | Prevent system add-ons from being installed or update.
 | **[`DisableTelemetry`](#disabletelemetry)** | DisableTelemetry
 | **[`DisplayBookmarksToolbar`](#displaybookmarkstoolbar)** | Set the initial state of the bookmarks toolbar.
-| **[`DisplayMenuBar`](#displaymenubar)** | Set the initial state of the menubar.
+| **[`DisplayMenuBar (Deprecated)`](#displaymenubar-deprecated)** | Set the initial state of the menubar.
+| **[`DisplayMenuBar`](#displaymenubar)** | Set the state of the menubar.
 | **[`DNSOverHTTPS`](#dnsoverhttps)** | Configure DNS over HTTPS.
 | **[`DontCheckDefaultBrowser`](#dontcheckdefaultbrowser)** | Don't check if Firefox is the default browser at startup.
 | **[`DefaultDownloadDirectory`](#defaultdownloaddirectory)** | Set the default download directory.
 | **[`DownloadDirectory`](#downloaddirectory)** | Set and lock the download directory.
 | **[`EnableTrackingProtection`](#enabletrackingprotection)** | Configure tracking protection.
+| **[`EncryptedMediaExtensions`](#encryptedmediaextensions)** | Enable or disable Encrypted Media Extensions and optionally lock it.
 | **[`EnterprisePoliciesEnabled`](#enterprisepoliciesenabled)** | Enable policy support on macOS.
 | **[`Extensions`](#extensions)** | Control the installation, uninstallation and locking of extensions.
 | **[`ExtensionSettings`](#extensionsettings)** | Manage all aspects of extensions.
@@ -53,18 +63,28 @@ Policies can be specified using the Group Policy templates on Windows (https://g
 | **[`FlashPlugin`](#flashplugin)** | Configure the default Flash plugin policy as well as origins for which Flash is allowed.
 | **[`FirefoxHome`](#firefoxhome)** | Customize the Firefox Home page.
 | **[`HardwareAcceleration`](#hardwareacceleration)** | Control hardware acceleration.
+| **[`Handlers`](#handlers)** | Configure default application handlers.
 | **[`Homepage`](#homepage)** | Configure the default homepage and how Firefox starts.
 | **[`InstallAddonsPermission`](#installaddonspermission)** | Configure the default extension install policy as well as origins for extension installs are allowed.
+| **[`LegacyProfiles`](#legacyprofiles)** | Disable the feature enforcing a separate profile for each installation.
 | **[`LocalFileLinks`](#localfilelinks)** | Enable linking to local files by origin.
+| **[`ManagedBookmarks`](#managedbookmarks)** | Configures a list of bookmarks managed by an administrator that cannot be changed by the user.
+| **[`ManualAppUpdateOnly`](#manualappupdateonly)** | Allow manual updates only and do not notify the user about updates..
+| **[`PrimaryPassword`](#primarypassword)** | Require or prevent using a primary (formerly master) password.
 | **[`NetworkPrediction`](#networkprediction)** | Enable or disable network prediction (DNS prefetching).
 | **[`NewTabPage`](#newtabpage)** | Enable or disable the New Tab page.
 | **[`NoDefaultBookmarks`](#nodefaultbookmarks)** | Disable the creation of default bookmarks.
 | **[`OfferToSaveLogins`](#offertosavelogins)** | Control whether or not Firefox offers to save passwords.
+| **[`OfferToSaveLoginsDefault`](#offertosaveloginsdefault)** | Set the default value for whether or not Firefox offers to save passwords.
 | **[`OverrideFirstRunPage`](#overridefirstrunpage)** | Override the first run page.
 | **[`OverridePostUpdatePage`](#overridepostupdatepage)** | Override the upgrade page.
+| **[`PasswordManagerEnabled`](#passwordmanagerenabled)** | Remove (some) access to the password manager.
+| **[`PDFjs`](#pdfjs)** | Disable or configure PDF.js, the built-in PDF viewer.
 | **[`Permissions`](#permissions)** | Set permissions associated with camera, microphone, location, and notifications.
+| **[`PictureInPicture`](#pictureinpicture)** | Enable or disable Picture-in-Picture.
 | **[`PopupBlocking`](#popupblocking)** | Configure the default pop-up window policy as well as origins for which pop-up windows are allowed.
-| **[`Preferences`](#preferences)** | Set and lock some preferences.
+| **[`Preferences`](#preferences)** | Set and lock preferences.
+| **[`Preferences (Deprecated)`](#preferences-deprecated)** | Set and lock some preferences.
 | **[`PromptForDownloadLocation`](#promptfordownloadlocation)** | Ask where to save each file before downloading.
 | **[`Proxy`](#proxy)** | Configure proxy settings.
 | **[`RequestedLocales`](#requestedlocales)** | Set the the list of requested locales for the application in order of preference.
@@ -76,24 +96,124 @@ Policies can be specified using the Group Policy templates on Windows (https://g
 | **[`SearchEngines -> PreventInstalls`](#searchengines--preventinstalls)** | Prevent installing search engines from webpages.
 | **[`SearchEngines -> Remove`](#searchengines--remove)** | Hide built-in search engines.
 | **[`SearchEngines -> Add`](#searchengines--add)** | Add new search engines.
-| **[`SecurityDevices`](#securitydevices)** | Install PKCS #11 modules.
 | **[`SearchSuggestEnabled`](#searchsuggestenabled)** | Enable search suggestions.
+| **[`SecurityDevices`](#securitydevices)** | Install PKCS #11 modules.
+| **[`ShowHomeButton`](#showhomebutton)** | Show the home button on the toolbar.
 | **[`SSLVersionMax`](#sslversionmax)** | Set and lock the maximum version of TLS.
 | **[`SSLVersionMin`](#sslversionmin)** | Set and lock the minimum version of TLS.
 | **[`SupportMenu`](#supportmenu)** | Add a menuitem to the help menu for specifying support information.
+| **[`UserMessaging`](#usermessaging)** | Don't show certain messages to the user.
 | **[`WebsiteFilter`](#websitefilter)** | Block websites from being visited.
+| **[`WindowsSSO`](#windowssso)** | Allow Windows single sign-on for Microsoft, work, and school accounts.
 
+### 3rdparty
+
+Allow WebExtensions to configure policy. For more information, see [Adding policy support to your extension](https://extensionworkshop.com/documentation/enterprise/adding-policy-support-to-your-extension/).
+
+### AppAutoUpdate
+
+Enable or disable **automatic** application update.
+
+If set to true, application updates are installed without user approval within Firefox. The operating system might still require approval.
+
+If set to false, application updates are downloaded but the user can choose when to install the update.
+
+If you have disabled updates via DisableAppUpdate, this policy has no effect.
+
+**Compatibility:** Firefox 75, Firefox ESR 68.7\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** app.update.auto
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\AppAutoUpdate = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/AppAutoUpdate
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>AppAutoUpdate</key>
+  <true/> | <false/>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "AppAutoUpdate": true | false
+  }
+}
+```
+### AllowedDomainsForApps
+
+Define domains allowed to access Google Workspace.
+
+This policy is based on the [Chrome policy](https://chromeenterprise.google/policies/#AllowedDomainsForApps) of the same name.
+
+If this policy is enabled, users can only access Google Workspace using accounts from the specified domains. If you want to allow Gmail, you can add ```consumer_accounts``` to the list.
+
+**Compatibility:** Firefox 89, Firefox ESR 78.11\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\AllowedDomainsForApps = "managedfirefox.com,example.com"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/AllowedDomainsForApps
+```
+Value (string):
+```
+<enabled/>
+<data id="AllowedDomainsForApps" value="managedfirefox.com,example.com"/>
+```
+#### macOS
+```
+<dict>
+  <key>AllowedDomainsForApps</key>
+  <string>managedfirefox.com,example.com</string>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "AllowedDomainsForApps": "managedfirefox.com,example.com"
+  }
+}
+```
 ### AppUpdateURL
 
-Change the URL for application update.
+Change the URL for application update if you are providing Firefox updates from a custom update server.
 
 **Compatibility:** Firefox 62, Firefox ESR 60.2\
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `app.update.url`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\AppUpdateURL = "https://yoursite.com"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/AppUpdateURL
+```
+Value (string):
+```
+<enabled/>
+<data id="AppUpdateURL" value="https://yoursite.com"/>
 ```
 #### macOS
 ```
@@ -102,7 +222,7 @@ Software\Policies\Mozilla\Firefox\AppUpdateURL = "https://yoursite.com"
   <string>https://yoursite.com</string>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -116,11 +236,13 @@ Configure sites that support integrated authentication.
 
 See https://developer.mozilla.org/en-US/docs/Mozilla/Integrated_authentication for more information.
 
-**Compatibility:** Firefox 60, Firefox ESR 60 (AllowNonFQDN added in 62/60.2)\
-**CCK2 Equivalent:** N/A\
-**Preferences Affected:** `network.negotiate-auth.trusted-uris`, `network.negotiate-auth.delegation-uris`, `network.automatic-ntlm-auth.trusted-uris`, `network.automatic-ntlm-auth.allow-non-fqdn`, `network.negotiate-auth.allow-non-fqdn`
+`PrivateBrowsing` enables integrated authentication in private browsing.
 
-#### Windows
+**Compatibility:** Firefox 60, Firefox ESR 60 (AllowNonFQDN added in 62/60.2, AllowProxies added in 70/68.2, Locked added in 71/68.3, PrivateBrowsing added in 77/68.9)\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** `network.negotiate-auth.trusted-uris`,`network.negotiate-auth.delegation-uris`,`network.automatic-ntlm-auth.trusted-uris`,`network.automatic-ntlm-auth.allow-non-fqdn`,`network.negotiate-auth.allow-non-fqdn`,`network.automatic-ntlm-auth.allow-proxies`,`network.negotiate-auth.allow-proxies`,`network.auth.private-browsing-sso`
+
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\Authentication\SPNEGO\1 = "mydomain.com"
 Software\Policies\Mozilla\Firefox\Authentication\SPNEGO\2 = "https://myotherdomain.com"
@@ -130,6 +252,64 @@ Software\Policies\Mozilla\Firefox\Authentication\NTLM\1 = "mydomain.com"
 Software\Policies\Mozilla\Firefox\Authentication\NTLM\2 = "https://myotherdomain.com"
 Software\Policies\Mozilla\Firefox\Authentication\AllowNonFQDN\SPNEGO = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\Authentication\AllowNonFQDN\NTLM = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\Authentication\AllowProxies\SPNEGO = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\Authentication\AllowProxies\NTLM = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\Authentication\Locked = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\Authentication\PrivateBrowsing = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Authentication/Authentication_SPNEGO
+```
+Value (string):
+```
+<enabled/>
+<data id="Authentication" value="1&#xF000;mydomain&#xF000;2&#xF000;https://myotherdomain.com"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Authentication/Authentication_Delegated
+```
+Value (string):
+```
+<enabled/>
+<data id="Authentication" value="1&#xF000;mydomain&#xF000;2&#xF000;https://myotherdomain.com"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Authentication/Authentication_NTLM
+```
+Value (string):
+```
+<enabled/>
+<data id="Authentication" value="1&#xF000;mydomain&#xF000;2&#xF000;https://myotherdomain.com"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Authentication/Authentication_AllowNonFQDN
+```
+Value (string):
+```
+<enabled/>
+<data id="Authentication_AllowNonFQDN_NTLM" value="true | false"/>
+<data id="Authentication_AllowNonFQDN_SPNEGO" value="true | false"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Authentication/Authentication_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Authentication/Authentication_PrivateBrowsing
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -158,10 +338,21 @@ Software\Policies\Mozilla\Firefox\Authentication\AllowNonFQDN\NTLM = 0x1 | 0x0
       <key>NTLM</key>
       <true/> | <false/>
     </dict>
+    <key>AllowProxies</key>
+      <dict>
+      <key>SPNEGO</key>
+      <true/> | <false/>
+      <key>NTLM</key>
+      <true/> | <false/>
+    </dict>
+    <key>Locked</key>
+    <true/> | <false/>
+    <key>PrivateBrowsing</key>
+    <true/> | <false/>
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -172,8 +363,148 @@ Software\Policies\Mozilla\Firefox\Authentication\AllowNonFQDN\NTLM = 0x1 | 0x0
       "AllowNonFQDN": {
         "SPNEGO": true | false,
         "NTLM": true | false
-      }
+      },
+      "AllowProxies": {
+        "SPNEGO": true | false,
+        "NTLM": true | false
+      },
+      "Locked": true | false,
+      "PrivateBrowsing": true | false
     }
+  }
+}
+```
+### AutoLaunchProtocolsFromOrigins
+Define a list of external protocols that can be used from listed origins without prompting the user.
+
+The syntax of this policy is exactly the same as the [Chrome AutoLaunchProtocolsFromOrigins policy](https://cloud.google.com/docs/chrome-enterprise/policies/?policy=AutoLaunchProtocolsFromOrigins) except that you can only use valid origins (not just hostnames). This also means that you cannot specify an asterisk for all origins.
+
+The schema is:
+```
+{
+ "items": {
+  "properties": {
+   "allowed_origins": {
+    "items": {
+     "type": "string"
+    },
+    "type": "array"
+   },
+   "protocol": {
+    "type": "string"
+   }
+  },
+  "required": [
+   "protocol",
+   "allowed_origins"
+  ],
+  "type": "object"
+ },
+ "type": "array"
+}
+```
+**Compatibility:** Firefox 90, Firefox ESR 78.12\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+Software\Policies\Mozilla\Firefox\AutoLaunchProtocolsFromOrigins (REG_MULTI_SZ) =
+```
+[
+  {
+    "protocol": "zoommtg",
+    "allowed_origins": [
+      "https://somesite.zoom.us"
+    ]
+  }
+]
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/AutoLaunchProtocolsFromOrigins
+```
+Value (string):
+```
+<enabled/>
+<data id="JSON" value='
+[
+  {
+    "protocol": "zoommtg",
+    "allowed_origins": [
+      "https://somesite.zoom.us"
+    ]
+  }
+]'/>
+```
+#### macOS
+```
+<dict>
+  <key>AutoLaunchProtocolsFromOrigins</key>
+  <array>
+    <dict>
+      <key>protocol</key>
+      <string>zoommtg</string>
+      <key>allowed_origins</key>
+      <array>
+        <string>https://somesite.zoom.us</string>
+      </array>
+    </dict>
+  </array>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "AutoLaunchProtocolsFromOrigins": [{
+      "protocol": "zoommtg",
+      "allowed_origins": [
+        "https://somesite.zoom.us"
+      ]
+    }]
+  }
+}
+```
+### BackgroundAppUpdate
+
+Enable or disable **automatic** application update **in the background**, when the application is not running.
+
+If set to true, application updates may be installed (without user approval) in the background, even when the application is not running. The operating system might still require approval.
+
+If set to false, the application will not try to install updates when the application is not running.
+
+If you have disabled updates via `DisableAppUpdate` or disabled automatic updates via `AppAutoUpdate`, this policy has no effect.
+
+**Compatibility:** Firefox 90 (Windows only)\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** `app.update.background.enabled`
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\BackgroundAppUpdate = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/BackgroundAppUpdate
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>BackgroundAppUpdate</key>
+  <true/> | <false/>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "BackgroundAppUpdate": true | false
   }
 }
 ```
@@ -185,9 +516,18 @@ Block access to the Add-ons Manager (about:addons).
 **CCK2 Equivalent:** `disableAddonsManager`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\BlockAboutAddons = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/BlockAboutAddons
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -196,7 +536,7 @@ Software\Policies\Mozilla\Firefox\BlockAboutAddons = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -212,9 +552,18 @@ Block access to about:config.
 **CCK2 Equivalent:** `disableAboutConfig`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\BlockAboutConfig = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/BlockAboutConfig
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -223,7 +572,7 @@ Software\Policies\Mozilla\Firefox\BlockAboutConfig = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -239,9 +588,18 @@ Block access to About Profiles (about:profiles).
 **CCK2 Equivalent:** `disableAboutProfiles`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\BlockAboutProfiles = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/BlockAboutProfiles
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -250,7 +608,7 @@ Software\Policies\Mozilla\Firefox\BlockAboutProfiles = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -266,9 +624,18 @@ Block access to Troubleshooting Information (about:support).
 **CCK2 Equivalent:** `disableAboutSupport`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\BlockAboutSupport = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/BlockAboutSupport
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -277,7 +644,7 @@ Software\Policies\Mozilla\Firefox\BlockAboutSupport = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -287,19 +654,35 @@ Software\Policies\Mozilla\Firefox\BlockAboutSupport = 0x1 | 0x0
 ```
 ### Bookmarks
 
+Note: [`ManagedBookmarks`](#managedbookmarks) is the new recommended way to add bookmarks. This policy will continue to be supported.
+
 Add bookmarks in either the bookmarks toolbar or menu. Only `Title` and `URL` are required. If `Placement` is not specified, the bookmark will be placed on the toolbar. If `Folder` is specified, it is automatically created and bookmarks with the same folder name are grouped together.
 
 **Compatibility:** Firefox 60, Firefox ESR 60\
 **CCK2 Equivalent:** `bookmarks.toolbar`,`bookmarks.menu`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\Bookmarks\1\Title = "Example"
 Software\Policies\Mozilla\Firefox\Bookmarks\1\URL = "https://example.com"
 Software\Policies\Mozilla\Firefox\Bookmarks\1\Favicon = "https://example.com/favicon.ico"
 Software\Policies\Mozilla\Firefox\Bookmarks\1\Placement = "toolbar" | "menu"
 Software\Policies\Mozilla\Firefox\Bookmarks\1\Folder = "FolderName"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Bookmarks/Bookmark01
+```
+Value (string):
+```
+<enabled/>
+<data id="BookmarkTitle" value="Example"/>
+<data id="BookmarkURL" value="https://example.com"/>
+<data id="BookmarkFavicon" value="https://example.com/favicon.ico"/>
+<data id="BookmarkPlacement" value="toolbar | menu"/>
+<data id="BookmarkFolder" value="FolderName"/>
 ```
 #### macOS
 ```
@@ -321,7 +704,7 @@ Software\Policies\Mozilla\Firefox\Bookmarks\1\Folder = "FolderName"
   </array>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -344,9 +727,18 @@ Enable or disable the detection of captive portals.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `network.captive-portal-service.enabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\CaptivePortal = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/CaptivePortal
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -355,7 +747,7 @@ Software\Policies\Mozilla\Firefox\CaptivePortal = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -369,15 +761,26 @@ Software\Policies\Mozilla\Firefox\CaptivePortal = 0x1 | 0x0
 
 Trust certificates that have been added to the operating system certificate store by a user or administrator.
 
+Note: This policy only works on Windows and macOS. For Linux discussion, see [bug 1600509](https://bugzilla.mozilla.org/show_bug.cgi?id=1600509).
+
 See https://support.mozilla.org/kb/setting-certificate-authorities-firefox for more detail.
 
 **Compatibility:** Firefox 60, Firefox ESR 60 (macOS support in Firefox 63, Firefox ESR 68)\
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `security.enterprise_roots.enabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\Certificates\ImportEnterpriseRoots = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Certificates/Certificates_ImportEnterpriseRoots
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -389,7 +792,7 @@ Software\Policies\Mozilla\Firefox\Certificates\ImportEnterpriseRoots = 0x1 | 0x0
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -426,10 +829,20 @@ Binary (DER) and ASCII (PEM) certificates are both supported.
 **CCK2 Equivalent:** `certs.ca`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\Certificates\Install\1 = "cert1.der"
 Software\Policies\Mozilla\Firefox\Certificates\Install\2 = "C:\Users\username\cert2.pem"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Certificates/Certificates_Install
+```
+Value (string):
+```
+<enabled/>
+<data id="Certificates_Install" value="1&#xF000;cert1.der&#xF000;2&#xF000;C:\Users\username\cert2.pem"/>
 ```
 #### macOS
 ```
@@ -444,7 +857,7 @@ Software\Policies\Mozilla\Firefox\Certificates\Install\2 = "C:\Users\username\ce
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -459,6 +872,8 @@ Configure cookie preferences.
 
 `Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.
 
+`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.
+
 `Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.
 
 `Default` determines whether cookies are accepted at all.
@@ -471,19 +886,89 @@ Configure cookie preferences.
 
 `Locked` prevents the user from changing cookie preferences.
 
-**Compatibility:** Firefox 60, Firefox ESR 60 (RejectTracker was added in Firefox 63)\
+**Compatibility:** Firefox 60, Firefox ESR 60 (RejectTracker added in Firefox 63, AllowSession added in Firefox 79/78.1)\
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `network.cookie.cookieBehavior`,`network.cookie.lifetimePolicy`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\Cookies\Allow\1 = "https://example.com"
+Software\Policies\Mozilla\Firefox\Cookies\AllowSession\1 = "https://example.edu"
 Software\Policies\Mozilla\Firefox\Cookies\Block\1 = "https://example.org"
 Software\Policies\Mozilla\Firefox\Cookies\Default = 0x1 | 0x0
-Software\Policies\Mozilla\Firefox\Cookies\AcceptThirdParty = "always" | "never" |"from-visited"
+Software\Policies\Mozilla\Firefox\Cookies\AcceptThirdParty = "always" | "never" | "from-visited"
 Software\Policies\Mozilla\Firefox\Cookies\ExpireAtSessionEnd = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\Cookies\RejectTracker = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\Cookies\Locked = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Cookies/Cookies_Allow
+```
+Value (string):
+```
+<enabled/>
+<data id="Cookies_Allow" value="1&#xF000;https://example.com"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Cookies/Cookies_AllowSession
+```
+Value (string):
+```
+<enabled/>
+<data id="Cookies_Allow" value="1&#xF000;https://example.edu"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Cookies/Cookies_Block
+```
+Value (string):
+```
+<enabled/>
+<data id="Cookies_Block" value="1&#xF000;https://example.org"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Cookies/Cookies_Default
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Cookies/Cookies_AcceptThirdParty
+```
+Value (string):
+```
+<enabled/>
+<data id="Cookies_AcceptThirdParty" value="always | never | from-visited"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Cookies/Cookies_ExpireAtSessionEnd
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Cookies/Cookies_RejectTracker
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Cookies/Cookies_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -493,6 +978,10 @@ Software\Policies\Mozilla\Firefox\Cookies\Locked = 0x1 | 0x0
     <key>Allow</key>
     <array>
       <string>http://example.com</string>
+    </array>
+    <key>AllowSession</key>
+    <array>
+      <string>http://example.edu</string>
     </array>
     <key>Block</key>
     <array>
@@ -511,15 +1000,16 @@ Software\Policies\Mozilla\Firefox\Cookies\Locked = 0x1 | 0x0
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "Cookies": {
       "Allow": ["http://example.org/"],
+      "AllowSession": ["http://example.edu/"],
       "Block": ["http://example.edu/"],
       "Default": true | false,
-      "AcceptThirdParty": "always" | "never" | "from-visited"],
+      "AcceptThirdParty": "always" | "never" | "from-visited",
       "ExpireAtSessionEnd": true | false,
       "RejectTracker": true | false,
       "Locked": true | false
@@ -534,11 +1024,19 @@ Remove the "Set As Desktop Background..." menuitem when right clicking on an ima
 **CCK2 Equivalent:** `removeSetDesktopBackground`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableSetDesktopBackground = 0x1 | 0x0
 ```
-
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableSetDesktopBackground
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
 #### macOS
 ```
 <dict>
@@ -546,7 +1044,7 @@ Software\Policies\Mozilla\Firefox\DisableSetDesktopBackground = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -557,15 +1055,27 @@ Software\Policies\Mozilla\Firefox\DisableSetDesktopBackground = 0x1 | 0x0
 ### DisableMasterPasswordCreation
 Remove the master password functionality.
 
+If this value is true, it works the same as setting [`PrimaryPassword`](#primarypassword) to false and removes the primary password functionality.
+
+If both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMasterPasswordCreation takes precedent.
+
 **Compatibility:** Firefox 60, Firefox ESR 60\
 **CCK2 Equivalent:** `noMasterPassword`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableMasterPasswordCreation = 0x1 | 0x0
 ```
-
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableMasterPasswordCreation
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
 #### macOS
 ```
 <dict>
@@ -573,7 +1083,7 @@ Software\Policies\Mozilla\Firefox\DisableMasterPasswordCreation = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -582,15 +1092,24 @@ Software\Policies\Mozilla\Firefox\DisableMasterPasswordCreation = 0x1 | 0x0
 }
 ```
 ### DisableAppUpdate
-Turn off application updates.
+Turn off application updates within Firefox.
 
 **Compatibility:** Firefox 60, Firefox ESR 60\
 **CCK2 Equivalent:** `disableFirefoxUpdates`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableAppUpdate = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableAppUpdate
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -599,7 +1118,7 @@ Software\Policies\Mozilla\Firefox\DisableAppUpdate = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -614,11 +1133,19 @@ Disable the built in PDF viewer. PDF files are downloaded and sent externally.
 **CCK2 Equivalent:** `disablePDFjs`\
 **Preferences Affected:** `pdfjs.disabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableBuiltinPDFViewer = 0x1 | 0x0
 ```
-
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableBuiltinPDFViewer
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
 #### macOS
 ```
 <dict>
@@ -626,11 +1153,139 @@ Software\Policies\Mozilla\Firefox\DisableBuiltinPDFViewer = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "DisableBuiltinPDFViewer": true | false
+  }
+}
+```
+### DisabledCiphers
+Disable specific cryptographic ciphers.
+
+**Preferences Affected:** `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.rsa_des_ede3_sha`
+
+---
+**Note:**
+
+This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
+
+---
+**Compatibility:** Firefox 76, Firefox ESR 68.8 (TLS_RSA_WITH_AES_128_GCM_SHA256 and TLS_RSA_WITH_AES_256_GCM_SHA384 were added in Firefox 78)\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_DHE_RSA_WITH_AES_128_CBC_SHA = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_DHE_RSA_WITH_AES_256_CBC_SHA = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_RSA_WITH_AES_128_CBC_SHA = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_RSA_WITH_AES_256_CBC_SHA = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_RSA_WITH_3DES_EDE_CBC_SHA = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_RSA_WITH_AES_128_GCM_SHA256 = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_RSA_WITH_AES_256_GCM_SHA384 = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DisabledCiphers/DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>DisabledCiphers</key>
+    <dict>
+      <key>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</key>
+      <true/> | <false/>
+      <key>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</key>
+      <true/> | <false/>
+      <key>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</key>
+      <true/> | <false/>
+      <key>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</key>
+      <true/> | <false/>
+      <key>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</key>
+      <true/> | <false/>
+      <key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
+      <true/> | <false/>
+      <key>TLS_RSA_WITH_AES_128_CBC_SHA</key>
+      <true/> | <false/>
+      <key>TLS_RSA_WITH_AES_256_CBC_SHA</key>
+      <true/> | <false/>
+      <key>TLS_RSA_WITH_3DES_EDE_CBC_SHA</key>
+      <true/> | <false/>
+      <key>TLS_RSA_WITH_AES_128_GCM_SHA256</key>
+      <true/> | <false/>
+      <key>TLS_RSA_WITH_AES_256_GCM_SHA384</key>
+      <true/> | <false/>
+    </dict>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "DisabledCiphers": {
+      "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": true | false,
+      "TLS_DHE_RSA_WITH_AES_256_CBC_SHA": true | false,
+      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": true | false,
+      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": true | false,
+      "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": true | false,
+      "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": true | false,
+      "TLS_RSA_WITH_AES_128_CBC_SHA": true | false,
+      "TLS_RSA_WITH_AES_256_CBC_SHA": true | false,
+      "TLS_RSA_WITH_3DES_EDE_CBC_SHA": true | false,
+      "TLS_RSA_WITH_AES_128_GCM_SHA256": true | false,
+      "TLS_RSA_WITH_AES_256_GCM_SHA384": true | false
+    }
+  }
+}
+```
+### DisableDefaultBrowserAgent
+Prevent the default browser agent from taking any actions. Only applicable to Windows; other platforms don’t have the agent.
+
+The browser agent is a Windows-only scheduled task which runs in the background to collect and submit data about the browser that the user has set as their OS default. More information is available [here](https://firefox-source-docs.mozilla.org/toolkit/mozapps/defaultagent/default-browser-agent/index.html).
+
+**Compatibility:** Firefox 75, Firefox ESR 68.7 (Windows only)\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\DisableDefaultBrowserAgent = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableDefaultBrowserAgent
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "DisableDefaultBrowserAgent": true | false
   }
 }
 ```
@@ -641,11 +1296,19 @@ Remove access to all developer tools.
 **CCK2 Equivalent:** `removeDeveloperTools`\
 **Preferences Affected:** `devtools.policy.disabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableDeveloperTools = 0x1 | 0x0`
 ```
-
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableDeveloperTools
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
 #### macOS
 ```
 <dict>
@@ -653,7 +1316,7 @@ Software\Policies\Mozilla\Firefox\DisableDeveloperTools = 0x1 | 0x0`
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -668,9 +1331,18 @@ Disable the menus for reporting sites (Submit Feedback, Report Deceptive Site).
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableFeedbackCommands = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableFeedbackCommands
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -679,7 +1351,7 @@ Software\Policies\Mozilla\Firefox\DisableFeedbackCommands = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -694,9 +1366,18 @@ Remove access to Firefox Screenshots.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `extensions.screenshots.disabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableFirefoxScreenshots = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableFirefoxScreenshots
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -705,7 +1386,7 @@ Software\Policies\Mozilla\Firefox\DisableFirefoxScreenshots = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -720,9 +1401,18 @@ Disable Firefox Accounts integration (Sync).
 **CCK2 Equivalent:** `disableSync`\
 **Preferences Affected:** `identity.fxaccounts.enabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableFirefoxAccounts = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableFirefoxAccounts
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -731,7 +1421,7 @@ Software\Policies\Mozilla\Firefox\DisableFirefoxAccounts = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -743,12 +1433,21 @@ Software\Policies\Mozilla\Firefox\DisableFirefoxAccounts = 0x1 | 0x0
 Disable Firefox studies (Shield).
 
 **Compatibility:** Firefox 60, Firefox ESR 60\
-**CCK2 Equivalent:** `disableForget`\
+**CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableFirefoxStudies = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableFirefoxStudies
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -757,7 +1456,7 @@ Software\Policies\Mozilla\Firefox\DisableFirefoxStudies = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -772,9 +1471,18 @@ Disable the "Forget" button.
 **CCK2 Equivalent:** `disableForget`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableForgetButton = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableForgetButton
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -783,7 +1491,7 @@ Software\Policies\Mozilla\Firefox\DisableForgetButton = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -798,9 +1506,18 @@ Turn off saving information on web forms and the search bar.
 **CCK2 Equivalent:** `disableFormFill`\
 **Preferences Affected:** ` browser.formfill.enable`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableFormHistory = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableFormHistory
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -809,11 +1526,46 @@ Software\Policies\Mozilla\Firefox\DisableFormHistory = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "DisableFormHistory": true | false
+  }
+}
+```
+### DisablePasswordReveal
+Do not allow passwords to be shown in saved logins
+
+**Compatibility:** Firefox 71, Firefox ESR 68.3\
+**CCK2 Equivalent:** N/A
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\DisablePasswordReveal = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisablePasswordReveal
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>DisablePasswordReveal</key>
+  <true/> | <false/>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "DisablePasswordReveal": true | false
   }
 }
 ```
@@ -824,9 +1576,18 @@ Remove Pocket in the Firefox UI. It does not remove it from the new tab page.
 **CCK2 Equivalent:** `disablePocket`\
 **Preferences Affected:** `extensions.pocket.enabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisablePocket = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisablePocket
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -835,7 +1596,7 @@ Software\Policies\Mozilla\Firefox\DisablePocket = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -850,9 +1611,18 @@ Remove access to private browsing.
 **CCK2 Equivalent:** `disablePrivateBrowsing`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisablePrivateBrowsing = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisablePrivateBrowsing
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -861,7 +1631,7 @@ Software\Policies\Mozilla\Firefox\DisablePrivateBrowsing = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -876,9 +1646,18 @@ Disables the "Import data from another browser" option in the bookmarks window.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableProfileImport = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableProfileImport
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -887,7 +1666,7 @@ Software\Policies\Mozilla\Firefox\DisableProfileImport = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -902,9 +1681,18 @@ Disable the Refresh Firefox button on about:support and support.mozilla.org, as 
 **CCK2 Equivalent:** `disableResetFirefox`\
 **Preferences Affected:** `browser.disableResetPrompt`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableProfileRefresh = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableProfileRefresh
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -913,7 +1701,7 @@ Software\Policies\Mozilla\Firefox\DisableProfileRefresh = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -930,9 +1718,18 @@ On Windows, this disables safe mode via the command line as well.
 **CCK2 Equivalent:** `disableSafeMode`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableSafeMode = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableSafeMode
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -941,7 +1738,7 @@ Software\Policies\Mozilla\Firefox\DisableSafeMode = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -960,11 +1757,29 @@ Prevent the user from bypassing security in certain cases.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `security.certerror.hideAddException`,`browser.safebrowsing.allowOverride`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableSecurityBypass\InvalidCertificate = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\DisableSecurityBypass\SafeBrowsing = 0x1 | 0x0
 ```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/P_DisableSecurityBypass_InvalidCertificate
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/P_DisableSecurityBypass_SafeBrowsing
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+
 #### macOS
 ```
 <dict>
@@ -972,18 +1787,18 @@ Software\Policies\Mozilla\Firefox\DisableSecurityBypass\SafeBrowsing = 0x1 | 0x0
   <dict>
     <key>InvalidCertificate</key>
     <true/> | <false/>
-    <key><SafeBrowsing/key>
+    <key>SafeBrowsing</key>
     <true/> | <false/>
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "DisableSecurityBypass": {
-      "InvalidCertificate": true false,
-      "SafeBrowsing": true false
+      "InvalidCertificate": true | false,
+      "SafeBrowsing": true | false
     }
   }
 }
@@ -995,8 +1810,18 @@ Prevent system add-ons from being installed or update.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
-#### Windows
-```Software\Policies\Mozilla\Firefox\DisableSystemAddonUpdate = 0x1 | 0x0
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\DisableSystemAddonUpdate = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableSystemAddonUpdate
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1005,7 +1830,7 @@ Prevent system add-ons from being installed or update.
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1016,15 +1841,26 @@ Prevent system add-ons from being installed or update.
 ### DisableTelemetry
 Prevent the upload of telemetry data.
 
+As of Firefox 83 and Firefox ESR 78.5, local storage of telemetry data is disabled as well.
+
 Mozilla recommends that you do not disable telemetry. Information collected through telemetry helps us build a better product for businesses like yours.
 
 **Compatibility:** Firefox 60, Firefox ESR 60\
 **CCK2 Equivalent:** `disableTelemetry`\
-**Preferences Affected:** `datareporting.healthreport.uploadEnabled,datareporting.policy.dataSubmissionEnabled`
+**Preferences Affected:** `datareporting.healthreport.uploadEnabled,datareporting.policy.dataSubmissionEnabled,toolkit.telemetry.archive.enabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisableTelemetry = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisableTelemetry
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1033,7 +1869,7 @@ Software\Policies\Mozilla\Firefox\DisableTelemetry = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1048,9 +1884,18 @@ Set the initial state of the bookmarks toolbar. A user can still hide it and it 
 **CCK2 Equivalent:** `displayBookmarksToolbar`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisplayBookmarksToolbar = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisplayBookmarksToolbar
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1059,7 +1904,7 @@ Software\Policies\Mozilla\Firefox\DisplayBookmarksToolbar = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1067,14 +1912,14 @@ Software\Policies\Mozilla\Firefox\DisplayBookmarksToolbar = 0x1 | 0x0
   }
 }
 ```
-### DisplayMenuBar
+### DisplayMenuBar (Deprecated)
 Set the initial state of the menubar. A user can still hide it and it will stay hidden.
 
 **Compatibility:** Firefox 60, Firefox ESR 60 (Windows, some Linux)\
 **CCK2 Equivalent:** `displayMenuBar`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DisplayMenuBar = 0x1 | 0x0
 ```
@@ -1085,11 +1930,55 @@ Software\Policies\Mozilla\Firefox\DisplayMenuBar = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "DisplayMenuBar": true | false
+  }
+}
+```
+### DisplayMenuBar
+Set the state of the menubar.
+
+`always` means the menubar is shown and cannot be hidden.
+
+`never` means the menubar is hidden and cannot be shown.
+
+`default-on` means the menubar is on by default but can be hidden.
+
+`default-off` means the menubar is off by default but can be shown.
+
+**Compatibility:** Firefox 73, Firefox ESR 68.5 (Windows, some Linux)\
+**CCK2 Equivalent:** `displayMenuBar`\
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\DisplayMenuBar = "always", "never", "default-on", "default-off"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DisplayMenuBar_Enum
+```
+Value (string):
+```
+<enabled/>
+<data id="DisplayMenuBar" value="always | never | default-on | default-off"/>
+```
+#### macOS
+```
+<dict>
+  <key>DisplayMenuBar</key>
+  <string>always | never | default-on | default-off</string>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "DisplayMenuBar": "always", "never", "default-on", "default-off"
   }
 }
 ```
@@ -1102,15 +1991,53 @@ Configure DNS over HTTPS.
 
 `Locked` prevents the user from changing DNS over HTTPS preferences.
 
-**Compatibility:** Firefox 63, Firefox ESR 68\
+`ExcludedDomains` excludes domains from DNS over HTTPS.
+
+**Compatibility:** Firefox 63, Firefox ESR 68 (ExcludedDomains added in 75/68.7)\
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `network.trr.mode`,`network.trr.uri`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DNSOverHTTPS\Enabled = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\DNSOverHTTPS\ProviderURL = "URL_TO_ALTERNATE_PROVIDER"
 Software\Policies\Mozilla\Firefox\DNSOverHTTPS\Locked = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\DNSOverHTTPS\ExcludedDomains\1 = "example.com"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DNSOverHTTPS/DNSOverHTTPS_Enabled
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DNSOverHTTPS/DNSOverHTTPS_ProviderURL
+```
+Value (string):
+```
+<enabled/>
+<data id="String" value="URL_TO_ALTERNATE_PROVIDER"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DNSOverHTTPS/DNSOverHTTPS_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~DNSOverHTTPS/DNSOverHTTPS_ExcludedDomains
+```
+Value (string):
+```
+<enabled/>
+<data id="List" value="1&#xF000;example.com"/>
 ```
 #### macOS
 ```
@@ -1123,17 +2050,22 @@ Software\Policies\Mozilla\Firefox\DNSOverHTTPS\Locked = 0x1 | 0x0
     <string>URL_TO_ALTERNATE_PROVIDER</string>
     <key>Locked</key>
     <true/> | <false/>
+    <key>ExcludedDomains</key>
+    <array>
+      <string>example.com</string>
+    </array>
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "DNSOverHTTPS": {
       "Enabled":  true | false,
       "ProviderURL": "URL_TO_ALTERNATE_PROVIDER",
-      "Locked": true | false
+      "Locked": true | false,
+      "ExcludedDomains": ["example.com"]
     }
   }
 }
@@ -1145,9 +2077,18 @@ Don't check if Firefox is the default browser at startup.
 **CCK2 Equivalent:** `dontCheckDefaultBrowser`\
 **Preferences Affected:** `browser.shell.checkDefaultBrowser`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DontCheckDefaultBrowser = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DontCheckDefaultBrowser
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1156,7 +2097,7 @@ Software\Policies\Mozilla\Firefox\DontCheckDefaultBrowser = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1173,9 +2114,19 @@ You can use ${home} for the native home directory.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `browser.download.dir`,`browser.download.folderList`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DefaultDownloadDirectory = "${home}\Downloads"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DefaultDownloadDirectory
+```
+Value (string):
+```
+<enabled/>
+<data id="Preferences_String" value="${home}\Downloads"/>
 ```
 #### macOS
 ```
@@ -1184,14 +2135,14 @@ Software\Policies\Mozilla\Firefox\DefaultDownloadDirectory = "${home}\Downloads"
   <string>${home}/Downloads</string>
 </dict>
 ```
-#### JSON (macOS and Linux)
+#### policies.json (macOS and Linux)
 ```
 {
   "policies": {
     "DefaultDownloadDirectory": "${home}/Downloads"
 }
 ```
-#### JSON (Windows)
+#### policies.json (Windows)
 ```
 {
   "policies": {
@@ -1207,9 +2158,19 @@ You can use ${home} for the native home directory.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `browser.download.dir`,`browser.download.folderList`,`browser.download.useDownloadDir`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\DownloadDirectory = "${home}\Downloads"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/DownloadDirectory
+```
+Value (string):
+```
+<enabled/>
+<data id="Preferences_String" value="${home}\Downloads"/>
 ```
 #### macOS
 ```
@@ -1218,14 +2179,14 @@ Software\Policies\Mozilla\Firefox\DownloadDirectory = "${home}\Downloads"
   <string>${home}/Downloads</string>
 </dict>
 ```
-#### JSON (macOS and Linux)
+#### policies.json (macOS and Linux)
 ```
 {
   "policies": {
     "DownloadDirectory": "${home}/Downloads"
 }
 ```
-#### JSON (Windows)
+#### policies.json (Windows)
 ```
 {
   "policies": {
@@ -1241,14 +2202,64 @@ If `Value` is set to false, tracking protection is disabled and locked in both t
 
 If `Value` is set to true, tracking protection is enabled by default in both the regular browser and private browsing and the `Locked` value determines whether or not a user can change it.
 
-**Compatibility:** Firefox 60, Firefox ESR 60\
-**CCK2 Equivalent:** `dontCheckDefaultBrowser`\
-**Preferences Affected:** `privacy.trackingprotection.enabled`,`privacy.trackingprotection.pbmode.enabled`
+If `Cryptomining` is set to true, cryptomining scripts on websites are blocked.
 
-#### Windows
+If `Fingerprinting` is set to true, fingerprinting scripts on websites are blocked.
+
+`Exceptions` are origins for which tracking protection is not enabled.
+
+**Compatibility:** Firefox 60, Firefox ESR 60 (Cryptomining and Fingerprinting added in 70/68.2, Exceptions added in 73/68.5)\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** `privacy.trackingprotection.enabled`,`privacy.trackingprotection.pbmode.enabled`,`privacy.trackingprotection.cryptomining.enabled`,`privacy.trackingprotection.fingerprinting.enabled`
+
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Value = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Locked = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Cryptomining = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Fingerprinting = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Exceptions\1 = "https://example.com"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~TrackingProtection/A_TrackingProtection_Value
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~TrackingProtection/B_TrackingProtection_Cryptomining
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~TrackingProtection/C_TrackingProtection_Fingerprinting
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~TrackingProtection/D_TrackingProtection_Exceptions
+```
+Value (string):
+```
+<data id="TrackingProtection_Exceptions" value="1&#xF000;https://example.com"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~TrackingProtection/E_TrackingProtection_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1257,20 +2268,80 @@ Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Locked = 0x1 | 0x0
   <dict>
     <key>Value</key>
     <true/> | <false/>
- 
-    <key><Locked/key>
+    <key>Locked</key>
     <true/> | <false/>
+    <key>Cryptomining</key>
+    <true/> | <false/>
+    <key>Fingerprinting</key>
+    <true/> | <false/>
+    <key>Exceptions</key>
+    <array>
+      <string>https://example.com</string>
+    </array>
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "EnableTrackingProtection": {
-      "Value": [true, false],
-      "Locked": [true, false]
+      "Value": true | false,
+      "Locked": true | false,
+      "Cryptomining": true | false,
+      "Fingerprinting": true | false,
+      "Exceptions": ["https://example.com"]
     }
+  }
+}
+```
+### EncryptedMediaExtensions
+Enable or disable Encrypted Media Extensions and optionally lock it.
+
+If `Enabled` is set to false, encrypted media extensions (like Widevine) are not downloaded by Firefox unless the user consents to installing them.
+
+If `Locked` is set to true and `Enabled` is set to false, Firefox will not download encrypted media extensions (like Widevine) or ask the user to install them.
+
+**Compatibility:** Firefox 77, Firefox ESR 68.9\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** `media.eme.enabled`
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\EncryptedMediaExtensions\Enabled = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\EncryptedMediaExtensions\Locked = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~EncryptedMediaExtensions/EncryptedMediaExtensions_Enabled
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~EncryptedMediaExtensions/EncryptedMediaExtensions_Locked
+```
+Value (string):
+```
+<enabled/>or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>EncryptedMediaExtensions</key>
+  <dict>
+    <key>Enabled</key>
+    <true/> | <false/>
+    <key>Locked</key>
+    <true/> | <false/>
+  </dict>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "EncryptedMediaExtensions": {
+      "Enabled": true | false,
+      "Locked": true | false
+    }
+  }
 }
 ```
 ### EnterprisePoliciesEnabled
@@ -1290,7 +2361,9 @@ Enable policy support on macOS.
 ### Extensions
 Control the installation, uninstallation and locking of extensions.
 
-`Install` is a list of URLs or native paths for extensions to be installed. 
+While this policy is not technically deprecated, it is recommended that you use the **[`ExtensionSettings`](#extensionsettings)** policy. It has the same functionality and adds more. It does not support native paths, though, so you'll have to use file:/// URLs.
+
+`Install` is a list of URLs or native paths for extensions to be installed.
 
 `Uninstall` is a list of extension IDs that should be uninstalled if found.
 
@@ -1300,12 +2373,40 @@ Control the installation, uninstallation and locking of extensions.
 **CCK2 Equivalent:** `addons`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\Extensions\Install\1 = "https://addons.mozilla.org/firefox/downloads/somefile.xpi"
 Software\Policies\Mozilla\Firefox\Extensions\Install\2 = "//path/to/xpi"
 Software\Policies\Mozilla\Firefox\Extensions\Uninstall\1 = "bad_addon_id@mozilla.org"
 Software\Policies\Mozilla\Firefox\Extensions\Locked\1 = "addon_id@mozilla.org"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Extensions/Extensions_Install
+```
+Value (string):
+```
+<enabled/>
+<data id="Extensions" value="1&#xF000;https://addons.mozilla.org/firefox/downloads/somefile.xpi&#xF000;2&#xF000;//path/to/xpi"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Extensions/Extensions_Uninstall
+```
+Value (string):
+```
+<enabled/>
+<data id="Extensions" value="1&#xF000;bad_addon_id@mozilla.org"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Extensions/Extensions_Locked
+```
+Value (string):
+```
+<enabled/>
+<data id="Extensions" value="1&#xF000;addon_id@mozilla.org"/>
 ```
 #### macOS
 ```
@@ -1328,9 +2429,7 @@ Software\Policies\Mozilla\Firefox\Extensions\Locked\1 = "addon_id@mozilla.org"
   </dict>
 </dict>
 ```
-#### JSON
-
-
+#### policies.json
 ```
 {
   "policies": {
@@ -1347,29 +2446,71 @@ Manage all aspects of extensions. This policy is based heavily on the [Chrome po
 
 This policy maps an extension ID to its configuration. With an extension ID, the configuration will be applied to the specified extension only. A default configuration can be set for the special ID "*", which will apply to all extensions that don't have a custom configuration set in this policy.
 
-To obtain an extension ID, install the extension and go to about:support. You will see the ID in the Extensions section.
+To obtain an extension ID, install the extension and go to about:support. You will see the ID in the Extensions section. I've also created an extension that makes it easy to find the ID of extensions on AMO. You can download it [here](https://github.com/mkaply/queryamoid/releases/tag/v0.1).
 
 The configuration for each extension is another dictionary that can contain the fields documented below.
 
 | Name | Description |
 | --- | --- |
 | `installation_mode` | Maps to a string indicating the installation mode for the extension. The valid strings are `allowed`,`blocked`,`force_installed`, and `normal_installed`.
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`allowed` | Allows the extension to be installed by the user. This is the default behavior.
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`allowed` | Allows the extension to be installed by the user. This is the default behavior. There is no need for an install_url; it will automatically be allowed based on the ID.
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`blocked`| Blocks installation of the extension and removes it from the device if already installed.
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`force_installed`| The extension is automatically installed and can't be removed by the user. This option is not valid for the default configuration and requires an install_url.
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`normal_installed`| The extension is automatically installed but can be disabled by the user. This option is not valid for the default configuration and requires an install_url.
-| `install_url`| Maps to a URL indicating where Firefox can download a force_installed or normal_installed extension. If installing from the addons.mozilla.org, use the following URL (substituting SHORT_NAME from the URL on AMO), https://addons.mozilla.org/firefox/downloads/latest/SHORT_NAME/latest.xpi. If installing frmo the local file system, use a file:/// URL.
-| `install_sources` | Each item in this list is an extension-style match pattern. Users will be able to easily install items from any URL that matches an item in this list. Both the location of the *.xpi file and the page where the download is started from (i.e.  the referrer) must be allowed by these patterns. This setting can be used only for the default configuration.
-| `allowed_types` | This setting whitelists the allowed types of extension/apps that can be installed in Firefox. The value is a list of strings, each of which should be one of the following: "extension", "theme", "dictionary", "langpack" This setting can be used only for the default configuration.
-| `blocked_install_message` | This maps to a string specifying the error message to display to users if they're blocked from installing an extension. This setting allows you to append text to the generic error message displayed when the extension is blocked. This could be be used to direct users to your help desk, explain why a particular extension is blocked, or something else.
+| `install_url`| Maps to a URL indicating where Firefox can download a force_installed or normal_installed extension.  If installing from the local file system, use a [```file:///``` URL](https://en.wikipedia.org/wiki/File_URI_scheme). If installing from the addons.mozilla.org, use the following URL (substituting SHORT_NAME from the URL on AMO), https://addons.mozilla.org/firefox/downloads/latest/SHORT_NAME/latest.xpi. Languages packs are available from https://releases.mozilla.org/pub/firefox/releases/VERSION/PLATFORM/xpi/LANGUAGE.xpi. If you need to update the extension, you can change the name of the extension and it will be automatically updated. Extensions installed from file URLs will additional be updated when their internal version changes.
+| `install_sources` | A list of sources from which installing extensions is allowed. **This is unnecessary if you are only allowing the installation of certain extensions by ID.** Each item in this list is an extension-style match pattern. Users will be able to easily install items from any URL that matches an item in this list. Both the location of the *.xpi file and the page where the download is started from (i.e.  the referrer) must be allowed by these patterns. This setting can be used only for the default configuration.
+| `allowed_types` | This setting whitelists the allowed types of extension/apps that can be installed in Firefox. The value is a list of strings, each of which should be one of the following: "extension", "theme", "dictionary", "locale" This setting can be used only for the default configuration.
+| `blocked_install_message` | This maps to a string specifying the error message to display to users if they're blocked from installing an extension. This setting allows you to append text to the generic error message displayed when the extension is blocked. This could be be used to direct users to your help desk, explain why a particular extension is blocked, or something else. This setting can be used only for the default configuration.
+| `restricted_domains` | An array of domains on which content scripts can't be run. This setting can be used only for the default configuration.
+| `updates_disabled` | (Firefox 89, Firefox ESR 78.11) Boolean that indicates whether or not to disable automatic updates for an individual extension.
 
-**Compatibility:** Firefox 69, Firefox ESR 68.1\
+**Compatibility:** Firefox 69, Firefox ESR 68.1 (As of Firefox 85, Firefox ESR 78.7, installing a theme makes it the default.)\
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
+Software\Policies\Mozilla\Firefox\ExtensionSettings (REG_MULTI_SZ) =
 ```
-Software\Policies\Mozilla\Firefox\ExtensionSettings = '{"*": {"installation_mode": "blocked"}}'
+{
+  "*": {
+    "blocked_install_message": "Custom error message.",
+    "install_sources": ["about:addons","https://addons.mozilla.org/"],
+    "installation_mode": "blocked",
+    "allowed_types": ["extension"]
+  },
+  "uBlock0@raymondhill.net": {
+    "installation_mode": "force_installed",
+    "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+  },
+  "https-everywhere@eff.org": {
+    "installation_mode": "allowed"
+  }
+}
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Extensions/ExtensionSettings
+```
+Value (string):
+```
+<enabled/>
+<data id="ExtensionSettings" value='
+{
+  "*": {
+    "blocked_install_message": "Custom error message.",
+    "install_sources": ["about:addons","https://addons.mozilla.org/"],
+    "installation_mode": "blocked",
+    "allowed_types": ["extension"]
+  },
+  "uBlock0@raymondhill.net": {
+    "installation_mode": "force_installed",
+    "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+  },
+    "https-everywhere@eff.org": {
+    "installation_mode": "allowed"
+  }
+}'/>
 ```
 #### macOS
 ```
@@ -1382,10 +2523,15 @@ Software\Policies\Mozilla\Firefox\ExtensionSettings = '{"*": {"installation_mode
       <string>Custom error message.</string>
       <key>install_sources</key>
       <array>
+        <string>about:addons</string>
         <string>https://addons.mozilla.org/</string>
       </array>
       <key>installation_mode</key>
       <string>blocked</string>
+      <key>allowed_types</key>
+      <array>
+        <string>extension</string>
+      </array>
     </dict>
     <key>uBlock0@raymondhill.net</key>
     <dict>
@@ -1394,22 +2540,31 @@ Software\Policies\Mozilla\Firefox\ExtensionSettings = '{"*": {"installation_mode
       <key>install_url</key>
       <string>https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi</string>
     </dict>
+    <key>https-everywhere@eff.org</key>
+    <dict>
+      <key>installation_mode</key>
+       <string>allowed</string>
+    </dict>
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "ExtensionSettings": {
       "*": {
         "blocked_install_message": "Custom error message.",
-        "install_sources": ["https://addons.mozilla.org/"],
-        "installation_mode": "blocked"
+        "install_sources": ["about:addons","https://addons.mozilla.org/"],
+        "installation_mode": "blocked",
+        "allowed_types": ["extension"]
       },
       "uBlock0@raymondhill.net": {
         "installation_mode": "force_installed",
         "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+      },
+      "https-everywhere@eff.org": {
+        "installation_mode": "allowed"
       }
     }
   }
@@ -1422,9 +2577,18 @@ Control extension updates.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `extensions.update.enabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\ExtensionUpdate = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Extensions/ExtensionUpdate
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1433,7 +2597,7 @@ Software\Policies\Mozilla\Firefox\ExtensionUpdate = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1456,12 +2620,38 @@ Configure the default Flash plugin policy as well as origins for which Flash is 
 **CCK2 Equivalent:** `permissions.plugin`\
 **Preferences Affected:** `plugin.state.flash`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\FlashPlugin\Allow\1 = "https://example.org"
 Software\Policies\Mozilla\Firefox\FlashPlugin\Block\1 = "https://example.edu"
 Software\Policies\Mozilla\Firefox\FlashPlugin\Default = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\FlashPlugin\Locked = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Flash/FlashPlugin_Allow
+```
+Value (string):
+```
+<enabled/>
+<data id="Permissions" value="1&#xF000;https://example.org&#xF000;2&#xF000;https://example.edu"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Flash/FlashPlugin_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Flash/FlashPlugin_Default
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1483,7 +2673,7 @@ Software\Policies\Mozilla\Firefox\FlashPlugin\Locked = 0x1 | 0x0
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1496,6 +2686,191 @@ Software\Policies\Mozilla\Firefox\FlashPlugin\Locked = 0x1 | 0x0
   }
 }
 ```
+
+
+
+### Handlers
+Configure default application handlers. This policy is based on the internal format of `handlers.json`.
+
+You can configure handlers based on a mime type (`mimeTypes`), a file's extension (`extensions`), or a protocol (`schemes`).
+
+Within each handler type, you specify the given mimeType/extension/scheme as a key and use the following subkeys to describe how it is handled.
+
+| Name | Description |
+| --- | --- |
+| `action`| Can be either `saveToDisk`, `useHelperApp`, `useSystemDefault`.
+| `ask` | If `true`, the user is asked if what they want to do with the file. If `false`, the action is taken without user intervention.
+| `handlers` | An array of handlers with the first one being the default. If you don't want to have a default handler, use an empty object for the first handler. Choose between path or uriTemplate.
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`name` | The display name of the handler (might not be used).
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`path`| The native path to the executable to be used.
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`uriTemplate`| A url to a web based application handler. The URL must be https and contain a %s to be used for substitution.
+
+**Compatibility:** Firefox 78, Firefox ESR 78\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+Software\Policies\Mozilla\Firefox\Handlers (REG_MULTI_SZ) =
+```
+{
+  "mimeTypes": {
+    "application/msword": {
+      "action": "useSystemDefault",
+      "ask": true | false
+    }
+  },
+  "schemes": {
+    "mailto": {
+      "action": "useHelperApp",
+      "ask": true | false,
+      "handlers": [{
+        "name": "Gmail",
+        "uriTemplate": "https://mail.google.com/mail/?extsrc=mailto&url=%s"
+      }]
+    }
+  },
+  "extensions": {
+    "pdf": {
+      "action": "useHelperApp",
+      "ask": true | false,
+      "handlers": [{
+        "name": "Adobe Acrobat",
+        "path": "C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\AcroRd32.exe"
+      }]
+    }
+  }
+}
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/Handlers
+```
+Value (string):
+```
+<enabled/>
+<data id="Handlers" value='
+{
+  "mimeTypes": {
+    "application/msword": {
+      "action": "useSystemDefault",
+      "ask": true | false
+    }
+  },
+  "schemes": {
+    "mailto": {
+      "action": "useHelperApp",
+      "ask": true | false,
+      "handlers": [{
+        "name": "Gmail",
+        "uriTemplate": "https://mail.google.com/mail/?extsrc=mailto&amp;url=%s"
+      }]
+    }
+  },
+  "extensions": {
+    "pdf": {
+      "action": "useHelperApp",
+      "ask": true | false,
+      "handlers": [{
+        "name": "Adobe Acrobat",
+        "path": "C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\AcroRd32.exe"
+      }]
+    }
+  }
+}
+'/>
+```
+#### macOS
+```
+<dict>
+  <key>Handlers</key>
+  <dict>
+    <key>mimeTypes</key>
+    <dict>
+      <key>application/msword</key>
+      <dict>
+        <key>action</key>
+        <string>useSystemDefault</string>
+        <key>ask</key>
+        <true/> | <false/>
+      </dict>
+    </dict>
+    <key>schemes</key>
+    <dict>
+      <key>mailto</key>
+      <dict>
+        <key>action</key>
+        <string>useHelperApp</string>
+        <key>ask</key>
+        <true/> | <false/>
+        <key>handlers</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>Gmail</string>
+            <key>uriTemplate</key>
+            <string>https://mail.google.com/mail/?extsrc=mailto&url=%s</string>
+          </dict>
+        </array>
+      </dict>
+    </dict>
+    <key>extensions</key>
+    <dict>
+      <key>pdf</key>
+      <dict>
+        <key>action</key>
+        <string>useHelperApp</string>
+        <key>ask</key>
+        <true/> | <false/>
+        <key>handlers</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>Adobe Acrobat</string>
+            <key>path</key>
+            <string>/System/Applications/Preview.app</string>
+          </dict>
+        </array>
+      </dict>
+    </dict>
+  </dict>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "Handlers": {
+      "mimeTypes": {
+        "application/msword": {
+          "action": "useSystemDefault",
+          "ask": false
+        }
+      },
+      "schemes": {
+        "mailto": {
+          "action": "useHelperApp",
+          "ask": true | false,
+          "handlers": [{
+            "name": "Gmail",
+            "uriTemplate": "https://mail.google.com/mail/?extsrc=mailto&url=%s"
+          }]
+        }
+      },
+      "extensions": {
+        "pdf": {
+          "action": "useHelperApp",
+          "ask": true | false,
+          "handlers": [{
+            "name": "Adobe Acrobat",
+            "path": "/usr/bin/acroread"
+          }]
+        }
+      }
+    }
+  }
+}
+```
 ### FirefoxHome
 Customize the Firefox Home page.
 
@@ -1503,7 +2878,7 @@ Customize the Firefox Home page.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `browser.newtabpage.activity-stream.showSearch`,`browser.newtabpage.activity-stream.feeds.topsites`,`browser.newtabpage.activity-stream.feeds.section.highlights`,`browser.newtabpage.activity-stream.feeds.section.topstories`,`browser.newtabpage.activity-stream.feeds.snippets`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\FirefoxHome\Search = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\FirefoxHome\TopSites = 0x1 | 0x0
@@ -1511,6 +2886,21 @@ Software\Policies\Mozilla\Firefox\FirefoxHome\Highlights = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\FirefoxHome\Pocket = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\FirefoxHome\Snippets = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\FirefoxHome\Locked = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/CustomizeFirefoxHome
+```
+Value (string):
+```
+<enabled/>
+<data id="FirefoxHome_Search"  value="true | false"/>
+<data id="FirefoxHome_TopSites"  value="true | false"/>
+<data id="FirefoxHome_Highlights"  value="true | false"/>
+<data id="FirefoxHome_Pocket"  value="true | false"/>
+<data id="FirefoxHome_Snippets"  value="true | false"/>
+<data id="FirefoxHome_Locked"  value="true | false"/>
 ```
 #### macOS
 ```
@@ -1532,7 +2922,7 @@ Software\Policies\Mozilla\Firefox\FirefoxHome\Locked = 0x1 | 0x0
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1554,9 +2944,18 @@ Control hardware acceleration.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `layers.acceleration.disabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\HardwareAcceleration = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/HardwareAcceleration
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1565,7 +2964,7 @@ Software\Policies\Mozilla\Firefox\HardwareAcceleration = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1584,17 +2983,51 @@ Configure the default homepage and how Firefox starts.
 
 `StartPage` is how Firefox starts. The choices are no homepage, the default homepage or the previous session.
 
-**Compatibility:** Firefox 60, Firefox ESR 60 (StartPage was added in Firefox 60, Firefox ESR 60.4)\
+With Firefox 78, an additional option as added for `Startpage`, `homepage-locked`. If this is value is set for the Startpage, the user will always get the homepage at startup and cannot choose to restore their session.
+
+**Compatibility:** Firefox 60, Firefox ESR 60 (StartPage was added in Firefox 60, Firefox ESR 60.4, homepage-locked added in Firefox 78)\
 **CCK2 Equivalent:** `homePage`,`lockHomePage`\
 **Preferences Affected:** `browser.startup.homepage`,`browser.startup.page`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\Homepage\URL = "https://example.com"
 Software\Policies\Mozilla\Firefox\Homepage\Locked = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\Homepage\Additional\1 = "https://example.org"
 Software\Policies\Mozilla\Firefox\Homepage\Additional\2 = "https://example.edu"
-Software\Policies\Mozilla\Firefox\Homepage\StartPage = "none" | "homepage" |  "previous-session"
+Software\Policies\Mozilla\Firefox\Homepage\StartPage = "none" | "homepage" | "previous-session" | "homepage-locked"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Homepage/HomepageURL
+```
+Value (string):
+```
+<enabled/>
+
+<data id="HomepageURL" value="https://example.com"/>
+<data id="HomepageLocked" value="true | false"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Homepage/HomepageAdditional
+```
+Value (string):
+```
+<enabled/>
+
+<data id="HomepageAdditional" value="1&#xF000;http://example.org&#xF000;2&#xF000;http://example.edu"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Homepage/HomepageStartPage
+```
+Value (string):
+```
+<enabled/>
+
+<data id="StartPage" value="none | homepage | previous-session"/>
 ```
 #### macOS
 ```
@@ -1611,11 +3044,11 @@ Software\Policies\Mozilla\Firefox\Homepage\StartPage = "none" | "homepage" |  "p
       <string>http://example.edu</string>
     </array>
     <key>StartPage</key>
-    <string>always | never | from-visited</string>
+    <string>none | homepage | previous-session | homepage-locked</string>
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1624,7 +3057,7 @@ Software\Policies\Mozilla\Firefox\Homepage\StartPage = "none" | "homepage" |  "p
       "Locked": true | false,
       "Additional": ["http://example.org/",
                      "http://example.edu/"],
-      "StartPage": "none" | "homepage" |  "previous-session"
+      "StartPage": "none" | "homepage" | "previous-session" | "homepage-locked"
     }
   }
 }
@@ -1640,11 +3073,29 @@ Configure the default extension install policy as well as origins for extension 
 **CCK2 Equivalent:** `permissions.install`\
 **Preferences Affected:** `xpinstall.enabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\InstallAddonsPermission\Allow\1 = "https://example.org"
 Software\Policies\Mozilla\Firefox\InstallAddonsPermission\Allow\2 = "https://example.edu"
 Software\Policies\Mozilla\Firefox\InstallAddonsPermission\Default = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Addons/InstallAddonsPermission_Allow
+```
+Value (string):
+```
+<enabled/>
+<data id="Permissions" value="1&#xF000;https://example.org&#xF000;2&#xF000;https://example.edu"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Addons/InstallAddonsPermission_Default
+```
+Value (string):
+```
+<enabled/>
 ```
 #### macOS
 ```
@@ -1661,7 +3112,7 @@ Software\Policies\Mozilla\Firefox\InstallAddonsPermission\Default = 0x1 | 0x0
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1673,6 +3124,32 @@ Software\Policies\Mozilla\Firefox\InstallAddonsPermission\Default = 0x1 | 0x0
   }
 }
 ```
+### LegacyProfiles
+Disable the feature enforcing a separate profile for each installation.
+
+If this policy set to true, Firefox will not try to create different profiles for installations of Firefox in different directories. This is the equivalent of the MOZ_LEGACY_PROFILES environment variable.
+
+If this policy set to false, Firefox will create a new profile for each unique installation of Firefox.
+
+This policy only work on Windows via GPO (not policies.json).
+
+**Compatibility:** Firefox 70, Firefox ESR 68.2 (Windows only, GPO only)\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\LegacyProfiles = = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/LegacyProfiles
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
 ### LocalFileLinks
 Enable linking to local files by origin.
 
@@ -1680,10 +3157,20 @@ Enable linking to local files by origin.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `capability.policy.localfilelinks.*`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\LocalFileLinks\1 = "https://example.org"
 Software\Policies\Mozilla\Firefox\LocalFileLinks\2 = "https://example.edu"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/LocalFileLinks
+```
+Value (string):
+```
+<enabled/>
+<data id="LocalFileLinks" value="1&#xF000;https://example.org&#xF000;2&#xF000;https://example.edu"/>
 ```
 #### macOS
 ```
@@ -1695,7 +3182,7 @@ Software\Policies\Mozilla\Firefox\LocalFileLinks\2 = "https://example.edu"
   </array>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1704,31 +3191,224 @@ Software\Policies\Mozilla\Firefox\LocalFileLinks\2 = "https://example.edu"
   }
 }
 ```
-### NoDefaultBookmarks
-Disable the creation of default bookmarks.
+### ManagedBookmarks
+Configures a list of bookmarks managed by an administrator that cannot be changed by the user.
 
-This policy is only effective if the user profile has not been created yet.
+The bookmarks are only added as a button on the personal toolbar. They are not in the bookmarks folder.
 
-**Compatibility:** Firefox 60, Firefox ESR 60\
-**CCK2 Equivalent:** `removeDefaultBookmarks`\
+The syntax of this policy is exactly the same as the [Chrome ManagedBookmarks policy](https://cloud.google.com/docs/chrome-enterprise/policies/?policy=ManagedBookmarks). The schema is:
+```
+{
+ "items": {
+  "id": "BookmarkType",
+  "properties": {
+   "children": {
+    "items": {
+     "$ref": "BookmarkType"
+    },
+    "type": "array"
+   },
+   "name": {
+    "type": "string"
+   },
+   "toplevel_name": {
+    "type": "string"
+   },
+   "url": {
+    "type": "string"
+   }
+  },
+  "type": "object"
+ },
+ "type": "array"
+}
+```
+**Compatibility:** Firefox 83, Firefox ESR 78.5\
+**CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
+Software\Policies\Mozilla\Firefox\ManagedBookmarks (REG_MULTI_SZ) =
 ```
-Software\Policies\Mozilla\Firefox\NoDefaultBookmarks = 0x1 | 0x0
+[
+  {
+    "toplevel_name": "My managed bookmarks folder"
+  },
+  {
+    "url": "example.com",
+    "name": "Example"
+  },
+  {
+    "name": "Mozilla links",
+    "children": [
+      {
+        "url": "https://mozilla.org",
+        "name": "Mozilla.org"
+      },
+      {
+        "url": "https://support.mozilla.org/",
+        "name": "SUMO"
+      }
+    ]
+  }
+]
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/ManagedBookmarks
+```
+Value (string):
+```
+<enabled/>
+<data id="JSON" value='
+[
+  {
+    "toplevel_name": "My managed bookmarks folder"
+  },
+  {
+    "url": "example.com",
+    "name": "Example"
+  },
+  {
+    "name": "Mozilla links",
+    "children": [
+      {
+        "url": "https://mozilla.org",
+        "name": "Mozilla.org"
+      },
+      {
+        "url": "https://support.mozilla.org/",
+        "name": "SUMO"
+      }
+    ]
+  }
+]'/>
 ```
 #### macOS
 ```
 <dict>
-  <key>NoDefaultBookmarks</key>
-  <true/> | <false/>
+  <key>ManagedBookmarks</key>
+  <array>
+    <dict>
+      <key>toplevel_name</key>
+      <string>My managed bookmarks folder</string>
+      <dict>
+        <key>url</key>
+        <string>example.com</string>
+        <key>name</key>
+        <string>Example</string>
+      </dict>
+      <dict>
+      <key>name</key>
+      <string>Mozilla links</string>
+      <key>children</key>
+      <array>
+        <dict>
+          <key>url</key>
+          <string>https://mozilla.org</string>
+          <key>name</key>
+          <string>Mozilla</string>
+        </dict>
+        <dict>
+          <key>url</key>
+          <string>https://support.mozilla.org/</string>
+          <key>name</key>
+          <string>SUMO</string>
+        </dict>
+      </array>
+    </dict>
+  </array>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
-    "NoDefaultBookmarks": true | false
+    "ManagedBookmarks": [
+      {
+        "toplevel_name": "My managed bookmarks folder"
+      },
+      {
+        "url": "example.com",
+        "name": "Example"
+      },
+      {
+        "name": "Mozilla links",
+        "children": [
+          {
+            "url": "https://mozilla.org",
+            "name": "Mozilla.org"
+          },
+          {
+            "url": "https://support.mozilla.org/",
+            "name": "SUMO"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+### ManualAppUpdateOnly
+
+Switch to manual updates only.
+
+If this policy is enabled:
+ 1. The user will never be prompted to install updates
+ 2. Firefox will not check for updates in the background, though it will check automatically when an update UI is displayed (such as the one in the About dialog). This check will be used to show "Update to version X" in the UI, but will not automatically download the update or prompt the user to update in any other way.
+ 3. The update UI will work as expected, unlike when using DisableAppUpdate.
+
+This policy is primarily intended for advanced end users, not for enterprises.
+
+**Compatibility:** Firefox 87\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
+
+#### policies.json
+```
+{
+  "policies": {
+    "ManualAppUpdateOnly": true | false
+  }
+}
+```
+### PrimaryPassword
+Require or prevent using a primary (formerly master) password.
+
+If this value is true, a primary password is required. If this value is false, it works the same as if [`DisableMasterPasswordCreation`](#disablemasterpasswordcreation) was true and removes the primary password functionality.
+
+If both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMasterPasswordCreation takes precedent.
+
+**Compatibility:** Firefox 79, Firefox ESR 78.1\
+**CCK2 Equivalent:** `noMasterPassword`\
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\PrimaryPassword = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/PrimaryPassword
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>PrimaryPassword</key>
+  <true/> | <false/>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "PrimaryPassword": true | false
   }
 }
 ```
@@ -1739,9 +3419,18 @@ Enable or disable network prediction (DNS prefetching).
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `network.dns.disablePrefetch`,`network.dns.disablePrefetchFromHTTPS`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\NetworkPrediction = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/NetworkPrediction
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1750,7 +3439,7 @@ Software\Policies\Mozilla\Firefox\NetworkPrediction = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1764,9 +3453,18 @@ Enable or disable the New Tab page.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `browser.newtabpage.enabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\NewTabPage = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/NewTabPage
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1775,11 +3473,48 @@ Software\Policies\Mozilla\Firefox\NewTabPage = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "NewTabPage": true | false
+}
+```
+### NoDefaultBookmarks
+Disable the creation of default bookmarks.
+
+This policy is only effective if the user profile has not been created yet.
+
+**Compatibility:** Firefox 60, Firefox ESR 60\
+**CCK2 Equivalent:** `removeDefaultBookmarks`\
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\NoDefaultBookmarks = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/NoDefaultBookmarks
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>NoDefaultBookmarks</key>
+  <true/> | <false/>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "NoDefaultBookmarks": true | false
+  }
 }
 ```
 ### OfferToSaveLogins
@@ -1789,9 +3524,18 @@ Control whether or not Firefox offers to save passwords.
 **CCK2 Equivalent:** `dontRememberPasswords`\
 **Preferences Affected:** `signon.rememberSignons`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\OfferToSaveLogins = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/OfferToSaveLogins
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1800,7 +3544,7 @@ Software\Policies\Mozilla\Firefox\OfferToSaveLogins = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -1808,16 +3552,63 @@ Software\Policies\Mozilla\Firefox\OfferToSaveLogins = 0x1 | 0x0
   }
 }
 ```
+### OfferToSaveLoginsDefault
+Sets the default value of signon.rememberSignons without locking it.
+
+**Compatibility:** Firefox 70, Firefox ESR 60.2\
+**CCK2 Equivalent:** `dontRememberPasswords`\
+**Preferences Affected:** `signon.rememberSignons`
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\OfferToSaveLoginsDefault = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/OfferToSaveLoginsDefault
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>OfferToSaveLoginsDefault</key>
+  <true/> | <false/>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "OfferToSaveLoginsDefault": true | false
+  }
+}
+```
 ### OverrideFirstRunPage
-Override the first run page. If the value is blank, no first run page is displayed.
+Override the first run page. If the value is an empty string (""), the first run page is not displayed.
+
+Starting with Firefox 83, Firefox ESR 78.5, you can also specify multiple URLS separated by a vertical bar (|).
 
 **Compatibility:** Firefox 60, Firefox ESR 60\
 **CCK2 Equivalent:** `welcomePage`,`noWelcomePage`\
 **Preferences Affected:** `startup.homepage_welcome_url`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\OverrideFirstRunPage = "http://example.org"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/OverrideFirstRunPage
+```
+Value (string):
+```
+<enabled/>
+<data id="OverridePage" value="https://example.com"/>
 ```
 #### macOS
 ```
@@ -1826,23 +3617,34 @@ Software\Policies\Mozilla\Firefox\OverrideFirstRunPage = "http://example.org"
   <string>http://example.org</string>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "OverrideFirstRunPage": "http://example.org"
+  }
 }
 ```
 ### OverridePostUpdatePage
-Override the upgrade page. If the value is blank, no upgrade page is displayed.
+Override the upgrade page. If the value is an empty string (""), no extra pages are displayed when Firefox is upgraded.
 
 **Compatibility:** Firefox 60, Firefox ESR 60\
 **CCK2 Equivalent:** `upgradePage`,`noUpgradePage`\
 **Preferences Affected:** `startup.homepage_override_url`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\OverridePostUpdatePage = "http://example.org"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/OverridePostUpdatePage
+```
+Value (string):
+```
+<enabled/>
+<data id="OverridePage" value="https://example.com"/>
 ```
 #### macOS
 ```
@@ -1851,15 +3653,102 @@ Software\Policies\Mozilla\Firefox\OverridePostUpdatePage = "http://example.org"
   <string>http://example.org</string>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "OverridePostUpdatePage": "http://example.org"
+  }
+}
+```
+### PasswordManagerEnabled
+Remove access to the password manager via preferences and blocks about:logins on Firefox 70.
+
+**Compatibility:** Firefox 70, Firefox ESR 60.2\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** `pref.privacy.disable_button.view_passwords`
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\PasswordManagerEnabled = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/PasswordManagerEnabled
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>PasswordManagerEnabled</key>
+  <true/> | <false/>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "PasswordManagerEnabled": true | false
+  }
+}
+```
+### PDFjs
+Disable or configure PDF.js, the built-in PDF viewer.
+
+If `Enabled` is set to false, the built-in PDF viewer is disabled.
+
+If `EnablePermissions` is set to true, the built-in PDF viewer will honor document permissions like preventing the copying of text.
+
+Note: DisableBuiltinPDFViewer has not been deprecated. You can either continue to use it, or switch to using PDFjs->Enabled to disable the built-in PDF viewer. This new permission was added because we needed a place for PDFjs->EnabledPermissions.
+
+**Compatibility:** Firefox 77, Firefox ESR 68.9\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** `pdfjs.diabled`,`pdfjs.enablePermissions`
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\PDFjs\Enabled = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\PDFjs\EnablePermissions = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~PDFjs/PDFjs_Enabled
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~PDFjs/PDFjs_EnablePermissions
+```
+Value (string):
+```
+<enabled/>or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>PDFjs</key>
+  <dict>
+    <key>Enabled</key>
+    <true/> | <false/>
+    <key>EnablePermissions</key>
+    <true/> | <false/>
+  </dict>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "PSFjs": {
+      "Enabled": true | false,
+      "EnablePermissions": true | false
+    }
+  }
 }
 ```
 ### Permissions
-Set permissions associated with camera, microphone, location, and notifications
+Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality. Because these are origins, not domains, entries with unique ports must be specified separately. This explicitly means that it is not possible to add wildcards. See examples below.
 
 `Allow` is a list of origins where the feature is allowed.
 
@@ -1869,13 +3758,16 @@ Set permissions associated with camera, microphone, location, and notifications
 
 `Locked` prevents the user from changing preferences for the feature.
 
-**Compatibility:** Firefox 62, Firefox ESR 60.2\
-**CCK2 Equivalent:** N/A\
-**Preferences Affected:** `permissions.default.camera`,`permissions.default.microphone`,`permissions.default.geo`,`permissions.default.desktop-notification`
+`Default` specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-#### Windows
+**Compatibility:** Firefox 62, Firefox ESR 60.2 (Autoplay added in Firefox 74, Firefox ESR 68.6, Autoplay Default/Locked added in Firefox 76, Firefox ESR 68.8, VirtualReality added in Firefox 80, Firefox ESR 78.2)\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** `permissions.default.camera`,`permissions.default.microphone`,`permissions.default.geo`,`permissions.default.desktop-notification`,`media.autoplay.default`.`permissions.default.xr`
+
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\Permissions\Camera\Allow\1 = "https://example.org"
+Software\Policies\Mozilla\Firefox\Permissions\Camera\Allow\2 = "https://example.org:1234"
 Software\Policies\Mozilla\Firefox\Permissions\Camera\Block\1 = "https://example.edu"
 Software\Policies\Mozilla\Firefox\Permissions\Camera\BlockNewRequests = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\Permissions\Camera\Locked = 0x1 | 0x0
@@ -1891,6 +3783,125 @@ Software\Policies\Mozilla\Firefox\Permissions\Notifications\Allow\1 = "https://e
 Software\Policies\Mozilla\Firefox\Permissions\Notifications\Block\1 = "https://example.edu"
 Software\Policies\Mozilla\Firefox\Permissions\Notifications\BlockNewRequests = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\Permissions\Notifications\Locked = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\Permissions\Autoplay\Allow\1 = "https://example.org"
+Software\Policies\Mozilla\Firefox\Permissions\Autoplay\Block\1 = "https://example.edu"
+Software\Policies\Mozilla\Firefox\Permissions\Autoplay\Default = "allow-audio-video" | "block-audio" | "block-audio-video"
+Software\Policies\Mozilla\Firefox\Permissions\Autoplay\Locked = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\Permissions\VirtualReality\Allow\1 = "https://example.org"
+Software\Policies\Mozilla\Firefox\Permissions\VirtualReality\Block\1 = "https://example.edu"
+Software\Policies\Mozilla\Firefox\Permissions\VirtualReality\BlockNewRequests = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\Permissions\VirtualReality\Locked = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Location/Location_BlockNewRequests
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Location/Location_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Notifications/Notifications_Allow
+```
+Value (string):
+```
+<enabled/>
+<data id="Permissions" value="1&#xF000;https://example.org"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Notifications/Notifications_BlockNewRequests
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Notifications/Notifications_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Autoplay/Autoplay_Allow
+```
+Value (string):
+```
+<enabled/>
+<data id="Permissions" value="1&#xF000;https://example.org"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Autoplay/Autoplay_Block
+```
+Value (string):
+```
+<enabled/>
+<data id="Permissions" value="1&#xF000;https://example.edu"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Autoplay/Autoplay_Default
+```
+Value (string):
+```
+<enabled/>
+<data id="Autoplay_Default" value="allow-audio-video | block-audio | block-audio-video"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Autoplay/Autoplay_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Notifications/VirtualReality_Allow
+```
+Value (string):
+```
+<enabled/>
+<data id="Permissions" value="1&#xF000;https://example.org"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Notifications/VirtualReality_Block
+```
+Value (string):
+```
+<enabled/>
+<data id="Permissions" value="1&#xF000;https://example.edu"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Notifications/VirtualReality_BlockNewRequests
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Permissions~Notifications/VirtualReality_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -1902,15 +3913,16 @@ Software\Policies\Mozilla\Firefox\Permissions\Notifications\Locked = 0x1 | 0x0
       <key>Allow</key>
       <array>
         <string>https://example.org</string>
+        <string>https://example.org:1234</string>
       </array>
       <key>Block</key>
       <array>
         <string>https://example.edu</string>
       </array>
       <key>BlockNewRequests</key>
-      <true/>
+      <true/> | <false/>
       <key>Locked</key>
-      <true/>
+      <true/> | <false/>
     </dict>
     <key>Microphone</key>
     <dict>
@@ -1923,9 +3935,9 @@ Software\Policies\Mozilla\Firefox\Permissions\Notifications\Locked = 0x1 | 0x0
         <string>https://example.edu</string>
       </array>
       <key>BlockNewRequests</key>
-      <true/>
+      <true/> | <false/>
       <key>Locked</key>
-      <true/>
+      <true/> | <false/>
     </dict>
     <key>Location</key>
     <dict>
@@ -1938,9 +3950,9 @@ Software\Policies\Mozilla\Firefox\Permissions\Notifications\Locked = 0x1 | 0x0
         <string>https://example.edu</string>
       </array>
       <key>BlockNewRequests</key>
-      <true/>
+      <true/> | <false/>
       <key>Locked</key>
-      <true/>
+      <true/> | <false/>
     </dict>
     <key>Notifications</key>
     <dict>
@@ -1957,16 +3969,31 @@ Software\Policies\Mozilla\Firefox\Permissions\Notifications\Locked = 0x1 | 0x0
       <key>Locked</key>
       <true/>
     </dict>
+    <key>Autoplay</key>
+    <dict>
+      <key>Allow</key>
+      <array>
+        <string>https://example.org</string>
+      </array>
+      <key>Block</key>
+      <array>
+        <string>https://example.edu</string>
+      </array>
+      <key>Default</key>
+      <string>allow-audio-video | block-audio | block-audio-video</string>
+      <key>Locked</key>
+      <true/> | <false/>
+    </dict>
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "Permissions": {
       "Camera": {
-        "Allow": ["https://example.org"],
+        "Allow": ["https://example.org","https://example.org:1234"],
         "Block": ["https://example.edu"],
         "BlockNewRequests": true | false,
         "Locked": true | false
@@ -1988,7 +4015,60 @@ Software\Policies\Mozilla\Firefox\Permissions\Notifications\Locked = 0x1 | 0x0
         "Block": ["https://example.edu"],
         "BlockNewRequests": true | false,
         "Locked": true | false
+      },
+      "Autoplay": {
+        "Allow": ["https://example.org"],
+        "Block": ["https://example.edu"],
+        "Default": "allow-audio-video" | "block-audio" | "block-audio-video",
+        "Locked": true | false
       }
+    }
+  }
+}
+```
+### PictureInPicture
+
+Enable or disable Picture-in-Picture as well as prevent the user from enabling or disabling it (Locked).
+
+**Compatibility:** Firefox 78, Firefox ESR 78\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** `media.videocontrols.picture-in-picture.video-toggle.enabled`
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\PictureInPicture\Enabled = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\PictureInPicture\Locked = 0x1 | 0x0
+
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~PictureInPicture/PictureInPicture_Enabled
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~PictureInPicture/PictureInPicture_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>PictureInPicture</key>
+  <dict>
+    <key>Enabled</key>
+    <true/> | <false/>
+    <key>Locked</key>
+    <true/> | <false/>
+  </dict>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "PictureInPicture": {
+      "Enabled": true | false,
+      "Locked": true | false
     }
   }
 }
@@ -2006,12 +4086,38 @@ Configure the default pop-up window policy as well as origins for which pop-up w
 **CCK2 Equivalent:** `permissions.popup`\
 **Preferences Affected:** `dom.disable_open_during_load`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\PopupBlocking\Allow\1 = "https://example.org"
 Software\Policies\Mozilla\Firefox\PopupBlocking\Allow\2 = "https://example.edu"
 Software\Policies\Mozilla\Firefox\PopupBlocking\Default = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\PopupBlocking\Locked = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Popups/PopupBlocking_Allow
+```
+Value (string):
+```
+<enabled/>
+<data id="Permissions" value="1&#xF000;https://example.org&#xF000;2&#xF000;https://example.edu"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Popups/PopupBlocking_Default
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Popups/PopupBlocking_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -2030,7 +4136,7 @@ Software\Policies\Mozilla\Firefox\PopupBlocking\Locked = 0x1 | 0x0
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2044,42 +4150,308 @@ Software\Policies\Mozilla\Firefox\PopupBlocking\Locked = 0x1 | 0x0
 }
 ```
 ### Preferences
+Set and lock preferences.
+
+**NOTE** On Windows, in order to use this policy, you must clear all settings in the old **Preferences (Deprecated)** section.
+
+Previously you could only set and lock a subset of preferences. Starting with Firefox 81 and Firefox ESR 78.3 you can set many more preferences. You can also set default preferences, user preferences and you can clear preferences.
+
+Preferences that start with the following prefixes are supported:
+```
+accessibility.
+app.update.* (Firefox 86, Firefox 78.8)
+browser.
+datareporting.policy.
+dom.
+extensions.
+general.autoScroll (Firefox 83, Firefox ESR 78.5)
+general.smoothScroll (Firefox 83, Firefox ESR 78.5)
+geo.
+gfx.
+intl.
+layers.
+layout.
+media.
+network.
+pdfjs. (Firefox 84, Firefox ESR 78.6)
+places.
+print.
+signon. (Firefox 83, Firefox ESR 78.5)
+spellchecker. (Firefox 84, Firefox ESR 78.6)
+ui.
+widget.
+```
+as well as the following security preferences:
+| Preference | Type | Default
+| --- | --- | ---
+| security.default_personal_cert | string | Ask Every Time
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to Select Automatically, Firefox automatically chooses the default personal certificate.
+| security.insecure_connection_text.enabled | bool | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to true, adds the words "Not Secure" for insecure sites.
+| security.insecure_connection_text.pbmode.enabled | bool | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to true, adds the words "Not Secure" for insecure sites in private browsing.
+| security.insecure_field_warning.contextual.enabled | bool | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to false, remove the warning for inscure login fields.
+| security.mixed_content.block_active_content | boolean | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, mixed active content (HTTP and HTTPS) is not blocked.
+| security.osclientcerts.autoload | boolean | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, client certificates are loaded from the operating system certificate store.
+| security.ssl.errorReporting.enabled | boolean | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, SSL errors cannot be sent to Mozilla.
+| security.tls.hello_downgrade_check | boolean | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the TLS 1.3 downgrade check is disabled.
+| security.tls.version.enable-deprecated | boolean | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, browser will accept TLS 1.0. and TLS 1.1 (Firefox 86, Firefox 78.8)
+| security.warn_submit_secure_to_insecure | boolean | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, no warning is shown when submitting s form from https to http.
+&nbsp;
+
+Using the preference as the key, set the `Value` to the corresponding preference value.
+
+`Status` can be "default", "locked", "user" or "clear"
+
+Default preferences can be modified by the user.
+
+If a value is locked, it is also set as the default.
+
+User preferences persist across invocations of Firefox. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy.
+
+User preferences persist even if the policy is removed, so if you need to remove them, you should use the clear policy.
+
+See the examples below for more detail.
+
+IMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.
+
+Status
+**Compatibility:** Firefox 81, Firefox ESR 78.3\
+**CCK2 Equivalent:** `preferences`\
+**Preferences Affected:** Many
+
+#### Windows (GPO)
+Software\Policies\Mozilla\Firefox\Preferences (REG_MULTI_SZ) =
+```
+{
+  "accessibility.force_disabled": {
+    "Value": 1,
+    "Status": "default"
+  },
+  "browser.cache.disk.parent_directory": {
+    "Value": "SOME_NATIVE_PATH",
+    "Status": "user"
+  },
+  "browser.tabs.warnOnClose": {
+    "Value": false,
+    "Status": "locked"
+  }
+}
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/Preferences
+```
+Value (string):
+```
+<enabled/>
+<data id="JSON" value='
+{
+  "accessibility.force_disabled": {
+    "Value": 1,
+    "Status": "default"
+  },
+  "browser.cache.disk.parent_directory": {
+    "Value": "SOME_NATIVE_PATH",
+    "Status": "user"
+  },
+  "browser.tabs.warnOnClose": {
+    "Value": false,
+    "Status": "locked"
+  }
+}'/>
+```
+#### macOS
+```
+<dict>
+  <key>Preferences</key>
+  <dict>
+    <key>accessibility.force_disabled</key>
+    <dict>
+      <key>Value</key>
+      <integer>1</integer>
+      <key>Status</key>
+      <string>default</string>
+    </dict>
+    <key>browser.cache.disk.parent_directory</key>
+    <dict>
+      <key>Value</key>
+      <string>SOME_NATIVE_PATH</string>
+      <key>Status</key>
+      <string>user</string>
+    </dict>
+    <key>browser.tabs.warnOnClose</key>
+    <dict>
+      <key>Value</key>
+      <false/>
+      <key>Status</key>
+      <string>locked</string>
+    </dict>
+  </dict>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "Preferences": {
+      "accessibility.force_disabled": {
+        "Value": 1,
+        "Status": "default"
+      },
+      "browser.cache.disk.parent_directory": {
+        "Value": "SOME_NATIVE_PATH",
+        "Status": "user"
+      },
+      "browser.tabs.warnOnClose": {
+        "Value": false,
+        "Status": "locked"
+      }
+    }
+  }
+}
+```
+### Preferences (Deprecated)
 Set and lock certain preferences.
 
 **Compatibility:** See below\
 **CCK2 Equivalent:** `preferences`\
 **Preferences Affected:** See below
 
-| Preference | Type | Compatibility
-| --- | --- | ---
-| app.update.auto | boolean | Firefox 68, Firefox 68 ESR
-| browser.cache.disk.enable | boolean | Firefox 68, Firefox 68 ESR
-| browser.cache.disk.parent_directory | string | Firefox 68, Firefox 68 ESR
-| browser.fixup.dns_first_for_single_words | boolean | Firefox 68, Firefox 68 ESR
-| browser.search.update | boolean | Firefox 68, Firefox 68 ESR
-| browser.tabs.warnOnClose | boolean | Firefox 68, Firefox 68 ESR
-| browser.urlbar.suggest.bookmark | boolean | Firefox 68, Firefox 68 ESR
-| browser.urlbar.suggest.history | boolean | Firefox 68, Firefox 68 ESR
-| browser.urlbar.suggest.openpage | boolean | Firefox 68, Firefox 68 ESR
-| datareporting.policy.dataSubmissionPolicyBypassNotification | boolean | Firefox 68, Firefox 68 ESR
-| dom.disable_window_flip | boolean | Firefox 68, Firefox 68 ESR
-| dom.disable_window_move_resize | boolean | Firefox 68, Firefox 68 ESR
-| dom.event.contextmenu.enabled | boolean | Firefox 68, Firefox 68 ESR
-| dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl | string | Firefox 68, Firefox 68 ESR
-| dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl | string | Firefox 68, Firefox 68 ESR
-| extensions.getAddons.showPane | boolean | Firefox 68, Firefox 68 ESR
-| media.gmp-gmpopenh264.enabled | boolean | Firefox 68, Firefox 68 ESR
-| media.gmp-widevinecdm.enabled | boolean | Firefox 68, Firefox 68 ESR
-| network.dns.disableIPv6 | boolean | Firefox 68, Firefox 68 ESR
-| network.IDN_show_punycode | boolean | Firefox 68, Firefox 68 ESR
-| places.history.enabled | boolean | Firefox 68, Firefox 68 ESR
-| security.default_personal_cert | string | Firefox 68, Firefox 68 ESR
-| security.ssl.errorReporting.enabled | boolean | Firefox 68, Firefox 68 ESR
-| ui.key.menuAccessKeyFocuses | boolean | Firefox 68, Firefox 68 ESR
-#### Windows
+| Preference | Type | Compatibility | Default
+| --- | --- | --- | ---
+| accessibility.force_disabled | integer | Firefox 70, Firefox ESR 68.2 | 0
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to 1, platform accessibility is disabled.
+| app.update.auto (Deprecated - Switch to AppAutoUpdate policy) | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, Firefox doesn't automatically install update.
+| browser.bookmarks.autoExportHTML | boolean | Firefox 70, Firefox ESR 68.2 | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, bookmarks are exported on shutdown.
+| browser.bookmarks.file | string | Firefox 70, Firefox ESR 68.2 | N/A
+| &nbsp;&nbsp;&nbsp;&nbsp;If set, the name of the file where bookmarks are exported and imported.
+| browser.bookmarks.restore_default_bookmarks | boolean | Firefox 70, Firefox ESR 68.2 | N/A
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, bookmarks are restored to their defaults.
+| browser.cache.disk.enable | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, don't store cache on the hard drive.
+| ~browser.cache.disk.parent_directory~ | string | Firefox 68, Firefox ESR 68 | Profile temporary directory
+| &nbsp;&nbsp;&nbsp;&nbsp;~If set, changes the location of the disk cache.~ This policy doesn't work. It's being worked on.
+| browser.fixup.dns_first_for_single_words | boolean | Firefox 68, Firefox ESR 68 | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, single words are sent to DNS, not directly to search.
+| browser.newtabpage.activity-stream.default.sites | string | Firefox 72, ESR 68.4 | Locale dependent
+| &nbsp;&nbsp;&nbsp;&nbsp;If set, a list of URLs to use as the default top sites on the new tab page. Due to Firefox limitations, search sites can't be added. In addition, sites with the same name but different TLDs (example.org/example.com) will not display properly.
+| browser.places.importBookmarksHTML | boolean | Firefox 70, Firefox ESR 68.2
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, bookmarks are always imported on startup.
+| browser.safebrowsing.phishing.enabled | boolean | Firefox 70, Firefox ESR 68.2 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, phishing protection is not enabled (Not recommended)
+| browser.safebrowsing.malware.enabled | boolean | Firefox 70, Firefox ESR 68.2 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, malware protection is not enabled (Not recommended)
+| browser.search.update | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, updates for search engines are not checked.
+| browser.slowStartup.notificationDisabled | boolean | Firefox 70, Firefox ESR 68.2 | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, a notification isn't shown if startup is slow.
+| browser.tabs.warnOnClose | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, there is no warning when the browser is closed.
+| browser.taskbar.previews.enable | boolean | Firefox 70, Firefox ESR 68.2 (Windows only) | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, tab previews are shown in the Windows taskbar.
+| browser.urlbar.suggest.bookmark | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, bookmarks aren't suggested when typing in the URL bar.
+| browser.urlbar.suggest.history | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, history isn't suggested when typing in the URL bar.
+| browser.urlbar.suggest.openpage | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, open tabs aren't suggested when typing in the URL bar.
+| datareporting.policy.dataSubmissionPolicyBypassNotification | boolean | Firefox 68, Firefox ESR 68 | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, don't show the privacy policy tab on first run.
+| dom.allow_scripts_to_close_windows | boolean | Firefox 70, Firefox ESR 68.2 | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, web page can close windows.
+| dom.disable_window_flip | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, web pages can focus and activate windows.
+| dom.disable_window_move_resize | boolean | Firefox 68, Firefox ESR 68 | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, web pages can't move or resize windows.
+| dom.event.contextmenu.enabled | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, web pages can't override context menus.
+| dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl | string | Firefox 68, Firefox ESR 68 | N/A
+| &nbsp;&nbsp;&nbsp;&nbsp;See https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-firefox-66
+| dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl | string | Firefox 68, Firefox ESR 68 | N/A
+| &nbsp;&nbsp;&nbsp;&nbsp;See https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-firefox-66
+| dom.xmldocument.load.enabled | boolean | Firefox ESR 68.5 | true.
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, XMLDocument.load is not available.
+| dom.xmldocument.async.enabled | boolean | Firefox ESR 68.5 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, XMLDocument.async is not available.
+| extensions.blocklist.enabled | boolean | Firefox 70, Firefox ESR 68.2 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the extensions blocklist is not used (Not recommended)
+| extensions.getAddons.showPane | boolean | Firefox 68, Firefox ESR 68 | N/A
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the Recommendations tab is not displayed in the Add-ons Manager.
+| extensions.htmlaboutaddons.recommendations.enabled | boolean | Firefox 72, Firefox ESR 68.4 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, recommendations are not shown on the Extensions tab in the Add-ons Manager.
+| geo.enabled | boolean | Firefox 70, Firefox ESR 68.2 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the geolocation API is disabled. | Language dependent
+| intl.accept_languages | string | Firefox 70, Firefox ESR 68.2
+| &nbsp;&nbsp;&nbsp;&nbsp;If set, preferred language for web pages.
+| media.eme.enabled (Deprecated - Switch to EncryptedMediaExtensions policy) | boolean | Firefox 70, Firefox ESR 68.2 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, Encrypted Media Extensions are not enabled.
+| media.gmp-gmpopenh264.enabled | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the OpenH264  plugin is not downloaded.
+| media.gmp-widevinecdm.enabled | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the Widevine plugin is not downloaded.
+| media.peerconnection.enabled | boolean | Firefox 72, Firefox ESR 68.4 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, WebRTC is disabled
+| media.peerconnection.ice.obfuscate_host_addresses.whitelist (Deprecated) | string | Firefox 72, Firefox ESR 68.4 | N/A
+| &nbsp;&nbsp;&nbsp;&nbsp;If set, a list of domains for which mDNS hostname obfuscation is
+disabled
+| media.peerconnection.ice.obfuscate_host_addresses.blocklist | string | Firefox 79, Firefox ESR 78.1 | N/A
+| &nbsp;&nbsp;&nbsp;&nbsp;If set, a list of domains for which mDNS hostname obfuscation is
+disabled
+| network.dns.disableIPv6 | boolean | Firefox 68, Firefox ESR 68 | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, IPv6 DNS lokoups are disabled.
+| network.IDN_show_punycode | boolean | Firefox 68, Firefox ESR 68 | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, display the punycode version of internationalized domain names.
+| places.history.enabled | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, history is not enabled.
+| print.save_print_settings | boolean | Firefox 70, Firefox ESR 68.2 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, print settings are not saved between jobs.
+| security.default_personal_cert | string | Firefox 68, Firefox ESR 68 | Ask Every Time
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to Select Automatically, Firefox automatically chooses the default personal certificate.
+| security.mixed_content.block_active_content | boolean | Firefox 70, Firefox ESR 68.2 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, mixed active content (HTTP and HTTPS) is not blocked.
+| security.osclientcerts.autoload | boolean | Firefox 72 (Windows), Firefox 75 (macOS)  | false
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, client certificates are loaded from the operating system certificate store.
+| security.ssl.errorReporting.enabled | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, SSL errors cannot be sent to Mozilla.
+| security.tls.hello_downgrade_check | boolean | Firefox 72, Firefox ESR 68.4 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the TLS 1.3 downgrade check is disabled.
+| ui.key.menuAccessKeyFocuses | boolean | Firefox 68, Firefox ESR 68 | true
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the Alt key doesn't show the menubar on Windows.
+| widget.content.gtk-theme-override | string | Firefox 72, Firefox ESR 68.4 (Linux only) | N/A
+| &nbsp;&nbsp;&nbsp;&nbsp;If set, overrides the GTK theme for widgets.
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\Preferences\boolean_preference_name = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\Preferences\string_preference_name = "string_value"
+```
+#### Windows (Intune)
+OMA-URI: (periods are replaced by underscores)
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Preferences/boolean_preference_name
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI: (periods are replaced by underscores)
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Preferences/string_preference_name
+```
+Value (string):
+```
+<enabled/>
+<data id="Preferences_String" value="string_value"/>
 ```
 #### macOS
 ```
@@ -2093,7 +4465,7 @@ Software\Policies\Mozilla\Firefox\Preferences\string_preference_name = "string_v
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2108,12 +4480,21 @@ Software\Policies\Mozilla\Firefox\Preferences\string_preference_name = "string_v
 Ask where to save each file before downloading.
 
 **Compatibility:** Firefox 68, Firefox ESR 68\
-**CCK2 Equivalent:** N/A
+**CCK2 Equivalent:** N/A\
 **Preferences Affected:** `browser.download.useDownloadDir`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\PromptForDownloadLocation = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/PromptForDownloadLocation
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -2122,7 +4503,7 @@ Software\Policies\Mozilla\Firefox\PromptForDownloadLocation = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2162,9 +4543,9 @@ To specify ports, append them to the hostnames with a colon (:).
 **CCK2 Equivalent:** `networkProxy*`\
 **Preferences Affected:** `network.proxy.type`,`network.proxy.autoconfig_url`,`network.proxy.socks_remote_dns`,`signon.autologin.proxy`,`network.proxy.socks_version`,`network.proxy.no_proxies_on`,`network.proxy.share_proxy_settings`,`network.proxy.http`,`network.proxy.http_port`,`network.proxy.ftp`,`network.proxy.ftp_port`,`network.proxy.ssl`,`network.proxy.ssl_port`,`network.proxy.socks`,`network.proxy.socks_port`
 
-#### Windows
+#### Windows (GPO)
 ```
-Software\Policies\Mozilla\Firefox\Proxy\Mode = "none", "system", "manual", "autoDetect", "autoConfig"
+Software\Policies\Mozilla\Firefox\Proxy\Mode = "none" | "system" | "manual" | "autoDetect" | "autoConfig"
 Software\Policies\Mozilla\Firefox\Proxy\Locked = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\=Proxy\HTTPProxy = https://httpproxy.example.com
 Software\Policies\Mozilla\Firefox\Proxy\UseHTTPProxyForAllProtocols = 0x1 | 0x0
@@ -2177,13 +4558,34 @@ Software\Policies\Mozilla\Firefox\Proxy\AutoConfigURL = URL_TO_AUTOCONFIG
 Software\Policies\Mozilla\Firefox\Proxy\AutoLogin = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\Proxy\UseProxyForDNS = 0x1 | 0x0
 ```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/Proxy
+```
+Value (string):
+```
+<enabled/>
+<data id="ProxyLocked" value="true | false"/>
+<data id="ConnectionType" value="none | system | manual | autoDetect | autoConfig"/>
+<data id="HTTPProxy" value="https://httpproxy.example.com"/>
+<data id="UseHTTPProxyForAllProtocols" value="true | false"/>
+<data id="SSLProxy" value="https://sslproxy.example.com"/>
+<data id="FTPProxy" value="https://ftpproxy.example.com"/>
+<data id="SOCKSProxy" value="https://socksproxy.example.com"/>
+<data id="SOCKSVersion" value="4 | 5"/>
+<data id="AutoConfigURL" value="URL_TO_AUTOCONFIG"/>
+<data id="Passthrough" value="<local>"/>
+<data id="AutoLogin" value="true | false"/>
+<data id="UseProxyForDNS" value="true | false"/>
+```
 #### macOS
 ```
 <dict>
   <key>Proxy</key>
   <dict>
     <key>Mode</key>
-    <string>none | system | manual | autoDetect| autoConfig</string>
+    <string>none | system | manual | autoDetect | autoConfig</string>
     <key>Locked</key>
     <true> | </false>
     <key>HTTPProxy</key>
@@ -2209,23 +4611,23 @@ Software\Policies\Mozilla\Firefox\Proxy\UseProxyForDNS = 0x1 | 0x0
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "Proxy": {
-      "Mode": "none", "system", "manual", "autoDetect", "autoConfig",
-      "Locked": [true, false],
+      "Mode": "none" | "system" | "manual" | "autoDetect" | "autoConfig",
+      "Locked": true | false,
       "HTTPProxy": "hostname",
-      "UseHTTPProxyForAllProtocols": [true, false],
+      "UseHTTPProxyForAllProtocols": true | false,
       "SSLProxy": "hostname",
       "FTPProxy": "hostname",
       "SOCKSProxy": "hostname",
-      "SOCKSVersion": 4 | 5
+      "SOCKSVersion": 4 | 5,
       "Passthrough": "<local>",
       "AutoConfigURL": "URL_TO_AUTOCONFIG",
-      "AutoLogin":  [true, false],
-      "UseProxyForDNS": [true, false]
+      "AutoLogin": true | false,
+      "UseProxyForDNS": true | false
     }
   }
 }
@@ -2238,7 +4640,7 @@ Note: For Firefox 68, this can now be a string so that you can specify an empty 
 **Compatibility:** Firefox 64, Firefox ESR 60.4, Updated in Firefox 68, Firefox ESR 68\
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\RequestedLocales\1 = "de"
 Software\Policies\Mozilla\Firefox\RequestedLocales\2 = "en-US"
@@ -2246,6 +4648,16 @@ Software\Policies\Mozilla\Firefox\RequestedLocales\2 = "en-US"
 or
 
 Software\Policies\Mozilla\Firefox\RequestedLocales = "de,en-US"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/RequestedLocalesString
+```
+Value (string):
+```
+<enabled/>
+<data id="Preferences_String" value="de,en-US"/>
 ```
 #### macOS
 ```
@@ -2265,7 +4677,7 @@ or
 </dict>
 
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2281,13 +4693,17 @@ or
   }
 }
 ```
+<a name="SanitizeOnShutdown"></a>
+
 ### SanitizeOnShutdown (Selective)
 Clear data on shutdown. Choose from Cache, Cookies, Download History, Form & Search History, Browsing History, Active Logins, Site Preferences and Offline Website Data.
 
-**Compatibility:** Firefox 68, Firefox ESR 68\
+Previously, these values were always locked. Starting with Firefox 74 and Firefox ESR 68.6, you can use the `Locked` option to either keep the values unlocked (set it to false), or lock only the values you set (set it to true). If you want the old behavior of locking everything, do not set `Locked` at all.
+
+**Compatibility:** Firefox 68, Firefox ESR 68 (Locked added in 74/68.6)\
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `privacy.sanitize.sanitizeOnShutdown`,`privacy.clearOnShutdown.cache`,`privacy.clearOnShutdown.cookies`,`privacy.clearOnShutdown.downloads`,`privacy.clearOnShutdown.formdata`,`privacy.clearOnShutdown.history`,`privacy.clearOnShutdown.sessions`,`privacy.clearOnShutdown.siteSettings`,`privacy.clearOnShutdown.offlineApps`
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\Cache = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\Cookies = 0x1 | 0x0
@@ -2297,6 +4713,80 @@ Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\History = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\Sessions = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\SiteSettings = 0x1 | 0x0
 Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\OfflineApps = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\Locked = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~SanitizeOnShutdown/A_SanitizeOnShutdown_Cache
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~SanitizeOnShutdown/B_SanitizeOnShutdown_Cookies
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~SanitizeOnShutdown/C_SanitizeOnShutdown_Downloads
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~SanitizeOnShutdown/D_SanitizeOnShutdown_FormData
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~SanitizeOnShutdown/E_SanitizeOnShutdown_History
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~SanitizeOnShutdown/F_SanitizeOnShutdown_Sessions
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~SanitizeOnShutdown/G_SanitizeOnShutdown_SiteSettings
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~SanitizeOnShutdown/H_SanitizeOnShutdown_OfflineApps
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~SanitizeOnShutdown/I_SanitizeOnShutdown_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -2319,10 +4809,12 @@ Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\OfflineApps = 0x1 | 0x0
     <true/> | <false/>
     <key>OfflineApps</key>
     <true/> | <false/>
+    <key>Locked</key>
+    <true/> | <false/>
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2334,7 +4826,8 @@ Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\OfflineApps = 0x1 | 0x0
       "History": true | false,
       "Sessions": true | false,
       "SiteSettings": true | false,
-      "OfflineApps": true | false
+      "OfflineApps": true | false,
+      "Locked": true | false
     }
   }
 }
@@ -2345,9 +4838,18 @@ Clear all data on shutdown, including Browsing & Download History, Cookies, Acti
 **Compatibility:** Firefox 60, Firefox ESR 60\
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `privacy.sanitize.sanitizeOnShutdown`,`privacy.clearOnShutdown.cache`,`privacy.clearOnShutdown.cookies`,`privacy.clearOnShutdown.downloads`,`privacy.clearOnShutdown.formdata`,`privacy.clearOnShutdown.history`,`privacy.clearOnShutdown.sessions`,`privacy.clearOnShutdown.siteSettings`,`privacy.clearOnShutdown.offlineApps`
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SanitizeOnShutdown = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/C_SanitizeOnShutdown
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -2356,7 +4858,7 @@ Software\Policies\Mozilla\Firefox\SanitizeOnShutdown = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2371,9 +4873,20 @@ Set whether or not search bar is displayed.
 **CCK2 Equivalent:** `showSearchBar`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SearchBar = "unified" | "separate"
+```
+
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/SearchBar
+```
+Value (string):
+```
+<enabled/>
+<data id="SearchBar" value="unified | separate"/>
 ```
 #### macOS
 ```
@@ -2382,8 +4895,7 @@ Software\Policies\Mozilla\Firefox\SearchBar = "unified" | "separate"
   <string>unified | separate</string>
 </dict>
 ```
-
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2391,10 +4903,7 @@ Software\Policies\Mozilla\Firefox\SearchBar = "unified" | "separate"
   }
 }
 ```
-
-
-
-
+<a name="SearchEngines"></a>
 
 ### SearchEngines (This policy is only available on the ESR.)
 
@@ -2406,9 +4915,19 @@ Set the default search engine. This policy is only available on the ESR.
 **CCK2 Equivalent:** `defaultSearchEngine`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SearchEngines\Default = NAME_OF_SEARCH_ENGINE
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Search/SearchEngines_Default
+```
+Value (string):
+```
+<enabled/>
+<data id="SearchEngines_Default" value="NAME_OF_SEARCH_ENGINE"/>
 ```
 #### macOS
 ```
@@ -2420,7 +4939,7 @@ Software\Policies\Mozilla\Firefox\SearchEngines\Default = NAME_OF_SEARCH_ENGINE
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2438,9 +4957,18 @@ Prevent installing search engines from webpages.
 **CCK2 Equivalent:** `disableSearchEngineInstall`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SearchEngines\PreventInstalls = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Search/SearchEngines_PreventInstalls
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -2452,7 +4980,7 @@ Software\Policies\Mozilla\Firefox\SearchEngines\PreventInstalls = 0x1 | 0x0
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2470,9 +4998,19 @@ Hide built-in search engines. This policy is only available on the ESR.
 **CCK2 Equivalent:** `removeDefaultSearchEngines` (removed all built-in engines)\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SearchEngines\Remove\1 = NAME_OF_SEARCH_ENGINE
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Search/SearchEngines_Remove
+```
+Value (string):
+```
+<enabled/>
+<data id="SearchEngines_Remove" value="1&#xF000;NAME_OF_SEARCH_ENGINE"/>
 ```
 #### macOS
 ```
@@ -2486,7 +5024,7 @@ Software\Policies\Mozilla\Firefox\SearchEngines\Remove\1 = NAME_OF_SEARCH_ENGINE
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2516,11 +5054,13 @@ Add new search engines (up to five). This policy is only available on the ESR. `
 
 `SuggestURLTemplate` is a search suggestions URL with {searchTerms} to substitute for the search term.
 
-**Compatibility:** Firefox ESR 60 (POST support in Firefox ESR 68)\
+`Encoding` is the query charset for the engine. It defaults to UTF-8.
+
+**Compatibility:** Firefox ESR 60 (POST support in Firefox ESR 68, Encoding support in Firefox 91)\
 **CCK2 Equivalent:** `searchplugins`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SearchEngines\Add\1\Name = "Example1"
 Software\Policies\Mozilla\Firefox\SearchEngines\Add\1\URLTemplate = "https://www.example.org/q={searchTerms}"
@@ -2531,7 +5071,23 @@ Software\Policies\Mozilla\Firefox\SearchEngines\Add\1\Description = "Example Des
 Software\Policies\Mozilla\Firefox\SearchEngines\Add\1\SuggestURLTemplate = "https://www.example.org/suggestions/q={searchTerms}"
 Software\Policies\Mozilla\Firefox\SearchEngines\Add\1\PostData = "name=value&q={searchTerms}"
 ```
-
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Search/SearchEngines_1
+```
+Value (string):
+```
+<enabled/>
+<data id="SearchEngine_Name" value="Example1"/>
+<data id="SearchEngine_URLTemplate" value="https://www.example.org/q={searchTerms"/>
+<data id="SearchEngine_Method" value="GET | POST"/>
+<data id="SearchEngine_IconURL" value="https://www.example.org/favicon.ico"/>
+<data id="SearchEngine_Alias" value="example"/>
+<data id="SearchEngine_Description" value="Example Description"/>
+<data id="SearchEngine_SuggestURLTemplate" value="https://www.example.org/suggestions/q={searchTerms}"/>
+<data id="SearchEngine_PostData" value="name=value&amp;q={searchTerms}"/>
+```
 #### macOS
 ```
 <dict>
@@ -2561,7 +5117,7 @@ Software\Policies\Mozilla\Firefox\SearchEngines\Add\1\PostData = "name=value&q={
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2590,9 +5146,18 @@ Enable search suggestions.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `browser.urlbar.suggest.searches`,`browser.search.suggest.enabled`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SearchSuggestEnabled = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~Search/SearchSuggestEnabled
+```
+Value (string):
+```
+<enabled/> or <disabled/>
 ```
 #### macOS
 ```
@@ -2601,7 +5166,7 @@ Software\Policies\Mozilla\Firefox\SearchSuggestEnabled = 0x1 | 0x0
   <true/> | <false/>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2617,9 +5182,19 @@ Install PKCS #11 modules.
 **CCK2 Equivalent:** `certs.devices`\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SecurityDevices\NAME_OF_DEVICE = PATH_TO_LIBRARY_FOR_DEVICE
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/SecurityDevices
+```
+Value (string):
+```
+<enabled/>
+<data id="SecurityDevices" value="NAME_OF_DEVICE&#xF000;PATH_TO_LIBRARY_FOR_DEVICE"/>
 ```
 #### macOS
 ```
@@ -2632,13 +5207,50 @@ Software\Policies\Mozilla\Firefox\SecurityDevices\NAME_OF_DEVICE = PATH_TO_LIBRA
 </dict>
 ```
 
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
     "SecurityDevices": {
       "NAME_OF_DEVICE": "PATH_TO_LIBRARY_FOR_DEVICE"
     }
+  }
+}
+```
+### ShowHomeButton
+Show the home button on the toolbar.
+
+Future versions of Firefox will not show the home button by default.
+
+**Compatibility:** Firefox 88, Firefox ESR 78.10\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\ShowHomeButton = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/ShowHomeButton
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>ShowHomeButton</key>
+  <true/> | <false/>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "ShowHomeButton": true | false
   }
 }
 ```
@@ -2650,9 +5262,19 @@ Set and lock the maximum version of TLS.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `security.tls.version.max`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SSLVersionMax = "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/SSLVersionMax
+```
+Value (string):
+```
+<enabled/>
+<data id="SSLVersion" value="tls1 | tls1.2 | tls1.3"/>
 ```
 #### macOS
 ```
@@ -2662,7 +5284,7 @@ Software\Policies\Mozilla\Firefox\SSLVersionMax = "tls1" | "tls1.1" | "tls1.2" |
 </dict>
 ```
 
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2678,9 +5300,19 @@ Set and lock the minimum version of TLS.
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `security.tls.version.min`
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SSLVersionMin = "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/SSLVersionMin
+```
+Value (string):
+```
+<enabled/>
+<data id="SSLVersion" value="tls1 | tls1.2 | tls1.3"/>
 ```
 #### macOS
 ```
@@ -2690,7 +5322,7 @@ Software\Policies\Mozilla\Firefox\SSLVersionMin = "tls1" | "tls1.1" | "tls1.2" |
 </dict>
 ```
 
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2705,11 +5337,23 @@ Add a menuitem to the help menu for specifying support information.
 **CCK2 Equivalent:** helpMenu\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
 Software\Policies\Mozilla\Firefox\SupportMenu\Title = "Support Menu"
 Software\Policies\Mozilla\Firefox\SupportMenu\URL = "http://example.com/support"
-Software\Policies\Mozilla\Firefox\SupportMenu\Title = "S"
+Software\Policies\Mozilla\Firefox\SupportMenu\AccessKey = "S"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/SupportMenu
+```
+Value (string):
+```
+<enabled/>
+<data id="SupportMenuTitle" value="Support Menu"/>
+<data id="SupportMenuURL" value="http://example.com/support"/>
+<data id="SupportMenuAccessKey" value="S">
 ```
 #### macOS
 ```
@@ -2725,7 +5369,7 @@ Software\Policies\Mozilla\Firefox\SupportMenu\Title = "S"
   </dict>
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2737,17 +5381,113 @@ Software\Policies\Mozilla\Firefox\SupportMenu\Title = "S"
   }
 }
 ```
+### UserMessaging
+
+Prevent Firefox from messaging the user in certain situations.
+
+`WhatsNew` Remove the "What's New" icon and menuitem.
+
+`ExtensionRecommendations` If false, don't recommend extensions while the user is visiting web pages.
+
+`FeatureRecommendations` IF false, don't recommend browser features.
+
+`UrlbarInterventions` If false, Don't offer Firefox specific suggestions in the URL bar.
+
+`SkipOnboarding` If true, don't show onboarding messages on the new tab page.
+
+**Compatibility:** Firefox 75, Firefox ESR 68.7\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** `browser.messaging-system.whatsNewPanel.enabled`,`browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons`,`browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features`,`browser.aboutwelcome.enabled`
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\UserMessaging\WhatsNew = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\UserMessaging\ExtensionRecommendations = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\UserMessaging\FeatureRecommendations = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\UserMessaging\UrlbarInterventions = 0x1 | 0x0
+Software\Policies\Mozilla\Firefox\UserMessaging\SkipOnboarding = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~UserMessaging/UserMessaging_WhatsNew
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~UserMessaging/UserMessaging_ExtensionRecommendations
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~UserMessaging/UserMessaging_FeatureRecommendations
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~UserMessaging/UserMessaging_UrlbarInterventions
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~UserMessaging/UserMessaging_SkipOnboarding
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>UserMessaging</key>
+  <dict>
+    <key>WhatsNew</key>
+    <true/> | <false/>
+    <key>ExtensionRecommendations</key>
+    <true/> | <false/>
+    <key>FeatureRecommendations</key>
+    <true/> | <false/>
+    <key>UrlbarInterventions</key>
+    <true/> | <false/>
+    <key>SkipOnboarding</key>
+    <true/> | <false/>
+  </dict>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "UserMessaging": {
+      "WhatsNew": true | false,
+      "ExtensionRecommendations": true | false,
+      "FeatureRecommendations": true | false,
+      "UrlbarInterventions": true | false
+      "SkipOnboarding": true | false
+    }
+  }
+}
+```
 ### WebsiteFilter
-Block websites from being visited. The parameters take an array of Match Patterns, as documented in https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Match_patterns. Only http/https addresses are supported at the moment. The arrays are limited to 1000 entries each.
+Block websites from being visited. The parameters take an array of Match Patterns, as documented in https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Match_patterns.
+The arrays are limited to 1000 entries each.
+
+If you want to block all URLs, you can use `<all_urls>` or `*://*/*`. You can't have just a `*` on the right side.
+
+For specific protocols, use `https://*/*` or `http://*/*`.
+
+As of Firefox 83 and Firefox ESR 78.5, file URLs are supported.
 
 **Compatibility:** Firefox 60, Firefox ESR 60\
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
-#### Windows
+#### Windows (GPO)
 ```
-Software\Policies\Mozilla\Firefox\WebsiteFilters\Block\1 = "<all_urls>"
-Software\Policies\Mozilla\Firefox\WebsiteFilters\Exceptions\1 = "http://example.org/*"
+Software\Policies\Mozilla\Firefox\WebsiteFilter\Block\1 = "<all_urls>"
+Software\Policies\Mozilla\Firefox\WebsiteFilter\Exceptions\1 = "http://example.org/*"
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/B_WebsiteFilter_Block
+```
+Value (string):
+```
+<enabled/> <data id="WebsiteFilter" value="1&#xF000;&#60;all_urls&#62;"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/B_WebsiteFilter_Exceptions
+```
+Value (string):
+```
+<enabled/>
+<data id="WebsiteFilter" value="1&#xF000;http://example.org/*"/>
 ```
 #### macOS
 ```
@@ -2766,7 +5506,7 @@ Software\Policies\Mozilla\Firefox\WebsiteFilters\Exceptions\1 = "http://example.
 
 </dict>
 ```
-#### JSON
+#### policies.json
 ```
 {
   "policies": {
@@ -2774,6 +5514,36 @@ Software\Policies\Mozilla\Firefox\WebsiteFilters\Exceptions\1 = "http://example.
       "Block": ["<all_urls>"],
       "Exceptions": ["http://example.org/*"]
     }
+  }
+}
+```
+### WindowsSSO
+Allow Windows single sign-on for Microsoft, work, and school accounts.
+
+If this policy is set to true, Firefox will use credentials stored in Windows to sign in to Microsoft, work, and school accounts.
+
+**Compatibility:** Firefox 91\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** network.http.windows-sso.enabled
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\WindowsSSO = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/WindowsSSO
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "WindowsSSO": true | false
   }
 }
 ```
