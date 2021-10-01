@@ -1,0 +1,2169 @@
+{
+  "AppUpdateURL": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "BlockAboutAddons": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "BlockAboutConfig": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "BlockAboutProfiles": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "BlockAboutSupport": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Certificates": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Certificates_ImportEnterpriseRoots": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Certificates_Install": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "DisableAppUpdate": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "DisableDeveloperTools": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "DisableMasterPasswordCreation": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "DisableSecurityBypass": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "DisableSecurityBypass_InvalidCertificate": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "DisableSecurityBypass_SafeBrowsing": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Extensions": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Extensions_Install": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Extensions_Uninstall": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Extensions_Locked": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "ExtensionSettings": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "ExtensionSettings_^.*$": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "ExtensionSettings_^.*$_blocked_install_message": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "ExtensionUpdate": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "InstallAddonsPermission": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "InstallAddonsPermission_Allow": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "InstallAddonsPermission_Default": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Preferences": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Preferences_network.IDN_show_punycode": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "68.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_browser.fixup.dns_first_for_single_words": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    },
+    "central": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    }
+  },
+  "Preferences_browser.cache.disk.parent_directory": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "68.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_browser.urlbar.suggest.openpage": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    },
+    "central": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    }
+  },
+  "Preferences_browser.urlbar.suggest.history": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    },
+    "central": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    }
+  },
+  "Preferences_browser.urlbar.suggest.bookmark": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    },
+    "central": {
+      "min": "68.0a1",
+      "max": "77.0a1"
+    }
+  },
+  "Proxy": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_Mode": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_Locked": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_AutoConfigURL": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_FTPProxy": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_HTTPProxy": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_SSLProxy": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_SOCKSProxy": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_SOCKSVersion": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_UseHTTPProxyForAllProtocols": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_Passthrough": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_UseProxyForDNS": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "Proxy_AutoLogin": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "RequestedLocales": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "SSLVersionMax": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "SSLVersionMin": {
+    "esr68": {
+      "min": "68.0a1"
+    },
+    "esr78": {
+      "min": "68.0a1"
+    },
+    "esr91": {
+      "min": "68.0a1"
+    },
+    "central": {
+      "min": "68.0a1"
+    }
+  },
+  "3rdparty": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "3rdparty_Extensions": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "3rdparty_Extensions_^.*$": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "AppAutoUpdate": {
+    "esr78": {
+      "min": "75.0a1"
+    },
+    "esr91": {
+      "min": "75.0a1"
+    },
+    "central": {
+      "min": "75.0a1"
+    }
+  },
+  "Authentication": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_SPNEGO": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_Delegated": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_NTLM": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_AllowNonFQDN": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_AllowNonFQDN_SPNEGO": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_AllowNonFQDN_NTLM": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_AllowProxies": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_AllowProxies_SPNEGO": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_AllowProxies_NTLM": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_Locked": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Authentication_PrivateBrowsing": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "CaptivePortal": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Cookies": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Cookies_Allow": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Cookies_Block": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Cookies_Default": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Cookies_AcceptThirdParty": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Cookies_ExpireAtSessionEnd": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Cookies_Locked": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "DefaultDownloadDirectory": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "DisabledCiphers": {
+    "esr78": {
+      "min": "76.0a1"
+    },
+    "esr91": {
+      "min": "76.0a1"
+    },
+    "central": {
+      "min": "76.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA": {
+    "esr78": {
+      "min": "76.0a1"
+    },
+    "esr91": {
+      "min": "76.0a1"
+    },
+    "central": {
+      "min": "76.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA": {
+    "esr78": {
+      "min": "76.0a1"
+    },
+    "esr91": {
+      "min": "76.0a1"
+    },
+    "central": {
+      "min": "76.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": {
+    "esr78": {
+      "min": "76.0a1"
+    },
+    "esr91": {
+      "min": "76.0a1"
+    },
+    "central": {
+      "min": "76.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": {
+    "esr78": {
+      "min": "76.0a1"
+    },
+    "esr91": {
+      "min": "76.0a1"
+    },
+    "central": {
+      "min": "76.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": {
+    "esr78": {
+      "min": "76.0a1"
+    },
+    "esr91": {
+      "min": "76.0a1"
+    },
+    "central": {
+      "min": "76.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": {
+    "esr78": {
+      "min": "76.0a1"
+    },
+    "esr91": {
+      "min": "76.0a1"
+    },
+    "central": {
+      "min": "76.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA": {
+    "esr78": {
+      "min": "76.0a1"
+    },
+    "esr91": {
+      "min": "76.0a1"
+    },
+    "central": {
+      "min": "76.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA": {
+    "esr78": {
+      "min": "76.0a1"
+    },
+    "esr91": {
+      "min": "76.0a1"
+    },
+    "central": {
+      "min": "76.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA": {
+    "esr78": {
+      "min": "76.0a1"
+    },
+    "esr91": {
+      "min": "76.0a1"
+    },
+    "central": {
+      "min": "76.0a1"
+    }
+  },
+  "DisablePasswordReveal": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "DisableSafeMode": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "DisableSystemAddonUpdate": {
+    "esr78": {
+      "min": "77.0a1"
+    },
+    "esr91": {
+      "min": "77.0a1"
+    },
+    "central": {
+      "min": "77.0a1"
+    }
+  },
+  "DisableTelemetry": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "DownloadDirectory": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "ExtensionSettings_*": {
+    "esr78": {
+      "min": "78.10.3"
+    },
+    "esr91": {
+      "min": "89.0a1"
+    },
+    "central": {
+      "min": "89.0a1"
+    }
+  },
+  "ExtensionSettings_*_installation_mode": {
+    "esr78": {
+      "min": "78.10.3"
+    },
+    "esr91": {
+      "min": "89.0a1"
+    },
+    "central": {
+      "min": "89.0a1"
+    }
+  },
+  "ExtensionSettings_*_allowed_types": {
+    "esr78": {
+      "min": "78.10.3"
+    },
+    "esr91": {
+      "min": "89.0a1"
+    },
+    "central": {
+      "min": "89.0a1"
+    }
+  },
+  "ExtensionSettings_*_blocked_install_message": {
+    "esr78": {
+      "min": "78.10.3"
+    },
+    "esr91": {
+      "min": "89.0a1"
+    },
+    "central": {
+      "min": "89.0a1"
+    }
+  },
+  "ExtensionSettings_*_install_sources": {
+    "esr78": {
+      "min": "78.10.3"
+    },
+    "esr91": {
+      "min": "89.0a1"
+    },
+    "central": {
+      "min": "89.0a1"
+    }
+  },
+  "ExtensionSettings_*_restricted_domains": {
+    "esr78": {
+      "min": "78.10.3"
+    },
+    "esr91": {
+      "min": "89.0a1"
+    },
+    "central": {
+      "min": "89.0a1"
+    }
+  },
+  "ExtensionSettings_^.*$_installation_mode": {
+    "esr78": {
+      "min": "78.10.3"
+    },
+    "esr91": {
+      "min": "89.0a1"
+    },
+    "central": {
+      "min": "89.0a1"
+    }
+  },
+  "ExtensionSettings_^.*$_install_url": {
+    "esr78": {
+      "min": "78.10.3"
+    },
+    "esr91": {
+      "min": "89.0a1"
+    },
+    "central": {
+      "min": "89.0a1"
+    }
+  },
+  "ExtensionSettings_^.*$_updates_disabled": {
+    "esr78": {
+      "min": "78.10.3"
+    },
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "HardwareAcceleration": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "PasswordManagerEnabled": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "Preferences_accessibility.force_disabled": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_browser.cache.disk.enable": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_browser.safebrowsing.phishing.enabled": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_browser.safebrowsing.malware.enabled": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_browser.search.update": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_datareporting.policy.dataSubmissionPolicyBypassNotification": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_dom.allow_scripts_to_close_windows": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_dom.disable_window_flip": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_dom.disable_window_move_resize": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_dom.event.contextmenu.enabled": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_extensions.blocklist.enabled": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_geo.enabled": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_intl.accept_languages": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_network.dns.disableIPv6": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_places.history.enabled": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_print.save_print_settings": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_security.default_personal_cert": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_security.mixed_content.block_active_content": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_security.osclientcerts.autoload": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_security.ssl.errorReporting.enabled": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_security.tls.hello_downgrade_check": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "Preferences_widget.content.gtk-theme-override": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    },
+    "central": {
+      "min": "78.0a1",
+      "max": "89.0a1"
+    }
+  },
+  "PromptForDownloadLocation": {
+    "esr78": {
+      "min": "78.0a1"
+    },
+    "esr91": {
+      "min": "78.0a1"
+    },
+    "central": {
+      "min": "78.0a1"
+    }
+  },
+  "BackgroundAppUpdate": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "DisableBuiltinPDFViewer": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "DNSOverHTTPS": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "DNSOverHTTPS_Enabled": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "DNSOverHTTPS_ProviderURL": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "DNSOverHTTPS_ExcludedDomains": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "DNSOverHTTPS_Locked": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "Handlers": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "Handlers_^(mimeTypes|extensions|schemes)$": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "Handlers_^(mimeTypes|extensions|schemes)$_^.*$": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "Handlers_^(mimeTypes|extensions|schemes)$_^.*$_action": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "Handlers_^(mimeTypes|extensions|schemes)$_^.*$_ask": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "Handlers_^(mimeTypes|extensions|schemes)$_^.*$_handlers": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "ManualAppUpdateOnly": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "NetworkPrediction": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "OfferToSaveLogins": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "OfferToSaveLoginsDefault": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "PDFjs": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "PDFjs_Enabled": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "PDFjs_EnablePermissions": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "Preferences_^.*$": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "Preferences_^.*$_Value": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "Preferences_^.*$_Status": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "PrimaryPassword": {
+    "esr91": {
+      "min": "91.0"
+    },
+    "central": {
+      "min": "92.0a1"
+    }
+  },
+  "AllowedDomainsForApps": {
+    "unsupported": true
+  },
+  "AutoLaunchProtocolsFromOrigins": {
+    "unsupported": true
+  },
+  "Bookmarks": {
+    "unsupported": true
+  },
+  "Cookies_AllowSession": {
+    "unsupported": true
+  },
+  "Cookies_RejectTracker": {
+    "unsupported": true
+  },
+  "DisableDefaultBrowserAgent": {
+    "unsupported": true
+  },
+  "DisableFeedbackCommands": {
+    "unsupported": true
+  },
+  "DisableFirefoxAccounts": {
+    "unsupported": true
+  },
+  "DisableFirefoxScreenshots": {
+    "unsupported": true
+  },
+  "DisableFirefoxStudies": {
+    "unsupported": true
+  },
+  "DisableForgetButton": {
+    "unsupported": true
+  },
+  "DisableFormHistory": {
+    "unsupported": true
+  },
+  "DisablePocket": {
+    "unsupported": true
+  },
+  "DisablePrivateBrowsing": {
+    "unsupported": true
+  },
+  "DisableProfileImport": {
+    "unsupported": true
+  },
+  "DisableProfileRefresh": {
+    "unsupported": true
+  },
+  "DisableSetDesktopBackground": {
+    "unsupported": true
+  },
+  "DisplayBookmarksToolbar": {
+    "unsupported": true
+  },
+  "DisplayMenuBar": {
+    "unsupported": true
+  },
+  "DontCheckDefaultBrowser": {
+    "unsupported": true
+  },
+  "EnableTrackingProtection": {
+    "unsupported": true
+  },
+  "EnableTrackingProtection_Value": {
+    "unsupported": true
+  },
+  "EnableTrackingProtection_Locked": {
+    "unsupported": true
+  },
+  "EnableTrackingProtection_Cryptomining": {
+    "unsupported": true
+  },
+  "EnableTrackingProtection_Fingerprinting": {
+    "unsupported": true
+  },
+  "EnableTrackingProtection_Exceptions": {
+    "unsupported": true
+  },
+  "EncryptedMediaExtensions": {
+    "unsupported": true
+  },
+  "EncryptedMediaExtensions_Enabled": {
+    "unsupported": true
+  },
+  "EncryptedMediaExtensions_Locked": {
+    "unsupported": true
+  },
+  "FirefoxHome": {
+    "unsupported": true
+  },
+  "FirefoxHome_Search": {
+    "unsupported": true
+  },
+  "FirefoxHome_TopSites": {
+    "unsupported": true
+  },
+  "FirefoxHome_Highlights": {
+    "unsupported": true
+  },
+  "FirefoxHome_Pocket": {
+    "unsupported": true
+  },
+  "FirefoxHome_Snippets": {
+    "unsupported": true
+  },
+  "FirefoxHome_Locked": {
+    "unsupported": true
+  },
+  "FlashPlugin": {
+    "unsupported": true
+  },
+  "FlashPlugin_Allow": {
+    "unsupported": true
+  },
+  "FlashPlugin_Block": {
+    "unsupported": true
+  },
+  "FlashPlugin_Default": {
+    "unsupported": true
+  },
+  "FlashPlugin_Locked": {
+    "unsupported": true
+  },
+  "Homepage": {
+    "unsupported": true
+  },
+  "Homepage_URL": {
+    "unsupported": true
+  },
+  "Homepage_Locked": {
+    "unsupported": true
+  },
+  "Homepage_Additional": {
+    "unsupported": true
+  },
+  "Homepage_StartPage": {
+    "unsupported": true
+  },
+  "LegacyProfiles": {
+    "unsupported": true
+  },
+  "LegacySameSiteCookieBehaviorEnabled": {
+    "unsupported": true
+  },
+  "LegacySameSiteCookieBehaviorEnabledForDomainList": {
+    "unsupported": true
+  },
+  "LocalFileLinks": {
+    "unsupported": true
+  },
+  "ManagedBookmarks": {
+    "unsupported": true
+  },
+  "NewTabPage": {
+    "unsupported": true
+  },
+  "NoDefaultBookmarks": {
+    "unsupported": true
+  },
+  "OverrideFirstRunPage": {
+    "unsupported": true
+  },
+  "OverridePostUpdatePage": {
+    "unsupported": true
+  },
+  "Permissions": {
+    "unsupported": true
+  },
+  "Permissions_Camera": {
+    "unsupported": true
+  },
+  "Permissions_Camera_Allow": {
+    "unsupported": true
+  },
+  "Permissions_Camera_Block": {
+    "unsupported": true
+  },
+  "Permissions_Camera_BlockNewRequests": {
+    "unsupported": true
+  },
+  "Permissions_Camera_Locked": {
+    "unsupported": true
+  },
+  "Permissions_Microphone": {
+    "unsupported": true
+  },
+  "Permissions_Microphone_Allow": {
+    "unsupported": true
+  },
+  "Permissions_Microphone_Block": {
+    "unsupported": true
+  },
+  "Permissions_Microphone_BlockNewRequests": {
+    "unsupported": true
+  },
+  "Permissions_Microphone_Locked": {
+    "unsupported": true
+  },
+  "Permissions_Autoplay": {
+    "unsupported": true
+  },
+  "Permissions_Autoplay_Default": {
+    "unsupported": true
+  },
+  "Permissions_Autoplay_Allow": {
+    "unsupported": true
+  },
+  "Permissions_Autoplay_Block": {
+    "unsupported": true
+  },
+  "Permissions_Autoplay_Locked": {
+    "unsupported": true
+  },
+  "Permissions_Location": {
+    "unsupported": true
+  },
+  "Permissions_Location_Allow": {
+    "unsupported": true
+  },
+  "Permissions_Location_Block": {
+    "unsupported": true
+  },
+  "Permissions_Location_BlockNewRequests": {
+    "unsupported": true
+  },
+  "Permissions_Location_Locked": {
+    "unsupported": true
+  },
+  "Permissions_Notifications": {
+    "unsupported": true
+  },
+  "Permissions_Notifications_Allow": {
+    "unsupported": true
+  },
+  "Permissions_Notifications_Block": {
+    "unsupported": true
+  },
+  "Permissions_Notifications_BlockNewRequests": {
+    "unsupported": true
+  },
+  "Permissions_Notifications_Locked": {
+    "unsupported": true
+  },
+  "Permissions_VirtualReality": {
+    "unsupported": true
+  },
+  "Permissions_VirtualReality_Allow": {
+    "unsupported": true
+  },
+  "Permissions_VirtualReality_Block": {
+    "unsupported": true
+  },
+  "Permissions_VirtualReality_BlockNewRequests": {
+    "unsupported": true
+  },
+  "Permissions_VirtualReality_Locked": {
+    "unsupported": true
+  },
+  "PictureInPicture": {
+    "unsupported": true
+  },
+  "PictureInPicture_Enabled": {
+    "unsupported": true
+  },
+  "PictureInPicture_Locked": {
+    "unsupported": true
+  },
+  "PopupBlocking": {
+    "unsupported": true
+  },
+  "PopupBlocking_Allow": {
+    "unsupported": true
+  },
+  "PopupBlocking_Default": {
+    "unsupported": true
+  },
+  "PopupBlocking_Locked": {
+    "unsupported": true
+  },
+  "SanitizeOnShutdown": {
+    "unsupported": true
+  },
+  "SanitizeOnShutdown_Cache": {
+    "unsupported": true
+  },
+  "SanitizeOnShutdown_Cookies": {
+    "unsupported": true
+  },
+  "SanitizeOnShutdown_Downloads": {
+    "unsupported": true
+  },
+  "SanitizeOnShutdown_FormData": {
+    "unsupported": true
+  },
+  "SanitizeOnShutdown_History": {
+    "unsupported": true
+  },
+  "SanitizeOnShutdown_Sessions": {
+    "unsupported": true
+  },
+  "SanitizeOnShutdown_SiteSettings": {
+    "unsupported": true
+  },
+  "SanitizeOnShutdown_OfflineApps": {
+    "unsupported": true
+  },
+  "SanitizeOnShutdown_Locked": {
+    "unsupported": true
+  },
+  "SearchBar": {
+    "unsupported": true
+  },
+  "SearchEngines": {
+    "unsupported": true
+  },
+  "SearchEngines_Add": {
+    "unsupported": true
+  },
+  "SearchEngines_Default": {
+    "unsupported": true
+  },
+  "SearchEngines_DefaultPrivate": {
+    "unsupported": true
+  },
+  "SearchEngines_PreventInstalls": {
+    "unsupported": true
+  },
+  "SearchEngines_Remove": {
+    "unsupported": true
+  },
+  "SearchSuggestEnabled": {
+    "unsupported": true
+  },
+  "SecurityDevices": {
+    "unsupported": true
+  },
+  "SecurityDevices_^.*$": {
+    "unsupported": true
+  },
+  "ShowHomeButton": {
+    "unsupported": true
+  },
+  "SupportMenu": {
+    "unsupported": true
+  },
+  "SupportMenu_Title": {
+    "unsupported": true
+  },
+  "SupportMenu_URL": {
+    "unsupported": true
+  },
+  "SupportMenu_AccessKey": {
+    "unsupported": true
+  },
+  "UserMessaging": {
+    "unsupported": true
+  },
+  "UserMessaging_WhatsNew": {
+    "unsupported": true
+  },
+  "UserMessaging_ExtensionRecommendations": {
+    "unsupported": true
+  },
+  "UserMessaging_FeatureRecommendations": {
+    "unsupported": true
+  },
+  "UserMessaging_UrlbarInterventions": {
+    "unsupported": true
+  },
+  "UserMessaging_SkipOnboarding": {
+    "unsupported": true
+  },
+  "UserMessaging_Locked": {
+    "unsupported": true
+  },
+  "WebsiteFilter": {
+    "unsupported": true
+  },
+  "WebsiteFilter_Block": {
+    "unsupported": true
+  },
+  "WebsiteFilter_Exceptions": {
+    "unsupported": true
+  },
+  "WindowsSSO": {
+    "unsupported": true
+  }
+}
