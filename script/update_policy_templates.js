@@ -217,7 +217,6 @@ function rebrand(lines) {
  * 
  */
 async function pullGitRepository(url, ref, dir) {
-	return;
 	if (!fs.existsSync(dir)) {
 		console.log(`Cloning ${url} (${ref})`);
 		fs.ensureDirSync(dir);
