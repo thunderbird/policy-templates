@@ -20,5 +20,5 @@ Execute the script as follows:
 
 ```
 npm install
-npm update_policy_templates.js
+node update_policy_templates.js
 ```
