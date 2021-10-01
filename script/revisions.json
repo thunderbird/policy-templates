@@ -1,0 +1,18 @@
+[
+  {
+    "tree": "esr68",
+    "mozillaReferencePolicyRevision": "1b0a29b456b432d1c8bef09c233b84205ec9e13c"
+  },
+  {
+    "tree": "esr78",
+    "mozillaReferencePolicyRevision": "a8c4670b6ef144a0f3b6851c2a9d4bbd44fc032a"
+  },
+  {
+    "tree": "esr91",
+    "mozillaReferencePolicyRevision": "02bf5ca05376f55029da3645bdc6c8806e306e80"
+  },
+  {
+    "tree": "central",
+    "mozillaReferencePolicyRevision": "17c8763d65a017a7e5d1834d2dc674014b97cbea"
+  }
+]
