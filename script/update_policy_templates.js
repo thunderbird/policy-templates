@@ -1,6 +1,5 @@
 /**
  * See https://bugzilla.mozilla.org/show_bug.cgi?id=1732258
- * 
  */
 
 // Debug logging (0 - errors and basic logs only, 1 - verbose debug)
@@ -17,7 +16,7 @@ const compatibility_json_path = `./compatibility.json`;
 const revisions_json_write_path = "./revisions.json";
 const revisions_json_read_path = `${state_dir}/script/revisions.json`;
 
-// replacement for deprecated request
+// Replacement for deprecated request.
 const bent = require('bent');
 const bentGetTEXT = bent('GET', 'string', 200);
 
@@ -37,8 +36,8 @@ const {
 } = require('comment-json');
 
 var gCompatibilityData = {};
-
 var gMainTemplateEntries = [];
+
 const gMainTemplate = `## Enterprise policy descriptions and templates for Thunderbird
 
 While the templates for the most recent version of Thunderbird will probably also work with older releases of Thunderbird, they may contain new policies which are not supported in older releases. We suggest to use the templates which correspond to the highest version of Thunderbird you are actually deploying.
@@ -130,22 +129,22 @@ function escape_code_markdown(str) {
 }
 
 /**
- * Compare version numbers, taken from https://jsfiddle.net/vanowm/p7uvtbor/
+ * Compare version numbers, taken from https://jsfiddle.net/vanowm/p7uvtbor/.
  */
 function compareVersion(a, b) {
 	function prep(t) {
 		return ("" + t)
-			//treat non-numerical characters as lower version
-			//replacing them with a negative number based on charcode of first character
+			// Treat non-numerical characters as lower version.
+			// Replacing them with a negative number based on charcode of first character.
 			.replace(/[^0-9\.]+/g, function (c) { return "." + ((c = c.replace(/[\W_]+/, "")) ? c.toLowerCase().charCodeAt(0) - 65536 : "") + "." })
-			//remove trailing "." and "0" if followed by non-numerical characters (1.0.0b);
+			// Remove trailing "." and "0" if followed by non-numerical characters (1.0.0b).
 			.replace(/(?:\.0+)*(\.-[0-9]+)(\.[0-9]+)?\.*$/g, "$1$2")
 			.split('.');
 	}
 	a = prep(a);
 	b = prep(b);
 	for (let i = 0; i < Math.max(a.length, b.length); i++) {
-		//convert to integer the most efficient way
+		// Convert to integer the most efficient way.
 		a[i] = ~~a[i];
 		b[i] = ~~b[i];
 		if (a[i] > b[i])
@@ -159,7 +158,7 @@ function compareVersion(a, b) {
 /**
  * Rebrand from Firefox to Thunderbird.
  * 
- * @param {*} lines - string or array of strings which need to be rebranded.
+ * @param {*} lines - string or array of strings which need to be rebranded
  * @returns - rebranded string (input array is joined by \n)
  */
 function rebrand(lines) {
@@ -187,11 +186,11 @@ function rebrand(lines) {
 			reg: /addons.mozilla.org/g,
 			val: "addons.thunderbird.net",
 		},
-		{	// Undo a wrong replace
+		{	// Undo a wrong replace.
 			reg: "https://support.mozilla.org/kb/setting-certificate-authorities-thunderbird",
 			val: "https://support.mozilla.org/kb/setting-certificate-authorities-firefox"
 		},
-		{	// Undo a wrong replace
+		{	// Undo a wrong replace.
 			reg: "https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-thunderbird-66",
 			val: "https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-firefox-66"
 		}
@@ -214,7 +213,6 @@ function rebrand(lines) {
  * @param {string} url - url to the repository
  * @param {string} ref - branch/tag to checkout, "master" or "v3.0"
  * @param {string} dir - directory to store templates in
- * 
  */
 async function pullGitRepository(url, ref, dir) {
 	if (!fs.existsSync(dir)) {
@@ -245,14 +243,12 @@ async function pullGitRepository(url, ref, dir) {
 }
 
 /**
- * Parse the README file of a given mozilla policy template.
+ * Parse the README files of a given mozilla policy template.
  * 
  * @param {string} tree - "central" or "esr91"
- * 
  * @return - parsed data from readme.json, updated with upstream changes
  */
 async function parseMozillaPolicyTemplate(tree) {
-	// Load last known version of the headers and policy chunks of the readme.
 	let readme_file_name = readme_json_path.replace("#tree#", tree);
 	let readmeData = fs.existsSync(readme_file_name)
 		? parse(fs.readFileSync(readme_file_name).toString())
@@ -303,7 +299,7 @@ async function parseMozillaPolicyTemplate(tree) {
 		}
 	}
 
-	// Process MacOS PLIST files
+	// Process MacOS readme.
 	let mac = fs.readFileSync(`${dir}/mac/README.md`, 'utf8').toString().split("\n");
 
 	if (!readmeData.macReadme) {
@@ -323,9 +319,8 @@ function getPolicySchemaFilename(branch, tree, ref) {
 /**
  * Download missing revisions of the policies-schema.json for the given tree.
  * 
- * @params {string} tree - "central" or "esr91"
- * 
- * Returns a data object for comm and mozilla.
+ * @param {string} tree - "central" or "esr91"
+ * @returns - a data object for comm and mozilla
  */
 async function downloadPolicySchemaFiles(tree) {
 	let data = {
@@ -343,7 +338,7 @@ async function downloadPolicySchemaFiles(tree) {
 	fs.ensureDirSync(schema_dir);
 
 	// For mozilla, we just need to check if there is a new revision out.
-	// For comm, we need all revisions
+	// For comm, we need all revisions.
 	for (let branch of ["mozilla", "comm"]) {
 		let folder = branch == "mozilla" ? "browser" : "mail"
 		let path = tree == "central" ? `${branch}-${tree}` : `releases/${branch}-${tree}`
@@ -354,7 +349,7 @@ async function downloadPolicySchemaFiles(tree) {
 		let hgLog = await request(data[branch].hgLogUrl);
 		const $ = cheerio.load(hgLog);
 
-		// Get the revision identifier from the table cell (TODO: switch to github tree instead of parsing html)
+		// Get the revision identifier from the table cell (TODO: switch to github tree instead of parsing html).
 		let revisions = [...$("body > table > tbody > tr > td:nth-child(2)")].map(element => element.children[0].data.trim());
 
 		for (let revision of revisions.slice(0, max)) {
@@ -380,7 +375,7 @@ async function downloadPolicySchemaFiles(tree) {
 }
 
 /**
- * Extract flat policy named from a schema file
+ * Extract flat policy name from a schema file.
  * 
  * @param {object} data - Object returned by downloadPolicySchemaFiles
  */
@@ -446,10 +441,10 @@ function extractCompatibilityInformation(data, tree) {
 }
 
 /**
-* Check for changes in the policy schema files between two revisions.
-* 
-* @param {object} data - Object returned by downloadPolicySchemaFiles
-*/
+ * Check for changes in the policy schema files between two revisions.
+ * 
+ * @param {object} data - Object returned by downloadPolicySchemaFiles
+ */
 function checkPolicySchemaChanges(file1, file2) {
 	if (!file1?.properties || !file2?.properties)
 		return;
@@ -467,37 +462,25 @@ function checkPolicySchemaChanges(file1, file2) {
 
 // -----------------------------------------------------------------------------
 
-/**
- * Generate the compatibility table.
- * 
- * @param {*} policy 
- * @param {*} tree 
- * @returns 
- */
-function buildCompatibilityTable(tree, policy) {
-	let details = [];
-
+function getCompatibilityInformation(distinct, tree, policy) {
 	// Get all entries found in gCompatibilityData which are related to policy.
 	let entries = policy
 		? Object.keys(gCompatibilityData).filter(k => k == policy || k.startsWith(policy + "_"))
 		: Object.keys(gCompatibilityData)
 
 	// Group filtered entries by identical compat data.
-	let distinct = [];
+	let compatInfo = [];
 	for (let entry of entries) {
 		// Skip unsupported policy properties, if the root policy itself is not supported as well.
 		let root = entry.split("_").shift();
 		if (root != entry && gCompatibilityData[entry].unsupported && gCompatibilityData[root].unsupported) continue;
 
-		let humanReadableEntry = "`" + escape_code_markdown(entry
-			.replace("^.*$", "[name]")
-			.replace("^(", "(")
-			.replace(")$", ")")) + "`";
-
 		// Generate the compatibility information. Primary information is the one from this tree, 
 		// but if it was backported to one version prior (92.0a1 -> 91.0) only list the backported one.
 		let first = "";
 		let last = "";
+		let firstLong = "";
+		let lastLong = "";
 		if (gCompatibilityData[entry][tree]) {
 			if (gCompatibilityData[entry][tree].min) {
 				let added = gCompatibilityData[entry][tree].min.replace(".0a1", ".0");
@@ -513,49 +496,58 @@ function buildCompatibilityTable(tree, policy) {
 					&& added_parts[1] == "0"
 					&& `${parseInt(added_parts[0], 10) - 1}.0` == backported
 				) {
-					//first = `Thunderbird ${backported}`;
+					firstLong = `Thunderbird ${backported}`;
 					first = `${backported}`;
 				} else if (backported) {
-					//first = `Thunderbird ${added}<br>(Thunderbird ${backported})`;
+					firstLong = `Thunderbird ${added}<br>(Thunderbird ${backported})`;
 					first = `${backported}, ${added}`;
 				} else {
-					//first = `Thunderbird ${added}`;
+					firstLong = `Thunderbird ${added}`;
 					first = `${added}`;
 				}
 			}
 			last = (gCompatibilityData[entry][tree].max || "").replace(".0a1", ".0");
+			lastLong = `Thunderbird ${last}`;
 		}
 
 		let key = `${first} - ${last}`;
-		let distinctEntry = distinct.find(e => e.key == key);
-		if (!policy || !distinctEntry) {
-			distinct.push({
+		let distinctEntry = compatInfo.find(e => e.key == key);
+		if (!distinct || !distinctEntry) {
+			compatInfo.push({
 				key,
 				first,
 				last,
-				policies: [humanReadableEntry],
+				firstLong,
+				lastLong,
+				policies: [entry],
 			})
 		} else {
-			distinctEntry.policies.push(humanReadableEntry);
+			distinctEntry.policies.push(entry);
 		}
 	}
+	return compatInfo;
+}
 
-	// Sort if this is the full table.
-	if (!policy) {
-		distinct.sort((a, b) => {
-			let aa = a.policies.join("<br>");
-			let bb = b.policies.join("<br>");
-			if (aa < bb) return -1;
-			if (aa > bb) return 1;
-			return 0;
-		});
+/**
+ * Generate the compatibility table.
+ * 
+ * @param {*} compatInfo - data structure returned by getCompatibilityInformation
+ * @returns - generated compatibility table
+ */
+function buildCompatibilityTable(compatInfo) {
+	let details = [];
+
+	const humanReadableEntry = entry => {
+		return "`" + escape_code_markdown(entry
+			.replace("^.*$", "[name]")
+			.replace("^(", "(")
+			.replace(")$", ")")) + "`";
 	}
 
-	// Build compatibility chart.
 	details.push("", "| Policy/Property Name | supported since | deprecated after |", "|:--- | ---:| ---:|");
-	for (let distinctEntry of distinct) {
-		let format = distinctEntry.first ? "" : "*";
-		details.push(`| ${format}${distinctEntry.policies.join("<br>")}${format} | ${distinctEntry.first} | ${distinctEntry.last} |`);
+	for (let entry of compatInfo) {
+		let format = entry.first ? "" : "*";
+		details.push(`| ${format}${entry.policies.map(humanReadableEntry).join("<br>")}${format} | ${entry.first} | ${entry.last} |`);
 	}
 	details.push("");
 	return details;
@@ -564,8 +556,8 @@ function buildCompatibilityTable(tree, policy) {
 /**
  * Build the Windows ADMX/ADML files.
  */
-async function buildAdmxFiles(template, thunderbirdPolicies, output_dir) {
-	// Read ADMX files - https://www.npmjs.com/package/xml2js
+async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
+	// Read ADMX files - https://www.npmjs.com/package/xml2js.
 	let parser = new xml2js.Parser();
 	let admx_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/firefox.admx`);
 	let admx_obj = await parser.parseStringPromise(
@@ -579,7 +571,7 @@ async function buildAdmxFiles(template, thunderbirdPolicies, output_dir) {
 			return key.substring(key_prefix_length).split("\\").join("_");
 		}
 	}
-	function isThunderbirdPolicy(policy, element) {
+	function getThunderbirdPolicy(policy, element) {
 		let parts = [];
 		let name = getNameFromKey(policy.$.key);
 		if (name) {
@@ -594,32 +586,69 @@ async function buildAdmxFiles(template, thunderbirdPolicies, output_dir) {
 			if (element.$.key) parts = [getNameFromKey(element.$.key)];
 			else if (element.$.valueName) parts.push(element.$.valueName);
 		}
-
-		return thunderbirdPolicies.includes(parts.join("_"));
+		let flat_policy_name = parts.join("_");
+		if (thunderbirdPolicies.includes(flat_policy_name)) {
+			return flat_policy_name;
+		}
+		return false;
 	}
 
-	// Remove unsupported policies. (Remember, we work with flattened policy_property names here)
-	// A single admx policy entry can include multiple elements, we need to check those individually.
+	// Remove unsupported policies (remember, we work with flattened policy_property names here).
+	// A single ADMX policy entry can include multiple elements, we need to check those individually.
 	let admxPolicies = admx_obj.policyDefinitions.policies[0].policy;
+	let distinctCompatInfo = getCompatibilityInformation(/* distinct */ true, tree);
 	for (let policy of admxPolicies) {
-		if (!isThunderbirdPolicy(policy)) {
+		policy.compatInfo = [];
+
+		let flat_policy_name = getThunderbirdPolicy(policy);
+		if (!flat_policy_name) {
 			policy.unsupported = true
 		}
 
 		if (policy.elements) {
 			for (let element of policy.elements) {
 				for (let type of Object.keys(element)) {
-					element[type] = element[type].filter(e => isThunderbirdPolicy(policy, e))
+					element[type] = element[type].filter(e => !!getThunderbirdPolicy(policy, e))
 					if (element[type].length == 0) delete element[type]
-					else delete policy.unsupported;
+					else {
+						delete policy.unsupported;
+						policy.compatInfo.push(...element[type].map(e => distinctCompatInfo.findIndex(i => i.policies.includes(getThunderbirdPolicy(policy, e)))));
+					}
 				}
 			}
 			// If we removed all elements, remove the policy
 			policy.elements = policy.elements.filter(e => Object.keys(e).length > 0)
 			if (policy.elements.length == 0) policy.unsupported = true
+		} else {
+			policy.compatInfo.push(distinctCompatInfo.findIndex(e => e.policies.includes(flat_policy_name)));
 		}
 	}
 	admx_obj.policyDefinitions.policies[0].policy = admxPolicies.filter(p => !p.unsupported);
+
+	// Adjust supportedOn.
+	let used_supported_on = {};
+	for (let policy of admx_obj.policyDefinitions.policies[0].policy) {
+		// A single policy entry can contain multiple policy elements which potentially could have a different compat setting.
+		// Todo: Check wether all members of policy.compatInfo are identical.
+
+		let compatInfoIndex = policy.compatInfo.pop();
+		delete policy.compatInfo;
+
+		if (compatInfoIndex != -1) {
+			let name = `SUPPORTED_ID_${compatInfoIndex}`;
+			policy.supportedOn[0].$.ref = name;
+
+			if (!used_supported_on[name]) {
+				used_supported_on[name] = {
+					"$": {
+						name,
+						displayName: `${distinctCompatInfo[compatInfoIndex].firstLong} - ${distinctCompatInfo[compatInfoIndex].last ? distinctCompatInfo[compatInfoIndex].lastLong : "*"}`,
+					}
+				}
+			}
+		}
+	}
+	admx_obj.policyDefinitions.supportedOn[0].definitions[0].definition = Object.keys(used_supported_on).sort().map(e => used_supported_on[e]);
 
 	// Rebuild thunderbird.admx file.
 	let builder = new xml2js.Builder();
@@ -649,7 +678,7 @@ async function buildAdmxFiles(template, thunderbirdPolicies, output_dir) {
  * Build the MasOS PLIST files.
  */
 async function buildPlistFiles(template, thunderbirdPolicies, output_dir) {
-	// Read PLIST files - https://www.npmjs.com/package/plist
+	// Read PLIST files - https://www.npmjs.com/package/plist.
 	let plist_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/mac/org.mozilla.firefox.plist`).toString();
 	let plist_obj = plist.parse(plist_file);
 
@@ -663,10 +692,9 @@ async function buildPlistFiles(template, thunderbirdPolicies, output_dir) {
 				: key;
 
 			if (!isObject(plist[key])) {
-				// This is a final entry, check if this is a supported policy
-				//console.log(policy_name, thunderbirdPolicies.includes(policy_name))
+				// This is a final entry, check if this is a supported policy.
 				if (!thunderbirdPolicies.includes(policy_name) && policy_name != "EnterprisePoliciesEnabled") {
-					delete plist[key];				
+					delete plist[key];
 				}
 			} else {
 				removeUnsupportedEntries(plist[key], policy_name);
@@ -713,7 +741,8 @@ async function buildReadme(tree, template, thunderbirdPolicies, output_dir) {
 			if (content && content != "skip") {
 				details.push(...content.filter(e => !e.includes("**Compatibility:**")));
 				details.push("#### Compatibility");
-				details.push(...buildCompatibilityTable(tree, policy));
+				let distinctCompatInfo = getCompatibilityInformation(/* distinct */ true, tree, policy);
+				details.push(...buildCompatibilityTable(distinctCompatInfo));
 				details.push("<br>", "");
 			}
 		}
@@ -739,9 +768,9 @@ async function buildReadme(tree, template, thunderbirdPolicies, output_dir) {
  * Generate the Thunderbird templates.
  * 
  * @param {*} settings 
- *  settings.tree - 
- *  settings.mozillaReferencePolicyRevision -
- * @returns 
+ *  settings.tree - "central" or "esr91"
+ *  settings.mozillaReferencePolicyRevision - the hg revision of the last known mozilla version of
+ *                                            their policies.json
  */
 async function buildThunderbirdTemplates(settings) {
 	// Download schema from https://hg.mozilla.org/
@@ -775,23 +804,7 @@ async function buildThunderbirdTemplates(settings) {
 		}
 	}
 
-	/*	TODO: For the readme it would be helpful to know which properties of used policies are not supported
-		// This logs differences between m-c and c-c, but the gain of information is not much, clutters the screen, we know they differ.
-		let m_c_diff = checkPolicySchemaChanges(data.mozilla.currentFile, data.comm.currentFile);
-		if (m_c_diff) {
-			console.log();
-			console.log(` There are differences between the currently acknowledged policy revisions of Mozilla and Thunderbird for the ${settings.tree} branch!`);
-			if (m_c_diff.added.length > 0) console.log(` - Thunderbird added extra support for the following policies in the currently acknowledged policy revisions:`, m_c_diff.added);
-			if (m_c_diff.removed.length > 0) console.log(` - Thunderbird does not support the following policies in the currently acknowledged policy revisions:`, m_c_diff.removed);
-			if (m_c_diff.changed.length > 0) console.log(` - Thunderbird and Mozilla policy properties differ in the following policies in the currently acknowledged policy revisions:`, m_c_diff.changed);
-			console.log();
-			console.log(` - currently acknowledged mozilla policy revision (${data.mozilla.currentRevision}): \n\t${path.resolve(getPolicySchemaFilename("mozilla", settings.tree, data.mozilla.currentRevision))}\n`);
-			console.log(` - currently acknowledged comm policy revision (${data.comm.currentRevision}): \n\t${path.resolve(getPolicySchemaFilename("comm", settings.tree, data.comm.currentRevision))}\n`);
-			console.log(` - available template versions: \n\thttps://github.com/mozilla/policy-templates/releases\n`);
-		}
-	*/
-
-	// Update thr global compatibility object
+	// Update thr global compatibility object.
 	extractCompatibilityInformation(data, settings.tree);
 
 	let template = await parseMozillaPolicyTemplate(settings.tree);
@@ -802,7 +815,7 @@ async function buildThunderbirdTemplates(settings) {
 		});
 
 	await buildReadme(settings.tree, template, thunderbirdPolicies, output_dir);
-	await buildAdmxFiles(template, thunderbirdPolicies, output_dir);
+	await buildAdmxFiles(settings.tree, template, thunderbirdPolicies, output_dir);
 	await buildPlistFiles(template, thunderbirdPolicies, output_dir);
 
 	if (settings.tree == "central") {
@@ -847,10 +860,18 @@ async function main() {
 	fs.writeFileSync(compatibility_json_path, stringify(gCompatibilityData, null, 2));
 	fs.writeFileSync(revisions_json_write_path, stringify(revisionData, null, 2));
 
+	let compatInfo = getCompatibilityInformation(/* distinct */ false, "central");
+	compatInfo.sort((a, b) => {
+		let aa = a.policies.join("<br>");
+		let bb = b.policies.join("<br>");
+		if (aa < bb) return -1;
+		if (aa > bb) return 1;
+		return 0;
+	});
 
 	fs.writeFileSync(main_readme, gMainTemplate
 		.replace("__list__", gMainTemplateEntries.join("\n"))
-		.replace("__compatibility__", buildCompatibilityTable("central").join("\n"))
+		.replace("__compatibility__", buildCompatibilityTable(compatInfo).join("\n"))
 	);
 }
 

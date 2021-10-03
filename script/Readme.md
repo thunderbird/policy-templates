@@ -9,11 +9,11 @@ This script runs on the source trees `esr68`,`esr78`,`esr91` and `central` and i
 * check if all supported policies are actually mentioned in the generated readme
 * adds a detailed compatibility table to each policy section
 * clone the `firefox.admx` files as `thunderbird.admx` and remove whatever is not supported by Thunderbird
+* update the compatibility information in the `supportedOn` field of the ADMX files
 * create a list of unsupported firefox policies
 * adjust mac templates
 
 This script is not yet doing the following:
-* update the compatibility information in the `supportedOn` field of the ADMX files
 * generate the `thunderbird.admx` file directly from `policies-schema.json` (which means we cannot add our own policies yet)
 
 Execute the script as follows:
