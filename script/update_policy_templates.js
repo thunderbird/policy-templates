@@ -375,7 +375,7 @@ async function downloadPolicySchemaFiles(tree) {
 }
 
 /**
- * Extract flat policy name from a schema file.
+ * Extract flat policy names from a schema file.
  * 
  * @param {object} data - Object returned by downloadPolicySchemaFiles
  */
@@ -804,7 +804,7 @@ async function buildThunderbirdTemplates(settings) {
 		}
 	}
 
-	// Update thr global compatibility object.
+	// Update the global compatibility object.
 	extractCompatibilityInformation(data, settings.tree);
 
 	let template = await parseMozillaPolicyTemplate(settings.tree);
