@@ -4,43 +4,17 @@
   <description/>
   <resources>
     <stringTable>
+      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
+      <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_10">Thunderbird 91.0 - *</string>
+      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
+      <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
+      <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
+      <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
+      <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
+      <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 или более поздние версии</string>
       <string id="UNSUPPORTED">Больше не поддерживается.</string>
-      <string id="SUPPORTED_TB60">Thunderbird 60 или более поздние версии, Thunderbird 60 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB62">Thunderbird 62 или более поздние версии, Thunderbird 60.2 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB63">Thunderbird 63 или более поздние версии</string>
-      <string id="SUPPORTED_TB64">Thunderbird 64 или более поздние версии, Thunderbird 60.4 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB66">Thunderbird 66 или более поздние версии, Thunderbird 60.6 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB67">Thunderbird 67 или более поздние версии, Thunderbird 60.7 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB68">Thunderbird 68 или более поздние версии, Thunderbird 68 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB6801">Thunderbird 68.0.1 или более поздние версии, Thunderbird 68.0.1 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB60ESR">Thunderbird 60 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB68ESR">Thunderbird 68.5 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB69">Thunderbird 69 или более поздние версии, Thunderbird 68.1 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB70">Thunderbird 70 или более поздние версии, Thunderbird 68.2 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB71">Thunderbird 71 или более поздние версии, Thunderbird 68.3 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB72">Thunderbird 72 или более поздние версии, Thunderbird 68.4 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB73">Thunderbird 73 или более поздние версии, Thunderbird 68.5 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB74">Thunderbird 74 или более поздние версии, Thunderbird 68.6 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB75">Thunderbird 75 или более поздние версии, Thunderbird 68.7 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB75_ONLY">Thunderbird 75 или более поздние версии</string>
-      <string id="SUPPORTED_TB76">Thunderbird 76 или более поздние версии, Thunderbird 68.8 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB76_ONLY">Thunderbird 76 или более поздние версии</string>
-      <string id="SUPPORTED_TB77">Thunderbird 77 или более поздние версии, Thunderbird 68.9 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB77_ONLY">Thunderbird 77 или более поздние версии</string>
-      <string id="SUPPORTED_TB78">Thunderbird 78 или более поздние версии</string>
-      <string id="SUPPORTED_TB79">Thunderbird 79 или более поздние версии, Thunderbird 78.1 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB80">Thunderbird 80 или более поздние версии, Thunderbird 78.2 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB81">Thunderbird 81 или более поздние версии, Thunderbird 78.3 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB82">Thunderbird 82 или более поздние версии, Thunderbird 78.4 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB83">Thunderbird 83 или более поздние версии, Thunderbird 78.5 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB84">Thunderbird 84 или более поздние версии, Thunderbird 78.6 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB85">Thunderbird 85 или более поздние версии, Thunderbird 78.7 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB86">Thunderbird 86 или более поздние версии, Thunderbird 78.8 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB88">Thunderbird 88 или более поздние версии, Thunderbird 78.10 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB89">Thunderbird 89 или более поздние версии, Thunderbird 78.11 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB90">Thunderbird 90 или более поздние версии, Thunderbird 78.12 ESR или более поздние версии</string>
-      <string id="SUPPORTED_TB91">Thunderbird 91 или более поздние версии</string>
       <string id="thunderbird">Thunderbird</string>
       <string id="Permissions_group">Разрешения</string>
       <string id="Camera_group">Камера</string>
@@ -161,7 +135,6 @@
       <string id="DNSOverHTTPS_ProviderURL_Explain">Если эта политика включена, указанный URL-адрес используется в качестве URL-адреса поставщика.
 
 Если эта политика отключена или не настроена, используется поставщик по умолчанию.</string>
-
       <string id="DNSOverHTTPS_Locked">Заблокировано</string>
       <string id="DNSOverHTTPS_Locked_Explain">Если эта политика включена, настройки DNS через HTTPS не могут быть изменены пользователем.
 
@@ -197,9 +170,9 @@
 
 Если эта политика отключена или не настроена, инструменты веб-разработчика доступны в Thunderbird.</string>
       <string id="DisableFeedbackCommands">Отключить команды обратной связи</string>
-      <string id="DisableFeedbackCommands_Explain">Если эта политика включена, кнопка &quot; Отправить отзыв &quot; и &quot; Сообщить о мошенническом сайте &quot;  - пункты меню недоступны из меню справки.
+      <string id="DisableFeedbackCommands_Explain">Если эта политика включена, кнопка " Отправить отзыв " и " Сообщить о мошенническом сайте "  - пункты меню недоступны из меню справки.
 
-Если эта политика отключена или не настроена, &quot; Отправить отзыв &quot; и &quot; Сообщить о мошенническом сайте &quot; элементы меню доступны из меню справки.</string>
+Если эта политика отключена или не настроена, " Отправить отзыв " и " Сообщить о мошенническом сайте " элементы меню доступны из меню справки.</string>
       <string id="DisableFirefoxAccounts">Отключить учетные записи Thunderbird</string>
       <string id="DisableFirefoxAccounts_Explain">Если эта политика включена, учетные записи Thunderbird отключены, в том числе отключена синхронизация.
 
@@ -214,7 +187,7 @@
 Если эта политика отключена или не настроена, пользователь может включить исследования SHIELD или опросы Heartbeat.
 
 Для получения дополнительной информации см. https://support.mozilla.org/en-US/kb/shield and https://wiki.mozilla.org/Thunderbird/Shield/Heartbeat</string>
-<string id="DisableForgetButton"> Отключить кнопку "Забыть" </string>
+      <string id="DisableForgetButton"> Отключить кнопку "Забыть" </string>
       <string id="DisableForgetButton_Explain"> Если эта политика включена, кнопка «Забыть» кнопка недоступна.
 
 Если эта политика отключена или не настроена, кнопка «Забыть» кнопка доступна. </string>
@@ -512,7 +485,6 @@ Mozilla рекомендует не отключать телеметрию. И�
 
 Если эта политика отключена или не настроена, данные не удаляются при закрытии браузера. </string>
       <string id="SanitizeOnShutdown_group"> Удалять данные при закрытии браузера </string>
-
       <string id="SanitizeOnShutdown_Cache"> Кэш </string>
       <string id="SanitizeOnShutdown_Cache_Explain"> Если политика включена, кеш очищается при закрытии браузера.
 
@@ -555,8 +527,8 @@ Mozilla рекомендует не отключать телеметрию. И�
       <string id="WebsiteFilter_Block_Explain">Если эта политика включена, вы можете указать шаблоны соответствия, указывающие на то, что сайты должны быть заблокированы. Шаблоны соответствия задокументированы на https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Match_patterns. Ограничение на вход - 1000.
 
 Если эта политика отключена или не настроена, никакие веб-сайты не блокируются. </string>
-       <string id="WebsiteFilter_Exceptions"> Исключения для заблокированных веб-сайтов </string>
-       <string id="WebsiteFilter_Exceptions_Explain"> Если эта политика включена и фильтр веб-сайтов включен, вы можете указать шаблоны соответствия для сайтов, которые не хотите блокировать. Шаблоны соответствия задокументированы на https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Match_patterns. Ограничение на вход - 1000.
+      <string id="WebsiteFilter_Exceptions"> Исключения для заблокированных веб-сайтов </string>
+      <string id="WebsiteFilter_Exceptions_Explain"> Если эта политика включена и фильтр веб-сайтов включен, вы можете указать шаблоны соответствия для сайтов, которые не хотите блокировать. Шаблоны соответствия задокументированы на https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Match_patterns. Ограничение на вход - 1000.
 
 Если эта политика отключена или не настроена, для фильтра веб-сайтов нет исключений.</string>
       <string id="Bookmark01">Закладка 01</string>
@@ -746,8 +718,8 @@ If this policy is not configured, Thunderbird will determine whether or not the 
       <string id="SSLVersionMin_Explain">Если эта политика включена, Thunderbird не будет использовать версии SSL / TLS меньше указанного значения.
 
 Если эта политика отключена или не настроена, Thunderbird по умолчанию использует как минимум TLS 1.0. </string>
-       <string id="SSLVersionMax"> Включена максимальная версия SSL </string>
-       <string id="SSLVersionMax_Explain"> Если эта политика включена, Thunderbird не будет использовать версии SSL / TLS, превышающие указанное значение.
+      <string id="SSLVersionMax"> Включена максимальная версия SSL </string>
+      <string id="SSLVersionMax_Explain"> Если эта политика включена, Thunderbird не будет использовать версии SSL / TLS, превышающие указанное значение.
 
 Если эта политика отключена или не настроена, Thunderbird по умолчанию использует максимум TLS 1.3.</string>
       <string id="TLS1">TLS 1.0</string>
@@ -944,11 +916,11 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences. <
       </presentation>
       <presentation id="Authentication_AllowNonFQDN">
         <checkBox refId="Authentication_AllowNonFQDN_NTLM">Всегда разрешать NTLM для не полных доменных имен </checkBox>
-         <checkBox refId="Authentication_AllowNonFQDN_SPNEGO"> Всегда разрешать SPNEGO для не полных доменных имен </checkBox>
-       </presentation>
-       <presentation id="Authentication_AllowProxies">
-         <checkBox refId="Authentication_AllowProxies_NTLM"> Разрешить NTLM автоматически аутентифицироваться на прокси-серверах </checkBox>
-         <checkBox refId="Authentication_AllowProxies_SPNEGO"> Разрешить SPNEGO автоматически аутентифицироваться на прокси-серверах</checkBox>
+        <checkBox refId="Authentication_AllowNonFQDN_SPNEGO"> Всегда разрешать SPNEGO для не полных доменных имен </checkBox>
+      </presentation>
+      <presentation id="Authentication_AllowProxies">
+        <checkBox refId="Authentication_AllowProxies_NTLM"> Разрешить NTLM автоматически аутентифицироваться на прокси-серверах </checkBox>
+        <checkBox refId="Authentication_AllowProxies_SPNEGO"> Разрешить SPNEGO автоматически аутентифицироваться на прокси-серверах</checkBox>
       </presentation>
       <presentation id="Certificates_Install">
         <listBox refId="Certificates_Install"/>
@@ -965,19 +937,23 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences. <
       <presentation id="WebsiteFilter">
         <listBox refId="WebsiteFilter"/>
       </presentation>
-      <presentation id="Permissions"><listBox refId="Permissions"/></presentation>
-      <presentation id="PopupsAllow"><listBox refId="PopupsAllowDesc">Разрешить всплывающие окна для веб-сайтов </listBox> </presentation>
-       <presentation id="Cookies_AcceptThirdParty">
-         <dropdownList refId="Cookies_AcceptThirdParty" />
-       </presentation>
-       <presentation id="SearchBar">
-         <dropdownList refId="SearchBar" />
-       </presentation>
-       <presentation id="TrackingProtection">
-         <checkBox refId="TrackingProtectionLocked"> Не разрешать изменять настройки защиты от отслеживания. </checkBox>
-         <checkBox refId="Cryptomining"> Блокировать скрипты майнинга. </checkBox>
-         <checkBox refId="Fingerprinting"> Блокировать скрипты снятия отпечатков пальцев. </checkBox>
-         <text> Исключения: </text>
+      <presentation id="Permissions">
+        <listBox refId="Permissions"/>
+      </presentation>
+      <presentation id="PopupsAllow">
+        <listBox refId="PopupsAllowDesc">Разрешить всплывающие окна для веб-сайтов </listBox>
+      </presentation>
+      <presentation id="Cookies_AcceptThirdParty">
+        <dropdownList refId="Cookies_AcceptThirdParty"/>
+      </presentation>
+      <presentation id="SearchBar">
+        <dropdownList refId="SearchBar"/>
+      </presentation>
+      <presentation id="TrackingProtection">
+        <checkBox refId="TrackingProtectionLocked"> Не разрешать изменять настройки защиты от отслеживания. </checkBox>
+        <checkBox refId="Cryptomining"> Блокировать скрипты майнинга. </checkBox>
+        <checkBox refId="Fingerprinting"> Блокировать скрипты снятия отпечатков пальцев. </checkBox>
+        <text> Исключения: </text>
         <listBox refId="TrackingProtection_Exceptions"/>
       </presentation>
       <presentation id="TrackingProtection_Exceptions">
@@ -994,9 +970,9 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences. <
           <label/>
         </textBox>
         <checkBox refId="HomepageLocked">Не позволяйте изменять домашнюю страницу. </checkBox>
-       </presentation>
-       <presentation id="HomepageAdditional">
-         <listBox refId="HomepageAdditional"> Дополнительные домашние страницы</listBox>
+      </presentation>
+      <presentation id="HomepageAdditional">
+        <listBox refId="HomepageAdditional"> Дополнительные домашние страницы</listBox>
       </presentation>
       <presentation id="StartPage">
         <dropdownList refId="StartPage"/>
@@ -1041,9 +1017,9 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences. <
         </textBox>
         <textBox refId="SearchEngine_SuggestURLTemplate">
           <label>Предложить шаблон URL: </label>
-         </textBox>
-         <textBox refId="SearchEngine_PostData">
-           <label> Данные POST:</label>
+        </textBox>
+        <textBox refId="SearchEngine_PostData">
+          <label> Данные POST:</label>
         </textBox>
         <textBox refId="SearchEngine_Encoding">
           <label>Encoding:</label>
@@ -1059,9 +1035,9 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences. <
       </presentation>
       <presentation id="Proxy">
         <checkBox refId="ProxyLocked">Не разрешайте изменять настройки прокси. </checkBox>
-         <text> Тип подключения: </text>
-         <dropdownList refId="ConnectionType" />
-         <text> HTTP-прокси:</text>
+        <text> Тип подключения: </text>
+        <dropdownList refId="ConnectionType"/>
+        <text> HTTP-прокси:</text>
         <textBox refId="HTTPProxy">
           <label/>
         </textBox>
@@ -1090,29 +1066,29 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences. <
           <label/>
         </textBox>
         <checkBox refId="AutoLogin">Не запрашивать аутентификацию, если пароль сохранен. </checkBox>
-         <checkBox refId="UseProxyForDNS"> Прокси-сервер DNS при использовании SOCKS v5. </checkBox>
-       </presentation>
-       <presentation id="DNSOverHTTPS">
-         <text> URL-адрес поставщика: </text>
-         <textBox refId="ProviderURL">
-           <label />
-         </textBox>
-         <checkBox refId="DNSOverHTTPSEnabled"> Включить DNS через HTTPS. </checkBox>
-         <checkBox refId="DNSOverHTTPSLocked"> Запрещать изменять настройки DNS поверх HTTPS. </checkBox>
-       </presentation>
-       <presentation id="SSLVersion">
-         <dropdownList refId="SSLVersion" />
-       </presentation>
-       <presentation id="SupportMenu">
-         <text> Заголовок: </text>
-         <textBox refId="SupportMenuTitle">
-           <label />
-         </textBox>
-         <text> URL: </text>
-         <textBox refId="SupportMenuURL">
-           <label />
-         </textBox>
-         <text> Ключ доступа:</text>
+        <checkBox refId="UseProxyForDNS"> Прокси-сервер DNS при использовании SOCKS v5. </checkBox>
+      </presentation>
+      <presentation id="DNSOverHTTPS">
+        <text> URL-адрес поставщика: </text>
+        <textBox refId="ProviderURL">
+          <label/>
+        </textBox>
+        <checkBox refId="DNSOverHTTPSEnabled"> Включить DNS через HTTPS. </checkBox>
+        <checkBox refId="DNSOverHTTPSLocked"> Запрещать изменять настройки DNS поверх HTTPS. </checkBox>
+      </presentation>
+      <presentation id="SSLVersion">
+        <dropdownList refId="SSLVersion"/>
+      </presentation>
+      <presentation id="SupportMenu">
+        <text> Заголовок: </text>
+        <textBox refId="SupportMenuTitle">
+          <label/>
+        </textBox>
+        <text> URL: </text>
+        <textBox refId="SupportMenuURL">
+          <label/>
+        </textBox>
+        <text> Ключ доступа:</text>
         <textBox refId="SupportMenuAccessKey">
           <label/>
         </textBox>

@@ -1,34 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="1.16" schemaVersion="1.0" >
+<policyDefinitionResources revision="1.16" schemaVersion="1.0">
   <displayName/>
   <description/>
-  <resources >
-    <stringTable >
+  <resources>
+    <stringTable>
+      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 ou supérieur</string>
       <string id="UNSUPPORTED">No longer supported.</string>
-      <string id="SUPPORTED_TB60">Thunderbird 60 ou supérieur, Thunderbird 60 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB62">Thunderbird 62 ou supérieur, Thunderbird 60.2 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB63">Thunderbird 63 ou supérieur</string>
-      <string id="SUPPORTED_TB64">Thunderbird 64 ou supérieur, Thunderbird 60.4 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB66">Thunderbird 66 ou supérieur, Thunderbird 60.6 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB67">Thunderbird 67 ou supérieur, Thunderbird 60.7 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB68">Thunderbird 68 ou supérieur, Thunderbird 68 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB6801">Thunderbird 68.0.1 ou supérieur, Thunderbird 68.0.1 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB60ESR">Thunderbird 60 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB68ESR">Thunderbird 68.5 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB69">Thunderbird 69 ou supérieur, Thunderbird 68.1 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB70">Thunderbird 70 ou supérieur, Thunderbird 68.2 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB71">Thunderbird 71 ou supérieur, Thunderbird 68.3 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB72">Thunderbird 72 ou supérieur, Thunderbird 68.4 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB73">Thunderbird 73 ou supérieur, Thunderbird 68.5 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB74">Thunderbird 74 ou supérieur, Thunderbird 68.6 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB75">Thunderbird 75 ou supérieur, Thunderbird 68.7 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB75_ONLY">Thunderbird 75 ou supérieur</string>
-      <string id="SUPPORTED_TB76">Thunderbird 76 ou supérieur, Thunderbird 68.8 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB76_ONLY">Thunderbird 76 ou supérieur</string>
-      <string id="SUPPORTED_TB77">Thunderbird 77 ou supérieur, Thunderbird 68.9 ESR ou supérieur</string>
-      <string id="SUPPORTED_TB77_ONLY">Thunderbird 77 ou supérieur</string>
-      <string id="SUPPORTED_TB78">Thunderbird 78 ou supérieur</string>
       <string id="thunderbird">Thunderbird</string>
       <string id="Permissions_group">Permissions</string>
       <string id="Camera_group">Caméra</string>
@@ -98,7 +76,7 @@ Si cette stratégie est activée ou non configurée, les préférences d'authent
 
 If this policy is disabled or not configured, integrated authentication is not used in private browsing.</string>
       <string id="BlockAboutAddons">Gestion de modules Add-ons </string>
-      <string id="BlockAboutAddons_Explain" >Si cette stratégie est activée, l'utilisateur ne peut pas accéder au gestionnaire de modules complémentaires ou aux modules add:.
+      <string id="BlockAboutAddons_Explain">Si cette stratégie est activée, l'utilisateur ne peut pas accéder au gestionnaire de modules complémentaires ou aux modules add:.
 
 Si cette stratégie est désactivée ou non configurée, l'utilisateur peut accéder au Gestionnaire de modules complémentaires et à about:addons.</string>
       <string id="BlockAboutConfig">Gestion about:config</string>
@@ -146,7 +124,6 @@ Si cette stratégie est activée ou non configurée, DNS sur HTTPS est activé.<
       <string id="DNSOverHTTPS_ProviderURL_Explain">Si cette stratégie est activée, l'URL spécifiée est utilisée comme URL du fournisseur.
 
 Si cette stratégie est désactivée ou n'est pas configurée, le fournisseur par défaut est utilisé.</string>
-
       <string id="DNSOverHTTPS_Locked">Bloqué</string>
       <string id="DNSOverHTTPS_Locked_Explain">Si cette stratégie est activée, les paramètres DNS sur HTTPS ne peuvent pas être modifiés par l'utilisateur.
 
@@ -478,7 +455,6 @@ Si cette stratégie est désactivée ou non configurée, la mise à niveau est a
 
 Si cette stratégie est désactivée ou non configurée, les données ne sont pas effacées à la fermeture du navigateur.</string>
       <string id="SanitizeOnShutdown_group">Effacer les données à la fermeture du navigateur.</string>
-
       <string id="SanitizeOnShutdown_Cache">Cache</string>
       <string id="SanitizeOnShutdown_Cache_Explain">Si la stratégie est activée, le cache est effacé à la fermeture du navigateur.
 
@@ -886,8 +862,12 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences</s
       <presentation id="WebsiteFilter">
         <listBox refId="WebsiteFilter"/>
       </presentation>
-      <presentation id="Permissions"><listBox refId="Permissions"/></presentation>
-      <presentation id="PopupsAllow"><listBox refId="PopupsAllowDesc">Autoriser les fenêtres contextuelles pour les sites Web</listBox></presentation>
+      <presentation id="Permissions">
+        <listBox refId="Permissions"/>
+      </presentation>
+      <presentation id="PopupsAllow">
+        <listBox refId="PopupsAllowDesc">Autoriser les fenêtres contextuelles pour les sites Web</listBox>
+      </presentation>
       <presentation id="Cookies_AcceptThirdParty">
         <dropdownList refId="Cookies_AcceptThirdParty"/>
       </presentation>

@@ -1,34 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="1.16" schemaVersion="1.0" >
+<policyDefinitionResources revision="1.16" schemaVersion="1.0">
   <displayName/>
   <description/>
-  <resources >
-    <stringTable >
+  <resources>
+    <stringTable>
+      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 oder höher</string>
       <string id="UNSUPPORTED">Nicht mehr unterstützt.</string>
-      <string id="SUPPORTED_TB60">Thunderbird 60 oder höher, Thunderbird 60 ESR oder höher</string>
-      <string id="SUPPORTED_TB62">Thunderbird 62 oder höher, Thunderbird 60.2 ESR oder höher</string>
-      <string id="SUPPORTED_TB63">Thunderbird 63 oder höher</string>
-      <string id="SUPPORTED_TB64">Thunderbird 64 oder höher, Thunderbird 60.4 ESR oder höher</string>
-      <string id="SUPPORTED_TB66">Thunderbird 66 oder höher, Thunderbird 60.6 ESR oder höher</string>
-      <string id="SUPPORTED_TB67">Thunderbird 67 oder höher, Thunderbird 60.7 ESR oder höher</string>
-      <string id="SUPPORTED_TB68">Thunderbird 68 oder höher, Thunderbird 68 ESR oder höher</string>
-      <string id="SUPPORTED_TB6801">Thunderbird 68.0.1 oder höher, Thunderbird 68.0.1 ESR oder höher</string>
-      <string id="SUPPORTED_TB60ESR">Thunderbird 60 ESR oder höher</string>
-      <string id="SUPPORTED_TB68ESR">Thunderbird 68.5 ESR oder höher</string>
-      <string id="SUPPORTED_TB69">Thunderbird 69 oder höher, Thunderbird 68.1 ESR oder höher</string>
-      <string id="SUPPORTED_TB70">Thunderbird 70 oder höher, Thunderbird 68.2 ESR oder höher</string>
-      <string id="SUPPORTED_TB71">Thunderbird 71 oder höher, Thunderbird 68.3 ESR oder höher</string>
-      <string id="SUPPORTED_TB72">Thunderbird 72 oder höher, Thunderbird 68.4 ESR oder höher</string>
-      <string id="SUPPORTED_TB73">Thunderbird 73 oder höher, Thunderbird 68.5 ESR oder höher</string>
-      <string id="SUPPORTED_TB74">Thunderbird 74 oder höher, Thunderbird 68.6 ESR oder höher</string>
-      <string id="SUPPORTED_TB75">Thunderbird 75 oder höher, Thunderbird 68.7 ESR oder höher</string>
-      <string id="SUPPORTED_TB75_ONLY">Thunderbird 75 oder höher</string>
-      <string id="SUPPORTED_TB76">Thunderbird 76 oder höher, Thunderbird 68.8 ESR oder höher</string>
-      <string id="SUPPORTED_TB76_ONLY">Thunderbird 76 oder höher</string>
-      <string id="SUPPORTED_TB77">Thunderbird 77 oder höher, Thunderbird 68.9 ESR oder höher</string>
-      <string id="SUPPORTED_TB77_ONLY">Thunderbird 77 oder höher</string>
-      <string id="SUPPORTED_TB78">Thunderbird 78 oder höher</string>
       <string id="thunderbird">Thunderbird</string>
       <string id="Permissions_group">Berechtigungen</string>
       <string id="Camera_group">Kamera</string>
@@ -98,7 +76,7 @@ Wenn diese Richtlinieneinstellung aktiviert oder nicht konfiguriert ist, können
 
 Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, wird die interne Authentifizierung in privaten Fenstern nicht benutzt.</string>
       <string id="BlockAboutAddons">Zugriff auf Add-ons Manager verhindern</string>
-      <string id="BlockAboutAddons_Explain" >Wenn Sie die Richtlinieneinstellung aktivieren, können Benutzer nicht auf den Add-on Manager oder about:addons zugreifen.
+      <string id="BlockAboutAddons_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, können Benutzer nicht auf den Add-on Manager oder about:addons zugreifen.
 
 Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, können Benutzer auf den Add-ons Manager und about:addons zugreifen.</string>
       <string id="BlockAboutConfig">Zugriff auf about:config verhindern</string>
@@ -146,7 +124,6 @@ Wenn diese Richtlinieneinstellung aktiviert oder nicht konfiguriert ist, ist DNS
       <string id="DNSOverHTTPS_ProviderURL_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, wird die angegebene URL als Provider-URL verwendet.
 
 Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, wird der Standardanbieter verwendet.</string>
-
       <string id="DNSOverHTTPS_Locked">Gesperrt</string>
       <string id="DNSOverHTTPS_Locked_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können die DNS über HTTPS-Einstellungen vom Benutzer nicht geändert werden.
 
@@ -182,9 +159,9 @@ Weitere Informationen über den Standard-Browser-Agent finden Sie unter https://
 
 Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, können die Werkzeuge für Webentwickler in Thunderbird benutzt werden.</string>
       <string id="DisableFeedbackCommands">Feedback Commands deaktivieren</string>
-      <string id="DisableFeedbackCommands_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, sind &quot;Feedback senden...&quot; und &quot;Betrügerische Website melden…&quot; im Hilfemenü nicht verfügbar.
+      <string id="DisableFeedbackCommands_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, sind "Feedback senden..." und "Betrügerische Website melden…" im Hilfemenü nicht verfügbar.
 
-Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, sind &quot;Feedback senden...&quot; und &quot;Betrügerische Website melden..&quot; im Hilfemenü verfügbar.</string>
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, sind "Feedback senden..." und "Betrügerische Website melden.." im Hilfemenü verfügbar.</string>
       <string id="DisableFirefoxAccounts">Thunderbird-Konto deaktivieren</string>
       <string id="DisableFirefoxAccounts_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, steht Thunderbird-Konto nicht zur Verfügung, dies beinhaltet auch die Synchronisierung.
 
@@ -200,9 +177,9 @@ Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, könn
 
 Für weitere Informationen, besuchen Sie https://support.mozilla.org/en-US/kb/shield und https://wiki.mozilla.org/Thunderbird/Shield/Heartbeat</string>
       <string id="DisableForgetButton">Vergessen Button deaktivieren</string>
-      <string id="DisableForgetButton_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, steht der &quot;Vergessen&quot; Button nicht zur Verfügung.
+      <string id="DisableForgetButton_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, steht der "Vergessen" Button nicht zur Verfügung.
 
-Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, steht der &quot;Vergessen&quot; Button zur Verfügung.</string>
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, steht der "Vergessen" Button zur Verfügung.</string>
       <string id="DisableFormHistory">Chronik deaktivieren</string>
       <string id="DisableFormHistory_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, wird Thunderbird dieselben Einstellungen wie im Privaten Modus verwenden und keinerlei Chronik anlegen.
 
@@ -220,21 +197,21 @@ Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, steht
 
 Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, ist privates Surfen erlaubt.</string>
       <string id="DisableProfileImport">Profil Import deaktivieren</string>
-      <string id="DisableProfileImport_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, steht die Option &quot;Daten von einen anderen Browser importieren..&quot; in der Bibliothek nicht zur Verfügung.
+      <string id="DisableProfileImport_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, steht die Option "Daten von einen anderen Browser importieren.." in der Bibliothek nicht zur Verfügung.
 
-Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, steht die Option &quot;Daten von einen anderen Browser importieren..&quot; in der Bibliothek zur Verfügung.</string>
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, steht die Option "Daten von einen anderen Browser importieren.." in der Bibliothek zur Verfügung.</string>
       <string id="DisableProfileRefresh">Thunderbird bereinigen deaktivieren</string>
-      <string id="DisableProfileRefresh_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, steht der &quot;Thunderbird bereinigen...&quot; Button auf der about:support Seite oder auf support.mozilla.org nicht zur Verfügung.
+      <string id="DisableProfileRefresh_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, steht der "Thunderbird bereinigen..." Button auf der about:support Seite oder auf support.mozilla.org nicht zur Verfügung.
 
-Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, steht der &quot;Thunderbird bereinigen...&quot; Button auf der about:support Seite oder auf support.mozilla.org zur Verfügung.</string>
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, steht der "Thunderbird bereinigen..." Button auf der about:support Seite oder auf support.mozilla.org zur Verfügung.</string>
       <string id="DisableSafeMode">Abgesicherten Modus deaktivieren</string>
-      <string id="DisableSafeMode_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, können Benutzer die Option &quot;Mit deaktivierten Add-ons neu starten...&quot; (Abgesicherter Modus) im Hilfemenü nicht auswählen.
+      <string id="DisableSafeMode_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, können Benutzer die Option "Mit deaktivierten Add-ons neu starten..." (Abgesicherter Modus) im Hilfemenü nicht auswählen.
 
-Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, können Benutzer die Option &quot;Mit deaktivierten Add-ons neu starten...&quot; (Abgesicherter Modus) im Hilfemenü auswählen.</string>
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, können Benutzer die Option "Mit deaktivierten Add-ons neu starten..." (Abgesicherter Modus) im Hilfemenü auswählen.</string>
       <string id="DisableSecurityBypass_InvalidCertificate">Ausnahme hinzufügen verhindern bei unsicheren Zertifikaten</string>
-      <string id="DisableSecurityBypass_InvalidCertificate_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, steht &quot;Ausnahme hinzufügen&quot; nicht zur Verfügung, wenn ein Zertifikat ungültig ist. Dies verhindert, dass ein Benutzer Zertifikatsfehler überschreibt.
+      <string id="DisableSecurityBypass_InvalidCertificate_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, steht "Ausnahme hinzufügen" nicht zur Verfügung, wenn ein Zertifikat ungültig ist. Dies verhindert, dass ein Benutzer Zertifikatsfehler überschreibt.
 
-Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, steht &quot;Ausnahme hinzufügen&quot; zur Verfügung, wenn ein Zertifikat ungültig ist.</string>
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, steht "Ausnahme hinzufügen" zur Verfügung, wenn ein Zertifikat ungültig ist.</string>
       <string id="DisableSecurityBypass_SafeBrowsing">Betrugsversuch- und Schadprogrammschutz ändern</string>
       <string id="DisableSecurityBypass_SafeBrowsing_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, können Benutzer Warnungen zu Betrugsversuch- und Schadprogrammschutz nicht umgehen um eine schädliche Webseite zu besuchen.
 
@@ -361,7 +338,7 @@ Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren oder w
       <string id="Cookies_ExpireAtSessionEnd">Cookies behalten, bis Thunderbird geschlossen ist</string>
       <string id="Cookies_ExpireAtSessionEnd_Explain">Wenn Sie die Richtlinieneinstellung aktivieren und Cookies erlaubt sind, werden diese gelöscht sobald Thunderbird geschlossen wird.
 
-Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren oder wenn &quot;Cookies und Website-Daten annehmen&quot; deaktiviert ist wird diese Richtlinieneinstellung ignoriert.</string>
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren oder wenn "Cookies und Website-Daten annehmen" deaktiviert ist wird diese Richtlinieneinstellung ignoriert.</string>
       <string id="Cookies_RejectTracker">Tracker ablehnen</string>
       <string id="Cookies_RejectTracker_Explain">Wenn diese Richtlinieneinstellung aktiviert ist und Cookies aktiviert sind, werden Tracker-Cookies standardmäßig abgewiesen.
 
@@ -478,7 +455,6 @@ Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren wird e
 
 Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wird die keine Daten der Chronik gelöscht.</string>
       <string id="SanitizeOnShutdown_group">Browserdaten löschen, wenn der Browser geschlossen wird</string>
-
       <string id="SanitizeOnShutdown_Cache">Cache</string>
       <string id="SanitizeOnShutdown_Cache_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, wird der Cache gelöscht, wenn der Browser geschlossen wird.
 
@@ -886,8 +862,12 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences (E
       <presentation id="WebsiteFilter">
         <listBox refId="WebsiteFilter"/>
       </presentation>
-      <presentation id="Permissions"><listBox refId="Permissions"/></presentation>
-      <presentation id="PopupsAllow"><listBox refId="PopupsAllowDesc">Pop-up-Blocker deaktivieren</listBox></presentation>
+      <presentation id="Permissions">
+        <listBox refId="Permissions"/>
+      </presentation>
+      <presentation id="PopupsAllow">
+        <listBox refId="PopupsAllowDesc">Pop-up-Blocker deaktivieren</listBox>
+      </presentation>
       <presentation id="Cookies_AcceptThirdParty">
         <dropdownList refId="Cookies_AcceptThirdParty"/>
       </presentation>

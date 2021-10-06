@@ -1,34 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="1.16" schemaVersion="1.0" >
+<policyDefinitionResources revision="1.16" schemaVersion="1.0">
   <displayName/>
   <description/>
-  <resources >
-    <stringTable >
+  <resources>
+    <stringTable>
+      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 o posterior</string>
       <string id="UNSUPPORTED">Ya no tiene soporte</string>
-      <string id="SUPPORTED_TB60">Thunderbird 60 o posterior, Thunderbird 60 ESR o posterior</string>
-      <string id="SUPPORTED_TB62">Thunderbird 62 o posterior, Thunderbird 60.2 ESR o posterior</string>
-      <string id="SUPPORTED_TB63">Thunderbird 63 o posterior</string>
-      <string id="SUPPORTED_TB64">Thunderbird 64 o posterior, Thunderbird 60.4 ESR o posterior</string>
-      <string id="SUPPORTED_TB66">Thunderbird 66 o posterior, Thunderbird 60.6 ESR o posterior</string>
-      <string id="SUPPORTED_TB67">Thunderbird 67 o posterior, Thunderbird 60.7 ESR o posterior</string>
-      <string id="SUPPORTED_TB68">Thunderbird 68 o posterior, Thunderbird 68 ESR o posterior</string>
-      <string id="SUPPORTED_TB6801">Thunderbird 68.0.1 o posterior, Thunderbird 68.0.1 ESR o posterior</string>
-      <string id="SUPPORTED_TB60ESR">Thunderbird 60 ESR o posterior</string>
-      <string id="SUPPORTED_TB68ESR">Thunderbird 68.5 ESR o posterior</string>
-      <string id="SUPPORTED_TB69">Thunderbird 69 o posterior, Thunderbird 68.1 ESR o posterior</string>
-      <string id="SUPPORTED_TB70">Thunderbird 70 o posterior, Thunderbird 68.2 ESR o posterior</string>
-      <string id="SUPPORTED_TB71">Thunderbird 71 o posterior, Thunderbird 68.3 ESR o posterior</string>
-      <string id="SUPPORTED_TB72">Thunderbird 72 o posterior, Thunderbird 68.4 ESR o posterior</string>
-      <string id="SUPPORTED_TB73">Thunderbird 73 o posterior, Thunderbird 68.5 ESR o posterior</string>
-      <string id="SUPPORTED_TB74">Thunderbird 74 o posterior, Thunderbird 68.6 ESR o posterior</string>
-      <string id="SUPPORTED_TB75">Thunderbird 75 o posterior, Thunderbird 68.7 ESR o posterior</string>
-      <string id="SUPPORTED_TB75_ONLY">Thunderbird 75 o posterior</string>
-      <string id="SUPPORTED_TB76">Thunderbird 76 o posterior, Thunderbird 68.8 ESR o posterior</string>
-      <string id="SUPPORTED_TB76_ONLY">Thunderbird 76 o posterior</string>
-      <string id="SUPPORTED_TB77">Thunderbird 77 o posterior, Thunderbird 68.9 ESR o posterior</string>
-      <string id="SUPPORTED_TB77_ONLY">Thunderbird 77 o posterior</string>
-      <string id="SUPPORTED_TB78">Thunderbird 78 o posterior</string>
       <string id="thunderbird">Thunderbird</string>
       <string id="Permissions_group">Permisos</string>
       <string id="Camera_group">Cámara</string>
@@ -146,7 +124,6 @@ If this policy is enabled or not configured, DNS Over HTTPS is enabled.</string>
       <string id="DNSOverHTTPS_ProviderURL_Explain">If this policy is enabled, the URL specified is used as the provider URL.
 
 If this policy is disabled or not configured, the default provider is used.</string>
-
       <string id="DNSOverHTTPS_Locked">Locked</string>
       <string id="DNSOverHTTPS_Locked_Explain">If this policy is enabled, DNS over HTTPS settings cannot be changed by the user.
 
@@ -182,9 +159,9 @@ For more information about the default browser agent, see https://thunderbird-so
 
 Si esta política está deshabilitada o no está configurada, las herramientas para desarrolladores web estarán disponibles dentro de Thunderbird.</string>
       <string id="DisableFeedbackCommands">Deshabilitar comandos de comentarios</string>
-      <string id="DisableFeedbackCommands_Explain">Si esta política está habilitada, los menús &quot;Enviar comentario&quot; y &quot;Reportar sitio engañoso&quot; no estarán disponibles en el menú de ayuda.
+      <string id="DisableFeedbackCommands_Explain">Si esta política está habilitada, los menús "Enviar comentario" y "Reportar sitio engañoso" no estarán disponibles en el menú de ayuda.
 
-Si esta política está deshabilitada o no está configurada, los menús &quot;Enviar comentario&quot; y &quot;Reportar sitio engañoso&quot; estarán disponibles en el menú de ayuda.</string>
+Si esta política está deshabilitada o no está configurada, los menús "Enviar comentario" y "Reportar sitio engañoso" estarán disponibles en el menú de ayuda.</string>
       <string id="DisableFirefoxAccounts">Deshabilitar cuentas de Thunderbird</string>
       <string id="DisableFirefoxAccounts_Explain">Si esta política está habilitada, las cuentas de Thunderbird estarán deshabilitadas, lo que incluye deshabilitar Sync.
 
@@ -200,9 +177,9 @@ Si esta política está deshabilitada o no está configurada, el usuario podrá 
 
 Para más información, visite https://support.mozilla.org/en-US/kb/shield y https://wiki.mozilla.org/Thunderbird/Shield/Heartbeat</string>
       <string id="DisableForgetButton">Deshabilitar el botón olvidar</string>
-      <string id="DisableForgetButton_Explain">Si esta política está habilitada, el botón &quot;Olvidar&quot; no estará disponible.
+      <string id="DisableForgetButton_Explain">Si esta política está habilitada, el botón "Olvidar" no estará disponible.
 
-Si esta política está deshabilitada o no está configurada, el botón &quot;Olvidar&quot; estará disponible.</string>
+Si esta política está deshabilitada o no está configurada, el botón "Olvidar" estará disponible.</string>
       <string id="DisableFormHistory">Deshabilitar historial de formulario</string>
       <string id="DisableFormHistory_Explain">Si esta política está habilitada, Thunderbird no recordará el formulario ni el historial de búsqueda.
 
@@ -220,19 +197,19 @@ Si esta política está deshabilitada o no está configurada, Pocket está dispo
 
 Si esta política está deshabilitada o no está configurada, se permitirá la navegación privada.</string>
       <string id="DisableProfileImport">Deshabilitar importación de perfil</string>
-      <string id="DisableProfileImport_Explain">Si esta política está habilitada, la opción &quot;Importar datos desde otro navegador&quot; no estará disponible en la ventana de marcadores.
+      <string id="DisableProfileImport_Explain">Si esta política está habilitada, la opción "Importar datos desde otro navegador" no estará disponible en la ventana de marcadores.
 
-Si esta política está ddeshabilitada o no está configurada, la opción &quot;Importar datos desde otro navegador&quot; estará disponible.</string>
+Si esta política está ddeshabilitada o no está configurada, la opción "Importar datos desde otro navegador" estará disponible.</string>
       <string id="DisableProfileRefresh">Deshabilitar actualización de perfil</string>
-      <string id="DisableProfileRefresh_Explain">Si esta política está habilitada, el botón &quot;Actualizar Thunderbird&quot; no estará disponible en la página about:support o en support.mozilla.org.
+      <string id="DisableProfileRefresh_Explain">Si esta política está habilitada, el botón "Actualizar Thunderbird" no estará disponible en la página about:support o en support.mozilla.org.
 
-Si esta política está deshabilitada o no está configurada, el botón &quot;Actualizar Thunderbird&quot; estará disponible.</string>
+Si esta política está deshabilitada o no está configurada, el botón "Actualizar Thunderbird" estará disponible.</string>
       <string id="DisableSafeMode">Deshabilitar modo seguro</string>
       <string id="DisableSafeMode_Explain">Si esta política está habilitada, el usuario no podrá reiniciar el navegador en modo seguro.
 
 Si esta política está deshabilitada o no está configurada, se permitirá el modo seguro.</string>
       <string id="DisableSecurityBypass_InvalidCertificate">Evitar anular los errores de certificado</string>
-      <string id="DisableSecurityBypass_InvalidCertificate_Explain">Si esta política está habilitada, el botón &quot;Añadir excepción&quot; no estará disponible cuando un certificado no es válido. Esto evita que el usuario anule el error de certificado.
+      <string id="DisableSecurityBypass_InvalidCertificate_Explain">Si esta política está habilitada, el botón "Añadir excepción" no estará disponible cuando un certificado no es válido. Esto evita que el usuario anule el error de certificado.
 
 Si esta política está deshabilitada o no está configurada, los errores de certificado pueden anularse.</string>
       <string id="DisableSecurityBypass_SafeBrowsing">Evitar anular los errores de navegación segura</string>
@@ -478,7 +455,6 @@ Si esta política está deshabilitada o no está configurada, se mostrará la ac
 
 Si esta política está deshabilitada o no está configurada, los datos no se borrarán cuando se cierre el navegador.</string>
       <string id="SanitizeOnShutdown_group">Borrar datos cuando el navegador esté cerrado</string>
-
       <string id="SanitizeOnShutdown_Cache">Caché</string>
       <string id="SanitizeOnShutdown_Cache_Explain">Si la política está habilitada, la caché se borrará cuando se cierre el navegador.
 
@@ -887,8 +863,12 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences</s
       <presentation id="WebsiteFilter">
         <listBox refId="WebsiteFilter"/>
       </presentation>
-      <presentation id="Permissions"><listBox refId="Permissions"/></presentation>
-      <presentation id="PopupsAllow"><listBox refId="PopupsAllowDesc">Permitir ventanas emergentes para sitios web</listBox></presentation>
+      <presentation id="Permissions">
+        <listBox refId="Permissions"/>
+      </presentation>
+      <presentation id="PopupsAllow">
+        <listBox refId="PopupsAllowDesc">Permitir ventanas emergentes para sitios web</listBox>
+      </presentation>
       <presentation id="Cookies_AcceptThirdParty">
         <dropdownList refId="Cookies_AcceptThirdParty"/>
       </presentation>

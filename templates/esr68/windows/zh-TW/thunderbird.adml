@@ -1,34 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="1.16" schemaVersion="1.0" >
+<policyDefinitionResources revision="1.16" schemaVersion="1.0">
   <displayName/>
   <description/>
-  <resources >
-    <stringTable >
+  <resources>
+    <stringTable>
+      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 或更新版本</string>
       <string id="UNSUPPORTED">不再支援。</string>
-      <string id="SUPPORTED_TB60">Thunderbird 60 或更新版本、Thunderbird 60 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB62">Thunderbird 62 或更新版本、Thunderbird 60.2 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB63">Thunderbird 63 或更新版本</string>
-      <string id="SUPPORTED_TB64">Thunderbird 64 或更新版本、Thunderbird 60.4 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB66">Thunderbird 66 或更新版本、Thunderbird 60.6 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB67">Thunderbird 67 或更新版本、Thunderbird 60.7 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB68">Thunderbird 68 或更新版本、Thunderbird 68 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB6801">Thunderbird 68.0.1 或更新版本、Thunderbird 68.0.1 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB60ESR">Thunderbird 60 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB68ESR">Thunderbird 68.5 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB69">Thunderbird 69 或更新版本、Thunderbird 68.1 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB70">Thunderbird 70 或更新版本、Thunderbird 68.2 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB71">Thunderbird 71 或更新版本、Thunderbird 68.3 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB72">Thunderbird 72 或更新版本、Thunderbird 68.4 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB73">Thunderbird 73 或更新版本、Thunderbird 68.5 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB74">Thunderbird 74 或更新版本、Thunderbird 68.6 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB75">Thunderbird 75 或更新版本、Thunderbird 68.7 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB75_ONLY">Thunderbird 75 或更新版本</string>
-      <string id="SUPPORTED_TB76">Thunderbird 76 或更新版本、Thunderbird 68.8 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB76_ONLY">Thunderbird 76 或更新版本</string>
-      <string id="SUPPORTED_TB77">Thunderbird 77 或更新版本、Thunderbird 68.9 ESR 或更新版本</string>
-      <string id="SUPPORTED_TB77_ONLY">Thunderbird 77 或更新版本</string>
-      <string id="SUPPORTED_TB78">Thunderbird 78 或更新版本</string>
       <string id="thunderbird">Thunderbird</string>
       <string id="Permissions_group">權限</string>
       <string id="Camera_group">攝影機</string>
@@ -98,7 +76,7 @@
 
 If this policy is disabled or not configured, integrated authentication is not used in private browsing.</string>
       <string id="BlockAboutAddons">封鎖附加元件管理員</string>
-      <string id="BlockAboutAddons_Explain" >若啟用此原則，使用者將無法開啟附加元件管理員或 about:addons。
+      <string id="BlockAboutAddons_Explain">若啟用此原則，使用者將無法開啟附加元件管理員或 about:addons。
 
 若停用或不設定此原則，使用者則可以開啟附加元件管理員或 about:addons。</string>
       <string id="BlockAboutConfig">封鎖 about:config</string>
@@ -146,7 +124,6 @@ If this policy is disabled or not configured, integrated authentication is not u
       <string id="DNSOverHTTPS_ProviderURL_Explain">若啟用此原則，將使用指定的網址作為供應商網址。
 
 若停用或不設定此原則，則使用預設供應商。</string>
-
       <string id="DNSOverHTTPS_Locked">鎖定</string>
       <string id="DNSOverHTTPS_Locked_Explain">若啟用此原則，使用者將無法更改 DNS over HTTPS 設定。
 
@@ -476,7 +453,6 @@ If this policy is disabled or not configured, the user can change autoplay prefe
 
 若停用或不設定此原則，則不會在關閉 Thunderbird 時清理任何資料。</string>
       <string id="SanitizeOnShutdown_group">在關閉瀏覽器時清理資料。</string>
-
       <string id="SanitizeOnShutdown_Cache">快取</string>
       <string id="SanitizeOnShutdown_Cache_Explain">若啟用此原則，將在瀏覽器關閉時清除快取。
 
@@ -885,8 +861,12 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。
       <presentation id="WebsiteFilter">
         <listBox refId="WebsiteFilter"/>
       </presentation>
-      <presentation id="Permissions"><listBox refId="Permissions"/></presentation>
-      <presentation id="PopupsAllow"><listBox refId="PopupsAllowDesc">允許網站彈出視窗</listBox></presentation>
+      <presentation id="Permissions">
+        <listBox refId="Permissions"/>
+      </presentation>
+      <presentation id="PopupsAllow">
+        <listBox refId="PopupsAllowDesc">允許網站彈出視窗</listBox>
+      </presentation>
       <presentation id="Cookies_AcceptThirdParty">
         <dropdownList refId="Cookies_AcceptThirdParty"/>
       </presentation>
