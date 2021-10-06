@@ -675,7 +675,8 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
 		.map(dirent => dirent.name);
 	for (let folder of folders) {
 		let adml_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/${folder}/firefox.adml`);
-		var adml_obj = convert.xml2js(rebrand(adml_file), { compact: false });
+		// https://www.npmjs.com/package/xml-js
+		let adml_obj = convert.xml2js(rebrand(adml_file), { compact: false });
 
 		let strings = adml_obj
 			.elements.find(e => e.name == "policyDefinitionResources")
