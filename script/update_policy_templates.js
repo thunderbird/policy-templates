@@ -28,6 +28,7 @@ const util = require('util');
 const fs = require('fs-extra');
 const path = require("path");
 const plist = require('plist');
+const convert = require('xml-js');
 
 const {
 	parse,
@@ -640,15 +641,23 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
 
 			if (!used_supported_on[name]) {
 				used_supported_on[name] = {
-					"$": {
-						name,
-						displayName: `${distinctCompatInfo[compatInfoIndex].firstLong} - ${distinctCompatInfo[compatInfoIndex].last ? distinctCompatInfo[compatInfoIndex].lastLong : "*"}`,
-					}
+					admx: { // npm install xml2json (parser supports to keep children order, but builder does not)
+						"$": {
+							name,
+							displayName: `$(string.${name})`,
+						}
+					},
+					adml: { // npm install xml-js (parser and builder supports to keep children order)
+						type: 'element',
+						name: 'string',
+						attributes: { id: name },
+						elements: [{ type: 'text', text: `${distinctCompatInfo[compatInfoIndex].firstLong} - ${distinctCompatInfo[compatInfoIndex].last ? distinctCompatInfo[compatInfoIndex].lastLong : "*"}` }]
+					},
 				}
 			}
 		}
 	}
-	admx_obj.policyDefinitions.supportedOn[0].definitions[0].definition = Object.keys(used_supported_on).sort().map(e => used_supported_on[e]);
+	admx_obj.policyDefinitions.supportedOn[0].definitions[0].definition = Object.keys(used_supported_on).sort().map(e => used_supported_on[e].admx);
 
 	// Rebuild thunderbird.admx file.
 	let builder = new xml2js.Builder();
@@ -665,12 +674,26 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
 		.filter(dirent => dirent.isDirectory())
 		.map(dirent => dirent.name);
 	for (let folder of folders) {
+		let adml_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/${folder}/firefox.adml`);
+		var adml_obj = convert.xml2js(rebrand(adml_file), { compact: false });
+
+		let strings = adml_obj
+			.elements.find(e => e.name == "policyDefinitionResources")
+			.elements.find(e => e.name == "resources")
+			.elements.find(e => e.name == "stringTable")
+			.elements.filter(e => !e.attributes.id.startsWith("SUPPORTED_TB"));;
+
+		strings.unshift(...Object.keys(used_supported_on).sort().map(e => used_supported_on[e].adml));
+
+		adml_obj
+			.elements.find(e => e.name == "policyDefinitionResources")
+			.elements.find(e => e.name == "resources")
+			.elements.find(e => e.name == "stringTable")
+			.elements = strings;
+
+		let adml_xml = convert.js2xml(adml_obj, { compact: false, spaces: 2 });
 		fs.ensureDirSync(`${output_dir}/windows/${folder}`);
-		let file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/${folder}/firefox.adml`);
-		fs.writeFileSync(`${output_dir}/windows/${folder}/thunderbird.adml`, rebrand(file));
-		// This file probably does not need to change
-		file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/${folder}/mozilla.adml`);
-		fs.writeFileSync(`${output_dir}/windows/${folder}/mozilla.adml`, file);
+		fs.writeFileSync(`${output_dir}/windows/${folder}/thunderbird.adml`, adml_xml);
 	}
 }
 
