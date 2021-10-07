@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8"?>
 <policyDefinitions revision="1.16" schemaVersion="1.0">
   <policyNamespaces>
     <target prefix="thunderbird" namespace="Mozilla.Policies.Thunderbird"/>
@@ -262,30 +262,6 @@
             <decimal value="0"/>
           </falseValue>
         </boolean>
-        <boolean id="UseHTTPProxyForAllProtocols" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="UseHTTPProxyForAllProtocols">
-          <trueValue>
-            <decimal value="1"/>
-          </trueValue>
-          <falseValue>
-            <decimal value="0"/>
-          </falseValue>
-        </boolean>
-        <boolean id="AutoLogin" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="AutoLogin">
-          <trueValue>
-            <decimal value="1"/>
-          </trueValue>
-          <falseValue>
-            <decimal value="0"/>
-          </falseValue>
-        </boolean>
-        <boolean id="UseProxyForDNS" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="UseProxyForDNS">
-          <trueValue>
-            <decimal value="1"/>
-          </trueValue>
-          <falseValue>
-            <decimal value="0"/>
-          </falseValue>
-        </boolean>
         <enum id="ConnectionType" valueName="Mode">
           <item displayName="$(string.NoProxy)">
             <value>
@@ -313,6 +289,18 @@
             </value>
           </item>
         </enum>
+        <text id="HTTPProxy" valueName="HTTPProxy"/>
+        <boolean id="UseHTTPProxyForAllProtocols" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="UseHTTPProxyForAllProtocols">
+          <trueValue>
+            <decimal value="1"/>
+          </trueValue>
+          <falseValue>
+            <decimal value="0"/>
+          </falseValue>
+        </boolean>
+        <text id="SSLProxy" valueName="SSLProxy"/>
+        <text id="FTPProxy" valueName="FTPProxy"/>
+        <text id="SOCKSProxy" valueName="SOCKSProxy"/>
         <enum id="SOCKSVersion" valueName="SOCKSVersion">
           <item displayName="$(string.SOCKSVersion4)">
             <value>
@@ -325,12 +313,24 @@
             </value>
           </item>
         </enum>
-        <text id="HTTPProxy" valueName="HTTPProxy"/>
-        <text id="SSLProxy" valueName="SSLProxy"/>
-        <text id="FTPProxy" valueName="FTPProxy"/>
-        <text id="SOCKSProxy" valueName="SOCKSProxy"/>
         <text id="AutoConfigURL" valueName="AutoConfigURL"/>
         <text id="Passthrough" valueName="Passthrough"/>
+        <boolean id="AutoLogin" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="AutoLogin">
+          <trueValue>
+            <decimal value="1"/>
+          </trueValue>
+          <falseValue>
+            <decimal value="0"/>
+          </falseValue>
+        </boolean>
+        <boolean id="UseProxyForDNS" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="UseProxyForDNS">
+          <trueValue>
+            <decimal value="1"/>
+          </trueValue>
+          <falseValue>
+            <decimal value="0"/>
+          </falseValue>
+        </boolean>
       </elements>
     </policy>
     <policy name="AppUpdateURL" class="Both" displayName="$(string.AppUpdateURL)" explainText="$(string.AppUpdateURL_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.AppUpdateURL)">

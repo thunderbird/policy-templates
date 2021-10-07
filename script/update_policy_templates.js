@@ -3,7 +3,8 @@
  */
 
 // Debug logging (0 - errors and basic logs only, 1 - verbose debug)
-const debugLevel = 0;
+const DEBUG_LEVEL = 0;
+const DEBUG_SKIP_GITHUB_PULL = false;
 
 const build_dir = "../templates";
 const state_dir = "./data/gitstate";
@@ -23,7 +24,6 @@ const bentGetTEXT = bent('GET', 'string', 200);
 const cheerio = require('cheerio');
 const git = require("isomorphic-git");
 const http = require('isomorphic-git/http/node');
-const xml2js = require('xml2js');
 const util = require('util');
 const fs = require('fs-extra');
 const path = require("path");
@@ -72,7 +72,7 @@ __details__
 `;
 
 function debug(...args) {
-	if (debugLevel > 0) {
+	if (DEBUG_LEVEL > 0) {
 		console.debug(...args);
 	}
 }
@@ -216,6 +216,9 @@ function rebrand(lines) {
  * @param {string} dir - directory to store templates in
  */
 async function pullGitRepository(url, ref, dir) {
+	if (DEBUG_SKIP_GITHUB_PULL)
+		return;
+
 	if (!fs.existsSync(dir)) {
 		console.log(`Cloning ${url} (${ref})`);
 		fs.ensureDirSync(dir);
@@ -558,34 +561,27 @@ function buildCompatibilityTable(compatInfo) {
  * Build the Windows ADMX/ADML files.
  */
 async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
-	// Read ADMX files - https://www.npmjs.com/package/xml2js.
-	let parser = new xml2js.Parser();
-	let admx_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/firefox.admx`);
-	let admx_obj = await parser.parseStringPromise(
-		rebrand(admx_file).replace(/">">/g, '">'), // issue https://github.com/mozilla/policy-templates/issues/801
-	);
-
 	function getNameFromKey(key) {
 		const key_prefix = "Software\\Policies\\Mozilla\\Thunderbird\\";
 		const key_prefix_length = key_prefix.length;
-		if (key.length > key_prefix_length) {
+		if (key && key.length > key_prefix_length) {
 			return key.substring(key_prefix_length).split("\\").join("_");
 		}
 	}
 	function getThunderbirdPolicy(policy, element) {
 		let parts = [];
-		let name = getNameFromKey(policy.$.key);
+		let name = getNameFromKey(policy?.attributes?.key);
 		if (name) {
 			parts.push(name);
 		}
 
-		if (policy.$.valueName) {
-			parts.push(policy.$.valueName);
+		if (policy?.attributes?.valueName) {
+			parts.push(policy.attributes.valueName);
 		}
 
 		if (element) {
-			if (element.$.key) parts = [getNameFromKey(element.$.key)];
-			else if (element.$.valueName) parts.push(element.$.valueName);
+			if (element?.attributes?.key) parts = [getNameFromKey(element.attributes.key)];
+			else if (element?.attributes?.valueName) parts.push(element.attributes.valueName);
 		}
 		let flat_policy_name = parts.join("_");
 		if (thunderbirdPolicies.includes(flat_policy_name)) {
@@ -593,61 +589,65 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
 		}
 		return false;
 	}
+	
+	// Read ADMX files - https://www.npmjs.com/package/xml-js
+	let admx_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/firefox.admx`);
+	let admx_obj = convert.xml2js(
+		rebrand(admx_file).replace(/">">/g, '">'), // issue https://github.com/mozilla/policy-templates/issues/801
+		{ compact: false }
+	);
 
-	// Remove unsupported policies (remember, we work with flattened policy_property names here).
-	// A single ADMX policy entry can include multiple elements, we need to check those individually.
-	let admxPolicies = admx_obj.policyDefinitions.policies[0].policy;
+	let admxPolicies = admx_obj
+		.elements.find(e => e.name == "policyDefinitions")
+		.elements.find(e => e.name == "policies")
+		.elements;
 	let distinctCompatInfo = getCompatibilityInformation(/* distinct */ true, tree);
+	let used_supported_on = {};
+
 	for (let policy of admxPolicies) {
-		policy.compatInfo = [];
+		// Identify unsupported policies (remember, we work with flattened policy_property names here).
+		// A single ADMX policy entry can include multiple elements, we need to check those individually.
+		let compatInfo = [];
 
 		let flat_policy_name = getThunderbirdPolicy(policy);
 		if (!flat_policy_name) {
 			policy.unsupported = true
 		}
 
-		if (policy.elements) {
-			for (let element of policy.elements) {
-				for (let type of Object.keys(element)) {
-					element[type] = element[type].filter(e => !!getThunderbirdPolicy(policy, e))
-					if (element[type].length == 0) delete element[type]
-					else {
-						delete policy.unsupported;
-						policy.compatInfo.push(...element[type].map(e => distinctCompatInfo.findIndex(i => i.policies.includes(getThunderbirdPolicy(policy, e)))));
-					}
-				}
+		if (policy.elements && policy.elements.find(e => e.name == "elements") && Array.isArray(policy.elements.find(e => e.name == "elements").elements)) {
+			// The elements member is a structure from the xml parser, we need the elements object of
+			// the elements obj with name elements here.
+			let elements = policy.elements.find(e => e.name == "elements").elements.filter(e => !!getThunderbirdPolicy(policy, e));
+			if (elements.length == 0) {
+				delete policy.elements.find(e => e.name == "elements").elements;
+				policy.unsupported = true;
+			} else {
+				delete policy.unsupported;
+				compatInfo.push(...elements.map(e => distinctCompatInfo.findIndex(i => i.policies.includes(getThunderbirdPolicy(policy, e)))));
 			}
-			// If we removed all elements, remove the policy
-			policy.elements = policy.elements.filter(e => Object.keys(e).length > 0)
-			if (policy.elements.length == 0) policy.unsupported = true
 		} else {
-			policy.compatInfo.push(distinctCompatInfo.findIndex(e => e.policies.includes(flat_policy_name)));
+			compatInfo.push(distinctCompatInfo.findIndex(e => e.policies.includes(flat_policy_name)));
 		}
-	}
-	admx_obj.policyDefinitions.policies[0].policy = admxPolicies.filter(p => !p.unsupported);
 
-	// Adjust supportedOn.
-	let used_supported_on = {};
-	for (let policy of admx_obj.policyDefinitions.policies[0].policy) {
+		// Adjust supportedOn.
 		// A single policy entry can contain multiple policy elements which potentially could have a different compat setting.
-		// Todo: Check wether all members of policy.compatInfo are identical.
-
-		let compatInfoIndex = policy.compatInfo.pop();
-		delete policy.compatInfo;
+		// Todo: Check wether all members of policy.compatInfo are identical.		
+		let compatInfoIndex = compatInfo.length > 0
+			? compatInfo[0]
+			: -1
 
 		if (compatInfoIndex != -1) {
 			let name = `SUPPORTED_ID_${compatInfoIndex}`;
-			policy.supportedOn[0].$.ref = name;
+			policy.elements.find(e => e.name == "supportedOn").attributes.ref = name;
 
 			if (!used_supported_on[name]) {
 				used_supported_on[name] = {
-					admx: { // npm install xml2json (parser supports to keep children order, but builder does not)
-						"$": {
-							name,
-							displayName: `$(string.${name})`,
-						}
+					admx: {
+						type: 'element',
+						name: 'definition',
+						attributes: { name, displayName: `$(string.${name})` },
 					},
-					adml: { // npm install xml-js (parser and builder supports to keep children order)
+					adml: {
 						type: 'element',
 						name: 'string',
 						attributes: { id: name },
@@ -657,17 +657,30 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
 			}
 		}
 	}
-	admx_obj.policyDefinitions.supportedOn[0].definitions[0].definition = Object.keys(used_supported_on).sort().map(e => used_supported_on[e].admx);
+
+	// Update policies.
+	admx_obj
+		.elements.find(e => e.name == "policyDefinitions")
+		.elements.find(e => e.name == "policies")
+		.elements = admxPolicies.filter(p => !p.unsupported);
+
+	// Update supportedOn definitions.
+	admx_obj
+		.elements.find(e => e.name == "policyDefinitions")
+		.elements.find(e => e.name == "supportedOn")
+		.elements.find(e => e.name == "definitions")
+		.elements = Object.keys(used_supported_on).sort().map(e => used_supported_on[e].admx);
 
 	// Rebuild thunderbird.admx file.
-	let builder = new xml2js.Builder();
-	let xml = builder.buildObject(admx_obj);
+	let admx_xml = convert.js2xml(admx_obj, { compact: false, spaces: 2 });
 	fs.ensureDirSync(`${output_dir}/windows`);
-	fs.writeFileSync(`${output_dir}/windows/thunderbird.admx`, xml);
+	fs.writeFileSync(`${output_dir}/windows/thunderbird.admx`, admx_xml);
 
 	// Copy mozilla.admx file.
 	file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/mozilla.admx`);
 	fs.writeFileSync(`${output_dir}/windows/mozilla.admx`, file);
+
+
 
 	// Handle translation files.
 	let folders = fs.readdirSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows`, { withFileTypes: true })
@@ -675,14 +688,13 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
 		.map(dirent => dirent.name);
 	for (let folder of folders) {
 		let adml_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/${folder}/firefox.adml`);
-		// https://www.npmjs.com/package/xml-js
 		let adml_obj = convert.xml2js(rebrand(adml_file), { compact: false });
 
 		let strings = adml_obj
 			.elements.find(e => e.name == "policyDefinitionResources")
 			.elements.find(e => e.name == "resources")
 			.elements.find(e => e.name == "stringTable")
-			.elements.filter(e => !e.attributes.id.startsWith("SUPPORTED_TB"));;
+			.elements.filter(e => !e.attributes.id.startsWith("SUPPORTED_TB"));
 
 		strings.unshift(...Object.keys(used_supported_on).sort().map(e => used_supported_on[e].adml));
 
