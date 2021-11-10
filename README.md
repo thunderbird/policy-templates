@@ -7,7 +7,7 @@ While the templates for the most recent version of Thunderbird will probably als
  * [Thunderbird 78 (and older)](templates/esr78) (v2.12) 
  * [Thunderbird 68](templates/esr68) (v1.17) 
 
-The files are also available as a [zip archive](https://github.com/thundernest/policy-templates/archive/refs/heads/master.zip).
+The files are also available for download as a [zip archive](https://github.com/thundernest/policy-templates/archive/refs/heads/master.zip).
 
 <br>
 
