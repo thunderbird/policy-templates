@@ -3,11 +3,11 @@
 While the templates for the most recent version of Thunderbird will probably also work with older releases of Thunderbird, they may contain new policies which are not supported in older releases. We suggest to use the templates which correspond to the highest version of Thunderbird you are actually deploying.
 
  * [Thunderbird (active development)](templates/central)
+ * [Thunderbird 115 (and older)](templates/esr115) (v5.9) 
+ * [Thunderbird 102 (and older)](templates/esr102) (v4.12) 
  * [Thunderbird 91 (and older)](templates/esr91) (v3.1) 
  * [Thunderbird 78 (and older)](templates/esr78) (v2.12) 
  * [Thunderbird 68](templates/esr68) (v1.17) 
-
-The files are also available for download as a [zip archive](https://github.com/thundernest/policy-templates/archive/refs/heads/master.zip).
 
 <br>
 
@@ -21,8 +21,10 @@ The following table states for each policy, when Thunderbird started to support 
 | `3rdparty` | 78.0 |  |
 | `3rdparty_Extensions` | 78.0 |  |
 | `3rdparty_Extensions_[name]` | 78.0 |  |
+| *`AllowFileSelectionDialogs`* |  |  |
 | *`AllowedDomainsForApps`* |  |  |
 | `AppAutoUpdate` | 75.0 |  |
+| `AppUpdatePin` | 104.0 |  |
 | `AppUpdateURL` | 68.0 |  |
 | `Authentication` | 78.0 |  |
 | `Authentication_AllowNonFQDN` | 78.0 |  |
@@ -37,6 +39,8 @@ The following table states for each policy, when Thunderbird started to support 
 | `Authentication_PrivateBrowsing` | 78.0 |  |
 | `Authentication_SPNEGO` | 78.0 |  |
 | *`AutoLaunchProtocolsFromOrigins`* |  |  |
+| *`AutofillAddressEnabled`* |  |  |
+| *`AutofillCreditCardEnabled`* |  |  |
 | `BackgroundAppUpdate` | 91.0 |  |
 | `BlockAboutAddons` | 68.0 |  |
 | `BlockAboutConfig` | 68.0 |  |
@@ -47,10 +51,14 @@ The following table states for each policy, when Thunderbird started to support 
 | `Certificates` | 68.0 |  |
 | `Certificates_ImportEnterpriseRoots` | 68.0 |  |
 | `Certificates_Install` | 68.0 |  |
+| *`Containers`* |  |  |
+| *`ContentAnalysis`* |  |  |
 | `Cookies` | 78.0 |  |
 | `Cookies_AcceptThirdParty` | 78.0 |  |
 | `Cookies_Allow` | 78.0 |  |
 | *`Cookies_AllowSession`* |  |  |
+| *`Cookies_Behavior`* |  |  |
+| *`Cookies_BehaviorPrivateBrowsing`* |  |  |
 | `Cookies_Block` | 78.0 |  |
 | `Cookies_Default` | 78.0 |  |
 | `Cookies_ExpireAtSessionEnd` | 78.0 |  |
@@ -59,9 +67,11 @@ The following table states for each policy, when Thunderbird started to support 
 | `DNSOverHTTPS` | 91.0 |  |
 | `DNSOverHTTPS_Enabled` | 91.0 |  |
 | `DNSOverHTTPS_ExcludedDomains` | 91.0 |  |
+| *`DNSOverHTTPS_Fallback`* |  |  |
 | `DNSOverHTTPS_Locked` | 91.0 |  |
 | `DNSOverHTTPS_ProviderURL` | 91.0 |  |
 | `DefaultDownloadDirectory` | 78.0 |  |
+| *`DisableAccounts`* |  |  |
 | `DisableAppUpdate` | 68.0 |  |
 | `DisableBuiltinPDFViewer` | 91.0 |  |
 | *`DisableDefaultBrowserAgent`* |  |  |
@@ -85,13 +95,20 @@ The following table states for each policy, when Thunderbird started to support 
 | *`DisableSetDesktopBackground`* |  |  |
 | `DisableSystemAddonUpdate` | 77.0 |  |
 | `DisableTelemetry` | 78.0 |  |
+| *`DisableThirdPartyModuleBlocking`* |  |  |
 | `DisabledCiphers` | 76.0 |  |
 | `DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA` | 76.0 |  |
 | `DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA` | 76.0 |  |
+| `DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA` | 102.0 |  |
 | `DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256` | 76.0 |  |
+| `DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA` | 102.0 |  |
+| `DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` | 102.0 |  |
+| `DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256` | 102.0 |  |
 | `DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA` | 76.0 |  |
 | `DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256` | 76.0 |  |
 | `DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA` | 76.0 |  |
+| `DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384` | 102.0 |  |
+| `DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256` | 102.0 |  |
 | `DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA` | 76.0 |  |
 | `DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA` | 76.0 |  |
 | `DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256` | 91.0 |  |
@@ -103,6 +120,7 @@ The following table states for each policy, when Thunderbird started to support 
 | `DownloadDirectory` | 78.0 |  |
 | *`EnableTrackingProtection`* |  |  |
 | *`EncryptedMediaExtensions`* |  |  |
+| *`ExemptDomainFileTypePairsFromFileTypeDownloadWarnings`* |  |  |
 | `ExtensionSettings` | 68.0 |  |
 | `ExtensionSettings_*` | 78.10.3, 89.0 |  |
 | `ExtensionSettings_*_allowed_types` | 78.10.3, 89.0 |  |
@@ -110,10 +128,13 @@ The following table states for each policy, when Thunderbird started to support 
 | `ExtensionSettings_*_install_sources` | 78.10.3, 89.0 |  |
 | `ExtensionSettings_*_installation_mode` | 78.10.3, 89.0 |  |
 | `ExtensionSettings_*_restricted_domains` | 78.10.3, 89.0 |  |
+| *`ExtensionSettings_*_temporarily_allow_weak_signatures`* |  |  |
 | `ExtensionSettings_[name]` | 68.0 |  |
 | `ExtensionSettings_[name]_blocked_install_message` | 68.0 |  |
+| *`ExtensionSettings_[name]_default_area`* |  |  |
 | `ExtensionSettings_[name]_install_url` | 78.10.3, 89.0 |  |
 | `ExtensionSettings_[name]_installation_mode` | 78.10.3, 89.0 |  |
+| *`ExtensionSettings_[name]_temporarily_allow_weak_signatures`* |  |  |
 | `ExtensionSettings_[name]_updates_disabled` | 91.0 |  |
 | `ExtensionUpdate` | 68.0 |  |
 | `Extensions` | 68.0 |  |
@@ -121,7 +142,8 @@ The following table states for each policy, when Thunderbird started to support 
 | `Extensions_Locked` | 68.0 |  |
 | `Extensions_Uninstall` | 68.0 |  |
 | *`FirefoxHome`* |  |  |
-| *`FlashPlugin`* |  |  |
+| *`FirefoxSuggest`* |  |  |
+| *`GoToIntranetSiteForSingleWordEntryInAddressBar`* |  |  |
 | `Handlers` | 91.0 |  |
 | `Handlers_(mimeTypes\|extensions\|schemes)` | 91.0 |  |
 | `Handlers_(mimeTypes\|extensions\|schemes)_[name]` | 91.0 |  |
@@ -150,12 +172,14 @@ The following table states for each policy, when Thunderbird started to support 
 | `PDFjs_EnablePermissions` | 91.0 |  |
 | `PDFjs_Enabled` | 91.0 |  |
 | `PasswordManagerEnabled` | 78.0 |  |
+| *`PasswordManagerExceptions`* |  |  |
 | *`Permissions`* |  |  |
 | *`PictureInPicture`* |  |  |
 | *`PopupBlocking`* |  |  |
 | `Preferences` | 68.0 |  |
 | `Preferences_[name]` | 91.0 |  |
 | `Preferences_[name]_Status` | 91.0 |  |
+| *`Preferences_[name]_Type`* |  |  |
 | `Preferences_[name]_Value` | 91.0 |  |
 | `Preferences_accessibility.force_disabled` | 78.0 | 89.0 |
 | `Preferences_browser.cache.disk.enable` | 78.0 | 89.0 |
@@ -188,6 +212,7 @@ The following table states for each policy, when Thunderbird started to support 
 | `Preferences_security.tls.hello_downgrade_check` | 78.0 | 89.0 |
 | `Preferences_widget.content.gtk-theme-override` | 78.0 | 89.0 |
 | `PrimaryPassword` | 91.0 |  |
+| *`PrintingEnabled`* |  |  |
 | `PromptForDownloadLocation` | 78.0 |  |
 | `Proxy` | 68.0 |  |
 | `Proxy_AutoConfigURL` | 68.0 |  |
@@ -207,11 +232,19 @@ The following table states for each policy, when Thunderbird started to support 
 | `SSLVersionMin` | 68.0 |  |
 | *`SanitizeOnShutdown`* |  |  |
 | *`SearchBar`* |  |  |
-| *`SearchEngines`* |  |  |
+| `SearchEngines` | 108.0 |  |
+| `SearchEngines_Add` | 108.0 |  |
+| `SearchEngines_Default` | 108.0 |  |
+| `SearchEngines_DefaultPrivate` | 108.0 |  |
+| `SearchEngines_PreventInstalls` | 108.0 |  |
+| `SearchEngines_Remove` | 108.0 |  |
 | *`SearchSuggestEnabled`* |  |  |
 | *`SecurityDevices`* |  |  |
 | *`ShowHomeButton`* |  |  |
+| *`StartDownloadsInTempDirectory`* |  |  |
 | *`SupportMenu`* |  |  |
+| *`TranslateEnabled`* |  |  |
+| *`UseSystemPrintDialog`* |  |  |
 | *`UserMessaging`* |  |  |
 | *`WebsiteFilter`* |  |  |
 | *`WindowsSSO`* |  |  |

@@ -6,8 +6,6 @@
     <true/>
     <key>AppAutoUpdate</key>
     <true/>
-    <key>AppUpdatePin</key>
-    <string>106.</string>
     <key>AppUpdateURL</key>
     <string>https://www.example.com/update.xml</string>
     <key>Authentication</key>
@@ -208,22 +206,6 @@
       <string>manual</string>
       <key>HTTPProxy</key>
       <string>proxy.example.com:80</string>
-      <key>UseHTTPProxyForAllProtocols</key>
-      <true/>
-      <key>SSLProxy</key>
-      <string>proxy.example.com:80</string>
-      <key>FTPProxy</key>
-      <string>proxy.example.com:80</string>
-      <key>SOCKSProxy</key>
-      <string>proxy.example.com:80</string>
-      <key>Passthrough</key>
-      <string>&lt;local&gt;</string>
-      <key>AutoConfigURL</key>
-      <string>URL_TO_AUTOCONFIG</string>
-      <key>AutoLogin</key>
-      <true/>
-      <key>UseProxyForDNS</key>
-      <true/>
       <key>Locked</key>
       <true/>
     </dict>

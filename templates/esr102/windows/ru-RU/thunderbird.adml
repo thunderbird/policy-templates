@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="5.9" schemaVersion="1.0">
+<policyDefinitionResources revision="4.12" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
     <stringTable>
       <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
       <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
-      <string id="SUPPORTED_ID_10">Thunderbird 102.0 - *</string>
-      <string id="SUPPORTED_ID_11">Thunderbird 104.0 - *</string>
-      <string id="SUPPORTED_ID_12">Thunderbird 108.0 - *</string>
+      <string id="SUPPORTED_ID_10">Thunderbird 91.0 - *</string>
+      <string id="SUPPORTED_ID_11">Thunderbird 102.0 - *</string>
       <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
       <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
       <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
       <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
       <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
-      <string id="SUPPORTED_ID_8">Thunderbird 91.0 - *</string>
       <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 или более поздние версии</string>
       <string id="UNSUPPORTED">Больше не поддерживается.</string>
@@ -44,7 +42,6 @@
       <string id="PictureInPicture_group">Картинка в картинке</string>
       <string id="ProxySettings_group">Proxy Settings</string>
       <string id="SecurityDevices_group">Security Devices</string>
-      <string id="FirefoxSuggest_group">Thunderbird Suggest (US only)</string>
       <string id="Allow">Разрешённые сайты</string>
       <string id="AllowSession">Разрешённые сайты (Session Only)</string>
       <string id="Block">Заблокированные сайты</string>
@@ -153,10 +150,6 @@
       <string id="DNSOverHTTPS_Explain">Если эта политика включена, можно изменить конфигурацию по умолчанию для DNS через HTTPS.
 
 Если эта политика отключена или не настроена, DNS через HTTPS использует конфигурацию Thunderbird по умолчанию.</string>
-      <string id="DNSOverHTTPS_Fallback">Fallback</string>
-      <string id="DNSOverHTTPS_Fallback_Explain">If this policy is disabled, Thunderbird will not fallback to your default DNS resolver if there is a problem with the secure DNS provider.
-
-If this policy is enabled or not configured, Thunderbird will use your default DNS resolver if there is a problem with the secure DNS provider.</string>
       <string id="DisableMasterPasswordCreation">Отключить создание мастер-пароля</string>
       <string id="DisableMasterPasswordCreation_Explain">Если эта политика включена, пользователи не могут создать мастер-пароль.
 
@@ -292,7 +285,6 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
       <string id="ExtensionUpdate_Explain">Если эта политика отключена, расширения не будут обновляться автоматически.
 
 Если эта политика включена или не настроена, расширения будут обновляться автоматически.</string>
-      <string id="ExtensionSettingsOneLine">Управление расширениями (JSON on one line)</string>
       <string id="ExtensionSettings">Управление расширениями</string>
       <string id="ExtensionSettings_Explain">Если эта политика включена, вы можете использовать JSON для описания политики управления расширениями.
 
@@ -571,7 +563,6 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
       <string id="WebsiteFilter_Exceptions_Explain">Если эта политика включена и фильтр веб-сайтов включен, вы можете указать шаблоны соответствия для сайтов, которые не хотите блокировать. Шаблоны соответствия задокументированы на https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Match_patterns. Ограничение на ввод — 1000.
 
 Если эта политика отключена или не настроена, для фильтра веб-сайтов нет исключений.</string>
-      <string id="WebsiteFilterOneLine">Website Filter (JSON on one line)</string>
       <string id="WebsiteFilter">Website Filter (JSON)</string>
       <string id="WebsiteFilter_Explain">If this policy is enabled, you can specify blocked sites and exceptions via JSON.
 
@@ -775,7 +766,7 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
       <string id="SSLVersionMin">Включить минимальную версию SSL</string>
       <string id="SSLVersionMin_Explain">Если эта политика включена, Thunderbird не будет использовать версии SSL/TLS меньше указанного значения.
 
-Если эта политика отключена или не настроена, Thunderbird по умолчанию использует как минимум TLS 1.2.</string>
+Если эта политика отключена или не настроена, Thunderbird по умолчанию использует как минимум TLS 1.0.</string>
       <string id="SSLVersionMax">Включить максимальную версию SSL</string>
       <string id="SSLVersionMax_Explain">Если эта политика включена, Thunderbird не будет использовать версии SSL/TLS, превышающие указанное значение.
 
@@ -812,10 +803,6 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
       <string id="UserMessaging_MoreFromMozilla_Explain">Если эта политика отключена, раздел «Дополнительно от Mozilla» не будет отображаться в настройках.
 
 Если эта политика включена или не настроена, раздел «Дополнительно от Mozilla» будет отображаться в настройках.</string>
-      <string id="UserMessaging_Locked">Do not allow user messaging preferences to be changed</string>
-      <string id="UserMessaging_Locked_Explain">If this policy is disabled, user messaging preferences can be changed by the user.
-
-If this policy is enabled or not configured, user messaging preferences cannot be changed by the user.</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA">TLS_DHE_RSA_WITH_AES_128_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA">TLS_DHE_RSA_WITH_AES_256_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</string>
@@ -868,14 +855,12 @@ If this policy is enabled or not configured, user messaging preferences cannot b
 Если эта политика отключена, пользователи не могут создать основной пароль.
 
 Если эта политика не настроена, пользователи могут создать основной пароль.</string>
-      <string id="HandlersOneLine">Обработчики (JSON on one line)</string>
       <string id="Handlers">Обработчики</string>
       <string id="Handlers_Explain">Если эта политика включена, вы можете использовать JSON для настройки обработчиков приложений по умолчанию.
 
 Если эта политика отключена или не настроена, используются настройки Thunderbird по умолчанию.
 
 Для получения подробной информации о создании политики см. https://github.com/mozilla/policy-templates/blob/master/README.md#handlers.</string>
-      <string id="PreferencesOneLine">Настройки (JSON on one line)</string>
       <string id="Preferences">Настройки</string>
       <string id="Preferences_Explain">Примечание. Чтобы использовать эту политику, необходимо очистить все настройки в старом разделе настроек (устарело).
 
@@ -884,7 +869,6 @@ If this policy is enabled or not configured, user messaging preferences cannot b
 Если эта политика отключена или не настроена, предпочтения не изменяются.
 
 Для получения подробной информации о создании политики см. Https://github.com/mozilla/policy-templates/blob/master/README.md#preferences.</string>
-      <string id="BookmarksOneLine">Закладки (JSON on one line)</string>
       <string id="Bookmarks">Закладки (JSON)</string>
       <string id="Bookmarks_Explain">Если эта политика включена, вы можете использовать JSON для настройки закладок, в том числе [] для удаления всех закладок.
 
@@ -895,7 +879,6 @@ If this policy is enabled or not configured, user messaging preferences cannot b
 Эта политика не влияет на управляемые закладки.
 
 Для получения подробной информации о JSON см. https://github.com/mozilla/policy-templates/blob/master/README.md#bookmarks.</string>
-      <string id="ManagedBookmarksOneLine">Управляемые закладки (JSON on one line)</string>
       <string id="ManagedBookmarks">Управляемые закладки</string>
       <string id="ManagedBookmarks_Explain">Если эта политика включена, вы можете использовать JSON для настройки управляемых закладок.
 
@@ -910,7 +893,6 @@ If this policy is enabled or not configured, user messaging preferences cannot b
       <string id="BackgroundAppUpdate_Explain">Если эта политика отключена, приложение не будет пытаться установить обновления, когда приложение не запущено.
 
 Если эта политика включена или не настроена, обновления приложения могут быть установлены (без одобрения пользователя) в фоновом режиме, даже если приложение не запущено. Операционная система может по-прежнему требовать одобрения.</string>
-      <string id="AutoLaunchProtocolsFromOriginsOneLine">Протоколы автозапуска от Origins (JSON on one line)</string>
       <string id="AutoLaunchProtocolsFromOrigins">Протоколы автозапуска от Origins</string>
       <string id="AutoLaunchProtocolsFromOrigins_Explain">Если эта политика включена, вы можете определить список внешних протоколов, которые можно использовать из перечисленных источников без запроса пользователя.
 
@@ -925,7 +907,6 @@ If this policy is enabled or not configured, user messaging preferences cannot b
       <string id="UseSystemPrintDialog_Explain">Если эта политика включена, Thunderbird будет использовать системный диалог печати вместо предварительного просмотра перед печатью.
 
 Если эта политика отключена или не настроена, Thunderbird будет отображать предварительный просмотр перед печатью.</string>
-      <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarningsOneLine">Отключить предупреждения на основе расширения файла для определенных типов файлов в доменах (JSON on one line)</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings">Отключить предупреждения на основе расширения файла для определенных типов файлов в доменах</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_Explain">Если эта политика включена, вы можете определить список доменов и расширений типов файлов, на которые не будут распространяться предупреждения об исполняемых файлах.
 
@@ -988,47 +969,12 @@ If this policy is disabled or not configured, DNS is not proxied when using SOCK
       <string id="DisableThirdPartyModuleBlocking_Explain">If this policy is enabled, users are not allowed to block third-party modules from the about:third-party page.
 
 If this policy is disabled or not configured, users users are allowed to block third-party modules from the about:third-party page.</string>
-      <string id="ContainersOneLine">Containers (JSON on one line)</string>
       <string id="Containers">Containers</string>
       <string id="Containers_Explain">If this policy is enabled, you can use JSON to configure the default containers.
 
 If this policy is disabled or not configured, the built-in defaults are used.
 
 For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#containers.</string>
-      <string id="FirefoxSuggest_WebSuggestions">Suggestions from the web</string>
-      <string id="FirefoxSuggest_WebSuggestions_Explain">If this policy is enabled, you will get suggestions from Thunderbird related to your search.
-
-If this policy is disabled, you will not get these suggestions.
-
-If this policy is not configured, , you will get suggestions from Thunderbird related to your search.</string>
-      <string id="FirefoxSuggest_SponsoredSuggestions">Suggestions from sponsors</string>
-      <string id="FirefoxSuggest_SponsoredSuggestions_Explain">If this policy is enabled, you will support the development of Thunderbird with occasional sponsored suggestions.
-
-If this policy is disabled, you will not get these suggestions.
-
-If this policy is not configured, you will get occasional sponsored suggestions.</string>
-      <string id="FirefoxSuggest_ImproveSuggest">Improve the Thunderbird Suggest experience</string>
-      <string id="FirefoxSuggest_ImproveSuggest_Explain">If this policy is enabled, you will help create a richer search experience by allowing Mozilla to process your search queries.
-
-If this policy is disabled or not configured, you do not allow Mozilla to process your search queries.</string>
-      <string id="FirefoxSuggest_Locked">Do not allow preferences to be changed</string>
-      <string id="FirefoxSuggest_Locked_Explain">If this policy is enabled, Thunderbird Suggest preferences cannot be changed by the user.
-
-If this policy is disabled or not configured, the user can change their Thunderbird Suggest preferences.</string>
-      <string id="PrintingEnabled">Printing</string>
-      <string id="PrintingEnabled_Explain">If this policy is disabled, printing is disabled.
-
-If this policy is enabled or not configured, printing is enabled.</string>
-      <string id="ManualAppUpdateOnly">Manual Update Only</string>
-      <string id="ManualAppUpdateOnly_Explain">If this policy is enabled, users will not be prompted to install updates and Thunderbird will not check for updates in the background. The user must manually check and install updates from the About dialog.
-
-If this policy is disabled or not configured, the browser receives updates.
-
-This policy is not recommended for most users.</string>
-      <string id="AllowFileSelectionDialogs">Allow File Selection Dialogs</string>
-      <string id="AllowFileSelectionDialogs_Explain">If this policy is disabled, users will not be able to open file selection dialogs. In most cases, Thunderbird will act as if the user clicked the cancel button.
-
-If this policy is enabled or not configured, users can open file selection dialogs.</string>
       <string id="Preferences_Boolean_Explain">Если эта политика включена, предпочтение заблокировано на true. Если эта политика отключена, предпочтение заблокировано на false.
 
 Описание предпочтения см.:
@@ -1277,11 +1223,8 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences.</
         <checkBox refId="DNSOverHTTPSEnabled">Включить DNS через HTTPS.</checkBox>
         <checkBox refId="DNSOverHTTPSLocked">Запретить изенение настроек DNS через HTTPS.</checkBox>
       </presentation>
-      <presentation id="SSLVersionMin">
-        <dropdownList refId="SSLVersion" defaultItem="2"/>
-      </presentation>
-      <presentation id="SSLVersionMax">
-        <dropdownList refId="SSLVersion" defaultItem="3"/>
+      <presentation id="SSLVersion">
+        <dropdownList refId="SSLVersion"/>
       </presentation>
       <presentation id="SupportMenu">
         <text>Заголовок:</text>
@@ -1359,11 +1302,6 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences.</
       </presentation>
       <presentation id="JSON">
         <multiTextBox refId="JSON"/>
-      </presentation>
-      <presentation id="JSONOneLine">
-        <textBox refId="JSONOneLine">
-          <label/>
-        </textBox>
       </presentation>
       <presentation id="Proxy_ConnectionType">
         <dropdownList refId="Proxy_ConnectionType"/>

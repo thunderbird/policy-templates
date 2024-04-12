@@ -1,6 +1,4 @@
-## Enterprise policy descriptions and templates for Thunderbird (active development)
-
-**These policies are in active development and so might contain changes that do not work with current versions of Thunderbird.**
+## Enterprise policy descriptions and templates for Thunderbird 115 (and older)
 
 Policies can be specified using the [Group Policy templates on Windows](windows), [Intune on Windows](https://support.mozilla.org/kb/managing-firefox-intune), [configuration profiles on macOS](mac), or by creating a file called `policies.json`.
 
@@ -860,7 +858,6 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Cookies`<br>`Cookies_Allow`<br>`Cookies_Block`<br>`Cookies_Default`<br>`Cookies_AcceptThirdParty`<br>`Cookies_ExpireAtSessionEnd`<br>`Cookies_Locked` | 78.0 |  |
-| *`Cookies_AllowSession`<br>`Cookies_RejectTracker`<br>`Cookies_Behavior`<br>`Cookies_BehaviorPrivateBrowsing`* |  |  |
 
 <br>
 
@@ -1524,7 +1521,6 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DNSOverHTTPS`<br>`DNSOverHTTPS_Enabled`<br>`DNSOverHTTPS_ProviderURL`<br>`DNSOverHTTPS_ExcludedDomains`<br>`DNSOverHTTPS_Locked` | 91.0 |  |
-| *`DNSOverHTTPS_Fallback`* |  |  |
 
 <br>
 
@@ -1805,8 +1801,7 @@ Value (string):
 |:--- | ---:| ---:|
 | `ExtensionSettings`<br>`ExtensionSettings_[name]`<br>`ExtensionSettings_[name]_blocked_install_message` | 68.0 |  |
 | `ExtensionSettings_*`<br>`ExtensionSettings_*_installation_mode`<br>`ExtensionSettings_*_allowed_types`<br>`ExtensionSettings_*_blocked_install_message`<br>`ExtensionSettings_*_install_sources`<br>`ExtensionSettings_*_restricted_domains`<br>`ExtensionSettings_[name]_installation_mode`<br>`ExtensionSettings_[name]_install_url` | 78.10.3, 89.0 |  |
-| `ExtensionSettings_[name]_updates_disabled` | 91.0 |  |
-| *`ExtensionSettings_*_temporarily_allow_weak_signatures`<br>`ExtensionSettings_[name]_default_area`<br>`ExtensionSettings_[name]_temporarily_allow_weak_signatures`* |  |  |
+| `ExtensionSettings_[name]_updates_disabled` | 78.10.3, 91.0 |  |
 
 <br>
 
@@ -2432,9 +2427,9 @@ geo.
 gfx.
 intl.
 layers.
-layout.
 mail.
 mailnews.
+layout.
 media.
 network.
 pdfjs.
@@ -2559,9 +2554,9 @@ Value (string):
         "Value": "SOME_NATIVE_PATH",
         "Status": "user"
       },
-      }
     }
   }
+}
 ```
 
 ### Deprecated Preferences (TB78 and older)
@@ -2686,7 +2681,6 @@ Value (string):
 | `Preferences_browser.fixup.dns_first_for_single_words`<br>`Preferences_browser.urlbar.suggest.openpage`<br>`Preferences_browser.urlbar.suggest.history`<br>`Preferences_browser.urlbar.suggest.bookmark` | 68.0 | 77.0 |
 | `Preferences_accessibility.force_disabled`<br>`Preferences_browser.cache.disk.enable`<br>`Preferences_browser.safebrowsing.phishing.enabled`<br>`Preferences_browser.safebrowsing.malware.enabled`<br>`Preferences_browser.search.update`<br>`Preferences_datareporting.policy.dataSubmissionPolicyBypassNotification`<br>`Preferences_dom.allow_scripts_to_close_windows`<br>`Preferences_dom.disable_window_flip`<br>`Preferences_dom.disable_window_move_resize`<br>`Preferences_dom.event.contextmenu.enabled`<br>`Preferences_dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl`<br>`Preferences_dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl`<br>`Preferences_extensions.blocklist.enabled`<br>`Preferences_geo.enabled`<br>`Preferences_intl.accept_languages`<br>`Preferences_network.dns.disableIPv6`<br>`Preferences_places.history.enabled`<br>`Preferences_print.save_print_settings`<br>`Preferences_security.default_personal_cert`<br>`Preferences_security.mixed_content.block_active_content`<br>`Preferences_security.osclientcerts.autoload`<br>`Preferences_security.ssl.errorReporting.enabled`<br>`Preferences_security.tls.hello_downgrade_check`<br>`Preferences_widget.content.gtk-theme-override` | 78.0 | 89.0 |
 | `Preferences_[name]`<br>`Preferences_[name]_Value`<br>`Preferences_[name]_Status` | 91.0 |  |
-| *`Preferences_[name]_Type`* |  |  |
 
 <br>
 

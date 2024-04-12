@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="5.9" schemaVersion="1.0">
+<policyDefinitionResources revision="4.12" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
     <stringTable>
       <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
       <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
-      <string id="SUPPORTED_ID_10">Thunderbird 102.0 - *</string>
-      <string id="SUPPORTED_ID_11">Thunderbird 104.0 - *</string>
-      <string id="SUPPORTED_ID_12">Thunderbird 108.0 - *</string>
+      <string id="SUPPORTED_ID_10">Thunderbird 91.0 - *</string>
+      <string id="SUPPORTED_ID_11">Thunderbird 102.0 - *</string>
       <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
       <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
       <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
       <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
       <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
-      <string id="SUPPORTED_ID_8">Thunderbird 91.0 - *</string>
       <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 oder höher</string>
       <string id="UNSUPPORTED">Nicht mehr unterstützt.</string>
@@ -43,8 +41,7 @@
       <string id="PDFjs_group">PDF.js</string>
       <string id="PictureInPicture_group">Bild in Bild</string>
       <string id="ProxySettings_group">Proxy</string>
-      <string id="SecurityDevices_group">Sicherheitsmodule</string>
-      <string id="FirefoxSuggest_group">Thunderbird Suggest (US only)</string>
+      <string id="SecurityDevices_group">Security Devices</string>
       <string id="Allow">Erlaubte Seiten</string>
       <string id="AllowSession">Erlaubte Seiten (Session Only)</string>
       <string id="Block">Gesperrte Seiten</string>
@@ -153,10 +150,6 @@ Wenn diese Richtlinie deaktiviert oder nicht konfiguriert ist, werden keine Doma
       <string id="DNSOverHTTPS_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, können die Standardeinstellungen für DNS über HTTPS geändert werden.
 
 Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden von Mozilla Thunderbird die Standardeinstellungen zu DNS über HTTPS benutzt.</string>
-      <string id="DNSOverHTTPS_Fallback">Fallback</string>
-      <string id="DNSOverHTTPS_Fallback_Explain">If this policy is disabled, Thunderbird will not fallback to your default DNS resolver if there is a problem with the secure DNS provider.
-
-If this policy is enabled or not configured, Thunderbird will use your default DNS resolver if there is a problem with the secure DNS provider.</string>
       <string id="DisableMasterPasswordCreation">Master-Passwort verwenden deaktivieren</string>
       <string id="DisableMasterPasswordCreation_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, können Benutzer kein Master-Passwort vergeben.
 
@@ -201,10 +194,10 @@ Für weitere Informationen, besuchen Sie https://support.mozilla.org/en-US/kb/sh
       <string id="DisableForgetButton_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, steht der "Vergessen" Button nicht zur Verfügung.
 
 Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, steht der "Vergessen" Button zur Verfügung.</string>
-      <string id="DisableFormHistory">Formular- und Suchverlaufhistorie deaktivieren</string>
-      <string id="DisableFormHistory_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, wird Thunderbird keine Formular- oder Suchverläufe speichern.
+      <string id="DisableFormHistory">Chronik deaktivieren</string>
+      <string id="DisableFormHistory_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, wird Thunderbird dieselben Einstellungen wie im Privaten Modus verwenden und keinerlei Chronik anlegen.
 
-Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wird Thunderbird Formular- und Suchverläufe speichern.</string>
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, Thunderbird wird eine Chronik anlegen.</string>
       <string id="DisablePasswordReveal">Verbieten, dass Nutzer Passwörter in Gespeicherte Zugangsdaten anzeigen können</string>
       <string id="DisablePasswordReveal_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Nutzer Gespeicherte Zugangsdaten nicht anzeigen lassen.
 
@@ -292,7 +285,6 @@ Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werde
       <string id="ExtensionUpdate_Explain">Wenn Sie die Richtlinieneinstellung deaktivieren, werden Add-ons nicht automatisch aktualisiert.
 
 Wenn Sie die Richtlinieneinstellung aktivieren oder nicht konfigurieren, werden Add-ons automatisch aktualisiert.</string>
-      <string id="ExtensionSettingsOneLine">Erweiterungen mit JSON verwalten (Einzeiliger JSON-Code)</string>
       <string id="ExtensionSettings">Erweiterungen mit JSON verwalten</string>
       <string id="ExtensionSettings_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, werden die Einstellungen zu Erweiterungen mit einer JSON-Datei verwaltet.
 
@@ -569,11 +561,10 @@ Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werde
       <string id="WebsiteFilter_Exceptions_Explain">Wenn Sie die Richtlinieneinstellung aktivieren und der Webseiten-Filter aktiviert ist, können Sie Übereinstimmungsmuster für Webseiten angeben, die nicht blockiert werden sollen. Die Übereinstimmungsmuster sind unter https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Match_patterns dokumentiert. Es gibt eine Beschränkung von 1000 Einträgen.
 
 Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, gibt es keine Ausnahmen für den Webseiten-Filter.</string>
-      <string id="WebsiteFilterOneLine">Webseiten-Filter (Einzeiliger JSON-Code)</string>
-      <string id="WebsiteFilter">Webseiten-Filter (JSON)</string>
-      <string id="WebsiteFilter_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Sie blockierte Webseiten und Ausnahmen über JSON angeben.
+      <string id="WebsiteFilter">Website Filter (JSON)</string>
+      <string id="WebsiteFilter_Explain">If this policy is enabled, you can specify blocked sites and exceptions via JSON.
 
-Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, werden Webseiten nicht gefiltert.</string>
+If this policy is disabled or not configured, websites are not filtered.</string>
       <string id="Bookmark01">Lesezeichen 01</string>
       <string id="Bookmark02">Lesezeichen 02</string>
       <string id="Bookmark03">Lesezeichen 03</string>
@@ -718,10 +709,10 @@ Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, gelte
       <string id="TrackingProtection_Locked_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Nutzer keine Änderungen an den Einstellungen zum Schutz vor Aktivitätenverfolgung vornehmen.
 
 Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, kann der Nutzer Änderungen an den Einstellungen vornehmen.</string>
-      <string id="TrackingProtection_EmailTracking">E-Mail-Verfolgung</string>
-      <string id="TrackingProtection_EmailTracking_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, werden versteckte E-Mail-Pixel und Skripte auf Websites blockiert.
+      <string id="TrackingProtection_EmailTracking">Email Tracking</string>
+      <string id="TrackingProtection_EmailTracking_Explain">If this policy is enabled, hidden email tracking pixels and scripts on websites are blocked.
 
-Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, werden versteckte E-Mail-Pixel und Skripte auf Websites nicht blockiert.</string>
+If this policy is disabled or not configured, hidden email tracking pixels and scripts on websites are not blocked.</string>
       <string id="RequestedLocales">Angefordertes Gebietsschema</string>
       <string id="RequestedLocalesString">Angefordertes Gebietsschema (Zeichenfolge)</string>
       <string id="RequestedLocales_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Sie eine Liste der angeforderten Gebietsschemata für die Anwendung in der Reihenfolge ihrer Präferenz angeben. Dadurch wird das entsprechende Sprachpaket aktiv.
@@ -731,11 +722,11 @@ Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, verwe
       <string id="SecurityDevices_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Sie eine Liste mit PKCS #11 Modulen definieren. Module werden mit einem Namen und einem qualifizierten Pfad benannt.
 
 Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, werden keine weiteren PKCS #11 Module installiert.</string>
-      <string id="SecurityDevices_Add">Hinzufügen</string>
-      <string id="SecurityDevices_Delete">Entfernen</string>
-      <string id="SecurityDevices_Delete_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Sie die Namen der zu entfernenden PKCS #11-Module angeben.
+      <string id="SecurityDevices_Add">Add</string>
+      <string id="SecurityDevices_Delete">Delete</string>
+      <string id="SecurityDevices_Delete_Explain">If this policy is enabled, you can specify the names of PKCS #11 modules to be deleted.
 
-Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, werden keine PKCS #11-Module entfernt.</string>
+If this policy is disabled or not configured, no PKCS #11 modules will be deleted.</string>
       <string id="SearchBar">Position der Suchleiste</string>
       <string id="SearchBar_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, können Sie festlegen, ob die Suchleiste von der Adressleiste getrennt ist.
 
@@ -773,7 +764,7 @@ Wenn Sie die Richtlinieneinstellung nicht konfigurieren, werden Suchvorschläge 
       <string id="SSLVersionMin">Minimale SSL-Version</string>
       <string id="SSLVersionMin_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, Thunderbird wird keine SSL/TLS-Version unter der angegebenen Version verwenden.
 
-Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet Thunderbird die Standardeinstellung von TLS 1.2.</string>
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet Thunderbird die Standardeinstellung von TLS 1.0.</string>
       <string id="SSLVersionMax">Maximale SSL-Version</string>
       <string id="SSLVersionMax_Explain">Wenn Sie die Richtlinieneinstellung aktivieren, Thunderbird wird keine höhere SSL/TLS-Version als der angegebenen Version verwenden.
 
@@ -810,10 +801,6 @@ Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, werde
       <string id="UserMessaging_MoreFromMozilla_Explain">Wenn diese Richtlinieneinstellung deaktiviert ist, wird der Abschnitt "Mehr von Mozilla" in den Einstellungen nicht angezeigt.
 
 Wenn diese Richtlinieneinstellung aktiviert oder nicht konfiguriert ist, wird der Abschnitt "Mehr von Mozilla" in den Einstellungen angezeigt.</string>
-      <string id="UserMessaging_Locked">Keine Änderung der Einstellungen für die Nachrichtenübermittlung zulassen</string>
-      <string id="UserMessaging_Locked_Explain">Wenn diese Richtlinieneinstellung deaktiviert ist, können die Einstellungen für die Nachrichtenübermittlung vom Benutzer geändert werden.
-
-Wenn diese Richtlinieneinstellung aktiviert oder nicht konfiguriert ist, können die Einstellungen für die Nachrichtenübermittlung nicht vom Benutzer geändert werden.</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA">TLS_DHE_RSA_WITH_AES_128_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA">TLS_DHE_RSA_WITH_AES_256_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</string>
@@ -866,7 +853,6 @@ Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, könn
 Wenn diese Richtlinieneinstellung deaktiviert ist, ist das Setzen eines Masterpasswortes nicht möglich.
 
 Wenn diese Richtlinieneinstellung nicht konfiguriert ist, können Nutzer ein Masterpasswort setzen, dies ist aber nicht erforderlich.</string>
-      <string id="HandlersOneLine">Handlers (Einzeiliger JSON-Code)</string>
       <string id="Handlers">Handlers</string>
       <string id="Handlers_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Sie das Anwendungsverhalten (beim Anklicken eines Links oder beim Download) mittels JSON beschreiben.
 
@@ -874,7 +860,6 @@ Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, werde
 
 Für eine Beschreibung der Einstellung, siehe:
 https://github.com/mozilla/policy-templates/blob/master/README.md#handlers (Englisch)</string>
-      <string id="PreferencesOneLine">Einstellungen (Einzeiliger JSON-Code)</string>
       <string id="Preferences">Einstellungen</string>
       <string id="Preferences_Explain">Hinweis: Um diese Richtlinieneinstellungen nutzen zu können, müssen Sie zunächst alle Einstellungen im Abschnitt Einstellungen (Veraltet) löschen.
 
@@ -884,7 +869,6 @@ Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, werde
 
 Für eine Beschreibung der Einstellung, siehe:
 https://github.com/mozilla/policy-templates/blob/master/README.md#preferences (Englisch)</string>
-      <string id="BookmarksOneLine">Lesezeichen (Einzeiliger JSON-Code)</string>
       <string id="Bookmarks">Lesezeichen (JSON)</string>
       <string id="Bookmarks_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Sie Lesezeichen mit JSON konfigurieren. Mit [] können Sie alle Lesezeichen löschen.
 
@@ -896,7 +880,6 @@ Diese Richtlinieneinstellung wirkt sich nicht auf verwaltete Lesezeichen aus.
 
 Für Informationen über die JSON-Struktur, siehe:
 https://github.com/mozilla/policy-templates/blob/master/README.md#bookmarks (Englisch)</string>
-      <string id="ManagedBookmarksOneLine">Verwaltete Lesezeichen (Einzeiliger JSON-Code)</string>
       <string id="ManagedBookmarks">Verwaltete Lesezeichen</string>
       <string id="ManagedBookmarks_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Sie verwaltete Lesezeichen mit Hilfe einer JSON-Datei konfigurieren.
 
@@ -912,7 +895,6 @@ Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, könn
       <string id="BackgroundAppUpdate_Explain">Wenn diese Richtlinieneinstellung deaktiviert ist, wird die Anwendung keine Updates im Hintergrund installieren, wenn sie geschlossen ist.
 
 Wenn diese Richtlinieneinstellung aktiviert oder nicht konfiguriert ist, können Updates ohne Genehmigung durch den Anwender im Hintergrund installiert werden, selbst wenn die Anwendung nicht gestartet ist. Das Betriebssystem kann jedoch den Anwender um Genehmigung fragen.</string>
-      <string id="AutoLaunchProtocolsFromOriginsOneLine">Externe Protokolle automatisch ausführen (Einzeiliger JSON-Code)</string>
       <string id="AutoLaunchProtocolsFromOrigins">Externe Protokolle automatisch ausführen</string>
       <string id="AutoLaunchProtocolsFromOrigins_Explain">Wenn diese Richtlinieneinstellung aktiviert, können Sie eine Liste von externen Protokollen definieren, die bei bestimmten URLs ohne Nachfrage beim Benutzer automatisch ausgeführt werden.
 
@@ -928,7 +910,6 @@ Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, müss
       <string id="UseSystemPrintDialog_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, verwendet Thunderbird den Druckdialog des Betriebssystems, anstatt vorher eine Druckvorschau anzuzeigen.
 
 Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, zeigt Thunderbird vor dem Drucken eine Druckvorschau an.</string>
-      <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarningsOneLine">Deaktivieren von Warnungen auf der Grundlage von Dateierweiterungen für bestimmte Dateitypen in Domänen (Einzeiliger JSON-Code)</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings">Deaktivieren von Warnungen auf der Grundlage von Dateierweiterungen für bestimmte Dateitypen in Domänen</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Sie eine Liste von Domänen und Dateierweiterungen definieren, die von Warnungen ausgenommen sind.
 
@@ -991,47 +972,12 @@ Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, wird 
       <string id="DisableThirdPartyModuleBlocking_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, dürfen Benutzer keine Module von Drittanbietern auf der Seite about:third-party blockieren.
 
 Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, dürfen Benutzer Module von Drittanbietern auf der Seite about:third-party blockieren.</string>
-      <string id="ContainersOneLine">Container (Einzeiliger JSON-Code)</string>
-      <string id="Containers">Container</string>
-      <string id="Containers_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können Sie JSON verwenden, um die Standardcontainer zu konfigurieren.
+      <string id="Containers">Containers</string>
+      <string id="Containers_Explain">If this policy is enabled, you can use JSON to configure the default containers.
 
-Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, werden die integrierten Standardwerte verwendet.
+If this policy is disabled or not configured, the built-in defaults are used.
 
-Ausführliche Informationen zur Erstellung der Richtlinie finden Sie unter https://github.com/mozilla/policy-templates/blob/master/README.md#containers.</string>
-      <string id="FirefoxSuggest_WebSuggestions">Vorschläge aus dem Internet</string>
-      <string id="FirefoxSuggest_WebSuggestions_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, erhalten Sie von Thunderbird Vorschläge, die mit Ihrer Suche zusammenhängen.
-
-Wenn diese Richtlinieneinstellung deaktiviert ist, erhalten Sie diese Vorschläge nicht.
-
-Wenn diese Richtlinieneinstellung nicht konfiguriert ist, erhalten Sie von Thunderbird Vorschläge für Ihre Suche.</string>
-      <string id="FirefoxSuggest_SponsoredSuggestions">Vorschläge von Sponsorens</string>
-      <string id="FirefoxSuggest_SponsoredSuggestions_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, werden Sie die Entwicklung von Thunderbird mit gelegentlichen gesponserten Vorschlägen unterstützen.
-
-Wenn diese Richtlinieneinstellung deaktiviert ist, werden Sie diese Vorschläge nicht erhalten.
-
-Wenn diese Richtlinieneinstellung nicht konfiguriert ist, erhalten Sie gelegentlich gesponserte Vorschläge.</string>
-      <string id="FirefoxSuggest_ImproveSuggest">Verbessern Sie Thunderbird Suggest</string>
-      <string id="FirefoxSuggest_ImproveSuggest_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, tragen Sie zu einem besseren Sucherlebnis bei, indem Sie Mozilla erlauben, Ihre Suchanfragen zu verarbeiten.
-
-Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, erlauben Sie Mozilla nicht, Ihre Suchanfragen zu verarbeiten.</string>
-      <string id="FirefoxSuggest_Locked">Keine Änderung der Thunderbird Suggest-Einstellungen zulassen</string>
-      <string id="FirefoxSuggest_Locked_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, können die Thunderbird Suggest-Einstellungen nicht vom Benutzer geändert werden.
-
-Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, kann der Benutzer seine Thunderbird Suggest-Einstellungen ändern..</string>
-      <string id="PrintingEnabled">Drucken</string>
-      <string id="PrintingEnabled_Explain">Wenn diese Richtlinieneinstellung deaktiviert ist, ist das Drucken deaktiviert.
-
-Wenn diese Richtlinieneinstellung aktiviert oder nicht konfiguriert ist, ist das Drucken aktiviert.</string>
-      <string id="ManualAppUpdateOnly">Manual Update Only</string>
-      <string id="ManualAppUpdateOnly_Explain">If this policy is enabled, users will not be prompted to install updates and Thunderbird will not check for updates in the background. The user must manually check and install updates from the About dialog.
-
-If this policy is disabled or not configured, the browser receives updates.
-
-This policy is not recommended for most users.</string>
-      <string id="AllowFileSelectionDialogs">Allow File Selection Dialogs</string>
-      <string id="AllowFileSelectionDialogs_Explain">If this policy is disabled, users will not be able to open file selection dialogs. In most cases, Thunderbird will act as if the user clicked the cancel button.
-
-If this policy is enabled or not configured, users can open file selection dialogs.</string>
+For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#containers.</string>
       <string id="Preferences_Boolean_Explain">Wenn diese Richtlinieneinstellung aktiviert ist, ist die Einstellung auf true gesperrt. Wenn diese Richtlinieneinstellung deaktiviert ist, ist die Einstellung auf false gesperrt.
 
 Für eine Beschreibung der Einstellung, siehe:
@@ -1277,11 +1223,8 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences (E
         <checkBox refId="DNSOverHTTPSEnabled">DNS über HTTPS aktivieren.</checkBox>
         <checkBox refId="DNSOverHTTPSLocked">Änderungen an den DNS-über-HTTPS Einstellungen nicht erlauben.</checkBox>
       </presentation>
-      <presentation id="SSLVersionMin">
-        <dropdownList refId="SSLVersion" defaultItem="2"/>
-      </presentation>
-      <presentation id="SSLVersionMax">
-        <dropdownList refId="SSLVersion" defaultItem="3"/>
+      <presentation id="SSLVersion">
+        <dropdownList refId="SSLVersion"/>
       </presentation>
       <presentation id="SupportMenu">
         <text>Title:</text>
@@ -1359,11 +1302,6 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences (E
       </presentation>
       <presentation id="JSON">
         <multiTextBox refId="JSON"/>
-      </presentation>
-      <presentation id="JSONOneLine">
-        <textBox refId="JSONOneLine">
-          <label/>
-        </textBox>
       </presentation>
       <presentation id="Proxy_ConnectionType">
         <dropdownList refId="Proxy_ConnectionType"/>

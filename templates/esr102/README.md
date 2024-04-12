@@ -1,6 +1,4 @@
-## Enterprise policy descriptions and templates for Thunderbird (active development)
-
-**These policies are in active development and so might contain changes that do not work with current versions of Thunderbird.**
+## Enterprise policy descriptions and templates for Thunderbird 102 (and older)
 
 Policies can be specified using the [Group Policy templates on Windows](windows), [Intune on Windows](https://support.mozilla.org/kb/managing-firefox-intune), [configuration profiles on macOS](mac), or by creating a file called `policies.json`.
 
@@ -53,11 +51,6 @@ On Windows, create a directory called `distribution` where the EXE is located an
 | **[`PromptForDownloadLocation`](#promptfordownloadlocation)** | Ask where to save each file before downloading.
 | **[`Proxy`](#proxy)** | Configure proxy settings.
 | **[`RequestedLocales`](#requestedlocales)** | Set the the list of requested locales for the application in order of preference.
-| **[`SearchEngines`](#searchengines-this-policy-is-only-available-on-the-esr)** |
-| **[`SearchEngines -> Add`](#searchengines--add)** | Add new search engines.
-| **[`SearchEngines -> Default`](#searchengines--default)** | Set the default search engine.
-| **[`SearchEngines -> PreventInstalls`](#searchengines--preventinstalls)** | Prevent installing search engines from webpages.
-| **[`SearchEngines -> Remove`](#searchengines--remove)** | Hide built-in search engines.
 | **[`SSLVersionMax`](#sslversionmax)** | Set and lock the maximum version of TLS.
 | **[`SSLVersionMin`](#sslversionmin)** | Set and lock the minimum version of TLS.
 
@@ -860,7 +853,6 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Cookies`<br>`Cookies_Allow`<br>`Cookies_Block`<br>`Cookies_Default`<br>`Cookies_AcceptThirdParty`<br>`Cookies_ExpireAtSessionEnd`<br>`Cookies_Locked` | 78.0 |  |
-| *`Cookies_AllowSession`<br>`Cookies_RejectTracker`<br>`Cookies_Behavior`<br>`Cookies_BehaviorPrivateBrowsing`* |  |  |
 
 <br>
 
@@ -1524,7 +1516,6 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DNSOverHTTPS`<br>`DNSOverHTTPS_Enabled`<br>`DNSOverHTTPS_ProviderURL`<br>`DNSOverHTTPS_ExcludedDomains`<br>`DNSOverHTTPS_Locked` | 91.0 |  |
-| *`DNSOverHTTPS_Fallback`* |  |  |
 
 <br>
 
@@ -1805,8 +1796,7 @@ Value (string):
 |:--- | ---:| ---:|
 | `ExtensionSettings`<br>`ExtensionSettings_[name]`<br>`ExtensionSettings_[name]_blocked_install_message` | 68.0 |  |
 | `ExtensionSettings_*`<br>`ExtensionSettings_*_installation_mode`<br>`ExtensionSettings_*_allowed_types`<br>`ExtensionSettings_*_blocked_install_message`<br>`ExtensionSettings_*_install_sources`<br>`ExtensionSettings_*_restricted_domains`<br>`ExtensionSettings_[name]_installation_mode`<br>`ExtensionSettings_[name]_install_url` | 78.10.3, 89.0 |  |
-| `ExtensionSettings_[name]_updates_disabled` | 91.0 |  |
-| *`ExtensionSettings_*_temporarily_allow_weak_signatures`<br>`ExtensionSettings_[name]_default_area`<br>`ExtensionSettings_[name]_temporarily_allow_weak_signatures`* |  |  |
+| `ExtensionSettings_[name]_updates_disabled` | 78.10.3, 91.0 |  |
 
 <br>
 
@@ -2421,8 +2411,6 @@ Preferences that start with the following prefixes are supported:
 accessibility.
 app.update.
 browser.
-calendar.
-chat.
 datareporting.policy.
 dom.
 extensions.
@@ -2433,8 +2421,6 @@ gfx.
 intl.
 layers.
 layout.
-mail.
-mailnews.
 media.
 network.
 pdfjs.
@@ -2559,9 +2545,9 @@ Value (string):
         "Value": "SOME_NATIVE_PATH",
         "Status": "user"
       },
-      }
     }
   }
+}
 ```
 
 ### Deprecated Preferences (TB78 and older)
@@ -2686,7 +2672,6 @@ Value (string):
 | `Preferences_browser.fixup.dns_first_for_single_words`<br>`Preferences_browser.urlbar.suggest.openpage`<br>`Preferences_browser.urlbar.suggest.history`<br>`Preferences_browser.urlbar.suggest.bookmark` | 68.0 | 77.0 |
 | `Preferences_accessibility.force_disabled`<br>`Preferences_browser.cache.disk.enable`<br>`Preferences_browser.safebrowsing.phishing.enabled`<br>`Preferences_browser.safebrowsing.malware.enabled`<br>`Preferences_browser.search.update`<br>`Preferences_datareporting.policy.dataSubmissionPolicyBypassNotification`<br>`Preferences_dom.allow_scripts_to_close_windows`<br>`Preferences_dom.disable_window_flip`<br>`Preferences_dom.disable_window_move_resize`<br>`Preferences_dom.event.contextmenu.enabled`<br>`Preferences_dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl`<br>`Preferences_dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl`<br>`Preferences_extensions.blocklist.enabled`<br>`Preferences_geo.enabled`<br>`Preferences_intl.accept_languages`<br>`Preferences_network.dns.disableIPv6`<br>`Preferences_places.history.enabled`<br>`Preferences_print.save_print_settings`<br>`Preferences_security.default_personal_cert`<br>`Preferences_security.mixed_content.block_active_content`<br>`Preferences_security.osclientcerts.autoload`<br>`Preferences_security.ssl.errorReporting.enabled`<br>`Preferences_security.tls.hello_downgrade_check`<br>`Preferences_widget.content.gtk-theme-override` | 78.0 | 89.0 |
 | `Preferences_[name]`<br>`Preferences_[name]_Value`<br>`Preferences_[name]_Status` | 91.0 |  |
-| *`Preferences_[name]_Type`* |  |  |
 
 <br>
 
@@ -2973,265 +2958,6 @@ or
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `RequestedLocales` | 68.0 |  |
-
-<br>
-
-## SearchEngines | Add
-
-Add new search engines (up to five). This policy is only available on the ESR. `Name` and `URLTemplate` are required.
-
-`Name` is the name of the search engine.
-
-`URLTemplate` is the search URL with {searchTerms} to substitute for the search term.
-
-`Method` is either GET or POST
-
-`IconURL` is a URL for the icon to use.
-
-`Alias` is a keyword to use for the engine.
-
-`Description` is a description of the search engine.
-
-`PostData` is the POST data as name value pairs separated by &.
-
-`SuggestURLTemplate` is a search suggestions URL with {searchTerms} to substitute for the search term.
-
-`Encoding` is the query charset for the engine. It defaults to UTF-8.
-
-**CCK2 Equivalent:** `searchplugins`\
-**Preferences Affected:** N/A
-
-#### Windows (GPO)
-```
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Name = "Example1"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\URLTemplate = "https://www.example.org/q={searchTerms}"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Method = "GET" | "POST"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\IconURL = "https://www.example.org/favicon.ico"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Alias = "example"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Description = "Example Description"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\SuggestURLTemplate = "https://www.example.org/suggestions/q={searchTerms}"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\PostData = "name=value&q={searchTerms}"
-```
-#### Windows (Intune)
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Search/SearchEngines_1
-```
-Value (string):
-```
-<enabled/>
-<data id="SearchEngine_Name" value="Example1"/>
-<data id="SearchEngine_URLTemplate" value="https://www.example.org/q={searchTerms"/>
-<data id="SearchEngine_Method" value="GET | POST"/>
-<data id="SearchEngine_IconURL" value="https://www.example.org/favicon.ico"/>
-<data id="SearchEngine_Alias" value="example"/>
-<data id="SearchEngine_Description" value="Example Description"/>
-<data id="SearchEngine_SuggestURLTemplate" value="https://www.example.org/suggestions/q={searchTerms}"/>
-<data id="SearchEngine_PostData" value="name=value&amp;q={searchTerms}"/>
-```
-#### macOS
-```
-<dict>
-  <key>SearchEngines</key>
-  <dict>
-    <key>Add</key>
-    <array>
-      <dict>
-        <key>Name</key>
-        <string>Example1</string>
-        <key>URLTemplate</key>
-        <string>https://www.example.org/q={searchTerms}</string>
-        <key>Method</key>
-        <string>GET | POST </string>
-        <key>IconURL</key>
-        <string>https://www.example.org/favicon.ico</string>
-        <key>Alias</key>
-        <string>example</string>
-        <key>Description</key>
-        <string>Example Description</string>
-        <key>SuggestURLTemplate</key>
-        <string>https://www.example.org/suggestions/q={searchTerms}</string>
-        <key>PostData</key>
-        <string>name=value&q={searchTerms}</string>
-      </dict>
-    <array>
-  </dict>
-</dict>
-```
-#### policies.json
-```
-{
-  "policies": {
-    "SearchEngines": {
-      "Add": [
-        {
-          "Name": "Example1",
-          "URLTemplate": "https://www.example.org/q={searchTerms}",
-          "Method": "GET" | "POST",
-          "IconURL": "https://www.example.org/favicon.ico",
-          "Alias": "example",
-          "Description": "Description",
-          "PostData": "name=value&q={searchTerms}",
-          "SuggestURLTemplate": "https://www.example.org/suggestions/q={searchTerms}"
-        }
-      ]
-    }
-  }
-}
-```
-#### Compatibility
-
-| Policy/Property Name | supported since | deprecated after |
-|:--- | ---:| ---:|
-| `SearchEngines_Add` | 108.0 |  |
-
-<br>
-
-## SearchEngines | Default
-
-Set the default search engine. This policy is only available on the ESR.
-
-**CCK2 Equivalent:** `defaultSearchEngine`\
-**Preferences Affected:** N/A
-
-#### Windows (GPO)
-```
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Default = NAME_OF_SEARCH_ENGINE
-```
-#### Windows (Intune)
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Search/SearchEngines_Default
-```
-Value (string):
-```
-<enabled/>
-<data id="SearchEngines_Default" value="NAME_OF_SEARCH_ENGINE"/>
-```
-#### macOS
-```
-<dict>
-  <key>SearchEngines</key>
-  <dict>
-    <key>Default</key>
-    <string>NAME_OF_SEARCH_ENGINE</string>
-  </dict>
-</dict>
-```
-#### policies.json
-```
-{
-  "policies": {
-    "SearchEngines": {
-      "Default": "NAME_OF_SEARCH_ENGINE"
-    }
-  }
-}
-```
-#### Compatibility
-
-| Policy/Property Name | supported since | deprecated after |
-|:--- | ---:| ---:|
-| `SearchEngines_Default` | 108.0 |  |
-
-<br>
-
-## SearchEngines | PreventInstalls
-
-Prevent installing search engines from webpages.
-
-**CCK2 Equivalent:** `disableSearchEngineInstall`\
-**Preferences Affected:** N/A
-
-#### Windows (GPO)
-```
-Software\Policies\Mozilla\Thunderbird\SearchEngines\PreventInstalls = 0x1 | 0x0
-```
-#### Windows (Intune)
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Search/SearchEngines_PreventInstalls
-```
-Value (string):
-```
-<enabled/> or <disabled/>
-```
-#### macOS
-```
-<dict>
-  <key>SearchEngines</key>
-  <dict>
-    <key>PreventInstalls</key>
-    <true/> | <false/>
-  </dict>
-</dict>
-```
-#### policies.json
-```
-{
-  "policies": {
-    "SearchEngines": {
-      "PreventInstalls": true | false
-    }
-  }
-}
-```
-#### Compatibility
-
-| Policy/Property Name | supported since | deprecated after |
-|:--- | ---:| ---:|
-| `SearchEngines_PreventInstalls` | 108.0 |  |
-
-<br>
-
-## SearchEngines | Remove
-
-Hide built-in search engines. This policy is only available on the ESR.
-
-**CCK2 Equivalent:** `removeDefaultSearchEngines` (removed all built-in engines)\
-**Preferences Affected:** N/A
-
-#### Windows (GPO)
-```
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Remove\1 = NAME_OF_SEARCH_ENGINE
-```
-#### Windows (Intune)
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Search/SearchEngines_Remove
-```
-Value (string):
-```
-<enabled/>
-<data id="SearchEngines_Remove" value="1&#xF000;NAME_OF_SEARCH_ENGINE"/>
-```
-#### macOS
-```
-<dict>
-  <key>SearchEngines</key>
-  <dict>
-    <key>Remove</key>
-    <array>
-      <string>NAME_OF_SEARCH_ENGINE</string>
-    </array>
-  </dict>
-</dict>
-```
-#### policies.json
-```
-{
-  "policies": {
-    "SearchEngines": {
-      "Remove": ["NAME_OF_SEARCH_ENGINE"]
-    }
-  }
-}
-```
-#### Compatibility
-
-| Policy/Property Name | supported since | deprecated after |
-|:--- | ---:| ---:|
-| `SearchEngines_Remove` | 108.0 |  |
 
 <br>
 

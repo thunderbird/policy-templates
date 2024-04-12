@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="5.9" schemaVersion="1.0">
+<policyDefinitionResources revision="4.12" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
     <stringTable>
       <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
       <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
-      <string id="SUPPORTED_ID_10">Thunderbird 102.0 - *</string>
-      <string id="SUPPORTED_ID_11">Thunderbird 104.0 - *</string>
-      <string id="SUPPORTED_ID_12">Thunderbird 108.0 - *</string>
+      <string id="SUPPORTED_ID_10">Thunderbird 91.0 - *</string>
+      <string id="SUPPORTED_ID_11">Thunderbird 102.0 - *</string>
       <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
       <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
       <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
       <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
       <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
-      <string id="SUPPORTED_ID_8">Thunderbird 91.0 - *</string>
       <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 或更新版本</string>
       <string id="UNSUPPORTED">不再支持。</string>
@@ -44,7 +42,6 @@
       <string id="PictureInPicture_group">子母画面</string>
       <string id="ProxySettings_group">Proxy Settings</string>
       <string id="SecurityDevices_group">Security Devices</string>
-      <string id="FirefoxSuggest_group">Thunderbird Suggest (US only)</string>
       <string id="Allow">允许的网站</string>
       <string id="AllowSession">允许的网站（仅当次浏览阶段）</string>
       <string id="Block">封锁的网站</string>
@@ -153,10 +150,6 @@
       <string id="DNSOverHTTPS_Explain">若启用此原则，可变更默认 DNS over httpS 设置。
 
 若禁用或不设定此原则，将使用默认 DNS Over httpS 设置。</string>
-      <string id="DNSOverHTTPS_Fallback">Fallback</string>
-      <string id="DNSOverHTTPS_Fallback_Explain">If this policy is disabled, Thunderbird will not fallback to your default DNS resolver if there is a problem with the secure DNS provider.
-
-If this policy is enabled or not configured, Thunderbird will use your default DNS resolver if there is a problem with the secure DNS provider.</string>
       <string id="DisableMasterPasswordCreation">禁用设定控制密码</string>
       <string id="DisableMasterPasswordCreation_Explain">若启用此原则，将无法设置控制密码。
 
@@ -292,7 +285,6 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
       <string id="ExtensionUpdate_Explain">若禁用此原则，将不会自动更新扩充套件。
 
 若启用或不设定此原则，将自动更新扩充套件。 </string>
-      <string id="ExtensionSettingsOneLine">扩展套件管理 (JSON on one line)</string>
       <string id="ExtensionSettings">扩展套件管理</string>
       <string id="ExtensionSettings_Explain">若启用此原则，您可以用 JSON 文件来描述扩展套件管理策略。
 
@@ -571,7 +563,6 @@ If this policy is not configured or disabled, in private browsing, cookies are r
       <string id="WebsiteFilter_Exceptions_Explain">若启用此原则，且启用了网站封锁规则，将可以指定要排除封锁的网站网址规则。 规则格式文件位于https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Match_patterns。 仅支持最多1000笔项目。
 
 若禁用或不设定此原则，则不会放行任何例外网站。</string>
-      <string id="WebsiteFilterOneLine">Website Filter (JSON on one line)</string>
       <string id="WebsiteFilter">Website Filter (JSON)</string>
       <string id="WebsiteFilter_Explain">If this policy is enabled, you can specify blocked sites and exceptions via JSON.
 
@@ -775,7 +766,7 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
       <string id="SSLVersionMin">启用的最低 SSL 版本</string>
       <string id="SSLVersionMin_Explain">若启用此原则，Thunderbird 将不会使用低于指定版本的 SSL/TLS 版本进行连接。
 
-若禁用或不设定此原则，Thunderbird 的默认最低版本为 TLS 1.2。</string>
+若禁用或不设定此原则，Thunderbird 的默认最低版本为 TLS 1.0。</string>
       <string id="SSLVersionMax">启用的最高 SSL 版本</string>
       <string id="SSLVersionMax_Explain">若启用此原则，将不会使用高于指定版本的 SSL/TLS 版本进行连接。
 
@@ -812,10 +803,6 @@ If this policy is disabled or not configured, onboarding messages will be shown 
       <string id="UserMessaging_MoreFromMozilla_Explain">If this policy is disabled, the More from Mozilla section will not be shown in preferences.
 
 If this policy is enabled or not configured, the More from Mozilla section will be shown in preferences.</string>
-      <string id="UserMessaging_Locked">Do not allow user messaging preferences to be changed</string>
-      <string id="UserMessaging_Locked_Explain">If this policy is disabled, user messaging preferences can be changed by the user.
-
-If this policy is enabled or not configured, user messaging preferences cannot be changed by the user.</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA">TLS_DHE_RSA_WITH_AES_128_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA">TLS_DHE_RSA_WITH_AES_256_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</string>
@@ -868,14 +855,12 @@ If this policy is enabled or not configured, user messaging preferences cannot b
 若禁用此原则，用户将无法建立主控密码。
 
 若不设定此原则，则使用者可自行决定是否要使用主控密码功能。</string>
-      <string id="HandlersOneLine">应用程序处理方式 (JSON on one line)</string>
       <string id="Handlers">应用程序处理方式</string>
       <string id="Handlers_Explain">若启用此原则，您可以使用 JSON 文件来设定默认应用程序处理方式。
 
 若禁用或不设定此原则，则使用 Thunderbird 默认设置。
 
 若需要建立原则的详细信息，请参考 https://github.com/mozilla/policy-templates/blob/master/README.md#handlers。</string>
-      <string id="PreferencesOneLine">偏好设定 (JSON on one line)</string>
       <string id="Preferences">偏好设定</string>
       <string id="Preferences_Explain">注：若要使用此原则，您必须先清除「偏好设定（已弃用）」区段当中的旧设定。
 
@@ -884,7 +869,6 @@ If this policy is enabled or not configured, user messaging preferences cannot b
 若禁用或不设定此原则，则不修改偏好设定。
 
 若需要建立原则的详细信息，请参考 https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。</string>
-      <string id="BookmarksOneLine">Bookmarks (JSON on one line)</string>
       <string id="Bookmarks">Bookmarks (JSON)</string>
       <string id="Bookmarks_Explain">If this policy is enabled, you can use JSON to configure bookmarks, including [] to clear all bookmarks.
 
@@ -895,7 +879,6 @@ If this policy is enabled along with individual bookmarks, those bookmarks will 
 This policy has no effect on Managed Bookmarks.
 
 For detailed information on the JSON, see https://github.com/mozilla/policy-templates/blob/master/README.md#bookmarks.</string>
-      <string id="ManagedBookmarksOneLine">受管理的书签 (JSON on one line)</string>
       <string id="ManagedBookmarks">受管理的书签</string>
       <string id="ManagedBookmarks_Explain">若启用此原则，您可以使用 JSON 文件来指定受管理的书签。
 
@@ -910,7 +893,6 @@ If this policy is disabled or not configured, users can access any account on Go
       <string id="BackgroundAppUpdate_Explain">If this policy disabled, the application will not try to install updates when the application is not running.
 
 If this policy is enabled or not configured, application updates may be installed (without user approval) in the background, even when the application is not running. The operating system might still require approval.</string>
-      <string id="AutoLaunchProtocolsFromOriginsOneLine">Auto Launch Protocols From Origins (JSON on one line)</string>
       <string id="AutoLaunchProtocolsFromOrigins">Auto Launch Protocols From Origins</string>
       <string id="AutoLaunchProtocolsFromOrigins_Explain">If this policy is enabled, you can define a list of external protocols that can be used from listed origins without prompting the user.
 
@@ -925,7 +907,6 @@ If this policy is disabled or not configured, credentials must be entered manual
       <string id="UseSystemPrintDialog_Explain">If this policy is enabled, Thunderbird will use the system print dialog instead of showing print preview before printing.
 
 If this policy is disabled or not configured, Thunderbird will show print preview before printing.</string>
-      <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarningsOneLine">Disable warnings based on file extension for specific file types on domains (JSON on one line)</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings">Disable warnings based on file extension for specific file types on domains</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_Explain">If this policy is enabled, you can define a list of domains and file type extensions that will be exempt from executable warnings.
 
@@ -988,47 +969,12 @@ If this policy is disabled or not configured, DNS is not proxied when using SOCK
       <string id="DisableThirdPartyModuleBlocking_Explain">If this policy is enabled, users are not allowed to block third-party modules from the about:third-party page.
 
 If this policy is disabled or not configured, users users are allowed to block third-party modules from the about:third-party page.</string>
-      <string id="ContainersOneLine">Containers (JSON on one line)</string>
       <string id="Containers">Containers</string>
       <string id="Containers_Explain">If this policy is enabled, you can use JSON to configure the default containers.
 
 If this policy is disabled or not configured, the built-in defaults are used.
 
 For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#containers.</string>
-      <string id="FirefoxSuggest_WebSuggestions">Suggestions from the web</string>
-      <string id="FirefoxSuggest_WebSuggestions_Explain">If this policy is enabled, you will get suggestions from Thunderbird related to your search.
-
-If this policy is disabled, you will not get these suggestions.
-
-If this policy is not configured, , you will get suggestions from Thunderbird related to your search.</string>
-      <string id="FirefoxSuggest_SponsoredSuggestions">Suggestions from sponsors</string>
-      <string id="FirefoxSuggest_SponsoredSuggestions_Explain">If this policy is enabled, you will support the development of Thunderbird with occasional sponsored suggestions.
-
-If this policy is disabled, you will not get these suggestions.
-
-If this policy is not configured, you will get occasional sponsored suggestions.</string>
-      <string id="FirefoxSuggest_ImproveSuggest">Improve the Thunderbird Suggest experience</string>
-      <string id="FirefoxSuggest_ImproveSuggest_Explain">If this policy is enabled, you will help create a richer search experience by allowing Mozilla to process your search queries.
-
-If this policy is disabled or not configured, you do not allow Mozilla to process your search queries.</string>
-      <string id="FirefoxSuggest_Locked">Do not allow preferences to be changed</string>
-      <string id="FirefoxSuggest_Locked_Explain">If this policy is enabled, Thunderbird Suggest preferences cannot be changed by the user.
-
-If this policy is disabled or not configured, the user can change their Thunderbird Suggest preferences.</string>
-      <string id="PrintingEnabled">Printing</string>
-      <string id="PrintingEnabled_Explain">If this policy is disabled, printing is disabled.
-
-If this policy is enabled or not configured, printing is enabled.</string>
-      <string id="ManualAppUpdateOnly">Manual Update Only</string>
-      <string id="ManualAppUpdateOnly_Explain">If this policy is enabled, users will not be prompted to install updates and Thunderbird will not check for updates in the background. The user must manually check and install updates from the About dialog.
-
-If this policy is disabled or not configured, the browser receives updates.
-
-This policy is not recommended for most users.</string>
-      <string id="AllowFileSelectionDialogs">Allow File Selection Dialogs</string>
-      <string id="AllowFileSelectionDialogs_Explain">If this policy is disabled, users will not be able to open file selection dialogs. In most cases, Thunderbird will act as if the user clicked the cancel button.
-
-If this policy is enabled or not configured, users can open file selection dialogs.</string>
       <string id="Preferences_Boolean_Explain">若启用此原则，偏好设定将锁定为 true。 若禁用此原则，偏好设定则锁定为false。
 
 若需要偏好设置的详细说明，请参考：
@@ -1277,11 +1223,8 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。
         <checkBox refId="DNSOverHTTPSEnabled">启用DNS over httpS。</checkBox>
         <checkBox refId="DNSOverHTTPSLocked">不允许变更 DNS over httpS 偏好设置。</checkBox>
       </presentation>
-      <presentation id="SSLVersionMin">
-        <dropdownList refId="SSLVersion" defaultItem="2"/>
-      </presentation>
-      <presentation id="SSLVersionMax">
-        <dropdownList refId="SSLVersion" defaultItem="3"/>
+      <presentation id="SSLVersion">
+        <dropdownList refId="SSLVersion"/>
       </presentation>
       <presentation id="SupportMenu">
         <text>标题：</text>
@@ -1359,11 +1302,6 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。
       </presentation>
       <presentation id="JSON">
         <multiTextBox refId="JSON"/>
-      </presentation>
-      <presentation id="JSONOneLine">
-        <textBox refId="JSONOneLine">
-          <label/>
-        </textBox>
       </presentation>
       <presentation id="Proxy_ConnectionType">
         <dropdownList refId="Proxy_ConnectionType"/>
