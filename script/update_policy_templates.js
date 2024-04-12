@@ -321,12 +321,38 @@ function getPolicySchemaFilename(branch, tree, ref) {
 }
 
 /**
+ * Download a specific policies-schema.json file.
+ * 
+ * @param {string} branch - "mozilla" or "comm"
+ * @param {string} tree - "central" or "esr91"
+ * @param {string} revision
+ * 
+ * @returns - a file json object
+ */
+async function downloadPolicySchemaFile(branch, tree, revision) {
+	let path = tree == "central" ? `${branch}-${tree}` : `releases/${branch}-${tree}`
+	let folder = branch == "mozilla" ? "browser" : "mail"
+	let url = `https://hg.mozilla.org/${path}/raw-file/${revision}/${folder}/components/enterprisepolicies/schemas/policies-schema.json`
+	
+	console.log(`Downloading ${url}`);
+	let file = parse(await request(url));
+	let version = (await request(`https://hg.mozilla.org/${path}/raw-file/${revision}/${folder}/config/version.txt`)).trim();
+	file.version = version;
+	file.revision = revision;
+	fs.writeFileSync(getPolicySchemaFilename(branch, tree, revision), stringify(file, null, 2));
+	return file;
+}
+
+/**
  * Download missing revisions of the policies-schema.json for the given tree.
  * 
  * @param {string} tree - "central" or "esr91"
+ * @param {string} mozillaReferencePolicyRevision - the hg revision of the last
+ *   known mozilla version of their policies.json
+ * 
  * @returns - a data object for comm and mozilla
  */
-async function downloadPolicySchemaFiles(tree) {
+async function downloadPolicySchemaFiles(tree, mozillaReferencePolicyRevision) {
 	let data = {
 		comm: {
 			hgLogUrl: "",
@@ -341,12 +367,9 @@ async function downloadPolicySchemaFiles(tree) {
 	console.log(`Processing ${tree}`);
 	fs.ensureDirSync(schema_dir);
 
-	// For mozilla, we just need to check if there is a new revision out.
-	// For comm, we need all revisions.
 	for (let branch of ["mozilla", "comm"]) {
 		let folder = branch == "mozilla" ? "browser" : "mail"
 		let path = tree == "central" ? `${branch}-${tree}` : `releases/${branch}-${tree}`
-		let max = branch == "mozilla" ? 5 : 30;
 
 		console.log(`Checking policies-schema.json revisions for ${path}`);
 		data[branch].hgLogUrl = `https://hg.mozilla.org/${path}/log/tip/${folder}/components/enterprisepolicies/schemas/policies-schema.json`;
@@ -356,18 +379,18 @@ async function downloadPolicySchemaFiles(tree) {
 		// Get the revision identifier from the table cell (TODO: switch to github tree instead of parsing html).
 		let revisions = [...$("body > table > tbody > tr > td:nth-child(2)")].map(element => element.children[0].data.trim());
 
-		for (let revision of revisions.slice(0, max)) {
+		// For mozilla, we just need the newest and the reference revision.
+		// For comm, we need all revisions to be able to extract compatibility information.
+		let neededRevisions = branch == "mozilla"
+			? [revisions[0], mozillaReferencePolicyRevision]
+			: revisions.slice(0, 30)
+
+
+		for (let revision of neededRevisions) {
 			let filename = getPolicySchemaFilename(branch, tree, revision);
 			let file;
-			let version;
 			if (!fs.existsSync(filename)) {
-				let url = `https://hg.mozilla.org/${path}/raw-file/${revision}/${folder}/components/enterprisepolicies/schemas/policies-schema.json`
-				console.log(`Downloading ${url}`);
-				file = parse(await request(url));
-				version = (await request(`https://hg.mozilla.org/${path}/raw-file/${revision}/${folder}/config/version.txt`)).trim();
-				file.version = version;
-				file.revision = revision;
-				fs.writeFileSync(getPolicySchemaFilename(branch, tree, revision), stringify(file, null, 2));
+				file = await downloadPolicySchemaFile(branch, tree, revision);
 			} else {
 				file = parse(fs.readFileSync(filename).toString());
 
@@ -805,15 +828,19 @@ async function buildReadme(tree, template, thunderbirdPolicies, output_dir) {
  * 
  * @param {*} settings 
  *  settings.tree - "central" or "esr91"
- *  settings.mozillaReferencePolicyRevision - the hg revision of the last known mozilla version of
- *                                            their policies.json
+ *  settings.mozillaReferencePolicyRevision - the hg revision of the last known
+ *    mozilla version of their policies.json
  */
 async function buildThunderbirdTemplates(settings) {
 	// Download schema from https://hg.mozilla.org/
-	let data = await downloadPolicySchemaFiles(settings.tree);
-	if (!data)
+	let data = await downloadPolicySchemaFiles(
+		settings.tree,
+		settings.mozillaReferencePolicyRevision,
+	);
+	if (!data) {
 		return;
-
+	}
+	
 	let output_dir = `${build_dir}/${settings.tree}`;
 	let mozillaReferencePolicyFile = data.mozilla.revisions.find(r => r.revision == settings.mozillaReferencePolicyRevision);
 	if (!mozillaReferencePolicyFile) {
