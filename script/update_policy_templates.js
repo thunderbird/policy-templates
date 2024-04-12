@@ -897,29 +897,43 @@ async function main() {
 	await pullGitRepository("https://github.com/thundernest/policy-templates", "master", state_dir);
 
 	// Load revision data (to see if any new revisions have been added to the tree).
-	let revisionData = fs.existsSync(revisions_json_read_path)
+	let revisionData = [];
+	let readRevisionData = fs.existsSync(revisions_json_read_path)
 		? parse(fs.readFileSync(revisions_json_read_path).toString())
-		: [
-			{ // A starter set, if the revision config file is missing.
-				tree: "esr68",
-				mozillaReferencePolicyRevision: "1b0a29b456b432d1c8bef09c233b84205ec9e13c",
-			},
-			{
-				tree: "esr78",
-				mozillaReferencePolicyRevision: "a8c4670b6ef144a0f3b6851c2a9d4bbd44fc032a",
-			},
-			{
-				tree: "esr91",
-				mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
+		: [];
+	// A starter set, if the revision config file is missing or incomplete.
+	let defaultRevisionData = [
+		{
+			tree: "esr68",
+			mozillaReferencePolicyRevision: "1b0a29b456b432d1c8bef09c233b84205ec9e13c",
+		},
+		{
+			tree: "esr78",
+			mozillaReferencePolicyRevision: "a8c4670b6ef144a0f3b6851c2a9d4bbd44fc032a",
+		},
+		{
+			tree: "esr91",
+			mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
 
-			},
-			{
-				tree: "central",
-				mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
-			}
-		];
+		},
+		{
+			tree: "esr102",
+			mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
+		},
+		{
+			tree: "esr115",
+			mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
+		},
+		{
+			tree: "central",
+			mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
+		}
+	];
 
-	for (let revision of revisionData) {
+	for (let defaultRevision of defaultRevisionData) {
+		let readRevision = readRevisionData.find(r => r.tree == defaultRevision.tree);
+		let revision = readRevision || defaultRevision;
+		revisionData.push(revision);
 		await buildThunderbirdTemplates(revision);
 	}
 
