@@ -894,7 +894,7 @@ async function buildThunderbirdTemplates(settings) {
 
 async function main() {
 	// Checkout the current state of the repo, so we can see if new revisions found have been acked already. 
-	await pullGitRepository("https://github.com/thundernest/policy-templates", "master", state_dir);
+	await pullGitRepository("https://github.com/thunderbird/policy-templates", "master", state_dir);
 
 	// Load revision data (to see if any new revisions have been added to the tree).
 	let revisionData = [];

@@ -1,4 +1,4 @@
-**IMPORTANT**: These files are in active development along with the policies in Thunderbird. To get the policy information that corresponds to a specific release, go to https://github.com/thundernest/policy-templates.
+**IMPORTANT**: These files are in active development along with the policies in Thunderbird. To get the policy information that corresponds to a specific release, go to https://github.com/thunderbird/policy-templates.
 
 Starting with Thunderbird 68, Thunderbird supports configuration files on macOS.
 
