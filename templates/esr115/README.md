@@ -123,6 +123,56 @@ Value (string):
 
 <br>
 
+### AppUpdatePin
+
+Prevent Thunderbird from being updated beyond the specified version.
+
+You can specify the any version as ```xx.``` and Thunderbird will be updated with all minor versions, but will not be updated beyond the major version.
+
+You can also specify the version as ```xx.xx``` and Thunderbird will be updated with all patch versions, but will not be updated beyond the minor version.
+
+You should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, Thunderbird will update beyond that version.
+
+**CCK2 Equivalent:** N/A
+**Preferences Affected:** N/A
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Thunderbird\AppUpdatePin = "106."
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/AppUpdatePin
+```
+Value (string):
+```
+<enabled/>
+<data id="AppUpdatePin" value="106."/>
+```
+#### macOS
+```
+<dict>
+  <key>AppUpdatePin</key>
+  <string>106.</string>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "AppUpdatePin": "106."
+  }
+}
+```
+#### Compatibility
+
+| Policy/Property Name | supported since | deprecated after |
+|:--- | ---:| ---:|
+| `AppUpdatePin` | 104.0 |  |
+
+<br>
+
 ## AppUpdateURL
 
 Change the URL for application update if you are providing Thunderbird updates from a custom update server.

@@ -360,7 +360,7 @@
         "```"
       ]
     },
-    "AppAutoPin": {
+    "AppUpdatePin": {
       "upstream": [
         "### AppUpdatePin",
         "",
