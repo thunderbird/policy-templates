@@ -739,6 +739,10 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
 async function buildPlistFiles(template, thunderbirdPolicies, output_dir) {
 	// Read PLIST files - https://www.npmjs.com/package/plist.
 	let plist_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/mac/org.mozilla.firefox.plist`).toString();
+	
+	// See https://github.com/mozilla/policy-templates/pull/1088
+	plist_file = plist_file.replaceAll("&rt;","&gt;");
+
 	let plist_obj = plist.parse(plist_file);
 
 	function isObject(v) {
