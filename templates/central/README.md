@@ -12,6 +12,7 @@ On Windows, create a directory called `distribution` where the EXE is located an
 |:--- |:--- |
 | **[`3rdparty`](#3rdparty)** | Set policies that WebExtensions can access via chrome.storage.managed.
 | **[`AppAutoUpdate`](#appautoupdate)** | Enable or disable automatic application update.
+| **[`AppUpdatePin`](#appupdatepin)** | Prevent Thunderbird from being updated beyond the specified version.
 | **[`AppUpdateURL`](#appupdateurl)** | Change the URL for application update.
 | **[`Authentication`](#authentication)** | Configure sites that support integrated authentication.
 | **[`BackgroundAppUpdate`](#backgroundappupdate)** | Enable or disable the background updater (Windows only).
