@@ -12,6 +12,10 @@
     "mozillaReferencePolicyRevision": "9137f00be7b39e1174c62796fb64626bbf37a1d0"
   },
   {
+    "tree": "esr102",
+    "mozillaReferencePolicyRevision": "656d54876405369eba969d43385aaca5511315a8"
+  },
+  {
     "tree": "central",
     "mozillaReferencePolicyRevision": "17c8763d65a017a7e5d1834d2dc674014b97cbea"
   }
