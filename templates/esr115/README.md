@@ -127,13 +127,13 @@ Value (string):
 
 Prevent Thunderbird from being updated beyond the specified version.
 
-You can specify the any version as ```xx.``` and Thunderbird will be updated with all minor versions, but will not be updated beyond the major version.
+You can specify the version as ```xx.``` and Thunderbird will be updated with all minor versions, but will not be updated beyond the major version.
 
 You can also specify the version as ```xx.xx``` and Thunderbird will be updated with all patch versions, but will not be updated beyond the minor version.
 
 You should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, Thunderbird will update beyond that version.
 
-**CCK2 Equivalent:** N/A
+**CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
 #### Windows (GPO)
