@@ -223,6 +223,8 @@ async function pullGitRepository(url, ref, dir) {
         console.log(`Cloning ${url} (${ref})`);
         fs.ensureDirSync(dir);
         await git.clone({
+            // Use name of the script as the name of the pulling "author".
+            author: { name: "update_policy_template.js" },
             fs,
             http,
             dir,
@@ -235,7 +237,8 @@ async function pullGitRepository(url, ref, dir) {
     } else {
         console.log(`Updating ${url} (${ref})`);
         await git.pull({
-            author: { name: "generate_policy_template.js" },
+            // Use name of the script as the name of the pulling "author".
+            author: { name: "update_policy_template.js" },
             fs,
             http,
             dir,
@@ -893,10 +896,10 @@ async function buildThunderbirdTemplates(settings) {
 }
 
 async function main() {
-    // Checkout the current state of the repo, so we can see if new revisions found have been acked already. 
+    // Checkout the current state of the repo, to identify new changes.
     await pullGitRepository("https://github.com/thunderbird/policy-templates", "master", state_dir);
 
-    // Load revision data (to see if any new revisions have been added to the tree).
+    // Load revision data, to see if any new revisions have been added to the tree.
     let revisionData = [];
     let readRevisionData = fs.existsSync(revisions_json_read_path)
         ? parse(fs.readFileSync(revisions_json_read_path).toString())
