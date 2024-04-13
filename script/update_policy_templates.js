@@ -855,6 +855,13 @@ async function buildThunderbirdTemplates(settings) {
         return;
     }
 
+    // Find supported policies.
+    extractCompatibilityInformation(data, settings.tree);
+    let supportedPolicies = 
+        getCompatibilityInformation(
+            /* distinct */ true, settings.tree
+        ).filter(e => e.first != "");
+
     // Get changes in the schema files and log them.
     if (mozillaReferencePolicyFile.revision != data.mozilla.revisions[0].revision) {
         settings.mozillaReferencePolicyRevision = data.mozilla.revisions[0].revision;
@@ -863,7 +870,22 @@ async function buildThunderbirdTemplates(settings) {
             console.log();
             console.log(` Mozilla has released an new policy revision for mozilla-${settings.tree}!`);
             console.log(` Do those changes need to be ported to Thunderbird?`);
-            if (m_m_changes.added.length > 0) console.log(` - Mozilla added the following policies:`, m_m_changes.added);
+            if (m_m_changes.added.length > 0) {
+                console.log(` - Mozilla added the following policies: [`);
+                // Indicate if the current tree supports any of the added policies.
+                // This can happen, if the revision config file has not yet been
+                // committed, and an older revision was used to detect changes in
+                // the policy files.
+                for (let added of m_m_changes.added) {
+                    let isSupported = supportedPolicies.find(e => e.policies.includes(added));
+                    if (isSupported) {
+                        console.log(`\x1b[32m   '${added}'\x1b[0m,`)
+                    } else {
+                        console.log(`\x1b[32m   '${added}'\x1b[0m, \x1b[31m Not supported by ${settings.tree} \x1b[0m`)
+                    }
+                }
+                console.log("]");
+            }
             if (m_m_changes.removed.length > 0) console.log(` - Mozilla removed the following policies:`, m_m_changes.removed);
             if (m_m_changes.changed.length > 0) console.log(` - Mozilla changed properties of the following policies:`, m_m_changes.changed);
             console.log();
@@ -873,9 +895,6 @@ async function buildThunderbirdTemplates(settings) {
             console.log(` If those changes are not needed for Thunderbird, check-in the updated ${revisions_json_write_path} file to acknowledge the change. Otherwise port the changes first.\n`);
         }
     }
-
-    // Update the global compatibility object.
-    extractCompatibilityInformation(data, settings.tree);
 
     let template = await parseMozillaPolicyTemplate(settings.tree);
     let thunderbirdPolicies = Object.keys(gCompatibilityData)
