@@ -16,7 +16,11 @@
     "mozillaReferencePolicyRevision": "656d54876405369eba969d43385aaca5511315a8"
   },
   {
+    "tree": "esr115",
+    "mozillaReferencePolicyRevision": "3fc8d7913eb0fa7e3b39dc1fc3c88b936ecab3bb"
+  },
+  {
     "tree": "central",
-    "mozillaReferencePolicyRevision": "17c8763d65a017a7e5d1834d2dc674014b97cbea"
+    "mozillaReferencePolicyRevision": "b501a3a06e1c572ec1d9e7366828dae0f77c6aa2"
   }
 ]
