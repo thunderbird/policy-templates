@@ -16,6 +16,7 @@ const readme_json_path = "./readme_#tree#.json";
 const compatibility_json_path = `./compatibility.json`;
 const revisions_json_write_path = "./revisions.json";
 const revisions_json_read_path = `${state_dir}/script/revisions.json`;
+const HG_URL = `https://hg-edge.mozilla.org`;
 
 // Replacement for deprecated request.
 const bent = require('bent');
@@ -335,11 +336,11 @@ function getPolicySchemaFilename(branch, tree, ref) {
 async function downloadPolicySchemaFile(branch, tree, revision) {
     let path = tree == "central" ? `${branch}-${tree}` : `releases/${branch}-${tree}`
     let folder = branch == "mozilla" ? "browser" : "mail"
-    let url = `https://hg.mozilla.org/${path}/raw-file/${revision}/${folder}/components/enterprisepolicies/schemas/policies-schema.json`
+    let url = `${HG_URL}/${path}/raw-file/${revision}/${folder}/components/enterprisepolicies/schemas/policies-schema.json`
     
     console.log(`Downloading ${url}`);
     let file = parse(await request(url));
-    let version = (await request(`https://hg.mozilla.org/${path}/raw-file/${revision}/${folder}/config/version.txt`)).trim();
+    let version = (await request(`${HG_URL}/${path}/raw-file/${revision}/${folder}/config/version.txt`)).trim();
     file.version = version;
     file.revision = revision;
     fs.writeFileSync(getPolicySchemaFilename(branch, tree, revision), stringify(file, null, 2));
@@ -375,7 +376,7 @@ async function downloadPolicySchemaFiles(tree, mozillaReferencePolicyRevision) {
         let path = tree == "central" ? `${branch}-${tree}` : `releases/${branch}-${tree}`
 
         console.log(`Checking policies-schema.json revisions for ${path}`);
-        data[branch].hgLogUrl = `https://hg.mozilla.org/${path}/log/tip/${folder}/components/enterprisepolicies/schemas/policies-schema.json`;
+        data[branch].hgLogUrl = `${HG_URL}/${path}/log/tip/${folder}/components/enterprisepolicies/schemas/policies-schema.json`;
         let hgLog = await request(data[branch].hgLogUrl);
         const $ = cheerio.load(hgLog);
 
@@ -720,7 +721,7 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
             .elements.find(e => e.name == "policyDefinitionResources")
             .elements.find(e => e.name == "resources")
             .elements.find(e => e.name == "stringTable")
-            .elements.filter(e => !e.attributes.id.startsWith("SUPPORTED_TB"));
+            .elements.filter(e => !e.attributes || !e.attributes.id.startsWith("SUPPORTED_TB"));
 
         strings.unshift(...Object.keys(used_supported_on).sort().map(e => used_supported_on[e].adml));
 
@@ -868,7 +869,7 @@ async function buildThunderbirdTemplates(settings) {
         let m_m_changes = checkPolicySchemaChanges(mozillaReferencePolicyFile, data.mozilla.revisions[0]);
         if (m_m_changes) {
             console.log();
-            console.log(` Mozilla has released an new policy revision for mozilla-${settings.tree}!`);
+            console.log(` Mozilla has released a new policy revision for mozilla-${settings.tree}!`);
             console.log(` Do those changes need to be ported to Thunderbird?`);
             if (m_m_changes.added.length > 0) {
                 console.log(` - Mozilla added the following policies: [`);
