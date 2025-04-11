@@ -270,13 +270,26 @@ async function parseMozillaPolicyTemplate(tree) {
     let dir = `${mozilla_template_dir}/${ref}`;
     await pullGitRepository("https://github.com/mozilla/policy-templates/", ref, dir);
 
+    // Later revisions moved the file.
+    let paths = [`${dir}/docs/index.md`, `${dir}/README.md`];
+    
     // This parsing highly depends on the structure of the README and needs to be
     // adjusted when its layout is changing. In the intro section we have lines like 
     // | **[`3rdparty`](#3rdparty)** |
     // Detailed descriptions are below level 3 headings (###) with potential subsections.
 
     // Split on ### heading to get chunks of policy descriptions.
-    let file = fs.readFileSync(`${dir}/docs/index.md`, 'utf8').toString();
+    let file;
+    for (let path of paths) {
+        try {
+            file = fs.readFileSync(path, 'utf8').toString();
+            break;
+        } catch {
+        }
+    }
+    if (!file) {
+        throw new Error(`Did not find mozilla policy template for ${tree}, ${rev}`)
+    }
     let data = file.split("\n### ");
 
     // Shift out the header and process it.
