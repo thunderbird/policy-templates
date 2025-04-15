@@ -883,7 +883,7 @@ async function buildThunderbirdTemplates(settings) {
         let m_m_changes = checkPolicySchemaChanges(mozillaReferencePolicyFile, data.mozilla.revisions[0]);
         if (m_m_changes) {
             console.log();
-            console.log(` Mozilla has released an new policy revision for mozilla-${settings.tree}!`);
+            console.log(` Mozilla has released a new policy revision for mozilla-${settings.tree}!`);
             console.log(` Do those changes need to be ported to Thunderbird?`);
             if (m_m_changes.added.length > 0) {
                 console.log(` - Mozilla added the following policies: [`);
