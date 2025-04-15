@@ -735,7 +735,7 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
             .elements.find(e => e.name == "policyDefinitionResources")
             .elements.find(e => e.name == "resources")
             .elements.find(e => e.name == "stringTable")
-            .elements.filter(e => !e.attributes.id.startsWith("SUPPORTED_TB"));
+            .elements.filter(e => !e.attributes || !e.attributes.id.startsWith("SUPPORTED_TB"));
 
         strings.unshift(...Object.keys(used_supported_on).sort().map(e => used_supported_on[e].adml));
 
