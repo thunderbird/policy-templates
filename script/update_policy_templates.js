@@ -16,6 +16,7 @@ const readme_json_path = "./readme_#tree#.json";
 const compatibility_json_path = `./compatibility.json`;
 const revisions_json_write_path = "./revisions.json";
 const revisions_json_read_path = `${state_dir}/script/revisions.json`;
+const HG_URL = `https://hg-edge.mozilla.org`;
 
 // Replacement for deprecated request.
 const bent = require('bent');
@@ -335,11 +336,11 @@ function getPolicySchemaFilename(branch, tree, ref) {
 async function downloadPolicySchemaFile(branch, tree, revision) {
     let path = tree == "central" ? `${branch}-${tree}` : `releases/${branch}-${tree}`
     let folder = branch == "mozilla" ? "browser" : "mail"
-    let url = `https://hg.mozilla.org/${path}/raw-file/${revision}/${folder}/components/enterprisepolicies/schemas/policies-schema.json`
+    let url = `${HG_URL}/${path}/raw-file/${revision}/${folder}/components/enterprisepolicies/schemas/policies-schema.json`
     
     console.log(`Downloading ${url}`);
     let file = parse(await request(url));
-    let version = (await request(`https://hg.mozilla.org/${path}/raw-file/${revision}/${folder}/config/version.txt`)).trim();
+    let version = (await request(`${HG_URL}/${path}/raw-file/${revision}/${folder}/config/version.txt`)).trim();
     file.version = version;
     file.revision = revision;
     fs.writeFileSync(getPolicySchemaFilename(branch, tree, revision), stringify(file, null, 2));
@@ -375,7 +376,7 @@ async function downloadPolicySchemaFiles(tree, mozillaReferencePolicyRevision) {
         let path = tree == "central" ? `${branch}-${tree}` : `releases/${branch}-${tree}`
 
         console.log(`Checking policies-schema.json revisions for ${path}`);
-        data[branch].hgLogUrl = `https://hg.mozilla.org/${path}/log/tip/${folder}/components/enterprisepolicies/schemas/policies-schema.json`;
+        data[branch].hgLogUrl = `${HG_URL}/${path}/log/tip/${folder}/components/enterprisepolicies/schemas/policies-schema.json`;
         let hgLog = await request(data[branch].hgLogUrl);
         const $ = cheerio.load(hgLog);
 
