@@ -97,7 +97,7 @@ async function request(url) {
             console.error("Retry", i);
         }
         // Rate limit the first request already, otherwise hg.mozilla.org will block us.
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        await new Promise(resolve => setTimeout(resolve, 2500));
 
         let killTimer;
         let killSwitch = new Promise((resolve, reject) => { killTimer = setTimeout(reject, 15000, "HardTimeout"); })
