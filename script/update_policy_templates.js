@@ -93,10 +93,10 @@ async function request(url) {
     // Retry on error, using a hard timeout enforced from the client side.
     let rv;
     for (let i = 0; (!rv && i < 5); i++) {
-        //if (i > 0) {
+        if (i > 0) {
             console.error("Retry", i);
             await new Promise(resolve => setTimeout(resolve, 5000));
-        //}
+        }
 
         let killTimer;
         let killSwitch = new Promise((resolve, reject) => { killTimer = setTimeout(reject, 15000, "HardTimeout"); })
@@ -276,7 +276,7 @@ async function parseMozillaPolicyTemplate(tree) {
     // Detailed descriptions are below level 3 headings (###) with potential subsections.
 
     // Split on ### heading to get chunks of policy descriptions.
-    let file = fs.readFileSync(`${dir}/docs/index.md`, 'utf8').toString();
+    let file = fs.readFileSync(`${dir}/README.md`, 'utf8').toString();
     let data = file.split("\n### ");
 
     // Shift out the header and process it.
@@ -945,10 +945,6 @@ async function main() {
         },
         {
             tree: "esr115",
-            mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
-        },
-        {
-            tree: "esr128",
             mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
         },
         {
