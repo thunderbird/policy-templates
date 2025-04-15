@@ -831,7 +831,7 @@ async function buildReadme(tree, template, thunderbirdPolicies, output_dir) {
 
     for (let skipped of skipped_main_policies) {
         if (!printed_main_policies.includes(skipped)) {
-            console.error(`  --> WARNING: Supported policy not present in readme: ${skipped}\n`);
+            console.log(`  --> WARNING: Supported policy not present in readme: \x1b[31m '${skipped}'\x1b[0m`);
         }
     }
 
@@ -843,6 +843,7 @@ async function buildReadme(tree, template, thunderbirdPolicies, output_dir) {
 
     fs.ensureDirSync(output_dir);
     fs.writeFileSync(`${output_dir}/README.md`, md);
+    console.log();
 }
 
 /**
@@ -894,20 +895,31 @@ async function buildThunderbirdTemplates(settings) {
                 for (let added of m_m_changes.added) {
                     let isSupported = supportedPolicies.find(e => e.policies.includes(added));
                     if (isSupported) {
-                        console.log(`\x1b[32m   '${added}'\x1b[0m,`)
+                        console.log(`\x1b[32m     '${added}'\x1b[0m`)
                     } else {
-                        console.log(`\x1b[32m   '${added}'\x1b[0m, \x1b[31m Not supported by ${settings.tree} \x1b[0m`)
+                        console.log(`\x1b[31m     '${added}'\x1b[0m, \x1b[31m Not supported by ${settings.tree} \x1b[0m`)
                     }
                 }
-                console.log("]");
+                console.log(`   ]\n`);
             }
-            if (m_m_changes.removed.length > 0) console.log(` - Mozilla removed the following policies:`, m_m_changes.removed);
-            if (m_m_changes.changed.length > 0) console.log(` - Mozilla changed properties of the following policies:`, m_m_changes.changed);
+            if (m_m_changes.removed.length > 0) {
+                console.log(` - Mozilla removed the following policies: [`);
+                m_m_changes.removed.forEach(e => console.log(`\x1b[33m     '${e}'\x1b[0m`));
+                console.log(`   ]\n`);
+            }
+            if (m_m_changes.changed.length > 0) {
+                console.log(` - Mozilla changed properties of the following policies: [`);
+                m_m_changes.changed.forEach(e => console.log(`\x1b[33m     '${e}'\x1b[0m`));
+                console.log(`   ]\n`);
+            }
+            
             console.log();
             console.log(` - currently acknowledged policy revision (${mozillaReferencePolicyFile.revision} / ${mozillaReferencePolicyFile.version}): \n\t${path.resolve(getPolicySchemaFilename("mozilla", settings.tree, mozillaReferencePolicyFile.revision))}\n`);
             console.log(` - latest available policy revision (${data.mozilla.revisions[0].revision} / ${data.mozilla.revisions[0].version}): \n\t${path.resolve(getPolicySchemaFilename("mozilla", settings.tree, data.mozilla.revisions[0].revision))}\n`);
             console.log(` - hg change log for mozilla-${settings.tree}: \n\t${data.mozilla.hgLogUrl}\n`);
-            console.log(` If those changes are not needed for Thunderbird, check-in the updated ${revisions_json_write_path} file to acknowledge the change. Otherwise port the changes first.\n`);
+            console.log(`Create bugs on Bugzilla for all policies which should be ported to Thunderbird and then check-in the updated ${revisions_json_write_path} file to acknowledge the reported changes.`);
+            console.log(`Once the reported changes are acknowledged, they will not be reported again.`);
+            console.log();
         }
     }
 
