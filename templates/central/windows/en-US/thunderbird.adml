@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="5.9" schemaVersion="1.0">
+<policyDefinitionResources revision="6.9" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
@@ -45,6 +45,10 @@
       <string id="ProxySettings_group">Proxy Settings</string>
       <string id="SecurityDevices_group">Security Devices</string>
       <string id="FirefoxSuggest_group">Thunderbird Suggest (US only)</string>
+      <string id="ContentAnalysis_group">Content Analysis (DLP)</string>
+      <string id="InterceptionPoints_group">Interception Points</string>
+      <string id="InterceptionPoints_Clipboard_group">Clipboard</string>
+      <string id="InterceptionPoints_DragAndDrop_group">Drag And Drop</string>
       <string id="Allow">Allowed Sites</string>
       <string id="AllowSession">Allowed Sites (Session Only)</string>
       <string id="Block">Blocked Sites</string>
@@ -531,18 +535,18 @@ If this policy is disabled or not configured, the cache is not cleared when the 
       <string id="SanitizeOnShutdown_Cookies_Explain">If the policy is enabled, cookies are cleared when the browser is closed.
 
 If this policy is disabled or not configured, cookies are not cleared when the browser is closed.</string>
-      <string id="SanitizeOnShutdown_Downloads">Download History</string>
+      <string id="SanitizeOnShutdown_Downloads">Download History (Deprecated)</string>
       <string id="SanitizeOnShutdown_Downloads_Explain">If the policy is enabled, download history is cleared when the browser is closed.
 
 If this policy is disabled or not configured, download history is not cleared when the browser is closed.</string>
-      <string id="SanitizeOnShutdown_FormData">Form &amp; Search History</string>
+      <string id="SanitizeOnShutdown_FormData">Form &amp; Search History (Deprecated)</string>
       <string id="SanitizeOnShutdown_FormData_Explain">If the policy is enabled, form data is cleared when the browser is closed.
 
 If this policy is disabled or not configured, form data is not cleared when the browser is closed.</string>
-      <string id="SanitizeOnShutdown_History">Browsing History</string>
-      <string id="SanitizeOnShutdown_History_Explain">If the policy is enabled, browsing history is cleared when the browser is closed.
+      <string id="SanitizeOnShutdown_History">History</string>
+      <string id="SanitizeOnShutdown_History_Explain">If the policy is enabled, browsing history, download history, search history, and form data are cleared when the browser is closed.
 
-If this policy is disabled or not configured, browsing history is not cleared when the browser is closed.</string>
+If this policy is disabled or not configured, browsing history, download history, search history, and form data are not cleared when the browser is closed.</string>
       <string id="SanitizeOnShutdown_Sessions">Active Logins</string>
       <string id="SanitizeOnShutdown_Sessions_Explain">If the policy is enabled, sessions cleared when the browser is closed.
 
@@ -551,7 +555,7 @@ If this policy is disabled or not configured, sessions not cleared when the brow
       <string id="SanitizeOnShutdown_SiteSettings_Explain">If the policy is enabled, site preferences are cleared when the browser is closed.
 
 If this policy is disabled or not configured, site preferences are not cleared when the browser is closed.</string>
-      <string id="SanitizeOnShutdown_OfflineApps">Offline Website Data</string>
+      <string id="SanitizeOnShutdown_OfflineApps">Offline Website Data (Deprecated)</string>
       <string id="SanitizeOnShutdown_OfflineApps_Explain">If the policy is enabled, offline application storage is cleared when the browser is closed.
 
 If this policy is disabled or not configured, offline application storage is not cleared when the browser is closed.</string>
@@ -786,7 +790,7 @@ If this policy is disabled or not configured, Thunderbird defaults to a maximum 
       <string id="SupportMenu_Explain">If this policy is enabled, a new menuitem is added to the help menu with support information.
 
 If this policy is disabled or not configured, no menuitem is added.</string>
-      <string id="UserMessaging_WhatsNew">What's New</string>
+      <string id="UserMessaging_WhatsNew">What's New (Deprecated)</string>
       <string id="UserMessaging_WhatsNew_Explain">If this policy is disabled, the What's new icon and menuitem will not be displayed.
 
 If this policy is enabled or not configured, the What's New icon and menuitem will be displayed.</string>
@@ -810,6 +814,10 @@ If this policy is disabled or not configured, onboarding messages will be shown 
       <string id="UserMessaging_MoreFromMozilla_Explain">If this policy is disabled, the More from Mozilla section will not be shown in preferences.
 
 If this policy is enabled or not configured, the More from Mozilla section will be shown in preferences.</string>
+      <string id="UserMessaging_FirefoxLabs">Thunderbird Labs</string>
+      <string id="UserMessaging_FirefoxLabs_Explain">If this policy is disabled, the Thunderbird Labs section will not be shown in preferences.
+
+If this policy is enabled or not configured, the Thunderbird Labs section will be shown in preferences.</string>
       <string id="UserMessaging_Locked">Do not allow user messaging preferences to be changed</string>
       <string id="UserMessaging_Locked_Explain">If this policy is disabled, user messaging preferences can be changed by the user.
 
@@ -978,10 +986,12 @@ If this policy is disabled or not configured, Thunderbird does not bypass the pr
       <string id="Proxy_AutoLogin_Explain">If this policy is enabled, Thunderbird will not prompt for proxy authentication when a password is saved.
 
 If this policy is disabled or not configured, Thunderbird will always prompt for proxy authentication.</string>
-      <string id="Proxy_UseProxyForDNS">Proxy DNS when using SOCKS v5</string>
-      <string id="Proxy_UseProxyForDNS_Explain">If this policy is enabled, DNS is proxied when using SOCKS v5.
+      <string id="Proxy_UseProxyForDNS">Proxy DNS when using SOCKS</string>
+      <string id="Proxy_UseProxyForDNS_Explain">If this policy is enabled, DNS is proxied when using SOCKS.
 
-If this policy is disabled or not configured, DNS is not proxied when using SOCKS v5.</string>
+If this policy is disabled, DNS is not proxied when using SOCKS.
+
+If this policy not configured, DNS is not proxied when using SOCKS v4, but proxied when using SOCKS v5.</string>
       <string id="DisableThirdPartyModuleBlocking">Disable Third Party Module Blocking</string>
       <string id="DisableThirdPartyModuleBlocking_Explain">If this policy is enabled, users are not allowed to block third-party modules from the about:third-party page.
 
@@ -1027,6 +1037,124 @@ This policy is not recommended for most users.</string>
       <string id="AllowFileSelectionDialogs_Explain">If this policy is disabled, users will not be able to open file selection dialogs. In most cases, Thunderbird will act as if the user clicked the cancel button.
 
 If this policy is enabled or not configured, users can open file selection dialogs.</string>
+      <string id="AutofillAddressEnabled">Enable autofill for addresses</string>
+      <string id="AutofillAddressEnabled_Explain">If this policy is disabled, addresses will not be autofilled for Thunderbird versions and regions that support it.
+
+If this policy is enabled or not configured, addresses will be autofilled for Thunderbird versions and regions that support it.</string>
+      <string id="AutofillCreditCardEnabled">Enable autofill for payment methods</string>
+      <string id="AutofillCreditCardEnabled_Explain">If this policy is disabled, payment methods will not be autofilled for Thunderbird versions and regions that support it.
+
+If this policy is enabled or not configured, payment methods will be autofilled for Thunderbird versions and regions that support it.</string>
+      <string id="TranslateEnabled">Enable webpage translation</string>
+      <string id="TranslateEnabled_Explain">If this policy is disabled, web page translation will not be available.
+
+If this policy is enabled or not configured, web page translation will be available.
+
+Note: Web page translation is done completely on the client, so there is no data or privacy risk.</string>
+      <string id="DisableEncryptedClientHello">Disable Encrypted Client Hello</string>
+      <string id="DisableEncryptedClientHello_Explain">If this policy is enabled, the TLS feature Encrypted Client Hello (ECH) will be disabled.
+
+If this policy is disabled or not configured, the TLS feature Encrypted Client Hello (ECH) will be enabled.</string>
+      <string id="PostQuantumKeyAgreementEnabled">Enable post-quantum key agreement</string>
+      <string id="PostQuantumKeyAgreementEnabled_Explain">If this policy is enabled, post-quantum key agreement for TLS will be enabled.
+
+If this policy is disabled or not configured, post-quantum key agreement for TLS will be disabled.</string>
+      <string id="HttpsOnlyMode">HTTPS-Only Mode</string>
+      <string id="HttpsOnlyMode_Explain">If this policy is enabled, you can set the default behavior for HTTPS-Only Mode.
+
+If this policy is disabled or not configured, HTTPS-Only Mode is not enabled.</string>
+      <string id="HttpsOnlyMode_Allowed">Off by default</string>
+      <string id="HttpsOnlyMode_Disallowed">Off and locked</string>
+      <string id="HttpsOnlyMode_Enabled">On by default</string>
+      <string id="HttpsOnlyMode_ForceEnabled">On and locked</string>
+      <string id="HttpAllowlist">HTTP Allowlist</string>
+      <string id="HttpAllowlist_Explain">If this policy is enabled, you can specify a list origins that will not be upgraded to HTTPS.
+
+If this policy is disabled or not configured, all origins are upgraded to HTTPS if HTTPS-Only Mode is enabled.</string>
+      <string id="PrivateBrowsingModeAvailability">Private Browsing Mode Availability</string>
+      <string id="PrivateBrowsingModeAvailability_Explain">If this policy is enabled, you can set the availability of Private Browsing Mode.
+
+If this policy is disabled or not configured, Private Browsing Mode is available.</string>
+      <string id="PrivateBrowsingModeAvailability_0">Allow Private Browsing Mode</string>
+      <string id="PrivateBrowsingModeAvailability_1">Disable Private Browsing Mode</string>
+      <string id="PrivateBrowsingModeAvailability_2">Force Private Browsing Mode</string>
+      <string id="ContentAnalysis_AgentName">Agent Name</string>
+      <string id="ContentAnalysis_AgentName_Explain">If this policy is enabled, you can specify the name of the DLP agent, used in dialogs and notifications about DLP operations.
+
+If this policy is disabled or not configured, the agent name "A DLP Agent" is used.</string>
+      <string id="ContentAnalysis_AgentTimeout">Agent Timeout</string>
+      <string id="ContentAnalysis_AgentTimeout_Explain">If this policy is enabled, you can specify the timeout in number of seconds after a DLP request is sent to the agent. After this timeout, the request will be denied unless 'Default Result' is set to 1 or 2.
+
+If this policy is disabled or not configured, the timeout is 30 seconds.</string>
+      <string id="ContentAnalysis_AllowUrlRegexList">Allow Url Regex List</string>
+      <string id="ContentAnalysis_AllowUrlRegexList_Explain">If this policy is enabled, you can specify a space-separated list of regular expressions that indicates URLs for which DLP operations will always be allowed without consulting the agent. The default is "^about:(?!blank|srcdoc).*", meaning that any pages that start with "about:" will be exempt from DLP except for "about:blank" and "about:srcdoc", as these can be controlled by web content.
+
+If this policy is disabled or not configured, the DLP agent will always be consulted.</string>
+      <string id="ContentAnalysis_BypassForSameTabOperations">Bypass For Same Tab Operations</string>
+      <string id="ContentAnalysis_BypassForSameTabOperations_Explain">If this policy is enabled, Thunderbird will automatically allow DLP requests whose data comes from the same tab and frame - for example, if data is copied to the clipboard and then pasted on the same page.
+
+If this policy is disabled or not configured, Thunderbird  Thunderbird will not pass DLP requests whose data comes from the same tab and frame to the DLP agent as normal.</string>
+      <string id="ContentAnalysis_ClientSignature">Client Signature</string>
+      <string id="ContentAnalysis_ClientSignature_Explain">If this policy is enabled, you can set the required signature of the DLP agent connected to the pipe. If this is a non-empty string and the DLP agent does not have a signature with a Subject Name that exactly matches this value, Thunderbird will not connect to the pipe.
+
+If this policy is disabled or not configured, the signature will not be verified.</string>
+      <string id="ContentAnalysis_DefaultResult">Default Result</string>
+      <string id="ContentAnalysis_DefaultResult_Explain">If this policy is enabled, you can indicate the desired behavior for DLP requests if there is a problem connecting to the DLP agent.
+
+If this policy is disabled or not configured, the DLP request will be denied if there is a problem connecting to the agent.</string>
+      <string id="ContentAnalysis_DefaultResult_0">Deny the request</string>
+      <string id="ContentAnalysis_DefaultResult_1">Warn the user and allow them to choose whether to allow or deny</string>
+      <string id="ContentAnalysis_DefaultResult_2">Allow the request</string>
+      <string id="ContentAnalysis_DenyUrlRegexList">Deny Url Regex List</string>
+      <string id="ContentAnalysis_DenyUrlRegexList_Explain">If this policy is enabled, you can specify a space-separated list of regular expressions that indicates URLs for which DLP operations will always be denied without consulting the agent.
+
+If this policy is disabled or not configured, the DLP agent will always be consulted.</string>
+      <string id="ContentAnalysis_Enabled">Enabled</string>
+      <string id="ContentAnalysis_Enabled_Explain">If this policy is enabled, Thunderbird will use DLP.
+
+If this policy is disabled or not configured, Thunderbird will not use DLP.
+
+Note: If this policy is enabled and no DLP agent is running, all DLP requests will be denied unless Default Result is set to 1 or 2.</string>
+      <string id="ContentAnalysis_IsPerUser">Is Per User</string>
+      <string id="ContentAnalysis_IsPerUser_Explain">If this policy is disabled, the pipe the DLP agent creates is per-system.
+
+If this policy is enabled or not configured, the pipe the DLP agent creates is per-user.</string>
+      <string id="ContentAnalysis_PipePathName">Pipe Path Name</string>
+      <string id="ContentAnalysis_PipePathName_Explain">If this policy is enabled, you can change the name of the pipe for the DLP agent.
+
+If this policy is disabled or not configured, the default pipe name of 'path_user' is used.</string>
+      <string id="ContentAnalysis_ShowBlockedResult">Show Blocked Result</string>
+      <string id="ContentAnalysis_ShowBlockedResult_Explain">If this policy is disabled, Thunderbird will not show a notification when a DLP request is denied.
+
+If this policy is enabled or not configured, Thunderbird will show a notification when a DLP request is denied.</string>
+      <string id="ContentAnalysis_InterceptionPoints_Clipboard">Enabled</string>
+      <string id="ContentAnalysis_InterceptionPoints_Clipboard_Explain">If this policy is disabled, clipboard operations will not use DLP.
+
+If this policy is enabled or not configured, clipboard operations will use DLP.</string>
+      <string id="ContentAnalysis_InterceptionPoints_Clipboard_PlainTextOnly">Plain Text Only</string>
+      <string id="ContentAnalysis_InterceptionPoints_Clipboard_PlainTextOnly_Explain">If this policy is disabled, all formats will be analyzed on the clipboard, which some DLP agents may not expect.
+
+If this policy is enabled or not configured, only the text/plain format will be analyzed on the clipboard.</string>
+      <string id="ContentAnalysis_InterceptionPoints_DragAndDrop">Enabled</string>
+      <string id="ContentAnalysis_InterceptionPoints_DragAndDrop_Explain">If this policy is disabled, drag and drop operations will not use DLP.
+
+If this policy is enabled or not configured, drag and drop operations will use DLP.</string>
+      <string id="ContentAnalysis_InterceptionPoints_DragAndDrop_PlainTextOnly">Plain Text Only</string>
+      <string id="ContentAnalysis_InterceptionPoints_DragAndDrop_PlainTextOnly_Explain">If this policy is disabled, all formats will be analyzed in what is being dropped, which some DLP agents may not expect.
+
+If this policy is enabled or not configured, only the text/plain format will be analyzed in what is being dropped.</string>
+      <string id="ContentAnalysis_InterceptionPoints_FileUpload">File Upload</string>
+      <string id="ContentAnalysis_InterceptionPoints_FileUpload_Explain">If this policy is disabled, file upload operations will not use DLP.
+
+If this policy is enabled or not configured, file upload operations will use DLP.</string>
+      <string id="ContentAnalysis_InterceptionPoints_Print">Print</string>
+      <string id="ContentAnalysis_InterceptionPoints_Print_Explain">If this policy is disabled, print operations will not use DLP.
+
+If this policy is enabled or not configured, print operations will use DLP.</string>
+      <string id="ContentAnalysis_TimeoutResult">Timeout Result</string>
+      <string id="ContentAnalysis_TimeoutResult_Explain">If this policy is enabled, you can indicate the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. 
+
+If this policy is disabled or not configured, the request will be denied.</string>
       <string id="Preferences_Boolean_Explain">If this policy is enabled, the preference is locked to true. If this policy is disabled, the preference is locked to false.
 
 For a description of the preference, see:
@@ -1396,6 +1524,21 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences.</
         </textBox>
         <text>Example: .mozilla.org, .net.nz, 192.168.1.0/24</text>
         <text>Connections to localhost, 127.0.0.1/8, and ::1 are never proxied.</text>
+      </presentation>
+      <presentation id="HttpsOnlyMode">
+        <dropdownList refId="HttpsOnlyMode"/>
+      </presentation>
+      <presentation id="PrivateBrowsingModeAvailability">
+        <dropdownList refId="PrivateBrowsingModeAvailability"/>
+      </presentation>
+      <presentation id="ContentAnalysis_DefaultResult">
+        <dropdownList refId="ContentAnalysis_DefaultResult"/>
+      </presentation>
+      <presentation id="Number">
+        <decimalTextBox refId="Number"/>
+      </presentation>
+      <presentation id="ContentAnalysis_TimeoutResult">
+        <dropdownList refId="ContentAnalysis_TimeoutResult"/>
       </presentation>
     </presentationTable>
   </resources>

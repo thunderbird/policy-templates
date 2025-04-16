@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="5.9" schemaVersion="1.0">
+<policyDefinitionResources revision="6.9" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
@@ -42,9 +42,13 @@
       <string id="EncryptedMediaExtensions_group">Зашифрованные медиа-сообщения</string>
       <string id="PDFjs_group">PDF.js</string>
       <string id="PictureInPicture_group">Картинка в картинке</string>
-      <string id="ProxySettings_group">Proxy Settings</string>
-      <string id="SecurityDevices_group">Security Devices</string>
+      <string id="ProxySettings_group">Настройки прокси</string>
+      <string id="SecurityDevices_group">Устройства безопасности</string>
       <string id="FirefoxSuggest_group">Thunderbird Suggest (US only)</string>
+      <string id="ContentAnalysis_group">Content Analysis (DLP)</string>
+      <string id="InterceptionPoints_group">Interception Points</string>
+      <string id="InterceptionPoints_Clipboard_group">Clipboard</string>
+      <string id="InterceptionPoints_DragAndDrop_group">Drag And Drop</string>
       <string id="Allow">Разрешённые сайты</string>
       <string id="AllowSession">Разрешённые сайты (Session Only)</string>
       <string id="Block">Заблокированные сайты</string>
@@ -154,9 +158,9 @@
 
 Если эта политика отключена или не настроена, DNS через HTTPS использует конфигурацию Thunderbird по умолчанию.</string>
       <string id="DNSOverHTTPS_Fallback">Fallback</string>
-      <string id="DNSOverHTTPS_Fallback_Explain">If this policy is disabled, Thunderbird will not fallback to your default DNS resolver if there is a problem with the secure DNS provider.
+      <string id="DNSOverHTTPS_Fallback_Explain">Если эта политика отключена, Thunderbird не будет использовать ваш DNS-резолвер по умолчанию, если возникнут проблемы с поставщиком защищенного DNS.
 
-If this policy is enabled or not configured, Thunderbird will use your default DNS resolver if there is a problem with the secure DNS provider.</string>
+Если эта политика включена или не настроена, Thunderbird будет использовать ваш DNS-резолвер по умолчанию, если возникнут проблемы с поставщиком защищенного DNS.</string>
       <string id="DisableMasterPasswordCreation">Отключить создание мастер-пароля</string>
       <string id="DisableMasterPasswordCreation_Explain">Если эта политика включена, пользователи не могут создать мастер-пароль.
 
@@ -251,10 +255,10 @@ Mozilla рекомендует не отключать телеметрию. И�
       <string id="DisplayBookmarksToolbar_Explain">Если эта политика включена, панель закладок по умолчанию отображается. Пользователь может её скрыть.
 
 Если эта политика отключена или не настроена, панель закладок по умолчанию не отображается.</string>
-      <string id="DisplayBookmarksToolbar_Enum">Display Bookmarks Toolbar</string>
-      <string id="DisplayBookmarksToolbar_Enum_Explain">If this policy is enabled, the default bokmarks toolbar display can be configured.
+      <string id="DisplayBookmarksToolbar_Enum">Отображение панели закладок</string>
+      <string id="DisplayBookmarksToolbar_Enum_Explain">Если эта политика включена, можно настроить отображение панели закладок по умолчанию.
 
-If this policy is disabled or not configured, the bookmarks toolbar is displayed on the new tab page by default.</string>
+Если эта политика отключена или не настроена, панель закладок отображается на новой вкладке по умолчанию.</string>
       <string id="DisplayBookmarksToolbar_Always">Always</string>
       <string id="DisplayBookmarksToolbar_Never">Never</string>
       <string id="DisplayBookmarksToolbar_NewTab">New Tab</string>
@@ -533,18 +537,18 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
       <string id="SanitizeOnShutdown_Cookies_Explain">Если политика включена, файлы cookie очищаются при закрытии браузера.
 
 Если эта политика отключена или не настроена, файлы cookie не удаляются при закрытии браузера.</string>
-      <string id="SanitizeOnShutdown_Downloads">История загрузок</string>
+      <string id="SanitizeOnShutdown_Downloads">История загрузок (устарело)</string>
       <string id="SanitizeOnShutdown_Downloads_Explain">Если политика включена, история загрузок очищается при закрытии браузера.
 
 Если эта политика отключена или не настроена, история загрузок не очищается при закрытии браузера.</string>
-      <string id="SanitizeOnShutdown_FormData">Данные форм&amp;История поиска</string>
+      <string id="SanitizeOnShutdown_FormData">Данные форм&amp;История поиска (устарело)</string>
       <string id="SanitizeOnShutdown_FormData_Explain">Если политика включена, данные форм очищаются при закрытии браузера.
 
 Если эта политика отключена или не настроена, данные форм не очищаются при закрытии браузера.</string>
-      <string id="SanitizeOnShutdown_History">История просмотров</string>
-      <string id="SanitizeOnShutdown_History_Explain">Если политика включена, история просмотра очищается при закрытии браузера.
+      <string id="SanitizeOnShutdown_History">История</string>
+      <string id="SanitizeOnShutdown_History_Explain">Если политика включена, история просмотров, история загрузок, история поиска и данные форм очищаются при закрытии браузера.
 
-Если эта политика отключена или не настроена, история просмотров не очищается при закрытии браузера.</string>
+Если эта политика отключена или не настроена, история просмотров, история загрузок, история поиска и данные форм не очищаются при закрытии браузера.</string>
       <string id="SanitizeOnShutdown_Sessions">Активные логины</string>
       <string id="SanitizeOnShutdown_Sessions_Explain">Если политика включена, сеансы очищаются при закрытии браузера.
 
@@ -553,7 +557,7 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
       <string id="SanitizeOnShutdown_SiteSettings_Explain">Если политика включена, настройки сайта очищаются при закрытии браузера.
 
 Если эта политика отключена или не настроена, настройки сайта не очищаются при закрытии браузера.</string>
-      <string id="SanitizeOnShutdown_OfflineApps">Данные автономного веб-сайта</string>
+      <string id="SanitizeOnShutdown_OfflineApps">Данные автономного веб-сайта (устарело)</string>
       <string id="SanitizeOnShutdown_OfflineApps_Explain">Если политика включена, автономное хранилище приложений очищается при закрытии браузера.
 
 Если эта политика отключена или не настроена, хранилище автономных приложений не очищается при закрытии браузера.</string>
@@ -571,11 +575,11 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
       <string id="WebsiteFilter_Exceptions_Explain">Если эта политика включена и фильтр веб-сайтов включен, вы можете указать шаблоны соответствия для сайтов, которые не хотите блокировать. Шаблоны соответствия задокументированы на https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Match_patterns. Ограничение на ввод — 1000.
 
 Если эта политика отключена или не настроена, для фильтра веб-сайтов нет исключений.</string>
-      <string id="WebsiteFilterOneLine">Website Filter (JSON on one line)</string>
-      <string id="WebsiteFilter">Website Filter (JSON)</string>
-      <string id="WebsiteFilter_Explain">If this policy is enabled, you can specify blocked sites and exceptions via JSON.
+      <string id="WebsiteFilterOneLine">Фильтр веб-сайтов (JSON в одной строке)</string>
+      <string id="WebsiteFilter">Фильтр веб-сайтов (JSON)</string>
+      <string id="WebsiteFilter_Explain">Если эта политика включена, вы можете указать заблокированные сайты и исключения через JSON.
 
-If this policy is disabled or not configured, websites are not filtered.</string>
+Если эта политика отключена или не настроена, веб-сайты не фильтруются.</string>
       <string id="Bookmark01">Закладка 01</string>
       <string id="Bookmark02">Закладка 02</string>
       <string id="Bookmark03">Закладка 03</string>
@@ -720,10 +724,10 @@ If this policy is disabled or not configured, websites are not filtered.</string
       <string id="TrackingProtection_Locked_Explain">Если эта политика включена, пользователь не может изменить настройки защиты от отслеживания.
 
 Если эта политика отключена или не настроена, пользователь может изменить настройки защиты от отслеживания.</string>
-      <string id="TrackingProtection_EmailTracking">Email Tracking</string>
-      <string id="TrackingProtection_EmailTracking_Explain">If this policy is enabled, hidden email tracking pixels and scripts on websites are blocked.
+      <string id="TrackingProtection_EmailTracking">Отслеживание электронной почты</string>
+      <string id="TrackingProtection_EmailTracking_Explain">Если эта политика включена, скрытые пиксели отслеживания электронной почты и скрипты на веб-сайтах блокируются.
 
-If this policy is disabled or not configured, hidden email tracking pixels and scripts on websites are not blocked.</string>
+Если эта политика отключена или не настроена, скрытые пиксели отслеживания электронной почты и скрипты на веб-сайтах не блокируются.</string>
       <string id="RequestedLocales">Запрошенный языковой стандарт</string>
       <string id="RequestedLocalesString">Запрошенный языковой стандарт (строка)</string>
       <string id="RequestedLocales_Explain">Если эта политика включена, вы можете указать список запрошенных локалей для приложения в порядке предпочтения. Это приведет к активации соответствующего языкового пакета.
@@ -733,11 +737,11 @@ If this policy is disabled or not configured, hidden email tracking pixels and s
       <string id="SecurityDevices_Explain">Если эта политика включена, вы можете указать список модулей PKCS # 11 для установки. Модули указываются в виде имени и полного пути.
 
 Если эта политика отключена или не настроена, дополнительные модули PKCS # 11 не будут установлены.</string>
-      <string id="SecurityDevices_Add">Add</string>
-      <string id="SecurityDevices_Delete">Delete</string>
-      <string id="SecurityDevices_Delete_Explain">If this policy is enabled, you can specify the names of PKCS #11 modules to be deleted.
+      <string id="SecurityDevices_Add">Добавить</string>
+      <string id="SecurityDevices_Delete">Удалить</string>
+      <string id="SecurityDevices_Delete_Explain">Если эта политика включена, вы можете указать имена модулей PKCS #11, которые нужно удалить.
 
-If this policy is disabled or not configured, no PKCS #11 modules will be deleted.</string>
+Если эта политика отключена или не настроена, модули PKCS #11 не будут удалены.</string>
       <string id="SearchBar">Расположение панели поиска</string>
       <string id="SearchBar_Explain">Если эта политика включена, вы можете указать, будет ли панель поиска отделена от строки URL.
 
@@ -788,7 +792,7 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
       <string id="SupportMenu_Explain">Если эта политика включена, в меню справки добавляется новый элемент с информацией о поддержке.
 
 Если эта политика отключена или не настроена, пункт меню не добавляется.</string>
-      <string id="UserMessaging_WhatsNew">Что нового</string>
+      <string id="UserMessaging_WhatsNew">Что нового (устарело)</string>
       <string id="UserMessaging_WhatsNew_Explain">Если эта политика отключена, значок и элемент меню «Что нового» отображаться не будут.
 
 Если эта политика включена или не настроена, будут отображаться значок и элемент меню «Что нового».</string>
@@ -808,14 +812,18 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
       <string id="UserMessaging_SkipOnboarding_Explain">Если эта политика включена, сообщения тура не будут отображаться в новой вкладке.
 
 Если эта политика отключена или не настроена, сообщения тура будут отображаться в новой вкладке.</string>
+      <string id="UserMessaging_FirefoxLabs">Thunderbird Labs</string>
+      <string id="UserMessaging_FirefoxLabs_Explain">Если эта политика отключена, раздел Thunderbird Labs не будет отображаться в настройках.
+
+Если эта политика включена или не настроена, раздел Thunderbird Labs будет отображаться в настройках.</string>
       <string id="UserMessaging_MoreFromMozilla">Дополнительно о Mozilla</string>
       <string id="UserMessaging_MoreFromMozilla_Explain">Если эта политика отключена, раздел «Дополнительно от Mozilla» не будет отображаться в настройках.
 
 Если эта политика включена или не настроена, раздел «Дополнительно от Mozilla» будет отображаться в настройках.</string>
-      <string id="UserMessaging_Locked">Do not allow user messaging preferences to be changed</string>
-      <string id="UserMessaging_Locked_Explain">If this policy is disabled, user messaging preferences can be changed by the user.
+      <string id="UserMessaging_Locked">Не разрешать изменять настройки сообщений пользователя</string>
+      <string id="UserMessaging_Locked_Explain">Если эта политика отключена, настройки сообщений пользователя могут быть изменены пользователем.
 
-If this policy is enabled or not configured, user messaging preferences cannot be changed by the user.</string>
+Если эта политика включена или не настроена, настройки сообщений пользователя не могут быть изменены пользователем.</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA">TLS_DHE_RSA_WITH_AES_128_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA">TLS_DHE_RSA_WITH_AES_256_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</string>
@@ -869,7 +877,8 @@ If this policy is enabled or not configured, user messaging preferences cannot b
 
 Если эта политика не настроена, пользователи могут создать основной пароль.</string>
       <string id="HandlersOneLine">Обработчики (JSON on one line)</string>
-      <string id="Handlers">Обработчики</string>
+      <string id="Handlers">Обработчики</string>HTTP Allow
+      
       <string id="Handlers_Explain">Если эта политика включена, вы можете использовать JSON для настройки обработчиков приложений по умолчанию.
 
 Если эта политика отключена или не настроена, используются настройки Thunderbird по умолчанию.
@@ -944,91 +953,211 @@ If this policy is enabled or not configured, user messaging preferences cannot b
       <string id="AppUpdatePin_Explain">Если эта политика включена, вы можете указать версию Thunderbird как xx. или хх.хх. и Thunderbird не будет обновляться после этой основной или дополнительной версии.
 
 Если эта политика отключена или не настроена, Thunderbird будет обновляться в обычном режиме.</string>
-      <string id="Proxy_Locked">Do not allow proxy settings to be changed</string>
-      <string id="Proxy_Locked_Explain">If this policy is enabled, proxy settings cannot be changed by the user.
+      <string id="Proxy_Locked">Не разрешать изменять настройки прокси</string>
+      <string id="Proxy_Locked_Explain">Если эта политика включена, настройки прокси не могут быть изменены пользователем.
 
-If this policy is disabled or not configured, the user can change their proxy settings.</string>
-      <string id="Proxy_ConnectionType">Connection Type</string>
-      <string id="Proxy_ConnectionType_Explain">If this policy is enabled, you can set the connection type.
+Если эта политика отключена или не настроена, пользователь может изменить свои настройки прокси.</string>
+      <string id="Proxy_ConnectionType">Тип подключения</string>
+      <string id="Proxy_ConnectionType_Explain">Если эта политика включена, вы можете задать тип подключения.
 
-If this policy is disabled or not configured, Thunderbird defaults to using the system proxy.</string>
-      <string id="Proxy_HTTPProxy">HTTP Proxy</string>
-      <string id="Proxy_HTTPProxy_Explain">If this policy is enabled, you can set the HTTP Proxy used when manual proxy configuration is specified.
+Если эта политика отключена или не настроена, Thunderbird по умолчанию использует системный прокси.</string>
+      <string id="Proxy_HTTPProxy">HTTP-прокси</string>
+      <string id="Proxy_HTTPProxy_Explain">Если эта политика включена, вы можете задать HTTP-прокси, используемый при указании ручной настройки прокси.
 
-If this policy is disabled or not configured, Thunderbird does not use an HTTP Proxy.</string>
-      <string id="Proxy_UseHTTPProxyForAllProtocols">Use HTTP proxy for HTTPS</string>
-      <string id="Proxy_UseHTTPProxyForAllProtocols_Explain">If this policy is enabled, the HTTP Proxy is used for HTTPS when manual proxy configuration is specified.
+Если эта политика отключена или не настроена, Thunderbird не использует HTTP-прокси.</string>
+      <string id="Proxy_UseHTTPProxyForAllProtocols">Использовать HTTP-прокси для HTTPS</string>
+      <string id="Proxy_UseHTTPProxyForAllProtocols_Explain">Если эта политика включена, HTTP-прокси используется для HTTPS при указании ручной настройки прокси.
 
-If this policy is disabled or not configured, Thunderbird does not use an HTTPS Proxy unless specified.</string>
-      <string id="Proxy_SSLProxy">HTTPS Proxy</string>
-      <string id="Proxy_SSLProxy_Explain">If this policy is enabled, you can set the HTTPS Proxy used when manual proxy configuration is specified.
+Если эта политика отключена или не настроена, Thunderbird не использует HTTPS-прокси, если не указано иное.</string>
+      <string id="Proxy_SSLProxy">HTTPS-прокси</string>
+      <string id="Proxy_SSLProxy_Explain">Если эта политика включена, вы можете задать HTTPS-прокси, используемый при указании ручной настройки прокси.
 
-If this policy is disabled or not configured, Thunderbird does not use an HTTPS Proxy.</string>
-      <string id="Proxy_SOCKSProxy">SOCKS Host</string>
-      <string id="Proxy_SOCKSProxy_Explain">If this policy is enabled, you can set the SOCKS Host and version used when manual proxy configuration is specified.
+Если эта политика отключена или не настроена, Thunderbird не использует HTTPS-прокси.</string>
+      <string id="Proxy_SOCKSProxy">Хост SOCKS</string>
+      <string id="Proxy_SOCKSProxy_Explain">Если эта политика включена, вы можете задать хост SOCKS и версию, используемую при указании ручной настройки прокси.
 
-If this policy is disabled or not configured, Thunderbird does not use a SOCKS Host.</string>
-      <string id="Proxy_AutoConfigURL">Automatic proxy configuration URL</string>
-      <string id="Proxy_AutoConfigURL_Explain">If this policy is enabled, you can set the automatic proxy configuration URL.
+Если эта политика отключена или не настроена, Thunderbird не использует хост SOCKS.</string>
+      <string id="Proxy_AutoConfigURL">URL автоматической настройки прокси</string>
+      <string id="Proxy_AutoConfigURL_Explain">Если эта политика включена, вы можете задать URL автоматической настройки прокси.
 
-If this policy is disabled or not configured, Thunderbird does not use an automatic proxy configuration URL.</string>
-      <string id="Proxy_Passthrough">Proxy Passthrough</string>
-      <string id="Proxy_Passthrough_Explain">If this policy is enabled, the proxy settings are bypassed for the locations specified.
+Если эта политика отключена или не настроена, Thunderbird не использует URL автоматической настройки прокси.</string>
+      <string id="Proxy_Passthrough">Проброс прокси</string>
+      <string id="Proxy_Passthrough_Explain">Если эта политика включена, настройки прокси игнорируются для указанных расположений.
 
-If this policy is disabled or not configured, Thunderbird does not bypass the proxy.</string>
-      <string id="Proxy_AutoLogin">Do not prompt for authentication if password is saved</string>
-      <string id="Proxy_AutoLogin_Explain">If this policy is enabled, Thunderbird will not prompt for proxy authentication when a password is saved.
+Если эта политика отключена или не настроена, Thunderbird не обходит прокси.</string>
+      <string id="Proxy_AutoLogin">Не запрашивать аутентификацию, если пароль сохранен</string>
+      <string id="Proxy_AutoLogin_Explain">Если эта политика включена, Thunderbird не будет запрашивать аутентификацию прокси при сохранении пароля.
 
-If this policy is disabled or not configured, Thunderbird will always prompt for proxy authentication.</string>
-      <string id="Proxy_UseProxyForDNS">Proxy DNS when using SOCKS v5</string>
-      <string id="Proxy_UseProxyForDNS_Explain">If this policy is enabled, DNS is proxied when using SOCKS v5.
+Если эта политика отключена или не настроена, Thunderbird всегда будет запрашивать аутентификацию прокси.</string>
+      <string id="Proxy_UseProxyForDNS">Прокси DNS при использовании SOCKS</string>
+      <string id="Proxy_UseProxyForDNS_Explain">Если эта политика включена, DNS проксируется при использовании SOCKS.
 
-If this policy is disabled or not configured, DNS is not proxied when using SOCKS v5.</string>
-      <string id="DisableThirdPartyModuleBlocking">Disable Third Party Module Blocking</string>
-      <string id="DisableThirdPartyModuleBlocking_Explain">If this policy is enabled, users are not allowed to block third-party modules from the about:third-party page.
+Если эта политика отключена, DNS не проксируется при использовании SOCKS.
 
-If this policy is disabled or not configured, users users are allowed to block third-party modules from the about:third-party page.</string>
-      <string id="ContainersOneLine">Containers (JSON on one line)</string>
-      <string id="Containers">Containers</string>
-      <string id="Containers_Explain">If this policy is enabled, you can use JSON to configure the default containers.
+Если эта политика не настроена, DNS не проксируется при использовании SOCKS v4, но проксируется при использовании SOCKS v5.</string>
+      <string id="DisableThirdPartyModuleBlocking">Отключить блокировку сторонних модулей</string>
+      <string id="DisableThirdPartyModuleBlocking_Explain">Если эта политика включена, пользователям не разрешено блокировать сторонние модули со страницы about:third-party.
 
-If this policy is disabled or not configured, the built-in defaults are used.
+Если эта политика отключена или не настроена, пользователям разрешено блокировать сторонние модули со страницы about:third-party.</string>
+      <string id="ContainersOneLine">Контейнеры (JSON в одной строке)</string>
+      <string id="Containers">Контейнеры</string>
+      <string id="Containers_Explain">Если эта политика включена, вы можете использовать JSON для настройки контейнеров по умолчанию.
 
-For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#containers.</string>
-      <string id="FirefoxSuggest_WebSuggestions">Suggestions from the web</string>
-      <string id="FirefoxSuggest_WebSuggestions_Explain">If this policy is enabled, you will get suggestions from Thunderbird related to your search.
+Если эта политика отключена или не настроена, используются встроенные значения по умолчанию.
 
-If this policy is disabled, you will not get these suggestions.
+Подробную информацию о создании политики см. на странице https://github.com/mozilla/policy-templates/blob/master/README.md#containers.</string>
+      <string id="FirefoxSuggest_WebSuggestions">Предложения из Интернета</string>
+      <string id="FirefoxSuggest_WebSuggestions_Explain">Если эта политика включена, вы будете получать предложения от Thunderbird, связанные с вашим поиском.
 
-If this policy is not configured, , you will get suggestions from Thunderbird related to your search.</string>
-      <string id="FirefoxSuggest_SponsoredSuggestions">Suggestions from sponsors</string>
-      <string id="FirefoxSuggest_SponsoredSuggestions_Explain">If this policy is enabled, you will support the development of Thunderbird with occasional sponsored suggestions.
+Если эта политика отключена, вы не будете получать эти предложения.
 
-If this policy is disabled, you will not get these suggestions.
+Если эта политика не настроена, вы будете получать предложения от Thunderbird, связанные с вашим поиском.</string>
+      <string id="FirefoxSuggest_SponsoredSuggestions">Предложения от спонсоров</string>
+      <string id="FirefoxSuggest_SponsoredSuggestions_Explain">Если эта политика включена, вы поддержите разработку Thunderbird периодическими спонсируемыми предложениями.
 
-If this policy is not configured, you will get occasional sponsored suggestions.</string>
-      <string id="FirefoxSuggest_ImproveSuggest">Improve the Thunderbird Suggest experience</string>
-      <string id="FirefoxSuggest_ImproveSuggest_Explain">If this policy is enabled, you will help create a richer search experience by allowing Mozilla to process your search queries.
+Если эта политика отключена, вы не будете получать эти предложения.
 
-If this policy is disabled or not configured, you do not allow Mozilla to process your search queries.</string>
-      <string id="FirefoxSuggest_Locked">Do not allow preferences to be changed</string>
-      <string id="FirefoxSuggest_Locked_Explain">If this policy is enabled, Thunderbird Suggest preferences cannot be changed by the user.
+Если эта политика не настроена, вы будете получать периодические спонсируемые предложения.</string>
+      <string id="FirefoxSuggest_ImproveSuggest">Улучшение работы Thunderbird Suggest</string>
+      <string id="FirefoxSuggest_ImproveSuggest_Explain">Если эта политика включена, вы поможете создать более богатый опыт поиска, разрешив Mozilla обрабатывать ваши поисковые запросы.
 
-If this policy is disabled or not configured, the user can change their Thunderbird Suggest preferences.</string>
-      <string id="PrintingEnabled">Printing</string>
-      <string id="PrintingEnabled_Explain">If this policy is disabled, printing is disabled.
+Если эта политика отключена или не настроена, вы не позволяете Mozilla обрабатывать ваши поисковые запросы.</string>
+      <string id="FirefoxSuggest_Locked">Не разрешать изменять настройки</string>
+      <string id="FirefoxSuggest_Locked_Explain">Если эта политика включена, настройки Thunderbird Suggest не могут быть изменены пользователем.
 
-If this policy is enabled or not configured, printing is enabled.</string>
-      <string id="ManualAppUpdateOnly">Manual Update Only</string>
-      <string id="ManualAppUpdateOnly_Explain">If this policy is enabled, users will not be prompted to install updates and Thunderbird will not check for updates in the background. The user must manually check and install updates from the About dialog.
+Если эта политика отключена или не настроена, пользователь может изменить свои настройки Thunderbird Suggest.</string>
+      <string id="PrintingEnabled">Печать</string>
+      <string id="PrintingEnabled_Explain">Если эта политика отключена, печать отключена.
 
-If this policy is disabled or not configured, the browser receives updates.
+Если эта политика включена или не настроена, печать включена.</string>
+      <string id="ManualAppUpdateOnly">Только ручное обновление</string>
+      <string id="ManualAppUpdateOnly_Explain">Если эта политика включена, пользователям не будет предложено установить обновления, и Thunderbird не будет проверять наличие обновлений в фоновом режиме. Пользователь должен вручную проверять и устанавливать обновления из диалогового окна «О программе».
 
-This policy is not recommended for most users.</string>
-      <string id="AllowFileSelectionDialogs">Allow File Selection Dialogs</string>
-      <string id="AllowFileSelectionDialogs_Explain">If this policy is disabled, users will not be able to open file selection dialogs. In most cases, Thunderbird will act as if the user clicked the cancel button.
+Если эта политика отключена или не настроена, браузер получает обновления.
 
-If this policy is enabled or not configured, users can open file selection dialogs.</string>
+Эта политика не рекомендуется для большинства пользователей.</string>
+      <string id="AllowFileSelectionDialogs">Разрешить диалоги выбора файлов</string>
+      <string id="AllowFileSelectionDialogs_Explain">Если эта политика отключена, пользователи не смогут открывать диалоги выбора файлов. В большинстве случаев Thunderbird будет действовать так, как будто пользователь нажал кнопку отмены.
+
+Если эта политика включена или не настроена, пользователи могут открывать диалоги выбора файлов.</string>
+      <string id="AutofillAddressEnabled">Включить автозаполнение адресов</string>
+      <string id="AutofillAddressEnabled_Explain">Если эта политика отключена, адреса не будут автоматически заполняться для версий Thunderbird и регионов, которые ее поддерживают.
+
+Если эта политика включена или не настроена, адреса будут автоматически заполняться для версий Thunderbird и регионов, которые ее поддерживают.</string>
+      <string id="AutofillCreditCardEnabled">Включить автозаполнение для способов оплаты</string>
+      <string id="AutofillCreditCardEnabled_Explain">Если эта политика отключена, способы оплаты не будут автоматически заполняться для версий Thunderbird и регионов, которые ее поддерживают.
+
+Если эта политика включена или не настроена, способы оплаты будут автоматически заполняться для версий Thunderbird и регионов, которые ее поддерживают.</string>
+      <string id="TranslateEnabled">Включить перевод веб-страниц</string>
+      <string id="TranslateEnabled_Explain">Если эта политика отключена, перевод веб-страниц не будет доступен.
+
+Если эта политика включена или не настроена, перевод веб-страниц будет доступен.
+
+Примечание: перевод веб-страниц выполняется полностью на клиенте, поэтому нет риска для данных или конфиденциальности.</string>
+      <string id="DisableEncryptedClientHello">Отключить зашифрованное приветствие клиента</string>
+      <string id="DisableEncryptedClientHello_Explain">Если эта политика включена, функция TLS «Зашифрованное приветствие клиента» (ECH) будет отключена.
+
+Если эта политика отключена или не настроена, функция TLS Encrypted Client Hello (ECH) будет включена.</string>
+      <string id="PostQuantumKeyAgreementEnabled">Включить постквантовое согласование ключей</string>
+      <string id="PostQuantumKeyAgreementEnabled_Explain">Если эта политика включена, постквантовое согласование ключей для TLS будет включено.
+
+Если эта политика отключена или не настроена, постквантовое согласование ключей для TLS будет отключено.</string>
+      <string id="HttpsOnlyMode">Режим только HTTPS</string>
+      <string id="HttpsOnlyMode_Explain">Если эта политика включена, вы можете задать поведение по умолчанию для режима только HTTPS.
+
+Если эта политика отключена или не настроена, режим только HTTPS не включен.</string>
+      <string id="HttpsOnlyMode_Allowed">Выключено по умолчанию</string>
+      <string id="HttpsOnlyMode_Disallowed">Выключено и заблокировано</string>
+      <string id="HttpsOnlyMode_Enabled">Включено по умолчанию</string>
+      <string id="HttpsOnlyMode_ForceEnabled">Включено и заблокировано</string>
+      <string id="HttpAllowlist">Список разрешенных HTTP</string>
+      <string id="HttpAllowlist_Explain">Если эта политика включена, вы можете указать список источников, которые не будут обновлены до HTTPS.
+
+Если эта политика отключена или не настроена, все источники обновляются до HTTPS, если включен режим «Только HTTPS».</string>
+      <string id="PrivateBrowsingModeAvailability">Доступность режима приватного просмотра</string>
+      <string id="PrivateBrowsingModeAvailability_Explain">Если эта политика включена, вы можете настроить доступность режима приватного просмотра.
+
+Если эта политика отключена или не настроена, доступен режим приватного просмотра.</string>
+      <string id="PrivateBrowsingModeAvailability_0">Разрешить режим приватного просмотра</string>
+      <string id="PrivateBrowsingModeAvailability_1">Отключить режим приватного просмотра</string>
+      <string id="PrivateBrowsingModeAvailability_2">Принудительно включить режим приватного просмотра</string>
+      <string id="ContentAnalysis_AgentName">Agent Name</string>
+      <string id="ContentAnalysis_AgentName_Explain">If this policy is enabled, you can specify the name of the DLP agent, used in dialogs and notifications about DLP operations.
+
+If this policy is disabled or not configured, the agent name "A DLP Agent" is used.</string>
+      <string id="ContentAnalysis_AgentTimeout">Agent Timeout</string>
+      <string id="ContentAnalysis_AgentTimeout_Explain">If this policy is enabled, you can specify the timeout in number of seconds after a DLP request is sent to the agent. After this timeout, the request will be denied unless 'Default Result' is set to 1 or 2.
+
+If this policy is disabled or not configured, the timeout is 30 seconds.</string>
+      <string id="ContentAnalysis_AllowUrlRegexList">Allow Url Regex List</string>
+      <string id="ContentAnalysis_AllowUrlRegexList_Explain">If this policy is enabled, you can specify a space-separated list of regular expressions that indicates URLs for which DLP operations will always be allowed without consulting the agent. The default is "^about:(?!blank|srcdoc).*", meaning that any pages that start with "about:" will be exempt from DLP except for "about:blank" and "about:srcdoc", as these can be controlled by web content.
+
+If this policy is disabled or not configured, the DLP agent will always be consulted.</string>
+      <string id="ContentAnalysis_BypassForSameTabOperations">Bypass For Same Tab Operations</string>
+      <string id="ContentAnalysis_BypassForSameTabOperations_Explain">If this policy is enabled, Thunderbird will automatically allow DLP requests whose data comes from the same tab and frame - for example, if data is copied to the clipboard and then pasted on the same page.
+
+If this policy is disabled or not configured, Thunderbird  Thunderbird will not pass DLP requests whose data comes from the same tab and frame to the DLP agent as normal.</string>
+      <string id="ContentAnalysis_ClientSignature">Client Signature</string>
+      <string id="ContentAnalysis_ClientSignature_Explain">If this policy is enabled, you can set the required signature of the DLP agent connected to the pipe. If this is a non-empty string and the DLP agent does not have a signature with a Subject Name that exactly matches this value, Thunderbird will not connect to the pipe.
+
+If this policy is disabled or not configured, the signature will not be verified.</string>
+      <string id="ContentAnalysis_DefaultResult">Default Result</string>
+      <string id="ContentAnalysis_DefaultResult_Explain">If this policy is enabled, you can indicate the desired behavior for DLP requests if there is a problem connecting to the DLP agent.
+
+If this policy is disabled or not configured, the DLP request will be denied if there is a problem connecting to the agent.</string>
+      <string id="ContentAnalysis_DefaultResult_0">Deny the request</string>
+      <string id="ContentAnalysis_DefaultResult_1">Warn the user and allow them to choose whether to allow or deny</string>
+      <string id="ContentAnalysis_DefaultResult_2">Allow the request</string>
+      <string id="ContentAnalysis_DenyUrlRegexList">Deny Url Regex List</string>
+      <string id="ContentAnalysis_DenyUrlRegexList_Explain">If this policy is enabled, you can specify a space-separated list of regular expressions that indicates URLs for which DLP operations will always be denied without consulting the agent.
+
+If this policy is disabled or not configured, the DLP agent will always be consulted.</string>
+      <string id="ContentAnalysis_Enabled">Enabled</string>
+      <string id="ContentAnalysis_Enabled_Explain">If this policy is enabled, Thunderbird will use DLP.
+
+If this policy is disabled or not configured, Thunderbird will not use DLP.
+
+Note: If this policy is enabled and no DLP agent is running, all DLP requests will be denied unless Default Result is set to 1 or 2.</string>
+      <string id="ContentAnalysis_IsPerUser">Is Per User</string>
+      <string id="ContentAnalysis_IsPerUser_Explain">If this policy is disabled, the pipe the DLP agent creates is per-system.
+
+If this policy is enabled or not configured, the pipe the DLP agent creates is per-user.</string>
+      <string id="ContentAnalysis_PipePathName">Pipe Path Name</string>
+      <string id="ContentAnalysis_PipePathName_Explain">If this policy is enabled, you can change the name of the pipe for the DLP agent.
+
+If this policy is disabled or not configured, the default pipe name of 'path_user' is used.</string>
+      <string id="ContentAnalysis_ShowBlockedResult">Show Blocked Result</string>
+      <string id="ContentAnalysis_ShowBlockedResult_Explain">If this policy is disabled, Thunderbird will not show a notification when a DLP request is denied.
+
+If this policy is enabled or not configured, Thunderbird will show a notification when a DLP request is denied.</string>
+      <string id="ContentAnalysis_InterceptionPoints_Clipboard">Enabled</string>
+      <string id="ContentAnalysis_InterceptionPoints_Clipboard_Explain">If this policy is disabled, clipboard operations will not use DLP.
+
+If this policy is enabled or not configured, clipboard operations will use DLP.</string>
+      <string id="ContentAnalysis_InterceptionPoints_Clipboard_PlainTextOnly">Plain Text Only</string>
+      <string id="ContentAnalysis_InterceptionPoints_Clipboard_PlainTextOnly_Explain">If this policy is disabled, all formats will be analyzed on the clipboard, which some DLP agents may not expect.
+
+If this policy is enabled or not configured, only the text/plain format will be analyzed on the clipboard.</string>
+      <string id="ContentAnalysis_InterceptionPoints_DragAndDrop">Enabled</string>
+      <string id="ContentAnalysis_InterceptionPoints_DragAndDrop_Explain">If this policy is disabled, drag and drop operations will not use DLP.
+
+If this policy is enabled or not configured, drag and drop operations will use DLP.</string>
+      <string id="ContentAnalysis_InterceptionPoints_DragAndDrop_PlainTextOnly">Plain Text Only</string>
+      <string id="ContentAnalysis_InterceptionPoints_DragAndDrop_PlainTextOnly_Explain">If this policy is disabled, all formats will be analyzed in what is being dropped, which some DLP agents may not expect.
+
+If this policy is enabled or not configured, only the text/plain format will be analyzed in what is being dropped.</string>
+      <string id="ContentAnalysis_InterceptionPoints_FileUpload">File Upload</string>
+      <string id="ContentAnalysis_InterceptionPoints_FileUpload_Explain">If this policy is disabled, file upload operations will not use DLP.
+
+If this policy is enabled or not configured, file upload operations will use DLP.</string>
+      <string id="ContentAnalysis_InterceptionPoints_Print">Print</string>
+      <string id="ContentAnalysis_InterceptionPoints_Print_Explain">If this policy is disabled, print operations will not use DLP.
+
+If this policy is enabled or not configured, print operations will use DLP.</string>
+      <string id="ContentAnalysis_TimeoutResult">Timeout Result</string>
+      <string id="ContentAnalysis_TimeoutResult_Explain">If this policy is enabled, you can indicate the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. 
+
+If this policy is disabled or not configured, the request will be denied.</string>
       <string id="Preferences_Boolean_Explain">Если эта политика включена, предпочтение заблокировано на true. Если эта политика отключена, предпочтение заблокировано на false.
 
 Описание предпочтения см.:
@@ -1370,20 +1499,20 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences.</
       </presentation>
       <presentation id="Proxy_HTTPProxy">
         <textBox refId="Proxy_HTTPProxy">
-          <label>Host including port:</label>
+          <label>SOCKS хост:</label>
         </textBox>
       </presentation>
       <presentation id="Proxy_SSLProxy">
         <textBox refId="Proxy_SSLProxy">
-          <label>Host including port:</label>
+          <label>SOCKS хост:</label>
         </textBox>
       </presentation>
       <presentation id="Proxy_SOCKSProxy">
-        <text>Host including port:</text>
+        <text>SOCKS хост:</text>
         <textBox refId="Proxy_SOCKSProxy">
           <label/>
         </textBox>
-        <text>SOCKS Version:</text>
+        <text>Версия SOCKS:</text>
         <dropdownList refId="Proxy_SOCKSVersion"/>
       </presentation>
       <presentation id="Proxy_AutoConfigURL">
@@ -1392,12 +1521,27 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences.</
         </textBox>
       </presentation>
       <presentation id="Proxy_Passthrough">
-        <text>No proxy for</text>
+        <text>Нет прокси для</text>
         <textBox refId="Proxy_Passthrough">
           <label/>
         </textBox>
-        <text>Example: .mozilla.org, .net.nz, 192.168.1.0/24</text>
-        <text>Connections to localhost, 127.0.0.1/8, and ::1 are never proxied.</text>
+        <text>Пример: .mozilla.org, .net.nz, 192.168.1.0/24</text>
+        <text>Подключения к localhost, 127.0.0.1/8 и ::1 никогда не проксируются.</text>
+      </presentation>
+      <presentation id="HttpsOnlyMode">
+        <dropdownList refId="HttpsOnlyMode"/>
+      </presentation>
+      <presentation id="PrivateBrowsingModeAvailability">
+        <dropdownList refId="PrivateBrowsingModeAvailability"/>
+      </presentation>
+      <presentation id="ContentAnalysis_DefaultResult">
+        <dropdownList refId="ContentAnalysis_DefaultResult"/>
+      </presentation>
+      <presentation id="Number">
+        <decimalTextBox refId="Number"/>
+      </presentation>
+      <presentation id="ContentAnalysis_TimeoutResult">
+        <dropdownList refId="ContentAnalysis_TimeoutResult"/>
       </presentation>
     </presentationTable>
   </resources>

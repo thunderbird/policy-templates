@@ -31,7 +31,7 @@ On Windows, create a directory called `distribution` where the EXE is located an
 | **[`DisablePasswordReveal`](#disablepasswordreveal)** | Do not allow passwords to be revealed in saved logins.
 | **[`DisableSafeMode`](#disablesafemode)** | Disable safe mode within the browser.
 | **[`DisableSecurityBypass`](#disablesecuritybypass)** | Prevent the user from bypassing security in certain cases.
-| **[`DisableSystemAddonUpdate`](#disablesystemaddonupdate)** | Prevent system add-ons from being installed or update.
+| **[`DisableSystemAddonUpdate`](#disablesystemaddonupdate)** | Prevent system add-ons from being installed or updated.
 | **[`DisableTelemetry`](#disabletelemetry)** | DisableTelemetry
 | **[`DNSOverHTTPS`](#dnsoverhttps)** | Configure DNS over HTTPS.
 | **[`DownloadDirectory`](#downloaddirectory)** | Set and lock the download directory.
@@ -41,7 +41,7 @@ On Windows, create a directory called `distribution` where the EXE is located an
 | **[`Handlers`](#handlers)** | Configure default application handlers.
 | **[`HardwareAcceleration`](#hardwareacceleration)** | Control hardware acceleration.
 | **[`InstallAddonsPermission`](#installaddonspermission)** | Configure the default extension install policy as well as origins for extension installs are allowed.
-| **[`ManualAppUpdateOnly`](#manualappupdateonly)** | Allow manual updates only and do not notify the user about updates..
+| **[`ManualAppUpdateOnly`](#manualappupdateonly)** | Allow manual updates only and do not notify the user about updates.
 | **[`NetworkPrediction`](#networkprediction)** | Enable or disable network prediction (DNS prefetching).
 | **[`OfferToSaveLogins`](#offertosavelogins)** | Control whether or not Thunderbird offers to save passwords.
 | **[`OfferToSaveLoginsDefault`](#offertosaveloginsdefault)** | Set the default value for whether or not Thunderbird offers to save passwords.
@@ -66,6 +66,57 @@ On Windows, create a directory called `distribution` where the EXE is located an
 
 Allow WebExtensions to configure policy. For more information, see [Adding policy support to your extension](https://extensionworkshop.com/documentation/enterprise/adding-policy-support-to-your-extension/).
 
+For GPO and Intune, the extension developer should provide an ADMX file.
+
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
+
+#### macOS
+```
+<dict>
+  <key>3rdparty</key>
+  <dict>
+    <key>Extensions</key>
+    <dict>
+      <key>uBlock0@raymondhill.net</key>
+      <dict>
+        <key>adminSettings</key>
+        <dict>
+          <key>selectedFilterLists</key>
+          <array>
+            <string>ublock-privacy</string>
+            <string>ublock-badware</string>
+            <string>ublock-filters</string>
+            <string>user-filters</string>
+          </array>
+        </dict>
+      </dict>
+    </dict>
+  </dict>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "3rdparty": {
+      "Extensions": {
+        "uBlock0@raymondhill.net": {
+          "adminSettings": {
+            "selectedFilterLists": [
+              "ublock-privacy",
+              "ublock-badware",
+              "ublock-filters",
+              "user-filters"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
@@ -82,10 +133,10 @@ If set to true, application updates are installed without user approval within T
 
 If set to false, application updates are downloaded but the user can choose when to install the update.
 
-If you have disabled updates via DisableAppUpdate, this policy has no effect.
+If you have disabled updates via `DisableAppUpdate`, this policy has no effect.
 
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** app.update.auto
+**Preferences Affected:** `app.update.auto`
 
 #### Windows (GPO)
 ```
@@ -123,11 +174,11 @@ Value (string):
 
 <br>
 
-### AppUpdatePin
+## AppUpdatePin
 
 Prevent Thunderbird from being updated beyond the specified version.
 
-You can specify the version as ```xx.``` and Thunderbird will be updated with all minor versions, but will not be updated beyond the major version.
+You can specify the any version as ```xx.``` and Thunderbird will be updated with all minor versions, but will not be updated beyond the major version.
 
 You can also specify the version as ```xx.xx``` and Thunderbird will be updated with all patch versions, but will not be updated beyond the minor version.
 
@@ -221,7 +272,7 @@ Value (string):
 
 Configure sites that support integrated authentication.
 
-See https://developer.mozilla.org/en-US/docs/Mozilla/Integrated_authentication for more information.
+See [Integrated authentication](https://htmlpreview.github.io/?https://github.com/mdn/archived-content/blob/main/files/en-us/mozilla/integrated_authentication/raw.html) for more information.
 
 `PrivateBrowsing` enables integrated authentication in private browsing.
 
@@ -377,6 +428,8 @@ If set to true, application updates may be installed (without user approval) in 
 If set to false, the application will not try to install updates when the application is not running.
 
 If you have disabled updates via `DisableAppUpdate` or disabled automatic updates via `AppAutoUpdate`, this policy has no effect.
+
+If you are having trouble getting the background task to run, verify your configuration with the ["Requirements to run" section in this support document](https://support.mozilla.org/en-US/kb/enable-background-updates-thunderbird-windows).
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `app.update.background.enabled`
@@ -764,18 +817,23 @@ Configure cookie preferences.
 
 `Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.
 
-`Default` determines whether cookies are accepted at all.
+`Behavior` sets the default behavior for cookies based on the values below.
 
-`AcceptThirdParty` determines how third-party cookies are handled.
+`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.
 
-`ExpireAtSessionEnd` determines when cookies expire.
-
-`RejectTracker` only rejects cookies for trackers.
+| Value | Description
+| --- | --- |
+| accept | Accept all cookies
+| reject-foreign | Reject third party cookies
+| reject | Reject all cookies
+| limit-foreign | Reject third party cookies for sites you haven't visited
+| reject-tracker | Reject cookies for known trackers (default)
+| reject-tracker-and-partition-foreign | Reject cookies for known trackers and partition third-party cookies (Total Cookie Protection) (default for private browsing)
 
 `Locked` prevents the user from changing cookie preferences.
 
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** `network.cookie.cookieBehavior`,`network.cookie.lifetimePolicy`
+**Preferences Affected:** `network.cookie.cookieBehavior`, `network.cookie.cookieBehavior.pbmode`, `network.cookie.lifetimePolicy`
 
 #### Windows (GPO)
 ```
@@ -786,6 +844,8 @@ Software\Policies\Mozilla\Thunderbird\Cookies\Default = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\Cookies\AcceptThirdParty = "always" | "never" | "from-visited"
 Software\Policies\Mozilla\Thunderbird\Cookies\ExpireAtSessionEnd = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\Cookies\RejectTracker = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Cookies\Behavior = "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign"
+Software\Policies\Mozilla\Thunderbird\Cookies\BehaviorPrivateBrowsing = "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign"
 Software\Policies\Mozilla\Thunderbird\Cookies\Locked = 0x1 | 0x0
 ```
 #### Windows (Intune)
@@ -796,7 +856,7 @@ OMA-URI:
 Value (string):
 ```
 <enabled/>
-<data id="Cookies_Allow" value="1&#xF000;https://example.com"/>
+<data id="Permissions" value="1&#xF000;https://example.com"/>
 ```
 OMA-URI:
 ```
@@ -805,7 +865,7 @@ OMA-URI:
 Value (string):
 ```
 <enabled/>
-<data id="Cookies_Allow" value="1&#xF000;https://example.edu"/>
+<data id="Permissions" value="1&#xF000;https://example.edu"/>
 ```
 OMA-URI:
 ```
@@ -814,7 +874,7 @@ OMA-URI:
 Value (string):
 ```
 <enabled/>
-<data id="Cookies_Block" value="1&#xF000;https://example.org"/>
+<data id="Permissions" value="1&#xF000;https://example.org"/>
 ```
 OMA-URI:
 ```
@@ -857,6 +917,24 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_Behavior
+```
+Value (string):
+```
+<enabled/>
+<data id="Cookies_Behavior" value="accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_BehaviorPrivateBrowsing
+```
+Value (string):
+```
+<enabled/>
+<data id="Cookies_BehaviorPrivateBrowsing" value="accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign"/>
+```
 #### macOS
 ```
 <dict>
@@ -884,6 +962,10 @@ Value (string):
     <true/> | <false/>
     <key>Locked</key>
     <true/> | <false/>
+    <key>Behavior</key>
+    <string>accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign</string>
+    <key>BehaviorPrivateBrowsing</key>
+    <string>accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign</string>
   </dict>
 </dict>
 ```
@@ -899,7 +981,9 @@ Value (string):
       "AcceptThirdParty": "always" | "never" | "from-visited",
       "ExpireAtSessionEnd": true | false,
       "RejectTracker": true | false,
-      "Locked": true | false
+      "Locked": true | false,
+      "Behavior": "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign",
+      "BehaviorPrivateBrowsing": "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign",
     }
   }
 }
@@ -918,7 +1002,7 @@ Set the default download directory.
 You can use ${home} for the native home directory.
 
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** `browser.download.dir`,`browser.download.folderList`
+**Preferences Affected:** `browser.download.dir`, `browser.download.folderList`
 
 #### Windows (GPO)
 ```
@@ -946,6 +1030,7 @@ Value (string):
 {
   "policies": {
     "DefaultDownloadDirectory": "${home}/Downloads"
+  }
 }
 ```
 #### policies.json (Windows)
@@ -953,6 +1038,7 @@ Value (string):
 {
   "policies": {
     "DefaultDownloadDirectory": "${home}\\Downloads"
+  }
 }
 ```
 #### Compatibility
@@ -1048,9 +1134,29 @@ Value (string):
 <br>
 
 ## DisabledCiphers
-Disable specific cryptographic ciphers.
+Disable specific cryptographic ciphers, listed below.
 
-**Preferences Affected:** `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.rsa_des_ede3_sha`
+```
+TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+TLS_RSA_WITH_AES_128_GCM_SHA256
+TLS_RSA_WITH_AES_256_GCM_SHA384
+TLS_RSA_WITH_AES_128_CBC_SHA
+TLS_RSA_WITH_AES_256_CBC_SHA
+TLS_RSA_WITH_3DES_EDE_CBC_SHA
+```
+
+**Preferences Affected:** `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_rsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_ecdsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_256_sha`, `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.deprecated.rsa_des_ede3_sha`
 
 ---
 **Note:**
@@ -1063,32 +1169,13 @@ This policy was updated in Thunderbird 78 to allow enabling ciphers as well. Set
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_DHE_RSA_WITH_AES_128_CBC_SHA = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_DHE_RSA_WITH_AES_256_CBC_SHA = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_RSA_WITH_AES_128_CBC_SHA = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_RSA_WITH_AES_256_CBC_SHA = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_RSA_WITH_3DES_EDE_CBC_SHA = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_RSA_WITH_AES_128_GCM_SHA256 = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_RSA_WITH_AES_256_GCM_SHA384 = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisabledCiphers\CIPHER_NAME = 0x1 | 0x0
 ```
 #### Windows (Intune)
 OMA-URI:
 ```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_CIPHER_NAME
+
 ```
 Value (string):
 ```
@@ -1099,27 +1186,7 @@ Value (string):
 <dict>
   <key>DisabledCiphers</key>
     <dict>
-      <key>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</key>
-      <true/> | <false/>
-      <key>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</key>
-      <true/> | <false/>
-      <key>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</key>
-      <true/> | <false/>
-      <key>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</key>
-      <true/> | <false/>
-      <key>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</key>
-      <true/> | <false/>
-      <key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
-      <true/> | <false/>
-      <key>TLS_RSA_WITH_AES_128_CBC_SHA</key>
-      <true/> | <false/>
-      <key>TLS_RSA_WITH_AES_256_CBC_SHA</key>
-      <true/> | <false/>
-      <key>TLS_RSA_WITH_3DES_EDE_CBC_SHA</key>
-      <true/> | <false/>
-      <key>TLS_RSA_WITH_AES_128_GCM_SHA256</key>
-      <true/> | <false/>
-      <key>TLS_RSA_WITH_AES_256_GCM_SHA384</key>
+      <key>CIPHER_NAME</key>
       <true/> | <false/>
     </dict>
 </dict>
@@ -1129,17 +1196,7 @@ Value (string):
 {
   "policies": {
     "DisabledCiphers": {
-      "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": true | false,
-      "TLS_DHE_RSA_WITH_AES_256_CBC_SHA": true | false,
-      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": true | false,
-      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": true | false,
-      "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": true | false,
-      "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": true | false,
-      "TLS_RSA_WITH_AES_128_CBC_SHA": true | false,
-      "TLS_RSA_WITH_AES_256_CBC_SHA": true | false,
-      "TLS_RSA_WITH_3DES_EDE_CBC_SHA": true | false,
-      "TLS_RSA_WITH_AES_128_GCM_SHA256": true | false,
-      "TLS_RSA_WITH_AES_256_GCM_SHA384": true | false
+      "CIPHER_NAME": true | false,
     }
   }
 }
@@ -1201,7 +1258,7 @@ Remove the master password functionality.
 
 If this value is true, it works the same as setting [`PrimaryPassword`](#primarypassword) to false and removes the primary password functionality.
 
-If both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMasterPasswordCreation takes precedent.
+If both `DisableMasterPasswordCreation` and `PrimaryPassword` are used, `DisableMasterPasswordCreation` takes precedent.
 
 **CCK2 Equivalent:** `noMasterPassword`\
 **Preferences Affected:** N/A
@@ -1335,8 +1392,10 @@ Prevent the user from bypassing security in certain cases.
 
 `SafeBrowsing` prevents selecting "ignore the risk" and visiting a harmful site anyway.
 
+These policies only affect what happens when an error is shown, they do not affect any settings in preferences.
+
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** `security.certerror.hideAddException`,`browser.safebrowsing.allowOverride`
+**Preferences Affected:** `security.certerror.hideAddException`, `browser.safebrowsing.allowOverride`
 
 #### Windows (GPO)
 ```
@@ -1393,7 +1452,7 @@ Value (string):
 <br>
 
 ## DisableSystemAddonUpdate
-Prevent system add-ons from being installed or update.
+Prevent system add-ons from being installed or updated.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
@@ -1442,7 +1501,7 @@ As of Thunderbird 83 and Thunderbird ESR 78.5, local storage of telemetry data i
 Mozilla recommends that you do not disable telemetry. Information collected through telemetry helps us build a better product for businesses like yours.
 
 **CCK2 Equivalent:** `disableTelemetry`\
-**Preferences Affected:** `datareporting.healthreport.uploadEnabled,datareporting.policy.dataSubmissionEnabled,toolkit.telemetry.archive.enabled`
+**Preferences Affected:** `datareporting.healthreport.uploadEnabled`, `datareporting.policy.dataSubmissionEnabled`, `toolkit.telemetry.archive.enabled`
 
 #### Windows (GPO)
 ```
@@ -1491,8 +1550,10 @@ Configure DNS over HTTPS.
 
 `ExcludedDomains` excludes domains from DNS over HTTPS.
 
+`Fallback` determines whether or not Thunderbird will use your default DNS resolver if there is a problem with the secure DNS provider.
+
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** `network.trr.mode`,`network.trr.uri`
+**Preferences Affected:** `network.trr.mode`, `network.trr.uri`
 
 #### Windows (GPO)
 ```
@@ -1500,6 +1561,7 @@ Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Enabled = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ProviderURL = "URL_TO_ALTERNATE_PROVIDER"
 Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Locked = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains\1 = "example.com"
+Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Fallback = 0x1 | 0x0
 ```
 #### Windows (Intune)
 OMA-URI:
@@ -1536,6 +1598,14 @@ Value (string):
 <enabled/>
 <data id="List" value="1&#xF000;example.com"/>
 ```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Fallback
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
 #### macOS
 ```
 <dict>
@@ -1551,6 +1621,8 @@ Value (string):
     <array>
       <string>example.com</string>
     </array>
+    <key>Fallback</key>
+    <true/> | <false/>
   </dict>
 </dict>
 ```
@@ -1562,7 +1634,8 @@ Value (string):
       "Enabled":  true | false,
       "ProviderURL": "URL_TO_ALTERNATE_PROVIDER",
       "Locked": true | false,
-      "ExcludedDomains": ["example.com"]
+      "ExcludedDomains": ["example.com"],
+      "Fallback": true | false,
     }
   }
 }
@@ -1581,7 +1654,7 @@ Set and lock the download directory.
 You can use ${home} for the native home directory.
 
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** `browser.download.dir`,`browser.download.folderList`,`browser.download.useDownloadDir`
+**Preferences Affected:** `browser.download.dir`, `browser.download.folderList`, `browser.download.useDownloadDir`
 
 #### Windows (GPO)
 ```
@@ -1629,7 +1702,9 @@ Value (string):
 ## Extensions
 Control the installation, uninstallation and locking of extensions.
 
-While this policy is not technically deprecated, it is recommended that you use the **[`ExtensionSettings`](#extensionsettings)** policy. It has the same functionality and adds more. It does not support native paths, though, so you'll have to use file:/// URLs.
+We strongly recommend that you use the **[`ExtensionSettings`](#extensionsettings)** policy. It has the same functionality and adds more. It does not support native paths, though, so you'll have to use file:/// URLs.
+
+This method will be deprecated in the near future.
 
 `Install` is a list of URLs or native paths for extensions to be installed.
 
@@ -2207,11 +2282,31 @@ If this policy is enabled:
  2. Thunderbird will not check for updates in the background, though it will check automatically when an update UI is displayed (such as the one in the About dialog). This check will be used to show "Update to version X" in the UI, but will not automatically download the update or prompt the user to update in any other way.
  3. The update UI will work as expected, unlike when using DisableAppUpdate.
 
-This policy is primarily intended for advanced end users, not for enterprises.
+This policy is primarily intended for advanced end users, not for enterprises, but it is available via GPO.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Thunderbird\ManualAppUpdateOnly = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/ManualAppUpdateOnly
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>ManualAppUpdateOnly</key>
+  <true/> | <false/>
+</dict>
+```
 #### policies.json
 ```
 {
@@ -2232,7 +2327,7 @@ This policy is primarily intended for advanced end users, not for enterprises.
 Enable or disable network prediction (DNS prefetching).
 
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** `network.dns.disablePrefetch`,`network.dns.disablePrefetchFromHTTPS`
+**Preferences Affected:** `network.dns.disablePrefetch`, `network.dns.disablePrefetchFromHTTPS`
 
 #### Windows (GPO)
 ```
@@ -2405,7 +2500,7 @@ If `EnablePermissions` is set to true, the built-in PDF viewer will honor docume
 Note: DisableBuiltinPDFViewer has not been deprecated. You can either continue to use it, or switch to using PDFjs->Enabled to disable the built-in PDF viewer. This new permission was added because we needed a place for PDFjs->EnabledPermissions.
 
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** `pdfjs.diabled`,`pdfjs.enablePermissions`
+**Preferences Affected:** `pdfjs.disabled`, `pdfjs.enablePermissions`
 
 #### Windows (GPO)
 ```
@@ -2438,7 +2533,7 @@ Value (string):
 ```
 {
   "policies": {
-    "PSFjs": {
+    "PDFjs": {
       "Enabled": true | false,
       "EnablePermissions": true | false
     }
@@ -2827,6 +2922,8 @@ Value (string):
 Configure proxy settings. These settings correspond to the connection settings in Thunderbird preferences.
 To specify ports, append them to the hostnames with a colon (:).
 
+Unless you lock this policy, changes the user already has in place will take effect.
+
 `Mode` is the proxy method being used.
 
 `Locked` is whether or not proxy settings can be changed.
@@ -2852,13 +2949,13 @@ To specify ports, append them to the hostnames with a colon (:).
 `UseProxyForDNS` to use proxy DNS when using SOCKS v5.
 
 **CCK2 Equivalent:** `networkProxy*`\
-**Preferences Affected:** `network.proxy.type`,`network.proxy.autoconfig_url`,`network.proxy.socks_remote_dns`,`signon.autologin.proxy`,`network.proxy.socks_version`,`network.proxy.no_proxies_on`,`network.proxy.share_proxy_settings`,`network.proxy.http`,`network.proxy.http_port`,`network.proxy.ftp`,`network.proxy.ftp_port`,`network.proxy.ssl`,`network.proxy.ssl_port`,`network.proxy.socks`,`network.proxy.socks_port`
+**Preferences Affected:** `network.proxy.type`, `network.proxy.autoconfig_url`, `network.proxy.socks_remote_dns`, `signon.autologin.proxy`, `network.proxy.socks_version`, `network.proxy.no_proxies_on`, `network.proxy.share_proxy_settings`, `network.proxy.http`, `network.proxy.http_port`, `network.proxy.ftp`, `network.proxy.ftp_port`, `network.proxy.ssl`, `network.proxy.ssl_port`, `network.proxy.socks`, `network.proxy.socks_port`
 
 #### Windows (GPO)
 ```
 Software\Policies\Mozilla\Thunderbird\Proxy\Mode = "none" | "system" | "manual" | "autoDetect" | "autoConfig"
 Software\Policies\Mozilla\Thunderbird\Proxy\Locked = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\=Proxy\HTTPProxy = https://httpproxy.example.com
+Software\Policies\Mozilla\Thunderbird\Proxy\HTTPProxy = https://httpproxy.example.com
 Software\Policies\Mozilla\Thunderbird\Proxy\UseHTTPProxyForAllProtocols = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\Proxy\SSLProxy = https://sslproxy.example.com
 Software\Policies\Mozilla\Thunderbird\Proxy\FTPProxy = https://ftpproxy.example.com
@@ -2870,7 +2967,97 @@ Software\Policies\Mozilla\Thunderbird\Proxy\AutoLogin = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\Proxy\UseProxyForDNS = 0x1 | 0x0
 ```
 #### Windows (Intune)
+**Note**
+These setttings were moved to a category to make them easier to configure via Intune.
+
 OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_Locked
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_ConnectionType
+```
+Value (string):
+```
+<enabled/>
+<data id="Proxy_ConnectionType" value="none | system | manual | autoDetect | autoConfig"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_HTTPProxy
+```
+Value (string):
+```
+<enabled/>
+<data id="Proxy_HTTPProxy" value="httpproxy.example.com"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_UseHTTPProxyForAllProtocols
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_SSLProxy
+```
+Value (string):
+```
+<enabled/>
+<data id="Proxy_SSLProxy" value="sslproxy.example.com"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_SOCKSProxy
+```
+Value (string):
+```
+<enabled/>
+<data id="Proxy_SOCKSProxy" value="socksproxy.example.com"/>
+<data id="Proxy_SOCKSVersion" value="4 | 5"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_AutoConfigURL
+```
+Value (string):
+```
+<enabled/>
+<data id="Proxy_AutoConfigURL" value="URL_TO_AUTOCONFIG"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_Passthrough
+```
+Value (string):
+```
+<enabled/>
+<data id="Proxy_Passthrough" value="&lt;local&gt;"/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_AutoLogin
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_UseProxyForDNS
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+OMA-URI (Old way):
 ```
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/Proxy
 ```
@@ -2879,11 +3066,11 @@ Value (string):
 <enabled/>
 <data id="ProxyLocked" value="true | false"/>
 <data id="ConnectionType" value="none | system | manual | autoDetect | autoConfig"/>
-<data id="HTTPProxy" value="https://httpproxy.example.com"/>
+<data id="HTTPProxy" value="httpproxy.example.com"/>
 <data id="UseHTTPProxyForAllProtocols" value="true | false"/>
-<data id="SSLProxy" value="https://sslproxy.example.com"/>
-<data id="FTPProxy" value="https://ftpproxy.example.com"/>
-<data id="SOCKSProxy" value="https://socksproxy.example.com"/>
+<data id="SSLProxy" value="sslproxy.example.com"/>
+<data id="FTPProxy" value="ftpproxy.example.com"/>
+<data id="SOCKSProxy" value="socksproxy.example.com"/>
 <data id="SOCKSVersion" value="4 | 5"/>
 <data id="AutoConfigURL" value="URL_TO_AUTOCONFIG"/>
 <data id="Passthrough" value="<local>"/>
@@ -3023,7 +3210,9 @@ or
 
 ## SearchEngines | Add
 
-Add new search engines (up to five). This policy is only available on the ESR. `Name` and `URLTemplate` are required.
+Add new search engines. Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
+
+This policy is only available on the ESR. `Name` and `URLTemplate` are required.
 
 `Name` is the name of the search engine.
 
@@ -3282,7 +3471,7 @@ Value (string):
 
 ## SSLVersionMax
 
-Set and lock the maximum version of TLS.
+Set and lock the maximum version of TLS. (Thunderbird defaults to a maximum of TLS 1.3.)
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `security.tls.version.max`
@@ -3327,7 +3516,7 @@ Value (string):
 
 ## SSLVersionMin
 
-Set and lock the minimum version of TLS.
+Set and lock the minimum version of TLS. (Thunderbird defaults to a minimum of TLS 1.2.)
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `security.tls.version.min`

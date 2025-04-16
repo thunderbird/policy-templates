@@ -2861,6 +2861,36 @@
       "min": "108.0a1"
     }
   },
+  "ExtensionSettings_^.*$_private_browsing": {
+    "central": {
+      "min": "136.0a1"
+    }
+  },
+  "InAppNotification": {
+    "central": {
+      "min": "139.0a1"
+    }
+  },
+  "InAppNotification_DonationEnabled": {
+    "central": {
+      "min": "139.0a1"
+    }
+  },
+  "InAppNotification_SurveyEnabled": {
+    "central": {
+      "min": "139.0a1"
+    }
+  },
+  "InAppNotification_MessageEnabled": {
+    "central": {
+      "min": "139.0a1"
+    }
+  },
+  "InAppNotification_Disabled": {
+    "central": {
+      "min": "139.0a1"
+    }
+  },
   "AllowedDomainsForApps": {
     "unsupported": true
   },
@@ -2912,10 +2942,52 @@
   "ContentAnalysis_IsPerUser": {
     "unsupported": true
   },
+  "ContentAnalysis_MaxConnectionsCount": {
+    "unsupported": true
+  },
   "ContentAnalysis_ShowBlockedResult": {
     "unsupported": true
   },
-  "ContentAnalysis_DefaultAllow": {
+  "ContentAnalysis_DefaultResult": {
+    "unsupported": true
+  },
+  "ContentAnalysis_TimeoutResult": {
+    "unsupported": true
+  },
+  "ContentAnalysis_BypassForSameTabOperations": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints_Clipboard": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints_Clipboard_Enabled": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints_Clipboard_PlainTextOnly": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints_DragAndDrop": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints_DragAndDrop_Enabled": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints_DragAndDrop_PlainTextOnly": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints_FileUpload": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints_FileUpload_Enabled": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints_Print": {
+    "unsupported": true
+  },
+  "ContentAnalysis_InterceptionPoints_Print_Enabled": {
     "unsupported": true
   },
   "Cookies_AllowSession": {
@@ -2933,7 +3005,19 @@
   "DisableAccounts": {
     "unsupported": true
   },
+  "DisabledCiphers_TLS_CHACHA20_POLY1305_SHA256": {
+    "unsupported": true
+  },
+  "DisabledCiphers_TLS_AES_128_GCM_SHA256": {
+    "unsupported": true
+  },
+  "DisabledCiphers_TLS_AES_256_GCM_SHA384": {
+    "unsupported": true
+  },
   "DisableDefaultBrowserAgent": {
+    "unsupported": true
+  },
+  "DisableEncryptedClientHello": {
     "unsupported": true
   },
   "DisableFeedbackCommands": {
@@ -3086,6 +3170,12 @@
   "Homepage_StartPage": {
     "unsupported": true
   },
+  "HttpAllowlist": {
+    "unsupported": true
+  },
+  "HttpsOnlyMode": {
+    "unsupported": true
+  },
   "LegacyProfiles": {
     "unsupported": true
   },
@@ -3099,6 +3189,9 @@
     "unsupported": true
   },
   "ManagedBookmarks": {
+    "unsupported": true
+  },
+  "MicrosoftEntraSSO": {
     "unsupported": true
   },
   "NewTabPage": {
@@ -3230,10 +3323,16 @@
   "PopupBlocking_Locked": {
     "unsupported": true
   },
+  "PostQuantumKeyAgreementEnabled": {
+    "unsupported": true
+  },
   "Preferences_^.*$_Type": {
     "unsupported": true
   },
   "PrintingEnabled": {
+    "unsupported": true
+  },
+  "PrivateBrowsingModeAvailability": {
     "unsupported": true
   },
   "SanitizeOnShutdown": {
@@ -3326,7 +3425,13 @@
   "UserMessaging_SkipOnboarding": {
     "unsupported": true
   },
+  "UserMessaging_SkipTermsOfUse": {
+    "unsupported": true
+  },
   "UserMessaging_MoreFromMozilla": {
+    "unsupported": true
+  },
+  "UserMessaging_FirefoxLabs": {
     "unsupported": true
   },
   "UserMessaging_Locked": {

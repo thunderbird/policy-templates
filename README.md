@@ -76,6 +76,7 @@ The following table states for each policy, when Thunderbird started to support 
 | `DisableBuiltinPDFViewer` | 91.0 |  |
 | *`DisableDefaultBrowserAgent`* |  |  |
 | `DisableDeveloperTools` | 68.0 |  |
+| *`DisableEncryptedClientHello`* |  |  |
 | *`DisableFeedbackCommands`* |  |  |
 | *`DisableFirefoxAccounts`* |  |  |
 | *`DisableFirefoxScreenshots`* |  |  |
@@ -97,6 +98,9 @@ The following table states for each policy, when Thunderbird started to support 
 | `DisableTelemetry` | 78.0 |  |
 | *`DisableThirdPartyModuleBlocking`* |  |  |
 | `DisabledCiphers` | 76.0 |  |
+| *`DisabledCiphers_TLS_AES_128_GCM_SHA256`* |  |  |
+| *`DisabledCiphers_TLS_AES_256_GCM_SHA384`* |  |  |
+| *`DisabledCiphers_TLS_CHACHA20_POLY1305_SHA256`* |  |  |
 | `DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA` | 76.0 |  |
 | `DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA` | 76.0 |  |
 | `DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA` | 102.0 |  |
@@ -134,6 +138,7 @@ The following table states for each policy, when Thunderbird started to support 
 | *`ExtensionSettings_[name]_default_area`* |  |  |
 | `ExtensionSettings_[name]_install_url` | 78.10.3, 89.0 |  |
 | `ExtensionSettings_[name]_installation_mode` | 78.10.3, 89.0 |  |
+| `ExtensionSettings_[name]_private_browsing` | 136.0 |  |
 | *`ExtensionSettings_[name]_temporarily_allow_weak_signatures`* |  |  |
 | `ExtensionSettings_[name]_updates_disabled` | 91.0 |  |
 | `ExtensionUpdate` | 68.0 |  |
@@ -152,6 +157,13 @@ The following table states for each policy, when Thunderbird started to support 
 | `Handlers_(mimeTypes\|extensions\|schemes)_[name]_handlers` | 91.0 |  |
 | `HardwareAcceleration` | 78.0 |  |
 | *`Homepage`* |  |  |
+| *`HttpAllowlist`* |  |  |
+| *`HttpsOnlyMode`* |  |  |
+| `InAppNotification` | 139.0 |  |
+| `InAppNotification_Disabled` | 139.0 |  |
+| `InAppNotification_DonationEnabled` | 139.0 |  |
+| `InAppNotification_MessageEnabled` | 139.0 |  |
+| `InAppNotification_SurveyEnabled` | 139.0 |  |
 | `InstallAddonsPermission` | 68.0 |  |
 | `InstallAddonsPermission_Allow` | 68.0 |  |
 | `InstallAddonsPermission_Default` | 68.0 |  |
@@ -161,6 +173,7 @@ The following table states for each policy, when Thunderbird started to support 
 | *`LocalFileLinks`* |  |  |
 | *`ManagedBookmarks`* |  |  |
 | `ManualAppUpdateOnly` | 91.0 |  |
+| *`MicrosoftEntraSSO`* |  |  |
 | `NetworkPrediction` | 91.0 |  |
 | *`NewTabPage`* |  |  |
 | *`NoDefaultBookmarks`* |  |  |
@@ -176,6 +189,7 @@ The following table states for each policy, when Thunderbird started to support 
 | *`Permissions`* |  |  |
 | *`PictureInPicture`* |  |  |
 | *`PopupBlocking`* |  |  |
+| *`PostQuantumKeyAgreementEnabled`* |  |  |
 | `Preferences` | 68.0 |  |
 | `Preferences_[name]` | 91.0 |  |
 | `Preferences_[name]_Status` | 91.0 |  |
@@ -213,6 +227,7 @@ The following table states for each policy, when Thunderbird started to support 
 | `Preferences_widget.content.gtk-theme-override` | 78.0 | 89.0 |
 | `PrimaryPassword` | 91.0 |  |
 | *`PrintingEnabled`* |  |  |
+| *`PrivateBrowsingModeAvailability`* |  |  |
 | `PromptForDownloadLocation` | 78.0 |  |
 | `Proxy` | 68.0 |  |
 | `Proxy_AutoConfigURL` | 68.0 |  |

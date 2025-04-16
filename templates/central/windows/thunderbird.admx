@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitions revision="5.9" schemaVersion="1.0">
+<policyDefinitions revision="6.9" schemaVersion="1.0">
   <policyNamespaces>
     <target prefix="thunderbird" namespace="Mozilla.Policies.Thunderbird"/>
     <using prefix="Mozilla" namespace="Mozilla.Policies"/>
   </policyNamespaces>
-  <resources minRequiredRevision="5.9"/>
+  <resources minRequiredRevision="6.9"/>
   <supportedOn>
     <definitions>
       <definition name="SUPPORTED_ID_0" displayName="$(string.SUPPORTED_ID_0)"/>
@@ -111,6 +111,18 @@
     </category>
     <category displayName="$(string.FirefoxSuggest_group)" name="FirefoxSuggest">
       <parentCategory ref="thunderbird"/>
+    </category>
+    <category displayName="$(string.ContentAnalysis_group)" name="ContentAnalysis">
+      <parentCategory ref="thunderbird"/>
+    </category>
+    <category displayName="$(string.InterceptionPoints_group)" name="InterceptionPoints">
+      <parentCategory ref="ContentAnalysis"/>
+    </category>
+    <category displayName="$(string.InterceptionPoints_Clipboard_group)" name="InterceptionPoints_Clipboard">
+      <parentCategory ref="InterceptionPoints"/>
+    </category>
+    <category displayName="$(string.InterceptionPoints_DragAndDrop_group)" name="InterceptionPoints_DragAndDrop">
+      <parentCategory ref="InterceptionPoints"/>
     </category>
   </categories>
   <policies>
