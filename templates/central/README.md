@@ -42,6 +42,7 @@ On Windows, create a directory called `distribution` where the EXE is located an
 | **[`ExtensionUpdate`](#extensionupdate)** | Control extension updates.
 | **[`Handlers`](#handlers)** | Configure default application handlers.
 | **[`HardwareAcceleration`](#hardwareacceleration)** | Control hardware acceleration.
+| **[`InAppNotification`](#inappnotification)** | TBD
 | **[`InstallAddonsPermission`](#installaddonspermission)** | Configure the default extension install policy as well as origins for extension installs are allowed.
 | **[`ManualAppUpdateOnly`](#manualappupdateonly)** | Allow manual updates only and do not notify the user about updates.
 | **[`NetworkPrediction`](#networkprediction)** | Enable or disable network prediction (DNS prefetching).
@@ -2179,6 +2180,15 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `HardwareAcceleration` | 78.0 |  |
+
+<br>
+
+TBD
+#### Compatibility
+
+| Policy/Property Name | supported since | deprecated after |
+|:--- | ---:| ---:|
+| `InAppNotification`<br>`InAppNotification_DonationEnabled`<br>`InAppNotification_SurveyEnabled`<br>`InAppNotification_MessageEnabled`<br>`InAppNotification_Disabled` | 139.0 |  |
 
 <br>
 
