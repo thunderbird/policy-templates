@@ -186,7 +186,7 @@
       "upstream": "| **[`Homepage`](#homepage)** | Configure the default homepage and how Firefox starts."
     },
     "InAppNotification": {
-      "override": "| **[`InAppNotification`](#inappnotification)** | TBD"
+      "override": "| **[`InAppNotification`](#inappnotification)** | Configures push notifications"
     },
     "InstallAddonsPermission": {
       "upstream": "| **[`InstallAddonsPermission`](#installaddonspermission)** | Configure the default extension install policy as well as origins for extension installs are allowed."

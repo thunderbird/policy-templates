@@ -42,7 +42,7 @@ On Windows, create a directory called `distribution` where the EXE is located an
 | **[`ExtensionUpdate`](#extensionupdate)** | Control extension updates.
 | **[`Handlers`](#handlers)** | Configure default application handlers.
 | **[`HardwareAcceleration`](#hardwareacceleration)** | Control hardware acceleration.
-| **[`InAppNotification`](#inappnotification)** | TBD
+| **[`InAppNotification`](#inappnotification)** | Configures push notifications.
 | **[`InstallAddonsPermission`](#installaddonspermission)** | Configure the default extension install policy as well as origins for extension installs are allowed.
 | **[`ManualAppUpdateOnly`](#manualappupdateonly)** | Allow manual updates only and do not notify the user about updates.
 | **[`NetworkPrediction`](#networkprediction)** | Enable or disable network prediction (DNS prefetching).
@@ -2184,7 +2184,48 @@ Value (string):
 <br>
 
 ## InAppNotification
-TBD
+
+Configure the push notifications allowed.
+
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A\
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Thunderbird\InAppNotification = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\InAppNotification_SurveyEnabled = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\InAppNotification_MessageEnabled = 0x1 | 0x0
+```
+#### Windows (Intune)
+OMA-URI:
+```
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_SurveyEnabled
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_MessageEnabled
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Disabled
+```
+Value (string):
+```
+<enabled/> or <disabled/>
+```
+#### macOS
+```
+<dict>
+  <key>InAppNotification</key>
+  <enabled/> | <disabled/>
+</dict>
+```
+#### policies.json
+```
+{
+  "policies": {
+    "InAppNotification": enabled | disabled
+  }
+}
+```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
