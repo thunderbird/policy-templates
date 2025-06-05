@@ -42,7 +42,7 @@ On Windows, create a directory called `distribution` where the EXE is located an
 | **[`ExtensionUpdate`](#extensionupdate)** | Control extension updates.
 | **[`Handlers`](#handlers)** | Configure default application handlers.
 | **[`HardwareAcceleration`](#hardwareacceleration)** | Control hardware acceleration.
-| **[`InAppNotification`](#inappnotification)** | Configures push notifications.
+| **[`InAppNotification`](#inappnotification)** | Configure TOAST, browser, and tab notifications within the context of the application.
 | **[`InstallAddonsPermission`](#installaddonspermission)** | Configure the default extension install policy as well as origins for extension installs are allowed.
 | **[`ManualAppUpdateOnly`](#manualappupdateonly)** | Allow manual updates only and do not notify the user about updates.
 | **[`NetworkPrediction`](#networkprediction)** | Enable or disable network prediction (DNS prefetching).
@@ -2185,14 +2185,14 @@ Value (string):
 
 ## InAppNotification
 
-Configure the push notifications allowed.
+Configure TOAST, browser, and tab notifications within the context of the application.
 
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** N/A\
+**Preferences Affected:** `mail.inappnotifications.donation_enabled`, `mail.inappnotifications.blog_enabled`, `mail.inappnotifications.message_enabled`, `mail.inappnotifications.enabled` 
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\InAppNotification = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\InAppNotification_SurveyEnabled = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\InAppNotification_MessageEnabled = 0x1 | 0x0
@@ -2204,7 +2204,6 @@ OMA-URI:
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_SurveyEnabled
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_MessageEnabled
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Disabled
 ```
 Value (string):
 ```
@@ -2213,7 +2212,13 @@ Value (string):
 #### macOS
 ```
 <dict>
-  <key>InAppNotification</key>
+  <key>InAppNotification_Enabled</key>
+  <enabled/> | <disabled/>
+  <key>InAppNotification_DonationEnabled</key>
+  <enabled/> | <disabled/>
+  <key>InAppNotification_SurveyEnabled</key>
+  <enabled/> | <disabled/>
+  <key>InAppNotification_MessageEnabled</key>
   <enabled/> | <disabled/>
 </dict>
 ```
@@ -2221,7 +2226,10 @@ Value (string):
 ```
 {
   "policies": {
-    "InAppNotification": enabled | disabled
+    "InAppNotification_Enabled": enabled | disabled,
+    "InAppNotification_DonationEnabled": enabled | disabled,
+    "InAppNotification_SurveyEnabled": enabled | disabled,
+    "InAppNotification_MessageEnabled": enabled | disabled
   }
 }
 ```
@@ -2230,7 +2238,7 @@ Value (string):
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
-| `InAppNotification`<br>`InAppNotification_DonationEnabled`<br>`InAppNotification_SurveyEnabled`<br>`InAppNotification_MessageEnabled`<br>`InAppNotification_Disabled` | 139.0 |  |
+| `InAppNotification_Enabled`<br>`InAppNotification_DonationEnabled`<br>`InAppNotification_SurveyEnabled`<br>`InAppNotification_MessageEnabled` | 139.0 |  |
 
 <br>
 
