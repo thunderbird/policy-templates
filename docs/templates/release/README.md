@@ -2244,10 +2244,10 @@ Value (string):
 ```
 {
   "policies": {
-    "InAppNotification_Enabled": enabled | disabled,
-    "InAppNotification_DonationEnabled": enabled | disabled,
-    "InAppNotification_SurveyEnabled": enabled | disabled,
-    "InAppNotification_MessageEnabled": enabled | disabled
+    "InAppNotification_Enabled": true | false,
+    "InAppNotification_DonationEnabled": true | false,
+    "InAppNotification_SurveyEnabled": true | false,
+    "InAppNotification_MessageEnabled": true | false
   }
 }
 ```
