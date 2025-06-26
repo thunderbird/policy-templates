@@ -721,7 +721,7 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
     fs.writeFileSync(`${output_dir}/windows/thunderbird.admx`, admx_xml);
 
     // Copy mozilla.admx file.
-    file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/mozilla.admx`);
+    let file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/mozilla.admx`);
     fs.writeFileSync(`${output_dir}/windows/mozilla.admx`, file);
 
 
