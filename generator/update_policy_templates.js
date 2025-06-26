@@ -15,7 +15,7 @@ const main_readme = "../README.md";
 const readme_json_path = "./config/readme_#tree#.json";
 const compatibility_json_path = `./config/compatibility.json`;
 const revisions_json_write_path = "./config/revisions.json";
-const revisions_json_read_path = `${state_dir}/script/config/revisions.json`;
+const revisions_json_read_path = `${state_dir}/generator/config/revisions.json`;
 const HG_URL = `https://hg-edge.mozilla.org`;
 
 import { createRequire } from 'module';

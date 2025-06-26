@@ -61,10 +61,10 @@ The final output may include the following sections:
    ]
 
  - currently acknowledged policy revision (b501a3a06e1c572ec1d9e7366828dae0f77c6aa2 / 126.0a1):
-        /mnt/c/Users/John/Documents/GitHub/policy-templates-tb/script/data/schema/mozilla-central-b501a3a06e1c572ec1d9e7366828dae0f77c6aa2.json
+        /mnt/c/Users/John/Documents/GitHub/policy-templates-tb/generator/data/schema/mozilla-central-b501a3a06e1c572ec1d9e7366828dae0f77c6aa2.json
 
  - latest available policy revision (fe6e070cd6b63ecd1f8ab30f12f6274e64210d66 / 138.0a1):
-        /mnt/c/Users/John/Documents/GitHub/policy-templates-tb/script/data/schema/mozilla-central-fe6e070cd6b63ecd1f8ab30f12f6274e64210d66.json
+        /mnt/c/Users/John/Documents/GitHub/policy-templates-tb/generator/data/schema/mozilla-central-fe6e070cd6b63ecd1f8ab30f12f6274e64210d66.json
 
  - hg change log for mozilla-central:
         https://hg-edge.mozilla.org/mozilla-central/log/tip/browser/components/enterprisepolicies/schemas/policies-schema.json
