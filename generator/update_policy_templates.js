@@ -8,10 +8,10 @@ const schema_dir = "./data/schema";
 const mozilla_template_dir = "./data/mozilla-policy-templates";
 
 const main_readme = "../docs/README.md";
-const readme_json_path = "./config/readme_#tree#.json";
-const compatibility_json_path = `./config/compatibility.json`;
-const revisions_json_write_path = "./config/revisions.json";
-const revisions_json_read_path = `${state_dir}/generator/config/revisions.json`;
+const readme_json_path = "../state/readme_#tree#.json";
+const compatibility_json_path = `../state/compatibility.json`;
+const revisions_json_write_path = "../state/revisions.json";
+const revisions_json_read_path = `${state_dir}/state/revisions.json`;
 
 import { 
     compareVersion, escape_code_markdown, rebrand, request, writePrettyJSONFile
