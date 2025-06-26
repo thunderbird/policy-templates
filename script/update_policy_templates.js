@@ -18,6 +18,9 @@ const revisions_json_write_path = "./config/revisions.json";
 const revisions_json_read_path = `${state_dir}/script/config/revisions.json`;
 const HG_URL = `https://hg-edge.mozilla.org`;
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
 // Replacement for deprecated request.
 const bent = require('bent');
 const bentGetTEXT = bent('GET', 'string', 200);
