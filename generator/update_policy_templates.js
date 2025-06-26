@@ -15,28 +15,22 @@ const revisions_json_read_path = `${state_dir}/state/revisions.json`;
 
 import { 
     compareVersion, escape_code_markdown, ensureDir, fileExists, rebrand, request, writePrettyJSONFile
-} from './modules/tools.mjs';
+} from "./modules/tools.mjs";
 import {
     pullGitRepository
 } from "./modules/git.mjs";
 import {
     gMainTemplate, gTreeTemplate, HG_URL
 } from "./modules/constants.mjs";
-
-import {
-    createRequire
-} from 'module';
+import { 
+    parse, stringify
+} from "comment-json";
 
 import fs from "node:fs/promises";
-
-const require = createRequire(import.meta.url);
-const cheerio = require('cheerio');
-const path = require("path");
-const plist = require('plist');
-const convert = require('xml-js');
-const {
-    parse, stringify
-} = require('comment-json');
+import pathUtils from "path";
+import convert from "xml-js";
+import plist from "plist";
+import cheerio from "cheerio"
 
 var gCompatibilityData = {};
 var gMainTemplateEntries = [];
@@ -73,9 +67,9 @@ async function parseMozillaPolicyTemplate(tree) {
 
     // Split on ### heading to get chunks of policy descriptions.
     let file;
-    for (let path of paths) {
+    for (let p of paths) {
         try {
-            file = await fs.readFile(path, 'utf8').then(f => f.toString());
+            file = await fs.readFile(p, 'utf8').then(f => f.toString());
             break;
         } catch {
         }
@@ -706,8 +700,8 @@ async function buildThunderbirdTemplates(settings) {
             }
             
             console.log();
-            console.log(` - currently acknowledged policy revision (${mozillaReferencePolicyFile.revision} / ${mozillaReferencePolicyFile.version}): \n\t${path.resolve(getPolicySchemaFilename("mozilla", settings.tree, mozillaReferencePolicyFile.revision))}\n`);
-            console.log(` - latest available policy revision (${data.mozilla.revisions[0].revision} / ${data.mozilla.revisions[0].version}): \n\t${path.resolve(getPolicySchemaFilename("mozilla", settings.tree, data.mozilla.revisions[0].revision))}\n`);
+            console.log(` - currently acknowledged policy revision (${mozillaReferencePolicyFile.revision} / ${mozillaReferencePolicyFile.version}): \n\t${pathUtils.resolve(getPolicySchemaFilename("mozilla", settings.tree, mozillaReferencePolicyFile.revision))}\n`);
+            console.log(` - latest available policy revision (${data.mozilla.revisions[0].revision} / ${data.mozilla.revisions[0].version}): \n\t${pathUtils.resolve(getPolicySchemaFilename("mozilla", settings.tree, data.mozilla.revisions[0].revision))}\n`);
             console.log(` - hg change log for mozilla-${settings.tree}: \n\t${data.mozilla.hgLogUrl}\n`);
             console.log(`Create bugs on Bugzilla for all policies which should be ported to Thunderbird and then check-in the updated ${revisions_json_write_path} file to acknowledge the reported changes.`);
             console.log(`Once the reported changes are acknowledged, they will not be reported again.`);
