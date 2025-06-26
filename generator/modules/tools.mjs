@@ -178,7 +178,7 @@ export async function request(url) {
  */
 export async function writePrettyJSONFile(filePath, json) {
   try {
-    return await fs.writeFile(filePath, JSON.stringify(json, null, 4));
+    return await fs.writeFile(filePath, JSON.stringify(json, null, 2));
   } catch (err) {
     console.error("Error in writePrettyJSONFile()", filePath, err);
     throw err;

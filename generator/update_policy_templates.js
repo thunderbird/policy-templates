@@ -122,7 +122,7 @@ async function parseMozillaPolicyTemplate(tree) {
         readmeData.macReadme.upstream = mac;
     }
 
-    await fs.writeFile(readme_file_name, stringify(readmeData, null, 2));
+    await writePrettyJSONFile(readme_file_name, readmeData);
     return readmeData;
 }
 
@@ -149,7 +149,7 @@ async function downloadPolicySchemaFile(branch, tree, revision) {
     let version = (await request(`${HG_URL}/${path}/raw-file/${revision}/${folder}/config/version.txt`)).trim();
     file.version = version;
     file.revision = revision;
-    await fs.writeFile(getPolicySchemaFilename(branch, tree, revision), stringify(file, null, 2));
+    await writePrettyJSONFile(getPolicySchemaFilename(branch, tree, revision), file);
     return file;
 }
 
