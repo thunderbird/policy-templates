@@ -2,10 +2,6 @@
  * See https://bugzilla.mozilla.org/show_bug.cgi?id=1732258
  */
 
-// Debug logging (0 - errors and basic logs only, 1 - verbose debug)
-const DEBUG_LEVEL = 0;
-const DEBUG_SKIP_GITHUB_PULL = false;
-
 const build_dir = "../docs/templates";
 const state_dir = "./data/gitstate";
 const schema_dir = "./data/schema";
@@ -16,109 +12,33 @@ const readme_json_path = "./config/readme_#tree#.json";
 const compatibility_json_path = `./config/compatibility.json`;
 const revisions_json_write_path = "./config/revisions.json";
 const revisions_json_read_path = `${state_dir}/generator/config/revisions.json`;
-const HG_URL = `https://hg-edge.mozilla.org`;
 
-import bent from "bent";
-import { rebrand, escape_code_markdown, compareVersion } from './modules/tools.mjs';
-import { pullGitRepository } from "./modules/git.mjs";
+import { 
+    compareVersion, escape_code_markdown, rebrand, request, writePrettyJSONFile
+} from './modules/tools.mjs';
+import {
+    pullGitRepository
+} from "./modules/git.mjs";
+import {
+    gMainTemplate, gTreeTemplate, HG_URL
+} from "./modules/constants.mjs";
 
-const bentGetTEXT = bent('GET', 'string', 200);
+import {
+    createRequire
+} from 'module';
 
-import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-
 const cheerio = require('cheerio');
-const git = require("isomorphic-git");
-const http = require('isomorphic-git/http/node');
-const util = require('util');
 const fs = require('fs-extra');
 const path = require("path");
 const plist = require('plist');
 const convert = require('xml-js');
-
 const {
-    parse,
-    stringify,
-    assign
+    parse, stringify
 } = require('comment-json');
 
 var gCompatibilityData = {};
 var gMainTemplateEntries = [];
-
-const gMainTemplate = `## Enterprise policy descriptions and templates for Thunderbird
-
-While the templates for the most recent version of Thunderbird will probably also work with older releases of Thunderbird, they may contain new policies which are not supported in older releases. We suggest to use the templates which correspond to the highest version of Thunderbird you are actually deploying.
-
-__list__
-
-<br>
-
-## List of supported policies
-
-The following table states for each policy, when Thunderbird started to support it, or when it has been deprecated. It also includes all policies currently supported by Firefox, which are not supported by Thunderbird.
-
-__compatibility__
-
-`
-
-const gTreeTemplate = `## Enterprise policy descriptions and templates for __name__
-
-__desc__
-
-<br>
-
-| Policy Name | Description
-|:--- |:--- |
-__list_of_policies__
-
-<br>
-
-__details__
-
-`;
-
-function debug(...args) {
-    if (DEBUG_LEVEL > 0) {
-        console.debug(...args);
-    }
-}
-
-function dump(data) {
-    console.log(util.inspect(data, false, null));
-}
-
-/**
- * bent based request variant with hard timeout on client side.
- * 
- * @param {string} url - url to GET
- * @returns - text content
- */
-async function request(url) {
-    debug(" -> ", url);
-    // Retry on error, using a hard timeout enforced from the client side.
-    let rv;
-    for (let i = 0; (!rv && i < 5); i++) {
-        if (i > 0) {
-            console.error("Retry", i);
-        }
-        // Rate limit the first request already, otherwise hg.mozilla.org will block us.
-        await new Promise(resolve => setTimeout(resolve, 2500));
-
-        let killTimer;
-        let killSwitch = new Promise((resolve, reject) => { killTimer = setTimeout(reject, 15000, "HardTimeout"); })
-        rv = await Promise
-            .race([bentGetTEXT(url), killSwitch])
-            .catch(err => {
-                console.error('Error in  request', err);
-                return null;
-            });
-
-        // node will continue to "wait" after the script finished, if we do not
-        // clear the timeouts.
-        clearTimeout(killTimer);
-    }
-    return rv;
-}
 
 // -----------------------------------------------------------------------------
 
@@ -812,68 +732,65 @@ async function buildThunderbirdTemplates(settings) {
     }
 }
 
-async function main() {
-    // Checkout the current state of the repo, to identify new changes.
-    await pullGitRepository("https://github.com/thunderbird/policy-templates", "master", state_dir);
 
-    // Load revision data, to see if any new revisions have been added to the tree.
-    let revisionData = [];
-    let readRevisionData = fs.existsSync(revisions_json_read_path)
-        ? parse(fs.readFileSync(revisions_json_read_path).toString())
-        : [];
-    // A starter set, if the revision config file is missing or incomplete.
-    let defaultRevisionData = [
-        {
-            tree: "esr68",
-            mozillaReferencePolicyRevision: "1b0a29b456b432d1c8bef09c233b84205ec9e13c",
-        },
-        {
-            tree: "esr78",
-            mozillaReferencePolicyRevision: "a8c4670b6ef144a0f3b6851c2a9d4bbd44fc032a",
-        },
-        {
-            tree: "esr91",
-            mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
+// Checkout the current state of the repo, to identify new changes.
+await pullGitRepository("https://github.com/thunderbird/policy-templates", "master", state_dir);
 
-        },
-        {
-            tree: "esr102",
-            mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
-        },
-        {
-            tree: "esr115",
-            mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
-        },
-        {
-            tree: "central",
-            mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
-        }
-    ];
+// Load revision data, to see if any new revisions have been added to the tree.
+let revisionData = [];
+let readRevisionData = fs.existsSync(revisions_json_read_path)
+    ? parse(fs.readFileSync(revisions_json_read_path).toString())
+    : [];
+// A starter set, if the revision config file is missing or incomplete.
+let defaultRevisionData = [
+    {
+        tree: "esr68",
+        mozillaReferencePolicyRevision: "1b0a29b456b432d1c8bef09c233b84205ec9e13c",
+    },
+    {
+        tree: "esr78",
+        mozillaReferencePolicyRevision: "a8c4670b6ef144a0f3b6851c2a9d4bbd44fc032a",
+    },
+    {
+        tree: "esr91",
+        mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
 
-    for (let defaultRevision of defaultRevisionData) {
-        let readRevision = readRevisionData.find(r => r.tree == defaultRevision.tree);
-        let revision = readRevision || defaultRevision;
-        revisionData.push(revision);
-        await buildThunderbirdTemplates(revision);
+    },
+    {
+        tree: "esr102",
+        mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
+    },
+    {
+        tree: "esr115",
+        mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
+    },
+    {
+        tree: "central",
+        mozillaReferencePolicyRevision: "02bf5ca05376f55029da3645bdc6c8806e306e80",
     }
+];
 
-    // Update files.
-    fs.writeFileSync(compatibility_json_path, stringify(gCompatibilityData, null, 2));
-    fs.writeFileSync(revisions_json_write_path, stringify(revisionData, null, 2));
-
-    let compatInfo = getCompatibilityInformation(/* distinct */ false, "central");
-    compatInfo.sort((a, b) => {
-        let aa = a.policies.join("<br>");
-        let bb = b.policies.join("<br>");
-        if (aa < bb) return -1;
-        if (aa > bb) return 1;
-        return 0;
-    });
-
-    fs.writeFileSync(main_readme, gMainTemplate
-        .replace("__list__", gMainTemplateEntries.join("\n"))
-        .replace("__compatibility__", buildCompatibilityTable(compatInfo).join("\n"))
-    );
+for (let defaultRevision of defaultRevisionData) {
+    let readRevision = readRevisionData.find(r => r.tree == defaultRevision.tree);
+    let revision = readRevision || defaultRevision;
+    revisionData.push(revision);
+    await buildThunderbirdTemplates(revision);
 }
 
-main();
+// Update files.
+await writePrettyJSONFile(compatibility_json_path, gCompatibilityData);
+await writePrettyJSONFile(revisions_json_write_path, revisionData);
+
+let compatInfo = getCompatibilityInformation(/* distinct */ false, "central");
+compatInfo.sort((a, b) => {
+    let aa = a.policies.join("<br>");
+    let bb = b.policies.join("<br>");
+    if (aa < bb) return -1;
+    if (aa > bb) return 1;
+    return 0;
+});
+
+fs.writeFileSync(main_readme, gMainTemplate
+    .replace("__list__", gMainTemplateEntries.join("\n"))
+    .replace("__compatibility__", buildCompatibilityTable(compatInfo).join("\n"))
+);
