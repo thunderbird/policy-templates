@@ -6,12 +6,12 @@
 const DEBUG_LEVEL = 0;
 const DEBUG_SKIP_GITHUB_PULL = false;
 
-const build_dir = "../templates";
+const build_dir = "../docs/templates";
 const state_dir = "./data/gitstate";
 const schema_dir = "./data/schema";
 const mozilla_template_dir = "./data/mozilla-policy-templates";
 
-const main_readme = "../README.md";
+const main_readme = "../docs/README.md";
 const readme_json_path = "./config/readme_#tree#.json";
 const compatibility_json_path = `./config/compatibility.json`;
 const revisions_json_write_path = "./config/revisions.json";
