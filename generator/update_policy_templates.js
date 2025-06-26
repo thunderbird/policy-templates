@@ -14,7 +14,7 @@ const revisions_json_write_path = "../state/revisions.json";
 const revisions_json_read_path = `${state_dir}/state/revisions.json`;
 
 import { 
-    compareVersion, escape_code_markdown, rebrand, request, writePrettyJSONFile
+    compareVersion, escape_code_markdown, ensureDir, fileExists, rebrand, request, writePrettyJSONFile
 } from './modules/tools.mjs';
 import {
     pullGitRepository
@@ -27,9 +27,10 @@ import {
     createRequire
 } from 'module';
 
+import fs from "node:fs/promises";
+
 const require = createRequire(import.meta.url);
 const cheerio = require('cheerio');
-const fs = require('fs-extra');
 const path = require("path");
 const plist = require('plist');
 const convert = require('xml-js');
@@ -50,8 +51,8 @@ var gMainTemplateEntries = [];
  */
 async function parseMozillaPolicyTemplate(tree) {
     let readme_file_name = readme_json_path.replace("#tree#", tree);
-    let readmeData = fs.existsSync(readme_file_name)
-        ? parse(fs.readFileSync(readme_file_name).toString())
+    let readmeData = await fileExists(readme_file_name)
+        ? parse(await fs.readFile(readme_file_name).then(f => f.toString()))
         : {};
 
     if (!readmeData) readmeData = {};
@@ -74,7 +75,7 @@ async function parseMozillaPolicyTemplate(tree) {
     let file;
     for (let path of paths) {
         try {
-            file = fs.readFileSync(path, 'utf8').toString();
+            file = await fs.readFile(path, 'utf8').then(f => f.toString());
             break;
         } catch {
         }
@@ -113,7 +114,7 @@ async function parseMozillaPolicyTemplate(tree) {
     }
 
     // Process MacOS readme.
-    let mac = fs.readFileSync(`${dir}/mac/README.md`, 'utf8').toString().split("\n");
+    let mac = await fs.readFile(`${dir}/mac/README.md`, 'utf8').then(f => f.toString().split("\n"));
 
     if (!readmeData.macReadme) {
         readmeData.macReadme = { upstream: mac };
@@ -121,7 +122,7 @@ async function parseMozillaPolicyTemplate(tree) {
         readmeData.macReadme.upstream = mac;
     }
 
-    fs.writeFileSync(readme_file_name, stringify(readmeData, null, 2));
+    await fs.writeFile(readme_file_name, stringify(readmeData, null, 2));
     return readmeData;
 }
 
@@ -148,7 +149,7 @@ async function downloadPolicySchemaFile(branch, tree, revision) {
     let version = (await request(`${HG_URL}/${path}/raw-file/${revision}/${folder}/config/version.txt`)).trim();
     file.version = version;
     file.revision = revision;
-    fs.writeFileSync(getPolicySchemaFilename(branch, tree, revision), stringify(file, null, 2));
+    await fs.writeFile(getPolicySchemaFilename(branch, tree, revision), stringify(file, null, 2));
     return file;
 }
 
@@ -174,7 +175,7 @@ async function downloadPolicySchemaFiles(tree, mozillaReferencePolicyRevision) {
     };
 
     console.log(`Processing ${tree}`);
-    fs.ensureDirSync(schema_dir);
+    await ensureDir(schema_dir);
 
     for (let branch of ["mozilla", "comm"]) {
         let folder = branch == "mozilla" ? "browser" : "mail"
@@ -198,10 +199,10 @@ async function downloadPolicySchemaFiles(tree, mozillaReferencePolicyRevision) {
         for (let revision of neededRevisions) {
             let filename = getPolicySchemaFilename(branch, tree, revision);
             let file;
-            if (!fs.existsSync(filename)) {
+            if (!await fileExists(filename)) {
                 file = await downloadPolicySchemaFile(branch, tree, revision);
             } else {
-                file = parse(fs.readFileSync(filename).toString());
+                file = parse(await fs.readFile(filename).then(f => f.toString()));
 
             }
             data[branch].revisions.push(file);
@@ -423,7 +424,7 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
     }
     
     // Read ADMX files - https://www.npmjs.com/package/xml-js
-    let admx_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/firefox.admx`);
+    let admx_file = await fs.readFile(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/firefox.admx`);
     let admx_obj = convert.xml2js(
         rebrand(admx_file).replace(/">">/g, '">'), // issue https://github.com/mozilla/policy-templates/issues/801
         { compact: false }
@@ -505,21 +506,21 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
 
     // Rebuild thunderbird.admx file.
     let admx_xml = convert.js2xml(admx_obj, { compact: false, spaces: 2 });
-    fs.ensureDirSync(`${output_dir}/windows`);
-    fs.writeFileSync(`${output_dir}/windows/thunderbird.admx`, admx_xml);
+    await ensureDir(`${output_dir}/windows`);
+    await fs.writeFile(`${output_dir}/windows/thunderbird.admx`, admx_xml);
 
     // Copy mozilla.admx file.
-    let file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/mozilla.admx`);
-    fs.writeFileSync(`${output_dir}/windows/mozilla.admx`, file);
+    let file = await fs.readFile(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/mozilla.admx`);
+    await fs.writeFile(`${output_dir}/windows/mozilla.admx`, file);
 
 
 
     // Handle translation files.
-    let folders = fs.readdirSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows`, { withFileTypes: true })
+    let folders = (await fs.readdir(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows`, { withFileTypes: true }))
         .filter(dirent => dirent.isDirectory())
         .map(dirent => dirent.name);
     for (let folder of folders) {
-        let adml_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/${folder}/firefox.adml`);
+        let adml_file = await fs.readFile(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/windows/${folder}/firefox.adml`);
         let adml_obj = convert.xml2js(rebrand(adml_file), { compact: false });
 
         let strings = adml_obj
@@ -537,8 +538,8 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
             .elements = strings;
 
         let adml_xml = convert.js2xml(adml_obj, { compact: false, spaces: 2 });
-        fs.ensureDirSync(`${output_dir}/windows/${folder}`);
-        fs.writeFileSync(`${output_dir}/windows/${folder}/thunderbird.adml`, adml_xml);
+        await ensureDir(`${output_dir}/windows/${folder}`);
+        await fs.writeFile(`${output_dir}/windows/${folder}/thunderbird.adml`, adml_xml);
     }
 }
 
@@ -547,7 +548,7 @@ async function buildAdmxFiles(tree, template, thunderbirdPolicies, output_dir) {
  */
 async function buildPlistFiles(template, thunderbirdPolicies, output_dir) {
     // Read PLIST files - https://www.npmjs.com/package/plist.
-    let plist_file = fs.readFileSync(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/mac/org.mozilla.firefox.plist`).toString();
+    let plist_file = await fs.readFile(`${mozilla_template_dir}/${template.mozillaReferenceTemplates}/mac/org.mozilla.firefox.plist`).then(f => f.toString());
     
     // See https://github.com/mozilla/policy-templates/pull/1088
     plist_file = plist_file.replaceAll("&rt;","&gt;");
@@ -579,9 +580,9 @@ async function buildPlistFiles(template, thunderbirdPolicies, output_dir) {
 
     removeUnsupportedEntries(plist_obj);
     let plist_tb = plist.build(plist_obj);
-    fs.ensureDirSync(`${output_dir}/mac`);
-    fs.writeFileSync(`${output_dir}/mac/org.mozilla.thunderbird.plist`, rebrand(plist_tb));
-    fs.writeFileSync(`${output_dir}/mac/README.md`, rebrand(template.macReadme.override || template.macReadme.upstream));
+    await ensureDir(`${output_dir}/mac`);
+    await fs.writeFile(`${output_dir}/mac/org.mozilla.thunderbird.plist`, rebrand(plist_tb));
+    await fs.writeFile(`${output_dir}/mac/README.md`, rebrand(template.macReadme.override || template.macReadme.upstream));
 }
 
 /**
@@ -632,8 +633,8 @@ async function buildReadme(tree, template, thunderbirdPolicies, output_dir) {
         .replace("__list_of_policies__", rebrand(header))
         .replace("__details__", rebrand(details));
 
-    fs.ensureDirSync(output_dir);
-    fs.writeFileSync(`${output_dir}/README.md`, md);
+    await ensureDir(output_dir);
+    await fs.writeFile(`${output_dir}/README.md`, md);
     console.log();
 }
 
@@ -738,8 +739,8 @@ await pullGitRepository("https://github.com/thunderbird/policy-templates", "mast
 
 // Load revision data, to see if any new revisions have been added to the tree.
 let revisionData = [];
-let readRevisionData = fs.existsSync(revisions_json_read_path)
-    ? parse(fs.readFileSync(revisions_json_read_path).toString())
+let readRevisionData = await fileExists(revisions_json_read_path)
+    ? parse(await fs.readFile(revisions_json_read_path).then(f => f.toString()))
     : [];
 // A starter set, if the revision config file is missing or incomplete.
 let defaultRevisionData = [
@@ -777,11 +778,17 @@ for (let defaultRevision of defaultRevisionData) {
     await buildThunderbirdTemplates(revision);
 }
 
-// Update files.
+// Update found revisions. Until the updated revision file in the /state folder
+// is not checked in, a new run of this script will report the same "new" findings
+// again. Checking the file into the repository will acknowledge the findings and
+// not report them again.
 await writePrettyJSONFile(compatibility_json_path, gCompatibilityData);
 await writePrettyJSONFile(revisions_json_write_path, revisionData);
 
-let compatInfo = getCompatibilityInformation(/* distinct */ false, "central");
+// Retrieve the collected compatibility information (the version of Thunderbird
+// when support for each policy was added or removed), to report them on the
+// main Readme file.
+let compatInfo = getCompatibilityInformation(/* distinct */ false, "central"); // TODO: use options object
 compatInfo.sort((a, b) => {
     let aa = a.policies.join("<br>");
     let bb = b.policies.join("<br>");
@@ -790,7 +797,8 @@ compatInfo.sort((a, b) => {
     return 0;
 });
 
-fs.writeFileSync(main_readme, gMainTemplate
+// Write the main Readme file.
+await fs.writeFile(main_readme, gMainTemplate
     .replace("__list__", gMainTemplateEntries.join("\n"))
     .replace("__compatibility__", buildCompatibilityTable(compatInfo).join("\n"))
 );

@@ -15,6 +15,35 @@ function debug(...args) {
   }
 }
 
+
+/**
+ * Asynchronously checks whether a given file or directory exists.
+ *
+ * @param {string} path - The path to the file or directory to check.
+ * @returns {Promise<boolean>} - Resolves to `true` if the path exists,
+ *    otherwise `false`.
+ */
+export async function fileExists(path) {
+  try {
+    await fs.access(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Asynchronously ensures that the specified directory exists. If the directory
+ * structure does not exist, it is created recursively.
+ *
+ * @param {string} path - The path to the directory to ensure.
+ * @returns {Promise<void>} Resolves when the directory has been created or
+ *    already exists.
+ */
+export async function ensureDir(path) {
+  return fs.mkdir(path, { recursive: true });
+}
+
 /**
  * Compare version numbers, taken from https://jsfiddle.net/vanowm/p7uvtbor/.
  */
