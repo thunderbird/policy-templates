@@ -18,12 +18,14 @@ const revisions_json_write_path = "./config/revisions.json";
 const revisions_json_read_path = `${state_dir}/generator/config/revisions.json`;
 const HG_URL = `https://hg-edge.mozilla.org`;
 
+import bent from "bent";
+import { rebrand, escape_code_markdown, compareVersion } from './modules/tools.mjs';
+import { pullGitRepository } from "./modules/git.mjs";
+
+const bentGetTEXT = bent('GET', 'string', 200);
+
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-
-// Replacement for deprecated request.
-const bent = require('bent');
-const bentGetTEXT = bent('GET', 'string', 200);
 
 const cheerio = require('cheerio');
 const git = require("isomorphic-git");
@@ -118,141 +120,7 @@ async function request(url) {
     return rv;
 }
 
-/**
- * Escape illegal chars from markdown code.
- * 
- * @param {string} str - markdown code string
- * @returns - escaped string
- */
-function escape_code_markdown(str) {
-    let chars = [
-        "\\|",
-    ];
-    for (let char of chars) {
-        str = str.replace(new RegExp(char, 'g'), char);
-    }
-    return str;
-}
-
-/**
- * Compare version numbers, taken from https://jsfiddle.net/vanowm/p7uvtbor/.
- */
-function compareVersion(a, b) {
-    function prep(t) {
-        return ("" + t)
-            // Treat non-numerical characters as lower version.
-            // Replacing them with a negative number based on charcode of first character.
-            .replace(/[^0-9\.]+/g, function (c) { return "." + ((c = c.replace(/[\W_]+/, "")) ? c.toLowerCase().charCodeAt(0) - 65536 : "") + "." })
-            // Remove trailing "." and "0" if followed by non-numerical characters (1.0.0b).
-            .replace(/(?:\.0+)*(\.-[0-9]+)(\.[0-9]+)?\.*$/g, "$1$2")
-            .split('.');
-    }
-    a = prep(a);
-    b = prep(b);
-    for (let i = 0; i < Math.max(a.length, b.length); i++) {
-        // Convert to integer the most efficient way.
-        a[i] = ~~a[i];
-        b[i] = ~~b[i];
-        if (a[i] > b[i])
-            return 1;
-        else if (a[i] < b[i])
-            return -1;
-    }
-    return 0;
-}
-
-/**
- * Rebrand from Firefox to Thunderbird.
- * 
- * @param {*} lines - string or array of strings which need to be rebranded
- * @returns - rebranded string (input array is joined by \n)
- */
-function rebrand(lines) {
-    if (!Array.isArray(lines))
-        lines = [lines.toString()];
-
-    const replacements = [
-        {
-            reg: /\bFirefox\b/g,
-            val: "Thunderbird",
-        },
-        {
-            reg: /\bfirefox\b/g,
-            val: "thunderbird",
-        },
-        {
-            reg: /([\W_])FF(\d\d)/g,
-            val: "\$1TB\$2",
-        },
-        {
-            reg: /\bAMO\b/g,
-            val: "ATN",
-        },
-        {
-            reg: /addons.mozilla.org/g,
-            val: "addons.thunderbird.net",
-        },
-        {	// Undo a wrong replace.
-            reg: "https://support.mozilla.org/kb/setting-certificate-authorities-thunderbird",
-            val: "https://support.mozilla.org/kb/setting-certificate-authorities-firefox"
-        },
-        {	// Undo a wrong replace.
-            reg: "https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-thunderbird-66",
-            val: "https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-firefox-66"
-        }
-    ]
-
-    for (let i = 0; i < lines.length; i++) {
-        for (let r of replacements) {
-            lines[i] = lines[i].replace(r.reg, r.val);
-        }
-    }
-
-    return lines.join("\n");
-}
-
 // -----------------------------------------------------------------------------
-
-/**
- * Clone or pull a github repository.
- * 
- * @param {string} url - url to the repository
- * @param {string} ref - branch/tag to checkout, "master" or "v3.0"
- * @param {string} dir - directory to store templates in
- */
-async function pullGitRepository(url, ref, dir) {
-    if (DEBUG_SKIP_GITHUB_PULL)
-        return;
-
-    if (!fs.existsSync(dir)) {
-        console.log(`Cloning ${url} (${ref})`);
-        fs.ensureDirSync(dir);
-        await git.clone({
-            // Use name of the script as the name of the pulling "author".
-            author: { name: "update_policy_template.js" },
-            fs,
-            http,
-            dir,
-            url,
-            ref,
-            singleBranch: true,
-            depth: 10,
-            force: true
-        });
-    } else {
-        console.log(`Updating ${url} (${ref})`);
-        await git.pull({
-            // Use name of the script as the name of the pulling "author".
-            author: { name: "update_policy_template.js" },
-            fs,
-            http,
-            dir,
-            ref,
-            singleBranch: true,
-            force: true
-        });
-    }
-}
 
 /**
  * Parse the README files of a given mozilla policy template.
