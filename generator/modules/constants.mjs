@@ -1,3 +1,17 @@
+export const STATE_DIR_PATH = "./data/gitstate";
+export const SCHEMA_DIR_PATH = "./data/schema";
+export const MOZILLA_TEMPLATE_DIR_PATH = "./data/mozilla-policy-templates";
+
+export const BUILD_DIR_PATH = "../docs/templates";
+export const MAIN_README_PATH = "../docs/README.md";
+
+export const README_JSON_PATH = "../state/readme_#tree#.json";
+export const COMPATIBILITY_JSON_PATH = `../state/compatibility.json`;
+export const REVISIONS_JSON_WRITE_PATH = "../state/revisions.json";
+export const REVISIONS_JSON_READ_PATH = `${STATE_DIR_PATH}/state/revisions.json`;
+
+export const HG_URL = `https://hg-edge.mozilla.org`;
+
 export const gMainTemplate = `## Enterprise policy descriptions and templates for Thunderbird
 
 While the templates for the most recent version of Thunderbird will probably also work with older releases of Thunderbird, they may contain new policies which are not supported in older releases. We suggest to use the templates which correspond to the highest version of Thunderbird you are actually deploying.
@@ -29,9 +43,6 @@ __list_of_policies__
 __details__
 
 `;
-
-export const HG_URL = `https://hg-edge.mozilla.org`;
-
 
 // -----------------------------------------------------------------
 
