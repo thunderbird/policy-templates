@@ -49,5 +49,3 @@ __details__
 const BUILD_HUB_URL = "buildhub.moz.tools";
 
 const COMM_GECKO_REV = ".gecko_rev.yml";
-
-const COMM_VERSION_FILE = "mail/config/version_display.txt";

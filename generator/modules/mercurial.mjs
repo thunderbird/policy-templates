@@ -1,6 +1,5 @@
 
 import fs from "node:fs/promises";
-import cheerio from "cheerio"
 import { parse } from "comment-json";
 
 import { HG_URL, SCHEMA_DIR_PATH } from "./constants.mjs";
@@ -342,34 +341,74 @@ export function generateCompatibilityInformationCache(revisions, tree) {
 
 /**
  * Returns the local path of a downloaded policy JSON file.
+ * 
  * @param {string} branch - "mozilla" or "comm"
- * @param {string} tree - "central" or "esr91"
+ * @param {string} tree - for example "central", "esr91", "esr128", ...
  * @param {string} revision - mercurial changeset identifier
  * 
  * @returns {string} path to the downloaded file
  */
-// TODO: Only needed for logging outside.
 export function getLocalPolicySchemaPath(branch, tree, revision) {
     return `${SCHEMA_DIR_PATH}/${branch}-${tree}-${revision}.json`;
+}
+
+/**
+ * Returns the download URL for the requested file from Mozillas mercurial instance.
+ * 
+ * @param {string} branch - "mozilla" or "comm"
+ * @param {string} tree - for example "central", "esr91", "esr128", ...
+ * @param {string} revision - mercurial changeset identifier
+ * @param {string} mode - supported modes are "log", "json-log" and "raw-file"
+ * @param {string} fileName - supported names are "version.txt" and "policies-schema.json"
+ * 
+ * @returns {string} path to the downloaded file
+ */
+export function getHgDownloadUrl(branch, tree, revision, mode, fileName) {
+    let folder = branch == "mozilla" ? "browser" : "mail"
+    let path = tree == "central" ? `${branch}-${tree}` : `releases/${branch}-${tree}`
+
+    let filePath = "";
+    switch (fileName) {
+        case "version.txt":
+            filePath = "config/version.txt";
+            break;
+        case "policies-schema.json":
+            filePath = "components/enterprisepolicies/schemas/policies-schema.json"
+            break;
+        default:
+            throw new Error(`Unknown file: ${fileName}`)
+    }
+
+    let query = ""
+    switch (mode) {
+        case "raw-file":
+        case "log":
+            break;
+        case "json-log":
+            query = "?revcount=125"
+            break;
+        default:
+            throw new Error(`Unknown mode: ${mode}`)
+    }
+    return `${HG_URL}/${path}/${mode}/${revision}/${folder}/${filePath}${query}`;
 }
 
 /**
  * Download a specific policies-schema.json file and returns its schema data.
  * 
  * @param {string} branch - "mozilla" or "comm"
- * @param {string} tree - "central" or "esr91"
+ * @param {string} tree - for example "central", "esr91", "esr128", ...
  * @param {string} revision - mercurial changeset identifier
  * 
  * @returns {PolicySchemaData}
  */
 async function downloadPolicySchemaData(branch, tree, revision) {
-    let path = tree == "central" ? `${branch}-${tree}` : `releases/${branch}-${tree}`
-    let folder = branch == "mozilla" ? "browser" : "mail"
-    let url = `${HG_URL}/${path}/raw-file/${revision}/${folder}/components/enterprisepolicies/schemas/policies-schema.json`
+    let schemaUrl = getHgDownloadUrl(branch, tree, revision, "raw-file", "policies-schema.json");
+    console.log(` - downloading ${schemaUrl}`);
+    let data = parse(await request(schemaUrl));
 
-    console.log(` - downloading ${url}`);
-    let data = parse(await request(url));
-    let version = (await request(`${HG_URL}/${path}/raw-file/${revision}/${folder}/config/version.txt`)).trim();
+    let versionUrl = getHgDownloadUrl(branch, tree, revision, "raw-file", "version.txt");
+    let version = (await request(versionUrl)).trim();
     data.version = version;
     data.revision = revision;
     await writePrettyJSONFile(getLocalPolicySchemaPath(branch, tree, revision), data);
@@ -379,7 +418,7 @@ async function downloadPolicySchemaData(branch, tree, revision) {
 /**
  * Download missing revisions of the policies-schema.json for the given tree.
  * 
- * @param {string} tree - "central" or "esr91"
+ * @param {string} tree - for example "central", "esr91", "esr128", ...
  * @param {string} mozillaReferencePolicyRevision - mercurial changeset identifier
  *   of the last known mozilla version of their policies.json
  * 
@@ -388,11 +427,9 @@ async function downloadPolicySchemaData(branch, tree, revision) {
 export async function downloadMissingPolicySchemaFiles(tree, mozillaReferencePolicyRevision) {
     let data = {
         comm: {
-            hgLogUrl: "",
             revisions: []
         },
         mozilla: {
-            hgLogUrl: "",
             revisions: []
         },
     };
@@ -401,16 +438,9 @@ export async function downloadMissingPolicySchemaFiles(tree, mozillaReferencePol
     await ensureDir(SCHEMA_DIR_PATH);
 
     for (let branch of ["mozilla", "comm"]) {
-        let folder = branch == "mozilla" ? "browser" : "mail"
-        let path = tree == "central" ? `${branch}-${tree}` : `releases/${branch}-${tree}`
-
-        console.log(`Checking policies-schema.json revisions for ${path}`);
-        data[branch].hgLogUrl = `${HG_URL}/${path}/log/tip/${folder}/components/enterprisepolicies/schemas/policies-schema.json`;
-        let hgLog = await request(data[branch].hgLogUrl);
-        const $ = cheerio.load(hgLog);
-
-        // Get the revision identifier from the table cell (TODO: switch to github tree instead of parsing html).
-        let revisions = [...$("body > table > tbody > tr > td:nth-child(2)")].map(element => element.children[0].data.trim());
+        let logUrl = getHgDownloadUrl(branch, tree, "tip", "json-log", "policies-schema.json");
+        console.log(` - checking ${logUrl}`);
+        let revisions = parse(await request(logUrl)).entries.map(e => e.node);
 
         // For mozilla, we just need the newest and the reference revision.
         // For comm, we need all revisions to be able to extract compatibility information.
