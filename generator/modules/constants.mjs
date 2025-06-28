@@ -6,11 +6,12 @@ export const BUILD_DIR_PATH = "../docs/templates";
 export const MAIN_README_PATH = "../docs/README.md";
 
 export const README_JSON_PATH = "../state/readme_#tree#.json";
-export const COMPATIBILITY_JSON_PATH = `../state/compatibility.json`;
-export const REVISIONS_JSON_WRITE_PATH = "../state/revisions.json";
-export const REVISIONS_JSON_READ_PATH = `${STATE_DIR_PATH}/state/revisions.json`;
+
+export const RELATIVE_COMPATIBILITY_JSON_PATH = `state/compatibility.json`;
+export const RELATIVE_REVISIONS_JSON_PATH = `state/revisions.json`;
 
 export const HG_URL = `https://hg-edge.mozilla.org`;
+export const BUILD_HUB_URL = "buildhub.moz.tools";
 
 export const gMainTemplate = `## Enterprise policy descriptions and templates for Thunderbird
 
@@ -46,6 +47,6 @@ __details__
 
 // -----------------------------------------------------------------
 
-const BUILD_HUB_URL = "buildhub.moz.tools";
+
 
 const COMM_GECKO_REV = ".gecko_rev.yml";

@@ -1,9 +1,12 @@
 import bent from "bent";
 import fs from "node:fs/promises";
 import https from "https";
-
 import { createWriteStream } from "node:fs";
+import { parse } from "comment-json";
 
+import { BUILD_HUB_URL } from "./constants.mjs";
+
+const requestJson = bent('GET', 'json', 200);
 const requestText = bent("GET", "string", 200);
 
 // Debug logging (0 - errors and basic logs only, 1 - verbose debug)
@@ -12,6 +15,83 @@ const DEBUG_LEVEL = 0;
 function debug(...args) {
     if (DEBUG_LEVEL > 0) {
         console.debug(...args);
+    }
+}
+
+function filterUniqueEntries(arr) {
+    return arr.reduce((acc, item) => {
+        if (!acc.includes(item)) {
+            acc.push(item);
+        }
+        return acc;
+    }, []);
+}
+
+export async function getThunderbirdEsrVersions() {
+    let { releases } = await requestJson("https://product-details.mozilla.org/1.0/thunderbird.json")
+    let ESR_VERSIONS = Object.entries(releases)
+        .filter(([name, value]) => name.endsWith("esr"))
+        .map(([name, value]) => Number(value.version.split(".")[0]))
+        .filter(v => v > 60);
+    // ESR releases stopped after 38.* and resumed with 115.*, hardcode the
+    // values in between.
+    ESR_VERSIONS.push(45, 52, 60, 68, 78, 91, 102);
+    return filterUniqueEntries(ESR_VERSIONS).sort((a, b) => a - b);
+}
+
+/**
+ * Query BUILD_HUB_URL to get the first revision for a given release.
+ *
+ * @param {string} branch - "mozilla" or "comm"
+ * @param {string} tree - for example "central", "esr91", "esr128", ...
+ *
+ * @returns {string} revision/changeset
+ */
+export async function getFirstRevisionFromBuildHub(branch, tree) {
+    try {
+        const postData = JSON.stringify({
+            size: 1,
+            query: { term: { "source.tree": `${branch}-${tree}` } },
+            sort: [{ "download.date": { order: "asc" } }],
+        });
+
+        const options = {
+            hostname: BUILD_HUB_URL,
+            port: 443,
+            path: "/api/search",
+            method: "POST",
+        };
+
+        // Create the HTTP request.
+        const task = Promise.withResolvers();
+        const req = https.request(options, (res) => {
+            let responseData = "";
+
+            // A chunk of data has been received.
+            res.on("data", (chunk) => {
+                responseData += chunk;
+            });
+
+            // The whole response has been received.
+            res.on("end", () => {
+                task.resolve(responseData);
+            });
+        });
+
+        // Handle errors.
+        req.on("error", (error) => {
+            task.reject(error.message);
+        });
+
+        // Send the POST data.
+        req.write(postData);
+        req.end();
+
+        let data = parse(await task.promise);
+        return data.hits.hits[0]._source.source.revision;
+    } catch (ex) {
+        console.error(ex);
+        throw new Error(`Failed to retrieve revision from ${BUILD_HUB_URL}`);
     }
 }
 

@@ -1,7 +1,7 @@
 import {
     gMainTemplate, gTreeTemplate,
     BUILD_DIR_PATH, MOZILLA_TEMPLATE_DIR_PATH,
-    MAIN_README_PATH, README_JSON_PATH, REVISIONS_JSON_WRITE_PATH
+    MAIN_README_PATH, README_JSON_PATH, RELATIVE_REVISIONS_JSON_PATH
 } from "./constants.mjs";
 import { pullGitRepository } from "./git.mjs";
 import {
@@ -21,7 +21,7 @@ import pathUtils from "path";
 import convert from "xml-js";
 import plist from "plist";
 
-var gMainTemplateEntries = [];
+const gMainTemplateEntries = [];
 
 /**
  * Parse the README files of a given mozilla policy template.
@@ -32,7 +32,7 @@ var gMainTemplateEntries = [];
 async function parseMozillaPolicyTemplate(tree) {
     let readme_file_name = README_JSON_PATH.replace("#tree#", tree);
     let readmeData = await fileExists(readme_file_name)
-        ? parse(await fs.readFile(readme_file_name).then(f => f.toString()))
+        ? parse(await fs.readFile(readme_file_name, 'utf8'))
         : {};
 
     if (!readmeData) readmeData = {};
@@ -55,7 +55,7 @@ async function parseMozillaPolicyTemplate(tree) {
     let file;
     for (let p of paths) {
         try {
-            file = await fs.readFile(p, 'utf8').then(f => f.toString());
+            file = await fs.readFile(p, 'utf8');
             break;
         } catch {
         }
@@ -94,7 +94,7 @@ async function parseMozillaPolicyTemplate(tree) {
     }
 
     // Process MacOS readme.
-    let mac = await fs.readFile(`${dir}/mac/README.md`, 'utf8').then(f => f.toString().split("\n"));
+    let mac = await fs.readFile(`${dir}/mac/README.md`, 'utf8').then(f => f.split("\n"));
 
     if (!readmeData.macReadme) {
         readmeData.macReadme = { upstream: mac };
@@ -126,7 +126,7 @@ function escape_pipes(str) {
  */
 function rebrand(lines) {
     if (!Array.isArray(lines))
-        lines = [lines.toString()];
+        lines = [lines];
 
     const replacements = [
         {
@@ -302,7 +302,7 @@ async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thunderbirdP
     }
 
     // Read ADMX files - https://www.npmjs.com/package/xml-js
-    let admx_file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/windows/firefox.admx`);
+    let admx_file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/windows/firefox.admx`, 'utf8');
     let admx_obj = convert.xml2js(
         rebrand(admx_file).replace(/">">/g, '">'), // issue https://github.com/mozilla/policy-templates/issues/801
         { compact: false }
@@ -342,7 +342,7 @@ async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thunderbirdP
 
         // Adjust supportedOn.
         // A single policy entry can contain multiple policy elements which potentially could have a different compat setting.
-        // Todo: Check wether all members of policy.compatInfo are identical.		
+        // Todo: Check wether all members of policy.compatInfo are identical.
         let compatInfoIndex = compatInfo.length > 0
             ? compatInfo[0]
             : -1
@@ -398,7 +398,7 @@ async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thunderbirdP
         .filter(dirent => dirent.isDirectory())
         .map(dirent => dirent.name);
     for (let folder of folders) {
-        let adml_file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/windows/${folder}/firefox.adml`);
+        let adml_file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/windows/${folder}/firefox.adml`, 'utf8');
         let adml_obj = convert.xml2js(rebrand(adml_file), { compact: false });
 
         let strings = adml_obj
@@ -432,7 +432,7 @@ async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thunderbirdP
  */
 async function adjustFirefoxPlistFilesForThunderbird(template, thunderbirdPolicies, output_dir) {
     // Read PLIST files - https://www.npmjs.com/package/plist.
-    let plist_file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/mac/org.mozilla.firefox.plist`).then(f => f.toString());
+    let plist_file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/mac/org.mozilla.firefox.plist`, 'utf8');
 
     // See https://github.com/mozilla/policy-templates/pull/1088
     plist_file = plist_file.replaceAll("&rt;", "&gt;");
@@ -539,7 +539,7 @@ export async function buildThunderbirdTemplates(tree, mozillaReferencePolicyRevi
             console.log(` - currently acknowledged policy revision (${mozillaReferencePolicyFile.revision} / ${mozillaReferencePolicyFile.version}): \n\t${pathUtils.resolve(getLocalPolicySchemaPath("mozilla", tree, mozillaReferencePolicyFile.revision))}\n`);
             console.log(` - latest available policy revision (${data.mozilla.revisions[0].revision} / ${data.mozilla.revisions[0].version}): \n\t${pathUtils.resolve(getLocalPolicySchemaPath("mozilla", tree, data.mozilla.revisions[0].revision))}\n`);
             console.log(` - hg change log for mozilla-${tree}: \n\t${getHgDownloadUrl("mozilla", tree, "tip", "log", "policies-schema.json")}\n`);
-            console.log(`Create bugs on Bugzilla for all policies which should be ported to Thunderbird and then check-in the updated ${REVISIONS_JSON_WRITE_PATH} file to acknowledge the reported changes.`);
+            console.log(`Create bugs on Bugzilla for all policies which should be ported to Thunderbird and then check-in the updated ../${RELATIVE_REVISIONS_JSON_PATH} file to acknowledge the reported changes.`);
             console.log(`Once the reported changes are acknowledged, they will not be reported again.`);
             console.log();
         }

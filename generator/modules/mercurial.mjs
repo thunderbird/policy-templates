@@ -111,7 +111,7 @@ import { ensureDir, fileExists, request, writePrettyJSONFile } from "./tools.mjs
  */
 
 /** @type {CompatibilityData} */
-export var gCompatibilityData = {};
+export const gCompatibilityData = {};
 
 /**
  * Compare version numbers, taken from https://jsfiddle.net/vanowm/p7uvtbor/.
@@ -320,7 +320,7 @@ export function generateCompatibilityInformationCache(revisions, tree) {
     // If the last version a policy was seen is the latest known version,
     // max is removed — implying it's still supported and not deprecated.
     for (let policy of Object.keys(gCompatibilityData)) {
-        if (gCompatibilityData[policy][tree].max == absolute_max)
+        if (gCompatibilityData[policy][tree]?.max == absolute_max)
             delete gCompatibilityData[policy][tree].max;
     }
 
@@ -455,7 +455,7 @@ export async function downloadMissingPolicySchemaFiles(tree, mozillaReferencePol
             if (!await fileExists(filename)) {
                 file = await downloadPolicySchemaData(branch, tree, revision);
             } else {
-                file = parse(await fs.readFile(filename).then(f => f.toString()));
+                file = parse(await fs.readFile(filename, 'utf8'))
 
             }
             data[branch].revisions.push(file);
