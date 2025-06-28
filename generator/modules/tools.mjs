@@ -44,14 +44,23 @@ export async function getThunderbirdEsrVersions() {
  *
  * @param {string} branch - "mozilla" or "comm"
  * @param {string} tree - for example "central", "esr91", "esr128", ...
+ * @param {string} versionMatch - a string which is matched against the target
+ *    version, for example "115.*"
  *
  * @returns {string} revision/changeset
  */
-export async function getFirstRevisionFromBuildHub(branch, tree) {
+export async function getFirstRevisionFromBuildHub(branch, tree, versionMatch) {
     try {
         const postData = JSON.stringify({
             size: 1,
-            query: { term: { "source.tree": `${branch}-${tree}` } },
+            query: {
+                bool: {
+                    must: [
+                        { term: { "source.tree": `${branch}-${tree}` } },
+                        { wildcard: { "target.version": versionMatch } },
+                    ]
+                }
+            },
             sort: [{ "download.date": { order: "asc" } }],
         });
 

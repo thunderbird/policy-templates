@@ -7,7 +7,7 @@ import {
 } from "./modules/constants.mjs";
 import { pullGitRepository } from "./modules/git.mjs";
 import { gCompatibilityData } from "./modules/mercurial.mjs";
-import { fileExists, getFirstRevisionFromBuildHub as getFirstRevisionFromBuildHub, getThunderbirdEsrVersions, writePrettyJSONFile } from "./modules/tools.mjs";
+import { fileExists, getFirstRevisionFromBuildHub, getThunderbirdEsrVersions, writePrettyJSONFile } from "./modules/tools.mjs";
 import { buildMainThunderbirdReadme, buildThunderbirdTemplates } from "./modules/build.mjs";
 
 import { parse } from "comment-json";
@@ -30,21 +30,28 @@ let lastKnownStateData = await fileExists(`${STATE_DIR_PATH}/${RELATIVE_REVISION
 // Pull the published ESR versions from product-details.mozilla.org. Ignore all
 // ESR < 68.
 // TODO: Enable support for 128.
-let ESR_VERSIONS = await getThunderbirdEsrVersions().then(
-    versions => versions.filter(v => !(v < 68) && v != 128).map(v => `esr${v}`)
+let TREES = await getThunderbirdEsrVersions().then(
+    versions => versions.filter(v => !(v < 68) && v != 128).map(version => ({
+        tree: `esr${version}`,
+        versionMatch: `${version}.*`,
+    }))
 );
+TREES.push({
+    tree: "central",
+    versionMatch: TREES.at(-1).versionMatch,
+})
 
 // Use the last known revision state and calculate a new revision entry, in case
 // a new ESR was published.
 let revisionData = [];
-for (let tree of [...ESR_VERSIONS, "central"]) {
+for (let { tree, versionMatch } of TREES) {
     let knownState = lastKnownStateData.find(r => r.tree == tree);
     if (knownState) {
         revisionData.push(knownState)
     } else {
         revisionData.push({
             tree,
-            "mozillaReferencePolicyRevision": await getFirstRevisionFromBuildHub("mozilla", tree)
+            "mozillaReferencePolicyRevision": await getFirstRevisionFromBuildHub("mozilla", tree, versionMatch)
         })
     }
 }
