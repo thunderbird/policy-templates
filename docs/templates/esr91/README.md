@@ -2537,7 +2537,6 @@ as well as the following security preferences:
 | security.warn_submit_secure_to_insecure | boolean | true
 | &nbsp;&nbsp;&nbsp;&nbsp;If false, no warning is shown when submitting s form from https to http.
 
-&nbsp;
 Using the preference as the key, set the `Value` to the corresponding preference value.
 
 `Status` can be "default", "locked", "user" or "clear"
