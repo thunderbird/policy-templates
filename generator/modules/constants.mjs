@@ -7,13 +7,15 @@ export const MAIN_README_PATH = "../docs/README.md";
 
 export const README_JSON_PATH = "../state/readme_#tree#.json";
 
-export const RELATIVE_COMPATIBILITY_JSON_PATH = `state/compatibility.json`;
-export const RELATIVE_REVISIONS_JSON_PATH = `state/revisions.json`;
+export const REVISIONS_JSON_PATH = `state/revisions.json`;
 
 export const HG_URL = `https://hg-edge.mozilla.org`;
 export const BUILD_HUB_URL = "buildhub.moz.tools";
 
-export const gMainTemplate = `## Enterprise policy descriptions and templates for Thunderbird
+export const SOURCE_PATH_POLICIES_SCHEMA_JSON = "components/enterprisepolicies/schemas/policies-schema.json";
+export const SOURCE_PATH_VERSION_TXT = "config/version.txt"
+
+export const MAIN_TEMPLATE = `## Enterprise policy descriptions and templates for Thunderbird
 
 While the templates for the most recent version of Thunderbird will probably also work with older releases of Thunderbird, they may contain new policies which are not supported in older releases. We suggest to use the templates which correspond to the highest version of Thunderbird you are actually deploying.
 
@@ -29,8 +31,7 @@ __compatibility__
 
 `
 
-export const gTreeTemplate = `## Enterprise policy descriptions and templates for __name__
-
+export const TREE_TEMPLATE = `## Enterprise policy descriptions and templates for __name__
 __desc__
 
 <br>
@@ -45,8 +46,21 @@ __details__
 
 `;
 
-// -----------------------------------------------------------------
+export const DESC_DEFAULT_DAILY_TEMPLATE = `
+**These policies are in active development and might contain changes that do
+not work with current release or ESR versions of Thunderbird.**`;
 
+export const DESC_DEFAULT_TEMPLATE = `
+Policies can be specified by creating a file called \`policies.json\`:
+ * Windows: place the file in a directory called \`distribution\` in the same
+   directory where \`thunderbird.exe\` is located.
+ * Mac: place the file into \`Thunderbird.app/Contents/Resources/distribution\`
+ * Linux: place the file into \`thunderbird/distribution\`, where \`thunderbird\`
+   is the installation directory for Thunderbird. You can also specify a system-wide
+   policy by placing the file in \`/etc/thunderbird/policies\`.
 
-
-const COMM_GECKO_REV = ".gecko_rev.yml";
+Alternatively, policies can be specified via platform specific methods:
+ * Windows: [group policy templates](windows) or [intune](https://support.mozilla.org/kb/managing-firefox-intune)
+ * Mac: [configuration profiles](mac)
+    
+This document provides for all policies examples for the mentioned formats.`

@@ -2,7 +2,7 @@
 import fs from "node:fs/promises";
 import { parse } from "comment-json";
 
-import { HG_URL, SCHEMA_DIR_PATH } from "./constants.mjs";
+import { HG_URL, SCHEMA_DIR_PATH, SOURCE_PATH_POLICIES_SCHEMA_JSON, SOURCE_PATH_VERSION_TXT } from "./constants.mjs";
 import { ensureDir, fileExists, request, writePrettyJSONFile } from "./tools.mjs";
 
 /**
@@ -200,7 +200,7 @@ export function getDifferencesBetweenPolicySchemas(data1, data2) {
  * @param {boolean} distinct - If true, each policy is listed with its exact
  *    compatibility range. If false, policies sharing the same version range are
  *    grouped together.
- * @param {string} tree - The tree to process (e.g. "release", "beta", "central").
+ * @param {string} tree - The tree to process (e.g. "release", "central").
  * @param {string} [policyName] - (Optional) A specific policy name to filter
  *    results by. If provided, includes only that policy and any nested entries
  *    (e.g., `policy_subKey`). If omitted, processes all entries.
@@ -285,8 +285,9 @@ export function getCachedCompatibilityInformation(distinct, tree, policyName) {
  * It also identifies policies that are only supported upstream (in mozilla-central
  * but not in comm-central) and marks them as unsupported.
  *
- * @param {PolicySchemaRevisions} revisions - Object returned by downloadMissingPolicySchemaFiles()
- * @param {string} tree - The tree to process (e.g. "release", "beta", "central").
+ * @param {PolicySchemaRevisions} revisions - Object returned by
+ *    downloadMissingPolicySchemaFiles().
+ * @param {string} tree - The tree to process (e.g. "release", "central").
  */
 export function generateCompatibilityInformationCache(revisions, tree) {
     let absolute_max = 0;
@@ -343,10 +344,10 @@ export function generateCompatibilityInformationCache(revisions, tree) {
  * Returns the local path of a downloaded policy JSON file.
  * 
  * @param {string} branch - "mozilla" or "comm"
- * @param {string} tree - for example "central", "esr91", "esr128", ...
- * @param {string} revision - mercurial changeset identifier
+ * @param {string} tree - The tree to process (e.g. "release", "central").
+ * @param {string} revision - A mercurial changeset identifier.
  * 
- * @returns {string} path to the downloaded file
+ * @returns {string} Path to the downloaded file.
  */
 export function getLocalPolicySchemaPath(branch, tree, revision) {
     return `${SCHEMA_DIR_PATH}/${branch}-${tree}-${revision}.json`;
@@ -356,10 +357,12 @@ export function getLocalPolicySchemaPath(branch, tree, revision) {
  * Returns the download URL for the requested file from Mozillas mercurial instance.
  * 
  * @param {string} branch - "mozilla" or "comm"
- * @param {string} tree - for example "central", "esr91", "esr128", ...
- * @param {string} revision - mercurial changeset identifier
- * @param {string} mode - supported modes are "log", "json-log" and "raw-file"
- * @param {string} fileName - supported names are "version.txt" and "policies-schema.json"
+ * @param {string} tree - The tree to process (e.g. "release", "central").
+ * @param {string} revision - A mercurial changeset identifier.
+ * @param {string} mode - Mercurial API access mode, supported modes are "log",
+ *    "json-log" and "raw-file".
+ * @param {string} fileName - Name of the file to fetch, supported names are
+ *    "version.txt" and "policies-schema.json".
  * 
  * @returns {string} path to the downloaded file
  */
@@ -370,10 +373,10 @@ export function getHgDownloadUrl(branch, tree, revision, mode, fileName) {
     let filePath = "";
     switch (fileName) {
         case "version.txt":
-            filePath = "config/version.txt";
+            filePath = SOURCE_PATH_VERSION_TXT;
             break;
         case "policies-schema.json":
-            filePath = "components/enterprisepolicies/schemas/policies-schema.json"
+            filePath = SOURCE_PATH_POLICIES_SCHEMA_JSON;
             break;
         default:
             throw new Error(`Unknown file: ${fileName}`)
@@ -397,8 +400,8 @@ export function getHgDownloadUrl(branch, tree, revision, mode, fileName) {
  * Download a specific policies-schema.json file and returns its schema data.
  * 
  * @param {string} branch - "mozilla" or "comm"
- * @param {string} tree - for example "central", "esr91", "esr128", ...
- * @param {string} revision - mercurial changeset identifier
+ * @param {string} tree - The tree to process (e.g. "release", "central").
+ * @param {string} revision - A mercurial changeset identifier.
  * 
  * @returns {PolicySchemaData}
  */
@@ -418,9 +421,10 @@ async function downloadPolicySchemaData(branch, tree, revision) {
 /**
  * Download missing revisions of the policies-schema.json for the given tree.
  * 
- * @param {string} tree - for example "central", "esr91", "esr128", ...
- * @param {string} mozillaReferencePolicyRevision - mercurial changeset identifier
- *   of the last known mozilla version of their policies.json
+ * @param {string} tree - The tree to process (e.g. "release", "central").
+ * @param {string} mozillaReferencePolicyRevision - The mercurial changeset
+ *    identifier of the last known mozilla version of their policies.json in the
+ *    specified tree.
  * 
  * @returns {PolicySchemaRevisions}
  */

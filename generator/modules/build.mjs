@@ -1,36 +1,32 @@
 import {
-    gMainTemplate, gTreeTemplate,
-    BUILD_DIR_PATH, MOZILLA_TEMPLATE_DIR_PATH,
-    MAIN_README_PATH, README_JSON_PATH, RELATIVE_REVISIONS_JSON_PATH
+    DESC_DEFAULT_DAILY_TEMPLATE, DESC_DEFAULT_TEMPLATE,
+    MOZILLA_TEMPLATE_DIR_PATH, README_JSON_PATH, TREE_TEMPLATE,
 } from "./constants.mjs";
 import { pullGitRepository } from "./git.mjs";
-import {
-    downloadMissingPolicySchemaFiles,
-    generateCompatibilityInformationCache,
-    getCachedCompatibilityInformation,
-    getDifferencesBetweenPolicySchemas,
-    getHgDownloadUrl,
-    getLocalPolicySchemaPath,
-    gCompatibilityData
-} from "./mercurial.mjs";
+import { getCachedCompatibilityInformation } from "./mercurial.mjs";
 import { ensureDir, fileExists, writePrettyJSONFile } from "./tools.mjs";
 
 import { parse, stringify } from "comment-json";
 import fs from "node:fs/promises";
-import pathUtils from "path";
 import convert from "xml-js";
 import plist from "plist";
-
-const gMainTemplateEntries = [];
 
 /**
  * Parse the README files of a given mozilla policy template.
  * 
- * @param {string} tree - for example "central", "esr91", "esr128", ...
- * @return - parsed data from readme.json, updated with upstream changes
+ * @param {object} revisionData
+ * @param {string} revisionData.name - Name of the template (e.g. Thunderbird 139).
+ * @param {string} revisionData.tree - The tree to process (e.g. "release",
+ *    "central").
+ * @param {integer} revisionData.version - Associated Thunderbird version.
+ * @param {string} revisionData.mozillaReferenceTemplates - GitHub tag of the 
+ *    associated Mozilla policy release.
+ *
+ * @return {TemplateData} - The parsed data from upstream readme.json, merged
+ *    with data in the current /state folder.
  */
-async function parseMozillaPolicyTemplate(tree) {
-    let readme_file_name = README_JSON_PATH.replace("#tree#", tree);
+export async function parseMozillaPolicyTemplate(revisionData) {
+    let readme_file_name = README_JSON_PATH.replace("#tree#", revisionData.tree);
     let readmeData = await fileExists(readme_file_name)
         ? parse(await fs.readFile(readme_file_name, 'utf8'))
         : {};
@@ -38,6 +34,13 @@ async function parseMozillaPolicyTemplate(tree) {
     if (!readmeData) readmeData = {};
     if (!readmeData.headers) readmeData.headers = {};
     if (!readmeData.policies) readmeData.policies = {};
+    if (!readmeData.desc) readmeData.desc = revisionData.tree == "central"
+        ? [...DESC_DEFAULT_DAILY_TEMPLATE.split("\n"), "", ...DESC_DEFAULT_TEMPLATE.split("\n")]
+        : DESC_DEFAULT_TEMPLATE.split("\n")
+
+    // Always update the provided revision name and mozillaReferenceTemplates.
+    readmeData.name = revisionData.name;
+    readmeData.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
 
     let ref = readmeData.mozillaReferenceTemplates;
     let dir = `${MOZILLA_TEMPLATE_DIR_PATH}/${ref}`;
@@ -183,7 +186,7 @@ function rebrand(lines) {
  *   ''
  * ]
  */
-function generateReadmeCompatibilityTable(compatInfo) {
+export function generateReadmeCompatibilityTable(compatInfo) {
     let details = [];
 
     const humanReadableEntry = entry => {
@@ -203,16 +206,16 @@ function generateReadmeCompatibilityTable(compatInfo) {
 }
 
 /**
- * Generate a markdown README file for a specific tree from the collected
- * compatibility information.
+ * Adjust the markdown README file downloaded from the Firefox policy repository
+ * to include Thunderbird's compatibility information.
  * 
- * @param {string} tree - for example "central", "esr91", "esr128", ...
- * @param {*} template 
- * @param {string[]} thunderbirdPolicies - flattened policy names, e.g.
- *    "InstallAddonsPermission_Allow"
- * @param {string} output_dir - path to save the generated README file
+ * @param {string} tree - The tree to process (e.g. "release", "central").
+ * @param {TemplateData} template 
+ * @param {string[]} thunderbirdPolicies - Flattened policy names, e.g.
+ *    "InstallAddonsPermission_Allow".
+ * @param {string} output_dir - Path to save the generated README file.
  */
-async function generateReadmeFile(tree, template, thunderbirdPolicies, output_dir) {
+export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thunderbirdPolicies, output_dir) {
     let header = [];
     let details = [];
     let printed_main_policies = [];
@@ -251,7 +254,7 @@ async function generateReadmeFile(tree, template, thunderbirdPolicies, output_di
         }
     }
 
-    let md = gTreeTemplate
+    let md = TREE_TEMPLATE
         .replace("__name__", template.name)
         .replace("__desc__", template.desc.join("\n"))
         .replace("__list_of_policies__", rebrand(header))
@@ -265,13 +268,13 @@ async function generateReadmeFile(tree, template, thunderbirdPolicies, output_di
  * Adjust the ADMX files downloaded from the Firefox policy repository to include
  * only the policies supported by Thunderbird.
  * 
- * @param {string} tree - for example "central", "esr91", "esr128", ...
- * @param {*} template 
- * @param {string[]} thunderbirdPolicies - flattened policy names, e.g.
- *    "InstallAddonsPermission_Allow"
- * @param {string} output_dir - path to save the adjusted ADMX files.
+ * @param {string} tree - The tree to process (e.g. "release", "central").
+ * @param {TemplateData} template 
+ * @param {string[]} thunderbirdPolicies - Flattened policy names, e.g.
+ *    "InstallAddonsPermission_Allow".
+ * @param {string} output_dir - Path to save the adjusted ADMX files.
  */
-async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thunderbirdPolicies, output_dir) {
+export async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thunderbirdPolicies, output_dir) {
     function getNameFromKey(key) {
         const key_prefix = "Software\\Policies\\Mozilla\\Thunderbird\\";
         const key_prefix_length = key_prefix.length;
@@ -425,17 +428,21 @@ async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thunderbirdP
  * Adjust the MasOS PLIST files downloaded from the Firefox policy repository to
  * include only the policies supported by Thunderbird.
  * 
- * @param {*} template 
+ * @param {TemplateData} template 
  * @param {string[]} thunderbirdPolicies - flattened policy names, e.g.
  *    "InstallAddonsPermission_Allow"
  * @param {string} output_dir - path to save the adjusted PLIST files.
  */
-async function adjustFirefoxPlistFilesForThunderbird(template, thunderbirdPolicies, output_dir) {
+export async function adjustFirefoxPlistFilesForThunderbird(template, thunderbirdPolicies, output_dir) {
     // Read PLIST files - https://www.npmjs.com/package/plist.
     let plist_file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/mac/org.mozilla.firefox.plist`, 'utf8');
 
-    // See https://github.com/mozilla/policy-templates/pull/1088
-    plist_file = plist_file.replaceAll("&rt;", "&gt;");
+    
+    plist_file = plist_file
+        // See https://github.com/mozilla/policy-templates/pull/1088
+        .replaceAll("&rt;", "&gt;")
+        // Malformed in TB115.
+        .replaceAll("</false>", "<false/>");
 
     let plist_obj = plist.parse(plist_file);
 
@@ -467,122 +474,4 @@ async function adjustFirefoxPlistFilesForThunderbird(template, thunderbirdPolici
     await ensureDir(`${output_dir}/mac`);
     await fs.writeFile(`${output_dir}/mac/org.mozilla.thunderbird.plist`, rebrand(plist_tb));
     await fs.writeFile(`${output_dir}/mac/README.md`, rebrand(template.macReadme.override || template.macReadme.upstream));
-}
-
-/**
- * Generate Thunderbird's policy template files for a specific tree.
- * 
- * @param {string} tree - for example "central", "esr91", "esr128", ...
- * @param {string} mozillaReferencePolicyRevision - mercurial changeset identifier
- *    of the last known version of policies.json from Firefox/Mozilla
- */
-export async function buildThunderbirdTemplates(tree, mozillaReferencePolicyRevision) {
-    // Download schema from https://hg.mozilla.org/
-    let data = await downloadMissingPolicySchemaFiles(
-        tree,
-        mozillaReferencePolicyRevision,
-    );
-    if (!data) {
-        return;
-    }
-
-    let output_dir = `${BUILD_DIR_PATH}/${tree}`;
-    let mozillaReferencePolicyFile = data.mozilla.revisions.find(r => r.revision == mozillaReferencePolicyRevision);
-    if (!mozillaReferencePolicyFile) {
-        console.error(`Unknown policy revision ${mozillaReferencePolicyRevision} set for mozilla-${tree}.\nCheck ${getHgDownloadUrl("mozilla", tree)}`);
-        return;
-    }
-
-    // Find supported policies.
-    generateCompatibilityInformationCache(data, tree);
-    let supportedPolicies =
-        getCachedCompatibilityInformation(
-            /* distinct */ true, tree
-        ).filter(e => e.first != "");
-
-    // Get changes in the schema files and log them.
-    if (mozillaReferencePolicyFile.revision != data.mozilla.revisions[0].revision) {
-        mozillaReferencePolicyRevision = data.mozilla.revisions[0].revision;
-        let m_m_changes = getDifferencesBetweenPolicySchemas(mozillaReferencePolicyFile, data.mozilla.revisions[0]);
-        if (m_m_changes) {
-            console.log();
-            console.log(` Mozilla has released a new policy revision for mozilla-${tree}!`);
-            console.log(` Do those changes need to be ported to Thunderbird?`);
-            if (m_m_changes.added.length > 0) {
-                console.log(` - Mozilla added the following policies: [`);
-                // Indicate if the current tree supports any of the added policies.
-                // This can happen, if the revision config file has not yet been
-                // committed, and an older revision was used to detect changes in
-                // the policy files.
-                for (let added of m_m_changes.added) {
-                    let isSupported = supportedPolicies.find(e => e.policies.includes(added));
-                    if (isSupported) {
-                        console.log(`\x1b[32m     '${added}'\x1b[0m`)
-                    } else {
-                        console.log(`\x1b[31m     '${added}'\x1b[0m, \x1b[31m Not supported by ${tree} \x1b[0m`)
-                    }
-                }
-                console.log(`   ]\n`);
-            }
-            if (m_m_changes.removed.length > 0) {
-                console.log(` - Mozilla removed the following policies: [`);
-                m_m_changes.removed.forEach(e => console.log(`\x1b[33m     '${e}'\x1b[0m`));
-                console.log(`   ]\n`);
-            }
-            if (m_m_changes.changed.length > 0) {
-                console.log(` - Mozilla changed properties of the following policies: [`);
-                m_m_changes.changed.forEach(e => console.log(`\x1b[33m     '${e}'\x1b[0m`));
-                console.log(`   ]\n`);
-            }
-
-            console.log();
-            console.log(` - currently acknowledged policy revision (${mozillaReferencePolicyFile.revision} / ${mozillaReferencePolicyFile.version}): \n\t${pathUtils.resolve(getLocalPolicySchemaPath("mozilla", tree, mozillaReferencePolicyFile.revision))}\n`);
-            console.log(` - latest available policy revision (${data.mozilla.revisions[0].revision} / ${data.mozilla.revisions[0].version}): \n\t${pathUtils.resolve(getLocalPolicySchemaPath("mozilla", tree, data.mozilla.revisions[0].revision))}\n`);
-            console.log(` - hg change log for mozilla-${tree}: \n\t${getHgDownloadUrl("mozilla", tree, "tip", "log", "policies-schema.json")}\n`);
-            console.log(`Create bugs on Bugzilla for all policies which should be ported to Thunderbird and then check-in the updated ../${RELATIVE_REVISIONS_JSON_PATH} file to acknowledge the reported changes.`);
-            console.log(`Once the reported changes are acknowledged, they will not be reported again.`);
-            console.log();
-        }
-    }
-
-    let template = await parseMozillaPolicyTemplate(tree);
-    let thunderbirdPolicies = Object.keys(gCompatibilityData)
-        .filter(p => !gCompatibilityData[p].unsupported)
-        .sort(function (a, b) {
-            return a.toLowerCase().localeCompare(b.toLowerCase());
-        });
-
-    await generateReadmeFile(tree, template, thunderbirdPolicies, output_dir);
-    await adjustFirefoxAdmxFilesForThunderbird(tree, template, thunderbirdPolicies, output_dir);
-    await adjustFirefoxPlistFilesForThunderbird(template, thunderbirdPolicies, output_dir);
-
-    if (tree == "central") {
-        gMainTemplateEntries.unshift(` * [${template.name}](templates/${tree})`);
-    } else {
-        gMainTemplateEntries.unshift(` * [${template.name}](templates/${tree}) (${template.mozillaReferenceTemplates}) `);
-    }
-}
-
-/**
- * Generate the main README for Thunderbird, the page behind
- * https://thunderbird.github.io/policy-templates/
- */
-export async function buildMainThunderbirdReadme() {
-    // Retrieve the collected compatibility information (the version of Thunderbird
-    // when support for each policy was added or removed), to report them on the
-    // main Readme file.
-    let compatInfo = getCachedCompatibilityInformation(/* distinct */ false, "central");
-    compatInfo.sort((a, b) => {
-        let aa = a.policies.join("<br>");
-        let bb = b.policies.join("<br>");
-        if (aa < bb) return -1;
-        if (aa > bb) return 1;
-        return 0;
-    });
-
-    // Write the main Readme file.
-    await fs.writeFile(MAIN_README_PATH, gMainTemplate
-        .replace("__list__", gMainTemplateEntries.join("\n"))
-        .replace("__compatibility__", generateReadmeCompatibilityTable(compatInfo).join("\n"))
-    );
 }

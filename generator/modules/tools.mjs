@@ -18,6 +18,27 @@ function debug(...args) {
     }
 }
 
+/**
+ * Logs a message to the console with the specified color.
+ * 
+ * @param {string} msg - The message to log.
+ * @param {string} [color="white"] - The color name (e.g., "red", "green",
+ *    "yellow", "blue", "magenta", "cyan", "white").
+ */
+export function logColor(msg, color = "white") {
+    const colors = {
+        red: 31,
+        green: 32,
+        yellow: 33,
+        blue: 34,
+        magenta: 35,
+        cyan: 36,
+        white: 37,
+    };
+    const colorCode = colors[color.toLowerCase()] || 31; // default to red if unknown
+    console.log(`\x1b[${colorCode}m${msg}\x1b[0m`);
+}
+
 function filterUniqueEntries(arr) {
     return arr.reduce((acc, item) => {
         if (!acc.includes(item)) {
@@ -26,8 +47,20 @@ function filterUniqueEntries(arr) {
         return acc;
     }, []);
 }
-
-export async function getThunderbirdEsrVersions() {
+/**
+ * Pull the list of known ESR versions from product-details.mozilla.org, by
+ * looking for releases which end with "esr". Sadly, the category flag is not a
+ * good identifier.
+ * 
+ * Also pull latest RELEASE and DAILY version from product-details.mozilla.org, by
+ * looking at LATEST_THUNDERBIRD_VERSION and LATEST_THUNDERBIRD_NIGHTLY_VERSION.
+ * 
+ * @returns {object}
+ * @param {string[]} ESR - list of known Thunderbird ESR versions
+ * @param {string} DAILY - current Thunderbird DAILY version
+ * @param {string} RELEASE - current Thunderbird RELEASE version
+ */
+export async function getThunderbirdVersions() {
     let { releases } = await requestJson("https://product-details.mozilla.org/1.0/thunderbird.json")
     let ESR_VERSIONS = Object.entries(releases)
         .filter(([name, value]) => name.endsWith("esr"))
@@ -36,16 +69,26 @@ export async function getThunderbirdEsrVersions() {
     // ESR releases stopped after 38.* and resumed with 115.*, hardcode the
     // values in between.
     ESR_VERSIONS.push(45, 52, 60, 68, 78, 91, 102);
-    return filterUniqueEntries(ESR_VERSIONS).sort((a, b) => a - b);
+
+    const {
+        LATEST_THUNDERBIRD_VERSION,
+        LATEST_THUNDERBIRD_NIGHTLY_VERSION,
+    } = await requestJson("https://product-details.mozilla.org/1.0/thunderbird_versions.json");
+
+    return {
+        ESR: filterUniqueEntries(ESR_VERSIONS).sort((a, b) => a - b),
+        DAILY: Number(LATEST_THUNDERBIRD_NIGHTLY_VERSION.split(".").at(0)),
+        RELEASE: Number(LATEST_THUNDERBIRD_VERSION.split(".").at(0)),
+    }
 }
 
 /**
  * Query BUILD_HUB_URL to get the first revision for a given release.
  *
  * @param {string} branch - "mozilla" or "comm"
- * @param {string} tree - for example "central", "esr91", "esr128", ...
- * @param {string} versionMatch - a string which is matched against the target
- *    version, for example "115.*"
+ * @param {string} tree - The tree to process (e.g. "release", "central").
+ * @param {string} versionMatch - A string which is matched against the target
+ *    version, for example "115.*".
  *
  * @returns {string} revision/changeset
  */
@@ -163,45 +206,6 @@ export async function request(url) {
         clearTimeout(killTimer);
     }
     return rv;
-}
-
-/**
- * Simple helper function to download a URL and store its content on the user's
- * disc.
- *
- * @param {string} url - The URL to download.
- * @param {string} filePath - The path to write the downloaded file to.
- */
-export async function downloadUrl(url, filePath) {
-    console.log(` - downloading ${url} ...`);
-    await new Promise((resolve) => setTimeout(resolve, 2500));
-    return new Promise((resolve, reject) => {
-        const file = createWriteStream(filePath);
-        https
-            .get(url, (response) => {
-                response.pipe(file);
-                file.on("finish", () => {
-                    file.close(() => {
-                        resolve(filePath);
-                    });
-                });
-            })
-            .on("error", (err) => {
-                reject(err);
-            });
-    });
-}
-
-/**
- * Simple helper function to download a URL and return its content.
- *
- * @param {string} url
- * @returns {string} content
- */
-export async function readUrl(url) {
-    console.log(` - downloading ${url}`);
-    await new Promise((resolve) => setTimeout(resolve, 2500));
-    return requestText(url);
 }
 
 /**
