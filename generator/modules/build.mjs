@@ -31,12 +31,17 @@ export async function parseMozillaPolicyTemplate(revisionData) {
         ? parse(await fs.readFile(readme_file_name, 'utf8'))
         : {};
 
+    const daily_template_lines = DESC_DEFAULT_DAILY_TEMPLATE
+        .replaceAll("#tree#", revisionData.tree).split("\n");
+    const normal_template_lines = DESC_DEFAULT_TEMPLATE
+        .replaceAll("#tree#", revisionData.tree).split("\n");
+
     if (!readmeData) readmeData = {};
     if (!readmeData.headers) readmeData.headers = {};
     if (!readmeData.policies) readmeData.policies = {};
     if (!readmeData.desc) readmeData.desc = revisionData.tree == "central"
-        ? [...DESC_DEFAULT_DAILY_TEMPLATE.split("\n"), "", ...DESC_DEFAULT_TEMPLATE.split("\n")]
-        : DESC_DEFAULT_TEMPLATE.split("\n")
+        ? [...daily_template_lines, "", ...normal_template_lines]
+        : normal_template_lines
 
     // Always update the provided revision name and mozillaReferenceTemplates.
     readmeData.name = revisionData.name;
@@ -94,15 +99,6 @@ export async function parseMozillaPolicyTemplate(revisionData) {
         } else if (!readmeData.policies[name].upstream || stringify(readmeData.policies[name].upstream) != stringify(lines)) {
             readmeData.policies[name].upstream = lines;
         }
-    }
-
-    // Process MacOS readme.
-    let mac = await fs.readFile(`${dir}/mac/README.md`, 'utf8').then(f => f.split("\n"));
-
-    if (!readmeData.macReadme) {
-        readmeData.macReadme = { upstream: mac };
-    } else if (!readmeData.macReadme.upstream || stringify(readmeData.macReadme.upstream) != stringify(mac)) {
-        readmeData.macReadme.upstream = mac;
     }
 
     await writePrettyJSONFile(readme_file_name, readmeData);
@@ -437,7 +433,7 @@ export async function adjustFirefoxPlistFilesForThunderbird(template, thunderbir
     // Read PLIST files - https://www.npmjs.com/package/plist.
     let plist_file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/mac/org.mozilla.firefox.plist`, 'utf8');
 
-    
+
     plist_file = plist_file
         // See https://github.com/mozilla/policy-templates/pull/1088
         .replaceAll("&rt;", "&gt;")
@@ -473,5 +469,4 @@ export async function adjustFirefoxPlistFilesForThunderbird(template, thunderbir
     let plist_tb = plist.build(plist_obj);
     await ensureDir(`${output_dir}/mac`);
     await fs.writeFile(`${output_dir}/mac/org.mozilla.thunderbird.plist`, rebrand(plist_tb));
-    await fs.writeFile(`${output_dir}/mac/README.md`, rebrand(template.macReadme.override || template.macReadme.upstream));
 }

@@ -17,7 +17,10 @@ export const SOURCE_PATH_VERSION_TXT = "config/version.txt"
 
 export const MAIN_TEMPLATE = `## Enterprise policy descriptions and templates for Thunderbird
 
-While the templates for the most recent version of Thunderbird will probably also work with older releases of Thunderbird, they may contain new policies which are not supported in older releases. We suggest to use the templates which correspond to the highest version of Thunderbird you are actually deploying.
+While the templates for the most recent version of Thunderbird will probably also
+work with older releases of Thunderbird, they may contain new policies which are
+not supported in older releases. We suggest to use the templates which correspond
+to the version of Thunderbird you are actually deploying.
 
 __list__
 
@@ -25,7 +28,9 @@ __list__
 
 ## List of supported policies
 
-The following table states for each policy, when Thunderbird started to support it, or when it has been deprecated. It also includes all policies currently supported by Firefox, which are not supported by Thunderbird.
+The following table states for each policy, when Thunderbird started to support it,
+or when it has been deprecated. It also includes all policies currently supported
+by Firefox, which are not supported by Thunderbird.
 
 __compatibility__
 
@@ -60,7 +65,7 @@ Policies can be specified by creating a file called \`policies.json\`:
    policy by placing the file in \`/etc/thunderbird/policies\`.
 
 Alternatively, policies can be specified via platform specific methods:
- * Windows: [group policy templates](windows) or [intune](https://support.mozilla.org/kb/managing-firefox-intune)
- * Mac: [configuration profiles](mac)
+ * Windows: [group policy templates](https://support.mozilla.org/en-US/kb/customizing-firefox-using-group-policy-windows) ([thunderbird.admx](https://github.com/thunderbird/policy-templates/tree/master/docs/templates/#tree#/windows)) or [intune](https://support.mozilla.org/kb/managing-firefox-intune)
+ * Mac: [configuration profiles](https://support.mozilla.org/en-US/kb/managing-policies-macos-desktops) ([org.mozilla.thunderbird.plist](https://github.com/thunderbird/policy-templates/blob/master/docs/templates/#tree#/mac/org.mozilla.thunderbird.plist))
     
 This document provides for all policies examples for the mentioned formats.`
