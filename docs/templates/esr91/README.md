@@ -2513,8 +2513,9 @@ ui.
 widget.
 ```
 as well as the following security preferences:
-| Preference | Type | Default
-| --- | --- | ---
+
+| Preference | Type | Default |
+| --- | --- | --- |
 | security.default_personal_cert | string | Ask Every Time
 | &nbsp;&nbsp;&nbsp;&nbsp;If set to Select Automatically, Thunderbird automatically chooses the default personal certificate.
 | security.insecure_connection_text.enabled | bool | false
@@ -2636,8 +2637,8 @@ Value (string):
 **CCK2 Equivalent:** `preferences`\
 **Preferences Affected:** See below
 
-| Preference | Type | Default
-| --- | --- | ---
+| Preference | Type | Default |
+| --- | --- | --- |
 | accessibility.force_disabled | integer | 0
 | &nbsp;&nbsp;&nbsp;&nbsp;If set to 1, platform accessibility is disabled.
 | browser.cache.disk.enable | boolean | true
@@ -2698,6 +2699,7 @@ Value (string):
 | &nbsp;&nbsp;&nbsp;&nbsp;If false, the TLS 1.3 downgrade check is disabled.
 | widget.content.gtk-theme-override | string | N/A
 | &nbsp;&nbsp;&nbsp;&nbsp;If set, overrides the GTK theme for widgets.
+
 #### Windows (GPO)
 ```
 Software\Policies\Mozilla\Thunderbird\Preferences\boolean_preference_name = 0x1 | 0x0
