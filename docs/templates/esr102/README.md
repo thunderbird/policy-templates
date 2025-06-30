@@ -28,6 +28,7 @@ This document provides for all policies examples for the mentioned formats.
 | **[`BlockAboutProfiles`](#blockaboutprofiles)** | Block access to About Profiles (about:profiles).
 | **[`BlockAboutSupport`](#blockaboutsupport)** | Block access to Troubleshooting Information (about:support).
 | **[`CaptivePortal`](#captiveportal)** | Enable or disable the detection of captive portals.
+| **[`Certificates`](#certificates)** |
 | **[`Certificates -> ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | Trust certificates that have been added to the operating system certificate store by a user or administrator.
 | **[`Certificates -> Install`](#certificates--install)** | Install certificates into the Thunderbird certificate store.
 | **[`Cookies`](#cookies)** | Configure cookie preferences.
@@ -633,6 +634,16 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `CaptivePortal` | 78.0 |  |
+
+<br>
+
+## Certificates
+
+#### Compatibility
+
+| Policy/Property Name | supported since | deprecated after |
+|:--- | ---:| ---:|
+| `Certificates`<br>`Certificates_ImportEnterpriseRoots`<br>`Certificates_Install` | 68.0 |  |
 
 <br>
 
@@ -2371,7 +2382,7 @@ Value (string):
 <br>
 
 ## PasswordManagerEnabled
-Remove access to the password manager via preferences and blocks about:logins.
+Remove access to the password manager via preferences and blocks about:logins on Thunderbird 70.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `pref.privacy.disable_button.view_passwords`

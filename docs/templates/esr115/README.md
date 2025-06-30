@@ -29,6 +29,7 @@ This document provides for all policies examples for the mentioned formats.
 | **[`BlockAboutProfiles`](#blockaboutprofiles)** | Block access to About Profiles (about:profiles).
 | **[`BlockAboutSupport`](#blockaboutsupport)** | Block access to Troubleshooting Information (about:support).
 | **[`CaptivePortal`](#captiveportal)** | Enable or disable the detection of captive portals.
+| **[`Certificates`](#certificates)** |
 | **[`Certificates -> ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | Trust certificates that have been added to the operating system certificate store by a user or administrator.
 | **[`Certificates -> Install`](#certificates--install)** | Install certificates into the Thunderbird certificate store.
 | **[`Cookies`](#cookies)** | Configure cookie preferences.
@@ -691,6 +692,16 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `CaptivePortal` | 78.0 |  |
+
+<br>
+
+## Certificates
+
+#### Compatibility
+
+| Policy/Property Name | supported since | deprecated after |
+|:--- | ---:| ---:|
+| `Certificates`<br>`Certificates_ImportEnterpriseRoots`<br>`Certificates_Install` | 68.0 |  |
 
 <br>
 
@@ -1771,17 +1782,17 @@ The configuration for each extension is another dictionary that can contain the 
 
 | Name | Description |
 | --- | --- |
-| `installation_mode` | Maps to a string indicating the installation mode for the extension. The valid strings are `allowed`,`blocked`,`force_installed`, and `normal_installed`.
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`allowed` | Allows the extension to be installed by the user. This is the default behavior. There is no need for an install_url; it will automatically be allowed based on the ID.
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`blocked`| Blocks installation of the extension and removes it from the device if already installed.
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`force_installed`| The extension is automatically installed and can't be removed by the user. This option is not valid for the default configuration and requires an install_url.
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`normal_installed`| The extension is automatically installed but can be disabled by the user. This option is not valid for the default configuration and requires an install_url.
-| `install_url`| Maps to a URL indicating where Thunderbird can download a force_installed or normal_installed extension.  If installing from the local file system, use a [```file:///``` URL](https://en.wikipedia.org/wiki/File_URI_scheme). If installing from the addons.thunderbird.net, use the following URL (substituting SHORT_NAME from the URL on ATN), https://addons.thunderbird.net/thunderbird/downloads/latest/SHORT_NAME/latest.xpi. Languages packs are available from https://releases.mozilla.org/pub/thunderbird/releases/VERSION/PLATFORM/xpi/LANGUAGE.xpi. If you need to update the extension, you can change the name of the extension and it will be automatically updated. Extensions installed from file URLs will additional be updated when their internal version changes.
-| `install_sources` | A list of sources from which installing extensions is allowed. **This is unnecessary if you are only allowing the installation of certain extensions by ID.** Each item in this list is an extension-style match pattern. Users will be able to easily install items from any URL that matches an item in this list. Both the location of the *.xpi file and the page where the download is started from (i.e.  the referrer) must be allowed by these patterns. This setting can be used only for the default configuration.
-| `allowed_types` | This setting whitelists the allowed types of extension/apps that can be installed in Thunderbird. The value is a list of strings, each of which should be one of the following: "extension", "theme", "dictionary", "locale" This setting can be used only for the default configuration.
-| `blocked_install_message` | This maps to a string specifying the error message to display to users if they're blocked from installing an extension. This setting allows you to append text to the generic error message displayed when the extension is blocked. This could be be used to direct users to your help desk, explain why a particular extension is blocked, or something else. This setting can be used only for the default configuration.
-| `restricted_domains` | An array of domains on which content scripts can't be run. This setting can be used only for the default configuration.
-| `updates_disabled` | Boolean that indicates whether or not to disable automatic updates for an individual extension.
+| `installation_mode` | Maps to a string indicating the installation mode for the extension. The valid strings are `allowed`,`blocked`,`force_installed`, and `normal_installed`. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`allowed` | Allows the extension to be installed by the user. This is the default behavior. There is no need for an install_url; it will automatically be allowed based on the ID. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`blocked`| Blocks installation of the extension and removes it from the device if already installed. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`force_installed`| The extension is automatically installed and can't be removed by the user. This option is not valid for the default configuration and requires an install_url. |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`normal_installed`| The extension is automatically installed but can be disabled by the user. This option is not valid for the default configuration and requires an install_url. |
+| `install_url`| Maps to a URL indicating where Thunderbird can download a force_installed or normal_installed extension.  If installing from the local file system, use a [```file:///``` URL](https://en.wikipedia.org/wiki/File_URI_scheme). If installing from the addons.thunderbird.net, use the following URL (substituting SHORT_NAME from the URL on ATN), https://addons.thunderbird.net/thunderbird/downloads/latest/SHORT_NAME/latest.xpi. Languages packs are available from https://releases.mozilla.org/pub/thunderbird/releases/VERSION/PLATFORM/xpi/LANGUAGE.xpi. If you need to update the extension, you can change the name of the extension and it will be automatically updated. Extensions installed from file URLs will additional be updated when their internal version changes. |
+| `install_sources` | A list of sources from which installing extensions is allowed. **This is unnecessary if you are only allowing the installation of certain extensions by ID.** Each item in this list is an extension-style match pattern. Users will be able to easily install items from any URL that matches an item in this list. Both the location of the *.xpi file and the page where the download is started from (i.e.  the referrer) must be allowed by these patterns. This setting can be used only for the default configuration. |
+| `allowed_types` | This setting whitelists the allowed types of extension/apps that can be installed in Thunderbird. The value is a list of strings, each of which should be one of the following: "extension", "theme", "dictionary", "locale" This setting can be used only for the default configuration. |
+| `blocked_install_message` | This maps to a string specifying the error message to display to users if they're blocked from installing an extension. This setting allows you to append text to the generic error message displayed when the extension is blocked. This could be be used to direct users to your help desk, explain why a particular extension is blocked, or something else. This setting can be used only for the default configuration. |
+| `restricted_domains` | An array of domains on which content scripts can't be run. This setting can be used only for the default configuration. |
+| `updates_disabled` | Boolean that indicates whether or not to disable automatic updates for an individual extension. |
 
 *As of Thunderbird 85, Thunderbird ESR 78.7, installing a theme makes it the default.)\
 
@@ -2418,7 +2429,7 @@ Value (string):
 <br>
 
 ## PasswordManagerEnabled
-Remove access to the password manager via preferences and blocks about:logins.
+Remove access to the password manager via preferences and blocks about:logins on Thunderbird 70.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `pref.privacy.disable_button.view_passwords`
@@ -2556,29 +2567,29 @@ ui.
 widget.
 ```
 as well as the following security preferences:
-| Preference | Type | Default
-| --- | --- | ---
-| security.default_personal_cert | string | Ask Every Time
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to Select Automatically, Thunderbird automatically chooses the default personal certificate.
-| security.insecure_connection_text.enabled | bool | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to true, adds the words "Not Secure" for insecure sites.
-| security.insecure_connection_text.pbmode.enabled | bool | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to true, adds the words "Not Secure" for insecure sites in private browsing.
-| security.insecure_field_warning.contextual.enabled | bool | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to false, remove the warning for inscure login fields.
-| security.mixed_content.block_active_content | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, mixed active content (HTTP and HTTPS) is not blocked.
-| security.osclientcerts.autoload | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, client certificates are loaded from the operating system certificate store.
-| security.ssl.errorReporting.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, SSL errors cannot be sent to Mozilla.
-| security.tls.hello_downgrade_check | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, the TLS 1.3 downgrade check is disabled.
-| security.tls.version.enable-deprecated | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, browser will accept TLS 1.0. and TLS 1.1
-| security.warn_submit_secure_to_insecure | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, no warning is shown when submitting s form from https to http.
-&nbsp;
+| Preference | Type | Default |
+| --- | --- | --- |
+| security.default_personal_cert | string | Ask Every Time |
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to Select Automatically, Thunderbird automatically chooses the default personal certificate. |
+| security.insecure_connection_text.enabled | bool | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to true, adds the words "Not Secure" for insecure sites. |
+| security.insecure_connection_text.pbmode.enabled | bool | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to true, adds the words "Not Secure" for insecure sites in private browsing. |
+| security.insecure_field_warning.contextual.enabled | bool | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to false, remove the warning for inscure login fields. |
+| security.mixed_content.block_active_content | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, mixed active content (HTTP and HTTPS) is not blocked. |
+| security.osclientcerts.autoload | boolean | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, client certificates are loaded from the operating system certificate store. |
+| security.ssl.errorReporting.enabled | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, SSL errors cannot be sent to Mozilla. |
+| security.tls.hello_downgrade_check | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the TLS 1.3 downgrade check is disabled. |
+| security.tls.version.enable-deprecated | boolean | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, browser will accept TLS 1.0. and TLS 1.1 |
+| security.warn_submit_secure_to_insecure | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, no warning is shown when submitting s form from https to http. |
+&nbsp; |
 
 Using the preference as the key, set the `Value` to the corresponding preference value.
 
@@ -2679,68 +2690,68 @@ Value (string):
 **CCK2 Equivalent:** `preferences`\
 **Preferences Affected:** See below
 
-| Preference | Type | Default
-| --- | --- | ---
-| accessibility.force_disabled | integer | 0
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to 1, platform accessibility is disabled.
-| browser.cache.disk.enable | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, don't store cache on the hard drive.
-| ~browser.cache.disk.parent_directory~ | string | Profile temporary directory
-| &nbsp;&nbsp;&nbsp;&nbsp;~If set, changes the location of the disk cache.~ This policy doesn't work. It's being worked on.
-| browser.fixup.dns_first_for_single_words | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, single words are sent to DNS, not directly to search.
-| browser.safebrowsing.phishing.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, phishing protection is not enabled (Not recommended)
-| browser.safebrowsing.malware.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, malware protection is not enabled (Not recommended)
-| browser.search.update | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, updates for search engines are not checked.
-| browser.urlbar.suggest.bookmark | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, bookmarks aren't suggested when typing in the URL bar.
-| browser.urlbar.suggest.history | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, history isn't suggested when typing in the URL bar.
-| browser.urlbar.suggest.openpage | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, open tabs aren't suggested when typing in the URL bar.
-| datareporting.policy.dataSubmissionPolicyBypassNotification | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, don't show the privacy policy tab on first run.
-| dom.allow_scripts_to_close_windows | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, web page can close windows.
-| dom.disable_window_flip | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, web pages can focus and activate windows.
-| dom.disable_window_move_resize | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, web pages can't move or resize windows.
-| dom.event.contextmenu.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, web pages can't override context menus.
-| dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl | string | N/A
-| &nbsp;&nbsp;&nbsp;&nbsp;See https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-firefox-66
-| dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl | string | N/A
-| &nbsp;&nbsp;&nbsp;&nbsp;See https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-firefox-66
-| extensions.blocklist.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, the extensions blocklist is not used (Not recommended)
-| geo.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, the geolocation API is disabled. | Language dependent
-| intl.accept_languages | string 
-| &nbsp;&nbsp;&nbsp;&nbsp;If set, preferred language for web pages.
-| network.dns.disableIPv6 | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, IPv6 DNS lokoups are disabled.
-| network.IDN_show_punycode | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, display the punycode version of internationalized domain names.
-| places.history.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, history is not enabled.
-| print.save_print_settings | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, print settings are not saved between jobs.
-| security.default_personal_cert | string | Ask Every Time
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to Select Automatically, Thunderbird automatically chooses the default personal certificate.
-| security.mixed_content.block_active_content | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, mixed active content (HTTP and HTTPS) is not blocked.
-| security.osclientcerts.autoload | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, client certificates are loaded from the operating system certificate store.
-| security.ssl.errorReporting.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, SSL errors cannot be sent to Mozilla.
-| security.tls.hello_downgrade_check | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, the TLS 1.3 downgrade check is disabled.
-| widget.content.gtk-theme-override | string | N/A
-| &nbsp;&nbsp;&nbsp;&nbsp;If set, overrides the GTK theme for widgets.
+| Preference | Type | Default |
+| --- | --- | --- |
+| accessibility.force_disabled | integer | 0 |
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to 1, platform accessibility is disabled. |
+| browser.cache.disk.enable | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, don't store cache on the hard drive. |
+| ~browser.cache.disk.parent_directory~ | string | Profile temporary directory |
+| &nbsp;&nbsp;&nbsp;&nbsp;~If set, changes the location of the disk cache.~ This policy doesn't work. It's being worked on. |
+| browser.fixup.dns_first_for_single_words | boolean | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, single words are sent to DNS, not directly to search. |
+| browser.safebrowsing.phishing.enabled | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, phishing protection is not enabled (Not recommended) |
+| browser.safebrowsing.malware.enabled | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, malware protection is not enabled (Not recommended) |
+| browser.search.update | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, updates for search engines are not checked. |
+| browser.urlbar.suggest.bookmark | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, bookmarks aren't suggested when typing in the URL bar. |
+| browser.urlbar.suggest.history | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, history isn't suggested when typing in the URL bar. |
+| browser.urlbar.suggest.openpage | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, open tabs aren't suggested when typing in the URL bar. |
+| datareporting.policy.dataSubmissionPolicyBypassNotification | boolean | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, don't show the privacy policy tab on first run. |
+| dom.allow_scripts_to_close_windows | boolean | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, web page can close windows. |
+| dom.disable_window_flip | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, web pages can focus and activate windows. |
+| dom.disable_window_move_resize | boolean | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, web pages can't move or resize windows. |
+| dom.event.contextmenu.enabled | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, web pages can't override context menus. |
+| dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl | string | N/A |
+| &nbsp;&nbsp;&nbsp;&nbsp;See https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-firefox-66 |
+| dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl | string | N/A |
+| &nbsp;&nbsp;&nbsp;&nbsp;See https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-firefox-66 |
+| extensions.blocklist.enabled | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the extensions blocklist is not used (Not recommended) |
+| geo.enabled | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the geolocation API is disabled. | Language dependent |
+| intl.accept_languages | string  |
+| &nbsp;&nbsp;&nbsp;&nbsp;If set, preferred language for web pages. |
+| network.dns.disableIPv6 | boolean | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, IPv6 DNS lokoups are disabled. |
+| network.IDN_show_punycode | boolean | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, display the punycode version of internationalized domain names. |
+| places.history.enabled | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, history is not enabled. |
+| print.save_print_settings | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, print settings are not saved between jobs. |
+| security.default_personal_cert | string | Ask Every Time |
+| &nbsp;&nbsp;&nbsp;&nbsp;If set to Select Automatically, Thunderbird automatically chooses the default personal certificate. |
+| security.mixed_content.block_active_content | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, mixed active content (HTTP and HTTPS) is not blocked. |
+| security.osclientcerts.autoload | boolean | false |
+| &nbsp;&nbsp;&nbsp;&nbsp;If true, client certificates are loaded from the operating system certificate store. |
+| security.ssl.errorReporting.enabled | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, SSL errors cannot be sent to Mozilla. |
+| security.tls.hello_downgrade_check | boolean | true |
+| &nbsp;&nbsp;&nbsp;&nbsp;If false, the TLS 1.3 downgrade check is disabled. |
+| widget.content.gtk-theme-override | string | N/A |
+| &nbsp;&nbsp;&nbsp;&nbsp;If set, overrides the GTK theme for widgets. |
 #### Windows (GPO)
 ```
 Software\Policies\Mozilla\Thunderbird\Preferences\boolean_preference_name = 0x1 | 0x0
