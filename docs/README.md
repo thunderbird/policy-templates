@@ -5,12 +5,12 @@ work with older releases of Thunderbird, they may contain new policies which are
 not supported in older releases. We suggest to use the templates which correspond
 to the version of Thunderbird you are actually deploying.
 
- * [Thunderbird Daily 142 (Mozilla template v7.0)](templates/central)
- * [Thunderbird 139 (Mozilla template v6.11)](templates/release)
- * [Thunderbird ESR 128 (Mozilla template v6.11)](templates/esr128)
- * [Thunderbird ESR 115 (Mozilla template v5.12)](templates/esr115)
- * [Thunderbird ESR 102 (Mozilla template v4.12)](templates/esr102)
- * [Thunderbird ESR 91 (Mozilla template v3.10)](templates/esr91)
+ * [Thunderbird Daily 142](templates/central)
+ * [Thunderbird 139](templates/release)
+ * [Thunderbird ESR 128](templates/esr128)
+ * [Thunderbird ESR 115](templates/esr115)
+ * [Thunderbird ESR 102](templates/esr102)
+ * [Thunderbird ESR 91](templates/esr91)
 
 <br>
 
