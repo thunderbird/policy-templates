@@ -387,7 +387,7 @@ export async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thund
     await fs.writeFile(`${output_dir}/windows/thunderbird.admx`, admx_xml);
 
     // Copy mozilla.admx file.
-    let file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/windows/mozilla.admx`);
+    let file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/windows/mozilla.admx`, 'utf8');
     await fs.writeFile(`${output_dir}/windows/mozilla.admx`, file);
 
 
@@ -417,6 +417,7 @@ export async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thund
         let adml_xml = convert.js2xml(adml_obj, { compact: false, spaces: 2 });
         await ensureDir(`${output_dir}/windows/${folder}`);
         await fs.writeFile(`${output_dir}/windows/${folder}/thunderbird.adml`, adml_xml);
+        await fs.writeFile(`${output_dir}/windows/${folder}/mozilla.adml`, adml_file);
     }
 }
 

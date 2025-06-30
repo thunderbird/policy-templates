@@ -167,6 +167,7 @@ for (let entry of allRevisionData) {
 }
 
 // Build the Thunderbird templates.
+await fs.rm(BUILD_DIR_PATH, { recursive: true, force: true });
 const gMainTemplateEntries = [];
 for (let revisionData of allRevisionData) {
     // Download schema from https://hg.mozilla.org/
