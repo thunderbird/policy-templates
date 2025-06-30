@@ -1,24 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="5.9" schemaVersion="1.0">
+<policyDefinitionResources revision="5.12" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
     <stringTable>
-      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
-      <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
-      <string id="SUPPORTED_ID_10">Thunderbird 102.0 - *</string>
-      <string id="SUPPORTED_ID_11">Thunderbird 104.0 - *</string>
-      <string id="SUPPORTED_ID_12">Thunderbird 108.0 - *</string>
-      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
-      <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
-      <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
-      <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
-      <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
-      <string id="SUPPORTED_ID_8">Thunderbird 91.0 - *</string>
-      <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 或更新版本</string>
       <string id="UNSUPPORTED">不再支援。</string>
-      <string id="thunderbird">Thunderbird</string>
+      <string id="SUPPORTED_FF60">Firefox 60 或更新版本、Firefox 60 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF62">Firefox 62 或更新版本、Firefox 60.2 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF63">Firefox 63 或更新版本</string>
+      <string id="SUPPORTED_FF64">Firefox 64 或更新版本、Firefox 60.4 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF66">Firefox 66 或更新版本、Firefox 60.6 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF67">Firefox 67 或更新版本、Firefox 60.7 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF68">Firefox 68 或更新版本、Firefox 68 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF6801">Firefox 68.0.1 或更新版本、Firefox 68.0.1 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF60ESR">Firefox 60 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF68ESR">Firefox 68.5 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF69">Firefox 69 或更新版本、Firefox 68.1 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF70">Firefox 70 或更新版本、Firefox 68.2 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF71">Firefox 71 或更新版本、Firefox 68.3 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF72">Firefox 72 或更新版本、Firefox 68.4 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF73">Firefox 73 或更新版本、Firefox 68.5 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF74">Firefox 74 或更新版本、Firefox 68.6 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF75">Firefox 75 或更新版本、Firefox 68.7 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF75_ONLY">Firefox 75 或更新版本</string>
+      <string id="SUPPORTED_FF76">Firefox 76 或更新版本、Firefox 68.8 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF76_ONLY">Firefox 76 或更新版本</string>
+      <string id="SUPPORTED_FF77">Firefox 77 或更新版本、Firefox 68.9 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF77_ONLY">Firefox 77 或更新版本</string>
+      <string id="SUPPORTED_FF78">Firefox 78 或更新版本</string>
+      <string id="SUPPORTED_FF79">Firefox 79 或更新版本、Firefox 78.1 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF80">Firefox 80 或更新版本、Firefox 78.2 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF81">Firefox 81 或更新版本、Firefox 78.3 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF82">Firefox 82 或更新版本、Firefox 78.4 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF83">Firefox 83 或更新版本、Firefox 78.5 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF84">Firefox 84 或更新版本、Firefox 78.6 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF85">Firefox 85 或更新版本、Firefox 78.7 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF86">Firefox 86 或更新版本、Firefox 78.8 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF88">Firefox 88 或更新版本、Firefox 78.10 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF89">Firefox 89 或更新版本、Firefox 78.11 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF90">Firefox 90 或更新版本、Firefox 78.12 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF91">Firefox 91 或更新版本</string>
+      <string id="SUPPORTED_FF95">Firefox 95 或更新版本、Firefox 91.4 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF96">Firefox 96 或更新版本、Firefox 91.5 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF96_ONLY">Firefox 96 或更新版本</string>
+      <string id="SUPPORTED_FF97">Firefox 97 或更新版本、Firefox 91.6 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF98_ONLY">Firefox 98 或更新版本</string>
+      <string id="SUPPORTED_FF99">Firefox 99 或更新版本、Firefox 91.8 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF100">Firefox 100 或更新版本、Firefox 91.9 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF101">Firefox 101 或更新版本、Firefox 91.10 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF102">Firefox 102 或更新版本</string>
+      <string id="SUPPORTED_FF104">Firefox 104 或更新版本、Firefox 102.2 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF105">Firefox 105 或更新版本、Firefox 102.3 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF106">Firefox 106 或更新版本、Firefox 102.4 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF107">Firefox 107 或更新版本、Firefox 102.5 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF108">Firefox 108 或更新版本、Firefox 102.6 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF109">Firefox 109 或更新版本、Firefox 102.7 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF110">Firefox 110 或更新版本、Firefox 102.8 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF112_ONLY">Firefox 112 或更新版本</string>
+      <string id="SUPPORTED_FF113_ONLY">Firefox 113 或更新版本</string>
+      <string id="SUPPORTED_FF114">Firefox 114 或更新版本、Firefox 102.12 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF118">Firefox 118 或更新版本、Firefox 105.3 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF120">Firefox 120 或更新版本、Firefox 105.5 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF121">Firefox 121 或更新版本、Firefox 105.6 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF122">Firefox 122 或更新版本、Firefox 105.7 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF123">Firefox 123 或更新版本、Firefox 105.8 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF124">Firefox 124 或更新版本、Firefox 105.9 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF124_ONLY">Firefox 124 或更新版本</string>
+      <string id="SUPPORTED_FF125">Firefox 125 或更新版本、Firefox 105.10 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF126_ONLY">Firefox 126 或更新版本</string>
+      <string id="SUPPORTED_FF127_ONLY">Firefox 127 或更新版本</string>
+      <string id="SUPPORTED_FF128">Firefox 128 或更新版本、Firefox 105.13 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF129">Firefox 129 或更新版本、Firefox 105.14 ESR 或更新版本</string>
+      <string id="SUPPORTED_FF130">Firefox 130 或更新版本、Firefox 105.15 ESR 或更新版本</string>
+      <string id="firefox">Firefox</string>
       <string id="Permissions_group">權限</string>
       <string id="Camera_group">攝影機</string>
       <string id="Microphone_group">麥克風</string>
@@ -44,16 +99,16 @@
       <string id="PictureInPicture_group">子母畫面</string>
       <string id="ProxySettings_group">Proxy Settings</string>
       <string id="SecurityDevices_group">Security Devices</string>
-      <string id="FirefoxSuggest_group">Thunderbird Suggest (US only)</string>
+      <string id="FirefoxSuggest_group">Firefox Suggest (US only)</string>
       <string id="Allow">允許的網站</string>
       <string id="AllowSession">允許的網站（僅當次瀏覽階段）</string>
       <string id="Block">封鎖的網站</string>
       <string id="AppAutoUpdate">應用程式自動更新</string>
-      <string id="AppAutoUpdate_Explain">若啟用此原則，Thunderbird 會不經使用者同意自動更新。
+      <string id="AppAutoUpdate_Explain">若啟用此原則，Firefox 會不經使用者同意自動更新。
 
-若停用此原則，會自動下載 Thunderbird 更新，但可由使用者自行選擇何時安裝。
+若停用此原則，會自動下載 Firefox 更新，但可由使用者自行選擇何時安裝。
 
-若不設定此原則，使用者可自行決定是否要自動更新 Thunderbird。</string>
+若不設定此原則，使用者可自行決定是否要自動更新 Firefox。</string>
       <string id="AppUpdateURL">自訂更新網址</string>
       <string id="AppUpdateURL_Explain">若啟用此原則，可指定用來檢查更新的伺服器網址。當您在內部網路自行架設更新伺服器時會有幫助。
 
@@ -117,21 +172,21 @@
 
 若啟用或不設定此原則，則啟用 Captive Portal 支援。</string>
       <string id="Certificates_ImportEnterpriseRoots">匯入企業根憑證</string>
-      <string id="Certificates_ImportEnterpriseRoots_Explain">若啟用此原則，Thunderbird 將從 Windows 憑證儲存區讀取憑證。
+      <string id="Certificates_ImportEnterpriseRoots_Explain">若啟用此原則，Firefox 將從 Windows 憑證儲存區讀取憑證。
 
-若停用或不設定此原則，Thunderbird 則不會從 Windows 憑證儲存區讀取憑證。</string>
+若停用或不設定此原則，Firefox 則不會從 Windows 憑證儲存區讀取憑證。</string>
       <string id="Certificates_Install">安裝憑證</string>
-      <string id="Certificates_Install_Explain">若啟用此原則，Thunderbird 將自行安裝列出的憑證。將在 %USERPROFILE%\AppData\Local\Mozilla\Certificates 及 %USERPROFILE%\AppData\Roaming\Mozilla\Certificates 當中尋找憑證檔案。
+      <string id="Certificates_Install_Explain">若啟用此原則，Firefox 將自行安裝列出的憑證。將在 %USERPROFILE%\AppData\Local\Mozilla\Certificates 及 %USERPROFILE%\AppData\Roaming\Mozilla\Certificates 當中尋找憑證檔案。
 
-若停用或不設定此原則，Thunderbird 將不會安裝額外憑證。</string>
+若停用或不設定此原則，Firefox 將不會安裝額外憑證。</string>
       <string id="DefaultDownloadDirectory">預設下載資料夾</string>
       <string id="DefaultDownloadDirectory_Explain">若啟用此原則，可設定下載項目的預設儲存資料夾。可使用 ${home} 來指定家目錄。
 
-若停用或不設定此原則，將使用 Thunderbird 的預設下載資料夾。</string>
+若停用或不設定此原則，將使用 Firefox 的預設下載資料夾。</string>
       <string id="DownloadDirectory">指定下載資料夾</string>
       <string id="DownloadDirectory_Explain">若啟用此原則，可設定並固定下載項目的預設儲存資料夾。可使用 ${home} 來指定家目錄。
 
-若停用或不設定此原則，將使用 Thunderbird 的預設下載資料夾，且可由使用者變更。</string>
+若停用或不設定此原則，將使用 Firefox 的預設下載資料夾，且可由使用者變更。</string>
       <string id="DNSOverHTTPS_group">DNS Over HTTPS</string>
       <string id="DNSOverHTTPS_Enabled">啟用</string>
       <string id="DNSOverHTTPS_Enabled_Explain">若停用此原則，將停用 DNS over HTTPS。
@@ -141,6 +196,7 @@
       <string id="DNSOverHTTPS_ProviderURL_Explain">若啟用此原則，將使用指定的網址作為供應商網址。
 
 若停用或不設定此原則，則使用預設供應商。</string>
+
       <string id="DNSOverHTTPS_Locked">鎖定</string>
       <string id="DNSOverHTTPS_Locked_Explain">若啟用此原則，使用者將無法更改 DNS over HTTPS 設定。
 
@@ -154,9 +210,9 @@
 
 若停用或不設定此原則，將使用預設 DNS Over HTTPS 設定。</string>
       <string id="DNSOverHTTPS_Fallback">Fallback</string>
-      <string id="DNSOverHTTPS_Fallback_Explain">If this policy is disabled, Thunderbird will not fallback to your default DNS resolver if there is a problem with the secure DNS provider.
+      <string id="DNSOverHTTPS_Fallback_Explain">If this policy is disabled, Firefox will not fallback to your default DNS resolver if there is a problem with the secure DNS provider.
 
-If this policy is enabled or not configured, Thunderbird will use your default DNS resolver if there is a problem with the secure DNS provider.</string>
+If this policy is enabled or not configured, Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.</string>
       <string id="DisableMasterPasswordCreation">停用設定主控密碼</string>
       <string id="DisableMasterPasswordCreation_Explain">若啟用此原則，將無法設定主控密碼。
 
@@ -166,45 +222,45 @@ If this policy is enabled or not configured, Thunderbird will use your default D
 
 若停用或不設定此原則，則會接收更新。</string>
       <string id="DisableBuiltinPDFViewer">停用內建 PDF 檢視器（PDF.js）</string>
-      <string id="DisableBuiltinPDFViewer_Explain">若啟用此原則，將不會使用 Thunderbird 內建檢視器開啟 PDF 檔案。
+      <string id="DisableBuiltinPDFViewer_Explain">若啟用此原則，將不會使用 Firefox 內建檢視器開啟 PDF 檔案。
 
-若停用或不設定此原則，則會使用 Thunderbird 內建檢視器開啟 PDF 檔案。</string>
+若停用或不設定此原則，則會使用 Firefox 內建檢視器開啟 PDF 檔案。</string>
       <string id="DisableDefaultBrowserAgent">停用預設瀏覽器代理工具</string>
       <string id="DisableDefaultBrowserAgent_Explain">若啟用此原則，將停用預設瀏覽器代理工具。
 
 若停用或不設定此原則，則啟用預設瀏覽器代理工具。
 
-若需關於預設瀏覽器代理工具的更多資訊，請參考 https://thunderbird-source-docs.mozilla.org/toolkit/mozapps/defaultagent/default-browser-agent/index.html</string>
+若需關於預設瀏覽器代理工具的更多資訊，請參考 https://firefox-source-docs.mozilla.org/toolkit/mozapps/defaultagent/default-browser-agent/index.html</string>
       <string id="DisableDeveloperTools">停用開發者工具</string>
-      <string id="DisableDeveloperTools_Explain">若啟用此原則，將關閉 Thunderbird 當中的網頁開發者工具功能。
+      <string id="DisableDeveloperTools_Explain">若啟用此原則，將關閉 Firefox 當中的網頁開發者工具功能。
 
-若停用或不設定此原則，則可使用 Thunderbird 網頁開發者工具。</string>
+若停用或不設定此原則，則可使用 Firefox 網頁開發者工具。</string>
       <string id="DisableFeedbackCommands">停用意見回饋相關功能</string>
       <string id="DisableFeedbackCommands_Explain">若啟用此原則，將不會顯示說明選單中的「送出意見回饋」及「回報詐騙網站」項目。
 
 若停用或不設定此原則，將會顯示說明選單中的「送出意見回饋」及「回報詐騙網站」項目。</string>
-      <string id="DisableFirefoxAccounts">停用 Thunderbird Accounts</string>
-      <string id="DisableFirefoxAccounts_Explain">若啟用此原則，將停用 Thunderbird Accounts 相關功能，包含 Sync。
+      <string id="DisableFirefoxAccounts">停用 Firefox Accounts</string>
+      <string id="DisableFirefoxAccounts_Explain">若啟用此原則，將停用 Firefox Accounts 相關功能，包含 Sync。
 
-若停用或不設定此原則，則可以使用 Thunderbird Accounts 及 Sync 相關功能。</string>
-      <string id="DisableFirefoxScreenshots">停用 Thunderbird Screenshots</string>
-      <string id="DisableFirefoxScreenshots_Explain">若啟用此原則，將無法使用 Thunderbird Screenshots。
+若停用或不設定此原則，則可以使用 Firefox Accounts 及 Sync 相關功能。</string>
+      <string id="DisableFirefoxScreenshots">停用 Firefox Screenshots</string>
+      <string id="DisableFirefoxScreenshots_Explain">若啟用此原則，將無法使用 Firefox Screenshots。
 
-若停用或不設定此原則，則可以使用 Thunderbird Screenshots。</string>
-      <string id="DisableFirefoxStudies">停用 Thunderbird Studies</string>
-      <string id="DisableFirefoxStudies_Explain">若啟用此原則，Thunderbird 將不會執行 SHIELD 研究或進行 Heartbeat 調查。
+若停用或不設定此原則，則可以使用 Firefox Screenshots。</string>
+      <string id="DisableFirefoxStudies">停用 Firefox Studies</string>
+      <string id="DisableFirefoxStudies_Explain">若啟用此原則，Firefox 將不會執行 SHIELD 研究或進行 Heartbeat 調查。
 
 若停用或不設定此原則，則使用者可以自行選擇是否接受 SHIELD 研究或進行 Heartbeat 調查。
 
-若需更多資訊，請參考 https://support.mozilla.org/en-US/kb/shield 及 https://wiki.mozilla.org/Thunderbird/Shield/Heartbeat</string>
+若需更多資訊，請參考 https://support.mozilla.org/en-US/kb/shield 及 https://wiki.mozilla.org/Firefox/Shield/Heartbeat</string>
       <string id="DisableForgetButton">停用「忘記」按鈕</string>
       <string id="DisableForgetButton_Explain">若啟用此原則，將無法使用「忘記」按鈕。
 
 若停用或不設定此原則，則可以使用「忘記」按鈕。</string>
       <string id="DisableFormHistory">停用表單填寫紀錄</string>
-      <string id="DisableFormHistory_Explain">若啟用此原則，Thunderbird 將不會保留表單填寫或搜尋紀錄。
+      <string id="DisableFormHistory_Explain">若啟用此原則，Firefox 將不會保留表單填寫或搜尋紀錄。
 
-若停用或不設定此原則，Thunderbird 則會保留表單填寫及搜尋紀錄。</string>
+若停用或不設定此原則，Firefox 則會保留表單填寫及搜尋紀錄。</string>
       <string id="DisablePasswordReveal">不允許在「儲存的登入資訊」頁面顯示密碼</string>
       <string id="DisablePasswordReveal_Explain">若啟用此原則，使用者將無法在「儲存的登入資訊」頁面顯示密碼。
 
@@ -222,9 +278,9 @@ If this policy is enabled or not configured, Thunderbird will use your default D
 
 若停用或不設定此原則，則可以使用「自其他瀏覽器匯入資料」選項。</string>
       <string id="DisableProfileRefresh">停用重新整理設定檔</string>
-      <string id="DisableProfileRefresh_Explain">若啟用此原則，在 about:support 頁面或 support.mozilla.org 就不會提供「重新整理 Thunderbird」功能。
+      <string id="DisableProfileRefresh_Explain">若啟用此原則，在 about:support 頁面或 support.mozilla.org 就不會提供「重新整理 Firefox」功能。
 
-若停用或不設定此原則，則會提供「重新整理 Thunderbird」功能。</string>
+若停用或不設定此原則，則會提供「重新整理 Firefox」功能。</string>
       <string id="DisableSafeMode">停用安全模式</string>
       <string id="DisableSafeMode_Explain">若啟用此原則，無法重新啟動瀏覽器進入安全模式。
 
@@ -271,11 +327,11 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
       <string id="DisplayMenuBar_Default_On">預設顯示</string>
       <string id="DisplayMenuBar_Default_Off">預設不顯示</string>
       <string id="DontCheckDefaultBrowser">不要檢查是否為預設瀏覽器</string>
-      <string id="DontCheckDefaultBrowser_Explain">若啟用此原則，Thunderbird 不會在啟動時檢查是否為預設瀏覽器。
+      <string id="DontCheckDefaultBrowser_Explain">若啟用此原則，Firefox 不會在啟動時檢查是否為預設瀏覽器。
 
-若停用或不設定此原則，Thunderbird 則會在啟動時檢查是否為預設瀏覽器。</string>
+若停用或不設定此原則，Firefox 則會在啟動時檢查是否為預設瀏覽器。</string>
       <string id="Extensions_Install">要安裝的擴充套件</string>
-      <string id="Extensions_Install_Explain">若啟用此原則，您可以指定一組擴充套件網址或路徑的清單，將在 Thunderbird 啟動時安裝。
+      <string id="Extensions_Install_Explain">若啟用此原則，您可以指定一組擴充套件網址或路徑的清單，將在 Firefox 啟動時安裝。
 只要變更此清單，就會重新安裝擴充套件。
 
 若停用或不設定此原則，則不會安裝任何擴充套件。</string>
@@ -304,17 +360,17 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
 
 若啟用或不設定此原則，則會啟用硬體加速功能。</string>
       <string id="LegacyProfiles">傳統設定檔</string>
-      <string id="LegacyProfiles_Explain">若啟用此原則，Thunderbird 將不會嘗試對本機電腦中不同套的 Thunderbird 建立不同的設定檔資料夾。也等於設定 MOZ_LEGACY_PROFILES。
+      <string id="LegacyProfiles_Explain">若啟用此原則，Firefox 將不會嘗試對本機電腦中不同套的 Firefox 建立不同的設定檔資料夾。也等於設定 MOZ_LEGACY_PROFILES。
 
-若停用或不設定此原則，Thunderbird 則會對每一套 Thunderbird 建立不同的設定檔。</string>
+若停用或不設定此原則，Firefox 則會對每一套 Firefox 建立不同的設定檔。</string>
       <string id="LegacySameSiteCookieBehaviorEnabled">退回舊版 SameSite 行為</string>
-      <string id="LegacySameSiteCookieBehaviorEnabled_Explain">若啟用此原則，Thunderbird 將退回舊版的 SameSite 行為。代表未明確指定 SameSite 屬性的 Cookie 將被視為 SameSite=None。
+      <string id="LegacySameSiteCookieBehaviorEnabled_Explain">若啟用此原則，Firefox 將退回舊版的 SameSite 行為。代表未明確指定 SameSite 屬性的 Cookie 將被視為 SameSite=None。
 
-若停用或不設定此原則，Thunderbird 則會強制視為 SameSite=lax。</string>
+若停用或不設定此原則，Firefox 則會強制視為 SameSite=lax。</string>
       <string id="LegacySameSiteCookieBehaviorEnabledForDomainList">對特定網域退回舊版 SameSite 行為</string>
-      <string id="LegacySameSiteCookieBehaviorEnabledForDomainList_Explain">若啟用此原則，Thunderbird 將對特定網域退回舊版的 SameSite 行為。代表未明確指定 SameSite 屬性的 Cookie 將被視為 SameSite=None。
+      <string id="LegacySameSiteCookieBehaviorEnabledForDomainList_Explain">若啟用此原則，Firefox 將對特定網域退回舊版的 SameSite 行為。代表未明確指定 SameSite 屬性的 Cookie 將被視為 SameSite=None。
 
-若停用或不設定此原則，Thunderbird 則會強制對所有網域都視為 SameSite=lax。</string>
+若停用或不設定此原則，Firefox 則會強制對所有網域都視為 SameSite=lax。</string>
       <string id="LocalFileLinks">本機檔案鏈結</string>
       <string id="LocalFileLinks_Explain">若啟用此原則，將可以指定網站內容是否允許鏈結到本機檔案。
 
@@ -328,13 +384,13 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
 
 若啟用或不設定此原則，新分頁頁面將使用預設值。</string>
       <string id="OfferToSaveLogins">提供儲存登入資訊</string>
-      <string id="OfferToSaveLogins_Explain">若啟用或不設定此原則，Thunderbird 將提示儲存網站登入資訊與密碼。
+      <string id="OfferToSaveLogins_Explain">若啟用或不設定此原則，Firefox 將提示儲存網站登入資訊與密碼。
 
-若停用此原則，Thunderbird 則不會提供儲存登入資訊與密碼。</string>
+若停用此原則，Firefox 則不會提供儲存登入資訊與密碼。</string>
       <string id="OfferToSaveLoginsDefault">提供儲存登入資訊（預設）</string>
-      <string id="OfferToSaveLoginsDefault_Explain">若啟用或不設定此原則，Thunderbird 將提示儲存網站登入資訊與密碼，且無法關閉。
+      <string id="OfferToSaveLoginsDefault_Explain">若啟用或不設定此原則，Firefox 將提示儲存網站登入資訊與密碼，且無法關閉。
 
-若停用此原則，Thunderbird 將提示儲存網站登入資訊與密碼，且無法開啟。</string>
+若停用此原則，Firefox 將提示儲存網站登入資訊與密碼，且無法開啟。</string>
       <string id="PopupBlocking_Allow_Explain">若啟用此原則，將允許來自指定來源網址的彈出視窗。若指定了頂級網域名稱（例如 http://example.org），也將允許所有來自子網域的彈出視窗。
 
 若停用或不設定此原則，則遵循預設的彈出視窗原則。</string>
@@ -373,12 +429,12 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
       <string id="Cookies_AcceptThirdParty_All">總是接受</string>
       <string id="Cookies_AcceptThirdParty_None">永不接受</string>
       <string id="Cookies_AcceptThirdParty_FromVisited">只接受來自造訪過網站的 Cookie</string>
-      <string id="Cookies_ExpireAtSessionEnd">保留 Cookie 直到 Thunderbird 關閉</string>
-      <string id="Cookies_ExpireAtSessionEnd_Explain">若啟用此原則並允許 Cookie，Cookie 將在 Thunderbird 時失效。
+      <string id="Cookies_ExpireAtSessionEnd">保留 Cookie 直到 Firefox 關閉</string>
+      <string id="Cookies_ExpireAtSessionEnd_Explain">若啟用此原則並允許 Cookie，Cookie 將在 Firefox 時失效。
 
 若停用或未設定此原則，或是不允許 Cookie，則忽略此設定。</string>
       <string id="Cookies_RejectTracker">拒絕追蹤器（已棄用）</string>
-      <string id="Cookies_RejectTracker_Explain">若啟用此原則並允許 Cookie，Thunderbird 將預設拒絕追蹤器 Cookie。
+      <string id="Cookies_RejectTracker_Explain">若啟用此原則並允許 Cookie，Firefox 將預設拒絕追蹤器 Cookie。
 
 若停用或未設定此原則，或是不允許 Cookie，則忽略此設定。</string>
       <string id="Cookies_Locked">不允許調整偏好設定</string>
@@ -488,8 +544,8 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
       <string id="VirtualReality_Locked_Explain">若啟用此原則，使用者將無法調整虛擬實境偏好設定。
 
 若停用或不設定此原則，則使用者能夠自行調整虛擬實境偏好設定。</string>
-      <string id="FirefoxHome">自訂 Thunderbird 首頁</string>
-      <string id="FirefoxHome_Explain">若啟用此原則，將可以設定要在 Thunderbird 首頁顯示哪些段落，並防止使用者更改設定。
+      <string id="FirefoxHome">自訂 Firefox 首頁</string>
+      <string id="FirefoxHome_Explain">若啟用此原則，將可以設定要在 Firefox 首頁顯示哪些段落，並防止使用者更改設定。
 
 若停用或不設定此原則，則顯示預設段落，使用者也可以更改設定。</string>
       <string id="FlashPlugin_Allow_Explain">若啟用此原則，除非完全停用 Flash，否則將允許指定來源網址使用。若指定了頂級網域名稱（例如 http://example.org），也將允許所有子網域使用 Flash。
@@ -509,20 +565,21 @@ If this policy is disabled or not configured, the bookmarks toolbar is displayed
 
 若停用或不設定此原則則使用者能夠自行調整 Flash 偏好設定。</string>
       <string id="OverrideFirstRunPage">覆蓋首次執行頁面</string>
-      <string id="OverrideFirstRunPage_Explain">若啟用此原則，將可以指定要開啟的 Thunderbird 首次執行（firstrun）頁面。若保留空白，則不會開啟頁面。
+      <string id="OverrideFirstRunPage_Explain">若啟用此原則，將可以指定要開啟的 Firefox 首次執行（firstrun）頁面。若保留空白，則不會開啟頁面。
 
-自 Thunderbird 83、Thunderbird ESR 78.5 起，您也可以用半形垂直線（|）來隔開要指定的多個網址。
+自 Firefox 83、Firefox ESR 78.5 起，您也可以用半形垂直線（|）來隔開要指定的多個網址。
 
 若停用或不設定此原則，則顯示預設首次執行頁面。</string>
       <string id="OverridePostUpdatePage">覆蓋升級頁面</string>
-      <string id="OverridePostUpdatePage_Explain">若啟用此原則，將可以指定 Thunderbird 更新後要開啟的頁面。若保留空白，則不會開啟頁面。
+      <string id="OverridePostUpdatePage_Explain">若啟用此原則，將可以指定 Firefox 更新後要開啟的頁面。若保留空白，則不會開啟頁面。
 
 若停用或不設定此原則，則顯示預設升級頁面。</string>
       <string id="SanitizeOnShutdown">關閉瀏覽器時清理資料</string>
-      <string id="SanitizeOnShutdown_Explain">若啟用此原則，將可以選擇要在關閉 Thunderbird 時清理哪些資料。
+      <string id="SanitizeOnShutdown_Explain">若啟用此原則，將可以選擇要在關閉 Firefox 時清理哪些資料。
 
-若停用或不設定此原則，則不會在關閉 Thunderbird 時清理任何資料。</string>
+若停用或不設定此原則，則不會在關閉 Firefox 時清理任何資料。</string>
       <string id="SanitizeOnShutdown_group">在關閉瀏覽器時清理資料。</string>
+
       <string id="SanitizeOnShutdown_Cache">快取</string>
       <string id="SanitizeOnShutdown_Cache_Explain">若啟用此原則，將在瀏覽器關閉時清除快取。
 
@@ -624,7 +681,7 @@ If this policy is disabled or not configured, websites are not filtered.</string
       <string id="Bookmark48">書籤 48</string>
       <string id="Bookmark49">書籤 49</string>
       <string id="Bookmark50">書籤 50</string>
-      <string id="Bookmark_Explain">若啟用此原則，將可以指定要加入到 Thunderbird 的書籤。由於有 Bug 存在的關係，您必須設定書籤位置。請注意必須照順序設定書籤。
+      <string id="Bookmark_Explain">若啟用此原則，將可以指定要加入到 Firefox 的書籤。由於有 Bug 存在的關係，您必須設定書籤位置。請注意必須照順序設定書籤。
 
 若停用或不設定此原則，則不會加入新書籤。</string>
       <string id="BookmarkPlacementToolbar">工具列</string>
@@ -644,7 +701,7 @@ If this policy is disabled or not configured, websites are not filtered.</string
 
 若停用或不設定此原則，則僅有一頁首頁。</string>
       <string id="HomepageStartPage">開始頁面</string>
-      <string id="HomepageStartPage_Explain">若啟用此原則，將可以更改 Thunderbird 啟動時要顯示的內容。可以是首頁、先前的瀏覽狀態，或空白頁。
+      <string id="HomepageStartPage_Explain">若啟用此原則，將可以更改 Firefox 啟動時要顯示的內容。可以是首頁、先前的瀏覽狀態，或空白頁。
 
 若停用或不設定此原則，則預設使用先前的瀏覽狀態。</string>
       <string id="None">無</string>
@@ -656,15 +713,15 @@ If this policy is disabled or not configured, websites are not filtered.</string
 
 若停用此原則，將預設不在工具列顯示首頁按鈕。
 
-若不設定此原則，則預設由 Thunderbird 自行決定是否要在工具列顯示首頁按鈕。</string>
+若不設定此原則，則預設由 Firefox 自行決定是否要在工具列顯示首頁按鈕。</string>
       <string id="PasswordManagerEnabled">密碼管理員</string>
       <string id="PasswordManagerEnabled_Explain">若停用此原則，將無法於偏好設定中使用密碼管理員。
 
 若啟用或不設定此原則，則可於偏好設定中使用密碼管理員。</string>
       <string id="PasswordManagerExceptions">Password Manager Exceptions</string>
-      <string id="PasswordManagerExceptions_Explain">If this policy is enabled, you can specify sites where Thunderbird won't offer to save passwords.
+      <string id="PasswordManagerExceptions_Explain">If this policy is enabled, you can specify sites where Firefox won't offer to save passwords.
 
-If this policy is disabled or not configured, Thunderbird will offer to save passwords on all sites.</string>
+If this policy is disabled or not configured, Firefox will offer to save passwords on all sites.</string>
       <string id="PromptForDownloadLocation">提示下載位置</string>
       <string id="PromptForDownloadLocation_Explain">若停用此原則，將不會向使用者詢問檔案下載位置。
 
@@ -739,13 +796,13 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
       <string id="SearchBar">搜尋列位置</string>
       <string id="SearchBar_Explain">若啟用此原則，將可以設定搜尋列是否要自網址列分離。
 
-若停用或不設定此原則，新使用者的搜尋列將合併於網址列內；從 Thunderbird 56 或之前版本升級上來的使用者，則會獨立於工具列中。</string>
+若停用或不設定此原則，新使用者的搜尋列將合併於網址列內；從 Firefox 56 或之前版本升級上來的使用者，則會獨立於工具列中。</string>
       <string id="SearchEngines_1">搜尋引擎 1</string>
       <string id="SearchEngines_2">搜尋引擎 2</string>
       <string id="SearchEngines_3">搜尋引擎 3</string>
       <string id="SearchEngines_4">搜尋引擎 4</string>
       <string id="SearchEngines_5">搜尋引擎 5</string>
-      <string id="SearchEngines_Explain">若啟用此原則，將可以指定要加入 Thunderbird 的搜尋引擎。請使用 {searchTerms} 來指定要取代於網址中的搜尋詞。由於有 Bug 存在的關係，您必須指定查詢方法（通常是 GET）。請注意必須照順序設定搜尋引擎。
+      <string id="SearchEngines_Explain">若啟用此原則，將可以指定要加入 Firefox 的搜尋引擎。請使用 {searchTerms} 來指定要取代於網址中的搜尋詞。由於有 Bug 存在的關係，您必須指定查詢方法（通常是 GET）。請注意必須照順序設定搜尋引擎。
 
 若停用或不設定此原則，則不會加入搜尋引擎。</string>
       <string id="SearchBar_Unified">合併於網址列內</string>
@@ -755,7 +812,7 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
       <string id="SearchEngines_Default">預設搜尋引擎</string>
       <string id="SearchEngines_Default_Explain">若啟用此原則，將可以設定預設要使用的搜尋引擎名稱。
 
-若停用或不設定此原則，則使用 Thunderbird 搜尋引擎。</string>
+若停用或不設定此原則，則使用 Firefox 搜尋引擎。</string>
       <string id="SearchEngines_PreventInstalls">防止安裝搜尋引擎</string>
       <string id="SearchEngines_PreventInstalls_Explain">若啟用此原則，使用者將無法從網頁安裝搜尋引擎。
 
@@ -771,13 +828,13 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
 
 若不設定此原則，則會啟用搜尋建議功能，且使用者可自行關閉此功能。</string>
       <string id="SSLVersionMin">啟用的最低 SSL 版本</string>
-      <string id="SSLVersionMin_Explain">若啟用此原則，Thunderbird 將不會使用低於指定版本的 SSL/TLS 版本進行連線。
+      <string id="SSLVersionMin_Explain">若啟用此原則，Firefox 將不會使用低於指定版本的 SSL/TLS 版本進行連線。
 
-若停用或不設定此原則，Thunderbird 的預設最低版本為 TLS 1.2。</string>
+若停用或不設定此原則，Firefox 的預設最低版本為 TLS 1.2。</string>
       <string id="SSLVersionMax">啟用的最高 SSL 版本</string>
       <string id="SSLVersionMax_Explain">若啟用此原則，將不會使用高於指定版本的 SSL/TLS 版本進行連線。
 
-若停用或不設定此原則，Thunderbird 的預設最高版本為 TLS 1.3。</string>
+若停用或不設定此原則，Firefox 的預設最高版本為 TLS 1.3。</string>
       <string id="TLS1">TLS 1.0</string>
       <string id="TLS1_1">TLS 1.1</string>
       <string id="TLS1_2">TLS 1.2</string>
@@ -786,7 +843,7 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
       <string id="SupportMenu_Explain">若啟用此原則，將在說明選單中加入技術支援資訊項目。
 
 若停用或不設定此原則，則不會加入選單項目。</string>
-      <string id="UserMessaging_WhatsNew">有什麼新鮮事</string>
+      <string id="UserMessaging_WhatsNew">有什麼新鮮事（已棄用）</string>
       <string id="UserMessaging_WhatsNew_Explain">若停用此原則，將不會顯示「有什麼新鮮事」的圖示與選單項目。
 
 若啟用或不設定此原則，則會顯示「有什麼新鮮事」的圖示與選單項目。</string>
@@ -795,9 +852,9 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
 
 若啟用或不設定此原則，則會在使用者瀏覽網站時推薦擴充套件。</string>
       <string id="UserMessaging_FeatureRecommendations">功能推薦</string>
-      <string id="UserMessaging_FeatureRecommendations_Explain">若停用此原則，將不會在使用者操作 Thunderbird 時推薦 Thunderbird 功能。
+      <string id="UserMessaging_FeatureRecommendations_Explain">若停用此原則，將不會在使用者操作 Firefox 時推薦 Firefox 功能。
 
-若啟用或不設定此原則，則會在使用者操作 Thunderbird 時推薦 Thunderbird 功能。</string>
+若啟用或不設定此原則，則會在使用者操作 Firefox 時推薦 Firefox 功能。</string>
       <string id="UserMessaging_UrlbarInterventions">介入網址列</string>
       <string id="UserMessaging_UrlbarInterventions_Explain">若停用此原則，將不會在使用者在網址列輸入時推薦操作行為。
 
@@ -835,13 +892,13 @@ If this policy is enabled or not configured, user messaging preferences cannot b
 
 若停用此原則，將只會開啟指定的加密套件組。
 
-若不設定此原則，則會根據 Thunderbird 當中的預設值來啟用或停用加密套件組。</string>
+若不設定此原則，則會根據 Firefox 當中的預設值來啟用或停用加密套件組。</string>
       <string id="EncryptedMediaExtensions_Enabled">開啟加密媒體擴充功能</string>
-      <string id="EncryptedMediaExtensions_Enabled_Explain">若停用此原則，需經使用者明確同意才會下載加密媒體擴充功能（例如 Widevine），Thunderbird 不會主動下載。
+      <string id="EncryptedMediaExtensions_Enabled_Explain">若停用此原則，需經使用者明確同意才會下載加密媒體擴充功能（例如 Widevine），Firefox 不會主動下載。
 
-若啟用或不設定此原則，Thunderbird 將自動下載並使用加密媒體擴充功能（例如 Widevine）。</string>
+若啟用或不設定此原則，Firefox 將自動下載並使用加密媒體擴充功能（例如 Widevine）。</string>
       <string id="EncryptedMediaExtensions_Locked">鎖定加密媒體擴充功能</string>
-      <string id="EncryptedMediaExtensions_Locked_Explain">若啟用此原則且停用了 EncryptedMediaExtensions，Thunderbird 將不會下載加密媒體擴充功能（例如 Widevine），也不會詢問使用者是否要安裝。
+      <string id="EncryptedMediaExtensions_Locked_Explain">若啟用此原則且停用了 EncryptedMediaExtensions，Firefox 將不會下載加密媒體擴充功能（例如 Widevine），也不會詢問使用者是否要安裝。
 
 若停用或不設定此原則，此原則就不會生效。</string>
       <string id="PDFjs_Enabled">啟用 PDF.js</string>
@@ -870,7 +927,7 @@ If this policy is enabled or not configured, user messaging preferences cannot b
       <string id="Handlers">應用程式處理方式</string>
       <string id="Handlers_Explain">若啟用此原則，您可以使用 JSON 檔案來設定預設應用程式處理方式。
 
-若停用或不設定此原則，則使用 Thunderbird 預設設定。
+若停用或不設定此原則，則使用 Firefox 預設設定。
 
 若需要建立原則的詳細資訊，請參考 https://github.com/mozilla/policy-templates/blob/master/README.md#handlers。</string>
       <string id="PreferencesOneLine">偏好設定（JSON on one line）</string>
@@ -916,13 +973,13 @@ If this policy is enabled or not configured, user messaging preferences cannot b
 
 若需要建立原則的詳細資訊，請參考 https://github.com/mozilla/policy-templates/blob/master/README.md#autolaunchprotocolsfromorigins。</string>
       <string id="WindowsSSO">Windows SSO 單一登入</string>
-      <string id="WindowsSSO_Explain">若啟用此原則，Thunderbird 將使用儲存於 Windows 的帳號密碼來登入微軟、工作單位、學校提供的帳號。
+      <string id="WindowsSSO_Explain">若啟用此原則，Firefox 將使用儲存於 Windows 的帳號密碼來登入微軟、工作單位、學校提供的帳號。
 
 若停用或不設定此原則，則必須手動輸入帳號密碼。</string>
       <string id="UseSystemPrintDialog">Use System Print Dialog</string>
-      <string id="UseSystemPrintDialog_Explain">If this policy is enabled, Thunderbird will use the system print dialog instead of showing print preview before printing.
+      <string id="UseSystemPrintDialog_Explain">If this policy is enabled, Firefox will use the system print dialog instead of showing print preview before printing.
 
-If this policy is disabled or not configured, Thunderbird will show print preview before printing.</string>
+If this policy is disabled or not configured, Firefox will show print preview before printing.</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarningsOneLine">Disable warnings based on file extension for specific file types on domains (JSON on one line)</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings">Disable warnings based on file extension for specific file types on domains</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_Explain">If this policy is enabled, you can define a list of domains and file type extensions that will be exempt from executable warnings.
@@ -931,17 +988,17 @@ If this policy is disabled or not configured, warnings are shown for all executa
 
 For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#exemptdomainfiletypepairsfromfiletypedownloadwarnings.</string>
       <string id="StartDownloadsInTempDirectory">Start Downloads in Temporary Directory</string>
-      <string id="StartDownloadsInTempDirectory_Explain">If this policy is enabled, Thunderbird will start downloads in a temporary directory and automatically deleted when you close the browser.
+      <string id="StartDownloadsInTempDirectory_Explain">If this policy is enabled, Firefox will start downloads in a temporary directory and automatically deleted when you close the browser.
 
-If this policy is disabled or not configured, Thunderbird will to the download folder and will not be automatically deleted when you close the browser.</string>
+If this policy is disabled or not configured, Firefox will to the download folder and will not be automatically deleted when you close the browser.</string>
       <string id="GoToIntranetSiteForSingleWordEntryInAddressBar">Force direct intranet site navigation on single word entries in the address bar</string>
       <string id="GoToIntranetSiteForSingleWordEntryInAddressBar_Explain">If this policy is enabled, typing single word entries in the address bar will attempt to navigate to intranet sites first, falling back to search if the DNS request fails.
 
 If this policy is disabled or not configured, typing single word entries in the address bar will search.</string>
       <string id="AppUpdatePin">Pin updates to a specific version</string>
-      <string id="AppUpdatePin_Explain">If this policy is enabled, you can specify a Thunderbird version as xx. or xx.xx. and Thunderbird will not be updated beyond that major or minor version.
+      <string id="AppUpdatePin_Explain">If this policy is enabled, you can specify a Firefox version as xx. or xx.xx. and Firefox will not be updated beyond that major or minor version.
 
-If this policy is disabled or not configured, Thunderbird will update normally.</string>
+If this policy is disabled or not configured, Firefox will update normally.</string>
       <string id="Proxy_Locked">Do not allow proxy settings to be changed</string>
       <string id="Proxy_Locked_Explain">If this policy is enabled, proxy settings cannot be changed by the user.
 
@@ -949,35 +1006,35 @@ If this policy is disabled or not configured, the user can change their proxy se
       <string id="Proxy_ConnectionType">Connection Type</string>
       <string id="Proxy_ConnectionType_Explain">If this policy is enabled, you can set the connection type.
 
-If this policy is disabled or not configured, Thunderbird defaults to using the system proxy.</string>
+If this policy is disabled or not configured, Firefox defaults to using the system proxy.</string>
       <string id="Proxy_HTTPProxy">HTTP Proxy</string>
       <string id="Proxy_HTTPProxy_Explain">If this policy is enabled, you can set the HTTP Proxy used when manual proxy configuration is specified.
 
-If this policy is disabled or not configured, Thunderbird does not use an HTTP Proxy.</string>
+If this policy is disabled or not configured, Firefox does not use an HTTP Proxy.</string>
       <string id="Proxy_UseHTTPProxyForAllProtocols">Use HTTP proxy for HTTPS</string>
       <string id="Proxy_UseHTTPProxyForAllProtocols_Explain">If this policy is enabled, the HTTP Proxy is used for HTTPS when manual proxy configuration is specified.
 
-If this policy is disabled or not configured, Thunderbird does not use an HTTPS Proxy unless specified.</string>
+If this policy is disabled or not configured, Firefox does not use an HTTPS Proxy unless specified.</string>
       <string id="Proxy_SSLProxy">HTTPS Proxy</string>
       <string id="Proxy_SSLProxy_Explain">If this policy is enabled, you can set the HTTPS Proxy used when manual proxy configuration is specified.
 
-If this policy is disabled or not configured, Thunderbird does not use an HTTPS Proxy.</string>
+If this policy is disabled or not configured, Firefox does not use an HTTPS Proxy.</string>
       <string id="Proxy_SOCKSProxy">SOCKS Host</string>
       <string id="Proxy_SOCKSProxy_Explain">If this policy is enabled, you can set the SOCKS Host and version used when manual proxy configuration is specified.
 
-If this policy is disabled or not configured, Thunderbird does not use a SOCKS Host.</string>
+If this policy is disabled or not configured, Firefox does not use a SOCKS Host.</string>
       <string id="Proxy_AutoConfigURL">Automatic proxy configuration URL</string>
       <string id="Proxy_AutoConfigURL_Explain">If this policy is enabled, you can set the automatic proxy configuration URL.
 
-If this policy is disabled or not configured, Thunderbird does not use an automatic proxy configuration URL.</string>
+If this policy is disabled or not configured, Firefox does not use an automatic proxy configuration URL.</string>
       <string id="Proxy_Passthrough">Proxy Passthrough</string>
       <string id="Proxy_Passthrough_Explain">If this policy is enabled, the proxy settings are bypassed for the locations specified.
 
-If this policy is disabled or not configured, Thunderbird does not bypass the proxy.</string>
+If this policy is disabled or not configured, Firefox does not bypass the proxy.</string>
       <string id="Proxy_AutoLogin">Do not prompt for authentication if password is saved</string>
-      <string id="Proxy_AutoLogin_Explain">If this policy is enabled, Thunderbird will not prompt for proxy authentication when a password is saved.
+      <string id="Proxy_AutoLogin_Explain">If this policy is enabled, Firefox will not prompt for proxy authentication when a password is saved.
 
-If this policy is disabled or not configured, Thunderbird will always prompt for proxy authentication.</string>
+If this policy is disabled or not configured, Firefox will always prompt for proxy authentication.</string>
       <string id="Proxy_UseProxyForDNS">Proxy DNS when using SOCKS v5</string>
       <string id="Proxy_UseProxyForDNS_Explain">If this policy is enabled, DNS is proxied when using SOCKS v5.
 
@@ -994,39 +1051,73 @@ If this policy is disabled or not configured, the built-in defaults are used.
 
 For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#containers.</string>
       <string id="FirefoxSuggest_WebSuggestions">Suggestions from the web</string>
-      <string id="FirefoxSuggest_WebSuggestions_Explain">If this policy is enabled, you will get suggestions from Thunderbird related to your search.
+      <string id="FirefoxSuggest_WebSuggestions_Explain">If this policy is enabled, you will get suggestions from Firefox related to your search.
 
 If this policy is disabled, you will not get these suggestions.
 
-If this policy is not configured, , you will get suggestions from Thunderbird related to your search.</string>
+If this policy is not configured, , you will get suggestions from Firefox related to your search.</string>
       <string id="FirefoxSuggest_SponsoredSuggestions">Suggestions from sponsors</string>
-      <string id="FirefoxSuggest_SponsoredSuggestions_Explain">If this policy is enabled, you will support the development of Thunderbird with occasional sponsored suggestions.
+      <string id="FirefoxSuggest_SponsoredSuggestions_Explain">If this policy is enabled, you will support the development of Firefox with occasional sponsored suggestions.
 
 If this policy is disabled, you will not get these suggestions.
 
 If this policy is not configured, you will get occasional sponsored suggestions.</string>
-      <string id="FirefoxSuggest_ImproveSuggest">Improve the Thunderbird Suggest experience</string>
+      <string id="FirefoxSuggest_ImproveSuggest">Improve the Firefox Suggest experience</string>
       <string id="FirefoxSuggest_ImproveSuggest_Explain">If this policy is enabled, you will help create a richer search experience by allowing Mozilla to process your search queries.
 
 If this policy is disabled or not configured, you do not allow Mozilla to process your search queries.</string>
       <string id="FirefoxSuggest_Locked">Do not allow preferences to be changed</string>
-      <string id="FirefoxSuggest_Locked_Explain">If this policy is enabled, Thunderbird Suggest preferences cannot be changed by the user.
+      <string id="FirefoxSuggest_Locked_Explain">If this policy is enabled, Firefox Suggest preferences cannot be changed by the user.
 
-If this policy is disabled or not configured, the user can change their Thunderbird Suggest preferences.</string>
+If this policy is disabled or not configured, the user can change their Firefox Suggest preferences.</string>
       <string id="PrintingEnabled">Printing</string>
       <string id="PrintingEnabled_Explain">If this policy is disabled, printing is disabled.
 
 If this policy is enabled or not configured, printing is enabled.</string>
       <string id="ManualAppUpdateOnly">Manual Update Only</string>
-      <string id="ManualAppUpdateOnly_Explain">If this policy is enabled, users will not be prompted to install updates and Thunderbird will not check for updates in the background. The user must manually check and install updates from the About dialog.
+      <string id="ManualAppUpdateOnly_Explain">If this policy is enabled, users will not be prompted to install updates and Firefox will not check for updates in the background. The user must manually check and install updates from the About dialog.
 
 If this policy is disabled or not configured, the browser receives updates.
 
 This policy is not recommended for most users.</string>
       <string id="AllowFileSelectionDialogs">Allow File Selection Dialogs</string>
-      <string id="AllowFileSelectionDialogs_Explain">If this policy is disabled, users will not be able to open file selection dialogs. In most cases, Thunderbird will act as if the user clicked the cancel button.
+      <string id="AllowFileSelectionDialogs_Explain">If this policy is disabled, users will not be able to open file selection dialogs. In most cases, Firefox will act as if the user clicked the cancel button.
 
 If this policy is enabled or not configured, users can open file selection dialogs.</string>
+      <string id="AutofillAddressEnabled">Enable autofill for addresses</string>
+      <string id="AutofillAddressEnabled_Explain">If this policy is disabled, addresses will not be autofilled for Firefox versions and regions that support it.
+
+If this policy is enabled or not configured, addresses will be autofilled for Firefox versions and regions that support it.</string>
+      <string id="AutofillCreditCardEnabled">Enable autofill for payment methods</string>
+      <string id="AutofillCreditCardEnabled_Explain">If this policy is disabled, payment methods will not be autofilled for Firefox versions and regions that support it.
+
+If this policy is enabled or not configured, payment methods will be autofilled for Firefox versions and regions that support it.</string>
+      <string id="TranslateEnabled">Enable webpage translation</string>
+      <string id="TranslateEnabled_Explain">If this policy is disabled, web page translation will not be available.
+
+If this policy is enabled or not configured, web page translation will be available.
+
+Note: Web page translation is done completely on the client, so there is no data or privacy risk.</string>
+      <string id="DisableEncryptedClientHello">Disable Encrypted Client Hello</string>
+      <string id="DisableEncryptedClientHello_Explain">If this policy is enabled, the TLS feature Encrypted Client Hello (ECH) will be disabled.
+
+If this policy is disabled or not configured, the TLS feature Encrypted Client Hello (ECH) will be enabled.</string>
+      <string id="PostQuantumKeyAgreementEnabled">Enable post-quantum key agreement</string>
+      <string id="PostQuantumKeyAgreementEnabled_Explain">If this policy is enabled, post-quantum key agreement for TLS will be enabled.
+
+If this policy is disabled or not configured, post-quantum key agreement for TLS will be disabled.</string>
+      <string id="HttpsOnlyMode">HTTPS-Only Mode</string>
+      <string id="HttpsOnlyMode_Explain">If this policy is enabled, you can set the default behavior for HTTPS-Only Mode.
+
+If this policy is disabled or not configured, HTTPS-Only Mode is not enabled.</string>
+      <string id="HttpsOnlyMode_Allowed">Off by default</string>
+      <string id="HttpsOnlyMode_Disallowed">Off and locked</string>
+      <string id="HttpsOnlyMode_Enabled">On by default</string>
+      <string id="HttpsOnlyMode_ForceEnabled">On and locked</string>
+      <string id="HttpAllowlist">HTTP Allowlist </string>
+      <string id="HttpAllowlist_Explain">If this policy is enabled, you can specify a list origins that will not be upgraded to HTTPS.
+
+If this policy is disabled or not configured, all origins are upgraded to HTTPS if HTTPS-Only Mode is enabled.</string>
       <string id="Preferences_Boolean_Explain">若啟用此原則，偏好設定將鎖定為 true。若停用此原則，偏好設定則鎖定為 false。
 
 若需要偏好設定的詳細說明，請參考：
@@ -1130,12 +1221,8 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。
       <presentation id="WebsiteFilter">
         <listBox refId="WebsiteFilter"/>
       </presentation>
-      <presentation id="Permissions">
-        <listBox refId="Permissions"/>
-      </presentation>
-      <presentation id="PopupsAllow">
-        <listBox refId="PopupsAllowDesc">允許網站彈出視窗</listBox>
-      </presentation>
+      <presentation id="Permissions"><listBox refId="Permissions"/></presentation>
+      <presentation id="PopupsAllow"><listBox refId="PopupsAllowDesc">允許網站彈出視窗</listBox></presentation>
       <presentation id="Cookies_AcceptThirdParty">
         <dropdownList refId="Cookies_AcceptThirdParty"/>
       </presentation>
@@ -1396,6 +1483,9 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。
         </textBox>
         <text>Example: .mozilla.org, .net.nz, 192.168.1.0/24</text>
         <text>Connections to localhost, 127.0.0.1/8, and ::1 are never proxied.</text>
+      </presentation>
+      <presentation id="HttpsOnlyMode">
+        <dropdownList refId="HttpsOnlyMode"/>
       </presentation>
     </presentationTable>
   </resources>

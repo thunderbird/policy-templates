@@ -9,8 +9,8 @@ Policies can be specified by creating a file called `policies.json`:
    policy by placing the file in `/etc/thunderbird/policies`.
 
 Alternatively, policies can be specified via platform specific methods:
- * Windows: [group policy templates](https://github.com/thunderbird/policy-templates/tree/master/docs/templates/esr102/windows) or [intune](https://support.mozilla.org/kb/managing-firefox-intune)
- * Mac: [configuration profiles](mac)
+ * Windows: [group policy templates](https://support.mozilla.org/en-US/kb/customizing-firefox-using-group-policy-windows) ([thunderbird.admx](https://github.com/thunderbird/policy-templates/tree/master/docs/templates/esr102/windows)) or [intune](https://support.mozilla.org/kb/managing-firefox-intune)
+ * Mac: [configuration profiles](https://support.mozilla.org/en-US/kb/managing-policies-macos-desktops) ([org.mozilla.thunderbird.plist](https://github.com/thunderbird/policy-templates/blob/master/docs/templates/esr102/mac/org.mozilla.thunderbird.plist))
     
 This document provides for all policies examples for the mentioned formats.
 

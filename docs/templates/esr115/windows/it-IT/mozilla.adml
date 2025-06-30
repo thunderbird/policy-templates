@@ -1,24 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="5.9" schemaVersion="1.0">
+<policyDefinitionResources revision="5.12" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
     <stringTable>
-      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
-      <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
-      <string id="SUPPORTED_ID_10">Thunderbird 102.0 - *</string>
-      <string id="SUPPORTED_ID_11">Thunderbird 104.0 - *</string>
-      <string id="SUPPORTED_ID_12">Thunderbird 108.0 - *</string>
-      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
-      <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
-      <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
-      <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
-      <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
-      <string id="SUPPORTED_ID_8">Thunderbird 91.0 - *</string>
-      <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 o versione successiva</string>
       <string id="UNSUPPORTED">Non più supportato.</string>
-      <string id="thunderbird">Thunderbird</string>
+      <string id="SUPPORTED_FF60">Firefox 60 o versione successiva, Firefox 60 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF62">Firefox 62 o versione successiva, Firefox 60.2 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF63">Firefox 63 o versione successiva</string>
+      <string id="SUPPORTED_FF64">Firefox 64 o versione successiva, Firefox 60.4 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF66">Firefox 66 o versione successiva, Firefox 60.6 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF67">Firefox 67 o versione successiva, Firefox 60.7 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF68">Firefox 68 o versione successiva, Firefox 68 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF6801">Firefox 68.0.1 o versione successiva, Firefox 68.0.1 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF60ESR">Firefox 60 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF68ESR">Firefox 68.5 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF69">Firefox 69 o versione successiva, Firefox 68.1 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF70">Firefox 70 o versione successiva, Firefox 68.2 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF71">Firefox 71 o versione successiva, Firefox 68.3 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF72">Firefox 72 o versione successiva, Firefox 68.4 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF73">Firefox 73 o versione successiva, Firefox 68.5 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF74">Firefox 74 o versione successiva, Firefox 68.6 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF75">Firefox 75 o versione successiva, Firefox 68.7 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF75_ONLY">Firefox 75 o versione successiva</string>
+      <string id="SUPPORTED_FF76">Firefox 76 o versione successiva, Firefox 68.8 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF76_ONLY">Firefox 76 o versione successiva</string>
+      <string id="SUPPORTED_FF77">Firefox 77 o versione successiva, Firefox 68.9 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF77_ONLY">Firefox 77 o versione successiva</string>
+      <string id="SUPPORTED_FF78">Firefox 78 o versione successiva</string>
+      <string id="SUPPORTED_FF79">Firefox 79 o versione successiva, Firefox 78.1 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF80">Firefox 80 o versione successiva, Firefox 78.2 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF81">Firefox 81 o versione successiva, Firefox 78.3 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF82">Firefox 82 o versione successiva, Firefox 78.4 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF83">Firefox 83 o versione successiva, Firefox 78.5 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF84">Firefox 84 o versione successiva, Firefox 78.6 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF85">Firefox 85 o versione successiva, Firefox 78.7 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF86">Firefox 86 o versione successiva, Firefox 78.8 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF88">Firefox 88 o versione successiva, Firefox 78.10 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF89">Firefox 89 o versione successiva, Firefox 78.11 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF90">Firefox 90 o versione successiva, Firefox 78.12 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF91">Firefox 91 o versione successiva</string>
+      <string id="SUPPORTED_FF95">Firefox 95 o versione successiva, Firefox 91.4 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF96">Firefox 96 o versione successiva, Firefox 91.5 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF96_ONLY">Firefox 96 o versione successiva</string>
+      <string id="SUPPORTED_FF97">Firefox 97 o versione successiva, Firefox 91.6 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF98_ONLY">Firefox 98 o versione successiva</string>
+      <string id="SUPPORTED_FF99">Firefox 99 o versione successiva, Firefox 91.8 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF100">Firefox 100 o versione successiva, Firefox 91.9 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF101">Firefox 101 o versione successiva, Firefox 91.10 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF102">Firefox 102 o versione successiva</string>
+      <string id="SUPPORTED_FF104">Firefox 104 o versione successiva, Firefox 102.2 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF105">Firefox 105 o versione successiva, Firefox 102.3 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF106">Firefox 106 o versione successiva, Firefox 102.4 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF107">Firefox 107 o versione successiva, Firefox 102.5 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF108">Firefox 108 o versione successiva, Firefox 102.6 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF109">Firefox 109 o versione successiva, Firefox 102.7 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF110">Firefox 110 o versione successiva, Firefox 102.8 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF112_ONLY">Firefox 112 o versione successiva</string>
+      <string id="SUPPORTED_FF113_ONLY">Firefox 113 o versione successiva</string>
+      <string id="SUPPORTED_FF114">Firefox 114 o versione successiva, Firefox 102.12 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF118">Firefox 118 o versione successiva, Firefox 105.3 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF120">Firefox 120 o versione successiva, Firefox 105.5 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF121">Firefox 121 o versione successiva, Firefox 105.6 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF122">Firefox 122 o versione successiva, Firefox 105.7 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF123">Firefox 123 o versione successiva, Firefox 105.8 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF124">Firefox 124 o versione successiva, Firefox 105.9 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF124_ONLY">Firefox 124 o versione successiva</string>
+      <string id="SUPPORTED_FF125">Firefox 125 o versione successiva, Firefox 105.10 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF126_ONLY">Firefox 126 o versione successiva</string>
+      <string id="SUPPORTED_FF127_ONLY">Firefox 127 o versione successiva</string>
+      <string id="SUPPORTED_FF128">Firefox 128 o versione successiva, Firefox 105.13 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF129">Firefox 129 o versione successiva, Firefox 105.14 ESR o versione successiva</string>
+      <string id="SUPPORTED_FF130">Firefox 130 o versione successiva, Firefox 105.15 ESR o versione successiva</string>
+      <string id="firefox">Firefox</string>
       <string id="Permissions_group">Permessi</string>
       <string id="Camera_group">Fotocamera</string>
       <string id="Microphone_group">Microfono</string>
@@ -44,16 +99,16 @@
       <string id="PictureInPicture_group">Picture-in-Picture</string>
       <string id="ProxySettings_group">Proxy Settings</string>
       <string id="SecurityDevices_group">Security Devices</string>
-      <string id="FirefoxSuggest_group">Thunderbird Suggest (US only)</string>
+      <string id="FirefoxSuggest_group">Firefox Suggest (US only)</string>
       <string id="Allow">Siti consentiti</string>
       <string id="AllowSession">Siti consentiti (solo sessione)</string>
       <string id="Block">Siti bloccati</string>
       <string id="AppAutoUpdate">Aggiornamento automatico applicazione</string>
-      <string id="AppAutoUpdate_Explain">Se questo criterio è abilitato, Thunderbird è aggiornato automaticamente senza l'approvazione dell'utente.
+      <string id="AppAutoUpdate_Explain">Se questo criterio è abilitato, Firefox è aggiornato automaticamente senza l'approvazione dell'utente.
 
-Se questo criterio è disabilitato, gli aggiornamenti di Thunderbird sono scaricati ma l'utente può scegliere quando installare l'aggiornamento.
+Se questo criterio è disabilitato, gli aggiornamenti di Firefox sono scaricati ma l'utente può scegliere quando installare l'aggiornamento.
 
-Se questo criterio non è configurato, l'utente può scegliere se Thunderbird verrà aggiornato automaticamente o meno.</string>
+Se questo criterio non è configurato, l'utente può scegliere se Firefox verrà aggiornato automaticamente o meno.</string>
       <string id="AppUpdateURL">URL aggiornamento personalizzato</string>
       <string id="AppUpdateURL_Explain">Se questo criterio è abilitato, è possibile impostare un URL diverso da quello predefinito per il server di aggiornamento. Ciò potrebbe essere utile se si dispone di un server di aggiornamento sulla propria rete.
 
@@ -117,21 +172,21 @@ Se questo criterio è disabilitato o non configurato, l'utente può impostare un
 
 Se questo criterio è abilitato o non configurato, il supporto per i captive portal è abilitato.</string>
       <string id="Certificates_ImportEnterpriseRoots">Importa Autorità di certificazione radice enterprise</string>
-      <string id="Certificates_ImportEnterpriseRoots_Explain">Se questo criterio è abilitato, Thunderbird utilizzerà i certificati radice nell'Archivio certificati di Windows.
+      <string id="Certificates_ImportEnterpriseRoots_Explain">Se questo criterio è abilitato, Firefox utilizzerà i certificati radice nell'Archivio certificati di Windows.
 
-Se questo criterio è disabilitato o non configurato, Thunderbird non utilizzerà i certificati radice nell'Archivio certificati di Windows.</string>
+Se questo criterio è disabilitato o non configurato, Firefox non utilizzerà i certificati radice nell'Archivio certificati di Windows.</string>
       <string id="Certificates_Install">Installa certificati</string>
-      <string id="Certificates_Install_Explain">Se questo criterio è abilitato, Thunderbird installerà i certificati elencati in Thunderbird. Questi saranno cercati in %USERPROFILE%\AppData\Local\Mozilla\Certificates e in %USERPROFILE%\AppData\Roaming\Mozilla\Certificates.
+      <string id="Certificates_Install_Explain">Se questo criterio è abilitato, Firefox installerà i certificati elencati in Firefox. Questi saranno cercati in %USERPROFILE%\AppData\Local\Mozilla\Certificates e in %USERPROFILE%\AppData\Roaming\Mozilla\Certificates.
 
-Se questo criterio è disabilitato o non configurato, Thunderbird non installerà certificati aggiuntivi.</string>
+Se questo criterio è disabilitato o non configurato, Firefox non installerà certificati aggiuntivi.</string>
       <string id="DefaultDownloadDirectory">Directory di download predefinita</string>
       <string id="DefaultDownloadDirectory_Explain">Se questo criterio è abilitato, è possibile impostare la directory predefinita per i download. È possibile usare ${home} per specificare il percorso nativo della directory utente.
 
-Se questo criterio è disabilitato o non configurato, Thunderbird utilizzerà la directory di download predefinita.</string>
+Se questo criterio è disabilitato o non configurato, Firefox utilizzerà la directory di download predefinita.</string>
       <string id="DownloadDirectory">Directory di download</string>
       <string id="DownloadDirectory_Explain">Se questo criterio è abilitato, è possibile impostare e rendere non modificabile la directory per i download. È possibile usare ${home} per specificare il percorso nativo della directory utente.
 
-Se questo criterio è disabilitato o non configurato, Thunderbird utilizzerà la directory di download predefinita e l'utente sarà in grado di modificarla.</string>
+Se questo criterio è disabilitato o non configurato, Firefox utilizzerà la directory di download predefinita e l'utente sarà in grado di modificarla.</string>
       <string id="DNSOverHTTPS_group">DNS su HTTPS</string>
       <string id="DNSOverHTTPS_Enabled">Abilitato</string>
       <string id="DNSOverHTTPS_Enabled_Explain">Se questo criterio è disabilitato, DNS su HTTPS è disabilitato.
@@ -141,6 +196,7 @@ Se questo criterio è abilitato o non configurato, DNS su HTTPS è abilitato.</s
       <string id="DNSOverHTTPS_ProviderURL_Explain">Se questo criterio è abilitato, l'URL specificato sarà utilizzato come URL provider.
 
 Se questo criterio è disabilitato o non configurato, sarà utilizzato il provider predefinito.</string>
+
       <string id="DNSOverHTTPS_Locked">Bloccato</string>
       <string id="DNSOverHTTPS_Locked_Explain">Se questo criterio è abilitato, le impostazioni DNS su HTTPS non possono essere modificate dall'utente.
 
@@ -152,11 +208,11 @@ Se questo criterio è disabilitato o non configurato, nessun dominio è escluso 
       <string id="DNSOverHTTPS">Configura DNS su HTTPS (spostato)</string>
       <string id="DNSOverHTTPS_Explain">Se questo criterio è abilitato, la configurazione predefinita per DNS su HTTPS può essere modificata.
 
-Se questo criterio è disabilitato o non configurato, DNS su HTTPS utilizza la configurazione predefinita di Thunderbird.</string>
+Se questo criterio è disabilitato o non configurato, DNS su HTTPS utilizza la configurazione predefinita di Firefox.</string>
       <string id="DNSOverHTTPS_Fallback">Fallback</string>
-      <string id="DNSOverHTTPS_Fallback_Explain">If this policy is disabled, Thunderbird will not fallback to your default DNS resolver if there is a problem with the secure DNS provider.
+      <string id="DNSOverHTTPS_Fallback_Explain">If this policy is disabled, Firefox will not fallback to your default DNS resolver if there is a problem with the secure DNS provider.
 
-If this policy is enabled or not configured, Thunderbird will use your default DNS resolver if there is a problem with the secure DNS provider.</string>
+If this policy is enabled or not configured, Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.</string>
       <string id="DisableMasterPasswordCreation">Disabilita creazione password principale</string>
       <string id="DisableMasterPasswordCreation_Explain">Se questo criterio è abilitato, gli utenti non possono creare una password principale.
 
@@ -166,45 +222,45 @@ Se questo criterio è disabilitato o non configurato, gli utenti possono creare 
 
 Se questo criterio è disabilitato o non configurato, il browser riceverà aggiornamenti.</string>
       <string id="DisableBuiltinPDFViewer">Disabilita visualizzatore PDF integrato (PDF.js)</string>
-      <string id="DisableBuiltinPDFViewer_Explain">Se questo criterio è abilitato, i file PDF non sono visualizzati all'interno di Thunderbird.
+      <string id="DisableBuiltinPDFViewer_Explain">Se questo criterio è abilitato, i file PDF non sono visualizzati all'interno di Firefox.
 
-Se questo criterio è disabilitato o non configurato, i file PDF sono visualizzati all'interno di Thunderbird.</string>
+Se questo criterio è disabilitato o non configurato, i file PDF sono visualizzati all'interno di Firefox.</string>
       <string id="DisableDefaultBrowserAgent">Disabilita l'agente browser predefinito</string>
       <string id="DisableDefaultBrowserAgent_Explain">Se questo criterio è abilitato, l'agente browser predefinito è disabilitato.
 
 Se questo criterio è disabilitato o non configurato, l'agente browser predefinito è abilitato.
 
-Per ulteriori informazioni sull'agente browser predefinito, si veda https://thunderbird-source-docs.mozilla.org/toolkit/mozapps/defaultagent/default-browser-agent/index.html</string>
+Per ulteriori informazioni sull'agente browser predefinito, si veda https://firefox-source-docs.mozilla.org/toolkit/mozapps/defaultagent/default-browser-agent/index.html</string>
       <string id="DisableDeveloperTools">Disabilita Strumenti Sviluppo web</string>
-      <string id="DisableDeveloperTools_Explain">Se questo criterio è abilitato, gli Strumenti Sviluppo web non sono disponibili all'interno di Thunderbird.
+      <string id="DisableDeveloperTools_Explain">Se questo criterio è abilitato, gli Strumenti Sviluppo web non sono disponibili all'interno di Firefox.
 
-Se questo criterio è disabilitato o non configurato, gli Strumenti Sviluppo web sono disponibili all'interno di Thunderbird.</string>
+Se questo criterio è disabilitato o non configurato, gli Strumenti Sviluppo web sono disponibili all'interno di Firefox.</string>
       <string id="DisableFeedbackCommands">Disabilita comandi feedback</string>
       <string id="DisableFeedbackCommands_Explain">Se questo criterio è abilitato, le voci di menù "Invia feedback" e "Segnala un sito ingannevole" non sono disponibili nel menù Aiuto.
 
 Se questo criterio è disabilitato o non configurato, le voci di menù "Invia feedback" e "Segnala un sito ingannevole" sono disponibili nel menù Aiuto.</string>
-      <string id="DisableFirefoxAccounts">Disabilita Account Thunderbird</string>
-      <string id="DisableFirefoxAccounts_Explain">Se questo criterio è abilitato, la funzionalità Account Thunderbird è disabilitata (ciò include la disabilitazione di Sync).
+      <string id="DisableFirefoxAccounts">Disabilita Account Firefox</string>
+      <string id="DisableFirefoxAccounts_Explain">Se questo criterio è abilitato, la funzionalità Account Firefox è disabilitata (ciò include la disabilitazione di Sync).
 
-Se questo criterio è disabilitato o non configurato, Account Thunderbird e Sync sono disponibili.</string>
-      <string id="DisableFirefoxScreenshots">Disabilita Thunderbird Screenshots</string>
-      <string id="DisableFirefoxScreenshots_Explain">Se questo criterio è abilitato, Thunderbird Screenshots non è disponibile.
+Se questo criterio è disabilitato o non configurato, Account Firefox e Sync sono disponibili.</string>
+      <string id="DisableFirefoxScreenshots">Disabilita Firefox Screenshots</string>
+      <string id="DisableFirefoxScreenshots_Explain">Se questo criterio è abilitato, Firefox Screenshots non è disponibile.
 
-Se questo criterio è disabilitato o non configurato, Thunderbird Screenshots è disponibile.</string>
-      <string id="DisableFirefoxStudies">Disabilita Thunderbird Studies</string>
-      <string id="DisableFirefoxStudies_Explain">Se questo criterio è abilitato, Thunderbird non eseguirà mai studi SHIELD né proporrà sondaggi Heartbeat.
+Se questo criterio è disabilitato o non configurato, Firefox Screenshots è disponibile.</string>
+      <string id="DisableFirefoxStudies">Disabilita Firefox Studies</string>
+      <string id="DisableFirefoxStudies_Explain">Se questo criterio è abilitato, Firefox non eseguirà mai studi SHIELD né proporrà sondaggi Heartbeat.
 
 Se questo criterio è disabilitato o non configurato, l'utente può scegliere di abilitare gli studi SHIELD o i sondaggi Heartbeat.
 
-Per ulteriori informazioni, vedi https://support.mozilla.org/en-US/kb/shield e https://wiki.mozilla.org/Thunderbird/Shield/Heartbeat</string>
+Per ulteriori informazioni, vedi https://support.mozilla.org/en-US/kb/shield e https://wiki.mozilla.org/Firefox/Shield/Heartbeat</string>
       <string id="DisableForgetButton">Disabilita pulsante Dimentica</string>
       <string id="DisableForgetButton_Explain">Se questo criterio è abilitato, il pulsante "Dimentica" non è disponibile.
 
 Se questo criterio è disabilitato o non configurato, il pulsante "Dimentica" è disponibile.</string>
       <string id="DisableFormHistory">Disabilita Cronologia moduli</string>
-      <string id="DisableFormHistory_Explain">Se questo criterio è abilitato, Thunderbird non ricorderà la cronologia dei moduli o di ricerca.
+      <string id="DisableFormHistory_Explain">Se questo criterio è abilitato, Firefox non ricorderà la cronologia dei moduli o di ricerca.
 
-Se questo criterio è disabilitato o non configurato, Thunderbird ricorderà la cronologia dei moduli e di ricerca.</string>
+Se questo criterio è disabilitato o non configurato, Firefox ricorderà la cronologia dei moduli e di ricerca.</string>
       <string id="DisablePasswordReveal">Non consentire la visualizzazione delle password nelle Credenziali salvate</string>
       <string id="DisablePasswordReveal_Explain">Se questo criterio è abilitato, gli utenti non possono visualizzare le password nelle Credenziali salvate.
 
@@ -222,9 +278,9 @@ Se questo criterio è disabilitato o non configurato, la navigazione anonima è 
 
 Se questo criterio è disabilitato o non configurato, l'opzione "Importa dati da un altro browser" è disponibile.</string>
       <string id="DisableProfileRefresh">Disabilita Ripristino profilo</string>
-      <string id="DisableProfileRefresh_Explain">Se questo criterio è abilitato, il pulsante "Ripristina Thunderbird" non è disponibile nella pagina about:support o su support.mozilla.org.
+      <string id="DisableProfileRefresh_Explain">Se questo criterio è abilitato, il pulsante "Ripristina Firefox" non è disponibile nella pagina about:support o su support.mozilla.org.
 
-Se questo criterio è disabilitato o non configurato, il pulsante "Ripristina Thunderbird" è disponibile.</string>
+Se questo criterio è disabilitato o non configurato, il pulsante "Ripristina Firefox" è disponibile.</string>
       <string id="DisableSafeMode">Disabilita Modalità provvisoria</string>
       <string id="DisableSafeMode_Explain">Se questo criterio è abilitato, l'utente non può riavviare il browser in Modalità provvisoria.
 
@@ -271,11 +327,11 @@ Se questo criterio è disabilitato o non configurato, la barra dei menù non è 
       <string id="DisplayMenuBar_Default_On">Sì per impostazione predefinita</string>
       <string id="DisplayMenuBar_Default_Off">No per impostazione predefinita</string>
       <string id="DontCheckDefaultBrowser">Non controllare il browser predefinito</string>
-      <string id="DontCheckDefaultBrowser_Explain">Se questo criterio è abilitato, Thunderbird all'avvio non controlla se è il browser predefinito.
+      <string id="DontCheckDefaultBrowser_Explain">Se questo criterio è abilitato, Firefox all'avvio non controlla se è il browser predefinito.
 
-Se questo criterio è disabilitato o non configurato, Thunderbird all'avvio controlla se è il browser predefinito.</string>
+Se questo criterio è disabilitato o non configurato, Firefox all'avvio controlla se è il browser predefinito.</string>
       <string id="Extensions_Install">Estensioni da installare</string>
-      <string id="Extensions_Install_Explain">Se questo criterio è abilitato, è possibile specificare un elenco di URL o percorsi a estensioni che saranno installate all'avvio di Thunderbird.
+      <string id="Extensions_Install_Explain">Se questo criterio è abilitato, è possibile specificare un elenco di URL o percorsi a estensioni che saranno installate all'avvio di Firefox.
 Le estensioni saranno reinstallate a ogni modifica dell'elenco.
 
 Se questo criterio è disabilitato o non configurato, non sarà installata alcuna estensione.</string>
@@ -304,17 +360,17 @@ Per informazioni dettagliate sulla creazione della policy, si veda https://githu
 
 Se questo criterio è abilitato o non configurato, l'accelerazione hardware è abilitata.</string>
       <string id="LegacyProfiles">Profili legacy</string>
-      <string id="LegacyProfiles_Explain">Se questo criterio è abilitato, Thunderbird non tenterà di creare profili differenti per le installazioni di Thunderbird eseguite in directory differenti. Questo criterio è l'equivalente della variabile d'ambiente MOZ_LEGACY_PROFILES.
+      <string id="LegacyProfiles_Explain">Se questo criterio è abilitato, Firefox non tenterà di creare profili differenti per le installazioni di Firefox eseguite in directory differenti. Questo criterio è l'equivalente della variabile d'ambiente MOZ_LEGACY_PROFILES.
 
-Se questo criterio è disabilitato o non configurato, Thunderbird creerà un nuovo profilo per ogni singola installazione di Thunderbird.</string>
+Se questo criterio è disabilitato o non configurato, Firefox creerà un nuovo profilo per ogni singola installazione di Firefox.</string>
       <string id="LegacySameSiteCookieBehaviorEnabled">Revert to legacy SameSite behavior</string>
-      <string id="LegacySameSiteCookieBehaviorEnabled_Explain">If this policy is enabled, Thunderbird will revert to the legacy behavior of SameSite. This means that cookies that don't explicitly specify a SameSite attribute are treated as if they were SameSite=None.
+      <string id="LegacySameSiteCookieBehaviorEnabled_Explain">If this policy is enabled, Firefox will revert to the legacy behavior of SameSite. This means that cookies that don't explicitly specify a SameSite attribute are treated as if they were SameSite=None.
 
-If this policy is disabled or not configured, Thunderbird will enforce SameSite=lax.</string>
+If this policy is disabled or not configured, Firefox will enforce SameSite=lax.</string>
       <string id="LegacySameSiteCookieBehaviorEnabledForDomainList">Revert to legacy SameSite behavior on specific domains</string>
-      <string id="LegacySameSiteCookieBehaviorEnabledForDomainList_Explain">If this policy is enabled, Thunderbird will revert to the legacy behavior of SameSite for the specified domains. This means that cookies that don't explicitly specify a SameSite attribute are treated as if they were SameSite=None.
+      <string id="LegacySameSiteCookieBehaviorEnabledForDomainList_Explain">If this policy is enabled, Firefox will revert to the legacy behavior of SameSite for the specified domains. This means that cookies that don't explicitly specify a SameSite attribute are treated as if they were SameSite=None.
 
-If this policy is disabled or not configured, Thunderbird will enforce SameSite=lax for all domains.</string>
+If this policy is disabled or not configured, Firefox will enforce SameSite=lax for all domains.</string>
       <string id="LocalFileLinks">Collegamenti file locali</string>
       <string id="LocalFileLinks_Explain">Se questo criterio è abilitato, è possibile specificare le origini da cui sono consentiti i collegamenti ai file locali.
 
@@ -328,13 +384,13 @@ Se questo criterio è abilitato o non configurato, la previsione di rete (prefet
 
 Se questo criterio è abilitato o non configurato, la pagina Nuova scheda sarà quella predefinita.</string>
       <string id="OfferToSaveLogins">Offri di salvare le credenziali di accesso</string>
-      <string id="OfferToSaveLogins_Explain">Se questo criterio è abilitato o non configurato, Thunderbird si offrirà di salvare i nomi utente e le password di accesso ai siti.
+      <string id="OfferToSaveLogins_Explain">Se questo criterio è abilitato o non configurato, Firefox si offrirà di salvare i nomi utente e le password di accesso ai siti.
 
-Se questo criterio è disabilitato, Thunderbird non offrirà la possibilità di salvare i nomi utente e le password di accesso ai siti.</string>
+Se questo criterio è disabilitato, Firefox non offrirà la possibilità di salvare i nomi utente e le password di accesso ai siti.</string>
       <string id="OfferToSaveLoginsDefault">Offri di salvare le credenziali di accesso (default)</string>
-      <string id="OfferToSaveLoginsDefault_Explain">Se questo criterio è abilitato o non configurato, Thunderbird si offrirà di salvare i nomi utente e le password di accesso ai siti.
+      <string id="OfferToSaveLoginsDefault_Explain">Se questo criterio è abilitato o non configurato, Firefox si offrirà di salvare i nomi utente e le password di accesso ai siti.
 
-Se questo criterio è disabilitato, Thunderbird non offrirà la possibilità di salvare i nomi utente e le password di accesso ai siti.
+Se questo criterio è disabilitato, Firefox non offrirà la possibilità di salvare i nomi utente e le password di accesso ai siti.
 
 In entrambi i casi, l'utente sarà in grado di modificare il valore (non è bloccato).</string>
       <string id="PopupBlocking_Allow_Explain">Se questo criterio è abilitato, le finestre pop-up sui siti indicati sono sempre consentite. Se è specificato un dominio di primo livello (http://example.org), le finestre pop-up sono consentite anche per tutti i sottodomini.
@@ -375,12 +431,12 @@ Quest'impostazione è ignorata se questo criterio è disabilitato o non configur
       <string id="Cookies_AcceptThirdParty_All">Sempre</string>
       <string id="Cookies_AcceptThirdParty_None">Mai</string>
       <string id="Cookies_AcceptThirdParty_FromVisited">Dai siti visitati</string>
-      <string id="Cookies_ExpireAtSessionEnd">Conserva i cookie fino alla chiusura di Thunderbird</string>
-      <string id="Cookies_ExpireAtSessionEnd_Explain">Se questo criterio è abilitato e i cookie sono consentiti, questi scadranno alla chiusura di Thunderbird.
+      <string id="Cookies_ExpireAtSessionEnd">Conserva i cookie fino alla chiusura di Firefox</string>
+      <string id="Cookies_ExpireAtSessionEnd_Explain">Se questo criterio è abilitato e i cookie sono consentiti, questi scadranno alla chiusura di Firefox.
 
 Quest'impostazione è ignorata se questo criterio è disabilitato o non configurato o se i cookie non sono consentiti.</string>
       <string id="Cookies_RejectTracker">Rifiuta elementi traccianti (deprecata)</string>
-      <string id="Cookies_RejectTracker_Explain">Se questo criterio è abilitato e i cookie sono consentiti, Thunderbird rifiuterà gli elementi traccianti per impostazione predefinita.
+      <string id="Cookies_RejectTracker_Explain">Se questo criterio è abilitato e i cookie sono consentiti, Firefox rifiuterà gli elementi traccianti per impostazione predefinita.
 
 Quest'impostazione è ignorata se questo criterio è disabilitato o non configurato o se i cookie non sono consentiti.</string>
       <string id="Cookies_Locked">Non consentire la modifica delle preferenze</string>
@@ -490,8 +546,8 @@ If this policy is disabled or not configured, any site that is not in the Block 
       <string id="VirtualReality_Locked_Explain">If this policy is enabled, virtual reality preferences cannot be changed by the user.
 
 If this policy is disabled or not configured, the user can change their virtual reality preferences.</string>
-      <string id="FirefoxHome">Personalizza pagina iniziale di Thunderbird</string>
-      <string id="FirefoxHome_Explain">Se questo criterio è abilitato, è possibile scegliere le sezioni visualizzate nella pagina iniziale di Thunderbird e impedire all'utente di modificarle.
+      <string id="FirefoxHome">Personalizza pagina iniziale di Firefox</string>
+      <string id="FirefoxHome_Explain">Se questo criterio è abilitato, è possibile scegliere le sezioni visualizzate nella pagina iniziale di Firefox e impedire all'utente di modificarle.
 
 Se questo criterio è disabilitato o non configurato, saranno visualizzate le sezioni predefinite e l'utente potrà modificarle.</string>
       <string id="FlashPlugin_Allow_Explain">Se questo criterio è abilitato, Flash è attivato per impostazione predefinita sui siti indicati a meno che non sia completamente disabilitato. Se è specificato un dominio di primo livello (http://example.org), Flash è consentito anche su tutti i sottodomini.
@@ -513,18 +569,19 @@ Se questo criterio è disabilitato o non configurato, l'utente può modificare l
       <string id="OverrideFirstRunPage">Esegui l'override della pagina visualizzata al primo avvio</string>
       <string id="OverrideFirstRunPage_Explain">Se questo criterio è abilitato, è possibile specificare l'indirizzo di una pagina da visualizzare al primo avvio del browser. Se il campo è lasciato vuoto, non verrà visualizzata alcuna pagina al primo avvio.
 
-Starting with Thunderbird 83, Thunderbird ESR 78.5, you can also specify multiple URLS separated by a vertical bar (|).
+Starting with Firefox 83, Firefox ESR 78.5, you can also specify multiple URLS separated by a vertical bar (|).
 
 Se questo criterio è disabilitato o non configurato, al primo avvio verrà visualizzata la pagina predefinita.</string>
       <string id="OverridePostUpdatePage">Esegui l'override della pagina visualizzata dopo un aggiornamento</string>
-      <string id="OverridePostUpdatePage_Explain">Se questo criterio è abilitato, è possibile specificare l'indirizzo di una pagina da visualizzare dopo l'aggiornamento di Thunderbird. Se il campo è lasciato vuoto, non verrà visualizzata alcuna pagina dopo l'aggiornamento.
+      <string id="OverridePostUpdatePage_Explain">Se questo criterio è abilitato, è possibile specificare l'indirizzo di una pagina da visualizzare dopo l'aggiornamento di Firefox. Se il campo è lasciato vuoto, non verrà visualizzata alcuna pagina dopo l'aggiornamento.
 
 Se questo criterio è disabilitato o non configurato, dopo ogni aggiornamento verrà visualizzata la pagina predefinita.</string>
       <string id="SanitizeOnShutdown">Cancella tutti i dati alla chiusura del browser</string>
-      <string id="SanitizeOnShutdown_Explain">Se questo criterio è abilitato, tutti i dati saranno cancellati alla chiusura di Thunderbird. Ciò include la cronologia di navigazione e dei download, i cookie, gli accessi effettuati, la cache, la cronologia dei moduli e di ricerca, le preferenze e i dati non in linea dei siti Web.
+      <string id="SanitizeOnShutdown_Explain">Se questo criterio è abilitato, tutti i dati saranno cancellati alla chiusura di Firefox. Ciò include la cronologia di navigazione e dei download, i cookie, gli accessi effettuati, la cache, la cronologia dei moduli e di ricerca, le preferenze e i dati non in linea dei siti Web.
 
 Se questo criterio è disabilitato o non configurato, i dati non sono cancellati alla chiusura del browser.</string>
       <string id="SanitizeOnShutdown_group">Elimina i dati alla chiusura del browser</string>
+
       <string id="SanitizeOnShutdown_Cache">Cache</string>
       <string id="SanitizeOnShutdown_Cache_Explain">Se questo criterio è abilitato, la cache sarà cancellata alla chiusura del browser.
 
@@ -626,7 +683,7 @@ If this policy is disabled or not configured, websites are not filtered.</string
       <string id="Bookmark48">Segnalibro 48</string>
       <string id="Bookmark49">Segnalibro 49</string>
       <string id="Bookmark50">Segnalibro 50</string>
-      <string id="Bookmark_Explain">Se questo criterio è abilitato, è possibile configurare l'aggiunta di un segnalibro a Thunderbird. A causa di un bug, è necessario selezionare l'indirizzo. I segnalibri devono essere specificati in ordine.
+      <string id="Bookmark_Explain">Se questo criterio è abilitato, è possibile configurare l'aggiunta di un segnalibro a Firefox. A causa di un bug, è necessario selezionare l'indirizzo. I segnalibri devono essere specificati in ordine.
 
 Se questo criterio è disabilitato o non configurato, non sarà aggiunto un nuovo segnalibro.</string>
       <string id="BookmarkPlacementToolbar">Barra degli strumenti</string>
@@ -646,7 +703,7 @@ Se questo criterio è disabilitato o non configurato, l'utente può impostare e 
 
 Se questo criterio è disabilitato o non configurato, ci sarà una sola pagina iniziale.</string>
       <string id="HomepageStartPage">Pagina iniziale</string>
-      <string id="HomepageStartPage_Explain">Se questo criterio è abilitato, è possibile modificare la pagina visualizzata all'avvio di Thunderbird. Si può scegliere la pagina iniziale, la sessione precedente o una pagina vuota.
+      <string id="HomepageStartPage_Explain">Se questo criterio è abilitato, è possibile modificare la pagina visualizzata all'avvio di Firefox. Si può scegliere la pagina iniziale, la sessione precedente o una pagina vuota.
 
 Se questo criterio è disabilitato o non configurato, per impostazione predefinita come pagina iniziale verrà visualizzata la sessione precedente.</string>
       <string id="None">Nessuna</string>
@@ -658,15 +715,15 @@ Se questo criterio è disabilitato o non configurato, per impostazione predefini
 
 If this policy is disabled, the home button will not appear on the toolbar by default.
 
-If this policy is not configured, Thunderbird will determine whether or not the home button appears on the toolbar by default.</string>
+If this policy is not configured, Firefox will determine whether or not the home button appears on the toolbar by default.</string>
       <string id="PasswordManagerEnabled">Gestore password</string>
       <string id="PasswordManagerEnabled_Explain">Se questo criterio è disabilitato, il gestore password non è disponibile nelle Preferenze.
 
 Se questo criterio è abilitato o non configurato, il gestore password è disponibile nelle Preferenze.</string>
       <string id="PasswordManagerExceptions">Password Manager Exceptions</string>
-      <string id="PasswordManagerExceptions_Explain">If this policy is enabled, you can specify sites where Thunderbird won't offer to save passwords.
+      <string id="PasswordManagerExceptions_Explain">If this policy is enabled, you can specify sites where Firefox won't offer to save passwords.
 
-If this policy is disabled or not configured, Thunderbird will offer to save passwords on all sites.</string>
+If this policy is disabled or not configured, Firefox will offer to save passwords on all sites.</string>
       <string id="PromptForDownloadLocation">Richiedi percorso di download</string>
       <string id="PromptForDownloadLocation_Explain">Se questo criterio è disabilitato, all'utente non verrà chiesto un percorso di download.
 
@@ -741,13 +798,13 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
       <string id="SearchBar">Posizione barra di ricerca</string>
       <string id="SearchBar_Explain">Se questo criterio è abilitato, è possibile impostare se la barra di ricerca sarà separata dalla barra degli indirizzi.
 
-Se questo criterio è disabilitato o non configurato, i nuovi utenti visualizzeranno una barra di ricerca unificata, gli utenti che eseguono l'aggiornamento da Thunderbird 56 o da una versione precedente visualizzeranno una barra di ricerca separata.</string>
+Se questo criterio è disabilitato o non configurato, i nuovi utenti visualizzeranno una barra di ricerca unificata, gli utenti che eseguono l'aggiornamento da Firefox 56 o da una versione precedente visualizzeranno una barra di ricerca separata.</string>
       <string id="SearchEngines_1">Motore di ricerca 1</string>
       <string id="SearchEngines_2">Motore di ricerca 2</string>
       <string id="SearchEngines_3">Motore di ricerca 3</string>
       <string id="SearchEngines_4">Motore di ricerca 4</string>
       <string id="SearchEngines_5">Motore di ricerca 5</string>
-      <string id="SearchEngines_Explain">Se questo criterio è abilitato, è possibile configurare un motore di ricerca da aggiungere a Thunderbird. Utilizzare {searchTerms} per indicare dove inserire il termine di ricerca. A causa di un bug, è necessario selezionare il metodo (di solito GET). Si noti che è necessario specificare i motori di ricerca in ordine.
+      <string id="SearchEngines_Explain">Se questo criterio è abilitato, è possibile configurare un motore di ricerca da aggiungere a Firefox. Utilizzare {searchTerms} per indicare dove inserire il termine di ricerca. A causa di un bug, è necessario selezionare il metodo (di solito GET). Si noti che è necessario specificare i motori di ricerca in ordine.
 
 Se questo criterio è disabilitato o non configurato, non verrà aggiunto nessun nuovo motore di ricerca.</string>
       <string id="SearchBar_Unified">Unificata</string>
@@ -757,7 +814,7 @@ Se questo criterio è disabilitato o non configurato, non verrà aggiunto nessun
       <string id="SearchEngines_Default">Motore di ricerca predefinito</string>
       <string id="SearchEngines_Default_Explain">Se questo criterio è abilitato, è possibile digitare il nome del motore di ricerca da utilizzare per impostazione predefinita.
 
-Se questo criterio è disabilitato o non configurato, verrà utilizzato il motore di ricerca predefinito di Thunderbird.</string>
+Se questo criterio è disabilitato o non configurato, verrà utilizzato il motore di ricerca predefinito di Firefox.</string>
       <string id="SearchEngines_PreventInstalls">Impedisci l'installazione dei motori di ricerca</string>
       <string id="SearchEngines_PreventInstalls_Explain">Se questo criterio è abilitato, l'utente non potrà installare motori di ricerca dalle pagine Web.
 
@@ -773,13 +830,13 @@ Se questo criterio è abilitato, i suggerimenti di ricerca saranno abilitati.
 
 Se questo criterio non è configurato, i suggerimenti di ricerca saranno abilitati, ma l'utente li potrà disabilitare.</string>
       <string id="SSLVersionMin">Abilita versione minima SSL</string>
-      <string id="SSLVersionMin_Explain">Se questo criterio è abilitato, Thunderbird non utilizzerà versioni di SSL/TLS minori del valore specificato.
+      <string id="SSLVersionMin_Explain">Se questo criterio è abilitato, Firefox non utilizzerà versioni di SSL/TLS minori del valore specificato.
 
-Se questo criterio è disabilitato o non configurato, per impostazione predefinita Thunderbird utilizzerà TLS 1.2 come versione minima.</string>
+Se questo criterio è disabilitato o non configurato, per impostazione predefinita Firefox utilizzerà TLS 1.2 come versione minima.</string>
       <string id="SSLVersionMax">Abilita versione massima SSL</string>
-      <string id="SSLVersionMax_Explain">Se questo criterio è abilitato, Thunderbird non utilizzerà versioni di SSL/TLS maggiori del valore specificato.
+      <string id="SSLVersionMax_Explain">Se questo criterio è abilitato, Firefox non utilizzerà versioni di SSL/TLS maggiori del valore specificato.
 
-Se questo criterio è disabilitato o non configurato, per impostazione predefinita Thunderbird utilizzerà TLS 1.3 come versione massima.</string>
+Se questo criterio è disabilitato o non configurato, per impostazione predefinita Firefox utilizzerà TLS 1.3 come versione massima.</string>
       <string id="TLS1">TLS 1.0</string>
       <string id="TLS1_1">TLS 1.1</string>
       <string id="TLS1_2">TLS 1.2</string>
@@ -788,7 +845,7 @@ Se questo criterio è disabilitato o non configurato, per impostazione predefini
       <string id="SupportMenu_Explain">Se questo criterio è abilitato, al menù Aiuto sarà aggiunta una nuova voce di menù per richiamare le informazioni di supporto.
 
 Se questo criterio è disabilitato o non configurato, non sarà aggiunta nessuna voce.</string>
-      <string id="UserMessaging_WhatsNew">Novità</string>
+      <string id="UserMessaging_WhatsNew">Novità (deprecata)</string>
       <string id="UserMessaging_WhatsNew_Explain">Se questo criterio è disabilitato, l'icona e la voce di menù Novità non saranno visualizzate.
 
 Se questo criterio è abilitato o non configurato, l'icona e la voce di menù Novità saranno visualizzate.</string>
@@ -797,9 +854,9 @@ Se questo criterio è abilitato o non configurato, l'icona e la voce di menù No
 
 Se questo criterio è abilitato o non configurato, saranno consigliate delle estensioni durante la navigazione dell'utente.</string>
       <string id="UserMessaging_FeatureRecommendations">Consigli funzionalità</string>
-      <string id="UserMessaging_FeatureRecommendations_Explain">Se questo criterio è disabilitato, non saranno consigliate funzionalità di Thunderbird durante l'utilizzo di Thunderbird da parte dell'utente.
+      <string id="UserMessaging_FeatureRecommendations_Explain">Se questo criterio è disabilitato, non saranno consigliate funzionalità di Firefox durante l'utilizzo di Firefox da parte dell'utente.
 
-Se questo criterio è abilitato o non configurato, saranno consigliate funzionalità di Thunderbird durante l'utilizzo di Thunderbird da parte dell'utente.</string>
+Se questo criterio è abilitato o non configurato, saranno consigliate funzionalità di Firefox durante l'utilizzo di Firefox da parte dell'utente.</string>
       <string id="UserMessaging_UrlbarInterventions">Intervento barra degli indirizzi</string>
       <string id="UserMessaging_UrlbarInterventions_Explain">Se questo criterio è disabilitato, non saranno consigliate azioni basate su quanto l'utente ha digitato nella barra degli indirizzi.
 
@@ -837,13 +894,13 @@ If this policy is enabled or not configured, user messaging preferences cannot b
 
 Se questo criterio è disabilitato, il cifrario corrispondente è abilitato.
 
-Se questo criterio è non configurato, il cifrario corrispondente è abilitato o disabilitato in base all'impostazione predefinita di Thunderbird.</string>
+Se questo criterio è non configurato, il cifrario corrispondente è abilitato o disabilitato in base all'impostazione predefinita di Firefox.</string>
       <string id="EncryptedMediaExtensions_Enabled">Abilita Encrypted Media Extension</string>
-      <string id="EncryptedMediaExtensions_Enabled_Explain">Se questo criterio è disabilitato, le Encrypted Media Extension (come Widevine) non sono scaricate da Thunderbird a meno che l'utente non acconsenta ad installarle.
+      <string id="EncryptedMediaExtensions_Enabled_Explain">Se questo criterio è disabilitato, le Encrypted Media Extension (come Widevine) non sono scaricate da Firefox a meno che l'utente non acconsenta ad installarle.
 
-Se questo criterio è abilitato o non configurato, le Encrypted Media Extension (come Widevine) sono scaricate automaticamente e utilizzate da Thunderbird.</string>
+Se questo criterio è abilitato o non configurato, le Encrypted Media Extension (come Widevine) sono scaricate automaticamente e utilizzate da Firefox.</string>
       <string id="EncryptedMediaExtensions_Locked">Blocca Encrypted Media Extension</string>
-      <string id="EncryptedMediaExtensions_Locked_Explain">Se questo criterio è abilitato e le Encrypted Media Extension sono disabilitate, Thunderbird non scaricherà le Encrypted Media Extension (come Widevine) né chiederà all'utente di installarle.
+      <string id="EncryptedMediaExtensions_Locked_Explain">Se questo criterio è abilitato e le Encrypted Media Extension sono disabilitate, Firefox non scaricherà le Encrypted Media Extension (come Widevine) né chiederà all'utente di installarle.
 
 Se questo criterio è disabilitato o non configurato, l'impostazione non ha effetto.</string>
       <string id="PDFjs_Enabled">Abilita PDF.js</string>
@@ -862,6 +919,7 @@ Se questo criterio è abilitato o non configurato, l'interruttore Picture-in-Pic
       <string id="PictureInPicture_Locked_Explain">Se questo criterio è abilitato, le impostazioni Picture-in-Picture non possono essere modificate dall'utente.
 
 Se questo criterio è disabilitato o non configurato, le impostazioni Picture-in-Picture possono essere modificate dall'utente.</string>
+
       <string id="PrimaryPassword">Password principale</string>
       <string id="PrimaryPassword_Explain">Se questo criterio è abilitato, è richiesto impostare una password principale.
 
@@ -872,7 +930,7 @@ Se questo criterio è non configurato, gli utenti possono scegliere di creare un
       <string id="Handlers">Gestori</string>
       <string id="Handlers_Explain">Se questo criterio è abilitato, è possibile utilizzare JSON per configurare i gestori applicazione predefiniti.
 
-Se questo criterio è disabilitato o non configurato, vengono utilizzati i criteri predefiniti di Thunderbird.
+Se questo criterio è disabilitato o non configurato, vengono utilizzati i criteri predefiniti di Firefox.
 
 Per informazioni dettagliate sulla creazione del criterio, si veda https://github.com/mozilla/policy-templates/blob/master/README.md#handlers.</string>
       <string id="PreferencesOneLine">Preferenze (JSON on one line)</string>
@@ -918,13 +976,13 @@ If this policy is disabled or not configured, any site that invokes an external 
 
 For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#autolaunchprotocolsfromorigins.</string>
       <string id="WindowsSSO">Windows SSO</string>
-      <string id="WindowsSSO_Explain">If this policy is enabled, Thunderbird will use credentials stored in Windows to sign in to Microsoft, work, and school accounts.
+      <string id="WindowsSSO_Explain">If this policy is enabled, Firefox will use credentials stored in Windows to sign in to Microsoft, work, and school accounts.
 
 If this policy is disabled or not configured, credentials must be entered manually.</string>
       <string id="UseSystemPrintDialog">Use System Print Dialog</string>
-      <string id="UseSystemPrintDialog_Explain">If this policy is enabled, Thunderbird will use the system print dialog instead of showing print preview before printing.
+      <string id="UseSystemPrintDialog_Explain">If this policy is enabled, Firefox will use the system print dialog instead of showing print preview before printing.
 
-If this policy is disabled or not configured, Thunderbird will show print preview before printing.</string>
+If this policy is disabled or not configured, Firefox will show print preview before printing.</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarningsOneLine">Disable warnings based on file extension for specific file types on domains (JSON on one line)</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings">Disable warnings based on file extension for specific file types on domains</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_Explain">If this policy is enabled, you can define a list of domains and file type extensions that will be exempt from executable warnings.
@@ -933,17 +991,17 @@ If this policy is disabled or not configured, warnings are shown for all executa
 
 For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#exemptdomainfiletypepairsfromfiletypedownloadwarnings.</string>
       <string id="StartDownloadsInTempDirectory">Start Downloads in Temporary Directory</string>
-      <string id="StartDownloadsInTempDirectory_Explain">If this policy is enabled, Thunderbird will start downloads in a temporary directory and automatically deleted when you close the browser.
+      <string id="StartDownloadsInTempDirectory_Explain">If this policy is enabled, Firefox will start downloads in a temporary directory and automatically deleted when you close the browser.
 
-If this policy is disabled or not configured, Thunderbird will to the download folder and will not be automatically deleted when you close the browser.</string>
+If this policy is disabled or not configured, Firefox will to the download folder and will not be automatically deleted when you close the browser.</string>
       <string id="GoToIntranetSiteForSingleWordEntryInAddressBar">Force direct intranet site navigation on single word entries in the address bar</string>
       <string id="GoToIntranetSiteForSingleWordEntryInAddressBar_Explain">If this policy is enabled, typing single word entries in the address bar will attempt to navigate to intranet sites first, falling back to search if the DNS request fails.
 
 If this policy is disabled or not configured, typing single word entries in the address bar will search.</string>
       <string id="AppUpdatePin">Pin updates to a specific version</string>
-      <string id="AppUpdatePin_Explain">If this policy is enabled, you can specify a Thunderbird version as xx. or xx.xx. and Thunderbird will not be updated beyond that major or minor version.
+      <string id="AppUpdatePin_Explain">If this policy is enabled, you can specify a Firefox version as xx. or xx.xx. and Firefox will not be updated beyond that major or minor version.
 
-If this policy is disabled or not configured, Thunderbird will update normally.</string>
+If this policy is disabled or not configured, Firefox will update normally.</string>
       <string id="Proxy_Locked">Do not allow proxy settings to be changed</string>
       <string id="Proxy_Locked_Explain">If this policy is enabled, proxy settings cannot be changed by the user.
 
@@ -951,35 +1009,35 @@ If this policy is disabled or not configured, the user can change their proxy se
       <string id="Proxy_ConnectionType">Connection Type</string>
       <string id="Proxy_ConnectionType_Explain">If this policy is enabled, you can set the connection type.
 
-If this policy is disabled or not configured, Thunderbird defaults to using the system proxy.</string>
+If this policy is disabled or not configured, Firefox defaults to using the system proxy.</string>
       <string id="Proxy_HTTPProxy">HTTP Proxy</string>
       <string id="Proxy_HTTPProxy_Explain">If this policy is enabled, you can set the HTTP Proxy used when manual proxy configuration is specified.
 
-If this policy is disabled or not configured, Thunderbird does not use an HTTP Proxy.</string>
+If this policy is disabled or not configured, Firefox does not use an HTTP Proxy.</string>
       <string id="Proxy_UseHTTPProxyForAllProtocols">Use HTTP proxy for HTTPS</string>
       <string id="Proxy_UseHTTPProxyForAllProtocols_Explain">If this policy is enabled, the HTTP Proxy is used for HTTPS when manual proxy configuration is specified.
 
-If this policy is disabled or not configured, Thunderbird does not use an HTTPS Proxy unless specified.</string>
+If this policy is disabled or not configured, Firefox does not use an HTTPS Proxy unless specified.</string>
       <string id="Proxy_SSLProxy">HTTPS Proxy</string>
       <string id="Proxy_SSLProxy_Explain">If this policy is enabled, you can set the HTTPS Proxy used when manual proxy configuration is specified.
 
-If this policy is disabled or not configured, Thunderbird does not use an HTTPS Proxy.</string>
+If this policy is disabled or not configured, Firefox does not use an HTTPS Proxy.</string>
       <string id="Proxy_SOCKSProxy">SOCKS Host</string>
       <string id="Proxy_SOCKSProxy_Explain">If this policy is enabled, you can set the SOCKS Host and version used when manual proxy configuration is specified.
 
-If this policy is disabled or not configured, Thunderbird does not use a SOCKS Host.</string>
+If this policy is disabled or not configured, Firefox does not use a SOCKS Host.</string>
       <string id="Proxy_AutoConfigURL">Automatic proxy configuration URL</string>
       <string id="Proxy_AutoConfigURL_Explain">If this policy is enabled, you can set the automatic proxy configuration URL.
 
-If this policy is disabled or not configured, Thunderbird does not use an automatic proxy configuration URL.</string>
+If this policy is disabled or not configured, Firefox does not use an automatic proxy configuration URL.</string>
       <string id="Proxy_Passthrough">Proxy Passthrough</string>
       <string id="Proxy_Passthrough_Explain">If this policy is enabled, the proxy settings are bypassed for the locations specified.
 
-If this policy is disabled or not configured, Thunderbird does not bypass the proxy.</string>
+If this policy is disabled or not configured, Firefox does not bypass the proxy.</string>
       <string id="Proxy_AutoLogin">Do not prompt for authentication if password is saved</string>
-      <string id="Proxy_AutoLogin_Explain">If this policy is enabled, Thunderbird will not prompt for proxy authentication when a password is saved.
+      <string id="Proxy_AutoLogin_Explain">If this policy is enabled, Firefox will not prompt for proxy authentication when a password is saved.
 
-If this policy is disabled or not configured, Thunderbird will always prompt for proxy authentication.</string>
+If this policy is disabled or not configured, Firefox will always prompt for proxy authentication.</string>
       <string id="Proxy_UseProxyForDNS">Proxy DNS when using SOCKS v5</string>
       <string id="Proxy_UseProxyForDNS_Explain">If this policy is enabled, DNS is proxied when using SOCKS v5.
 
@@ -996,39 +1054,73 @@ If this policy is disabled or not configured, the built-in defaults are used.
 
 For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#containers.</string>
       <string id="FirefoxSuggest_WebSuggestions">Suggestions from the web</string>
-      <string id="FirefoxSuggest_WebSuggestions_Explain">If this policy is enabled, you will get suggestions from Thunderbird related to your search.
+      <string id="FirefoxSuggest_WebSuggestions_Explain">If this policy is enabled, you will get suggestions from Firefox related to your search.
 
 If this policy is disabled, you will not get these suggestions.
 
-If this policy is not configured, , you will get suggestions from Thunderbird related to your search.</string>
+If this policy is not configured, , you will get suggestions from Firefox related to your search.</string>
       <string id="FirefoxSuggest_SponsoredSuggestions">Suggestions from sponsors</string>
-      <string id="FirefoxSuggest_SponsoredSuggestions_Explain">If this policy is enabled, you will support the development of Thunderbird with occasional sponsored suggestions.
+      <string id="FirefoxSuggest_SponsoredSuggestions_Explain">If this policy is enabled, you will support the development of Firefox with occasional sponsored suggestions.
 
 If this policy is disabled, you will not get these suggestions.
 
 If this policy is not configured, you will get occasional sponsored suggestions.</string>
-      <string id="FirefoxSuggest_ImproveSuggest">Improve the Thunderbird Suggest experience</string>
+      <string id="FirefoxSuggest_ImproveSuggest">Improve the Firefox Suggest experience</string>
       <string id="FirefoxSuggest_ImproveSuggest_Explain">If this policy is enabled, you will help create a richer search experience by allowing Mozilla to process your search queries.
 
 If this policy is disabled or not configured, you do not allow Mozilla to process your search queries.</string>
       <string id="FirefoxSuggest_Locked">Do not allow preferences to be changed</string>
-      <string id="FirefoxSuggest_Locked_Explain">If this policy is enabled, Thunderbird Suggest preferences cannot be changed by the user.
+      <string id="FirefoxSuggest_Locked_Explain">If this policy is enabled, Firefox Suggest preferences cannot be changed by the user.
 
-If this policy is disabled or not configured, the user can change their Thunderbird Suggest preferences.</string>
+If this policy is disabled or not configured, the user can change their Firefox Suggest preferences.</string>
       <string id="PrintingEnabled">Printing</string>
       <string id="PrintingEnabled_Explain">If this policy is disabled, printing is disabled.
 
 If this policy is enabled or not configured, printing is enabled.</string>
       <string id="ManualAppUpdateOnly">Manual Update Only</string>
-      <string id="ManualAppUpdateOnly_Explain">If this policy is enabled, users will not be prompted to install updates and Thunderbird will not check for updates in the background. The user must manually check and install updates from the About dialog.
+      <string id="ManualAppUpdateOnly_Explain">If this policy is enabled, users will not be prompted to install updates and Firefox will not check for updates in the background. The user must manually check and install updates from the About dialog.
 
 If this policy is disabled or not configured, the browser receives updates.
 
 This policy is not recommended for most users.</string>
       <string id="AllowFileSelectionDialogs">Allow File Selection Dialogs</string>
-      <string id="AllowFileSelectionDialogs_Explain">If this policy is disabled, users will not be able to open file selection dialogs. In most cases, Thunderbird will act as if the user clicked the cancel button.
+      <string id="AllowFileSelectionDialogs_Explain">If this policy is disabled, users will not be able to open file selection dialogs. In most cases, Firefox will act as if the user clicked the cancel button.
 
 If this policy is enabled or not configured, users can open file selection dialogs.</string>
+      <string id="AutofillAddressEnabled">Enable autofill for addresses</string>
+      <string id="AutofillAddressEnabled_Explain">If this policy is disabled, addresses will not be autofilled for Firefox versions and regions that support it.
+
+If this policy is enabled or not configured, addresses will be autofilled for Firefox versions and regions that support it.</string>
+      <string id="AutofillCreditCardEnabled">Enable autofill for payment methods</string>
+      <string id="AutofillCreditCardEnabled_Explain">If this policy is disabled, payment methods will not be autofilled for Firefox versions and regions that support it.
+
+If this policy is enabled or not configured, payment methods will be autofilled for Firefox versions and regions that support it.</string>
+      <string id="TranslateEnabled">Enable webpage translation</string>
+      <string id="TranslateEnabled_Explain">If this policy is disabled, web page translation will not be available.
+
+If this policy is enabled or not configured, web page translation will be available.
+
+Note: Web page translation is done completely on the client, so there is no data or privacy risk.</string>
+      <string id="DisableEncryptedClientHello">Disable Encrypted Client Hello</string>
+      <string id="DisableEncryptedClientHello_Explain">If this policy is enabled, the TLS feature Encrypted Client Hello (ECH) will be disabled.
+
+If this policy is disabled or not configured, the TLS feature Encrypted Client Hello (ECH) will be enabled.</string>
+      <string id="PostQuantumKeyAgreementEnabled">Enable post-quantum key agreement</string>
+      <string id="PostQuantumKeyAgreementEnabled_Explain">If this policy is enabled, post-quantum key agreement for TLS will be enabled.
+
+If this policy is disabled or not configured, post-quantum key agreement for TLS will be disabled.</string>
+      <string id="HttpsOnlyMode">HTTPS-Only Mode</string>
+      <string id="HttpsOnlyMode_Explain">If this policy is enabled, you can set the default behavior for HTTPS-Only Mode.
+
+If this policy is disabled or not configured, HTTPS-Only Mode is not enabled.</string>
+      <string id="HttpsOnlyMode_Allowed">Off by default</string>
+      <string id="HttpsOnlyMode_Disallowed">Off and locked</string>
+      <string id="HttpsOnlyMode_Enabled">On by default</string>
+      <string id="HttpsOnlyMode_ForceEnabled">On and locked</string>
+      <string id="HttpAllowlist">HTTP Allowlist </string>
+      <string id="HttpAllowlist_Explain">If this policy is enabled, you can specify a list origins that will not be upgraded to HTTPS.
+
+If this policy is disabled or not configured, all origins are upgraded to HTTPS if HTTPS-Only Mode is enabled.</string>
       <string id="Preferences_Boolean_Explain">Se questo criterio è abilitato, la preferenza è impostata a Vero e resa non modificabile. Se questo criterio è disabilitato, la preferenza è impostata a Falso e resa non modificabile.
 
 Per una descrizione della preferenza, si veda:
@@ -1132,12 +1224,8 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences</s
       <presentation id="WebsiteFilter">
         <listBox refId="WebsiteFilter"/>
       </presentation>
-      <presentation id="Permissions">
-        <listBox refId="Permissions"/>
-      </presentation>
-      <presentation id="PopupsAllow">
-        <listBox refId="PopupsAllowDesc">Consenti le finestre pop-up dai siti Web</listBox>
-      </presentation>
+      <presentation id="Permissions"><listBox refId="Permissions"/></presentation>
+      <presentation id="PopupsAllow"><listBox refId="PopupsAllowDesc">Consenti le finestre pop-up dai siti Web</listBox></presentation>
       <presentation id="Cookies_AcceptThirdParty">
         <dropdownList refId="Cookies_AcceptThirdParty"/>
       </presentation>
@@ -1398,6 +1486,9 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences</s
         </textBox>
         <text>Example: .mozilla.org, .net.nz, 192.168.1.0/24</text>
         <text>Connections to localhost, 127.0.0.1/8, and ::1 are never proxied.</text>
+      </presentation>
+      <presentation id="HttpsOnlyMode">
+        <dropdownList refId="HttpsOnlyMode"/>
       </presentation>
     </presentationTable>
   </resources>
