@@ -251,7 +251,7 @@ for (let revisionData of allRevisionData) {
     await adjustFirefoxPlistFilesForThunderbird(template, thunderbirdPolicies, output_dir);
 
     gMainTemplateEntries.unshift(
-        ` * [${revisionData.name} (based on Mozilla template ${revisionData.mozillaReferenceTemplates})](templates/${revisionData.tree})`
+        ` * [${revisionData.name} (Mozilla template ${revisionData.mozillaReferenceTemplates})](templates/${revisionData.tree})`
     );
 }
 

@@ -1,19 +1,24 @@
 ## Enterprise policy descriptions and templates for Thunderbird
 
-While the templates for the most recent version of Thunderbird will probably also work with older releases of Thunderbird, they may contain new policies which are not supported in older releases. We suggest to use the templates which correspond to the highest version of Thunderbird you are actually deploying.
+While the templates for the most recent version of Thunderbird will probably also
+work with older releases of Thunderbird, they may contain new policies which are
+not supported in older releases. We suggest to use the templates which correspond
+to the version of Thunderbird you are actually deploying.
 
- * [Thunderbird Daily 142 (based on Mozilla template v7.0)](templates/central)
- * [Thunderbird 139 (based on Mozilla template v6.11)](templates/release)
- * [Thunderbird ESR 128 (based on Mozilla template v6.11)](templates/esr128)
- * [Thunderbird ESR 115 (based on Mozilla template v5.12)](templates/esr115)
- * [Thunderbird ESR 102 (based on Mozilla template v4.12)](templates/esr102)
- * [Thunderbird ESR 91 (based on Mozilla template v3.10)](templates/esr91)
+ * [Thunderbird Daily 142 (Mozilla template v7.0)](templates/central)
+ * [Thunderbird 139 (Mozilla template v6.11)](templates/release)
+ * [Thunderbird ESR 128 (Mozilla template v6.11)](templates/esr128)
+ * [Thunderbird ESR 115 (Mozilla template v5.12)](templates/esr115)
+ * [Thunderbird ESR 102 (Mozilla template v4.12)](templates/esr102)
+ * [Thunderbird ESR 91 (Mozilla template v3.10)](templates/esr91)
 
 <br>
 
 ## List of supported policies
 
-The following table states for each policy, when Thunderbird started to support it, or when it has been deprecated. It also includes all policies currently supported by Firefox, which are not supported by Thunderbird.
+The following table states for each policy, when Thunderbird started to support it,
+or when it has been deprecated. It also includes all policies currently supported
+by Firefox, which are not supported by Thunderbird.
 
 
 | Policy/Property Name | supported since | deprecated after |
