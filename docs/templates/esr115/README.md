@@ -2590,8 +2590,8 @@ as well as the following security preferences:
 | &nbsp;&nbsp;&nbsp;&nbsp;If true, browser will accept TLS 1.0. and TLS 1.1
 | security.warn_submit_secure_to_insecure | boolean | true
 | &nbsp;&nbsp;&nbsp;&nbsp;If false, no warning is shown when submitting s form from https to http.
-&nbsp;
 
+&nbsp;
 Using the preference as the key, set the `Value` to the corresponding preference value.
 
 `Status` can be "default", "locked", "user" or "clear"
@@ -2697,8 +2697,8 @@ Value (string):
 | &nbsp;&nbsp;&nbsp;&nbsp;If set to 1, platform accessibility is disabled.
 | browser.cache.disk.enable | boolean | true
 | &nbsp;&nbsp;&nbsp;&nbsp;If false, don't store cache on the hard drive.
-| ~browser.cache.disk.parent_directory~ | string | Profile temporary directory
-| &nbsp;&nbsp;&nbsp;&nbsp;~If set, changes the location of the disk cache.~ This policy doesn't work. It's being worked on.
+| browser.cache.disk.parent_directory | string | Profile temporary directory
+| &nbsp;&nbsp;&nbsp;&nbsp;If set, changes the location of the disk cache.
 | browser.fixup.dns_first_for_single_words | boolean | false
 | &nbsp;&nbsp;&nbsp;&nbsp;If true, single words are sent to DNS, not directly to search.
 | browser.safebrowsing.phishing.enabled | boolean | true
