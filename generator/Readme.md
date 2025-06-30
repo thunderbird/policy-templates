@@ -1,7 +1,7 @@
 update_policy_templates.js
 ==========================
 
-This script runs on the source trees `esr68`,`esr78`,`esr91`,`esr102`,`esr115` and `central`, and is doing the following for each:
+This script runs on the source trees `esr68`,`esr78`,`esr91`,`esr102`,`esr115`, `esr128` and `central`, and is doing the following for each:
 
 * Check for new revisions of the `policies-schema.json` file in `mozilla-${tree}` and report newly added policies, which Thunderbird might want to port.
 * Parse the `policies-schema.json` file in `comm-${tree}` to see what policies are supported by Thunderbird.
