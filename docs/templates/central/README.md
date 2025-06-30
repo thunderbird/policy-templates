@@ -1,10 +1,22 @@
-## Enterprise policy descriptions and templates for Thunderbird (active development)
+## Enterprise policy descriptions and templates for Thunderbird Daily 142
 
-**These policies are in active development and so might contain changes that do not work with current versions of Thunderbird.**
+**These policies are in active development and might contain changes that do
+not work with current release or ESR versions of Thunderbird.**
 
-Policies can be specified using the [Group Policy templates on Windows](windows), [Intune on Windows](https://support.mozilla.org/kb/managing-firefox-intune), [configuration profiles on macOS](mac), or by creating a file called `policies.json`.
 
-On Windows, create a directory called `distribution` where the EXE is located and place the file there. On Mac, the file goes into `Thunderbird.app/Contents/Resources/distribution`.  On Linux, the file goes into `thunderbird/distribution`, where `thunderbird` is the installation directory for Thunderbird, which varies by distribution or you can specify system-wide policy by placing the file in `/etc/thunderbird/policies`.
+Policies can be specified by creating a file called `policies.json`:
+ * Windows: place the file in a directory called `distribution` in the same
+   directory where `thunderbird.exe` is located.
+ * Mac: place the file into `Thunderbird.app/Contents/Resources/distribution`
+ * Linux: place the file into `thunderbird/distribution`, where `thunderbird`
+   is the installation directory for Thunderbird. You can also specify a system-wide
+   policy by placing the file in `/etc/thunderbird/policies`.
+
+Alternatively, policies can be specified via platform specific methods:
+ * Windows: [group policy templates](https://github.com/thunderbird/policy-templates/tree/master/docs/templates/#tree#/windows) or [intune](https://support.mozilla.org/kb/managing-firefox-intune)
+ * Mac: [configuration profiles](mac)
+    
+This document provides for all policies examples for the mentioned formats.
 
 <br>
 
@@ -55,7 +67,7 @@ On Windows, create a directory called `distribution` where the EXE is located an
 | **[`PromptForDownloadLocation`](#promptfordownloadlocation)** | Ask where to save each file before downloading.
 | **[`Proxy`](#proxy)** | Configure proxy settings.
 | **[`RequestedLocales`](#requestedlocales)** | Set the the list of requested locales for the application in order of preference.
-| **[`SearchEngines`](#searchengines-this-policy-is-only-available-on-the-esr)** |
+| **[`SearchEngines`](#searchengines)** |
 | **[`SearchEngines -> Add`](#searchengines--add)** | Add new search engines.
 | **[`SearchEngines -> Default`](#searchengines--default)** | Set the default search engine.
 | **[`SearchEngines -> PreventInstalls`](#searchengines--preventinstalls)** | Prevent installing search engines from webpages.
@@ -1055,10 +1067,13 @@ Value (string):
 <br>
 
 ## DisableBuiltinPDFViewer
+
 Disable the built in PDF viewer. PDF files are downloaded and sent externally.
 
+Note: As of Thunderbird 140, this policy no longer completely disables PDF.js; it changes the handler to send PDF files to the operating system. Embedded PDF files are shown in the browser. If you need to completely disable PDF.js, you can use the [`PDFjs`](#pdfjs) policy. 
+
 **CCK2 Equivalent:** `disablePDFjs`\
-**Preferences Affected:** `pdfjs.disabled`
+**Preferences Affected:** N/A
 
 #### Windows (GPO)
 ```
@@ -1100,26 +1115,29 @@ Value (string):
 Disable specific cryptographic ciphers, listed below.
 
 ```
-TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
-TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
-TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
-TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
-TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
-TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
-TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
-TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
 TLS_DHE_RSA_WITH_AES_128_CBC_SHA
 TLS_DHE_RSA_WITH_AES_256_CBC_SHA
-TLS_RSA_WITH_AES_128_GCM_SHA256
-TLS_RSA_WITH_AES_256_GCM_SHA384
 TLS_RSA_WITH_AES_128_CBC_SHA
 TLS_RSA_WITH_AES_256_CBC_SHA
+TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
 TLS_RSA_WITH_3DES_EDE_CBC_SHA
+TLS_RSA_WITH_AES_128_GCM_SHA256 (Thunderbird 78)
+TLS_RSA_WITH_AES_256_GCM_SHA384 (Thunderbird 78)
+TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (Thunderbird 97 and Thunderbird ESR 91.6)
+TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (Thunderbird 97 and Thunderbird ESR 91.6)
+TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (Thunderbird 97 and Thunderbird ESR 91.6)
+TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Thunderbird 97 and Thunderbird ESR 91.6)
+TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (Thunderbird 97 and Thunderbird ESR 91.6)
+TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (Thunderbird 97 and Thunderbird ESR 91.6)
+TLS_CHACHA20_POLY1305_SHA256 (Thunderbird 138, Thunderbird ESR 128.10)
+TLS_AES_128_GCM_SHA256 (Thunderbird 138, Thunderbird ESR 128.10)
+TLS_AES_256_GCM_SHA384 (Thunderbird 138, Thunderbird ESR 128.10)
 ```
 
-**Preferences Affected:** `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_rsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_ecdsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_256_sha`, `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.deprecated.rsa_des_ede3_sha`
+**Preferences Affected:** `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_rsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_ecdsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_256_sha`, `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.deprecated.rsa_des_ede3_sha`, `security.tls13.chacha20_poly1305_sha256`, `security.tls13.aes_128_gcm_sha256`, `security.tls13.aes_256_gcm_sha384`
 
 ---
 **Note:**
@@ -1465,7 +1483,7 @@ As of Thunderbird 83 and Thunderbird ESR 78.5, local storage of telemetry data i
 Mozilla recommends that you do not disable telemetry. Information collected through telemetry helps us build a better product for businesses like yours.
 
 **CCK2 Equivalent:** `disableTelemetry`\
-**Preferences Affected:** `datareporting.healthreport.uploadEnabled`, `datareporting.policy.dataSubmissionEnabled`, `toolkit.telemetry.archive.enabled`
+**Preferences Affected:** `datareporting.healthreport.uploadEnabled`, `datareporting.policy.dataSubmissionEnabled`, `toolkit.telemetry.archive.enabled`, `datareporting.usage.uploadEnabled`
 
 #### Windows (GPO)
 ```
@@ -1891,9 +1909,9 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `ExtensionSettings`<br>`ExtensionSettings_[name]`<br>`ExtensionSettings_[name]_blocked_install_message` | 68.0 |  |
-| `ExtensionSettings_*`<br>`ExtensionSettings_*_installation_mode`<br>`ExtensionSettings_*_allowed_types`<br>`ExtensionSettings_*_blocked_install_message`<br>`ExtensionSettings_*_install_sources`<br>`ExtensionSettings_*_restricted_domains`<br>`ExtensionSettings_[name]_installation_mode`<br>`ExtensionSettings_[name]_install_url` | 78.10.3, 89.0 |  |
+| `ExtensionSettings_*`<br>`ExtensionSettings_*_installation_mode`<br>`ExtensionSettings_*_allowed_types`<br>`ExtensionSettings_*_blocked_install_message`<br>`ExtensionSettings_*_install_sources`<br>`ExtensionSettings_*_restricted_domains`<br>`ExtensionSettings_[name]_installation_mode`<br>`ExtensionSettings_[name]_install_url` | 89.0 |  |
 | `ExtensionSettings_[name]_updates_disabled` | 91.0 |  |
-| `ExtensionSettings_[name]_private_browsing` | 136.0 |  |
+| `ExtensionSettings_[name]_private_browsing` | 128.8.0, 136.0 |  |
 | *`ExtensionSettings_*_temporarily_allow_weak_signatures`<br>`ExtensionSettings_[name]_default_area`<br>`ExtensionSettings_[name]_temporarily_allow_weak_signatures`* |  |  |
 
 <br>
@@ -2812,10 +2830,10 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Preferences` | 68.0 |  |
-| `Preferences_network.IDN_show_punycode`<br>`Preferences_browser.cache.disk.parent_directory` | 68.0 | 89.0 |
-| `Preferences_browser.fixup.dns_first_for_single_words`<br>`Preferences_browser.urlbar.suggest.openpage`<br>`Preferences_browser.urlbar.suggest.history`<br>`Preferences_browser.urlbar.suggest.bookmark` | 68.0 | 77.0 |
-| `Preferences_accessibility.force_disabled`<br>`Preferences_browser.cache.disk.enable`<br>`Preferences_browser.safebrowsing.phishing.enabled`<br>`Preferences_browser.safebrowsing.malware.enabled`<br>`Preferences_browser.search.update`<br>`Preferences_datareporting.policy.dataSubmissionPolicyBypassNotification`<br>`Preferences_dom.allow_scripts_to_close_windows`<br>`Preferences_dom.disable_window_flip`<br>`Preferences_dom.disable_window_move_resize`<br>`Preferences_dom.event.contextmenu.enabled`<br>`Preferences_dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl`<br>`Preferences_dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl`<br>`Preferences_extensions.blocklist.enabled`<br>`Preferences_geo.enabled`<br>`Preferences_intl.accept_languages`<br>`Preferences_network.dns.disableIPv6`<br>`Preferences_places.history.enabled`<br>`Preferences_print.save_print_settings`<br>`Preferences_security.default_personal_cert`<br>`Preferences_security.mixed_content.block_active_content`<br>`Preferences_security.osclientcerts.autoload`<br>`Preferences_security.ssl.errorReporting.enabled`<br>`Preferences_security.tls.hello_downgrade_check`<br>`Preferences_widget.content.gtk-theme-override` | 78.0 | 89.0 |
 | `Preferences_[name]`<br>`Preferences_[name]_Value`<br>`Preferences_[name]_Status` | 91.0 |  |
+| `Preferences_accessibility.force_disabled`<br>`Preferences_browser.cache.disk.enable`<br>`Preferences_browser.safebrowsing.phishing.enabled`<br>`Preferences_browser.safebrowsing.malware.enabled`<br>`Preferences_browser.search.update`<br>`Preferences_datareporting.policy.dataSubmissionPolicyBypassNotification`<br>`Preferences_dom.allow_scripts_to_close_windows`<br>`Preferences_dom.disable_window_flip`<br>`Preferences_dom.disable_window_move_resize`<br>`Preferences_dom.event.contextmenu.enabled`<br>`Preferences_dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl`<br>`Preferences_dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl`<br>`Preferences_extensions.blocklist.enabled`<br>`Preferences_geo.enabled`<br>`Preferences_intl.accept_languages`<br>`Preferences_network.dns.disableIPv6`<br>`Preferences_places.history.enabled`<br>`Preferences_print.save_print_settings`<br>`Preferences_security.default_personal_cert`<br>`Preferences_security.mixed_content.block_active_content`<br>`Preferences_security.osclientcerts.autoload`<br>`Preferences_security.ssl.errorReporting.enabled`<br>`Preferences_security.tls.hello_downgrade_check`<br>`Preferences_widget.content.gtk-theme-override` | 78.0 | 89.0 |
+| `Preferences_browser.cache.disk.parent_directory`<br>`Preferences_network.IDN_show_punycode` | 68.0 | 89.0 |
+| `Preferences_browser.fixup.dns_first_for_single_words`<br>`Preferences_browser.urlbar.suggest.openpage`<br>`Preferences_browser.urlbar.suggest.history`<br>`Preferences_browser.urlbar.suggest.bookmark` | 68.0 | 77.0 |
 | *`Preferences_[name]_Type`* |  |  |
 
 <br>
@@ -3198,15 +3216,25 @@ or
 
 <br>
 
+## SearchEngines
+
+As of Thunderbird 139, this policy is available in all versions of Thunderbird.
+
+#### Compatibility
+
+| Policy/Property Name | supported since | deprecated after |
+|:--- | ---:| ---:|
+| `SearchEngines`<br>`SearchEngines_Add`<br>`SearchEngines_Default`<br>`SearchEngines_DefaultPrivate`<br>`SearchEngines_PreventInstalls`<br>`SearchEngines_Remove` | 108.0 |  |
+
+<br>
+
 ## SearchEngines | Add
 
 Add new search engines. Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
 
-This policy is only available on the ESR. `Name` and `URLTemplate` are required.
+`Name` is the name of the search engine. (Required)
 
-`Name` is the name of the search engine.
-
-`URLTemplate` is the search URL with {searchTerms} to substitute for the search term.
+`URLTemplate` is the search URL with {searchTerms} to substitute for the search term. (Required)
 
 `Method` is either GET or POST
 
@@ -3313,7 +3341,7 @@ Value (string):
 
 ## SearchEngines | Default
 
-Set the default search engine. This policy is only available on the ESR.
+Set the default search engine.
 
 **CCK2 Equivalent:** `defaultSearchEngine`\
 **Preferences Affected:** N/A
@@ -3410,7 +3438,7 @@ Value (string):
 
 ## SearchEngines | Remove
 
-Hide built-in search engines. This policy is only available on the ESR.
+Hide built-in search engines.
 
 **CCK2 Equivalent:** `removeDefaultSearchEngines` (removed all built-in engines)\
 **Preferences Affected:** N/A

@@ -1,8 +1,18 @@
-## Enterprise policy descriptions and templates for Thunderbird 115 (and older)
+## Enterprise policy descriptions and templates for Thunderbird ESR 115
 
-Policies can be specified using the [Group Policy templates on Windows](windows), [Intune on Windows](https://support.mozilla.org/kb/managing-firefox-intune), [configuration profiles on macOS](mac), or by creating a file called `policies.json`.
+Policies can be specified by creating a file called `policies.json`:
+ * Windows: place the file in a directory called `distribution` in the same
+   directory where `thunderbird.exe` is located.
+ * Mac: place the file into `Thunderbird.app/Contents/Resources/distribution`
+ * Linux: place the file into `thunderbird/distribution`, where `thunderbird`
+   is the installation directory for Thunderbird. You can also specify a system-wide
+   policy by placing the file in `/etc/thunderbird/policies`.
 
-On Windows, create a directory called `distribution` where the EXE is located and place the file there. On Mac, the file goes into `Thunderbird.app/Contents/Resources/distribution`.  On Linux, the file goes into `thunderbird/distribution`, where `thunderbird` is the installation directory for Thunderbird, which varies by distribution or you can specify system-wide policy by placing the file in `/etc/thunderbird/policies`.
+Alternatively, policies can be specified via platform specific methods:
+ * Windows: [group policy templates](https://github.com/thunderbird/policy-templates/tree/master/docs/templates/esr115/windows) or [intune](https://support.mozilla.org/kb/managing-firefox-intune)
+ * Mac: [configuration profiles](mac)
+    
+This document provides for all policies examples for the mentioned formats.
 
 <br>
 
@@ -64,7 +74,7 @@ On Windows, create a directory called `distribution` where the EXE is located an
 
 ## 3rdparty
 
-Allow WebExtensions to configure policy. For more information, see [Adding policy support to your extension](https://extensionworkshop.com/documentation/enterprise/adding-policy-support-to-your-extension/).
+Allow WebExtensions to configure policy. For more information, see [Adding policy support to your extension](https://extensionworkshop.com/documentation/enterprise/enterprise-development/#how-to-add-policy).
 
 For GPO and Intune, the extension developer should provide an ADMX file.
 
@@ -832,6 +842,14 @@ Configure cookie preferences.
 
 `Locked` prevents the user from changing cookie preferences.
 
+`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)
+
+`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)
+
+`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)
+
+`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown-selective) instead)
+
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `network.cookie.cookieBehavior`, `network.cookie.cookieBehavior.pbmode`, `network.cookie.lifetimePolicy`
 
@@ -840,10 +858,6 @@ Configure cookie preferences.
 Software\Policies\Mozilla\Thunderbird\Cookies\Allow\1 = "https://example.com"
 Software\Policies\Mozilla\Thunderbird\Cookies\AllowSession\1 = "https://example.edu"
 Software\Policies\Mozilla\Thunderbird\Cookies\Block\1 = "https://example.org"
-Software\Policies\Mozilla\Thunderbird\Cookies\Default = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Cookies\AcceptThirdParty = "always" | "never" | "from-visited"
-Software\Policies\Mozilla\Thunderbird\Cookies\ExpireAtSessionEnd = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Cookies\RejectTracker = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\Cookies\Behavior = "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign"
 Software\Policies\Mozilla\Thunderbird\Cookies\BehaviorPrivateBrowsing = "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign"
 Software\Policies\Mozilla\Thunderbird\Cookies\Locked = 0x1 | 0x0
@@ -875,39 +889,6 @@ Value (string):
 ```
 <enabled/>
 <data id="Permissions" value="1&#xF000;https://example.org"/>
-```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_Default
-```
-Value (string):
-```
-<enabled/> or <disabled/>
-```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_AcceptThirdParty
-```
-Value (string):
-```
-<enabled/>
-<data id="Cookies_AcceptThirdParty" value="always | never | from-visited"/>
-```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_ExpireAtSessionEnd
-```
-Value (string):
-```
-<enabled/> or <disabled/>
-```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_RejectTracker
-```
-Value (string):
-```
-<enabled/> or <disabled/>
 ```
 OMA-URI:
 ```
@@ -952,14 +933,6 @@ Value (string):
     <array>
       <string>http://example.org</string>
     </array>
-    <key>Default</key>
-    <true/> | <false/>
-    <key>AcceptThirdParty</key>
-    <string>always | never | from-visited</string>
-    <key>ExpireAtSessionEnd</key>
-    <true/> | <false/>
-    <key>RejectTracker</key>
-    <true/> | <false/>
     <key>Locked</key>
     <true/> | <false/>
     <key>Behavior</key>
@@ -977,10 +950,6 @@ Value (string):
       "Allow": ["http://example.org/"],
       "AllowSession": ["http://example.edu/"],
       "Block": ["http://example.edu/"],
-      "Default": true | false,
-      "AcceptThirdParty": "always" | "never" | "from-visited",
-      "ExpireAtSessionEnd": true | false,
-      "RejectTracker": true | false,
       "Locked": true | false,
       "Behavior": "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign",
       "BehaviorPrivateBrowsing": "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign",
@@ -1926,8 +1895,8 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `ExtensionSettings`<br>`ExtensionSettings_[name]`<br>`ExtensionSettings_[name]_blocked_install_message` | 68.0 |  |
-| `ExtensionSettings_*`<br>`ExtensionSettings_*_installation_mode`<br>`ExtensionSettings_*_allowed_types`<br>`ExtensionSettings_*_blocked_install_message`<br>`ExtensionSettings_*_install_sources`<br>`ExtensionSettings_*_restricted_domains`<br>`ExtensionSettings_[name]_installation_mode`<br>`ExtensionSettings_[name]_install_url` | 78.10.3, 89.0 |  |
-| `ExtensionSettings_[name]_updates_disabled` | 78.10.3, 91.0 |  |
+| `ExtensionSettings_*`<br>`ExtensionSettings_*_installation_mode`<br>`ExtensionSettings_*_allowed_types`<br>`ExtensionSettings_*_blocked_install_message`<br>`ExtensionSettings_*_install_sources`<br>`ExtensionSettings_*_restricted_domains`<br>`ExtensionSettings_[name]_installation_mode`<br>`ExtensionSettings_[name]_install_url` | 89.0 |  |
+| `ExtensionSettings_[name]_updates_disabled` | 91.0 |  |
 
 <br>
 
@@ -2212,7 +2181,7 @@ Configure the default extension install policy as well as origins for extension 
 `Default` determines whether or not extension installs are allowed by default.
 
 **CCK2 Equivalent:** `permissions.install`\
-**Preferences Affected:** `xpinstall.enabled`
+**Preferences Affected:** `xpinstall.enabled`, `browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons`, `browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features`
 
 #### Windows (GPO)
 ```
@@ -2823,10 +2792,10 @@ Value (string):
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Preferences` | 68.0 |  |
-| `Preferences_network.IDN_show_punycode`<br>`Preferences_browser.cache.disk.parent_directory` | 68.0 | 89.0 |
-| `Preferences_browser.fixup.dns_first_for_single_words`<br>`Preferences_browser.urlbar.suggest.openpage`<br>`Preferences_browser.urlbar.suggest.history`<br>`Preferences_browser.urlbar.suggest.bookmark` | 68.0 | 77.0 |
-| `Preferences_accessibility.force_disabled`<br>`Preferences_browser.cache.disk.enable`<br>`Preferences_browser.safebrowsing.phishing.enabled`<br>`Preferences_browser.safebrowsing.malware.enabled`<br>`Preferences_browser.search.update`<br>`Preferences_datareporting.policy.dataSubmissionPolicyBypassNotification`<br>`Preferences_dom.allow_scripts_to_close_windows`<br>`Preferences_dom.disable_window_flip`<br>`Preferences_dom.disable_window_move_resize`<br>`Preferences_dom.event.contextmenu.enabled`<br>`Preferences_dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl`<br>`Preferences_dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl`<br>`Preferences_extensions.blocklist.enabled`<br>`Preferences_geo.enabled`<br>`Preferences_intl.accept_languages`<br>`Preferences_network.dns.disableIPv6`<br>`Preferences_places.history.enabled`<br>`Preferences_print.save_print_settings`<br>`Preferences_security.default_personal_cert`<br>`Preferences_security.mixed_content.block_active_content`<br>`Preferences_security.osclientcerts.autoload`<br>`Preferences_security.ssl.errorReporting.enabled`<br>`Preferences_security.tls.hello_downgrade_check`<br>`Preferences_widget.content.gtk-theme-override` | 78.0 | 89.0 |
 | `Preferences_[name]`<br>`Preferences_[name]_Value`<br>`Preferences_[name]_Status` | 91.0 |  |
+| `Preferences_accessibility.force_disabled`<br>`Preferences_browser.cache.disk.enable`<br>`Preferences_browser.safebrowsing.phishing.enabled`<br>`Preferences_browser.safebrowsing.malware.enabled`<br>`Preferences_browser.search.update`<br>`Preferences_datareporting.policy.dataSubmissionPolicyBypassNotification`<br>`Preferences_dom.allow_scripts_to_close_windows`<br>`Preferences_dom.disable_window_flip`<br>`Preferences_dom.disable_window_move_resize`<br>`Preferences_dom.event.contextmenu.enabled`<br>`Preferences_dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl`<br>`Preferences_dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl`<br>`Preferences_extensions.blocklist.enabled`<br>`Preferences_geo.enabled`<br>`Preferences_intl.accept_languages`<br>`Preferences_network.dns.disableIPv6`<br>`Preferences_places.history.enabled`<br>`Preferences_print.save_print_settings`<br>`Preferences_security.default_personal_cert`<br>`Preferences_security.mixed_content.block_active_content`<br>`Preferences_security.osclientcerts.autoload`<br>`Preferences_security.ssl.errorReporting.enabled`<br>`Preferences_security.tls.hello_downgrade_check`<br>`Preferences_widget.content.gtk-theme-override` | 78.0 | 89.0 |
+| `Preferences_browser.cache.disk.parent_directory`<br>`Preferences_network.IDN_show_punycode` | 68.0 | 89.0 |
+| `Preferences_browser.fixup.dns_first_for_single_words`<br>`Preferences_browser.urlbar.suggest.openpage`<br>`Preferences_browser.urlbar.suggest.history`<br>`Preferences_browser.urlbar.suggest.bookmark` | 68.0 | 77.0 |
 
 <br>
 

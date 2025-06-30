@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="5.9" schemaVersion="1.0">
+<policyDefinitionResources revision="5.12" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
     <stringTable>
-      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
-      <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
-      <string id="SUPPORTED_ID_10">Thunderbird 91.0 - *</string>
-      <string id="SUPPORTED_ID_11">Thunderbird 102.0 - *</string>
-      <string id="SUPPORTED_ID_12">Thunderbird 104.0 - *</string>
-      <string id="SUPPORTED_ID_13">Thunderbird 108.0 - *</string>
-      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
-      <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
-      <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
-      <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
-      <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
-      <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_0">Thunderbird 78.0 - *</string>
+      <string id="SUPPORTED_ID_1">Thunderbird 75.0 - *</string>
+      <string id="SUPPORTED_ID_10">Thunderbird 102.0 - *</string>
+      <string id="SUPPORTED_ID_11">Thunderbird 104.0 - *</string>
+      <string id="SUPPORTED_ID_12">Thunderbird 108.0 - *</string>
+      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - *</string>
+      <string id="SUPPORTED_ID_3">Thunderbird 91.0 - *</string>
+      <string id="SUPPORTED_ID_4">Thunderbird 76.0 - *</string>
+      <string id="SUPPORTED_ID_5">Thunderbird 77.0 - *</string>
+      <string id="SUPPORTED_ID_7">Thunderbird 78.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_8">Thunderbird 68.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_9">Thunderbird 68.0 - Thunderbird 77.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 或更新版本</string>
       <string id="UNSUPPORTED">不再支援。</string>
       <string id="thunderbird">Thunderbird</string>
@@ -786,7 +786,7 @@ If this policy is disabled or not configured, no PKCS #11 modules will be delete
       <string id="SupportMenu_Explain">若啟用此原則，將在說明選單中加入技術支援資訊項目。
 
 若停用或不設定此原則，則不會加入選單項目。</string>
-      <string id="UserMessaging_WhatsNew">有什麼新鮮事</string>
+      <string id="UserMessaging_WhatsNew">有什麼新鮮事（已棄用）</string>
       <string id="UserMessaging_WhatsNew_Explain">若停用此原則，將不會顯示「有什麼新鮮事」的圖示與選單項目。
 
 若啟用或不設定此原則，則會顯示「有什麼新鮮事」的圖示與選單項目。</string>
@@ -1027,6 +1027,40 @@ This policy is not recommended for most users.</string>
       <string id="AllowFileSelectionDialogs_Explain">If this policy is disabled, users will not be able to open file selection dialogs. In most cases, Thunderbird will act as if the user clicked the cancel button.
 
 If this policy is enabled or not configured, users can open file selection dialogs.</string>
+      <string id="AutofillAddressEnabled">Enable autofill for addresses</string>
+      <string id="AutofillAddressEnabled_Explain">If this policy is disabled, addresses will not be autofilled for Thunderbird versions and regions that support it.
+
+If this policy is enabled or not configured, addresses will be autofilled for Thunderbird versions and regions that support it.</string>
+      <string id="AutofillCreditCardEnabled">Enable autofill for payment methods</string>
+      <string id="AutofillCreditCardEnabled_Explain">If this policy is disabled, payment methods will not be autofilled for Thunderbird versions and regions that support it.
+
+If this policy is enabled or not configured, payment methods will be autofilled for Thunderbird versions and regions that support it.</string>
+      <string id="TranslateEnabled">Enable webpage translation</string>
+      <string id="TranslateEnabled_Explain">If this policy is disabled, web page translation will not be available.
+
+If this policy is enabled or not configured, web page translation will be available.
+
+Note: Web page translation is done completely on the client, so there is no data or privacy risk.</string>
+      <string id="DisableEncryptedClientHello">Disable Encrypted Client Hello</string>
+      <string id="DisableEncryptedClientHello_Explain">If this policy is enabled, the TLS feature Encrypted Client Hello (ECH) will be disabled.
+
+If this policy is disabled or not configured, the TLS feature Encrypted Client Hello (ECH) will be enabled.</string>
+      <string id="PostQuantumKeyAgreementEnabled">Enable post-quantum key agreement</string>
+      <string id="PostQuantumKeyAgreementEnabled_Explain">If this policy is enabled, post-quantum key agreement for TLS will be enabled.
+
+If this policy is disabled or not configured, post-quantum key agreement for TLS will be disabled.</string>
+      <string id="HttpsOnlyMode">HTTPS-Only Mode</string>
+      <string id="HttpsOnlyMode_Explain">If this policy is enabled, you can set the default behavior for HTTPS-Only Mode.
+
+If this policy is disabled or not configured, HTTPS-Only Mode is not enabled.</string>
+      <string id="HttpsOnlyMode_Allowed">Off by default</string>
+      <string id="HttpsOnlyMode_Disallowed">Off and locked</string>
+      <string id="HttpsOnlyMode_Enabled">On by default</string>
+      <string id="HttpsOnlyMode_ForceEnabled">On and locked</string>
+      <string id="HttpAllowlist">HTTP Allowlist </string>
+      <string id="HttpAllowlist_Explain">If this policy is enabled, you can specify a list origins that will not be upgraded to HTTPS.
+
+If this policy is disabled or not configured, all origins are upgraded to HTTPS if HTTPS-Only Mode is enabled.</string>
       <string id="Preferences_Boolean_Explain">若啟用此原則，偏好設定將鎖定為 true。若停用此原則，偏好設定則鎖定為 false。
 
 若需要偏好設定的詳細說明，請參考：
@@ -1396,6 +1430,9 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。
         </textBox>
         <text>Example: .mozilla.org, .net.nz, 192.168.1.0/24</text>
         <text>Connections to localhost, 127.0.0.1/8, and ::1 are never proxied.</text>
+      </presentation>
+      <presentation id="HttpsOnlyMode">
+        <dropdownList refId="HttpsOnlyMode"/>
       </presentation>
     </presentationTable>
   </resources>

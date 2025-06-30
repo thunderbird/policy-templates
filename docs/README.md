@@ -2,12 +2,12 @@
 
 While the templates for the most recent version of Thunderbird will probably also work with older releases of Thunderbird, they may contain new policies which are not supported in older releases. We suggest to use the templates which correspond to the highest version of Thunderbird you are actually deploying.
 
- * [Thunderbird (active development)](templates/central)
- * [Thunderbird 115 (and older)](templates/esr115) (v5.9) 
- * [Thunderbird 102 (and older)](templates/esr102) (v4.12) 
- * [Thunderbird 91 (and older)](templates/esr91) (v3.1) 
- * [Thunderbird 78 (and older)](templates/esr78) (v2.12) 
- * [Thunderbird 68](templates/esr68) (v1.17) 
+ * [Thunderbird Daily 142 (based on Mozilla template v7.0)](templates/central)
+ * [Thunderbird 139 (based on Mozilla template v6.11)](templates/release)
+ * [Thunderbird ESR 128 (based on Mozilla template v6.11)](templates/esr128)
+ * [Thunderbird ESR 115 (based on Mozilla template v5.12)](templates/esr115)
+ * [Thunderbird ESR 102 (based on Mozilla template v4.12)](templates/esr102)
+ * [Thunderbird ESR 91 (based on Mozilla template v3.10)](templates/esr91)
 
 <br>
 
@@ -126,19 +126,19 @@ The following table states for each policy, when Thunderbird started to support 
 | *`EncryptedMediaExtensions`* |  |  |
 | *`ExemptDomainFileTypePairsFromFileTypeDownloadWarnings`* |  |  |
 | `ExtensionSettings` | 68.0 |  |
-| `ExtensionSettings_*` | 78.10.3, 89.0 |  |
-| `ExtensionSettings_*_allowed_types` | 78.10.3, 89.0 |  |
-| `ExtensionSettings_*_blocked_install_message` | 78.10.3, 89.0 |  |
-| `ExtensionSettings_*_install_sources` | 78.10.3, 89.0 |  |
-| `ExtensionSettings_*_installation_mode` | 78.10.3, 89.0 |  |
-| `ExtensionSettings_*_restricted_domains` | 78.10.3, 89.0 |  |
+| `ExtensionSettings_*` | 89.0 |  |
+| `ExtensionSettings_*_allowed_types` | 89.0 |  |
+| `ExtensionSettings_*_blocked_install_message` | 89.0 |  |
+| `ExtensionSettings_*_install_sources` | 89.0 |  |
+| `ExtensionSettings_*_installation_mode` | 89.0 |  |
+| `ExtensionSettings_*_restricted_domains` | 89.0 |  |
 | *`ExtensionSettings_*_temporarily_allow_weak_signatures`* |  |  |
 | `ExtensionSettings_[name]` | 68.0 |  |
 | `ExtensionSettings_[name]_blocked_install_message` | 68.0 |  |
 | *`ExtensionSettings_[name]_default_area`* |  |  |
-| `ExtensionSettings_[name]_install_url` | 78.10.3, 89.0 |  |
-| `ExtensionSettings_[name]_installation_mode` | 78.10.3, 89.0 |  |
-| `ExtensionSettings_[name]_private_browsing` | 136.0 |  |
+| `ExtensionSettings_[name]_install_url` | 89.0 |  |
+| `ExtensionSettings_[name]_installation_mode` | 89.0 |  |
+| `ExtensionSettings_[name]_private_browsing` | 128.8.0, 136.0 |  |
 | *`ExtensionSettings_[name]_temporarily_allow_weak_signatures`* |  |  |
 | `ExtensionSettings_[name]_updates_disabled` | 91.0 |  |
 | `ExtensionUpdate` | 68.0 |  |
@@ -256,6 +256,7 @@ The following table states for each policy, when Thunderbird started to support 
 | *`SearchSuggestEnabled`* |  |  |
 | *`SecurityDevices`* |  |  |
 | *`ShowHomeButton`* |  |  |
+| *`SkipTermsOfUse`* |  |  |
 | *`StartDownloadsInTempDirectory`* |  |  |
 | *`SupportMenu`* |  |  |
 | *`TranslateEnabled`* |  |  |

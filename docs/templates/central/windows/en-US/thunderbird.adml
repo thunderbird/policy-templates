@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="6.9" schemaVersion="1.0">
+<policyDefinitionResources revision="7.0" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
     <stringTable>
-      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
-      <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_0">Thunderbird 78.0 - *</string>
+      <string id="SUPPORTED_ID_1">Thunderbird 75.0 - *</string>
       <string id="SUPPORTED_ID_10">Thunderbird 102.0 - *</string>
       <string id="SUPPORTED_ID_11">Thunderbird 104.0 - *</string>
       <string id="SUPPORTED_ID_12">Thunderbird 108.0 - *</string>
-      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
-      <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
-      <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
-      <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
-      <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
-      <string id="SUPPORTED_ID_8">Thunderbird 91.0 - *</string>
-      <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - *</string>
+      <string id="SUPPORTED_ID_3">Thunderbird 91.0 - *</string>
+      <string id="SUPPORTED_ID_4">Thunderbird 76.0 - *</string>
+      <string id="SUPPORTED_ID_5">Thunderbird 77.0 - *</string>
+      <string id="SUPPORTED_ID_7">Thunderbird 78.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_8">Thunderbird 68.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_9">Thunderbird 68.0 - Thunderbird 77.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 or later</string>
       <string id="UNSUPPORTED">No longer supported.</string>
       <string id="thunderbird">Thunderbird</string>
@@ -213,7 +213,7 @@ If this policy is disabled or not configured, Thunderbird will remember form and
       <string id="DisablePasswordReveal_Explain">If this policy is enabled, users cannot show passwords in saved logins.
 
 If this policy is disabled or not configured, users can show passwords in saved logins.</string>
-      <string id="DisablePocket">Disable Pocket</string>
+      <string id="DisablePocket">Disable Pocket (Deprecated)</string>
       <string id="DisablePocket_Explain">If this policy is enabled, Pocket is not available.
 
 If this policy is disabled or not configured, Pocket is available.</string>
@@ -839,6 +839,9 @@ If this policy is enabled or not configured, user messaging preferences cannot b
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256">TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256">TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256</string>
+      <string id="DisabledCiphers_TLS_CHACHA20_POLY1305_SHA256">TLS_CHACHA20_POLY1305_SHA256</string>
+      <string id="DisabledCiphers_TLS_AES_128_GCM_SHA256">TLS_AES_128_GCM_SHA256</string>
+      <string id="DisabledCiphers_TLS_AES_256_GCM_SHA384">TLS_AES_256_GCM_SHA384</string>
       <string id="DisabledCiphers_Explain">If this policy is enabled, the corresponding cipher is disabled.
 
 If this policy is disabled, the corresponding cipher is enabled.
@@ -1155,6 +1158,12 @@ If this policy is enabled or not configured, print operations will use DLP.</str
       <string id="ContentAnalysis_TimeoutResult_Explain">If this policy is enabled, you can indicate the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. 
 
 If this policy is disabled or not configured, the request will be denied.</string>
+      <string id="SkipTermsOfUse">Skip Terms of Use</string>
+      <string id="SkipTermsOfUse_Explain">If this policy is enabled, the Thunderbird Terms of Use (https://www.mozilla.org/about/legal/terms/thunderbird/) and Privacy Notice (https://www.mozilla.org/privacy/thunderbird/) do not display upon startup.
+
+You represent that you accept and have the authority to accept the Terms of Use on behalf of all individuals to whom you provide access to this browser.
+
+If this policy is disabled or not configured, the Thunderbird Terms of Use and Privacy Notice do display upon startup.</string>
       <string id="Preferences_Boolean_Explain">If this policy is enabled, the preference is locked to true. If this policy is disabled, the preference is locked to false.
 
 For a description of the preference, see:

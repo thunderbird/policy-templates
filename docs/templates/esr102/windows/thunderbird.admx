@@ -10,12 +10,12 @@
       <definition name="SUPPORTED_ID_0" displayName="$(string.SUPPORTED_ID_0)"/>
       <definition name="SUPPORTED_ID_1" displayName="$(string.SUPPORTED_ID_1)"/>
       <definition name="SUPPORTED_ID_10" displayName="$(string.SUPPORTED_ID_10)"/>
-      <definition name="SUPPORTED_ID_11" displayName="$(string.SUPPORTED_ID_11)"/>
       <definition name="SUPPORTED_ID_2" displayName="$(string.SUPPORTED_ID_2)"/>
       <definition name="SUPPORTED_ID_3" displayName="$(string.SUPPORTED_ID_3)"/>
       <definition name="SUPPORTED_ID_4" displayName="$(string.SUPPORTED_ID_4)"/>
       <definition name="SUPPORTED_ID_5" displayName="$(string.SUPPORTED_ID_5)"/>
-      <definition name="SUPPORTED_ID_6" displayName="$(string.SUPPORTED_ID_6)"/>
+      <definition name="SUPPORTED_ID_7" displayName="$(string.SUPPORTED_ID_7)"/>
+      <definition name="SUPPORTED_ID_8" displayName="$(string.SUPPORTED_ID_8)"/>
       <definition name="SUPPORTED_ID_9" displayName="$(string.SUPPORTED_ID_9)"/>
     </definitions>
   </supportedOn>
@@ -111,7 +111,7 @@
   <policies>
     <policy name="AppAutoUpdate" class="Both" displayName="$(string.AppAutoUpdate)" explainText="$(string.AppAutoUpdate_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="AppAutoUpdate">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_4"/>
+      <supportedOn ref="SUPPORTED_ID_1"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -121,28 +121,28 @@
     </policy>
     <policy name="Authentication_SPNEGO" class="Both" displayName="$(string.Authentication_SPNEGO)" key="Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO" explainText="$(string.Authentication_SPNEGO_Explain)" presentation="$(presentation.Authentication)">
       <parentCategory ref="Authentication"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <elements>
         <list id="Authentication" key="Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Authentication_Delegated" class="Both" displayName="$(string.Authentication_Delegated)" key="Software\Policies\Mozilla\Thunderbird\Authentication\Delegated" explainText="$(string.Authentication_Delegated_Explain)" presentation="$(presentation.Authentication)">
       <parentCategory ref="Authentication"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <elements>
         <list id="Authentication" key="Software\Policies\Mozilla\Thunderbird\Authentication\Delegated" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Authentication_NTLM" class="Both" displayName="$(string.Authentication_NTLM)" key="Software\Policies\Mozilla\Thunderbird\Authentication\NTLM" explainText="$(string.Authentication_NTLM_Explain)" presentation="$(presentation.Authentication)">
       <parentCategory ref="Authentication"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <elements>
         <list id="Authentication" key="Software\Policies\Mozilla\Thunderbird\Authentication\NTLM" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Authentication_AllowNonFQDN" class="Both" displayName="$(string.Authentication_AllowNonFQDN)" key="Software\Policies\Mozilla\Thunderbird\Authentication\AllowNonFQDN" explainText="$(string.Authentication_AllowNonFQDN_Explain)" presentation="$(presentation.Authentication_AllowNonFQDN)">
       <parentCategory ref="Authentication"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <elements>
         <boolean id="Authentication_AllowNonFQDN_NTLM" key="Software\Policies\Mozilla\Thunderbird\Authentication\AllowNonFQDN" valueName="NTLM">
           <trueValue>
@@ -164,7 +164,7 @@
     </policy>
     <policy name="Authentication_AllowProxies" class="Both" displayName="$(string.Authentication_AllowProxies)" key="Software\Policies\Mozilla\Thunderbird\Authentication\AllowProxies" explainText="$(string.Authentication_AllowProxies_Explain)" presentation="$(presentation.Authentication_AllowProxies)">
       <parentCategory ref="Authentication"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <elements>
         <boolean id="Authentication_AllowProxies_NTLM" key="Software\Policies\Mozilla\Thunderbird\Authentication\AllowProxies" valueName="NTLM">
           <trueValue>
@@ -186,7 +186,7 @@
     </policy>
     <policy name="Authentication_Locked" class="Both" displayName="$(string.Authentication_Locked)" explainText="$(string.Authentication_Locked_Explain)" key="Software\Policies\Mozilla\Thunderbird\Authentication" valueName="Locked">
       <parentCategory ref="Authentication"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -196,7 +196,7 @@
     </policy>
     <policy name="Authentication_PrivateBrowsing" class="Both" displayName="$(string.Authentication_PrivateBrowsing)" explainText="$(string.Authentication_PrivateBrowsing_Explain)" key="Software\Policies\Mozilla\Thunderbird\Authentication" valueName="PrivateBrowsing">
       <parentCategory ref="Authentication"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -206,7 +206,7 @@
     </policy>
     <policy name="BlockAboutAddons" class="Both" displayName="$(string.BlockAboutAddons)" explainText="$(string.BlockAboutAddons_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="BlockAboutAddons">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -216,7 +216,7 @@
     </policy>
     <policy name="BlockAboutConfig" class="Both" displayName="$(string.BlockAboutConfig)" explainText="$(string.BlockAboutConfig_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="BlockAboutConfig">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -226,7 +226,7 @@
     </policy>
     <policy name="BlockAboutProfiles" class="Both" displayName="$(string.BlockAboutProfiles)" explainText="$(string.BlockAboutProfiles_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="BlockAboutProfiles">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -236,7 +236,7 @@
     </policy>
     <policy name="BlockAboutSupport" class="Both" displayName="$(string.BlockAboutSupport)" explainText="$(string.BlockAboutSupport_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="BlockAboutSupport">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -246,7 +246,7 @@
     </policy>
     <policy name="CaptivePortal" class="Both" displayName="$(string.CaptivePortal)" explainText="$(string.CaptivePortal_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="CaptivePortal">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -256,7 +256,7 @@
     </policy>
     <policy name="Certificates_ImportEnterpriseRoots" class="Both" displayName="$(string.Certificates_ImportEnterpriseRoots)" explainText="$(string.Certificates_ImportEnterpriseRoots_Explain)" key="Software\Policies\Mozilla\Thunderbird\Certificates" valueName="ImportEnterpriseRoots">
       <parentCategory ref="Certificates"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -266,28 +266,28 @@
     </policy>
     <policy name="Certificates_Install" class="Both" displayName="$(string.Certificates_Install)" explainText="$(string.Certificates_Install_Explain)" key="Software\Policies\Mozilla\Certificates" presentation="$(presentation.Certificates_Install)">
       <parentCategory ref="Certificates"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <list id="Certificates_Install" key="Software\Policies\Mozilla\Thunderbird\Certificates\Install" valuePrefix="" expandable="true"/>
       </elements>
     </policy>
     <policy name="Cookies_Allow" class="Both" displayName="$(string.Allow)" explainText="$(string.Cookies_Allow_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.Permissions)">
       <parentCategory ref="Cookies"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <elements>
         <list id="Permissions" key="Software\Policies\Mozilla\Thunderbird\Cookies\Allow" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Cookies_Block" class="Both" displayName="$(string.Block)" explainText="$(string.Cookies_Block_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.Permissions)">
       <parentCategory ref="Cookies"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <elements>
         <list id="Permissions" key="Software\Policies\Mozilla\Thunderbird\Cookies\Block" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Cookies_Default" class="Both" displayName="$(string.Cookies_Default)" explainText="$(string.Cookies_Default_Explain)" key="Software\Policies\Mozilla\Thunderbird\Cookies" valueName="Default">
       <parentCategory ref="Cookies"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -297,7 +297,7 @@
     </policy>
     <policy name="Cookies_AcceptThirdParty" class="Both" displayName="$(string.Cookies_AcceptThirdParty)" explainText="$(string.Cookies_AcceptThirdParty_Explain)" key="Software\Policies\Mozilla\Thunderbird\Cookies" presentation="$(presentation.Cookies_AcceptThirdParty)">
       <parentCategory ref="Cookies"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <elements>
         <enum id="Cookies_AcceptThirdParty" valueName="AcceptThirdParty">
           <item displayName="$(string.Cookies_AcceptThirdParty_All)">
@@ -320,7 +320,7 @@
     </policy>
     <policy name="Cookies_ExpireAtSessionEnd" class="Both" displayName="$(string.Cookies_ExpireAtSessionEnd)" explainText="$(string.Cookies_ExpireAtSessionEnd_Explain)" key="Software\Policies\Mozilla\Thunderbird\Cookies" valueName="ExpireAtSessionEnd">
       <parentCategory ref="Cookies"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -330,7 +330,7 @@
     </policy>
     <policy name="Cookies_Locked" class="Both" displayName="$(string.Cookies_Locked)" explainText="$(string.Cookies_Locked_Explain)" key="Software\Policies\Mozilla\Thunderbird\Cookies" valueName="Locked">
       <parentCategory ref="Cookies"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -340,21 +340,21 @@
     </policy>
     <policy name="DefaultDownloadDirectory" class="Both" displayName="$(string.DefaultDownloadDirectory)" explainText="$(string.DefaultDownloadDirectory_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.Preferences_String)">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <elements>
         <text id="Preferences_String" valueName="DefaultDownloadDirectory" expandable="true"/>
       </elements>
     </policy>
     <policy name="DownloadDirectory" class="Both" displayName="$(string.DownloadDirectory)" explainText="$(string.DownloadDirectory_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.Preferences_String)">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <elements>
         <text id="Preferences_String" valueName="DownloadDirectory" expandable="true"/>
       </elements>
     </policy>
     <policy name="DNSOverHTTPS_Enabled" class="Both" displayName="$(string.DNSOverHTTPS_Enabled)" explainText="$(string.DNSOverHTTPS_Enabled_Explain)" key="Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS" valueName="Enabled">
       <parentCategory ref="DNSOverHTTPS"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -364,14 +364,14 @@
     </policy>
     <policy name="DNSOverHTTPS_ProviderURL" class="Both" displayName="$(string.DNSOverHTTPS_ProviderURL)" explainText="$(string.DNSOverHTTPS_ProviderURL_Explain)" key="Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS" presentation="$(presentation.String)">
       <parentCategory ref="DNSOverHTTPS"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <elements>
         <text id="String" valueName="ProviderURL"/>
       </elements>
     </policy>
     <policy name="DNSOverHTTPS_Locked" class="Both" displayName="$(string.DNSOverHTTPS_Locked)" explainText="$(string.DNSOverHTTPS_Locked_Explain)" key="Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS" valueName="Locked">
       <parentCategory ref="DNSOverHTTPS"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -381,14 +381,14 @@
     </policy>
     <policy name="DNSOverHTTPS_ExcludedDomains" class="Both" displayName="$(string.DNSOverHTTPS_ExcludedDomains)" explainText="$(string.DNSOverHTTPS_ExcludedDomains_Explain)" key="Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS" presentation="$(presentation.List)">
       <parentCategory ref="DNSOverHTTPS"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <elements>
         <list id="List" key="Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="DisableAppUpdate" class="Both" displayName="$(string.DisableAppUpdate)" explainText="$(string.DisableAppUpdate_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="DisableAppUpdate">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -398,7 +398,7 @@
     </policy>
     <policy name="DisableBuiltinPDFViewer" class="Both" displayName="$(string.DisableBuiltinPDFViewer)" explainText="$(string.DisableBuiltinPDFViewer_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="DisableBuiltinPDFViewer">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -408,7 +408,7 @@
     </policy>
     <policy name="DisableDeveloperTools" class="Both" displayName="$(string.DisableDeveloperTools)" explainText="$(string.DisableDeveloperTools_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="DisableDeveloperTools">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -418,7 +418,7 @@
     </policy>
     <policy name="HardwareAcceleration" class="Both" displayName="$(string.HardwareAcceleration)" explainText="$(string.HardwareAcceleration_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="HardwareAcceleration">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -428,7 +428,7 @@
     </policy>
     <policy name="DisableMasterPasswordCreation" class="Both" displayName="$(string.DisableMasterPasswordCreation)" explainText="$(string.DisableMasterPasswordCreation_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="DisableMasterPasswordCreation">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -438,7 +438,7 @@
     </policy>
     <policy name="DisablePasswordReveal" class="Both" displayName="$(string.DisablePasswordReveal)" explainText="$(string.DisablePasswordReveal_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="DisablePasswordReveal">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -448,7 +448,7 @@
     </policy>
     <policy name="DisableSafeMode" class="Both" displayName="$(string.DisableSafeMode)" explainText="$(string.DisableSafeMode_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="DisableSafeMode">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -458,7 +458,7 @@
     </policy>
     <policy name="DisableSystemAddonUpdate" class="Both" displayName="$(string.DisableSystemAddonUpdate)" explainText="$(string.DisableSystemAddonUpdate_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="DisableSystemAddonUpdate">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_6"/>
+      <supportedOn ref="SUPPORTED_ID_5"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -468,7 +468,7 @@
     </policy>
     <policy name="DisableTelemetry" class="Both" displayName="$(string.DisableTelemetry)" explainText="$(string.DisableTelemetry_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="DisableTelemetry">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -478,35 +478,35 @@
     </policy>
     <policy name="Extensions_Install" class="Both" displayName="$(string.Extensions_Install)" key="Software\Policies\Mozilla\Thunderbird\Extensions\Install" explainText="$(string.Extensions_Install_Explain)" presentation="$(presentation.Extensions)">
       <parentCategory ref="Extensions"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <list id="Extensions" key="Software\Policies\Mozilla\Thunderbird\Extensions\Install" valuePrefix="" expandable="true"/>
       </elements>
     </policy>
     <policy name="Extensions_Uninstall" class="Both" displayName="$(string.Extensions_Uninstall)" key="Software\Policies\Mozilla\Thunderbird\Extensions\Uninstall" explainText="$(string.Extensions_Uninstall_Explain)" presentation="$(presentation.Extensions)">
       <parentCategory ref="Extensions"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <list id="Extensions" key="Software\Policies\Mozilla\Thunderbird\Extensions\Uninstall" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Extensions_Locked" class="Both" displayName="$(string.Extensions_Locked)" key="Software\Policies\Mozilla\Thunderbird\Extensions\Locked" explainText="$(string.Extensions_Locked_Explain)" presentation="$(presentation.Extensions)">
       <parentCategory ref="Extensions"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <list id="Extensions" key="Software\Policies\Mozilla\Thunderbird\Extensions\Locked" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="ExtensionSettings" class="Both" displayName="$(string.ExtensionSettings)" key="Software\Policies\Mozilla\Thunderbird" explainText="$(string.ExtensionSettings_Explain)" presentation="$(presentation.ExtensionSettings)">
       <parentCategory ref="Extensions"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <multiText id="ExtensionSettings" valueName="ExtensionSettings" maxLength="16384"/>
       </elements>
     </policy>
     <policy name="ExtensionUpdate" class="Both" displayName="$(string.ExtensionUpdate)" explainText="$(string.ExtensionUpdate_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="ExtensionUpdate">
       <parentCategory ref="Extensions"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -516,7 +516,7 @@
     </policy>
     <policy name="NetworkPrediction" class="Both" displayName="$(string.NetworkPrediction)" explainText="$(string.NetworkPrediction_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="NetworkPrediction">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -526,7 +526,7 @@
     </policy>
     <policy name="OfferToSaveLogins" class="Both" displayName="$(string.OfferToSaveLogins)" explainText="$(string.OfferToSaveLogins_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="OfferToSaveLogins">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -536,7 +536,7 @@
     </policy>
     <policy name="OfferToSaveLoginsDefault" class="Both" displayName="$(string.OfferToSaveLoginsDefault)" explainText="$(string.OfferToSaveLoginsDefault_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="OfferToSaveLoginsDefault">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -546,14 +546,14 @@
     </policy>
     <policy name="InstallAddonsPermission_Allow" class="Both" displayName="$(string.Allow)" explainText="$(string.InstallAddonsPermission_Allow_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.Permissions)">
       <parentCategory ref="Addons"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <list id="Permissions" key="Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="InstallAddonsPermission_Default" class="Both" displayName="$(string.InstallAddonsPermission_Default)" explainText="$(string.InstallAddonsPermission_Default_Explain)" key="Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission" valueName="Default">
       <parentCategory ref="Addons"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -563,7 +563,7 @@
     </policy>
     <policy name="PromptForDownloadLocation" class="Both" displayName="$(string.PromptForDownloadLocation)" explainText="$(string.PromptForDownloadLocation_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="PromptForDownloadLocation">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -573,7 +573,7 @@
     </policy>
     <policy name="P_DisableSecurityBypass_InvalidCertificate" class="Both" displayName="$(string.DisableSecurityBypass_InvalidCertificate)" explainText="$(string.DisableSecurityBypass_InvalidCertificate_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass" valueName="InvalidCertificate">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -583,7 +583,7 @@
     </policy>
     <policy name="P_DisableSecurityBypass_SafeBrowsing" class="Both" displayName="$(string.DisableSecurityBypass_SafeBrowsing)" explainText="$(string.DisableSecurityBypass_SafeBrowsing_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass" valueName="SafeBrowsing">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -593,7 +593,7 @@
     </policy>
     <policy name="PasswordManagerEnabled" class="Both" displayName="$(string.PasswordManagerEnabled)" explainText="$(string.PasswordManagerEnabled_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="PasswordManagerEnabled">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_3"/>
+      <supportedOn ref="SUPPORTED_ID_0"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -603,7 +603,7 @@
     </policy>
     <policy name="Proxy" class="Both" displayName="$(string.Proxy)" explainText="$(string.Proxy_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" presentation="$(presentation.Proxy)">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <boolean id="ProxyLocked" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="Locked">
           <trueValue>
@@ -686,7 +686,7 @@
     </policy>
     <policy name="Proxy_Locked" class="Both" displayName="$(string.Proxy_Locked)" explainText="$(string.Proxy_Locked_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="Locked">
       <parentCategory ref="ProxySettings"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -696,7 +696,7 @@
     </policy>
     <policy name="Proxy_ConnectionType" class="Both" displayName="$(string.Proxy_ConnectionType)" explainText="$(string.Proxy_ConnectionType_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" presentation="$(presentation.Proxy_ConnectionType)">
       <parentCategory ref="ProxySettings"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <enum id="Proxy_ConnectionType" valueName="Mode">
           <item displayName="$(string.NoProxy)">
@@ -729,14 +729,14 @@
     </policy>
     <policy name="Proxy_HTTPProxy" class="Both" displayName="$(string.Proxy_HTTPProxy)" explainText="$(string.Proxy_HTTPProxy_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" presentation="$(presentation.Proxy_HTTPProxy)">
       <parentCategory ref="ProxySettings"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <text id="Proxy_HTTPProxy" valueName="HTTPProxy"/>
       </elements>
     </policy>
     <policy name="Proxy_UseHTTPProxyForAllProtocols" class="Both" displayName="$(string.Proxy_UseHTTPProxyForAllProtocols)" explainText="$(string.Proxy_UseHTTPProxyForAllProtocols_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="UseHTTPProxyForAllProtocols">
       <parentCategory ref="ProxySettings"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -746,14 +746,14 @@
     </policy>
     <policy name="Proxy_SSLProxy" class="Both" displayName="$(string.Proxy_SSLProxy)" explainText="$(string.Proxy_SSLProxy_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" presentation="$(presentation.Proxy_SSLProxy)">
       <parentCategory ref="ProxySettings"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <text id="Proxy_SSLProxy" valueName="SSLProxy"/>
       </elements>
     </policy>
     <policy name="Proxy_SOCKSProxy" class="Both" displayName="$(string.Proxy_SOCKSProxy)" explainText="$(string.Proxy_SOCKSProxy_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" presentation="$(presentation.Proxy_SOCKSProxy)">
       <parentCategory ref="ProxySettings"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <text id="Proxy_SOCKSProxy" valueName="SOCKSProxy"/>
         <enum id="Proxy_SOCKSVersion" valueName="SOCKSVersion">
@@ -772,21 +772,21 @@
     </policy>
     <policy name="Proxy_AutoConfigURL" class="Both" displayName="$(string.Proxy_AutoConfigURL)" explainText="$(string.Proxy_AutoConfigURL_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" presentation="$(presentation.Proxy_AutoConfigURL)">
       <parentCategory ref="ProxySettings"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <text id="Proxy_AutoConfigURL" valueName="AutoConfigURL"/>
       </elements>
     </policy>
     <policy name="Proxy_Passthrough" class="Both" displayName="$(string.Proxy_Passthrough)" explainText="$(string.Proxy_Passthrough_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" presentation="$(presentation.Proxy_Passthrough)">
       <parentCategory ref="ProxySettings"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <text id="Proxy_Passthrough" valueName="Passthrough"/>
       </elements>
     </policy>
     <policy name="Proxy_AutoLogin" class="Both" displayName="$(string.Proxy_AutoLogin)" explainText="$(string.Proxy_AutoLogin_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="AutoLogin">
       <parentCategory ref="ProxySettings"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -796,7 +796,7 @@
     </policy>
     <policy name="Proxy_UseProxyForDNS" class="Both" displayName="$(string.Proxy_UseProxyForDNS)" explainText="$(string.Proxy_UseProxyForDNS_Explain)" key="Software\Policies\Mozilla\Thunderbird\Proxy" valueName="UseProxyForDNS">
       <parentCategory ref="ProxySettings"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -806,28 +806,28 @@
     </policy>
     <policy name="AppUpdateURL" class="Both" displayName="$(string.AppUpdateURL)" explainText="$(string.AppUpdateURL_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.AppUpdateURL)">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <text id="AppUpdateURL" valueName="AppUpdateURL" required="true"/>
       </elements>
     </policy>
     <policy name="RequestedLocales" class="Both" displayName="$(string.RequestedLocales)" explainText="$(string.RequestedLocales_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.RequestedLocales)">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <list id="RequestedLocales" key="Software\Policies\Mozilla\Thunderbird\RequestedLocales" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="RequestedLocalesString" class="Both" displayName="$(string.RequestedLocalesString)" explainText="$(string.RequestedLocales_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.Preferences_String)">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <text id="Preferences_String" valueName="RequestedLocales"/>
       </elements>
     </policy>
     <policy name="SSLVersionMin" class="Both" displayName="$(string.SSLVersionMin)" explainText="$(string.SSLVersionMin_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.SSLVersion)">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <enum id="SSLVersion" valueName="SSLVersionMin">
           <item displayName="$(string.TLS1)">
@@ -855,7 +855,7 @@
     </policy>
     <policy name="SSLVersionMax" class="Both" displayName="$(string.SSLVersionMax)" explainText="$(string.SSLVersionMax_Explain)" key="Software\Policies\Mozilla\Thunderbird" presentation="$(presentation.SSLVersion)">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <enum id="SSLVersion" valueName="SSLVersionMax">
           <item displayName="$(string.TLS1)">
@@ -883,7 +883,7 @@
     </policy>
     <policy name="accessibility_force_disabled" class="Both" displayName="$(string.accessibility_force_disabled)" explainText="$(string.Preferences_Enum_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" presentation="$(presentation.Preferences_accessibility_force_disabled)">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <elements>
         <enum id="Preferences_accessibility_force_disabled" valueName="accessibility.force_disabled">
           <item displayName="$(string.Preferences_accessibility_force_disabled_auto)">
@@ -901,7 +901,7 @@
     </policy>
     <policy name="browser_cache_disk_enable" class="Both" displayName="$(string.browser_cache_disk_enable)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="browser.cache.disk.enable">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -911,7 +911,7 @@
     </policy>
     <policy name="browser_fixup_dns_first_for_single_words" class="Both" displayName="$(string.browser_fixup_dns_first_for_single_words)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="browser.fixup.dns_first_for_single_words">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_2"/>
+      <supportedOn ref="SUPPORTED_ID_9"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -921,7 +921,7 @@
     </policy>
     <policy name="browser_safebrowsing_phishing_enabled" class="Both" displayName="$(string.browser_safebrowsing_phishing_enabled)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="browser.safebrowsing.phishing.enabled">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -931,7 +931,7 @@
     </policy>
     <policy name="browser_safebrowsing_malware_enabled" class="Both" displayName="$(string.browser_safebrowsing_malware_enabled)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="browser.safebrowsing.malware.enabled">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -941,7 +941,7 @@
     </policy>
     <policy name="browser_search_update" class="Both" displayName="$(string.browser_search_update)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="browser.search.update">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -951,7 +951,7 @@
     </policy>
     <policy name="browser_urlbar_suggest_bookmark" class="Both" displayName="$(string.browser_urlbar_suggest_bookmark)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="browser.urlbar.suggest.bookmark">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_2"/>
+      <supportedOn ref="SUPPORTED_ID_9"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -961,7 +961,7 @@
     </policy>
     <policy name="browser_urlbar_suggest_history" class="Both" displayName="$(string.browser_urlbar_suggest_history)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="browser.urlbar.suggest.history">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_2"/>
+      <supportedOn ref="SUPPORTED_ID_9"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -971,7 +971,7 @@
     </policy>
     <policy name="browser_urlbar_suggest_openpage" class="Both" displayName="$(string.browser_urlbar_suggest_openpage)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="browser.urlbar.suggest.openpage">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_2"/>
+      <supportedOn ref="SUPPORTED_ID_9"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -981,7 +981,7 @@
     </policy>
     <policy name="datareporting_policy_dataSubmissionPolicyBypassNotification" class="Both" displayName="$(string.datareporting_policy_dataSubmissionPolicyBypassNotification)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="datareporting.policy.dataSubmissionPolicyBypassNotification">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -991,7 +991,7 @@
     </policy>
     <policy name="dom_allow_scripts_to_close_windows" class="Both" displayName="$(string.dom_allow_scripts_to_close_windows)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="dom.allow_scripts_to_close_windows">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1001,7 +1001,7 @@
     </policy>
     <policy name="dom_disable_window_flip" class="Both" displayName="$(string.dom_disable_window_flip)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="dom.disable_window_flip">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1011,7 +1011,7 @@
     </policy>
     <policy name="dom_disable_window_move_resize" class="Both" displayName="$(string.dom_disable_window_move_resize)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="dom.disable_window_move_resize">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1021,7 +1021,7 @@
     </policy>
     <policy name="dom_event_contextmenu_enabled" class="Both" displayName="$(string.dom_event_contextmenu_enabled)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="dom.event.contextmenu.enabled">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1031,7 +1031,7 @@
     </policy>
     <policy name="extensions_blocklist_enabled" class="Both" displayName="$(string.extensions_blocklist_enabled)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="extensions.blocklist.enabled">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1041,7 +1041,7 @@
     </policy>
     <policy name="geo_enabled" class="Both" displayName="$(string.geo_enabled)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="geo.enabled">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1051,14 +1051,14 @@
     </policy>
     <policy name="intl_accept_languages" class="Both" displayName="$(string.intl_accept_languages)" explainText="$(string.Preferences_String_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" presentation="$(presentation.Preferences_String)">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <elements>
         <text id="Preferences_String" valueName="intl.accept_languages" required="true" expandable="true"/>
       </elements>
     </policy>
     <policy name="network_dns_disableIPv6" class="Both" displayName="$(string.network_dns_disableIPv6)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="network.dns.disableIPv6">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1068,7 +1068,7 @@
     </policy>
     <policy name="network_IDN_show_punycode" class="Both" displayName="$(string.network_IDN_show_punycode)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="network.IDN_show_punycode">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_1"/>
+      <supportedOn ref="SUPPORTED_ID_8"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1078,7 +1078,7 @@
     </policy>
     <policy name="places_history_enabled" class="Both" displayName="$(string.places_history_enabled)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="places.history.enabled">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1088,7 +1088,7 @@
     </policy>
     <policy name="print_save_print_settings" class="Both" displayName="$(string.print_save_print_settings)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="print.save_print_settings">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1098,7 +1098,7 @@
     </policy>
     <policy name="security_mixed_content_block_active_content" class="Both" displayName="$(string.security_mixed_content_block_active_content)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="security.mixed_content.block_active_content">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1108,7 +1108,7 @@
     </policy>
     <policy name="security_ssl_errorReporting_enabled" class="Both" displayName="$(string.security_ssl_errorReporting_enabled)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="security.ssl.errorReporting.enabled">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1118,28 +1118,28 @@
     </policy>
     <policy name="browser_cache_disk_parent_directory" class="Both" displayName="$(string.browser_cache_disk_parent_directory)" explainText="$(string.Preferences_String_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" presentation="$(presentation.Preferences_String)">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_1"/>
+      <supportedOn ref="SUPPORTED_ID_8"/>
       <elements>
         <text id="Preferences_String" valueName="browser.cache.disk.parent_directory" required="true" expandable="true"/>
       </elements>
     </policy>
     <policy name="dom_keyboardevent_keypress_hack_dispatch_non_printable_keys_addl" class="Both" displayName="$(string.dom_keyboardevent_keypress_hack_dispatch_non_printable_keys_addl)" explainText="$(string.Preferences_String_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" presentation="$(presentation.Preferences_String)">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <elements>
         <text id="Preferences_String" valueName="dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl" required="true"/>
       </elements>
     </policy>
     <policy name="dom_keyboardevent_keypress_hack_use_legacy_keycode_and_charcode_addl" class="Both" displayName="$(string.dom_keyboardevent_keypress_hack_use_legacy_keycode_and_charcode_addl)" explainText="$(string.Preferences_String_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" presentation="$(presentation.Preferences_String)">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <elements>
         <text id="Preferences_String" valueName="dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl" required="true"/>
       </elements>
     </policy>
     <policy name="security_default_personal_cert" class="Both" displayName="$(string.security_default_personal_cert)" explainText="$(string.Preferences_Enum_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" presentation="$(presentation.Preferences_security_default_personal_cert)">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <elements>
         <enum id="Preferences_security_default_personal_cert" valueName="security.default_personal_cert">
           <item displayName="$(string.Preferences_security_default_personal_cert_Ask_Every_Time)">
@@ -1157,7 +1157,7 @@
     </policy>
     <policy name="security_osclientcerts_autoload" class="Both" displayName="$(string.security_osclientcerts_autoload)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="security.osclientcerts.autoload">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1167,7 +1167,7 @@
     </policy>
     <policy name="security_tls_hello_downgrade_check" class="Both" displayName="$(string.security_tls_hello_downgrade_check)" explainText="$(string.Preferences_Boolean_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" valueName="security.tls.hello_downgrade_check">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1177,14 +1177,14 @@
     </policy>
     <policy name="widget_content_gtk-theme-override" class="Both" displayName="$(string.widget_content_gtk-theme-override)" explainText="$(string.Preferences_String_Explain)" key="Software\Policies\Mozilla\Thunderbird\Preferences" presentation="$(presentation.Preferences_String)">
       <parentCategory ref="Preferences"/>
-      <supportedOn ref="SUPPORTED_ID_9"/>
+      <supportedOn ref="SUPPORTED_ID_7"/>
       <elements>
         <text id="Preferences_String" valueName="widget.content.gtk-theme-override" required="true"/>
       </elements>
     </policy>
     <policy name="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_DHE_RSA_WITH_AES_128_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_5"/>
+      <supportedOn ref="SUPPORTED_ID_4"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1194,7 +1194,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_DHE_RSA_WITH_AES_256_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_5"/>
+      <supportedOn ref="SUPPORTED_ID_4"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1204,7 +1204,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_5"/>
+      <supportedOn ref="SUPPORTED_ID_4"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1214,7 +1214,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_5"/>
+      <supportedOn ref="SUPPORTED_ID_4"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1224,7 +1224,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_5"/>
+      <supportedOn ref="SUPPORTED_ID_4"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1234,7 +1234,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_5"/>
+      <supportedOn ref="SUPPORTED_ID_4"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1244,7 +1244,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_RSA_WITH_AES_128_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_5"/>
+      <supportedOn ref="SUPPORTED_ID_4"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1254,7 +1254,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_RSA_WITH_AES_256_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_5"/>
+      <supportedOn ref="SUPPORTED_ID_4"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1264,7 +1264,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_RSA_WITH_3DES_EDE_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_5"/>
+      <supportedOn ref="SUPPORTED_ID_4"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1274,7 +1274,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_RSA_WITH_AES_128_GCM_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1284,7 +1284,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384" class="Both" displayName="$(string.DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_RSA_WITH_AES_256_GCM_SHA384">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1294,7 +1294,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_11"/>
+      <supportedOn ref="SUPPORTED_ID_10"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1304,7 +1304,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_11"/>
+      <supportedOn ref="SUPPORTED_ID_10"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1314,7 +1314,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_11"/>
+      <supportedOn ref="SUPPORTED_ID_10"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1324,7 +1324,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_11"/>
+      <supportedOn ref="SUPPORTED_ID_10"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1334,7 +1334,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_11"/>
+      <supportedOn ref="SUPPORTED_ID_10"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1344,7 +1344,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256)" explainText="$(string.DisabledCiphers_Explain)" key="Software\Policies\Mozilla\Thunderbird\DisabledCiphers" valueName="TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_11"/>
+      <supportedOn ref="SUPPORTED_ID_10"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1354,7 +1354,7 @@
     </policy>
     <policy name="PDFjs_Enabled" class="Both" displayName="$(string.PDFjs_Enabled)" explainText="$(string.PDFjs_Enabled_Explain)" key="Software\Policies\Mozilla\Thunderbird\PDFjs" valueName="Enabled">
       <parentCategory ref="PDFjs"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1364,7 +1364,7 @@
     </policy>
     <policy name="PDFjs_EnablePermissions" class="Both" displayName="$(string.PDFjs_EnablePermissions)" explainText="$(string.PDFjs_EnablePermissions_Explain)" key="Software\Policies\Mozilla\Thunderbird\PDFjs" valueName="EnablePermissions">
       <parentCategory ref="PDFjs"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1374,7 +1374,7 @@
     </policy>
     <policy name="PrimaryPassword" class="Both" displayName="$(string.PrimaryPassword)" explainText="$(string.PrimaryPassword_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="PrimaryPassword">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1384,21 +1384,21 @@
     </policy>
     <policy name="Handlers" class="Both" displayName="$(string.Handlers)" key="Software\Policies\Mozilla\Thunderbird" explainText="$(string.Handlers_Explain)" presentation="$(presentation.Handlers)">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <elements>
         <multiText id="Handlers" valueName="Handlers" maxLength="16384"/>
       </elements>
     </policy>
     <policy name="Preferences" class="Both" displayName="$(string.Preferences)" key="Software\Policies\Mozilla\Thunderbird" explainText="$(string.Preferences_Explain)" presentation="$(presentation.JSON)">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_0"/>
+      <supportedOn ref="SUPPORTED_ID_2"/>
       <elements>
         <multiText id="JSON" valueName="Preferences" maxLength="16384"/>
       </elements>
     </policy>
     <policy name="BackgroundAppUpdate" class="Both" displayName="$(string.BackgroundAppUpdate)" explainText="$(string.BackgroundAppUpdate_Explain)" key="Software\Policies\Mozilla\Thunderbird" valueName="BackgroundAppUpdate">
       <parentCategory ref="thunderbird"/>
-      <supportedOn ref="SUPPORTED_ID_10"/>
+      <supportedOn ref="SUPPORTED_ID_3"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>

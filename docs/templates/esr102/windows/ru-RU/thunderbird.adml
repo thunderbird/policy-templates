@@ -4,16 +4,16 @@
   <description/>
   <resources>
     <stringTable>
-      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
-      <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
-      <string id="SUPPORTED_ID_10">Thunderbird 91.0 - *</string>
-      <string id="SUPPORTED_ID_11">Thunderbird 102.0 - *</string>
-      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
-      <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
-      <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
-      <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
-      <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
-      <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_0">Thunderbird 78.0 - *</string>
+      <string id="SUPPORTED_ID_1">Thunderbird 75.0 - *</string>
+      <string id="SUPPORTED_ID_10">Thunderbird 102.0 - *</string>
+      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - *</string>
+      <string id="SUPPORTED_ID_3">Thunderbird 91.0 - *</string>
+      <string id="SUPPORTED_ID_4">Thunderbird 76.0 - *</string>
+      <string id="SUPPORTED_ID_5">Thunderbird 77.0 - *</string>
+      <string id="SUPPORTED_ID_7">Thunderbird 78.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_8">Thunderbird 68.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_9">Thunderbird 68.0 - Thunderbird 77.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 или более поздние версии</string>
       <string id="UNSUPPORTED">Больше не поддерживается.</string>
       <string id="thunderbird">Thunderbird</string>

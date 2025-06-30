@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="3.1" schemaVersion="1.0">
+<policyDefinitionResources revision="3.10" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
     <stringTable>
-      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
-      <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
-      <string id="SUPPORTED_ID_10">Thunderbird 91.0 - *</string>
-      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
-      <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
-      <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
-      <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
-      <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
-      <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_0">Thunderbird 78.0 - *</string>
+      <string id="SUPPORTED_ID_1">Thunderbird 75.0 - *</string>
+      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - *</string>
+      <string id="SUPPORTED_ID_3">Thunderbird 91.0 - *</string>
+      <string id="SUPPORTED_ID_4">Thunderbird 76.0 - *</string>
+      <string id="SUPPORTED_ID_5">Thunderbird 77.0 - *</string>
+      <string id="SUPPORTED_ID_7">Thunderbird 78.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_8">Thunderbird 68.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_9">Thunderbird 68.0 - Thunderbird 77.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 或更新版本</string>
       <string id="UNSUPPORTED">不再支援。</string>
       <string id="thunderbird">Thunderbird</string>
@@ -37,7 +37,7 @@
       <string id="UserMessaging_group">顯示給使用者的訊息</string>
       <string id="DisabledCiphers_group">停用加密演算法</string>
       <string id="EncryptedMediaExtensions_group">加密媒體擴充功能</string>
-      <string id="PDFjs_group">PDFjs</string>
+      <string id="PDFjs_group">PDF.js</string>
       <string id="PictureInPicture_group">子母畫面</string>
       <string id="Allow">允許的網站</string>
       <string id="AllowSession">允許的網站（僅當次瀏覽階段）</string>
@@ -289,6 +289,14 @@ Mozilla 建議您不要停用 Telemetry。透過 Telemetry 收集到的資訊可
       <string id="LegacyProfiles_Explain">若啟用此原則，Thunderbird 將不會嘗試對本機電腦中不同套的 Thunderbird 建立不同的設定檔資料夾。也等於設定 MOZ_LEGACY_PROFILES。
 
 若停用或不設定此原則，Thunderbird 則會對每一套 Thunderbird 建立不同的設定檔。</string>
+      <string id="LegacySameSiteCookieBehaviorEnabled">退回舊版 SameSite 行為</string>
+      <string id="LegacySameSiteCookieBehaviorEnabled_Explain">若啟用此原則，Thunderbird 將退回舊版的 SameSite 行為。代表未明確指定 SameSite 屬性的 Cookie 將被視為 SameSite=None。
+
+若停用或不設定此原則，Thunderbird 則會強制視為 SameSite=lax。</string>
+      <string id="LegacySameSiteCookieBehaviorEnabledForDomainList">對特定網域退回舊版 SameSite 行為</string>
+      <string id="LegacySameSiteCookieBehaviorEnabledForDomainList_Explain">若啟用此原則，Thunderbird 將對特定網域退回舊版的 SameSite 行為。代表未明確指定 SameSite 屬性的 Cookie 將被視為 SameSite=None。
+
+若停用或不設定此原則，Thunderbird 則會強制對所有網域都視為 SameSite=lax。</string>
       <string id="LocalFileLinks">本機檔案鏈結</string>
       <string id="LocalFileLinks_Explain">若啟用此原則，將可以指定網站內容是否允許鏈結到本機檔案。
 
@@ -336,11 +344,11 @@ Mozilla 建議您不要停用 Telemetry。透過 Telemetry 收集到的資訊可
       <string id="Cookies_Block_Explain">若啟用此原則，將封鎖來自指定來源網址的 Cookie。若指定了頂級網域名稱（例如 http://example.org），也將封鎖所有來自子網域的 Cookie。
 
 若停用或不設定此原則，則預設不封鎖 Cookie。</string>
-      <string id="Cookies_Default">接受來自網站的 Cookie</string>
+      <string id="Cookies_Default">接受來自網站的 Cookie（已棄用）</string>
       <string id="Cookies_Default_Explain">若停用此原則，將預設不接受來自網站的 Cookie。
 
 若未啟用或設定此原則，則接受來自網站的 Cookie。</string>
-      <string id="Cookies_AcceptThirdParty">允許第三方 Cookie</string>
+      <string id="Cookies_AcceptThirdParty">允許第三方 Cookie（已棄用）</string>
       <string id="Cookies_AcceptThirdParty_Explain">若接受 Cookie 並啟用了此原則，將可以設定是否要接受第三方 Cookie。
 
 若停用或未設定此原則，或是不允許 Cookie，則忽略此設定。</string>
@@ -351,7 +359,7 @@ Mozilla 建議您不要停用 Telemetry。透過 Telemetry 收集到的資訊可
       <string id="Cookies_ExpireAtSessionEnd_Explain">若啟用此原則並允許 Cookie，Cookie 將在 Thunderbird 時失效。
 
 若停用或未設定此原則，或是不允許 Cookie，則忽略此設定。</string>
-      <string id="Cookies_RejectTracker">拒絕追蹤器</string>
+      <string id="Cookies_RejectTracker">拒絕追蹤器（已棄用）</string>
       <string id="Cookies_RejectTracker_Explain">若啟用此原則並允許 Cookie，Thunderbird 將預設拒絕追蹤器 Cookie。
 
 若停用或未設定此原則，或是不允許 Cookie，則忽略此設定。</string>
@@ -359,6 +367,20 @@ Mozilla 建議您不要停用 Telemetry。透過 Telemetry 收集到的資訊可
       <string id="Cookies_Locked_Explain">若啟用此原則，使用者將無法調整 Cookie 偏好設定。
 
 若停用或不設定此原則，則使用者能夠自行調整 Cookie 偏好設定。</string>
+      <string id="Cookies_Behavior">Cookie 行為</string>
+      <string id="Cookies_Behavior_Explain">若啟用此原則，可調整 Cookie 接受行為。
+
+若停用或不設定此原則，將拒絕來自已知追蹤器的 Cookie。</string>
+      <string id="Cookies_BehaviorPrivateBrowsing">隱私瀏覽模式中的 Cookie 行為</string>
+      <string id="Cookies_BehaviorPrivateBrowsing_Explain">若啟用此原則，可調整隱私瀏覽模式中的 Cookie 接受行為。
+
+若停用或不設定此原則，將在隱私瀏覽模式中拒絕來自已知追蹤器的 Cookie，並隔離所有第三方 cookie。</string>
+      <string id="Cookies_Behavior_Accept">接受所有 Cookie</string>
+      <string id="Cookies_Behavior_RejectForeign">拒絕第三方 Cookie</string>
+      <string id="Cookies_Behavior_Reject">拒絕所有 Cookie</string>
+      <string id="Cookies_Behavior_LimitForeign">拒絕來自您未造訪過的第三方 Cookie</string>
+      <string id="Cookies_Behavior_RejectTracker">拒絕來自已知追蹤器的 Cookie</string>
+      <string id="Cookies_Behavior_RejectTrackerAndPartitionForeign">拒絕來自已知追蹤器的 Cookie，並隔離第三方網站的 Cookie（全方位 Cookie 保護功能）</string>
       <string id="Camera_Allow_Explain">若啟用此原則，將允許指定來源網址存取攝影機。
 
 若停用或不設定此原則，則依循預設攝影機存取原則。</string>
@@ -616,6 +638,10 @@ Mozilla 建議您不要停用 Telemetry。透過 Telemetry 收集到的資訊可
       <string id="PasswordManagerEnabled_Explain">若停用此原則，將無法於偏好設定中使用密碼管理員。
 
 若啟用或不設定此原則，則可於偏好設定中使用密碼管理員。</string>
+      <string id="PasswordManagerExceptions">Password Manager Exceptions</string>
+      <string id="PasswordManagerExceptions_Explain">If this policy is enabled, you can specify sites where Thunderbird won't offer to save passwords.
+
+If this policy is disabled or not configured, Thunderbird will offer to save passwords on all sites.</string>
       <string id="PromptForDownloadLocation">提示下載位置</string>
       <string id="PromptForDownloadLocation_Explain">若停用此原則，將不會向使用者詢問檔案下載位置。
 
@@ -748,6 +774,10 @@ Mozilla 建議您不要停用 Telemetry。透過 Telemetry 收集到的資訊可
       <string id="UserMessaging_SkipOnboarding_Explain">若啟用此原則，將不會在「新分頁」頁面顯示新功能說明訊息。
 
 若停用或不設定此原則，則會在「新分頁」頁面顯示新功能說明訊息。</string>
+      <string id="UserMessaging_MoreFromMozilla">「Mozilla 的更多產品」頁面</string>
+      <string id="UserMessaging_MoreFromMozilla_Explain">若停用此原則，偏好設定中將不會顯示「Mozilla 的更多產品」頁面。
+
+若啟用或不設定此原則，將會在偏好設定中顯示「Mozilla 的更多產品」頁面。</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA">TLS_DHE_RSA_WITH_AES_128_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA">TLS_DHE_RSA_WITH_AES_256_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</string>
@@ -759,6 +789,12 @@ Mozilla 建議您不要停用 Telemetry。透過 Telemetry 收集到的資訊可
       <string id="DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA">TLS_RSA_WITH_3DES_EDE_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256">TLS_RSA_WITH_AES_128_GCM_SHA256</string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384">TLS_RSA_WITH_AES_256_GCM_SHA384</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384">TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256">TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256">TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256</string>
       <string id="DisabledCiphers_Explain">若啟用此原則，將停用指定的加密套件組。
 
 若停用此原則，將只會開啟指定的加密套件組。
@@ -772,7 +808,7 @@ Mozilla 建議您不要停用 Telemetry。透過 Telemetry 收集到的資訊可
       <string id="EncryptedMediaExtensions_Locked_Explain">若啟用此原則且停用了 EncryptedMediaExtensions，Thunderbird 將不會下載加密媒體擴充功能（例如 Widevine），也不會詢問使用者是否要安裝。
 
 若停用或不設定此原則，此原則就不會生效。</string>
-      <string id="PDFjs_Enabled">啟用 PDFjs</string>
+      <string id="PDFjs_Enabled">啟用 PDF.js</string>
       <string id="PDFjs_Enabled_Explain">若停用此原則，將不會使用內建的 PDF 檢視器。
 
 若啟用或不設定此原則，就會使用內建的 PDF 檢視器。</string>
@@ -808,6 +844,16 @@ Mozilla 建議您不要停用 Telemetry。透過 Telemetry 收集到的資訊可
 若停用或不設定此原則，則不修改偏好設定。
 
 若需要建立原則的詳細資訊，請參考 https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。</string>
+      <string id="Bookmarks">書籤（JSON）</string>
+      <string id="Bookmarks_Explain">若啟用此原則，您可以使用 JSON 字串來設定書籤，也可以使用 [] 來清除所有書籤。
+
+若停用或不設定此原則，則不會指定書籤原則。
+
+若此原則與單一書籤一同啟用，則不會新增書籤。
+
+此原則不會影響「受管理的書籤」原則內容。
+
+若需要 JSON 書籤原則的詳細資訊，請參考 https://github.com/mozilla/policy-templates/blob/master/README.md#bookmarks。</string>
       <string id="ManagedBookmarks">受管理的書籤</string>
       <string id="ManagedBookmarks_Explain">若啟用此原則，您可以使用 JSON 檔案來指定受管理的書籤。
 
@@ -944,6 +990,12 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。
       <presentation id="Cookies_AcceptThirdParty">
         <dropdownList refId="Cookies_AcceptThirdParty"/>
       </presentation>
+      <presentation id="Cookies_Behavior">
+        <dropdownList refId="Cookies_Behavior"/>
+      </presentation>
+      <presentation id="Cookies_BehaviorPrivateBrowsing">
+        <dropdownList refId="Cookies_BehaviorPrivateBrowsing"/>
+      </presentation>
       <presentation id="SearchBar">
         <dropdownList refId="SearchBar"/>
       </presentation>
@@ -951,7 +1003,7 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。
         <checkBox refId="TrackingProtectionLocked">不允許調整追蹤保護偏好設定。</checkBox>
         <checkBox refId="Cryptomining">封鎖加密貨幣採礦程式。</checkBox>
         <checkBox refId="Fingerprinting">封鎖數位指紋追蹤程式。</checkBox>
-        <text>Exceptions:</text>
+        <text>例外：</text>
         <listBox refId="TrackingProtection_Exceptions"/>
       </presentation>
       <presentation id="TrackingProtection_Exceptions">
@@ -1102,6 +1154,9 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。
       <presentation id="Preferences_security_default_personal_cert">
         <dropdownList refId="Preferences_security_default_personal_cert"/>
       </presentation>
+      <presentation id="LegacySameSiteCookieBehaviorEnabledForDomainList">
+        <listBox refId="LegacySameSiteCookieBehaviorEnabledForDomainList"/>
+      </presentation>
       <presentation id="LocalFileLinks">
         <listBox refId="LocalFileLinks"/>
       </presentation>
@@ -1118,8 +1173,10 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences。
       <presentation id="FirefoxHome">
         <checkBox refId="FirefoxHome_Search">搜尋</checkBox>
         <checkBox refId="FirefoxHome_TopSites">熱門網站</checkBox>
+        <checkBox refId="FirefoxHome_SponsoredTopSites">贊助的熱門網站</checkBox>
         <checkBox refId="FirefoxHome_Highlights">下載紀錄</checkBox>
         <checkBox refId="FirefoxHome_Pocket">Pocket 推薦項目</checkBox>
+        <checkBox refId="FirefoxHome_SponsoredPocket">Pocket 贊助內容</checkBox>
         <checkBox refId="FirefoxHome_Snippets">隻字片語</checkBox>
         <checkBox refId="FirefoxHome_Locked">不允許變更設定</checkBox>
       </presentation>

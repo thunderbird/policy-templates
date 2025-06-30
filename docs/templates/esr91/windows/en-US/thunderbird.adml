@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="3.1" schemaVersion="1.0">
+<policyDefinitionResources revision="3.10" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
     <stringTable>
-      <string id="SUPPORTED_ID_0">Thunderbird 68.0 - *</string>
-      <string id="SUPPORTED_ID_1">Thunderbird 68.0 - Thunderbird 89.0</string>
-      <string id="SUPPORTED_ID_10">Thunderbird 91.0 - *</string>
-      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - Thunderbird 77.0</string>
-      <string id="SUPPORTED_ID_3">Thunderbird 78.0 - *</string>
-      <string id="SUPPORTED_ID_4">Thunderbird 75.0 - *</string>
-      <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
-      <string id="SUPPORTED_ID_6">Thunderbird 77.0 - *</string>
-      <string id="SUPPORTED_ID_9">Thunderbird 78.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_0">Thunderbird 78.0 - *</string>
+      <string id="SUPPORTED_ID_1">Thunderbird 75.0 - *</string>
+      <string id="SUPPORTED_ID_2">Thunderbird 68.0 - *</string>
+      <string id="SUPPORTED_ID_3">Thunderbird 91.0 - *</string>
+      <string id="SUPPORTED_ID_4">Thunderbird 76.0 - *</string>
+      <string id="SUPPORTED_ID_5">Thunderbird 77.0 - *</string>
+      <string id="SUPPORTED_ID_7">Thunderbird 78.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_8">Thunderbird 68.0 - Thunderbird 89.0</string>
+      <string id="SUPPORTED_ID_9">Thunderbird 68.0 - Thunderbird 77.0</string>
       <string id="SUPPORTED_WINXPSP2">Microsoft Windows XP SP2 or later</string>
       <string id="UNSUPPORTED">No longer supported.</string>
       <string id="thunderbird">Thunderbird</string>
@@ -37,7 +37,7 @@
       <string id="UserMessaging_group">User Messaging</string>
       <string id="DisabledCiphers_group">Disabled Ciphers</string>
       <string id="EncryptedMediaExtensions_group">Encrypted Media Extensions</string>
-      <string id="PDFjs_group">PDFjs</string>
+      <string id="PDFjs_group">PDF.js</string>
       <string id="PictureInPicture_group">Picture-in-Picture</string>
       <string id="Allow">Allowed Sites</string>
       <string id="AllowSession">Allowed Sites (Session Only)</string>
@@ -282,13 +282,21 @@ If this policy is disabled or not configured, extensions will not be managed.
 
 For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#extensionsettings.</string>
       <string id="HardwareAcceleration">Hardware Acceleration</string>
-      <string id="HardwareAcceleration_Explain">If this policy is disabled, hardware acceleration and cannot be enabled.
+      <string id="HardwareAcceleration_Explain">If this policy is disabled, hardware acceleration is disabled and cannot be enabled.
 
 If this policy is enabled or not configured, hardware acceleration is enabled.</string>
       <string id="LegacyProfiles">Legacy Profiles</string>
       <string id="LegacyProfiles_Explain">If this policy is enabled, Thunderbird will not try to create different profiles for installations of Thunderbird in different directories. This is the equivalent of the MOZ_LEGACY_PROFILES environment variable.
 
 If this policy is disabled or not configured, Thunderbird will create a new profile for each unique installation of Thunderbird.</string>
+      <string id="LegacySameSiteCookieBehaviorEnabled">Revert to legacy SameSite behavior</string>
+      <string id="LegacySameSiteCookieBehaviorEnabled_Explain">If this policy is enabled, Thunderbird will revert to the legacy behavior of SameSite. This means that cookies that don't explicitly specify a SameSite attribute are treated as if they were SameSite=None.
+
+If this policy is disabled or not configured, Thunderbird will enforce SameSite=lax.</string>
+      <string id="LegacySameSiteCookieBehaviorEnabledForDomainList">Revert to legacy SameSite behavior on specific domains</string>
+      <string id="LegacySameSiteCookieBehaviorEnabledForDomainList_Explain">If this policy is enabled, Thunderbird will revert to the legacy behavior of SameSite for the specified domains. This means that cookies that don't explicitly specify a SameSite attribute are treated as if they were SameSite=None.
+
+If this policy is disabled or not configured, Thunderbird will enforce SameSite=lax for all domains.</string>
       <string id="LocalFileLinks">Local File Links</string>
       <string id="LocalFileLinks_Explain">If this policy is enabled, you can specify origins where linking to local files is allowed.
 
@@ -338,11 +346,11 @@ If this policy is disabled or not configured, the default cookie policy is follo
       <string id="Cookies_Block_Explain">If this policy is enabled, cookies are blocked for the origins indicated. If a top level domain is specified (http://example.org), cookies are blocked from all subdomains as well.
 
 If this policy is disabled or not configured, cookies are not blocked by default.</string>
-      <string id="Cookies_Default">Accept cookies from websites</string>
+      <string id="Cookies_Default">Accept cookies from websites (Deprecated)</string>
       <string id="Cookies_Default_Explain">If this policy is disabled, cookies are not accepted from websites by default.
 
 If this policy is not configured or enabled, cookies are accepted from websites.</string>
-      <string id="Cookies_AcceptThirdParty">Accept third-party cookies</string>
+      <string id="Cookies_AcceptThirdParty">Accept third-party cookies (Deprecated)</string>
       <string id="Cookies_AcceptThirdParty_Explain">If this policy is enabled and cookies are allowed, you can set when to accept third-party cookies.
 
 This setting is ignored if this policy is disabled or not configured or if cookies are not allowed.</string>
@@ -353,14 +361,26 @@ This setting is ignored if this policy is disabled or not configured or if cooki
       <string id="Cookies_ExpireAtSessionEnd_Explain">If this policy is enabled and cookies are allowed, they will expire when Thunderbird is closed.
 
 This setting is ignored if this policy is disabled or not configured or if cookies are not allowed.</string>
-      <string id="Cookies_RejectTracker">Reject trackers</string>
+      <string id="Cookies_RejectTracker">Reject trackers (Deprecated)</string>
       <string id="Cookies_RejectTracker_Explain">If this policy is enabled and cookies are allowed, Thunderbird will reject tracker cookies by default.
 
 This setting is ignored if this policy is disabled or not configured or if cookies are not allowed.</string>
       <string id="Cookies_Locked">Do not allow preferences to be changed</string>
-      <string id="Cookies_Locked_Explain">If this policy is enabled, cookie preferences cannot be changed by the user.
+      <string id="Cookies_Locked_Explain">If this policy is enabled, cookie preferences cannot be changed by the user.</string>
+      <string id="Cookies_Behavior">Cookie Behavior</string>
+      <string id="Cookies_Behavior_Explain">If this policy is enabled, you can configure cookie behavior.
 
-If this policy is disabled or not configured, the user can change their cookie preferences.</string>
+If this policy is not configured or disabled, cookies are rejected for known trackers.</string>
+      <string id="Cookies_BehaviorPrivateBrowsing">Cookie Behavior in private browsing</string>
+      <string id="Cookies_BehaviorPrivateBrowsing_Explain">If this policy is enabled, you can configure cookie behavior in private browsing.
+
+If this policy is not configured or disabled, in private browsing, cookies are rejected for known trackers and third-party cookies are partitioned.</string>
+      <string id="Cookies_Behavior_Accept">Accept all cookies</string>
+      <string id="Cookies_Behavior_RejectForeign">Reject third party cookies</string>
+      <string id="Cookies_Behavior_Reject">Reject all cookies</string>
+      <string id="Cookies_Behavior_LimitForeign">Reject third party cookies for sites you haven't visited</string>
+      <string id="Cookies_Behavior_RejectTracker">Reject cookies for known trackers</string>
+      <string id="Cookies_Behavior_RejectTrackerAndPartitionForeign">Reject cookies for known trackers and partition third-party cookies (Total Cookie Protection)</string>
       <string id="Camera_Allow_Explain">If this policy is enabled, access to the camera is always allowed for the origins indicated.
 
 If this policy is disabled or not configured, the default camera policy is followed.</string>
@@ -581,7 +601,7 @@ If this policy is disabled or not configured, there are no exceptions to the web
       <string id="Bookmark48">Bookmark 48</string>
       <string id="Bookmark49">Bookmark 49</string>
       <string id="Bookmark50">Bookmark 50</string>
-      <string id="Bookmark_Explain">If this policy is enabled, you can configure a bookmark be added to Thunderbird.  Due to a bug, you must select the location. Note that you must specify the bookmarks in order.
+      <string id="Bookmark_Explain">If this policy is enabled, you can configure a bookmark be added to Thunderbird. Due to a bug, you must select the location. Note that you must specify the bookmarks in order.
 
 If this policy is disabled or not configured, a new bookmark is not added.</string>
       <string id="BookmarkPlacementToolbar">Toolbar</string>
@@ -618,6 +638,10 @@ If this policy is not configured, Thunderbird will determine whether or not the 
       <string id="PasswordManagerEnabled_Explain">If this policy is disabled, the password manager is not available via preferences.
 
 If this policy is enabled or not configured, the password manager is available via preferences.</string>
+      <string id="PasswordManagerExceptions">Password Manager Exceptions</string>
+      <string id="PasswordManagerExceptions_Explain">If this policy is enabled, you can specify sites where Thunderbird won't offer to save passwords.
+
+If this policy is disabled or not configured, Thunderbird will offer to save passwords on all sites.</string>
       <string id="PromptForDownloadLocation">Prompt for download location</string>
       <string id="PromptForDownloadLocation_Explain">If this policy is disabled, the user is not prompted for a download location.
 
@@ -750,6 +774,10 @@ If this policy is enabled or not configured, actions will be recommended based o
       <string id="UserMessaging_SkipOnboarding_Explain">If this policy is enabled, onboarding messages will not be shown on the new tab page.
 
 If this policy is disabled or not configured, onboarding messages will be shown on the new tab page.</string>
+      <string id="UserMessaging_MoreFromMozilla">More from Mozilla</string>
+      <string id="UserMessaging_MoreFromMozilla_Explain">If this policy is disabled, the More from Mozilla section will not be shown in preferences.
+
+If this policy is enabled or not configured, the More from Mozilla section will be shown in preferences.</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA">TLS_DHE_RSA_WITH_AES_128_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA">TLS_DHE_RSA_WITH_AES_256_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</string>
@@ -761,6 +789,12 @@ If this policy is disabled or not configured, onboarding messages will be shown 
       <string id="DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA">TLS_RSA_WITH_3DES_EDE_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256">TLS_RSA_WITH_AES_128_GCM_SHA256</string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384">TLS_RSA_WITH_AES_256_GCM_SHA384</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384">TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256">TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256">TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256</string>
       <string id="DisabledCiphers_Explain">If this policy is enabled, the corresponding cipher is disabled.
 
 If this policy is disabled, the corresponding cipher is enabled.
@@ -774,7 +808,7 @@ If this policy is enabled or not configured, encrypted media extensions (like Wi
       <string id="EncryptedMediaExtensions_Locked_Explain">If this policy is enabled and EncryptedMediaExtensions are disabled, Thunderbird will not download encrypted media extensions (like Widevine) or ask the user to install them.
 
 If this policy is not disabled or not configured, it has no effect.</string>
-      <string id="PDFjs_Enabled">Enable PDFjs</string>
+      <string id="PDFjs_Enabled">Enable PDF.js</string>
       <string id="PDFjs_Enabled_Explain">If this policy is disabled, the built-in PDF viewer is not used.
 
 If this policy is enabled or not configured, the built-in PDF viewer is used.</string>
@@ -810,6 +844,16 @@ If this policy is enabled, you can use JSON to configure preferences.
 If this policy is disabled or not configured, preferences are not modified.
 
 For detailed information on creating the policy, see https://github.com/mozilla/policy-templates/blob/master/README.md#preferences.</string>
+      <string id="Bookmarks">Bookmarks (JSON)</string>
+      <string id="Bookmarks_Explain">If this policy is enabled, you can use JSON to configure bookmarks, including [] to clear all bookmarks.
+
+If this policy is disabled or not configured, the individual bookmark policies are used.
+
+If this policy is enabled along with individual bookmarks, those bookmarks will not be added.
+
+This policy has no effect on Managed Bookmarks.
+
+For detailed information on the JSON, see https://github.com/mozilla/policy-templates/blob/master/README.md#bookmarks.</string>
       <string id="ManagedBookmarks">Managed Bookmarks</string>
       <string id="ManagedBookmarks_Explain">If this policy is enabled, you can use JSON to configure managed bookmarks.
 
@@ -945,6 +989,12 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences.</
       </presentation>
       <presentation id="Cookies_AcceptThirdParty">
         <dropdownList refId="Cookies_AcceptThirdParty"/>
+      </presentation>
+      <presentation id="Cookies_Behavior">
+        <dropdownList refId="Cookies_Behavior"/>
+      </presentation>
+      <presentation id="Cookies_BehaviorPrivateBrowsing">
+        <dropdownList refId="Cookies_BehaviorPrivateBrowsing"/>
       </presentation>
       <presentation id="SearchBar">
         <dropdownList refId="SearchBar"/>
@@ -1104,6 +1154,9 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences.</
       <presentation id="Preferences_security_default_personal_cert">
         <dropdownList refId="Preferences_security_default_personal_cert"/>
       </presentation>
+      <presentation id="LegacySameSiteCookieBehaviorEnabledForDomainList">
+        <listBox refId="LegacySameSiteCookieBehaviorEnabledForDomainList"/>
+      </presentation>
       <presentation id="LocalFileLinks">
         <listBox refId="LocalFileLinks"/>
       </presentation>
@@ -1120,8 +1173,10 @@ https://github.com/mozilla/policy-templates/blob/master/README.md#preferences.</
       <presentation id="FirefoxHome">
         <checkBox refId="FirefoxHome_Search">Search</checkBox>
         <checkBox refId="FirefoxHome_TopSites">Top Sites</checkBox>
+        <checkBox refId="FirefoxHome_SponsoredTopSites">Sponsored Top Sites</checkBox>
         <checkBox refId="FirefoxHome_Highlights">Download History</checkBox>
         <checkBox refId="FirefoxHome_Pocket">Recommended by Pocket</checkBox>
+        <checkBox refId="FirefoxHome_SponsoredPocket">Sponsored Pocket Stories</checkBox>
         <checkBox refId="FirefoxHome_Snippets">Snippets</checkBox>
         <checkBox refId="FirefoxHome_Locked">Don't allow settings to be changed</checkBox>
       </presentation>
