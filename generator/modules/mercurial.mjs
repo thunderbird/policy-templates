@@ -349,7 +349,7 @@ export function generateCompatibilityInformationCache(revisions, tree) {
  * 
  * @returns {string} Path to the downloaded file.
  */
-export function getLocalPolicySchemaPath(branch, tree, revision) {
+function getLocalPolicySchemaPath(branch, tree, revision) {
     return `${SCHEMA_DIR_PATH}/${branch}-${tree}-${revision}.json`;
 }
 

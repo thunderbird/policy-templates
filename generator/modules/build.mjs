@@ -105,7 +105,7 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
         };
 
         // Update upstream state.
-        const isSupported = supportedPolicies.find(e => e.policies.includes(name));
+        const isSupported = supportedPolicies.some(e => e.policies.includes(name));
         if (isSupported) {
             updatedUpstreamReadmeData.headers[name] = h;
         }
@@ -124,7 +124,7 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
         }
 
         // Update upstream state.
-        const isSupported = supportedPolicies.find(e => e.policies.includes(name));
+        const isSupported = supportedPolicies.some(e => e.policies.includes(name));
         if (isSupported) {
             updatedUpstreamReadmeData.policies[name] = lines;
         }

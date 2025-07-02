@@ -19,27 +19,6 @@ function debug(...args) {
 }
 
 /**
- * Logs a message to the console with the specified color.
- * 
- * @param {string} msg - The message to log.
- * @param {string} [color="white"] - The color name (e.g., "red", "green",
- *    "yellow", "blue", "magenta", "cyan", "white").
- */
-export function logColor(msg, color = "white") {
-    const colors = {
-        red: 31,
-        green: 32,
-        yellow: 33,
-        blue: 34,
-        magenta: 35,
-        cyan: 36,
-        white: 37,
-    };
-    const colorCode = colors[color.toLowerCase()] || 31; // default to red if unknown
-    console.log(`\x1b[${colorCode}m${msg}\x1b[0m`);
-}
-
-/**
  * Returns a new object with the same key-value pairs as the input object,
  * but with keys sorted in ascending alphabetical order.
  *

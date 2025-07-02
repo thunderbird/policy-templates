@@ -21,12 +21,11 @@ import {
     getCachedCompatibilityInformation,
     getDifferencesBetweenPolicySchemas,
     getHgDownloadUrl,
-    getLocalPolicySchemaPath,
     gCompatibilityData
 } from "./modules/mercurial.mjs";
 import {
     fileExists, getFirstRevisionFromBuildHub,
-    getThunderbirdVersions, logColor, writePrettyJSONFile
+    getThunderbirdVersions, writePrettyJSONFile
 } from "./modules/tools.mjs";
 
 import { parse } from "comment-json";
@@ -169,6 +168,7 @@ for (let entry of allRevisionData) {
 // Build the Thunderbird templates.
 await fs.rm(DOCS_TEMPLATES_DIR_PATH, { recursive: true, force: true });
 const gMainTemplateEntries = [];
+const GITHUB_REPORTS = [];
 for (let revisionData of allRevisionData) {
     // Download schema from https://hg.mozilla.org/
     let data = await downloadMissingPolicySchemaFiles(
@@ -198,44 +198,64 @@ for (let revisionData of allRevisionData) {
     if (mozillaReferencePolicyFile.revision != data.mozilla.revisions[0].revision) {
         revisionData.mozillaReferencePolicyRevision = data.mozilla.revisions[0].revision;
         let m_m_changes = getDifferencesBetweenPolicySchemas(mozillaReferencePolicyFile, data.mozilla.revisions[0]);
+        let report = {
+            title: null,
+            description: [],
+            added: [],
+            removed: [],
+            changed: [],
+        }
         if (m_m_changes) {
-            console.log();
-            logColor(` Mozilla has released a new policy revision for mozilla-${revisionData.tree}!`);
-            logColor(` Do those changes need to be ported to Thunderbird?`);
-            if (m_m_changes.added.length > 0) {
-                logColor(` - Mozilla added the following policies: [`, "yellow");
-                // Indicate if the current tree supports any of the added policies.
-                // This can happen, if the revision config file has not yet been
-                // committed, and an older revision was used to detect changes in
-                // the policy files.
-                for (let added of m_m_changes.added) {
-                    let isSupported = supportedPolicies.find(e => e.policies.includes(added));
-                    if (isSupported) {
-                        logColor(`     '${added}'`, "green");
-                    } else {
-                        logColor(`     '${added}', Not supported by ${revisionData.tree}`, "red");
+            for (const { title, data, require_supported, log } of [
+                {
+                    title: "New unsupported policies:",
+                    data: m_m_changes.added,
+                    require_supported: false,
+                    log: report.added,
+                },
+                {
+                    title: "Removed policies:",
+                    data: m_m_changes.removed,
+                    require_supported: true,
+                    log: report.removed,
+                },
+                {
+                    title: "Policies with changed properties:",
+                    data: m_m_changes.changed,
+                    require_supported: true,
+                    log: report.changed,
+                }
+            ]) {
+                if (data.length > 0) {
+                    const entries = [];
+                    for (let entry of data) {
+                        let isSupported = supportedPolicies.some(e => e.policies.includes(entry));
+                        if (isSupported == require_supported) {
+                            entries.push(` * \`${entry}\``);
+                        }
+                    }
+                    if (entries.length) {
+                        log.push(title);
+                        log.push(...entries);
                     }
                 }
-                logColor(`   ]\n`, "yellow");
-            }
-            if (m_m_changes.removed.length > 0) {
-                logColor(` - Mozilla removed the following policies: [`, "yellow");
-                m_m_changes.removed.forEach(e => logColor(`     '${e}'`, "yellow"));
-                logColor(`   ]\n`, "yellow");
-            }
-            if (m_m_changes.changed.length > 0) {
-                logColor(` - Mozilla changed properties of the following policies: [`, "yellow");
-                m_m_changes.changed.forEach(e => logColor(`     '${e}'`, "yellow"));
-                logColor(`   ]\n`, "yellow");
             }
 
-            console.log();
-            console.log(` - currently acknowledged policy revision (${mozillaReferencePolicyFile.revision} / ${mozillaReferencePolicyFile.version}): \n\t${pathUtils.resolve(getLocalPolicySchemaPath("mozilla", revisionData.tree, mozillaReferencePolicyFile.revision))}\n`);
-            console.log(` - latest available policy revision (${data.mozilla.revisions[0].revision} / ${data.mozilla.revisions[0].version}): \n\t${pathUtils.resolve(getLocalPolicySchemaPath("mozilla", revisionData.tree, data.mozilla.revisions[0].revision))}\n`);
-            console.log(` - hg change log for mozilla-${revisionData.tree}: \n\t${getHgDownloadUrl("mozilla", revisionData.tree, "tip", "log", "policies-schema.json")}\n`);
-            console.log(`Create bugs on Bugzilla for all policies which should be ported to Thunderbird and then check-in the updated ../${UPSTREAM_REVISIONS_PATH} file to acknowledge the reported changes.`);
-            console.log(`Once the reported changes are acknowledged, they will not be reported again.`);
-            console.log();
+            if (report.added.length || report.removed.length || report.changed.length) {
+                report.title = `Mozilla has released a new policy revision for mozilla-${revisionData.tree} (${data.mozilla.revisions[0].version})!`;
+                report.description.push(`The following changes have been detected since the last check (${mozillaReferencePolicyFile.version}). Do those changes need to be ported to Thunderbird?`);
+                console.log("-----------------------------------------------------------------------");
+                console.log(report.title);
+                console.log();
+                for (const log of [report.description, report.added, report.removed, report.changed]) {
+                    if (log.length) {
+                        log.forEach(e => console.log(e));
+                        console.log();
+                    }
+                }
+                console.log("-----------------------------------------------------------------------");
+                GITHUB_REPORTS.push(report);
+            }
         }
     }
 
@@ -275,3 +295,12 @@ await fs.writeFile(DOCS_README_PATH, MAIN_TEMPLATE
     .replace("__list__", gMainTemplateEntries.join("\n"))
     .replace("__compatibility__", generateReadmeCompatibilityTable(compatInfo).join("\n"))
 );
+
+// Pass reports back to github action workflow, to create issues.
+const githubWorkflowOutput = process.env.GITHUB_OUTPUT;
+if (githubWorkflowOutput) {
+    await fs.appendFile(
+        githubWorkflowOutput,
+        `reports=${JSON.stringify(GITHUB_REPORTS)}\n`
+    );
+}
