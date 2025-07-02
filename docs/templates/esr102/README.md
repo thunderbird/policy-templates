@@ -2628,7 +2628,7 @@ Value (string):
       "browser.cache.disk.parent_directory": {
         "Value": "SOME_NATIVE_PATH",
         "Status": "user"
-      },
+      }
     }
   }
 }

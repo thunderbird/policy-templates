@@ -2706,10 +2706,10 @@ Value (string):
       "browser.cache.disk.parent_directory": {
         "Value": "SOME_NATIVE_PATH",
         "Status": "user"
-      },
       }
     }
   }
+}
 ```
 
 ### Deprecated Preferences (TB78 and older)
