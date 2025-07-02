@@ -12,7 +12,8 @@ import convert from "xml-js";
 import plist from "plist";
 
 /**
- * Parse the README files of a given mozilla policy template.
+ * Parse the README files of a given mozilla policy template, or creates it if
+ * missing (cloned from comm-central, if possible).
  * 
  * @param {object} revisionData
  * @param {string} revisionData.name - Name of the template (e.g. Thunderbird 139).
@@ -26,10 +27,15 @@ import plist from "plist";
  *    with data in the current /state folder.
  */
 export async function parseMozillaPolicyTemplate(revisionData) {
-    let readme_file_name = README_JSON_PATH.replace("#tree#", revisionData.tree);
-    let readmeData = await fileExists(readme_file_name)
-        ? parse(await fs.readFile(readme_file_name, 'utf8'))
+    const README_FILE_NAME = README_JSON_PATH.replace("#tree#", revisionData.tree);
+    const readmeData = await fileExists(README_FILE_NAME)
+        ? parse(await fs.readFile(README_FILE_NAME, 'utf8'))
         : {};
+
+    const COMM_CENTRAL_FILE_NAME = README_JSON_PATH.replace("#tree#", "central");
+    const commCentralReadmeData = await fileExists(COMM_CENTRAL_FILE_NAME)
+    ? parse(await fs.readFile(COMM_CENTRAL_FILE_NAME, 'utf8'))
+    : {};
 
     const daily_template_lines = DESC_DEFAULT_DAILY_TEMPLATE
         .replaceAll("#tree#", revisionData.tree).split("\n");
@@ -37,15 +43,18 @@ export async function parseMozillaPolicyTemplate(revisionData) {
         .replaceAll("#tree#", revisionData.tree).split("\n");
 
     if (!readmeData) readmeData = {};
-    if (!readmeData.headers) readmeData.headers = {};
-    if (!readmeData.policies) readmeData.policies = {};
-    if (!readmeData.desc) readmeData.desc = revisionData.tree == "central"
+    
+    // Always update the provided revision name and mozillaReferenceTemplates.
+    readmeData.tree = revisionData.tree;
+    readmeData.name = revisionData.name;
+    readmeData.version = revisionData.version;
+    readmeData.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
+
+    if (!readmeData.headers) readmeData.headers = commCentralReadmeData?.headers || {};
+    if (!readmeData.policies) readmeData.policies = commCentralReadmeData?.policies || {};
+    /*if (!readmeData.desc)*/ readmeData.desc = revisionData.tree == "central"
         ? [...daily_template_lines, "", ...normal_template_lines]
         : normal_template_lines
-
-    // Always update the provided revision name and mozillaReferenceTemplates.
-    readmeData.name = revisionData.name;
-    readmeData.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
 
     let ref = readmeData.mozillaReferenceTemplates;
     let dir = `${MOZILLA_TEMPLATE_DIR_PATH}/${ref}`;
@@ -101,7 +110,7 @@ export async function parseMozillaPolicyTemplate(revisionData) {
         }
     }
 
-    await writePrettyJSONFile(readme_file_name, readmeData);
+    await writePrettyJSONFile(README_FILE_NAME, readmeData);
     return readmeData;
 }
 
