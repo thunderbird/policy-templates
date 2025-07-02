@@ -5,9 +5,9 @@ import {
 } from "./constants.mjs";
 import { pullGitRepository } from "./git.mjs";
 import { getCachedCompatibilityInformation } from "./mercurial.mjs";
-import { ensureDir, fileExists, writePrettyJSONFile } from "./tools.mjs";
+import { ensureDir, fileExists, sortObjectByKeys, writePrettyJSONFile } from "./tools.mjs";
 
-import { parse, stringify } from "comment-json";
+import { parse } from "comment-json";
 import fs from "node:fs/promises";
 import convert from "xml-js";
 import pathUtils from "path";
@@ -24,10 +24,11 @@ import plist from "plist";
  * @param {integer} revisionData.version - Associated Thunderbird version.
  * @param {string} revisionData.mozillaReferenceTemplates - GitHub tag of the 
  *    associated Mozilla policy release.
+ * @param {PolicyCompatibilityEntry[]} supportedPolicies
  *
  * @return {TemplateData} - The parsed data from upstream readme.json.
  */
-export async function parseMozillaPolicyTemplate(revisionData) {
+export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies) {
     // Get default descriptions in case this creates a new template revision (for
     // a new ESR for example).
     const daily_template_lines = DESC_DEFAULT_DAILY_TEMPLATE
@@ -35,17 +36,13 @@ export async function parseMozillaPolicyTemplate(revisionData) {
     const normal_template_lines = DESC_DEFAULT_TEMPLATE
         .replaceAll("#tree#", revisionData.tree).split("\n");
 
-    // Get the last known upstream state (to compare it against the current state
-    // and report changes).
-    const CURRENT_UPSTREAM_README_FILE_NAME = pathUtils.join(
-        GIT_CHECKOUT_DIR_PATH,
-        UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
-    );
-    const upstreamReadmeData = await fileExists(CURRENT_UPSTREAM_README_FILE_NAME)
-        ? parse(await fs.readFile(CURRENT_UPSTREAM_README_FILE_NAME, 'utf8'))
-        : {};
-    if (!upstreamReadmeData.headers) upstreamReadmeData.headers = {};
-    if (!upstreamReadmeData.policies) upstreamReadmeData.policies = {};
+    const updatedUpstreamReadmeData = {
+        tree: revisionData.tree,
+        version: revisionData.version,
+        mozillaReferenceTemplates: revisionData.mozillaReferenceTemplates,
+        headers: {},
+        policies: {},
+    }
 
     // Get the Thunderbird config data for this template. Clone the config for
     // comm-central, if not available.
@@ -107,13 +104,11 @@ export async function parseMozillaPolicyTemplate(revisionData) {
             readmeData.headers[name] = h;
         };
 
-        // TODO: Report changes in upstream.
-        upstreamReadmeData.headers[name] = h;
-        /* if (!upstreamReadmeData.headers[name]) {
-            upstreamReadmeData.headers[name] = h;
-        } else if (!upstreamReadmeData.headers[name].upstream || upstreamReadmeData.headers[name].upstream != h) {
-            upstreamReadmeData.headers[name].upstream = h;
-        } */
+        // Update upstream state.
+        const isSupported = supportedPolicies.find(e => e.policies.includes(name));
+        if (isSupported) {
+            updatedUpstreamReadmeData.headers[name] = h;
+        }
     }
 
     // Process policies.
@@ -128,20 +123,20 @@ export async function parseMozillaPolicyTemplate(revisionData) {
             readmeData.policies[name] = lines;
         }
 
-        // TODO: Report changes in upstream.
-        upstreamReadmeData.policies[name] = lines;
-        /* if (!readmeData.policies[name]) {
-            readmeData.policies[name] = { upstream: lines };
-        } else if (!readmeData.policies[name].upstream || stringify(readmeData.policies[name].upstream) != stringify(lines)) {
-            readmeData.policies[name].upstream = lines;
-        } */
+        // Update upstream state.
+        const isSupported = supportedPolicies.find(e => e.policies.includes(name));
+        if (isSupported) {
+            updatedUpstreamReadmeData.policies[name] = lines;
+        }
     }
 
     const UPDATED_UPSTREAM_README_FILE_NAME = pathUtils.join(
         "..",
         UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
     );
-    await writePrettyJSONFile(UPDATED_UPSTREAM_README_FILE_NAME, upstreamReadmeData);
+    updatedUpstreamReadmeData.headers = sortObjectByKeys(updatedUpstreamReadmeData.headers);
+    updatedUpstreamReadmeData.policies = sortObjectByKeys(updatedUpstreamReadmeData.policies);
+    await writePrettyJSONFile(UPDATED_UPSTREAM_README_FILE_NAME, updatedUpstreamReadmeData);
     return readmeData;
 }
 

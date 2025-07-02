@@ -240,7 +240,7 @@ for (let revisionData of allRevisionData) {
     }
 
     // Clone the Mozilla templates.
-    let template = await parseMozillaPolicyTemplate(revisionData);
+    let template = await parseMozillaPolicyTemplate(revisionData, supportedPolicies);
     let thunderbirdPolicies = Object.keys(gCompatibilityData)
         .filter(p => !gCompatibilityData[p].unsupported)
         .sort(function (a, b) {

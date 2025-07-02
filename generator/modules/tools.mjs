@@ -39,6 +39,29 @@ export function logColor(msg, color = "white") {
     console.log(`\x1b[${colorCode}m${msg}\x1b[0m`);
 }
 
+/**
+ * Returns a new object with the same key-value pairs as the input object,
+ * but with keys sorted in ascending alphabetical order.
+ *
+ * @param {Object} obj - The input object to sort.
+ * @returns {Object} A new object with keys sorted alphabetically.
+ */
+export function sortObjectByKeys(obj) {
+    return Object.keys(obj)
+        .sort()
+        .reduce((sorted, key) => {
+            sorted[key] = obj[key];
+            return sorted;
+        }, {});
+}
+
+/**
+ * Filters an array to remove duplicate entries, preserving the order
+ * of the first occurrence of each unique value.
+ *
+ * @param {Array} arr - The input array that may contain duplicate values.
+ * @returns {Array} A new array with only unique values from the input.
+ */
 function filterUniqueEntries(arr) {
     return arr.reduce((acc, item) => {
         if (!acc.includes(item)) {
@@ -47,6 +70,7 @@ function filterUniqueEntries(arr) {
         return acc;
     }, []);
 }
+
 /**
  * Pull the list of known ESR versions from product-details.mozilla.org, by
  * looking for releases which end with "esr". Sadly, the category flag is not a
