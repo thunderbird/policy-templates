@@ -1,13 +1,13 @@
-export const STATE_DIR_PATH = "./data/gitstate";
+export const GIT_CHECKOUT_DIR_PATH = "./data/gitstate";
 export const SCHEMA_DIR_PATH = "./data/schema";
 export const MOZILLA_TEMPLATE_DIR_PATH = "./data/mozilla-policy-templates";
 
-export const BUILD_DIR_PATH = "../docs/templates";
-export const MAIN_README_PATH = "../docs/README.md";
+export const DOCS_TEMPLATES_DIR_PATH = "../docs/templates";
+export const DOCS_README_PATH = "../docs/README.md";
+export const CONFIG_README_PATH = "../config/readme_#tree#.json";
 
-export const README_JSON_PATH = "../state/readme_#tree#.json";
-
-export const REVISIONS_JSON_PATH = `state/revisions.json`;
+export const UPSTREAM_README_PATH = "upstream-state/readme_#tree#.json";
+export const UPSTREAM_REVISIONS_PATH = "upstream-state/revisions.json";
 
 export const HG_URL = `https://hg-edge.mozilla.org`;
 export const BUILD_HUB_URL = "buildhub.moz.tools";

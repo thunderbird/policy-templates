@@ -11,8 +11,8 @@ import {
 } from "./modules/build.mjs";
 import {
     MAIN_TEMPLATE,
-    BUILD_DIR_PATH, MAIN_README_PATH,
-    REVISIONS_JSON_PATH, STATE_DIR_PATH
+    DOCS_TEMPLATES_DIR_PATH, DOCS_README_PATH,
+    UPSTREAM_REVISIONS_PATH, GIT_CHECKOUT_DIR_PATH
 } from "./modules/constants.mjs";
 import { pullGitRepository } from "./modules/git.mjs";
 import {
@@ -137,9 +137,9 @@ if (matching_central) {
 // Note: This allows us to monitor Mozilla policies and get notified about changes.
 //       We can then decide if the additions need to be ported for Thunderbird.
 await pullGitRepository(
-    "https://github.com/thunderbird/policy-templates", "master", STATE_DIR_PATH
+    "https://github.com/thunderbird/policy-templates", "master", GIT_CHECKOUT_DIR_PATH
 );
-let stateDirRevisionsPath = pathUtils.join(STATE_DIR_PATH, REVISIONS_JSON_PATH);
+let stateDirRevisionsPath = pathUtils.join(GIT_CHECKOUT_DIR_PATH, UPSTREAM_REVISIONS_PATH);
 let lastKnownStateData = await fileExists(stateDirRevisionsPath)
     ? parse(await fs.readFile(stateDirRevisionsPath, 'utf8'))
     : [];
@@ -167,7 +167,7 @@ for (let entry of allRevisionData) {
 }
 
 // Build the Thunderbird templates.
-await fs.rm(BUILD_DIR_PATH, { recursive: true, force: true });
+await fs.rm(DOCS_TEMPLATES_DIR_PATH, { recursive: true, force: true });
 const gMainTemplateEntries = [];
 for (let revisionData of allRevisionData) {
     // Download schema from https://hg.mozilla.org/
@@ -179,7 +179,7 @@ for (let revisionData of allRevisionData) {
         continue;
     }
 
-    let output_dir = pathUtils.join(BUILD_DIR_PATH, revisionData.tree);
+    let output_dir = pathUtils.join(DOCS_TEMPLATES_DIR_PATH, revisionData.tree);
     let mozillaReferencePolicyFile = data.mozilla.revisions.find(r => r.revision == revisionData.mozillaReferencePolicyRevision);
     if (!mozillaReferencePolicyFile) {
         console.error(`Unknown policy revision ${revisionData.mozillaReferencePolicyRevision} set for mozilla-${revisionData.tree}.`);
@@ -233,7 +233,7 @@ for (let revisionData of allRevisionData) {
             console.log(` - currently acknowledged policy revision (${mozillaReferencePolicyFile.revision} / ${mozillaReferencePolicyFile.version}): \n\t${pathUtils.resolve(getLocalPolicySchemaPath("mozilla", revisionData.tree, mozillaReferencePolicyFile.revision))}\n`);
             console.log(` - latest available policy revision (${data.mozilla.revisions[0].revision} / ${data.mozilla.revisions[0].version}): \n\t${pathUtils.resolve(getLocalPolicySchemaPath("mozilla", revisionData.tree, data.mozilla.revisions[0].revision))}\n`);
             console.log(` - hg change log for mozilla-${revisionData.tree}: \n\t${getHgDownloadUrl("mozilla", revisionData.tree, "tip", "log", "policies-schema.json")}\n`);
-            console.log(`Create bugs on Bugzilla for all policies which should be ported to Thunderbird and then check-in the updated ../${REVISIONS_JSON_PATH} file to acknowledge the reported changes.`);
+            console.log(`Create bugs on Bugzilla for all policies which should be ported to Thunderbird and then check-in the updated ../${UPSTREAM_REVISIONS_PATH} file to acknowledge the reported changes.`);
             console.log(`Once the reported changes are acknowledged, they will not be reported again.`);
             console.log();
         }
@@ -257,7 +257,7 @@ for (let revisionData of allRevisionData) {
 }
 
 // Update /state folder with latest revisions.
-await writePrettyJSONFile(pathUtils.join("..", REVISIONS_JSON_PATH), allRevisionData);
+await writePrettyJSONFile(pathUtils.join("..", UPSTREAM_REVISIONS_PATH), allRevisionData);
 
 // Build the main README of https://thunderbird.github.io/policy-templates/, which
 // gives a compatibility overview.
@@ -271,7 +271,7 @@ compatInfo.sort((a, b) => {
 });
 
 // Write the main Readme file.
-await fs.writeFile(MAIN_README_PATH, MAIN_TEMPLATE
+await fs.writeFile(DOCS_README_PATH, MAIN_TEMPLATE
     .replace("__list__", gMainTemplateEntries.join("\n"))
     .replace("__compatibility__", generateReadmeCompatibilityTable(compatInfo).join("\n"))
 );

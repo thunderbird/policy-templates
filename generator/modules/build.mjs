@@ -1,6 +1,7 @@
 import {
+    CONFIG_README_PATH, GIT_CHECKOUT_DIR_PATH,
     DESC_DEFAULT_DAILY_TEMPLATE, DESC_DEFAULT_TEMPLATE,
-    MOZILLA_TEMPLATE_DIR_PATH, README_JSON_PATH, TREE_TEMPLATE,
+    MOZILLA_TEMPLATE_DIR_PATH, UPSTREAM_README_PATH, TREE_TEMPLATE,
 } from "./constants.mjs";
 import { pullGitRepository } from "./git.mjs";
 import { getCachedCompatibilityInformation } from "./mercurial.mjs";
@@ -9,6 +10,7 @@ import { ensureDir, fileExists, writePrettyJSONFile } from "./tools.mjs";
 import { parse, stringify } from "comment-json";
 import fs from "node:fs/promises";
 import convert from "xml-js";
+import pathUtils from "path";
 import plist from "plist";
 
 /**
@@ -23,39 +25,51 @@ import plist from "plist";
  * @param {string} revisionData.mozillaReferenceTemplates - GitHub tag of the 
  *    associated Mozilla policy release.
  *
- * @return {TemplateData} - The parsed data from upstream readme.json, merged
- *    with data in the current /state folder.
+ * @return {TemplateData} - The parsed data from upstream readme.json.
  */
 export async function parseMozillaPolicyTemplate(revisionData) {
-    const README_FILE_NAME = README_JSON_PATH.replace("#tree#", revisionData.tree);
-    const readmeData = await fileExists(README_FILE_NAME)
-        ? parse(await fs.readFile(README_FILE_NAME, 'utf8'))
-        : {};
-
-    const COMM_CENTRAL_FILE_NAME = README_JSON_PATH.replace("#tree#", "central");
-    const commCentralReadmeData = await fileExists(COMM_CENTRAL_FILE_NAME)
-    ? parse(await fs.readFile(COMM_CENTRAL_FILE_NAME, 'utf8'))
-    : {};
-
+    // Get default descriptions in case this creates a new template revision (for
+    // a new ESR for example).
     const daily_template_lines = DESC_DEFAULT_DAILY_TEMPLATE
         .replaceAll("#tree#", revisionData.tree).split("\n");
     const normal_template_lines = DESC_DEFAULT_TEMPLATE
         .replaceAll("#tree#", revisionData.tree).split("\n");
 
-    if (!readmeData) readmeData = {};
-    
+    // Get the last known upstream state (to compare it against the current state
+    // and report changes).
+    const CURRENT_UPSTREAM_README_FILE_NAME = pathUtils.join(
+        GIT_CHECKOUT_DIR_PATH,
+        UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
+    );
+    const upstreamReadmeData = await fileExists(CURRENT_UPSTREAM_README_FILE_NAME)
+        ? parse(await fs.readFile(CURRENT_UPSTREAM_README_FILE_NAME, 'utf8'))
+        : {};
+    if (!upstreamReadmeData.headers) upstreamReadmeData.headers = {};
+    if (!upstreamReadmeData.policies) upstreamReadmeData.policies = {};
+
+    // Get the Thunderbird config data for this template. Clone the config for
+    // comm-central, if not available.
+    const TEMPLATE_CONFIG_FILE_NAME = CONFIG_README_PATH.replace("#tree#", revisionData.tree)
+    const CENTRAL_TEMPLATE_CONFIG_FILE_NAME = CONFIG_README_PATH.replace("#tree#", "central");
+    let readmeData = await fileExists(TEMPLATE_CONFIG_FILE_NAME)
+        ? parse(await fs.readFile(TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
+        : await fileExists(CENTRAL_TEMPLATE_CONFIG_FILE_NAME)
+            ? parse(await fs.readFile(CENTRAL_TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
+            : {};
+    if (!readmeData.headers) readmeData.headers = {};
+    if (!readmeData.policies) readmeData.policies = {};
+
     // Always update the provided revision name and mozillaReferenceTemplates.
     readmeData.tree = revisionData.tree;
     readmeData.name = revisionData.name;
     readmeData.version = revisionData.version;
     readmeData.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
-
-    if (!readmeData.headers) readmeData.headers = commCentralReadmeData?.headers || {};
-    if (!readmeData.policies) readmeData.policies = commCentralReadmeData?.policies || {};
-    /*if (!readmeData.desc)*/ readmeData.desc = revisionData.tree == "central"
+    readmeData.desc = revisionData.tree == "central"
         ? [...daily_template_lines, "", ...normal_template_lines]
         : normal_template_lines
+    await writePrettyJSONFile(TEMPLATE_CONFIG_FILE_NAME, readmeData);
 
+    // Read README files from Mozilla policy-templates repository
     let ref = readmeData.mozillaReferenceTemplates;
     let dir = `${MOZILLA_TEMPLATE_DIR_PATH}/${ref}`;
     await pullGitRepository("https://github.com/mozilla/policy-templates/", ref, dir);
@@ -90,10 +104,16 @@ export async function parseMozillaPolicyTemplate(revisionData) {
             .replace(" -> ", "_"); // flat hierarchy
 
         if (!readmeData.headers[name]) {
-            readmeData.headers[name] = { upstream: h };
-        } else if (!readmeData.headers[name].upstream || readmeData.headers[name].upstream != h) {
-            readmeData.headers[name].upstream = h;
-        }
+            readmeData.headers[name] = h;
+        };
+
+        // TODO: Report changes in upstream.
+        upstreamReadmeData.headers[name] = h;
+        /* if (!upstreamReadmeData.headers[name]) {
+            upstreamReadmeData.headers[name] = h;
+        } else if (!upstreamReadmeData.headers[name].upstream || upstreamReadmeData.headers[name].upstream != h) {
+            upstreamReadmeData.headers[name].upstream = h;
+        } */
     }
 
     // Process policies.
@@ -103,14 +123,25 @@ export async function parseMozillaPolicyTemplate(revisionData) {
         lines[0] = `## ${name}`;
 
         name = name.replace(" | ", "_"); // flat hierarchy
+
         if (!readmeData.policies[name]) {
+            readmeData.policies[name] = lines;
+        }
+
+        // TODO: Report changes in upstream.
+        upstreamReadmeData.policies[name] = lines;
+        /* if (!readmeData.policies[name]) {
             readmeData.policies[name] = { upstream: lines };
         } else if (!readmeData.policies[name].upstream || stringify(readmeData.policies[name].upstream) != stringify(lines)) {
             readmeData.policies[name].upstream = lines;
-        }
+        } */
     }
 
-    await writePrettyJSONFile(README_FILE_NAME, readmeData);
+    const UPDATED_UPSTREAM_README_FILE_NAME = pathUtils.join(
+        "..",
+        UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
+    );
+    await writePrettyJSONFile(UPDATED_UPSTREAM_README_FILE_NAME, upstreamReadmeData);
     return readmeData;
 }
 
@@ -227,9 +258,9 @@ export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thun
     let skipped_main_policies = [];
     // Loop over all policies found in the thunderbird policy schema file and rebuild the readme.
     for (let policy of thunderbirdPolicies) {
-        // Get the policy header from the template (or its override).
+        // Get the policy header from the template.
         if (template.headers[policy]) {
-            let content = template.headers[policy].override || template.headers[policy].upstream;
+            let content = template.headers[policy];
             if (content && content != "skip") {
                 header.push(content);
             }
@@ -240,9 +271,9 @@ export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thun
             if (!skipped_main_policies.includes(skipped)) skipped_main_policies.push(skipped);
         }
 
-        // Get the policy details from the template (or its override).
+        // Get the policy details from the template.
         if (template.policies[policy]) {
-            let content = template.policies[policy].override || template.policies[policy].upstream;
+            let content = template.policies[policy];
             if (content && content != "skip") {
                 details.push(...content.filter(e => !e.includes("**Compatibility:**")));
                 details.push("#### Compatibility");
