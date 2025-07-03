@@ -85,7 +85,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add upstream-state
+          git add upstream
           if git diff --cached --quiet; then
             echo "No changes in the upstream state to commit."
             echo "changed=false" >> $GITHUB_OUTPUT

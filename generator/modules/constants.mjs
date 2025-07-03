@@ -6,10 +6,10 @@ export const TEMPORARY_SCHEMA_CACHE_FILE = 'temporary_schema_cache.json';
 
 export const DOCS_TEMPLATES_DIR_PATH = "../docs/templates";
 export const DOCS_README_PATH = "../docs/README.md";
-export const CONFIG_README_PATH = "../config/readme_#tree#.json";
+export const CONFIG_README_PATH = "../config/#tree#.json";
 
-export const UPSTREAM_README_PATH = "upstream-state/readme_#tree#.json";
-export const UPSTREAM_REVISIONS_PATH = "upstream-state/revisions.json";
+export const UPSTREAM_README_PATH = "upstream/state_#tree#.json";
+export const UPSTREAM_REVISIONS_PATH = "upstream/revisions.json";
 
 export const HG_URL = `https://hg-edge.mozilla.org`;
 export const BUILD_HUB_URL = "buildhub.moz.tools";
