@@ -1,26 +1,44 @@
 [
   {
-    "tree": "esr68",
-    "mozillaReferencePolicyRevision": "1b0a29b456b432d1c8bef09c233b84205ec9e13c"
-  },
-  {
-    "tree": "esr78",
-    "mozillaReferencePolicyRevision": "a8c4670b6ef144a0f3b6851c2a9d4bbd44fc032a"
-  },
-  {
+    "name": "Thunderbird ESR 91",
     "tree": "esr91",
+    "version": 91,
+    "mozillaReferenceTemplates": "v3.10",
     "mozillaReferencePolicyRevision": "9137f00be7b39e1174c62796fb64626bbf37a1d0"
   },
   {
+    "name": "Thunderbird ESR 102",
     "tree": "esr102",
+    "version": 102,
+    "mozillaReferenceTemplates": "v4.12",
     "mozillaReferencePolicyRevision": "656d54876405369eba969d43385aaca5511315a8"
   },
   {
+    "name": "Thunderbird ESR 115",
     "tree": "esr115",
+    "version": 115,
+    "mozillaReferenceTemplates": "v5.12",
     "mozillaReferencePolicyRevision": "3fc8d7913eb0fa7e3b39dc1fc3c88b936ecab3bb"
   },
   {
+    "name": "Thunderbird ESR 128",
+    "tree": "esr128",
+    "version": 128,
+    "mozillaReferenceTemplates": "v6.11",
+    "mozillaReferencePolicyRevision": "99168f42503f17aca5bbc48d31fdb4285e79a4f7"
+  },
+  {
+    "name": "Thunderbird 140",
+    "tree": "release",
+    "version": 140,
+    "mozillaReferenceTemplates": "v7.0",
+    "mozillaReferencePolicyRevision": "ec9ad37f99760ae8a9699c883ef36488085a7770"
+  },
+  {
+    "name": "Thunderbird Daily 142",
     "tree": "central",
-    "mozillaReferencePolicyRevision": "fe6e070cd6b63ecd1f8ab30f12f6274e64210d66"
+    "version": 142,
+    "mozillaReferenceTemplates": "v7.0",
+    "mozillaReferencePolicyRevision": "45fdc620ed724dffc1c2d53c265b73b5e0ad380a"
   }
 ]
