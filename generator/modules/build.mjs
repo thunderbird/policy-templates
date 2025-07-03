@@ -73,18 +73,20 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
     templateConfig.tree = revisionData.tree;
     templateConfig.name = revisionData.name;
     templateConfig.version = revisionData.version;
-    templateConfig.desc = revisionData.tree == "central"
-        ? [...daily_template_lines, "", ...normal_template_lines]
-        : normal_template_lines
+    if (!templateConfig.desc) {
+        templateConfig.desc = revisionData.tree == "central"
+            ? [...daily_template_lines, "", ...normal_template_lines]
+            : normal_template_lines
+    }
     await writePrettyJSONFile(TEMPLATE_CONFIG_FILE_NAME, templateConfig);
     templateConfig.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
 
-    // Read README files from Mozilla policy-templates repository
+    // Read README files from Mozilla policy-templates repository.
     let ref = templateConfig.mozillaReferenceTemplates;
     let dir = `${MOZILLA_TEMPLATE_DIR_PATH}/${ref}`;
     await pullGitRepository("https://github.com/mozilla/policy-templates/", ref, dir);
 
-    // Later revisions moved the file.
+    // Later revisions moved the file into the /docs folder.
     let paths = [`${dir}/docs/index.md`, `${dir}/README.md`];
 
     // This parsing highly depends on the structure of the README and needs to be
