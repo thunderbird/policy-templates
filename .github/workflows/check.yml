@@ -1,0 +1,143 @@
+name: Scheduled upstream policy check
+
+on:
+  schedule:
+    - cron: '0 4 * * *'   # Run every day at 4:00 AM UTC
+  workflow_dispatch:      # Allow manual trigger as well
+
+jobs:
+  update-schema:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout policy-templates default branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Restore cached persistent_schema_cache.json (if available)
+        id: cache-restore
+        uses: actions/cache@v3
+        with:
+          path: persistent_schema_cache.json
+          key: schema-cache
+          restore-keys: |
+            schema-cache
+
+      - name: Check if persistent_schema_cache.json exists
+        id: check_data
+        run: |
+          if [ -f "persistent_schema_cache.json" ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download fallback from latest release if cache is not found
+        if: steps.check_data.outputs.found == 'false'
+        run: |
+          echo "No cached version found. Looking for persistent_schema_cache.json in a GitHub release..."
+          releases=$(curl -s https://api.github.com/repos/thunderbird/policy-templates/releases)
+
+          for url in $(echo "$releases" | jq -r '.[].assets[]? | select(.name == "persistent_schema_cache.json") | .browser_download_url'); do
+            echo "Found persistent_schema_cache.json at: $url"
+            curl -L -o persistent_schema_cache.json "$url"
+            echo "Download successful."
+            exit 0
+          done
+
+          echo "No persistent_schema_cache.json found in any release."
+          exit 1
+
+      - name: Install dependencies
+        run: |
+          npm install --prefix generator
+          npm install node-fetch@2
+
+      - name: Run script
+        id: generate
+        run: |
+          node generator/update_policy_templates.js
+
+      - name: Delete Previous Cache
+        if: ${{ steps.cache-restore.outputs.cache-hit == 'true' }}
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh extension install actions/gh-actions-cache
+          gh actions-cache delete "schema-cache" --confirm
+          
+      - name: Update cache with new data.json
+        uses: actions/cache@v3
+        with:
+          path: persistent_schema_cache.json
+          key: schema-cache
+
+      - name: Check for changes in the upstream state
+        id: git-check
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add upstream-state
+          if git diff --cached --quiet; then
+            echo "No changes in the upstream state to commit."
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Committing changes in the upstream state."
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push the upstream state 
+        id: commit_push
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git commit -m "Update known upstream state"
+          git push origin HEAD
+          echo "commit_sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Create issues from reports
+        env:
+          REPORTS_JSON: ${{ steps.generate.outputs.reports }}
+          COMMIT_SHA: ${{ steps.commit_push.outputs.commit_sha }}
+          REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node -e "
+            const fetch = require('node-fetch');
+
+            (async () => {
+              const reports = JSON.parse(process.env.REPORTS_JSON);
+              const commitLink = `https://github.com/${process.env.REPO}/commit/${process.env.COMMIT_SHA}`;
+
+              if (!reports || reports.length === 0) {
+                console.log("No issues to create.");
+                return;
+              }
+
+              for (const report of reports) {
+                const title = report.title;
+                const body = report.body + '\n\n---\nUpstream changes: ' + commitLink;
+
+                const response = await fetch(`https://api.github.com/repos/${process.env.REPO}/issues`, {
+                  method: 'POST',
+                  headers: {
+                    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+                    Accept: 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ title, body })
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                  console.error('Failed to create issue:', data);
+                } else {
+                  console.log('Created issue:', data.html_url);
+                }
+              }
+            })();
+          "

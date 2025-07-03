@@ -275,18 +275,23 @@ for (let revisionData of allRevisionData) {
     if (reports.some(log => log.length > 0)) {
         report.title = `Mozilla has updated the policies for mozilla-${revisionData.tree} (${data.mozilla.revisions[0].version})!`;
         report.description.push(`The following changes have been detected since the last check.`);
-        GITHUB_REPORTS.push(report);
 
-        const printLog = [];
-        printLog.push(report.title);
+        const body = [];
         for (const log of reports) {
             if (log.length) {
-                printLog.push("");
-                log.forEach(e => printLog.push(e));
+                body.push("");
+                log.forEach(e => body.push(e));
             }
         }
+
+        GITHUB_REPORTS.push({
+            title: report.title,
+            body: body.join("\n").trim(),
+        });
+
         console.log("");
-        printLog.forEach(e => console.log(`| ${e}`));
+        console.log(`| ${report.title}`);
+        body.forEach(e => console.log(`| ${e}`));
         console.log("");
     }
 }
