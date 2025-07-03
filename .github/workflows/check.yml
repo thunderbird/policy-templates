@@ -22,13 +22,14 @@ jobs:
         id: cache-restore
         uses: actions/cache@v3
         with:
-          path: persistent_schema_cache.json
+          path: generator/persistent_schema_cache.json
           key: schema-cache
           restore-keys: |
             schema-cache
 
       - name: Check if persistent_schema_cache.json exists
         id: check_data
+        working-directory: generator
         run: |
           if [ -f "persistent_schema_cache.json" ]; then
             echo "found=true" >> "$GITHUB_OUTPUT"
@@ -38,6 +39,7 @@ jobs:
 
       - name: Download fallback from latest release if cache is not found
         if: steps.check_data.outputs.found == 'false'
+        working-directory: generator
         run: |
           echo "No cached version found. Looking for persistent_schema_cache.json in a GitHub release..."
           releases=$(curl -s https://api.github.com/repos/thunderbird/policy-templates/releases)
@@ -59,6 +61,7 @@ jobs:
 
       - name: Run script
         id: generate
+        working-directory: generator
         run: |
           node generator/update_policy_templates.js
 
@@ -74,7 +77,7 @@ jobs:
       - name: Update cache with new data.json
         uses: actions/cache@v3
         with:
-          path: persistent_schema_cache.json
+          path: generator/persistent_schema_cache.json
           key: schema-cache
 
       - name: Check for changes in the upstream state
