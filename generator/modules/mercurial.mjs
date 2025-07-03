@@ -1,9 +1,8 @@
 
-import fs from "node:fs/promises";
 import { parse } from "comment-json";
 
-import { HG_URL, SCHEMA_DIR_PATH, SOURCE_PATH_POLICIES_SCHEMA_JSON, SOURCE_PATH_VERSION_TXT } from "./constants.mjs";
-import { ensureDir, fileExists, request, writePrettyJSONFile } from "./tools.mjs";
+import { HG_URL, SOURCE_PATH_POLICIES_SCHEMA_JSON, SOURCE_PATH_VERSION_TXT } from "./constants.mjs";
+import { readCachedUrl } from "./tools.mjs";
 
 /**
  * @typedef {Object} PolicySchemaData
@@ -341,19 +340,6 @@ export function generateCompatibilityInformationCache(revisions, tree) {
 }
 
 /**
- * Returns the local path of a downloaded policy JSON file.
- * 
- * @param {string} branch - "mozilla" or "comm"
- * @param {string} tree - The tree to process (e.g. "release", "central").
- * @param {string} revision - A mercurial changeset identifier.
- * 
- * @returns {string} Path to the downloaded file.
- */
-function getLocalPolicySchemaPath(branch, tree, revision) {
-    return `${SCHEMA_DIR_PATH}/${branch}-${tree}-${revision}.json`;
-}
-
-/**
  * Returns the download URL for the requested file from Mozillas mercurial instance.
  * 
  * @param {string} branch - "mozilla" or "comm"
@@ -407,14 +393,12 @@ export function getHgDownloadUrl(branch, tree, revision, mode, fileName) {
  */
 async function downloadPolicySchemaData(branch, tree, revision) {
     let schemaUrl = getHgDownloadUrl(branch, tree, revision, "raw-file", "policies-schema.json");
-    console.log(` - downloading ${schemaUrl}`);
-    let data = parse(await request(schemaUrl));
+    let data = parse(await readCachedUrl(schemaUrl, { temporary: revision == "tip" }));
 
     let versionUrl = getHgDownloadUrl(branch, tree, revision, "raw-file", "version.txt");
-    let version = (await request(versionUrl)).trim();
+    let version = (await readCachedUrl(versionUrl, { temporary: revision == "tip" })).trim();
     data.version = version;
     data.revision = revision;
-    await writePrettyJSONFile(getLocalPolicySchemaPath(branch, tree, revision), data);
     return data;
 }
 
@@ -439,12 +423,10 @@ export async function downloadMissingPolicySchemaFiles(tree, mozillaReferencePol
     };
 
     console.log(`Processing ${tree}`);
-    await ensureDir(SCHEMA_DIR_PATH);
 
     for (let branch of ["mozilla", "comm"]) {
         let logUrl = getHgDownloadUrl(branch, tree, "tip", "json-log", "policies-schema.json");
-        console.log(` - checking ${logUrl}`);
-        let revisions = parse(await request(logUrl)).entries.map(e => e.node);
+        let revisions = parse(await readCachedUrl(logUrl, { temporary: true })).entries.map(e => e.node);
 
         // For mozilla, we just need the newest and the reference revision.
         // For comm, we need all revisions to be able to extract compatibility information.
@@ -454,14 +436,7 @@ export async function downloadMissingPolicySchemaFiles(tree, mozillaReferencePol
 
 
         for (let revision of neededRevisions) {
-            let filename = getLocalPolicySchemaPath(branch, tree, revision);
-            let file;
-            if (!await fileExists(filename)) {
-                file = await downloadPolicySchemaData(branch, tree, revision);
-            } else {
-                file = parse(await fs.readFile(filename, 'utf8'))
-
-            }
+            let file = await downloadPolicySchemaData(branch, tree, revision);
             data[branch].revisions.push(file);
         }
     }

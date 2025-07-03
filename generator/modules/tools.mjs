@@ -8,6 +8,12 @@ import { BUILD_HUB_URL } from "./constants.mjs";
 const requestJson = bent('GET', 'json', 200);
 const requestText = bent("GET", "string", 200);
 
+// The temporary cache is still written to disc, but can be easily cleared
+// without interfering with the persistent cache.
+const SCHEMA_CACHE = {};
+const PERSISTENT_SCHEMA_CACHE_FILE = 'persistent_schema_cache.json';
+const TEMPORARY_SCHEMA_CACHE_FILE = 'temporary_schema_cache.json';
+
 // Debug logging (0 - errors and basic logs only, 1 - verbose debug)
 const DEBUG_LEVEL = 0;
 
@@ -184,7 +190,7 @@ export async function ensureDir(path) {
  * @returns - text content
  */
 export async function request(url) {
-    debug(" -> ", url);
+    console.log(` - downloading ${url}`);
     // Retry on error, using a hard timeout enforced from the client side.
     let rv;
     for (let i = 0; (!rv && i < 5); i++) {
@@ -243,4 +249,45 @@ export function parseArgs(argv = process.argv.slice(2)) {
         }
     }
     return args;
+}
+
+/**
+ * Simple helper function to download a URL and cache its content in SCHEMA_CACHE.
+ * Reading the same URL at a later time will retrieve the content from the cache.
+ *
+ * @param {string} url
+ * @param {boolean} temporary - if the temporary cache is used, which is stored
+ *    in a separate file and can be easily cleared independently of the persistent
+ *    cache
+ *
+ * @returns {string} content of url
+ */
+export async function readCachedUrl(url, options) {
+    const temporary = options?.temporary ?? false;
+    const cache = temporary
+        ? { type: 'temporary', file: TEMPORARY_SCHEMA_CACHE_FILE }
+        : { type: 'persistent', file: PERSISTENT_SCHEMA_CACHE_FILE };
+
+    if (!SCHEMA_CACHE[cache.type]) {
+        try {
+            const data = await fs.readFile(cache.file, 'utf-8');
+            SCHEMA_CACHE[cache.type] = new Map(JSON.parse(data));
+        } catch (ex) {
+            // Cache file does not yet exist.
+            SCHEMA_CACHE[cache.type] = new Map();
+        }
+    }
+
+    if (!SCHEMA_CACHE[cache.type].has(url)) {
+        const rev = await request(url);
+        if (!rev) {
+            return null;
+        };
+        SCHEMA_CACHE[cache.type].set(url, rev);
+        await writePrettyJSONFile(
+            cache.file,
+            Array.from(SCHEMA_CACHE[cache.type].entries())
+        );
+    }
+    return SCHEMA_CACHE[cache.type].get(url);
 }
