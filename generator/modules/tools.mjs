@@ -3,7 +3,9 @@ import fs from "node:fs/promises";
 import https from "https";
 import { parse } from "comment-json";
 
-import { BUILD_HUB_URL } from "./constants.mjs";
+import { 
+    BUILD_HUB_URL, PERSISTENT_SCHEMA_CACHE_FILE, TEMPORARY_SCHEMA_CACHE_FILE 
+} from "./constants.mjs";
 
 const requestJson = bent('GET', 'json', 200);
 const requestText = bent("GET", "string", 200);
@@ -11,8 +13,6 @@ const requestText = bent("GET", "string", 200);
 // The temporary cache is still written to disc, but can be easily cleared
 // without interfering with the persistent cache.
 const SCHEMA_CACHE = {};
-const PERSISTENT_SCHEMA_CACHE_FILE = 'persistent_schema_cache.json';
-const TEMPORARY_SCHEMA_CACHE_FILE = 'temporary_schema_cache.json';
 
 // Debug logging (0 - errors and basic logs only, 1 - verbose debug)
 const DEBUG_LEVEL = 0;

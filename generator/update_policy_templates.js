@@ -12,7 +12,8 @@ import {
 import {
     MAIN_TEMPLATE,
     DOCS_TEMPLATES_DIR_PATH, DOCS_README_PATH,
-    UPSTREAM_REVISIONS_PATH, GIT_CHECKOUT_DIR_PATH
+    UPSTREAM_REVISIONS_PATH, GIT_CHECKOUT_DIR_PATH,
+    TEMPORARY_SCHEMA_CACHE_FILE
 } from "./modules/constants.mjs";
 import { pullGitRepository } from "./modules/git.mjs";
 import {
@@ -31,6 +32,10 @@ import {
 import { parse } from "comment-json";
 import fs from "node:fs/promises";
 import pathUtils from "path";
+
+// Start with a clean environment.
+await fs.rm(DOCS_TEMPLATES_DIR_PATH, { recursive: true, force: true });
+await fs.rm(TEMPORARY_SCHEMA_CACHE_FILE, { force: true });
 
 // We currently do not generate our own templates (Readme files, PLIST files for
 // Mac, ADMX files for Windows) from our policies-schema.json file, but clone and
@@ -166,7 +171,6 @@ for (let entry of allRevisionData) {
 }
 
 // Build the Thunderbird templates.
-await fs.rm(DOCS_TEMPLATES_DIR_PATH, { recursive: true, force: true });
 const gMainTemplateEntries = [];
 const GITHUB_REPORTS = [];
 for (let revisionData of allRevisionData) {
