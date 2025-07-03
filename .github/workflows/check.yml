@@ -63,7 +63,7 @@ jobs:
         id: generate
         working-directory: generator
         run: |
-          node generator/update_policy_templates.js
+          node update_policy_templates.js
 
       - name: Delete Previous Cache
         if: ${{ steps.cache-restore.outputs.cache-hit == 'true' }}
