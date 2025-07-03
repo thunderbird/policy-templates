@@ -2531,7 +2531,7 @@ Value (string):
 ## Preferences
 Set and lock preferences.
 
-**NOTE** On Windows, in order to use this policy, you must clear all settings in the old **`Preferences (Deprecated)`** section for Thunderbird 78 and older.
+**NOTE:** On Windows, in order to use this policy, you must clear all settings in the old **`Preferences (Deprecated)`** section for Thunderbird 78 and older.
 
 Previously you could only set and lock a subset of preferences. Starting with Thunderbird 91 you can set many more preferences. You can also set default preferences, user preferences and you can clear preferences.
 
@@ -2605,7 +2605,6 @@ See the examples below for more detail.
 
 IMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.
 
-Status
 **CCK2 Equivalent:** `preferences`\
 **Preferences Affected:** Many
 
