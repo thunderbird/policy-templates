@@ -1,7 +1,6 @@
 import bent from "bent";
 import fs from "node:fs/promises";
 import https from "https";
-import { createWriteStream } from "node:fs";
 import { parse } from "comment-json";
 
 import { BUILD_HUB_URL } from "./constants.mjs";

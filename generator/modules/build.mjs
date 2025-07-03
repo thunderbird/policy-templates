@@ -24,11 +24,14 @@ import plist from "plist";
  * @param {integer} revisionData.version - Associated Thunderbird version.
  * @param {string} revisionData.mozillaReferenceTemplates - GitHub tag of the 
  *    associated Mozilla policy release.
- * @param {PolicyCompatibilityEntry[]} supportedPolicies
+ * @param {PolicyCompatibilityEntry[]} supportedPolicies - list with supported
+ *    properties for the specified revision
+ * @param {string[]} changeLog - an array to store changed entries, which will be
+ *    added to the final report
  *
  * @return {TemplateData} - The parsed data from upstream readme.json.
  */
-export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies) {
+export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies, changeLog) {
     // Get default descriptions in case this creates a new template revision (for
     // a new ESR for example).
     const daily_template_lines = DESC_DEFAULT_DAILY_TEMPLATE
@@ -43,6 +46,16 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
         headers: {},
         policies: {},
     }
+    // Get the upstream config data for this template.
+    const UPSTREAM_TEMPLATE_CONFIG_FILE_NAME = pathUtils.join(
+        GIT_CHECKOUT_DIR_PATH,
+        UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
+    );
+    let upstreamTemplateConfig = await fileExists(UPSTREAM_TEMPLATE_CONFIG_FILE_NAME)
+        ? parse(await fs.readFile(UPSTREAM_TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
+        : {};
+    if (!upstreamTemplateConfig.headers) upstreamTemplateConfig.headers = {};
+    if (!upstreamTemplateConfig.policies) upstreamTemplateConfig.policies = {};
 
     // Get the Thunderbird config data for this template. Clone the config for
     // comm-central, if not available.
@@ -118,6 +131,12 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
         lines[0] = `## ${name}`;
 
         name = name.replace(" | ", "_"); // flat hierarchy
+        if (
+            upstreamTemplateConfig.policies[name] &&
+            upstreamTemplateConfig.policies[name].join("\n") != lines.join("\n")
+        ) {
+            changeLog.push(` * \`${name}\``);
+        }
 
         if (!templateConfig.policies[name]) {
             templateConfig.policies[name] = lines;

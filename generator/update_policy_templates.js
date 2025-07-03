@@ -170,6 +170,16 @@ await fs.rm(DOCS_TEMPLATES_DIR_PATH, { recursive: true, force: true });
 const gMainTemplateEntries = [];
 const GITHUB_REPORTS = [];
 for (let revisionData of allRevisionData) {
+    // Keep track of changes for the final report.
+    let report = {
+        title: null,
+        description: [],
+        added: [],
+        removed: [],
+        changed: [],
+        changedDocumentation: [],
+    }
+
     // Download schema from https://hg.mozilla.org/
     let data = await downloadMissingPolicySchemaFiles(
         revisionData.tree,
@@ -198,13 +208,6 @@ for (let revisionData of allRevisionData) {
     if (mozillaReferencePolicyFile.revision != data.mozilla.revisions[0].revision) {
         revisionData.mozillaReferencePolicyRevision = data.mozilla.revisions[0].revision;
         let m_m_changes = getDifferencesBetweenPolicySchemas(mozillaReferencePolicyFile, data.mozilla.revisions[0]);
-        let report = {
-            title: null,
-            description: [],
-            added: [],
-            removed: [],
-            changed: [],
-        }
         if (m_m_changes) {
             for (const { title, data, require_supported, log } of [
                 {
@@ -240,27 +243,14 @@ for (let revisionData of allRevisionData) {
                     }
                 }
             }
-
-            if (report.added.length || report.removed.length || report.changed.length) {
-                report.title = `Mozilla has released a new policy revision for mozilla-${revisionData.tree} (${data.mozilla.revisions[0].version})!`;
-                report.description.push(`The following changes have been detected since the last check (${mozillaReferencePolicyFile.version}). Do those changes need to be ported to Thunderbird?`);
-                console.log("-----------------------------------------------------------------------");
-                console.log(report.title);
-                console.log();
-                for (const log of [report.description, report.added, report.removed, report.changed]) {
-                    if (log.length) {
-                        log.forEach(e => console.log(e));
-                        console.log();
-                    }
-                }
-                console.log("-----------------------------------------------------------------------");
-                GITHUB_REPORTS.push(report);
-            }
         }
     }
 
     // Clone the Mozilla templates.
-    let template = await parseMozillaPolicyTemplate(revisionData, supportedPolicies);
+    let template = await parseMozillaPolicyTemplate(revisionData, supportedPolicies, report.changedDocumentation);
+    if (report.changedDocumentation.length) {
+        report.changedDocumentation.unshift("Policies with changed documentation:")
+    }
     let thunderbirdPolicies = Object.keys(gCompatibilityData)
         .filter(p => !gCompatibilityData[p].unsupported)
         .sort(function (a, b) {
@@ -274,6 +264,31 @@ for (let revisionData of allRevisionData) {
     gMainTemplateEntries.unshift(
         ` * [${revisionData.name}](templates/${revisionData.tree})`
     );
+
+    const reports = [
+        report.description,
+        report.added,
+        report.removed,
+        report.changed,
+        report.changedDocumentation
+    ];
+    if (reports.some(log => log.length > 0)) {
+        report.title = `Mozilla has updated the policies for mozilla-${revisionData.tree} (${data.mozilla.revisions[0].version})!`;
+        report.description.push(`The following changes have been detected since the last check (${mozillaReferencePolicyFile.version}).`);
+        GITHUB_REPORTS.push(report);
+
+        const printLog = [];
+        printLog.push(report.title);
+        for (const log of reports) {
+            if (log.length) {
+                printLog.push("");
+                log.forEach(e => printLog.push(e));
+            }
+        }
+        console.log("");
+        printLog.forEach(e => console.log(`| ${e}`));
+        console.log("");
+    }
 }
 
 // Update /state folder with latest revisions.
