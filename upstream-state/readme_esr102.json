@@ -1,6 +1,5 @@
 {
   "tree": "esr102",
-  "version": 102,
   "mozillaReferenceTemplates": "v4.12",
   "headers": {
     "3rdparty": "| **[`3rdparty`](#3rdparty)** | Set policies that WebExtensions can access via chrome.storage.managed.",
