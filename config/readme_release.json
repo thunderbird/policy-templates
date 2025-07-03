@@ -1,7 +1,7 @@
 {
   "tree": "release",
-  "mozillaReferenceTemplates": "v6.11",
   "name": "Thunderbird 139",
+  "version": 139,
   "desc": [
     "",
     "Policies can be specified by creating a file called `policies.json`:",
@@ -361,6 +361,5 @@
       "}",
       "```"
     ]
-  },
-  "version": 139
+  }
 }

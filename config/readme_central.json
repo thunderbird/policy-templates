@@ -1,7 +1,7 @@
 {
   "tree": "central",
-  "mozillaReferenceTemplates": "v7.0",
   "name": "Thunderbird Daily 142",
+  "version": 142,
   "desc": [
     "",
     "**These policies are in active development and might contain changes that do",
@@ -365,6 +365,5 @@
       "}",
       "```"
     ]
-  },
-  "version": 142
+  }
 }

@@ -1,7 +1,7 @@
 {
   "tree": "esr91",
-  "mozillaReferenceTemplates": "v3.10",
   "name": "Thunderbird ESR 91",
+  "version": 91,
   "desc": [
     "",
     "Policies can be specified by creating a file called `policies.json`:",
@@ -423,6 +423,5 @@
       "```"
     ],
     "Preferences (Deprecated)": "skip"
-  },
-  "version": 91
+  }
 }

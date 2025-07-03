@@ -36,7 +36,7 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
     const normal_template_lines = DESC_DEFAULT_TEMPLATE
         .replaceAll("#tree#", revisionData.tree).split("\n");
 
-    const updatedUpstreamReadmeData = {
+    const updatedUpstreamTemplateConfig = {
         tree: revisionData.tree,
         version: revisionData.version,
         mozillaReferenceTemplates: revisionData.mozillaReferenceTemplates,
@@ -48,26 +48,26 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
     // comm-central, if not available.
     const TEMPLATE_CONFIG_FILE_NAME = CONFIG_README_PATH.replace("#tree#", revisionData.tree)
     const CENTRAL_TEMPLATE_CONFIG_FILE_NAME = CONFIG_README_PATH.replace("#tree#", "central");
-    let readmeData = await fileExists(TEMPLATE_CONFIG_FILE_NAME)
+    let templateConfig = await fileExists(TEMPLATE_CONFIG_FILE_NAME)
         ? parse(await fs.readFile(TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
         : await fileExists(CENTRAL_TEMPLATE_CONFIG_FILE_NAME)
             ? parse(await fs.readFile(CENTRAL_TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
             : {};
-    if (!readmeData.headers) readmeData.headers = {};
-    if (!readmeData.policies) readmeData.policies = {};
+    if (!templateConfig.headers) templateConfig.headers = {};
+    if (!templateConfig.policies) templateConfig.policies = {};
 
     // Always update the provided revision name and mozillaReferenceTemplates.
-    readmeData.tree = revisionData.tree;
-    readmeData.name = revisionData.name;
-    readmeData.version = revisionData.version;
-    readmeData.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
-    readmeData.desc = revisionData.tree == "central"
+    templateConfig.tree = revisionData.tree;
+    templateConfig.name = revisionData.name;
+    templateConfig.version = revisionData.version;
+    templateConfig.desc = revisionData.tree == "central"
         ? [...daily_template_lines, "", ...normal_template_lines]
         : normal_template_lines
-    await writePrettyJSONFile(TEMPLATE_CONFIG_FILE_NAME, readmeData);
+    await writePrettyJSONFile(TEMPLATE_CONFIG_FILE_NAME, templateConfig);
+    templateConfig.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
 
     // Read README files from Mozilla policy-templates repository
-    let ref = readmeData.mozillaReferenceTemplates;
+    let ref = templateConfig.mozillaReferenceTemplates;
     let dir = `${MOZILLA_TEMPLATE_DIR_PATH}/${ref}`;
     await pullGitRepository("https://github.com/mozilla/policy-templates/", ref, dir);
 
@@ -100,14 +100,14 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
             .replace(/`/g, "") // unable to fix the regex to exclude those
             .replace(" -> ", "_"); // flat hierarchy
 
-        if (!readmeData.headers[name]) {
-            readmeData.headers[name] = h;
+        if (!templateConfig.headers[name]) {
+            templateConfig.headers[name] = h;
         };
 
         // Update upstream state.
         const isSupported = supportedPolicies.some(e => e.policies.includes(name));
         if (isSupported) {
-            updatedUpstreamReadmeData.headers[name] = h;
+            updatedUpstreamTemplateConfig.headers[name] = h;
         }
     }
 
@@ -119,25 +119,25 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
 
         name = name.replace(" | ", "_"); // flat hierarchy
 
-        if (!readmeData.policies[name]) {
-            readmeData.policies[name] = lines;
+        if (!templateConfig.policies[name]) {
+            templateConfig.policies[name] = lines;
         }
 
         // Update upstream state.
         const isSupported = supportedPolicies.some(e => e.policies.includes(name));
         if (isSupported) {
-            updatedUpstreamReadmeData.policies[name] = lines;
+            updatedUpstreamTemplateConfig.policies[name] = lines;
         }
     }
 
-    const UPDATED_UPSTREAM_README_FILE_NAME = pathUtils.join(
+    const UPDATED_UPSTREAM_TEMPLATE_CONFIG_FILE_NAME = pathUtils.join(
         "..",
         UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
     );
-    updatedUpstreamReadmeData.headers = sortObjectByKeys(updatedUpstreamReadmeData.headers);
-    updatedUpstreamReadmeData.policies = sortObjectByKeys(updatedUpstreamReadmeData.policies);
-    await writePrettyJSONFile(UPDATED_UPSTREAM_README_FILE_NAME, updatedUpstreamReadmeData);
-    return readmeData;
+    updatedUpstreamTemplateConfig.headers = sortObjectByKeys(updatedUpstreamTemplateConfig.headers);
+    updatedUpstreamTemplateConfig.policies = sortObjectByKeys(updatedUpstreamTemplateConfig.policies);
+    await writePrettyJSONFile(UPDATED_UPSTREAM_TEMPLATE_CONFIG_FILE_NAME, updatedUpstreamTemplateConfig);
+    return templateConfig;
 }
 
 //------------------------------------------------------------------------------

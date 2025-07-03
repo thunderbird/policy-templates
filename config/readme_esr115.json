@@ -1,7 +1,7 @@
 {
   "tree": "esr115",
-  "mozillaReferenceTemplates": "v5.12",
   "name": "Thunderbird ESR 115",
+  "version": 115,
   "desc": [
     "",
     "Policies can be specified by creating a file called `policies.json`:",
@@ -307,6 +307,5 @@
       "}",
       "```"
     ]
-  },
-  "version": 115
+  }
 }

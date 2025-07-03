@@ -1,7 +1,7 @@
 {
   "tree": "esr128",
-  "mozillaReferenceTemplates": "v6.11",
   "name": "Thunderbird ESR 128",
+  "version": 128,
   "desc": [
     "",
     "Policies can be specified by creating a file called `policies.json`:",
@@ -307,6 +307,5 @@
       "}",
       "```"
     ]
-  },
-  "version": 128
+  }
 }
