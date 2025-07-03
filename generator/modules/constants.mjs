@@ -1,6 +1,6 @@
-export const GIT_CHECKOUT_DIR_PATH = "./data/gitstate";
-export const SCHEMA_DIR_PATH = "./data/schema";
-export const MOZILLA_TEMPLATE_DIR_PATH = "./data/mozilla-policy-templates";
+export const GIT_CHECKOUT_DIR_PATH = "../data/gitstate";
+export const SCHEMA_DIR_PATH = "../data/schema";
+export const MOZILLA_TEMPLATE_DIR_PATH = "../data/mozilla-policy-templates";
 
 export const DOCS_TEMPLATES_DIR_PATH = "../docs/templates";
 export const DOCS_README_PATH = "../docs/README.md";

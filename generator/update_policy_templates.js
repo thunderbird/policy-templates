@@ -274,7 +274,7 @@ for (let revisionData of allRevisionData) {
     ];
     if (reports.some(log => log.length > 0)) {
         report.title = `Mozilla has updated the policies for mozilla-${revisionData.tree} (${data.mozilla.revisions[0].version})!`;
-        report.description.push(`The following changes have been detected since the last check (${mozillaReferencePolicyFile.version}).`);
+        report.description.push(`The following changes have been detected since the last check.`);
         GITHUB_REPORTS.push(report);
 
         const printLog = [];
