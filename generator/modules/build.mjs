@@ -5,13 +5,83 @@ import {
 } from "./constants.mjs";
 import { pullGitRepository } from "./git.mjs";
 import { getCachedCompatibilityInformation } from "./mercurial.mjs";
-import { ensureDir, fileExists, sortObjectByKeys, writePrettyJSONFile } from "./tools.mjs";
+import { ensureDir, fileExists, slugify, sortObjectByKeys, writePrettyJSONFile, writePrettyYAMLFile } from "./tools.mjs";
 
 import { parse } from "comment-json";
 import fs from "node:fs/promises";
 import convert from "xml-js";
 import pathUtils from "path";
 import plist from "plist";
+import yaml from 'yaml';
+
+function yamlToJsonTemplate(yamlData) {
+    // The yaml document holds extended information which is needed to correctly
+    // save the file again, but not for using it. Get a plain JSON object.
+    const jsonData = yamlData.toJSON();
+    const policies = jsonData.policies;
+    
+    // Build the JSON template.
+    jsonData.headers = {};
+    jsonData.policies = {};
+    for (let [key,value] of Object.entries(policies)) {
+        jsonData.headers[key] = `| **[\`${key}\`](#${slugify(key)})** | ${value.toc}`;
+        jsonData.policies[key] = [
+            `## ${key}`,
+            ...value.content.split("\n"),
+            `**CCK2 Equivalent:** ${value.cck2Equivalent ? `\`${value.cck2Equivalent}\`` : "N/A"}`,
+            `**Preferences Affected:** ${
+                Array.isArray(value.preferencesAffected)
+                ? value.preferencesAffected.map(e => `\`${e}\``).join(", ")
+                : value.preferencesAffected ?? "N/A"
+            }`
+        ];
+        if (value.gpo.length > 0) {
+            jsonData.policies[key].push(
+                "",
+                "#### Windows (GPO)",
+                "```",
+                ...value.gpo.map(e => `${e.key} (${e.type}) = ${e.type == "REG_MULTI_SZ" ? "\n" : ""}${e.value.trim()}`),
+                "```",
+            )
+        }
+        if (value.intune.length > 0) {
+            jsonData.policies[key].push(
+                "",
+                "#### Windows (Intune)",
+                ...value.intune.flatMap(e => [
+                    "OMA-URI:",
+                    "```",
+                    e['oma-uri'].trim(),
+                    "```",
+                    `Value (${e.type}):`,
+                    "```",
+                    e.value.trim(),
+                    "```",
+                ])
+            )
+        }
+        if (value.plist.length > 0) {
+            jsonData.policies[key].push(
+                "",
+                "#### MacOS",
+                "```",
+                value.plist.trim(),
+                "```"
+            )
+        }
+        if (value.json.length > 0) {
+            jsonData.policies[key].push(
+                "",
+                "#### policies.json",
+                "```",
+                value.json.trim(),
+                "```"
+            )
+        }
+        
+    }
+    return jsonData;
+}
 
 /**
  * Parse the README files of a given mozilla policy template, or creates it if
@@ -35,9 +105,9 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
     // Get default descriptions in case this creates a new template revision (for
     // a new ESR for example).
     const daily_template_lines = DESC_DEFAULT_DAILY_TEMPLATE
-        .replaceAll("#tree#", revisionData.tree).split("\n");
+        .replaceAll("#tree#", revisionData.tree);
     const normal_template_lines = DESC_DEFAULT_TEMPLATE
-        .replaceAll("#tree#", revisionData.tree).split("\n");
+        .replaceAll("#tree#", revisionData.tree);
 
     const updatedUpstreamTemplateConfig = {
         tree: revisionData.tree,
@@ -61,28 +131,31 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
     // comm-central, if not available.
     const TEMPLATE_CONFIG_FILE_NAME = CONFIG_README_PATH.replace("#tree#", revisionData.tree)
     const CENTRAL_TEMPLATE_CONFIG_FILE_NAME = CONFIG_README_PATH.replace("#tree#", "central");
-    let templateConfig = await fileExists(TEMPLATE_CONFIG_FILE_NAME)
-        ? parse(await fs.readFile(TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
+    let yamlTemplateDocument = await fileExists(TEMPLATE_CONFIG_FILE_NAME)
+        ? yaml.parseDocument(await fs.readFile(TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
         : await fileExists(CENTRAL_TEMPLATE_CONFIG_FILE_NAME)
-            ? parse(await fs.readFile(CENTRAL_TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
+            ? yaml.parseDocument(await fs.readFile(CENTRAL_TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
             : {};
-    if (!templateConfig.headers) templateConfig.headers = {};
-    if (!templateConfig.policies) templateConfig.policies = {};
 
     // Always update the provided revision name and mozillaReferenceTemplates.
-    templateConfig.tree = revisionData.tree;
-    templateConfig.name = revisionData.name;
-    templateConfig.version = revisionData.version;
-    if (!templateConfig.desc) {
-        templateConfig.desc = revisionData.tree == "central"
-            ? [...daily_template_lines, "", ...normal_template_lines]
+    yamlTemplateDocument.set("tree", revisionData.tree);
+    yamlTemplateDocument.set("name", revisionData.name);
+    yamlTemplateDocument.set("version", revisionData.version);
+    if (!yamlTemplateDocument.has("description")) {
+        yamlTemplateDocument.set("description", revisionData.tree == "central"
+            ? [daily_template_lines, "", normal_template_lines].join("\n")
             : normal_template_lines
+        );
     }
-    await writePrettyJSONFile(TEMPLATE_CONFIG_FILE_NAME, templateConfig);
-    templateConfig.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
+    await writePrettyYAMLFile(TEMPLATE_CONFIG_FILE_NAME, yamlTemplateDocument);
+    
+    // Convert the YAML document to a JSON template.
+    const jsonTemplateConfig = yamlToJsonTemplate(yamlTemplateDocument);
+    jsonTemplateConfig.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
 
-    // Read README files from Mozilla policy-templates repository.
-    let ref = templateConfig.mozillaReferenceTemplates;
+    // Read README files from Mozilla policy-templates repository and merge them
+    // into the jsonTemplateConfig.
+    let ref = jsonTemplateConfig.mozillaReferenceTemplates;
     let dir = `${MOZILLA_TEMPLATE_DIR_PATH}/${ref}`;
     await pullGitRepository("https://github.com/mozilla/policy-templates/", ref, dir);
 
@@ -115,8 +188,8 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
             .replace(/`/g, "") // unable to fix the regex to exclude those
             .replace(" -> ", "_"); // flat hierarchy
 
-        if (!templateConfig.headers[name]) {
-            templateConfig.headers[name] = h;
+        if (!jsonTemplateConfig.headers[name]) {
+            jsonTemplateConfig.headers[name] = h;
         };
 
         // Update upstream state.
@@ -140,8 +213,8 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
             changeLog.push(` * \`${name}\``);
         }
 
-        if (!templateConfig.policies[name]) {
-            templateConfig.policies[name] = lines;
+        if (!jsonTemplateConfig.policies[name]) {
+            jsonTemplateConfig.policies[name] = lines;
         }
 
         // Update upstream state.
@@ -158,7 +231,7 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
     updatedUpstreamTemplateConfig.headers = sortObjectByKeys(updatedUpstreamTemplateConfig.headers);
     updatedUpstreamTemplateConfig.policies = sortObjectByKeys(updatedUpstreamTemplateConfig.policies);
     await writePrettyJSONFile(UPDATED_UPSTREAM_TEMPLATE_CONFIG_FILE_NAME, updatedUpstreamTemplateConfig);
-    return templateConfig;
+    return jsonTemplateConfig;
 }
 
 //------------------------------------------------------------------------------
@@ -308,7 +381,7 @@ export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thun
 
     let md = TREE_TEMPLATE
         .replace("__name__", template.name)
-        .replace("__desc__", template.desc.join("\n"))
+        .replace("__desc__", template.description)
         .replace("__list_of_policies__", rebrand(header))
         .replace("__details__", rebrand(details));
 
