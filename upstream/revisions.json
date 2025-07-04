@@ -32,13 +32,13 @@
     "tree": "release",
     "version": 140,
     "mozillaReferenceTemplates": "v7.0",
-    "mozillaReferencePolicyRevision": "ec9ad37f99760ae8a9699c883ef36488085a7770"
+    "mozillaReferencePolicyRevision": "07295ebdf891ade50ae5e921ec31f80d31e6cb9f"
   },
   {
     "name": "Thunderbird Daily 142",
     "tree": "central",
     "version": 142,
     "mozillaReferenceTemplates": "v7.0",
-    "mozillaReferencePolicyRevision": "45fdc620ed724dffc1c2d53c265b73b5e0ad380a"
+    "mozillaReferencePolicyRevision": "9117dc7fce1cb431ab316313420d0ff32f43d298"
   }
 ]
