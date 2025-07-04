@@ -15,7 +15,7 @@ import {
     UPSTREAM_REVISIONS_PATH, GIT_CHECKOUT_DIR_PATH,
     TEMPORARY_SCHEMA_CACHE_FILE
 } from "./modules/constants.mjs";
-import { pullGitRepository } from "./modules/git.mjs";
+import { pullGitRepository, listAllReleases } from "./modules/git.mjs";
 import {
     downloadMissingPolicySchemaFiles,
     generateCompatibilityInformationCache,
@@ -41,12 +41,13 @@ await fs.rm(TEMPORARY_SCHEMA_CACHE_FILE, { force: true });
 // Mac, ADMX files for Windows) from our policies-schema.json file, but clone and
 // adjust the templates published by Mozilla. We then delete policies we do not
 // support, and add our own Thunderbird-only policies.
-// TODO: We should switch to an approach, which annotates our policies-schema.json
-//       file with all the required information and no longer clone the Mozilla
-//       templates, but truly generate our own templates.
-const mozilla_policy_template_releases = await fetch(
-    "https://api.github.com/repos/mozilla/policy-templates/releases"
-).then(res => res.json()).then(data =>
+// TODO: We should switch to an approach, which pulls all the required
+//       information from our tree, for example by moving the yaml files from the
+//       config folder into the tree, and including the config data for all
+//       supported policies.
+const mozilla_policy_template_releases = await listAllReleases(
+    "mozilla/policy-templates"
+).then(data =>
     // Create an array of GitHub release entries of the following data structure,
     // sorted by major, minor (of the mozilla policy github release tag):
     //  {
@@ -78,7 +79,7 @@ const mozilla_policy_template_releases = await fetch(
 );
 
 // Match the policy template versions published by Mozilla against the available
-// Thunderbird versions.
+// Thunderbird versions. Skip versions older versions (v < 91)
 // Note: This depends on the convention of the published release titles used by
 //       https://github.com/mozilla/policy-templates/releases. Expected is this:
 //       "Policy templates for Firefox 139 and Firefox ESR 128.11"
@@ -90,7 +91,7 @@ let THUNDERBIRD_VERSIONS = await getThunderbirdVersions();
 //    version: 128,
 //    mozillaReferenceTemplates: 'v6.11'
 //},
-let allRevisionData = THUNDERBIRD_VERSIONS.ESR.flatMap(version => {
+let allRevisionData = THUNDERBIRD_VERSIONS.ESR.filter(v => v >= 91).flatMap(version => {
     let matching_esr = mozilla_policy_template_releases.find(
         // Use RegExp instead of a simple .includes() to tolerate flexible spacing
         // and increase the probability to correctly match the used version format

@@ -47,3 +47,42 @@ export async function pullGitRepository(url, ref, dir) {
         });
     }
 }
+
+/**
+ * Fetches all releases from a GitHub repository, handling pagination.
+ *
+ * This function queries the GitHub REST API for the list of releases
+ * and continues fetching paginated results until all releases have been retrieved.
+ *
+ * @param {string} repo - The repository in the format "owner/repo", for example
+ *    "mozilla/policy-templates"
+ * @returns {Promise<Object[]>} A promise that resolves to an array of release
+ *    objects from the GitHub API.
+ */
+export async function listAllReleases(repo) {
+    const perPage = 100;
+    let page = 1;
+    let allReleases = [];
+    let hasMore = true;
+  
+    while (hasMore) {
+      const response = await fetch(
+        `https://api.github.com/repos/${repo}/releases?per_page=${perPage}&page=${page}`
+      );
+      if (!response.ok) {
+        throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+      }
+  
+      const releases = await response.json();
+      allReleases = allReleases.concat(releases);
+  
+      if (releases.length < perPage) {
+        hasMore = false;
+      } else {
+        page++;
+      }
+    }
+  
+    return allReleases;
+  }
+  
