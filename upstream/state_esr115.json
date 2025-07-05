@@ -3044,6 +3044,9 @@
         "```"
       ]
     },
+    "SearchEngines": {
+      "toc": "| **[`SearchEngines`](#searchengines-this-policy-is-only-available-on-the-esr)** |"
+    },
     "SearchEngines_Add": {
       "toc": "| **[`SearchEngines -> Add`](#searchengines--add)** | Add new search engines.",
       "content": [
