@@ -1,20 +1,19 @@
 ## Enterprise policy descriptions and templates for Thunderbird ESR 102
-
 Policies can be specified by creating a file called `policies.json`:
- * Windows: place the file in a directory called `distribution` in the same
-   directory where `thunderbird.exe` is located.
- * Mac: place the file into `Thunderbird.app/Contents/Resources/distribution`
- * Linux: place the file into `thunderbird/distribution`, where `thunderbird`
-   is the installation directory for Thunderbird. You can also specify a system-wide
-   policy by placing the file in `/etc/thunderbird/policies`.
+* Windows: place the file in a directory called `distribution` in the same
+  directory where `thunderbird.exe` is located.
+* Mac: place the file into `Thunderbird.app/Contents/Resources/distribution`
+* Linux: place the file into `thunderbird/distribution`, where `thunderbird`
+  is the installation directory for Thunderbird. You can also specify a system-wide
+  policy by placing the file in `/etc/thunderbird/policies`.
 
 Alternatively, policies can be specified via platform specific methods:
- * Windows: [thunderbird.admx](https://github.com/thunderbird/policy-templates/tree/master/docs/templates/esr102/windows) — use with [group policy templates](https://support.mozilla.org/en-US/kb/customizing-firefox-using-group-policy-windows) or [intune](https://support.mozilla.org/kb/managing-firefox-intune)
- * Mac: [org.mozilla.thunderbird.plist](https://github.com/thunderbird/policy-templates/blob/master/docs/templates/esr102/mac/org.mozilla.thunderbird.plist) — use with [configuration profiles](https://support.mozilla.org/en-US/kb/managing-policies-macos-desktops)
+* Windows: [thunderbird.admx](https://github.com/thunderbird/policy-templates/tree/master/docs/templates/esr102/windows) — use with [group policy templates](https://support.mozilla.org/en-US/kb/customizing-thunderbird-using-group-policy-windows) or [intune](https://support.mozilla.org/kb/managing-thunderbird-intune)
+* Mac: [org.mozilla.thunderbird.plist](https://github.com/thunderbird/policy-templates/blob/master/docs/templates/esr102/mac/org.mozilla.thunderbird.plist) — use with [configuration profiles](https://support.mozilla.org/en-US/kb/managing-policies-macos-desktops)
 
 This document provides for all policies examples for the mentioned formats.
 
-<br>
+
 
 | Policy Name | Description
 |:--- |:--- |
@@ -65,7 +64,6 @@ This document provides for all policies examples for the mentioned formats.
 | **[`SSLVersionMax`](#sslversionmax)** | Set and lock the maximum version of TLS.
 | **[`SSLVersionMin`](#sslversionmin)** | Set and lock the minimum version of TLS.
 
-<br>
 
 ## 3rdparty
 
@@ -1749,36 +1747,36 @@ Manage all aspects of extensions. This policy is based heavily on the [Chrome po
 
 This policy maps an extension ID to its configuration. With an extension ID, the configuration will be applied to the specified extension only. A default configuration can be set for the special ID "*", which will apply to all extensions that don't have a custom configuration set in this policy.
 
-To obtain an extension ID, install the extension and go to about:support. You will see the ID in the Extensions section. I've also created an extension that makes it easy to find the ID of extensions on ATN. You can download it [here](https://github.com/mkaply/queryamoid/releases/tag/v0.1).
+To obtain an extension ID, install the extension and go to about:support. You will see the ID in the Extensions section.
 
 The configuration for each extension is another dictionary that can contain the fields documented below.
 
 | Name | Description |
 | --- | --- |
-| `installation_mode` | Maps to a string indicating the installation mode for the extension. The valid strings are `allowed`,`blocked`,`force_installed`, and `normal_installed`.
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`allowed` | Allows the extension to be installed by the user. This is the default behavior. There is no need for an install_url; it will automatically be allowed based on the ID.
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`blocked`| Blocks installation of the extension and removes it from the device if already installed.
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`force_installed`| The extension is automatically installed and can't be removed by the user. This option is not valid for the default configuration and requires an install_url.
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`normal_installed`| The extension is automatically installed but can be disabled by the user. This option is not valid for the default configuration and requires an install_url.
-| `install_url`| Maps to a URL indicating where Thunderbird can download a force_installed or normal_installed extension.  If installing from the local file system, use a [```file:///``` URL](https://en.wikipedia.org/wiki/File_URI_scheme). If installing from the addons.thunderbird.net, use the following URL (substituting SHORT_NAME from the URL on ATN), https://addons.thunderbird.net/thunderbird/downloads/latest/SHORT_NAME/latest.xpi. Languages packs are available from https://releases.mozilla.org/pub/thunderbird/releases/VERSION/PLATFORM/xpi/LANGUAGE.xpi. If you need to update the extension, you can change the name of the extension and it will be automatically updated. Extensions installed from file URLs will additional be updated when their internal version changes.
-| `install_sources` | A list of sources from which installing extensions is allowed. **This is unnecessary if you are only allowing the installation of certain extensions by ID.** Each item in this list is an extension-style match pattern. Users will be able to easily install items from any URL that matches an item in this list. Both the location of the *.xpi file and the page where the download is started from (i.e.  the referrer) must be allowed by these patterns. This setting can be used only for the default configuration.
-| `allowed_types` | This setting whitelists the allowed types of extension/apps that can be installed in Thunderbird. The value is a list of strings, each of which should be one of the following: "extension", "theme", "dictionary", "locale" This setting can be used only for the default configuration.
-| `blocked_install_message` | This maps to a string specifying the error message to display to users if they're blocked from installing an extension. This setting allows you to append text to the generic error message displayed when the extension is blocked. This could be be used to direct users to your help desk, explain why a particular extension is blocked, or something else. This setting can be used only for the default configuration.
-| `restricted_domains` | An array of domains on which content scripts can't be run. This setting can be used only for the default configuration.
-| `updates_disabled` | Boolean that indicates whether or not to disable automatic updates for an individual extension.
+| `installation_mode` | Maps to a string indicating the installation mode for the extension. The valid strings are `allowed`, `blocked`, `force_installed`, and `normal_installed`. |
+|     `allowed` | Allows the extension to be installed by the user. This is the default behavior. There is no need for an install_url; it will automatically be allowed based on the ID. |
+|     `blocked` | Blocks installation of the extension and removes it from the device if already installed. |
+|     `force_installed` | The extension is automatically installed and can't be removed by the user. This option is not valid for the default configuration and requires an install_url. |
+|     `normal_installed` | The extension is automatically installed but can be disabled by the user. This option is not valid for the default configuration and requires an install_url. |
+| `install_url` | Maps to a URL indicating where Thunderbird can download a force_installed or normal_installed extension. If installing from the local file system, use a [```file:///``` URL](https://en.wikipedia.org/wiki/File_URI_scheme). If installing from the addons.thunderbird.net, use the following URL (substituting SHORT_NAME from the URL on ATN), https://addons.thunderbird.net/thunderbird/downloads/latest/SHORT_NAME/latest.xpi. Language packs are available from https://releases.mozilla.org/pub/thunderbird/releases/VERSION/PLATFORM/xpi/LANGUAGE.xpi. If you need to update the extension, you can change the name of the extension and it will be automatically updated. Extensions installed from file URLs will additionally be updated when their internal version changes. |
+| `install_sources` | A list of sources from which installing extensions is allowed. **This is unnecessary if you are only allowing the installation of certain extensions by ID.** Each item in this list is an extension-style match pattern. Users will be able to easily install items from any URL that matches an item in this list. Both the location of the *.xpi file and the page where the download is started from (i.e. the referrer) must be allowed by these patterns. This setting can be used only for the default configuration. |
+| `allowed_types` | This setting whitelists the allowed types of extension/apps that can be installed in Thunderbird. The value is a list of strings, each of which should be one of the following: "extension", "theme", "dictionary", "locale". This setting can be used only for the default configuration. |
+| `blocked_install_message` | This maps to a string specifying the error message to display to users if they're blocked from installing an extension. This setting allows you to append text to the generic error message displayed when the extension is blocked. This could be used to direct users to your help desk, explain why a particular extension is blocked, or something else. This setting can be used only for the default configuration. |
+| `restricted_domains` | An array of domains on which content scripts can't be run. This setting can be used only for the default configuration. |
+| `updates_disabled` | Boolean that indicates whether or not to disable automatic updates for an individual extension. |
 
-*As of Thunderbird 85, Thunderbird ESR 78.7, installing a theme makes it the default.)\
+*As of Thunderbird 85, Thunderbird ESR 78.7, installing a theme makes it the default.*
 
-**CCK2 Equivalent:** N/A\
+**CCK2 Equivalent:** N/A
 **Preferences Affected:** N/A
 
 #### Windows (GPO)
-Software\Policies\Mozilla\Thunderbird\ExtensionSettings (REG_MULTI_SZ) =
 ```
+Software\Policies\Mozilla\Thunderbird\ExtensionSettings (REG_MULTI_SZ) = 
 {
   "*": {
     "blocked_install_message": "Custom error message.",
-    "install_sources": ["about:addons","https://addons.thunderbird.net/"],
+    "install_sources": ["about:addons", "https://addons.thunderbird.net/"],
     "installation_mode": "blocked",
     "allowed_types": ["extension"]
   },
@@ -1791,6 +1789,7 @@ Software\Policies\Mozilla\Thunderbird\ExtensionSettings (REG_MULTI_SZ) =
   }
 }
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1799,11 +1798,10 @@ OMA-URI:
 Value (string):
 ```
 <enabled/>
-<data id="ExtensionSettings" value='
-{
+<data id="ExtensionSettings" value='{
   "*": {
     "blocked_install_message": "Custom error message.",
-    "install_sources": ["about:addons","https://addons.thunderbird.net/"],
+    "install_sources": ["about:addons", "https://addons.thunderbird.net/"],
     "installation_mode": "blocked",
     "allowed_types": ["extension"]
   },
@@ -1811,12 +1809,13 @@ Value (string):
     "installation_mode": "force_installed",
     "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/ublock-origin/latest.xpi"
   },
-    "https-everywhere@eff.org": {
+  "https-everywhere@eff.org": {
     "installation_mode": "allowed"
   }
 }'/>
 ```
-#### macOS
+
+#### MacOS
 ```
 <dict>
   <key>ExtensionSettings</key>
@@ -1840,18 +1839,19 @@ Value (string):
     <key>uBlock0@raymondhill.net</key>
     <dict>
       <key>installation_mode</key>
-       <string>force_installed</string>
+      <string>force_installed</string>
       <key>install_url</key>
       <string>https://addons.thunderbird.net/thunderbird/downloads/latest/ublock-origin/latest.xpi</string>
     </dict>
     <key>https-everywhere@eff.org</key>
     <dict>
       <key>installation_mode</key>
-       <string>allowed</string>
+      <string>allowed</string>
     </dict>
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1859,7 +1859,7 @@ Value (string):
     "ExtensionSettings": {
       "*": {
         "blocked_install_message": "Custom error message.",
-        "install_sources": ["about:addons","https://addons.thunderbird.net/"],
+        "install_sources": ["about:addons", "https://addons.thunderbird.net/"],
         "installation_mode": "blocked",
         "allowed_types": ["extension"]
       },
@@ -2484,9 +2484,7 @@ Value (string):
 ## Preferences
 Set and lock preferences.
 
-### Improved Preferences Policy (TB91 and newer)
-
-**NOTE:** On Windows, in order to use this policy, you must clear all settings in the old **[`Deprecated Preferences (TB78 and older)`](#deprecated-preferences-tb78-and-older)** section.
+**NOTE:** On Windows, in order to use this policy, you must clear all settings in the old **`Preferences (Deprecated)`** section for Thunderbird 78 and older.
 
 Previously you could only set and lock a subset of preferences. Starting with Thunderbird 91 you can set many more preferences. You can also set default preferences, user preferences and you can clear preferences.
 
@@ -2519,26 +2517,26 @@ as well as the following security preferences:
 
 | Preference | Type | Default |
 | --- | --- | --- |
-| security.default_personal_cert | string | Ask Every Time
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to Select Automatically, Thunderbird automatically chooses the default personal certificate.
-| security.insecure_connection_text.enabled | bool | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to true, adds the words "Not Secure" for insecure sites.
-| security.insecure_connection_text.pbmode.enabled | bool | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to true, adds the words "Not Secure" for insecure sites in private browsing.
-| security.insecure_field_warning.contextual.enabled | bool | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to false, remove the warning for inscure login fields.
-| security.mixed_content.block_active_content | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, mixed active content (HTTP and HTTPS) is not blocked.
-| security.osclientcerts.autoload | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, client certificates are loaded from the operating system certificate store.
-| security.ssl.errorReporting.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, SSL errors cannot be sent to Mozilla.
-| security.tls.hello_downgrade_check | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, the TLS 1.3 downgrade check is disabled.
-| security.tls.version.enable-deprecated | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, browser will accept TLS 1.0. and TLS 1.1
-| security.warn_submit_secure_to_insecure | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, no warning is shown when submitting s form from https to http.
+| security.default_personal_cert | string | Ask Every Time |
+|     If set to Select Automatically, Thunderbird automatically chooses the default personal certificate. |
+| security.insecure_connection_text.enabled | boolean | false |
+|     If set to true, adds the words "Not Secure" for insecure sites. |
+| security.insecure_connection_text.pbmode.enabled | boolean | false |
+|     If set to true, adds the words "Not Secure" for insecure sites in private browsing. |
+| security.insecure_field_warning.contextual.enabled | boolean | true |
+|     If set to false, remove the warning for inscure login fields. |
+| security.mixed_content.block_active_content | boolean | true |
+|     If false, mixed active content (HTTP and HTTPS) is not blocked. |
+| security.osclientcerts.autoload | boolean | false |
+|     If true, client certificates are loaded from the operating system certificate store. |
+| security.ssl.errorReporting.enabled | boolean | true |
+|     If false, SSL errors cannot be sent to Mozilla. |
+| security.tls.hello_downgrade_check | boolean | true |
+|     If false, the TLS 1.3 downgrade check is disabled. |
+| security.tls.version.enable-deprecated | boolean | false |
+|     If true, browser will accept TLS 1.0. and TLS 1.1 |
+| security.warn_submit_secure_to_insecure | boolean | true |
+|     If false, no warning is shown when submitting s form from https to http. |
 
 Using the preference as the key, set the `Value` to the corresponding preference value.
 
@@ -2556,12 +2554,12 @@ See the examples below for more detail.
 
 IMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.
 
-**CCK2 Equivalent:** `preferences`\
+**CCK2 Equivalent:** `preferences`
 **Preferences Affected:** Many
 
 #### Windows (GPO)
-Software\Policies\Mozilla\Thunderbird\Preferences (REG_MULTI_SZ) =
 ```
+Software\Policies\Mozilla\Thunderbird\Preferences (REG_MULTI_SZ) = 
 {
   "accessibility.force_disabled": {
     "Value": 1,
@@ -2570,9 +2568,10 @@ Software\Policies\Mozilla\Thunderbird\Preferences (REG_MULTI_SZ) =
   "browser.cache.disk.parent_directory": {
     "Value": "SOME_NATIVE_PATH",
     "Status": "user"
-  },
+  }
 }
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2590,10 +2589,11 @@ Value (string):
   "browser.cache.disk.parent_directory": {
     "Value": "SOME_NATIVE_PATH",
     "Status": "user"
-  },
+  }
 }'/>
 ```
-#### macOS
+
+#### MacOS
 ```
 <dict>
   <key>Preferences</key>
@@ -2615,6 +2615,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2628,121 +2629,6 @@ Value (string):
         "Value": "SOME_NATIVE_PATH",
         "Status": "user"
       }
-    }
-  }
-}
-```
-
-### Deprecated Preferences (TB78 and older)
-
-**CCK2 Equivalent:** `preferences`\
-**Preferences Affected:** See below
-
-| Preference | Type | Default |
-| --- | --- | --- |
-| accessibility.force_disabled | integer | 0
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to 1, platform accessibility is disabled.
-| browser.cache.disk.enable | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, don't store cache on the hard drive.
-| browser.cache.disk.parent_directory | string | Profile temporary directory
-| &nbsp;&nbsp;&nbsp;&nbsp;If set, changes the location of the disk cache.
-| browser.fixup.dns_first_for_single_words | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, single words are sent to DNS, not directly to search.
-| browser.safebrowsing.phishing.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, phishing protection is not enabled (Not recommended)
-| browser.safebrowsing.malware.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, malware protection is not enabled (Not recommended)
-| browser.search.update | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, updates for search engines are not checked.
-| browser.urlbar.suggest.bookmark | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, bookmarks aren't suggested when typing in the URL bar.
-| browser.urlbar.suggest.history | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, history isn't suggested when typing in the URL bar.
-| browser.urlbar.suggest.openpage | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, open tabs aren't suggested when typing in the URL bar.
-| datareporting.policy.dataSubmissionPolicyBypassNotification | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, don't show the privacy policy tab on first run.
-| dom.allow_scripts_to_close_windows | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, web page can close windows.
-| dom.disable_window_flip | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, web pages can focus and activate windows.
-| dom.disable_window_move_resize | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, web pages can't move or resize windows.
-| dom.event.contextmenu.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, web pages can't override context menus.
-| dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl | string | N/A
-| &nbsp;&nbsp;&nbsp;&nbsp;See https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-firefox-66
-| dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl | string | N/A
-| &nbsp;&nbsp;&nbsp;&nbsp;See https://support.mozilla.org/en-US/kb/dom-events-changes-introduced-firefox-66
-| extensions.blocklist.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, the extensions blocklist is not used (Not recommended)
-| geo.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, the geolocation API is disabled. | Language dependent
-| intl.accept_languages | string 
-| &nbsp;&nbsp;&nbsp;&nbsp;If set, preferred language for web pages.
-| network.dns.disableIPv6 | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, IPv6 DNS lokoups are disabled.
-| network.IDN_show_punycode | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, display the punycode version of internationalized domain names.
-| places.history.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, history is not enabled.
-| print.save_print_settings | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, print settings are not saved between jobs.
-| security.default_personal_cert | string | Ask Every Time
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to Select Automatically, Thunderbird automatically chooses the default personal certificate.
-| security.mixed_content.block_active_content | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, mixed active content (HTTP and HTTPS) is not blocked.
-| security.osclientcerts.autoload | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, client certificates are loaded from the operating system certificate store.
-| security.ssl.errorReporting.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, SSL errors cannot be sent to Mozilla.
-| security.tls.hello_downgrade_check | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, the TLS 1.3 downgrade check is disabled.
-| widget.content.gtk-theme-override | string | N/A
-| &nbsp;&nbsp;&nbsp;&nbsp;If set, overrides the GTK theme for widgets.
-
-#### Windows (GPO)
-```
-Software\Policies\Mozilla\Thunderbird\Preferences\boolean_preference_name = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Preferences\string_preference_name = "string_value"
-```
-#### Windows (Intune)
-OMA-URI: (periods are replaced by underscores)
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Preferences/boolean_preference_name
-```
-Value (string):
-```
-<enabled/> or <disabled/>
-```
-OMA-URI: (periods are replaced by underscores)
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Preferences/string_preference_name
-```
-Value (string):
-```
-<enabled/>
-<data id="Preferences_String" value="string_value"/>
-```
-#### macOS
-```
-<dict>
-  <key>Preferences</key>
-  <dict>
-    <key>boolean_preference_name</key>
-    <true/> | <false/>
-    <key>string_preference_name</key>
-    <string>string_value</string>
-  </dict>
-</dict>
-```
-#### policies.json
-```
-{
-  "policies": {
-    "Preferences": {
-      "boolean_preference_name": true | false,
-      "string_preference_name": "string_value"
     }
   }
 }

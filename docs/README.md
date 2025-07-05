@@ -6,13 +6,12 @@ not supported in older releases. We suggest to use the templates which correspon
 to the version of Thunderbird you are actually deploying.
 
  * [Thunderbird Daily 142](templates/central)
- * [Thunderbird 139](templates/release)
+ * [Thunderbird 140](templates/release)
  * [Thunderbird ESR 128](templates/esr128)
  * [Thunderbird ESR 115](templates/esr115)
  * [Thunderbird ESR 102](templates/esr102)
  * [Thunderbird ESR 91](templates/esr91)
 
-<br>
 
 ## List of supported policies
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="6.11" schemaVersion="1.0">
+<policyDefinitionResources revision="7.0" schemaVersion="1.0">
   <displayName/>
   <description/>
   <resources>
@@ -274,7 +274,7 @@ If this policy is disabled or not configured, Firefox will remember form and sea
       <string id="DisablePasswordReveal_Explain">If this policy is enabled, users cannot show passwords in saved logins.
 
 If this policy is disabled or not configured, users can show passwords in saved logins.</string>
-      <string id="DisablePocket">Disable Pocket</string>
+      <string id="DisablePocket">Disable Pocket (Deprecated)</string>
       <string id="DisablePocket_Explain">If this policy is enabled, Pocket is not available.
 
 If this policy is disabled or not configured, Pocket is available.</string>
