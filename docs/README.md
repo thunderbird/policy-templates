@@ -12,7 +12,6 @@ to the version of Thunderbird you are actually deploying.
  * [Thunderbird ESR 102](templates/esr102)
  * [Thunderbird ESR 91](templates/esr91)
 
-
 ## List of supported policies
 
 The following table states for each policy, when Thunderbird started to support it,

@@ -1,4 +1,5 @@
 ## Enterprise policy descriptions and templates for Thunderbird ESR 102
+
 Policies can be specified by creating a file called `policies.json`:
 * Windows: place the file in a directory called `distribution` in the same
   directory where `thunderbird.exe` is located.
@@ -14,7 +15,6 @@ Alternatively, policies can be specified via platform specific methods:
 This document provides for all policies examples for the mentioned formats.
 
 
-
 | Policy Name | Description
 |:--- |:--- |
 | **[`3rdparty`](#3rdparty)** | Set policies that WebExtensions can access via chrome.storage.managed.
@@ -27,7 +27,7 @@ This document provides for all policies examples for the mentioned formats.
 | **[`BlockAboutProfiles`](#blockaboutprofiles)** | Block access to About Profiles (about:profiles).
 | **[`BlockAboutSupport`](#blockaboutsupport)** | Block access to Troubleshooting Information (about:support).
 | **[`CaptivePortal`](#captiveportal)** | Enable or disable the detection of captive portals.
-| **[`Certificates`](#certificates)** |
+| **[`Certificates`](#certificates)** | 
 | **[`Certificates -> ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | Trust certificates that have been added to the operating system certificate store by a user or administrator.
 | **[`Certificates -> Install`](#certificates--install)** | Install certificates into the Thunderbird certificate store.
 | **[`Cookies`](#cookies)** | Configure cookie preferences.
@@ -64,7 +64,6 @@ This document provides for all policies examples for the mentioned formats.
 | **[`SSLVersionMax`](#sslversionmax)** | Set and lock the maximum version of TLS.
 | **[`SSLVersionMin`](#sslversionmin)** | Set and lock the minimum version of TLS.
 
-
 ## 3rdparty
 
 Allow WebExtensions to configure policy. For more information, see [Adding policy support to your extension](https://extensionworkshop.com/documentation/enterprise/adding-policy-support-to-your-extension/).
@@ -98,6 +97,7 @@ For GPO and Intune, the extension developer should provide an ADMX file.
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -126,8 +126,6 @@ For GPO and Intune, the extension developer should provide an ADMX file.
 |:--- | ---:| ---:|
 | `3rdparty`<br>`3rdparty_Extensions`<br>`3rdparty_Extensions_[name]` | 78.0 |  |
 
-<br>
-
 ## AppAutoUpdate
 
 Enable or disable **automatic** application update.
@@ -143,8 +141,9 @@ If you have disabled updates via `DisableAppUpdate`, this policy has no effect.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\AppAutoUpdate = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\AppAutoUpdate (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -154,6 +153,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -161,6 +161,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -169,13 +170,12 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `AppAutoUpdate` | 75.0 |  |
-
-<br>
 
 ## AppUpdateURL
 
@@ -186,8 +186,9 @@ Change the URL for application update if you are providing Thunderbird updates f
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\AppUpdateURL = "https://yoursite.com"
+Software\Policies\Mozilla\Thunderbird\AppUpdateURL (REG_SZ) = "https://yoursite.com"
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -198,6 +199,7 @@ Value (string):
 <enabled/>
 <data id="AppUpdateURL" value="https://yoursite.com"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -205,6 +207,7 @@ Value (string):
   <string>https://yoursite.com</string>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -213,13 +216,12 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `AppUpdateURL` | 68.0 |  |
-
-<br>
 
 ## Authentication
 
@@ -230,23 +232,24 @@ See [Integrated authentication](https://htmlpreview.github.io/?https://github.co
 `PrivateBrowsing` enables integrated authentication in private browsing.
 
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** `network.negotiate-auth.trusted-uris`,`network.negotiate-auth.delegation-uris`,`network.automatic-ntlm-auth.trusted-uris`,`network.automatic-ntlm-auth.allow-non-fqdn`,`network.negotiate-auth.allow-non-fqdn`,`network.automatic-ntlm-auth.allow-proxies`,`network.negotiate-auth.allow-proxies`,`network.auth.private-browsing-sso`
+**Preferences Affected:** `network.negotiate-auth.trusted-uris`, `network.negotiate-auth.delegation-uris`, `network.automatic-ntlm-auth.trusted-uris`, `network.automatic-ntlm-auth.allow-non-fqdn`, `network.negotiate-auth.allow-non-fqdn`, `network.automatic-ntlm-auth.allow-proxies`, `network.negotiate-auth.allow-proxies`, `network.auth.private-browsing-sso`
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO\1 = "mydomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO\2 = "https://myotherdomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\Delegated\1 = "mydomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\Delegated\2 = "https://myotherdomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\NTLM\1 = "mydomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\NTLM\2 = "https://myotherdomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\AllowNonFQDN\SPNEGO = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Authentication\AllowNonFQDN\NTLM = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Authentication\AllowProxies\SPNEGO = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Authentication\AllowProxies\NTLM = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Authentication\Locked = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Authentication\PrivateBrowsing = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO\1 (REG_SZ) = "mydomain.com"
+Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO\2 (REG_SZ) = "https://myotherdomain.com"
+Software\Policies\Mozilla\Thunderbird\Authentication\Delegated\1 (REG_SZ) = "mydomain.com"
+Software\Policies\Mozilla\Thunderbird\Authentication\Delegated\2 (REG_SZ) = "https://myotherdomain.com"
+Software\Policies\Mozilla\Thunderbird\Authentication\NTLM\1 (REG_SZ) = "mydomain.com"
+Software\Policies\Mozilla\Thunderbird\Authentication\NTLM\2 (REG_SZ) = "https://myotherdomain.com"
+Software\Policies\Mozilla\Thunderbird\Authentication\AllowNonFQDN\SPNEGO (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Authentication\AllowNonFQDN\NTLM (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Authentication\AllowProxies\SPNEGO (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Authentication\AllowProxies\NTLM (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Authentication\Locked (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Authentication\PrivateBrowsing (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -301,6 +304,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -342,6 +346,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -364,13 +369,12 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Authentication`<br>`Authentication_SPNEGO`<br>`Authentication_Delegated`<br>`Authentication_NTLM`<br>`Authentication_AllowNonFQDN`<br>`Authentication_AllowNonFQDN_SPNEGO`<br>`Authentication_AllowNonFQDN_NTLM`<br>`Authentication_AllowProxies`<br>`Authentication_AllowProxies_SPNEGO`<br>`Authentication_AllowProxies_NTLM`<br>`Authentication_Locked`<br>`Authentication_PrivateBrowsing` | 78.0 |  |
-
-<br>
 
 ## BackgroundAppUpdate
 
@@ -387,8 +391,9 @@ If you have disabled updates via `DisableAppUpdate` or disabled automatic update
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\BackgroundAppUpdate = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\BackgroundAppUpdate (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -398,6 +403,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -405,6 +411,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -413,13 +420,12 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `BackgroundAppUpdate` | 91.0 |  |
-
-<br>
 
 ## BlockAboutAddons
 
@@ -430,8 +436,9 @@ Block access to the Add-ons Manager (about:addons).
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\BlockAboutAddons = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\BlockAboutAddons (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -441,6 +448,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -448,6 +456,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -456,13 +465,12 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `BlockAboutAddons` | 68.0 |  |
-
-<br>
 
 ## BlockAboutConfig
 
@@ -473,8 +481,9 @@ Block access to about:config.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\BlockAboutConfig = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\BlockAboutConfig (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -484,6 +493,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -491,6 +501,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -499,13 +510,12 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `BlockAboutConfig` | 68.0 |  |
-
-<br>
 
 ## BlockAboutProfiles
 
@@ -516,8 +526,9 @@ Block access to About Profiles (about:profiles).
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\BlockAboutProfiles = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\BlockAboutProfiles (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -527,6 +538,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -534,6 +546,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -542,13 +555,12 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `BlockAboutProfiles` | 68.0 |  |
-
-<br>
 
 ## BlockAboutSupport
 
@@ -559,8 +571,9 @@ Block access to Troubleshooting Information (about:support).
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\BlockAboutSupport = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\BlockAboutSupport (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -570,6 +583,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -577,6 +591,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -585,15 +600,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `BlockAboutSupport` | 68.0 |  |
 
-<br>
-
 ## CaptivePortal
+
 Enable or disable the detection of captive portals.
 
 **CCK2 Equivalent:** N/A\
@@ -601,8 +616,9 @@ Enable or disable the detection of captive portals.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\CaptivePortal = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\CaptivePortal (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -612,6 +628,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -619,6 +636,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -627,23 +645,23 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `CaptivePortal` | 78.0 |  |
 
-<br>
-
 ## Certificates
+
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
 
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Certificates`<br>`Certificates_ImportEnterpriseRoots`<br>`Certificates_Install` | 68.0 |  |
-
-<br>
 
 ## Certificates | ImportEnterpriseRoots
 
@@ -658,8 +676,9 @@ See https://support.mozilla.org/kb/setting-certificate-authorities-firefox for m
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Certificates\ImportEnterpriseRoots = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Certificates\ImportEnterpriseRoots (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -669,6 +688,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -679,6 +699,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -689,13 +710,12 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Certificates_ImportEnterpriseRoots` | 68.0 |  |
-
-<br>
 
 ## Certificates | Install
 
@@ -725,9 +745,10 @@ Binary (DER) and ASCII (PEM) certificates are both supported.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Certificates\Install\1 = "cert1.der"
-Software\Policies\Mozilla\Thunderbird\Certificates\Install\2 = "C:\Users\username\cert2.pem"
+Software\Policies\Mozilla\Thunderbird\Certificates\Install\1 (REG_SZ) = "cert1.der"
+Software\Policies\Mozilla\Thunderbird\Certificates\Install\2 (REG_SZ) = "C:\Users\username\cert2.pem"
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -738,6 +759,7 @@ Value (string):
 <enabled/>
 <data id="Certificates_Install" value="1&#xF000;cert1.der&#xF000;2&#xF000;C:\Users\username\cert2.pem"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -751,6 +773,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -761,15 +784,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Certificates_Install` | 68.0 |  |
 
-<br>
-
 ## Cookies
+
 Configure cookie preferences.
 
 `Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.
@@ -806,17 +829,18 @@ Configure cookie preferences.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Cookies\Allow\1 = "https://example.com"
-Software\Policies\Mozilla\Thunderbird\Cookies\AllowSession\1 = "https://example.edu"
-Software\Policies\Mozilla\Thunderbird\Cookies\Block\1 = "https://example.org"
-Software\Policies\Mozilla\Thunderbird\Cookies\Default = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Cookies\AcceptThirdParty = "always" | "never" | "from-visited"
-Software\Policies\Mozilla\Thunderbird\Cookies\ExpireAtSessionEnd = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Cookies\RejectTracker = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Cookies\Behavior = "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign"
-Software\Policies\Mozilla\Thunderbird\Cookies\BehaviorPrivateBrowsing = "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign"
-Software\Policies\Mozilla\Thunderbird\Cookies\Locked = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Cookies\Allow\1 (REG_SZ) = "https://example.com"
+Software\Policies\Mozilla\Thunderbird\Cookies\AllowSession\1 (REG_SZ) = "https://example.edu"
+Software\Policies\Mozilla\Thunderbird\Cookies\Block\1 (REG_SZ) = "https://example.org"
+Software\Policies\Mozilla\Thunderbird\Cookies\Default (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Cookies\AcceptThirdParty (REG_SZ) = "always" | "never" | "from-visited"
+Software\Policies\Mozilla\Thunderbird\Cookies\ExpireAtSessionEnd (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Cookies\RejectTracker (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Cookies\Behavior (REG_SZ) = "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign"
+Software\Policies\Mozilla\Thunderbird\Cookies\BehaviorPrivateBrowsing (REG_SZ) = "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign"
+Software\Policies\Mozilla\Thunderbird\Cookies\Locked (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -904,6 +928,7 @@ Value (string):
 <enabled/>
 <data id="Cookies_BehaviorPrivateBrowsing" value="accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -938,6 +963,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -957,15 +983,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Cookies`<br>`Cookies_Allow`<br>`Cookies_Block`<br>`Cookies_Default`<br>`Cookies_AcceptThirdParty`<br>`Cookies_ExpireAtSessionEnd`<br>`Cookies_Locked` | 78.0 |  |
 
-<br>
-
 ## DefaultDownloadDirectory
+
 Set the default download directory.
 
 You can use ${home} for the native home directory.
@@ -975,8 +1001,9 @@ You can use ${home} for the native home directory.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DefaultDownloadDirectory = "${home}\Downloads"
+Software\Policies\Mozilla\Thunderbird\DefaultDownloadDirectory (REG_SZ) = "${home}\Downloads"
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -987,6 +1014,7 @@ Value (string):
 <enabled/>
 <data id="Preferences_String" value="${home}\Downloads"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -994,31 +1022,15 @@ Value (string):
   <string>${home}/Downloads</string>
 </dict>
 ```
-#### policies.json (macOS and Linux)
-```
-{
-  "policies": {
-    "DefaultDownloadDirectory": "${home}/Downloads"
-  }
-}
-```
-#### policies.json (Windows)
-```
-{
-  "policies": {
-    "DefaultDownloadDirectory": "${home}\\Downloads"
-  }
-}
-```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DefaultDownloadDirectory` | 78.0 |  |
 
-<br>
-
 ## DisableAppUpdate
+
 Turn off application updates within Thunderbird.
 
 **CCK2 Equivalent:** `disableFirefoxUpdates`\
@@ -1026,8 +1038,9 @@ Turn off application updates within Thunderbird.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisableAppUpdate = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisableAppUpdate (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1037,6 +1050,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1044,6 +1058,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1052,15 +1067,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DisableAppUpdate` | 68.0 |  |
 
-<br>
-
 ## DisableBuiltinPDFViewer
+
 Disable the built in PDF viewer. PDF files are downloaded and sent externally.
 
 **CCK2 Equivalent:** `disablePDFjs`\
@@ -1068,8 +1083,9 @@ Disable the built in PDF viewer. PDF files are downloaded and sent externally.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisableBuiltinPDFViewer = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisableBuiltinPDFViewer (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1079,6 +1095,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1086,6 +1103,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1094,15 +1112,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DisableBuiltinPDFViewer` | 91.0 |  |
 
-<br>
-
 ## DisabledCiphers
+
 Disable specific cryptographic ciphers, listed below.
 
 ```
@@ -1125,31 +1143,24 @@ TLS_RSA_WITH_AES_256_CBC_SHA
 TLS_RSA_WITH_3DES_EDE_CBC_SHA
 ```
 
-**Preferences Affected:** `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_rsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_ecdsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_256_sha`, `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.deprecated.rsa_des_ede3_sha`
-
----
-**Note:**
-
-This policy was updated in Thunderbird 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
-
----
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** N/A
+**Preferences Affected:** `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_rsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_ecdsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_256_sha`, `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.deprecated.rsa_des_ede3_sha`
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\CIPHER_NAME = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisabledCiphers\CIPHER_NAME (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_CIPHER_NAME
-
 ```
 Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1160,6 +1171,7 @@ Value (string):
     </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1170,6 +1182,7 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
@@ -1178,9 +1191,8 @@ Value (string):
 | `DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384` | 91.0 |  |
 | `DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA` | 102.0 |  |
 
-<br>
-
 ## DisableDeveloperTools
+
 Remove access to all developer tools.
 
 **CCK2 Equivalent:** `removeDeveloperTools`\
@@ -1188,8 +1200,9 @@ Remove access to all developer tools.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisableDeveloperTools = 0x1 | 0x0`
+Software\Policies\Mozilla\Thunderbird\DisableDeveloperTools (REG_SZ) = 0x1 | 0x0`
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1199,6 +1212,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1206,6 +1220,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1214,15 +1229,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DisableDeveloperTools` | 68.0 |  |
 
-<br>
-
 ## DisableMasterPasswordCreation
+
 Remove the master password functionality.
 
 If this value is true, it works the same as setting [`PrimaryPassword`](#primarypassword) to false and removes the primary password functionality.
@@ -1234,8 +1249,9 @@ If both `DisableMasterPasswordCreation` and `PrimaryPassword` are used, `Disable
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisableMasterPasswordCreation = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisableMasterPasswordCreation (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1245,6 +1261,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1252,6 +1269,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1260,24 +1278,25 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DisableMasterPasswordCreation` | 68.0 |  |
 
-<br>
-
 ## DisablePasswordReveal
+
 Do not allow passwords to be shown in saved logins
 
-**CCK2 Equivalent:** N/A
+**CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisablePasswordReveal = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisablePasswordReveal (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1287,6 +1306,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1294,6 +1314,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1302,15 +1323,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DisablePasswordReveal` | 78.0 |  |
 
-<br>
-
 ## DisableSafeMode
+
 Disable safe mode within the browser.
 
 On Windows, this disables safe mode via the command line as well.
@@ -1320,8 +1341,9 @@ On Windows, this disables safe mode via the command line as well.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisableSafeMode = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisableSafeMode (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1331,6 +1353,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1338,6 +1361,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1346,15 +1370,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DisableSafeMode` | 78.0 |  |
 
-<br>
-
 ## DisableSecurityBypass
+
 Prevent the user from bypassing security in certain cases.
 
 `InvalidCertificate` prevents adding an exception when an invalid certificate is shown.
@@ -1366,9 +1390,10 @@ Prevent the user from bypassing security in certain cases.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass\InvalidCertificate = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass\SafeBrowsing = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass\InvalidCertificate (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass\SafeBrowsing (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1399,6 +1424,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1410,15 +1436,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DisableSecurityBypass`<br>`DisableSecurityBypass_InvalidCertificate`<br>`DisableSecurityBypass_SafeBrowsing` | 68.0 |  |
 
-<br>
-
 ## DisableSystemAddonUpdate
+
 Prevent system add-ons from being installed or updated.
 
 **CCK2 Equivalent:** N/A\
@@ -1426,8 +1452,9 @@ Prevent system add-ons from being installed or updated.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisableSystemAddonUpdate = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisableSystemAddonUpdate (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1437,6 +1464,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1444,6 +1472,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1452,15 +1481,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DisableSystemAddonUpdate` | 77.0 |  |
 
-<br>
-
 ## DisableTelemetry
+
 Prevent the upload of telemetry data.
 
 As of Thunderbird 83 and Thunderbird ESR 78.5, local storage of telemetry data is disabled as well.
@@ -1472,8 +1501,9 @@ Mozilla recommends that you do not disable telemetry. Information collected thro
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisableTelemetry = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisableTelemetry (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1483,6 +1513,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1490,6 +1521,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1498,15 +1530,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DisableTelemetry` | 78.0 |  |
 
-<br>
-
 ## DNSOverHTTPS
+
 Configure DNS over HTTPS.
 
 `Enabled` determines whether DNS over HTTPS is enabled
@@ -1522,11 +1554,12 @@ Configure DNS over HTTPS.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Enabled = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ProviderURL = "URL_TO_ALTERNATE_PROVIDER"
-Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Locked = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains\1 = "example.com"
+Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Enabled (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ProviderURL (REG_SZ) = "URL_TO_ALTERNATE_PROVIDER"
+Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Locked (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains\1 (REG_SZ) = "example.com"
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1562,6 +1595,7 @@ Value (string):
 <enabled/>
 <data id="List" value="1&#xF000;example.com"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1580,6 +1614,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1593,15 +1628,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DNSOverHTTPS`<br>`DNSOverHTTPS_Enabled`<br>`DNSOverHTTPS_ProviderURL`<br>`DNSOverHTTPS_ExcludedDomains`<br>`DNSOverHTTPS_Locked` | 91.0 |  |
 
-<br>
-
 ## DownloadDirectory
+
 Set and lock the download directory.
 
 You can use ${home} for the native home directory.
@@ -1611,8 +1646,9 @@ You can use ${home} for the native home directory.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DownloadDirectory = "${home}\Downloads"
+Software\Policies\Mozilla\Thunderbird\DownloadDirectory (REG_SZ) = "${home}\Downloads"
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1623,6 +1659,7 @@ Value (string):
 <enabled/>
 <data id="Preferences_String" value="${home}\Downloads"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1630,29 +1667,15 @@ Value (string):
   <string>${home}/Downloads</string>
 </dict>
 ```
-#### policies.json (macOS and Linux)
-```
-{
-  "policies": {
-    "DownloadDirectory": "${home}/Downloads"
-}
-```
-#### policies.json (Windows)
-```
-{
-  "policies": {
-    "DownloadDirectory": "${home}\\Downloads"
-}
-```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `DownloadDirectory` | 78.0 |  |
 
-<br>
-
 ## Extensions
+
 Control the installation, uninstallation and locking of extensions.
 
 While this policy is not technically deprecated, it is recommended that you use the **[`ExtensionSettings`](#extensionsettings)** policy. It has the same functionality and adds more. It does not support native paths, though, so you'll have to use file:/// URLs.
@@ -1668,11 +1691,12 @@ While this policy is not technically deprecated, it is recommended that you use 
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Extensions\Install\1 = "https://addons.thunderbird.net/thunderbird/downloads/somefile.xpi"
-Software\Policies\Mozilla\Thunderbird\Extensions\Install\2 = "//path/to/xpi"
-Software\Policies\Mozilla\Thunderbird\Extensions\Uninstall\1 = "bad_addon_id@mozilla.org"
-Software\Policies\Mozilla\Thunderbird\Extensions\Locked\1 = "addon_id@mozilla.org"
+Software\Policies\Mozilla\Thunderbird\Extensions\Install\1 (REG_SZ) = "https://addons.thunderbird.net/thunderbird/downloads/somefile.xpi"
+Software\Policies\Mozilla\Thunderbird\Extensions\Install\2 (REG_SZ) = "//path/to/xpi"
+Software\Policies\Mozilla\Thunderbird\Extensions\Uninstall\1 (REG_SZ) = "bad_addon_id@mozilla.org"
+Software\Policies\Mozilla\Thunderbird\Extensions\Locked\1 (REG_SZ) = "addon_id@mozilla.org"
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1701,6 +1725,7 @@ Value (string):
 <enabled/>
 <data id="Extensions" value="1&#xF000;addon_id@mozilla.org"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1722,6 +1747,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1734,15 +1760,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Extensions`<br>`Extensions_Install`<br>`Extensions_Uninstall`<br>`Extensions_Locked` | 68.0 |  |
 
-<br>
-
 ## ExtensionSettings
+
 Manage all aspects of extensions. This policy is based heavily on the [Chrome policy](https://dev.chromium.org/administrators/policy-list-3/extension-settings-full) of the same name.
 
 This policy maps an extension ID to its configuration. With an extension ID, the configuration will be applied to the specified extension only. A default configuration can be set for the special ID "*", which will apply to all extensions that don't have a custom configuration set in this policy.
@@ -1767,7 +1793,7 @@ The configuration for each extension is another dictionary that can contain the 
 
 *As of Thunderbird 85, Thunderbird ESR 78.7, installing a theme makes it the default.*
 
-**CCK2 Equivalent:** N/A
+**CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
 #### Windows (GPO)
@@ -1815,7 +1841,7 @@ Value (string):
 }'/>
 ```
 
-#### MacOS
+#### macOS
 ```
 <dict>
   <key>ExtensionSettings</key>
@@ -1874,6 +1900,7 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
@@ -1882,9 +1909,8 @@ Value (string):
 | `ExtensionSettings_*`<br>`ExtensionSettings_*_installation_mode`<br>`ExtensionSettings_*_allowed_types`<br>`ExtensionSettings_*_blocked_install_message`<br>`ExtensionSettings_*_install_sources`<br>`ExtensionSettings_*_restricted_domains`<br>`ExtensionSettings_[name]_installation_mode`<br>`ExtensionSettings_[name]_install_url` | 89.0 |  |
 | `ExtensionSettings_[name]_updates_disabled` | 91.0 |  |
 
-<br>
-
 ## ExtensionUpdate
+
 Control extension updates.
 
 **CCK2 Equivalent:** N/A\
@@ -1892,8 +1918,9 @@ Control extension updates.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\ExtensionUpdate = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\ExtensionUpdate (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -1903,6 +1930,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -1910,6 +1938,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -1918,15 +1947,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `ExtensionUpdate` | 68.0 |  |
 
-<br>
-
 ## Handlers
+
 Configure default application handlers. This policy is based on the internal format of `handlers.json`.
 
 You can configure handlers based on a mime type (`mimeTypes`), a file's extension (`extensions`), or a protocol (`schemes`).
@@ -1946,8 +1975,8 @@ Within each handler type, you specify the given mimeType/extension/scheme as a k
 **Preferences Affected:** N/A
 
 #### Windows (GPO)
-Software\Policies\Mozilla\Thunderbird\Handlers (REG_MULTI_SZ) =
 ```
+Software\Policies\Mozilla\Thunderbird\Handlers (REG_MULTI_SZ) = 
 {
   "mimeTypes": {
     "application/msword": {
@@ -1977,6 +2006,7 @@ Software\Policies\Mozilla\Thunderbird\Handlers (REG_MULTI_SZ) =
   }
 }
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2016,6 +2046,7 @@ Value (string):
 }
 '/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2072,6 +2103,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2107,15 +2139,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Handlers`<br>`Handlers_(mimeTypes\|extensions\|schemes)`<br>`Handlers_(mimeTypes\|extensions\|schemes)_[name]`<br>`Handlers_(mimeTypes\|extensions\|schemes)_[name]_action`<br>`Handlers_(mimeTypes\|extensions\|schemes)_[name]_ask`<br>`Handlers_(mimeTypes\|extensions\|schemes)_[name]_handlers` | 91.0 |  |
 
-<br>
-
 ## HardwareAcceleration
+
 Control hardware acceleration.
 
 **CCK2 Equivalent:** N/A\
@@ -2123,8 +2155,9 @@ Control hardware acceleration.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\HardwareAcceleration = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\HardwareAcceleration (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2134,6 +2167,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2141,6 +2175,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2149,15 +2184,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `HardwareAcceleration` | 78.0 |  |
 
-<br>
-
 ## InstallAddonsPermission
+
 Configure the default extension install policy as well as origins for extension installs are allowed. This policy does not override turning off all extension installs.
 
 `Allow` is a list of origins where extension installs are allowed.
@@ -2169,10 +2204,11 @@ Configure the default extension install policy as well as origins for extension 
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow\1 = "https://example.org"
-Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow\2 = "https://example.edu"
-Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Default = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow\1 (REG_SZ) = "https://example.org"
+Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow\2 (REG_SZ) = "https://example.edu"
+Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Default (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2191,6 +2227,7 @@ Value (string):
 ```
 <enabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2206,6 +2243,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2218,13 +2256,12 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `InstallAddonsPermission`<br>`InstallAddonsPermission_Allow`<br>`InstallAddonsPermission_Default` | 68.0 |  |
-
-<br>
 
 ## ManualAppUpdateOnly
 
@@ -2248,15 +2285,15 @@ This policy is primarily intended for advanced end users, not for enterprises.
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `ManualAppUpdateOnly` | 91.0 |  |
 
-<br>
-
 ## NetworkPrediction
+
 Enable or disable network prediction (DNS prefetching).
 
 **CCK2 Equivalent:** N/A\
@@ -2264,8 +2301,9 @@ Enable or disable network prediction (DNS prefetching).
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\NetworkPrediction = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\NetworkPrediction (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2275,6 +2313,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2282,6 +2321,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2289,15 +2329,15 @@ Value (string):
     "NetworkPrediction": true | false
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `NetworkPrediction` | 91.0 |  |
 
-<br>
-
 ## OfferToSaveLogins
+
 Control whether or not Thunderbird offers to save passwords.
 
 **CCK2 Equivalent:** `dontRememberPasswords`\
@@ -2305,8 +2345,9 @@ Control whether or not Thunderbird offers to save passwords.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\OfferToSaveLogins = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\OfferToSaveLogins (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2316,6 +2357,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2323,6 +2365,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2331,15 +2374,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `OfferToSaveLogins` | 91.0 |  |
 
-<br>
-
 ## OfferToSaveLoginsDefault
+
 Sets the default value of signon.rememberSignons without locking it.
 
 **CCK2 Equivalent:** `dontRememberPasswords`\
@@ -2347,8 +2390,9 @@ Sets the default value of signon.rememberSignons without locking it.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\OfferToSaveLoginsDefault = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\OfferToSaveLoginsDefault (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2358,6 +2402,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2365,6 +2410,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2373,15 +2419,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `OfferToSaveLoginsDefault` | 91.0 |  |
 
-<br>
-
 ## PasswordManagerEnabled
+
 Remove access to the password manager via preferences and blocks about:logins on Thunderbird 70.
 
 **CCK2 Equivalent:** N/A\
@@ -2389,8 +2435,9 @@ Remove access to the password manager via preferences and blocks about:logins on
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\PasswordManagerEnabled = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\PasswordManagerEnabled (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2400,6 +2447,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2407,6 +2455,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2415,15 +2464,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `PasswordManagerEnabled` | 78.0 |  |
 
-<br>
-
 ## PDFjs
+
 Disable or configure PDF.js, the built-in PDF viewer.
 
 If `Enabled` is set to false, the built-in PDF viewer is disabled.
@@ -2437,9 +2486,10 @@ Note: DisableBuiltinPDFViewer has not been deprecated. You can either continue t
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\PDFjs\Enabled = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\PDFjs\EnablePermissions = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\PDFjs\Enabled (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\PDFjs\EnablePermissions (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2450,6 +2500,7 @@ Value (string):
 ```
 <enabled/>or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2462,6 +2513,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2473,15 +2525,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `PDFjs`<br>`PDFjs_Enabled`<br>`PDFjs_EnablePermissions` | 91.0 |  |
 
-<br>
-
 ## Preferences
+
 Set and lock preferences.
 
 **NOTE:** On Windows, in order to use this policy, you must clear all settings in the old **`Preferences (Deprecated)`** section for Thunderbird 78 and older.
@@ -2554,7 +2606,7 @@ See the examples below for more detail.
 
 IMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.
 
-**CCK2 Equivalent:** `preferences`
+**CCK2 Equivalent:** `preferences`\
 **Preferences Affected:** Many
 
 #### Windows (GPO)
@@ -2593,7 +2645,7 @@ Value (string):
 }'/>
 ```
 
-#### MacOS
+#### macOS
 ```
 <dict>
   <key>Preferences</key>
@@ -2633,6 +2685,7 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
@@ -2643,9 +2696,8 @@ Value (string):
 | `Preferences_browser.cache.disk.parent_directory`<br>`Preferences_network.IDN_show_punycode` | 68.0 | 89.0 |
 | `Preferences_browser.fixup.dns_first_for_single_words`<br>`Preferences_browser.urlbar.suggest.openpage`<br>`Preferences_browser.urlbar.suggest.history`<br>`Preferences_browser.urlbar.suggest.bookmark` | 68.0 | 77.0 |
 
-<br>
-
 ## PrimaryPassword
+
 Require or prevent using a primary (formerly master) password.
 
 If this value is true, a primary password is required. If this value is false, it works the same as if [`DisableMasterPasswordCreation`](#disablemasterpasswordcreation) was true and removes the primary password functionality.
@@ -2657,8 +2709,9 @@ If both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMaste
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\PrimaryPassword = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\PrimaryPassword (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2668,6 +2721,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2675,6 +2729,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2683,15 +2738,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `PrimaryPassword` | 91.0 |  |
 
-<br>
-
 ## PromptForDownloadLocation
+
 Ask where to save each file before downloading.
 
 **CCK2 Equivalent:** N/A\
@@ -2699,8 +2754,9 @@ Ask where to save each file before downloading.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\PromptForDownloadLocation = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\PromptForDownloadLocation (REG_DWORD) = 0x1 | 0x0
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2710,6 +2766,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2717,6 +2774,7 @@ Value (string):
   <true/> | <false/>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2725,15 +2783,15 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `PromptForDownloadLocation` | 78.0 |  |
 
-<br>
-
 ## Proxy
+
 Configure proxy settings. These settings correspond to the connection settings in Thunderbird preferences.
 To specify ports, append them to the hostnames with a colon (:).
 
@@ -2768,23 +2826,20 @@ Unless you lock this policy, changes the user already has in place will take eff
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Proxy\Mode = "none" | "system" | "manual" | "autoDetect" | "autoConfig"
-Software\Policies\Mozilla\Thunderbird\Proxy\Locked = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\=Proxy\HTTPProxy = https://httpproxy.example.com
-Software\Policies\Mozilla\Thunderbird\Proxy\UseHTTPProxyForAllProtocols = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Proxy\SSLProxy = https://sslproxy.example.com
-Software\Policies\Mozilla\Thunderbird\Proxy\FTPProxy = https://ftpproxy.example.com
-Software\Policies\Mozilla\Thunderbird\Proxy\SOCKSProxy = https://socksproxy.example.com
-Software\Policies\Mozilla\Thunderbird\Proxy\SOCKSVersion = 0x4 | 0x5
-Software\Policies\Mozilla\Thunderbird\Proxy\Passthrough = <local>
-Software\Policies\Mozilla\Thunderbird\Proxy\AutoConfigURL = URL_TO_AUTOCONFIG
-Software\Policies\Mozilla\Thunderbird\Proxy\AutoLogin = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Proxy\UseProxyForDNS = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Proxy\Mode (REG_SZ) = "none" | "system" | "manual" | "autoDetect" | "autoConfig"
+Software\Policies\Mozilla\Thunderbird\Proxy\Locked (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Proxy\UseHTTPProxyForAllProtocols (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Proxy\SSLProxy (REG_SZ) = https://sslproxy.example.com
+Software\Policies\Mozilla\Thunderbird\Proxy\FTPProxy (REG_SZ) = https://ftpproxy.example.com
+Software\Policies\Mozilla\Thunderbird\Proxy\SOCKSProxy (REG_SZ) = https://socksproxy.example.com
+Software\Policies\Mozilla\Thunderbird\Proxy\SOCKSVersion (REG_DWORD) = 0x4 | 0x5
+Software\Policies\Mozilla\Thunderbird\Proxy\Passthrough (REG_SZ) = <local>
+Software\Policies\Mozilla\Thunderbird\Proxy\AutoConfigURL (REG_SZ) = URL_TO_AUTOCONFIG
+Software\Policies\Mozilla\Thunderbird\Proxy\AutoLogin (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Proxy\UseProxyForDNS (REG_DWORD) = 0x1 | 0x0
 ```
-#### Windows (Intune)
-**Note**
-These setttings were moved to a category to make them easier to configure via Intune.
 
+#### Windows (Intune)
 OMA-URI:
 ```
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_Locked
@@ -2872,7 +2927,7 @@ Value (string):
 ```
 <enabled/> or <disabled/>
 ```
-OMA-URI (Old way):
+OMA-URI:
 ```
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/Proxy
 ```
@@ -2892,6 +2947,7 @@ Value (string):
 <data id="AutoLogin" value="true | false"/>
 <data id="UseProxyForDNS" value="true | false"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2924,6 +2980,7 @@ Value (string):
   </dict>
 </dict>
 ```
+
 #### policies.json
 ```
 {
@@ -2945,30 +3002,29 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `Proxy`<br>`Proxy_Mode`<br>`Proxy_Locked`<br>`Proxy_AutoConfigURL`<br>`Proxy_FTPProxy`<br>`Proxy_HTTPProxy`<br>`Proxy_SSLProxy`<br>`Proxy_SOCKSProxy`<br>`Proxy_SOCKSVersion`<br>`Proxy_UseHTTPProxyForAllProtocols`<br>`Proxy_Passthrough`<br>`Proxy_UseProxyForDNS`<br>`Proxy_AutoLogin` | 68.0 |  |
 
-<br>
-
 ## RequestedLocales
+
 Set the the list of requested locales for the application in order of preference. It will cause the corresponding language pack to become active.
 
 Note: For Thunderbird 68, this can now be a string so that you can specify an empty value.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
+
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\RequestedLocales\1 = "de"
-Software\Policies\Mozilla\Thunderbird\RequestedLocales\2 = "en-US"
-
-or
-
-Software\Policies\Mozilla\Thunderbird\RequestedLocales = "de,en-US"
+Software\Policies\Mozilla\Thunderbird\RequestedLocales\1 (REG_SZ) = "de"
+Software\Policies\Mozilla\Thunderbird\RequestedLocales\2 (REG_SZ) = "en-US"
+Software\Policies\Mozilla\Thunderbird\RequestedLocales (REG_SZ) = "de,en-US"
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -2979,6 +3035,7 @@ Value (string):
 <enabled/>
 <data id="Preferences_String" value="de,en-US"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -2995,8 +3052,8 @@ or
   <key>RequestedLocales</key>
   <string>de,en-US</string>
 </dict>
-
 ```
+
 #### policies.json
 ```
 {
@@ -3013,15 +3070,12 @@ or
   }
 }
 ```
-<a name="SanitizeOnShutdown"></a>
 
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `RequestedLocales` | 68.0 |  |
-
-<br>
 
 ## SSLVersionMax
 
@@ -3032,8 +3086,9 @@ Set and lock the maximum version of TLS.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SSLVersionMax = "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+Software\Policies\Mozilla\Thunderbird\SSLVersionMax (REG_SZ) = "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -3044,6 +3099,7 @@ Value (string):
 <enabled/>
 <data id="SSLVersion" value="tls1 | tls1.2 | tls1.3"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -3060,13 +3116,12 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `SSLVersionMax` | 68.0 |  |
-
-<br>
 
 ## SSLVersionMin
 
@@ -3077,8 +3132,9 @@ Set and lock the minimum version of TLS.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SSLVersionMin = "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+Software\Policies\Mozilla\Thunderbird\SSLVersionMin (REG_SZ) = "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
 ```
+
 #### Windows (Intune)
 OMA-URI:
 ```
@@ -3089,6 +3145,7 @@ Value (string):
 <enabled/>
 <data id="SSLVersion" value="tls1 | tls1.2 | tls1.3"/>
 ```
+
 #### macOS
 ```
 <dict>
@@ -3105,12 +3162,11 @@ Value (string):
   }
 }
 ```
+
 #### Compatibility
 
 | Policy/Property Name | supported since | deprecated after |
 |:--- | ---:| ---:|
 | `SSLVersionMin` | 68.0 |  |
-
-<br>
 
 
