@@ -14,18 +14,13 @@ import pathUtils from "path";
 import plist from "plist";
 import yaml from 'yaml';
 
-function yamlToJsonTemplate(yamlData) {
-    // The yaml document holds extended information which is needed to correctly
-    // save the file again, but not for using it. Get a plain JSON object.
-    const jsonData = yamlData.toJSON();
-    const policies = jsonData.policies;
-    
-    // Build the JSON template.
-    jsonData.headers = {};
-    jsonData.policies = {};
-    for (let [key,value] of Object.entries(policies)) {
-        jsonData.headers[key] = `| **[\`${key}\`](#${slugify(key)})** | ${value.toc}`;
-        jsonData.policies[key] = [
+function generateReadmeMarkdown(jsonData) {
+    // Build the JSON readmeData.
+    const readmeData = {}
+    for (let [key,value] of Object.entries(jsonData.policies)) {
+        readmeData[key] = {}
+        readmeData[key].toc = `| **[\`${key}\`](#${slugify(key)})** | ${value.toc}`;
+        readmeData[key].content = [
             `## ${key}`,
             ...value.content.split("\n"),
             `**CCK2 Equivalent:** ${value.cck2Equivalent ? `\`${value.cck2Equivalent}\`` : "N/A"}`,
@@ -36,7 +31,7 @@ function yamlToJsonTemplate(yamlData) {
             }`
         ];
         if (value.gpo.length > 0) {
-            jsonData.policies[key].push(
+            readmeData[key].content.push(
                 "",
                 "#### Windows (GPO)",
                 "```",
@@ -45,7 +40,7 @@ function yamlToJsonTemplate(yamlData) {
             )
         }
         if (value.intune.length > 0) {
-            jsonData.policies[key].push(
+            readmeData[key].content.push(
                 "",
                 "#### Windows (Intune)",
                 ...value.intune.flatMap(e => [
@@ -61,7 +56,7 @@ function yamlToJsonTemplate(yamlData) {
             )
         }
         if (value.plist.length > 0) {
-            jsonData.policies[key].push(
+            readmeData[key].content.push(
                 "",
                 "#### MacOS",
                 "```",
@@ -70,7 +65,7 @@ function yamlToJsonTemplate(yamlData) {
             )
         }
         if (value.json.length > 0) {
-            jsonData.policies[key].push(
+            readmeData[key].content.push(
                 "",
                 "#### policies.json",
                 "```",
@@ -80,7 +75,7 @@ function yamlToJsonTemplate(yamlData) {
         }
         
     }
-    return jsonData;
+    return readmeData;
 }
 
 /**
@@ -113,8 +108,7 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
         tree: revisionData.tree,
         version: revisionData.version,
         mozillaReferenceTemplates: revisionData.mozillaReferenceTemplates,
-        headers: {},
-        policies: {},
+        readmeData: {},
     }
     // Get the upstream config data for this template.
     const UPSTREAM_TEMPLATE_CONFIG_FILE_NAME = pathUtils.join(
@@ -124,8 +118,7 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
     let upstreamTemplateConfig = await fileExists(UPSTREAM_TEMPLATE_CONFIG_FILE_NAME)
         ? parse(await fs.readFile(UPSTREAM_TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
         : {};
-    if (!upstreamTemplateConfig.headers) upstreamTemplateConfig.headers = {};
-    if (!upstreamTemplateConfig.policies) upstreamTemplateConfig.policies = {};
+    if (!upstreamTemplateConfig.readmeData) upstreamTemplateConfig.readmeData = {};
 
     // Get the Thunderbird config data for this template. Clone the config for
     // comm-central, if not available.
@@ -137,7 +130,8 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
             ? yaml.parseDocument(await fs.readFile(CENTRAL_TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
             : {};
 
-    // Always update the provided revision name and mozillaReferenceTemplates.
+    // Always update the provided revision tree, name and version before writing
+    // back the yaml file.
     yamlTemplateDocument.set("tree", revisionData.tree);
     yamlTemplateDocument.set("name", revisionData.name);
     yamlTemplateDocument.set("version", revisionData.version);
@@ -149,12 +143,15 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
     }
     await writePrettyYAMLFile(TEMPLATE_CONFIG_FILE_NAME, yamlTemplateDocument);
     
-    // Convert the YAML document to a JSON template.
-    const jsonTemplateConfig = yamlToJsonTemplate(yamlTemplateDocument);
+    // Convert the YAML document to JSON object.
+    const jsonTemplateConfig = yamlTemplateDocument.toJSON();
     jsonTemplateConfig.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
 
+    // Generate the README markdown.
+    jsonTemplateConfig.readmeData = generateReadmeMarkdown(jsonTemplateConfig);
+    
     // Read README files from Mozilla policy-templates repository and merge them
-    // into the jsonTemplateConfig.
+    // into the jsonTemplateConfig.readmeData.
     let ref = jsonTemplateConfig.mozillaReferenceTemplates;
     let dir = `${MOZILLA_TEMPLATE_DIR_PATH}/${ref}`;
     await pullGitRepository("https://github.com/mozilla/policy-templates/", ref, dir);
@@ -188,14 +185,21 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
             .replace(/`/g, "") // unable to fix the regex to exclude those
             .replace(" -> ", "_"); // flat hierarchy
 
-        if (!jsonTemplateConfig.headers[name]) {
-            jsonTemplateConfig.headers[name] = h;
+        // Merge upstream Readme toc into jsonTemplateConfig.readmeData.
+        if (!jsonTemplateConfig.readmeData[name]) {
+            jsonTemplateConfig.readmeData[name] = {};
+        };
+        if (!jsonTemplateConfig.readmeData[name].toc) {
+            jsonTemplateConfig.readmeData[name].toc = h;
         };
 
         // Update upstream state.
         const isSupported = supportedPolicies.some(e => e.policies.includes(name));
         if (isSupported) {
-            updatedUpstreamTemplateConfig.headers[name] = h;
+            if (!updatedUpstreamTemplateConfig.readmeData[name]) {
+                updatedUpstreamTemplateConfig.readmeData[name] = {};
+            };
+            updatedUpstreamTemplateConfig.readmeData[name].toc = h;
         }
     }
 
@@ -207,20 +211,27 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
 
         name = name.replace(" | ", "_"); // flat hierarchy
         if (
-            upstreamTemplateConfig.policies[name] &&
-            upstreamTemplateConfig.policies[name].join("\n") != lines.join("\n")
+            upstreamTemplateConfig.readmeData[name]?.content &&
+            upstreamTemplateConfig.readmeData[name].content.join("\n") != lines.join("\n")
         ) {
             changeLog.push(` * \`${name}\``);
         }
 
-        if (!jsonTemplateConfig.policies[name]) {
-            jsonTemplateConfig.policies[name] = lines;
+        // Merge upstream Readme content into jsonTemplateConfig.readmeData.
+        if (!jsonTemplateConfig.readmeData[name]) {
+            jsonTemplateConfig.readmeData[name] = {};
+        };
+        if (!jsonTemplateConfig.readmeData[name].content) {
+            jsonTemplateConfig.readmeData[name].content = lines;
         }
 
         // Update upstream state.
         const isSupported = supportedPolicies.some(e => e.policies.includes(name));
         if (isSupported) {
-            updatedUpstreamTemplateConfig.policies[name] = lines;
+            if (!updatedUpstreamTemplateConfig.readmeData[name]) {
+                updatedUpstreamTemplateConfig.readmeData[name] = {};
+            };
+            updatedUpstreamTemplateConfig.readmeData[name].content = lines;
         }
     }
 
@@ -228,8 +239,7 @@ export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies
         "..",
         UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
     );
-    updatedUpstreamTemplateConfig.headers = sortObjectByKeys(updatedUpstreamTemplateConfig.headers);
-    updatedUpstreamTemplateConfig.policies = sortObjectByKeys(updatedUpstreamTemplateConfig.policies);
+    updatedUpstreamTemplateConfig.readmeData = sortObjectByKeys(updatedUpstreamTemplateConfig.readmeData);
     await writePrettyJSONFile(UPDATED_UPSTREAM_TEMPLATE_CONFIG_FILE_NAME, updatedUpstreamTemplateConfig);
     return jsonTemplateConfig;
 }
@@ -348,10 +358,10 @@ export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thun
     // Loop over all policies found in the thunderbird policy schema file and rebuild the readme.
     for (let policy of thunderbirdPolicies) {
         // Get the policy header from the template.
-        if (template.headers[policy]) {
-            let content = template.headers[policy];
-            if (content && content != "skip") {
-                header.push(content);
+        if (template.readmeData[policy]) {
+            let readmeData = template.readmeData[policy];
+            if (readmeData != "skip" && readmeData.toc) {
+                header.push(readmeData.toc);
             }
             printed_main_policies.push(policy.split("_").shift());
         } else {
@@ -361,10 +371,10 @@ export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thun
         }
 
         // Get the policy details from the template.
-        if (template.policies[policy]) {
-            let content = template.policies[policy];
-            if (content && content != "skip") {
-                details.push(...content.filter(e => !e.includes("**Compatibility:**")));
+        if (template.readmeData[policy]) {
+            let readmeData = template.readmeData[policy];
+            if (readmeData != "skip" && readmeData.content) {
+                details.push(...readmeData.content.filter(e => !e.includes("**Compatibility:**")));
                 details.push("#### Compatibility");
                 let distinctCompatInfo = getCachedCompatibilityInformation(/* distinct */ true, tree, policy);
                 details.push(...generateReadmeCompatibilityTable(distinctCompatInfo));
