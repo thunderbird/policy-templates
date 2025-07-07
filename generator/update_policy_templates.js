@@ -3,180 +3,118 @@
  */
 
 import {
-    adjustFirefoxReadmeFileForThunderbird,
+    generatePolicyReadme,
     adjustFirefoxAdmxFilesForThunderbird,
-    adjustFirefoxPlistFilesForThunderbird,
+    generatePlistFile,
     generateReadmeCompatibilityTable,
-    parseMozillaPolicyTemplate,
 } from "./modules/build.mjs";
 import {
     MAIN_TEMPLATE,
     DOCS_TEMPLATES_DIR_PATH, DOCS_README_PATH,
     UPSTREAM_REVISIONS_PATH, GIT_CHECKOUT_DIR_PATH,
-    TEMPORARY_SCHEMA_CACHE_FILE
+    TEMPORARY_SCHEMA_CACHE_FILE,
+    YAML_CONFIG_PATH,
 } from "./modules/constants.mjs";
-import { pullGitRepository, listAllReleases } from "./modules/git.mjs";
 import {
-    downloadMissingPolicySchemaFiles,
+    getPolicySchemaRevisions,
+    getRevisionVersion,
     generateCompatibilityInformationCache,
     getCachedCompatibilityInformation,
     getDifferencesBetweenPolicySchemas,
     getHgDownloadUrl,
     gCompatibilityData
 } from "./modules/mercurial.mjs";
+import { getDocumentationChanges } from "./modules/parse.mjs"
 import {
     fileExists, getFirstRevisionFromBuildHub,
     getThunderbirdVersions, writePrettyJSONFile
 } from "./modules/tools.mjs";
 
-import { parse } from "comment-json";
+import commentJson from "comment-json";
 import fs from "node:fs/promises";
 import pathUtils from "path";
+import yaml from 'yaml';
 
 // Start with a clean environment.
 await fs.rm(DOCS_TEMPLATES_DIR_PATH, { recursive: true, force: true });
 await fs.rm(TEMPORARY_SCHEMA_CACHE_FILE, { force: true });
 
-// We currently do not generate our own templates (Readme files, PLIST files for
-// Mac, ADMX files for Windows) from our policies-schema.json file, but clone and
-// adjust the templates published by Mozilla. We then delete policies we do not
-// support, and add our own Thunderbird-only policies.
-// TODO: We should switch to an approach, which pulls all the required
-//       information from our tree, for example by moving the yaml files from the
-//       config folder into the tree, and including the config data for all
-//       supported policies.
-const mozilla_policy_template_releases = await listAllReleases(
-    "mozilla/policy-templates"
-).then(data =>
-    // Create an array of GitHub release entries of the following data structure,
-    // sorted by major, minor (of the mozilla policy github release tag):
-    //  {
-    //    title: 'Policy templates for Firefox 139 and Firefox ESR 128.11',
-    //    major: 6,
-    //    minor: 11
-    //  },
-    // Only keep the major version entry with the highest minor version.
-    data.flatMap(e => {
-        const match = e.tag_name.match(/^v(\d+)\.(\d+)$/);
-        if (!match) return [];
 
-        const [_, major, minor] = match;
-        return [{
-            title: e.name,
-            major: parseInt(major, 10),
-            minor: parseInt(minor, 10),
-        }];
-    }).sort((a, b) =>
-        b.major !== a.major
-            ? b.major - a.major
-            : b.minor - a.minor
-    ).reduce((acc, entry) => {
-        if (!acc.find(e => e.major === entry.major)) {
-            acc.push(entry);
-        }
-        return acc;
-    }, [])
-);
-
-// Match the policy template versions published by Mozilla against the available
-// Thunderbird versions. Skip versions older versions (v < 91)
-// Note: This depends on the convention of the published release titles used by
-//       https://github.com/mozilla/policy-templates/releases. Expected is this:
-//       "Policy templates for Firefox 139 and Firefox ESR 128.11"
-let THUNDERBIRD_VERSIONS = await getThunderbirdVersions();
-// Create an array of revision entries of the following data structure:
-// {
-//    name: 'Thunderbird ESR 128',
-//    tree: 'esr128',
-//    version: 128,
-//    mozillaReferenceTemplates: 'v6.11'
-//},
-let allRevisionData = THUNDERBIRD_VERSIONS.ESR.filter(v => v >= 91).flatMap(version => {
-    let matching_esr = mozilla_policy_template_releases.find(
-        // Use RegExp instead of a simple .includes() to tolerate flexible spacing
-        // and increase the probability to correctly match the used version format
-        // (e.g., "Firefox ESR 128.11").
-        r => new RegExp(`Firefox ESR\\s+${version}\\.`).test(r.title)
-    )
-    if (!matching_esr) {
-        return []
-    }
-    let mozillaReferenceTemplates = `v${matching_esr.major}.${matching_esr.minor}`;
+// Determine for which major versions of Thunderbird we should build the docs.
+const THUNDERBIRD_VERSIONS = await getThunderbirdVersions();
+const treesData = THUNDERBIRD_VERSIONS.ESR.filter(v => v >= 91).map(version => {
     return {
-        name: `Thunderbird ESR ${version}`,
+        prefix: "`Thunderbird ESR",
         tree: `esr${version}`,
-        version,
-        mozillaReferenceTemplates,
+        majorVersion: version,
     }
 })
-let matching_release = mozilla_policy_template_releases.find(
-    r => r.title.includes(`Firefox ${THUNDERBIRD_VERSIONS.RELEASE}`)
-)
-if (matching_release) {
-    let mozillaReferenceTemplates = `v${matching_release.major}.${matching_release.minor}`;
-    allRevisionData.push({
-        name: `Thunderbird ${THUNDERBIRD_VERSIONS.RELEASE}`,
-        tree: `release`,
-        version: THUNDERBIRD_VERSIONS.RELEASE,
-        mozillaReferenceTemplates,
-    })
-}
-let matching_central = mozilla_policy_template_releases[0];
-if (matching_central) {
-    let mozillaReferenceTemplates = `v${matching_central.major}.${matching_central.minor}`;
-    allRevisionData.push({
-        name: `Thunderbird Daily ${THUNDERBIRD_VERSIONS.DAILY}`,
-        tree: `central`,
-        version: THUNDERBIRD_VERSIONS.DAILY,
-        mozillaReferenceTemplates,
-    })
-}
+treesData.push({
+    prefix: "Thunderbird",
+    tree: `release`,
+    majorVersion: THUNDERBIRD_VERSIONS.RELEASE
+});
+treesData.push({
+    prefix: "Thunderbird Daily",
+    tree: `central`,
+    majorVersion: THUNDERBIRD_VERSIONS.DAILY,
+});
 
-// Pull the current master of Thunderbird's policy-templates repository, and use
-// the state stored in /state as the last known state to compare against the most
-// recent state. When the script runs, it will update the local /state folder to
-// report upstream changes. As long as the updated /state folder is not pushed
-// back to the repository, a new run of this script will report the same "new"
-// findings again. Pushing the updated /state folder will acknowledge the findings
-// and not report them again.
-// Note: This allows us to monitor Mozilla policies and get notified about changes.
-//       We can then decide if the additions need to be ported for Thunderbird.
-await pullGitRepository(
-    "https://github.com/thunderbird/policy-templates", "master", GIT_CHECKOUT_DIR_PATH
-);
-let stateDirRevisionsPath = pathUtils.join(GIT_CHECKOUT_DIR_PATH, UPSTREAM_REVISIONS_PATH);
-let lastKnownStateData = await fileExists(stateDirRevisionsPath)
-    ? parse(await fs.readFile(stateDirRevisionsPath, 'utf8'))
+
+const STATE_DIR_REVISION_PATH = pathUtils.join(GIT_CHECKOUT_DIR_PATH, UPSTREAM_REVISIONS_PATH);
+const lastKnownStateData = await fileExists(STATE_DIR_REVISION_PATH)
+    ? commentJson.parse(await fs.readFile(STATE_DIR_REVISION_PATH, 'utf8'))
     : [];
-// Tracks the highest ESR version seen so far during the loop.
-// Needed to determine the revision to use for entries with unknown last state.
+const GITHUB_REPORTS = [];
+const MAIN_README_ENTRIES = [];
 let currently_highest_known_esr = 0
-for (let entry of allRevisionData) {
-    if (entry.version > currently_highest_known_esr && entry.tree.startsWith("esr")) {
-        currently_highest_known_esr = entry.version;
-    }
 
+// Process each Thunderbird version.
+for (let treeData of treesData) {
+    // Tracks the highest ESR version seen so far during the loop.
+    // Needed to determine the revision to use for entries with unknown last state.
+    if (treeData.majorVersion > currently_highest_known_esr && treeData.tree.startsWith("esr")) {
+        currently_highest_known_esr = treeData.majorVersion;
+    }
     // Either use the mozillaReferencePolicyRevision from the last known revision
     // state, or extract the first changeset from the given tree which is from a
     // version which matches the highest ESR version seen so far.
-    let knownState = lastKnownStateData.find(r => r.tree == entry.tree);
+    let knownState = lastKnownStateData.find(r => r.tree == treeData.tree);
     if (knownState) {
-        entry.mozillaReferencePolicyRevision = knownState.mozillaReferencePolicyRevision;
+        treeData.mozillaReferencePolicyRevision = knownState.mozillaReferencePolicyRevision;
     } else {
-        entry.mozillaReferencePolicyRevision = await getFirstRevisionFromBuildHub(
+        treeData.mozillaReferencePolicyRevision = await getFirstRevisionFromBuildHub(
             "mozilla",
-            entry.tree,
+            treeData.tree,
             `${currently_highest_known_esr}.*`
         )
     }
-}
 
-// Build the Thunderbird templates.
-const gMainTemplateEntries = [];
-const GITHUB_REPORTS = [];
-for (let revisionData of allRevisionData) {
-    // Keep track of changes for the final report.
-    let report = {
+    // Download schema revisions from https://hg.mozilla.org/.
+    let revisionsData = await getPolicySchemaRevisions(
+        treeData.tree,
+        treeData.mozillaReferencePolicyRevision,
+    );
+    if (!revisionsData) {
+        continue;
+    }
+
+    if (!revisionsData.mozilla.revisions.find(r => r.revision == treeData.mozillaReferencePolicyRevision)) {
+        console.error(`Unknown policy revision ${treeData.mozillaReferencePolicyRevision} set for mozilla-${treeData.tree}.`);
+        console.error(`Check ${getHgDownloadUrl("mozilla", treeData.tree)}`);
+        continue;
+    }
+
+    // Find supported policies.
+    generateCompatibilityInformationCache(revisionsData);
+    let supportedPolicies =
+        getCachedCompatibilityInformation(
+            /* distinct */ true,
+            revisionsData.tree
+        ).filter(e => e.first != "");
+
+    // Find changes in the schema files and report them.
+    const reports = {
         title: null,
         description: [],
         added: [],
@@ -184,54 +122,28 @@ for (let revisionData of allRevisionData) {
         changed: [],
         changedDocumentation: [],
     }
-
-    // Download schema from https://hg.mozilla.org/
-    let data = await downloadMissingPolicySchemaFiles(
-        revisionData.tree,
-        revisionData.mozillaReferencePolicyRevision,
-    );
-    if (!data) {
-        continue;
-    }
-
-    let output_dir = pathUtils.join(DOCS_TEMPLATES_DIR_PATH, revisionData.tree);
-    let mozillaReferencePolicyFile = data.mozilla.revisions.find(r => r.revision == revisionData.mozillaReferencePolicyRevision);
-    if (!mozillaReferencePolicyFile) {
-        console.error(`Unknown policy revision ${revisionData.mozillaReferencePolicyRevision} set for mozilla-${revisionData.tree}.`);
-        console.error(`Check ${getHgDownloadUrl("mozilla", revisionData.tree)}`);
-        continue;
-    }
-
-    // Find supported policies.
-    generateCompatibilityInformationCache(data, revisionData.tree);
-    let supportedPolicies =
-        getCachedCompatibilityInformation(
-            /* distinct */ true, revisionData.tree
-        ).filter(e => e.first != "");
-
-    // Get changes in the schema files and report them.
-    if (mozillaReferencePolicyFile.revision != data.mozilla.revisions[0].revision) {
-        revisionData.mozillaReferencePolicyRevision = data.mozilla.revisions[0].revision;
-        let m_m_changes = getDifferencesBetweenPolicySchemas(mozillaReferencePolicyFile, data.mozilla.revisions[0]);
+    if (treeData.mozillaReferencePolicyRevision != revisionsData.mozilla.revisions[0].revision) {
+        treeData.mozillaReferencePolicyRevision = revisionsData.mozilla.revisions[0].revision;
+        let m_m_changes = getDifferencesBetweenPolicySchemas(mozillaReferencePolicyFile, revisionsData.mozilla.revisions[0]);
         if (m_m_changes) {
             for (const { title, data, require_supported, log } of [
                 {
                     title: "New unsupported policies:",
                     data: m_m_changes.added,
                     require_supported: false,
-                    log: report.added,
+                    log: reports.added,
                 },
                 {
                     title: "Removed policies:",
                     data: m_m_changes.removed,
                     require_supported: true,
-                    log: report.removed,
+                    log: reports.removed,
                 },
                 {
                     title: "Policies with changed properties:",
                     data: m_m_changes.changed,
                     require_supported: true,
-                    log: report.changed,
+                    log: reports.changed,
                 }
             ]) {
                 if (data.length > 0) {
@@ -251,38 +163,19 @@ for (let revisionData of allRevisionData) {
         }
     }
 
-    // Clone the Mozilla templates.
-    let template = await parseMozillaPolicyTemplate(revisionData, supportedPolicies, report.changedDocumentation);
-    if (report.changedDocumentation.length) {
-        report.changedDocumentation.unshift("Policies with changed documentation:")
+    // Find changes in the upstream documentation and report them.
+    reports.changedDocumentation = await getDocumentationChanges(revisionsData);
+    if (reports.changedDocumentation.length) {
+        reports.changedDocumentation.unshift("Policies with changed documentation:")
     }
-    let thunderbirdPolicies = Object.keys(gCompatibilityData)
-        .filter(p => !gCompatibilityData[p].unsupported)
-        .sort(function (a, b) {
-            return a.toLowerCase().localeCompare(b.toLowerCase());
-        });
 
-    await adjustFirefoxReadmeFileForThunderbird(revisionData.tree, template, thunderbirdPolicies, output_dir);
-    await adjustFirefoxAdmxFilesForThunderbird(revisionData.tree, template, thunderbirdPolicies, output_dir);
-    await adjustFirefoxPlistFilesForThunderbird(template, thunderbirdPolicies, output_dir);
-
-    gMainTemplateEntries.unshift(
-        ` * [${revisionData.name}](templates/${revisionData.tree})`
-    );
-
-    const reports = [
-        report.description,
-        report.added,
-        report.removed,
-        report.changed,
-        report.changedDocumentation
-    ];
-    if (reports.some(log => log.length > 0)) {
-        report.title = `Mozilla has updated the policies for mozilla-${revisionData.tree} (${data.mozilla.revisions[0].version})!`;
-        report.description.push(`The following changes have been detected since the last check.`);
+    const reportTypes = Object.values(reports).filter(value => Array.isArray(value));
+    if (reportTypes.some(log => log.length > 0)) {
+        reports.title = `Mozilla has updated the policies for mozilla-${revisionsData.tree} (${revisionsData.mozilla.revisions[0].version})!`;
+        reports.description.push(`The following changes have been detected since the last check.`);
 
         const body = [];
-        for (const log of reports) {
+        for (const log of reportTypes) {
             if (log.length) {
                 body.push("");
                 log.forEach(e => body.push(e));
@@ -290,26 +183,49 @@ for (let revisionData of allRevisionData) {
         }
 
         GITHUB_REPORTS.push({
-            title: report.title,
+            title: reports.title,
             body: body.join("\n").trim(),
         });
 
         console.log("");
-        console.log(`| ${report.title}`);
+        console.log(`| ${reports.title}`);
         body.forEach(e => console.log(`| ${e}`));
         console.log("");
     }
+
+    // Generate the docs.
+    let thunderbirdPolicies = Object.keys(gCompatibilityData)
+        .filter(p => !gCompatibilityData[p].unsupported)
+        .sort(function (a, b) {
+            return a.toLowerCase().localeCompare(b.toLowerCase());
+        });
+    let output_dir = pathUtils.join(DOCS_TEMPLATES_DIR_PATH, revisionsData.tree);
+    const THUNDERBIRD_YAML_CONFIG_FILE_NAME = YAML_CONFIG_PATH.replace("#tree#", `${revisionsData.tree}`)
+    let template = yaml.parseDocument(await fs.readFile(THUNDERBIRD_YAML_CONFIG_FILE_NAME, 'utf8')).toJSON();
+    
+    template.mozillaReferenceTemplates = treeData.mozillaReferenceTemplates;
+    template.tree = revisionsData.tree;
+    template.version = await getRevisionVersion("comm", template.tree, "tip");
+    template.name = `${treeData.prefix} ${template.version}`;
+    
+    await generatePolicyReadme(template, thunderbirdPolicies, output_dir);
+    await generatePlistFile(template, thunderbirdPolicies, output_dir);
+    //await adjustFirefoxAdmxFilesForThunderbird(template, thunderbirdPolicies, output_dir);
+
+    MAIN_README_ENTRIES.unshift(
+        ` * [${template.name}](templates/${template.tree})`
+    );
 }
 
 // Update /state folder with latest revisions.
-await writePrettyJSONFile(pathUtils.join("..", UPSTREAM_REVISIONS_PATH), allRevisionData);
+await writePrettyJSONFile(pathUtils.join("..", UPSTREAM_REVISIONS_PATH), treesData);
 
 // Build the main README of https://thunderbird.github.io/policy-templates/, which
 // gives a compatibility overview.
 let compatInfo = getCachedCompatibilityInformation(/* distinct */ false, "central");
 compatInfo.sort((a, b) => {
-    let aa = a.policies.join("<br>");
-    let bb = b.policies.join("<br>");
+    let aa = a.policies.join(", ");
+    let bb = b.policies.join(", ");
     if (aa < bb) return -1;
     if (aa > bb) return 1;
     return 0;
@@ -317,7 +233,7 @@ compatInfo.sort((a, b) => {
 
 // Write the main Readme file.
 await fs.writeFile(DOCS_README_PATH, MAIN_TEMPLATE
-    .replace("__list__", gMainTemplateEntries.join("\n"))
+    .replace("__list__", MAIN_README_ENTRIES.join("\n"))
     .replace("__compatibility__", generateReadmeCompatibilityTable(compatInfo).join("\n"))
 );
 

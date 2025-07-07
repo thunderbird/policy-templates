@@ -1,5 +1,5 @@
 
-import { parse } from "comment-json";
+import commentJson from "comment-json";
 
 import { HG_URL, SOURCE_PATH_POLICIES_SCHEMA_JSON, SOURCE_PATH_VERSION_TXT } from "./constants.mjs";
 import { readCachedUrl } from "./tools.mjs";
@@ -33,6 +33,7 @@ import { readCachedUrl } from "./tools.mjs";
 
 /**
  * @typedef {Object} PolicySchemaRevisions
+ * @param {string} tree - The tree to process (e.g. "release", "central").
  * @property {{ revisions: PolicySchemaData[] }} comm - Thunderbird-specific policy schema revisions.
  * @property {{ revisions: PolicySchemaData[] }} mozilla - Upstream Mozilla policy schema revisions.
  * 
@@ -284,13 +285,14 @@ export function getCachedCompatibilityInformation(distinct, tree, policyName) {
  * It also identifies policies that are only supported upstream (in mozilla-central
  * but not in comm-central) and marks them as unsupported.
  *
- * @param {PolicySchemaRevisions} revisions - Object returned by
- *    downloadMissingPolicySchemaFiles().
- * @param {string} tree - The tree to process (e.g. "release", "central").
+ * @param {PolicySchemaRevisions} revisionsData - Object returned by
+ *    getPolicySchemaRevisions().
  */
-export function generateCompatibilityInformationCache(revisions, tree) {
+export function generateCompatibilityInformationCache(revisionsData) {
+    let tree = revisionsData.tree;
+
     let absolute_max = 0;
-    for (let revision of revisions.comm.revisions) {
+    for (let revision of revisionsData.comm.revisions) {
         let policies = extractFlatPolicyNamesFromPolicySchema(revision);
 
         // Track the highest seen version, to suppress redundant max values that
@@ -327,7 +329,7 @@ export function generateCompatibilityInformationCache(revisions, tree) {
     // Compare comm-central against mozilla-central and find policies not yet
     // supported by Thunderbird.
     if (tree == "central") {
-        let policies = extractFlatPolicyNamesFromPolicySchema(revisions.mozilla.revisions[0]);
+        let policies = extractFlatPolicyNamesFromPolicySchema(revisionsData.mozilla.revisions[0]);
         for (let raw_policy of policies) {
             let policy = raw_policy.trim().replace(/'/g, "");
             if (!gCompatibilityData[policy]) {
@@ -383,6 +385,22 @@ export function getHgDownloadUrl(branch, tree, revision, mode, fileName) {
 }
 
 /**
+ * Extract the exact version corresponding to the specified revision.
+ * 
+ * @param {string} branch - "mozilla" or "comm"
+ * @param {string} tree - The tree to process (e.g. "release", "central").
+ * @param {string} revision - A mercurial changeset identifier.
+ * 
+ * @returns {string} The version string belonging to this schema data
+ *    (e.g., "91.0", "92.0a1").
+ */
+export async function getRevisionVersion(branch, tree, revision) {
+    let versionUrl = getHgDownloadUrl(branch, tree, revision, "raw-file", "version.txt");
+    let version = (await readCachedUrl(versionUrl, { temporary: revision == "tip" })).trim();
+    return version;
+}
+
+/**
  * Download a specific policies-schema.json file and returns its schema data.
  * 
  * @param {string} branch - "mozilla" or "comm"
@@ -393,17 +411,20 @@ export function getHgDownloadUrl(branch, tree, revision, mode, fileName) {
  */
 async function downloadPolicySchemaData(branch, tree, revision) {
     let schemaUrl = getHgDownloadUrl(branch, tree, revision, "raw-file", "policies-schema.json");
-    let data = parse(await readCachedUrl(schemaUrl, { temporary: revision == "tip" }));
-
-    let versionUrl = getHgDownloadUrl(branch, tree, revision, "raw-file", "version.txt");
-    let version = (await readCachedUrl(versionUrl, { temporary: revision == "tip" })).trim();
-    data.version = version;
+    let data = commentJson.parse(await readCachedUrl(schemaUrl, { temporary: revision == "tip" }));
+    
+    data.version = await getRevisionVersion(branch, tree, revision);
     data.revision = revision;
+    
     return data;
 }
 
 /**
- * Download missing revisions of the policies-schema.json for the given tree.
+ * Get the PolicySchemaRevisions for the requested tree and download any missing
+ * schema file. For Thunderbird all schema files are downloaded (or pulled from
+ * the cache), for Mozilla only the newest ("tip") schema file and the one
+ * corresponding to the last known state ("mozillaReferencePolicyRevision") are
+ * downloaded.
  * 
  * @param {string} tree - The tree to process (e.g. "release", "central").
  * @param {string} mozillaReferencePolicyRevision - The mercurial changeset
@@ -412,8 +433,9 @@ async function downloadPolicySchemaData(branch, tree, revision) {
  * 
  * @returns {PolicySchemaRevisions}
  */
-export async function downloadMissingPolicySchemaFiles(tree, mozillaReferencePolicyRevision) {
+export async function getPolicySchemaRevisions(tree, mozillaReferencePolicyRevision) {
     let data = {
+        tree,
         comm: {
             revisions: []
         },
@@ -426,7 +448,7 @@ export async function downloadMissingPolicySchemaFiles(tree, mozillaReferencePol
 
     for (let branch of ["mozilla", "comm"]) {
         let logUrl = getHgDownloadUrl(branch, tree, "tip", "json-log", "policies-schema.json");
-        let revisions = parse(await readCachedUrl(logUrl, { temporary: true })).entries.map(e => e.node);
+        let revisions = commentJson.parse(await readCachedUrl(logUrl, { temporary: true })).entries.map(e => e.node);
 
         // For mozilla, we just need the newest and the reference revision.
         // For comm, we need all revisions to be able to extract compatibility information.
@@ -436,8 +458,8 @@ export async function downloadMissingPolicySchemaFiles(tree, mozillaReferencePol
 
 
         for (let revision of neededRevisions) {
-            let file = await downloadPolicySchemaData(branch, tree, revision);
-            data[branch].revisions.push(file);
+            let schemaData = await downloadPolicySchemaData(branch, tree, revision);
+            data[branch].revisions.push(schemaData);
         }
     }
     return data;

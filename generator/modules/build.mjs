@@ -1,36 +1,46 @@
 import {
-    CONFIG_README_PATH, GIT_CHECKOUT_DIR_PATH,
-    DESC_DEFAULT_DAILY_TEMPLATE, DESC_DEFAULT_TEMPLATE,
-    MOZILLA_TEMPLATE_DIR_PATH, UPSTREAM_README_PATH, TREE_TEMPLATE,
+    DESC_DEFAULT_DAILY_TEMPLATE,
+    MOZILLA_TEMPLATE_DIR_PATH, TREE_TEMPLATE,
 } from "./constants.mjs";
-import { pullGitRepository } from "./git.mjs";
 import { getCachedCompatibilityInformation } from "./mercurial.mjs";
-import { ensureDir, fileExists, slugify, sortObjectByKeys, writePrettyJSONFile, writePrettyYAMLFile } from "./tools.mjs";
-
-import { parse } from "comment-json";
+import { ensureDir } from "./tools.mjs";
 import fs from "node:fs/promises";
 import convert from "xml-js";
-import pathUtils from "path";
 import plist from "plist";
-import yaml from 'yaml';
+import GithubSlugger from 'github-slugger';
 
-function generateReadmeMarkdown(jsonData) {
+/**
+ * Escape pipes, which may break markdown tables.
+ * 
+ * @param {string} str
+ * @returns {string} string with escaped pipes
+ */
+function escape_pipes(str) {
+    return str.replaceAll('|', '\\|');
+}
+
+function generateReadmeMarkdown(policies) {
     // Build the JSON readmeData.
     const readmeData = {}
-    for (let [key,value] of Object.entries(jsonData.policies)) {
+    for (let [key, value] of Object.entries(policies)) {
         readmeData[key] = {}
-        readmeData[key].toc = `| **[\`${key}\`](#${slugify(key)})** | ${value.toc}`;
+        const slugger = new GithubSlugger();
+        readmeData[key].toc = `| **[\`${key.replaceAll("_", " -> ")
+            }\`](#${slugger.slug(key.replaceAll("_", " | "))
+            })** | ${value.toc}`;
+
+        //console.log(value);
         readmeData[key].content = [
-            `## ${key}`,
-            ...value.content.split("\n"),
-            `**CCK2 Equivalent:** ${value.cck2Equivalent ? `\`${value.cck2Equivalent}\`` : "N/A"}`,
-            `**Preferences Affected:** ${
-                Array.isArray(value.preferencesAffected)
+            `## ${key.replaceAll("_", " | ")}`,
+            ``,
+            ...(value.content?.split("\n") || []),
+            `**CCK2 Equivalent:** ${value.cck2Equivalent ? `\`${value.cck2Equivalent}\`` : "N/A"}\\`,
+            `**Preferences Affected:** ${Array.isArray(value.preferencesAffected)
                 ? value.preferencesAffected.map(e => `\`${e}\``).join(", ")
                 : value.preferencesAffected ?? "N/A"
             }`
         ];
-        if (value.gpo.length > 0) {
+        if (value.gpo && value.gpo.length > 0) {
             readmeData[key].content.push(
                 "",
                 "#### Windows (GPO)",
@@ -39,7 +49,7 @@ function generateReadmeMarkdown(jsonData) {
                 "```",
             )
         }
-        if (value.intune.length > 0) {
+        if (value.intune && value.intune.length > 0) {
             readmeData[key].content.push(
                 "",
                 "#### Windows (Intune)",
@@ -55,16 +65,16 @@ function generateReadmeMarkdown(jsonData) {
                 ])
             )
         }
-        if (value.plist.length > 0) {
+        if (value.plist && value.plist.length > 0) {
             readmeData[key].content.push(
                 "",
-                "#### MacOS",
+                "#### macOS",
                 "```",
                 value.plist.trim(),
                 "```"
             )
         }
-        if (value.json.length > 0) {
+        if (value.json && value.json.length > 0) {
             readmeData[key].content.push(
                 "",
                 "#### policies.json",
@@ -73,191 +83,13 @@ function generateReadmeMarkdown(jsonData) {
                 "```"
             )
         }
-        
+
     }
     return readmeData;
 }
 
 /**
- * Parse the README files of a given mozilla policy template, or creates it if
- * missing (cloned from comm-central, if possible).
- * 
- * @param {object} revisionData
- * @param {string} revisionData.name - Name of the template (e.g. Thunderbird 139).
- * @param {string} revisionData.tree - The tree to process (e.g. "release",
- *    "central").
- * @param {integer} revisionData.version - Associated Thunderbird version.
- * @param {string} revisionData.mozillaReferenceTemplates - GitHub tag of the 
- *    associated Mozilla policy release.
- * @param {PolicyCompatibilityEntry[]} supportedPolicies - list with supported
- *    properties for the specified revision
- * @param {string[]} changeLog - an array to store changed entries, which will be
- *    added to the final report
- *
- * @return {TemplateData} - The parsed data from upstream readme.json.
- */
-export async function parseMozillaPolicyTemplate(revisionData, supportedPolicies, changeLog) {
-    // Get default descriptions in case this creates a new template revision (for
-    // a new ESR for example).
-    const daily_template_lines = DESC_DEFAULT_DAILY_TEMPLATE
-        .replaceAll("#tree#", revisionData.tree);
-    const normal_template_lines = DESC_DEFAULT_TEMPLATE
-        .replaceAll("#tree#", revisionData.tree);
-
-    const updatedUpstreamTemplateConfig = {
-        tree: revisionData.tree,
-        version: revisionData.version,
-        mozillaReferenceTemplates: revisionData.mozillaReferenceTemplates,
-        readmeData: {},
-    }
-    // Get the upstream config data for this template.
-    const UPSTREAM_TEMPLATE_CONFIG_FILE_NAME = pathUtils.join(
-        GIT_CHECKOUT_DIR_PATH,
-        UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
-    );
-    let upstreamTemplateConfig = await fileExists(UPSTREAM_TEMPLATE_CONFIG_FILE_NAME)
-        ? parse(await fs.readFile(UPSTREAM_TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
-        : {};
-    if (!upstreamTemplateConfig.readmeData) upstreamTemplateConfig.readmeData = {};
-
-    // Get the Thunderbird config data for this template. Clone the config for
-    // comm-central, if not available.
-    const TEMPLATE_CONFIG_FILE_NAME = CONFIG_README_PATH.replace("#tree#", revisionData.tree)
-    const CENTRAL_TEMPLATE_CONFIG_FILE_NAME = CONFIG_README_PATH.replace("#tree#", "central");
-    let yamlTemplateDocument = await fileExists(TEMPLATE_CONFIG_FILE_NAME)
-        ? yaml.parseDocument(await fs.readFile(TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
-        : await fileExists(CENTRAL_TEMPLATE_CONFIG_FILE_NAME)
-            ? yaml.parseDocument(await fs.readFile(CENTRAL_TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
-            : {};
-
-    // Always update the provided revision tree, name and version before writing
-    // back the yaml file.
-    yamlTemplateDocument.set("tree", revisionData.tree);
-    yamlTemplateDocument.set("name", revisionData.name);
-    yamlTemplateDocument.set("version", revisionData.version);
-    if (!yamlTemplateDocument.has("description")) {
-        yamlTemplateDocument.set("description", revisionData.tree == "central"
-            ? [daily_template_lines, "", normal_template_lines].join("\n")
-            : normal_template_lines
-        );
-    }
-    await writePrettyYAMLFile(TEMPLATE_CONFIG_FILE_NAME, yamlTemplateDocument);
-    
-    // Convert the YAML document to JSON object.
-    const jsonTemplateConfig = yamlTemplateDocument.toJSON();
-    jsonTemplateConfig.mozillaReferenceTemplates = revisionData.mozillaReferenceTemplates;
-
-    // Generate the README markdown.
-    jsonTemplateConfig.readmeData = generateReadmeMarkdown(jsonTemplateConfig);
-    
-    // Read README files from Mozilla policy-templates repository and merge them
-    // into the jsonTemplateConfig.readmeData.
-    let ref = jsonTemplateConfig.mozillaReferenceTemplates;
-    let dir = `${MOZILLA_TEMPLATE_DIR_PATH}/${ref}`;
-    await pullGitRepository("https://github.com/mozilla/policy-templates/", ref, dir);
-
-    // Later revisions moved the file into the /docs folder.
-    let paths = [`${dir}/docs/index.md`, `${dir}/README.md`];
-
-    // This parsing highly depends on the structure of the README and needs to be
-    // adjusted when its layout is changing. In the intro section we have lines like 
-    // | **[`3rdparty`](#3rdparty)** |
-    // Detailed descriptions are below level 3 headings (###) with potential subsections.
-
-    // Split on ### heading to get chunks of policy descriptions.
-    let file;
-    for (let p of paths) {
-        try {
-            file = await fs.readFile(p, 'utf8');
-            break;
-        } catch {
-        }
-    }
-    if (!file) {
-        throw new Error(`Did not find mozilla policy template for ${tree}, ${rev}`)
-    }
-    let data = file.split("\n### ");
-
-    // Shift out the header and process it.
-    for (let h of data.shift().split("\n").filter(e => e.startsWith("| **[`"))) {
-        let name = h
-            .match(/\*\*\[(.*?)\]/)[1] // extract name from the markdown link
-            .replace(/`/g, "") // unable to fix the regex to exclude those
-            .replace(" -> ", "_"); // flat hierarchy
-
-        // Merge upstream Readme toc into jsonTemplateConfig.readmeData.
-        if (!jsonTemplateConfig.readmeData[name]) {
-            jsonTemplateConfig.readmeData[name] = {};
-        };
-        if (!jsonTemplateConfig.readmeData[name].toc) {
-            jsonTemplateConfig.readmeData[name].toc = h;
-        };
-
-        // Update upstream state.
-        const isSupported = supportedPolicies.some(e => e.policies.includes(name));
-        if (isSupported) {
-            if (!updatedUpstreamTemplateConfig.readmeData[name]) {
-                updatedUpstreamTemplateConfig.readmeData[name] = {};
-            };
-            updatedUpstreamTemplateConfig.readmeData[name].toc = h;
-        }
-    }
-
-    // Process policies.
-    for (let p of data) {
-        let lines = p.split("\n");
-        let name = lines[0];
-        lines[0] = `## ${name}`;
-
-        name = name.replace(" | ", "_"); // flat hierarchy
-        if (
-            upstreamTemplateConfig.readmeData[name]?.content &&
-            upstreamTemplateConfig.readmeData[name].content.join("\n") != lines.join("\n")
-        ) {
-            changeLog.push(` * \`${name}\``);
-        }
-
-        // Merge upstream Readme content into jsonTemplateConfig.readmeData.
-        if (!jsonTemplateConfig.readmeData[name]) {
-            jsonTemplateConfig.readmeData[name] = {};
-        };
-        if (!jsonTemplateConfig.readmeData[name].content) {
-            jsonTemplateConfig.readmeData[name].content = lines;
-        }
-
-        // Update upstream state.
-        const isSupported = supportedPolicies.some(e => e.policies.includes(name));
-        if (isSupported) {
-            if (!updatedUpstreamTemplateConfig.readmeData[name]) {
-                updatedUpstreamTemplateConfig.readmeData[name] = {};
-            };
-            updatedUpstreamTemplateConfig.readmeData[name].content = lines;
-        }
-    }
-
-    const UPDATED_UPSTREAM_TEMPLATE_CONFIG_FILE_NAME = pathUtils.join(
-        "..",
-        UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
-    );
-    updatedUpstreamTemplateConfig.readmeData = sortObjectByKeys(updatedUpstreamTemplateConfig.readmeData);
-    await writePrettyJSONFile(UPDATED_UPSTREAM_TEMPLATE_CONFIG_FILE_NAME, updatedUpstreamTemplateConfig);
-    return jsonTemplateConfig;
-}
-
-//------------------------------------------------------------------------------
-
-/**
- * Escape pipes, which may break markdown tables.
- * 
- * @param {string} str
- * @returns {string} string with escaped pipes
- */
-function escape_pipes(str) {
-    return str.replaceAll('|', '\\|');
-}
-
-/**
- * Rebrand from Firefox to Thunderbird.
+ * Rebrand from Firefox to Thunderbird. Kept here only until ADMX/L files are generated.
  * 
  * @param {string|string[]} lines - string or array of strings
  * @returns {string} re-branded string (input array is joined by \n)
@@ -341,16 +173,18 @@ export function generateReadmeCompatibilityTable(compatInfo) {
 }
 
 /**
- * Adjust the markdown README file downloaded from the Firefox policy repository
- * to include Thunderbird's compatibility information.
+ * Generate the markdown for Thunderbird's README file and save it in the specified
+ * folder.
  * 
- * @param {string} tree - The tree to process (e.g. "release", "central").
  * @param {TemplateData} template 
- * @param {string[]} thunderbirdPolicies - Flattened policy names, e.g.
- *    "InstallAddonsPermission_Allow".
+ * @param {string[]} thunderbirdPolicies - Flattened policy names of supported
+ *    policies, e.g. "InstallAddonsPermission_Allow".
  * @param {string} output_dir - Path to save the generated README file.
  */
-export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thunderbirdPolicies, output_dir) {
+export async function generatePolicyReadme(template, thunderbirdPolicies, output_dir) {
+    let tree = template.tree;
+    let thunderbirdReadmeData = generateReadmeMarkdown(template.policies);
+
     let header = [];
     let details = [];
     let printed_main_policies = [];
@@ -358,9 +192,9 @@ export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thun
     // Loop over all policies found in the thunderbird policy schema file and rebuild the readme.
     for (let policy of thunderbirdPolicies) {
         // Get the policy header from the template.
-        if (template.readmeData[policy]) {
-            let readmeData = template.readmeData[policy];
-            if (readmeData != "skip" && readmeData.toc) {
+        if (thunderbirdReadmeData[policy]) {
+            let readmeData = thunderbirdReadmeData[policy];
+            if (readmeData.toc) {
                 header.push(readmeData.toc);
             }
             printed_main_policies.push(policy.split("_").shift());
@@ -371,14 +205,14 @@ export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thun
         }
 
         // Get the policy details from the template.
-        if (template.readmeData[policy]) {
-            let readmeData = template.readmeData[policy];
-            if (readmeData != "skip" && readmeData.content) {
+        if (thunderbirdReadmeData[policy]) {
+            let readmeData = thunderbirdReadmeData[policy];
+            if (readmeData.content) {
                 details.push(...readmeData.content.filter(e => !e.includes("**Compatibility:**")));
+                details.push("");
                 details.push("#### Compatibility");
                 let distinctCompatInfo = getCachedCompatibilityInformation(/* distinct */ true, tree, policy);
                 details.push(...generateReadmeCompatibilityTable(distinctCompatInfo));
-                details.push("<br>", "");
             }
         }
     }
@@ -391,9 +225,9 @@ export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thun
 
     let md = TREE_TEMPLATE
         .replace("__name__", template.name)
-        .replace("__desc__", template.description)
-        .replace("__list_of_policies__", rebrand(header))
-        .replace("__details__", rebrand(details));
+        .replace("__desc__", `${template.tree == "central" ? DESC_DEFAULT_DAILY_TEMPLATE : ""}${template.description}`)
+        .replace("__list_of_policies__", header.join("\n"))
+        .replace("__details__", details.join("\n"));
 
     await ensureDir(output_dir);
     await fs.writeFile(`${output_dir}/README.md`, md);
@@ -403,13 +237,12 @@ export async function adjustFirefoxReadmeFileForThunderbird(tree, template, thun
  * Adjust the ADMX files downloaded from the Firefox policy repository to include
  * only the policies supported by Thunderbird.
  * 
- * @param {string} tree - The tree to process (e.g. "release", "central").
  * @param {TemplateData} template 
  * @param {string[]} thunderbirdPolicies - Flattened policy names, e.g.
  *    "InstallAddonsPermission_Allow".
  * @param {string} output_dir - Path to save the adjusted ADMX files.
  */
-export async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thunderbirdPolicies, output_dir) {
+export async function adjustFirefoxAdmxFilesForThunderbird(template, thunderbirdPolicies, output_dir) {
     function getNameFromKey(key) {
         const key_prefix = "Software\\Policies\\Mozilla\\Thunderbird\\";
         const key_prefix_length = key_prefix.length;
@@ -438,6 +271,8 @@ export async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thund
         }
         return false;
     }
+
+    let tree = template.tree;
 
     // Read ADMX files - https://www.npmjs.com/package/xml-js
     let admx_file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/windows/firefox.admx`, 'utf8');
@@ -561,52 +396,90 @@ export async function adjustFirefoxAdmxFilesForThunderbird(tree, template, thund
 }
 
 /**
- * Adjust the MasOS PLIST files downloaded from the Firefox policy repository to
- * include only the policies supported by Thunderbird.
+ * Generate the example plist file policies support by Thunderbird on MacOs.
  * 
- * @param {TemplateData} template 
- * @param {string[]} thunderbirdPolicies - flattened policy names, e.g.
- *    "InstallAddonsPermission_Allow"
+ * @param {TemplateData} template
+ * @param {string[]} thunderbirdPolicies - Flattened policy names of supported
+ *    policies, e.g. "InstallAddonsPermission_Allow".
  * @param {string} output_dir - path to save the adjusted PLIST files.
  */
-export async function adjustFirefoxPlistFilesForThunderbird(template, thunderbirdPolicies, output_dir) {
-    // Read PLIST files - https://www.npmjs.com/package/plist.
-    let plist_file = await fs.readFile(`${MOZILLA_TEMPLATE_DIR_PATH}/${template.mozillaReferenceTemplates}/mac/org.mozilla.firefox.plist`, 'utf8');
-
-
-    plist_file = plist_file
-        // See https://github.com/mozilla/policy-templates/pull/1088
-        .replaceAll("&rt;", "&gt;")
-        // Malformed in TB115.
-        .replaceAll("</false>", "<false/>");
-
-    let plist_obj = plist.parse(plist_file);
-
-    function isObject(v) {
-        return typeof v === 'object' && !Array.isArray(v) && v !== null;
+export async function generatePlistFile(template, thunderbirdPolicies, output_dir) {
+    function sortKeysRecursively(obj) {
+        if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+            // Sort the keys and rebuild object
+            const sorted = {};
+            Object.keys(obj)
+                .sort((a, b) => a.localeCompare(b))
+                .forEach(key => {
+                    sorted[key] = sortKeysRecursively(obj[key]);
+                });
+            return sorted;
+        } else if (Array.isArray(obj)) {
+            // Recursively sort dicts inside arrays
+            return obj.map(item => sortKeysRecursively(item));
+        } else {
+            // Primitive value, return as is
+            return obj;
+        }
     }
-    function removeUnsupportedEntries(plist, base_name = "") {
-        for (let key of Object.keys(plist)) {
-            let policy_name = base_name
-                ? `${base_name}_${key}`
-                : key;
-
-            if (!isObject(plist[key])) {
-                // This is a final entry, check if this is a supported policy.
-                if (!thunderbirdPolicies.includes(policy_name) && policy_name != "EnterprisePoliciesEnabled") {
-                    delete plist[key];
-                }
+    function deepMerge(target, source) {
+        for (const key of Object.keys(source)) {
+            if (
+                typeof target[key] === 'object' &&
+                typeof source[key] === 'object' &&
+                !Array.isArray(target[key]) &&
+                !Array.isArray(source[key])
+            ) {
+                // Recursively merge nested dictionaries
+                deepMerge(target[key], source[key]);
             } else {
-                removeUnsupportedEntries(plist[key], policy_name);
-                if (Object.keys(plist[key]).length == 0) {
-                    delete plist[key];
-                }
+                // For arrays or primitives, overwrite
+                target[key] = source[key];
             }
+        }
+        return target;
+    }
+
+    const plistEntries = Object.entries(template.policies)
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .filter(e => thunderbirdPolicies.includes(e[0]))
+        .map(e => e[1].plist)
+        .filter(Boolean);
+
+    const mergedObject = {};
+    for (const entry of plistEntries) {
+        try {
+            // Use only the first XML tag before the pipe for each value, and also
+            // only keep the first provided string value.
+            const cleaned = entry.replace(/(<[^>]+>\s*\|\s*<[^>]+>)/g, match => {
+                // For XML tags separated by |
+                return match.split('|')[0].trim();
+            }).replace(/<string>([^<]+)<\/string>/g, (match, content) => {
+                // For <string> that contains multiple options separated by '|'
+                const firstOption = content.split('|')[0].trim();
+                return `<string>${firstOption}</string>`;
+            });
+
+            // Wrap into a valid plist structure.
+            const wrapped = `<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+    ${cleaned}
+  </plist>`;
+
+            // Parse the cleaned plist fragment.
+            const parsed = plist.parse(wrapped);
+
+            // Merge keys into the result.
+            deepMerge(mergedObject, sortKeysRecursively(parsed));
+        } catch (err) {
+            console.error(`Invalid plist entry:\n${entry}`);
+            console.error(`Error: ${err.message}`);
         }
     }
 
-    removeUnsupportedEntries(plist_obj);
-    let plist_tb = plist.build(plist_obj);
+    // Convert merged object back to plist string.
+    const plist_tb = plist.build(mergedObject);
     await ensureDir(`${output_dir}/mac`);
-    await fs.writeFile(`${output_dir}/mac/org.mozilla.thunderbird.plist`, rebrand(plist_tb));
+    await fs.writeFile(`${output_dir}/mac/org.mozilla.thunderbird.plist`, plist_tb);
 }

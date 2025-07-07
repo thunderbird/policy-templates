@@ -1,10 +1,10 @@
 import bent from "bent";
 import fs from "node:fs/promises";
 import https from "https";
-import { parse } from "comment-json";
+import commentJson from "comment-json";
 
-import { 
-    BUILD_HUB_URL, PERSISTENT_SCHEMA_CACHE_FILE, TEMPORARY_SCHEMA_CACHE_FILE 
+import {
+    BUILD_HUB_URL, PERSISTENT_SCHEMA_CACHE_FILE, TEMPORARY_SCHEMA_CACHE_FILE
 } from "./constants.mjs";
 
 const requestJson = bent('GET', 'json', 200);
@@ -147,7 +147,7 @@ export async function getFirstRevisionFromBuildHub(branch, tree, versionMatch) {
         req.write(postData);
         req.end();
 
-        let data = parse(await task.promise);
+        let data = commentJson.parse(await task.promise);
         return data.hits.hits[0]._source.source.revision;
     } catch (ex) {
         console.error(ex);
@@ -217,28 +217,6 @@ export async function request(url) {
 }
 
 /**
- * Converts a string into a URL-friendly slug.
- *
- * The function transforms the input string by:
- * - Lowercasing all characters
- * - Replacing all non-alphanumeric characters (including spaces and symbols)
- *   with hyphens (`-`)
- * - Trimming any leading or trailing hyphens
- *
- * Example:
- *   slugify("Certificates -> Install") returns "certificates--install"
- *
- * @param {string} str - The input string to convert
- * @returns {string} The slugified version of the input
- */
-export function slugify(str) {
-    return str
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')   // Replace non-alphanumeric characters with "-"
-      .replace(/^-+|-+$/g, '');      // Trim leading/trailing hyphens
-  }
-
-/**
  * Simple helper function to produce pretty JSON files.
  *
  * @param {string} filePath - The path to write the JSON to.
@@ -253,6 +231,12 @@ export async function writePrettyJSONFile(filePath, json) {
     }
 }
 
+/**
+ * Simple helper function to produce pretty YAML files.
+ *
+ * @param {string} filePath - The path to write the JSON to.
+ * @param {obj} json - The obj to write into the file.
+ */
 export async function writePrettyYAMLFile(filePath, yamlDocument) {
     try {
         return await fs.writeFile(filePath, yamlDocument.toString());
