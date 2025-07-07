@@ -19,12 +19,6 @@
   },
   {
     "prefix": "Thunderbird ESR",
-    "tree": "esr128",
-    "majorVersion": 128,
-    "lastKnownMozillaPolicyRevision": "99168f42503f17aca5bbc48d31fdb4285e79a4f7"
-  },
-  {
-    "prefix": "Thunderbird ESR",
     "tree": "esr140",
     "majorVersion": 140,
     "lastKnownMozillaPolicyRevision": "6550a728c57e3e9f4d19e14cf93e4fcc43e97c2d"
@@ -39,6 +33,6 @@
     "prefix": "Thunderbird Daily",
     "tree": "central",
     "majorVersion": 142,
-    "lastKnownMozillaPolicyRevision": "9117dc7fce1cb431ab316313420d0ff32f43d298"
+    "lastKnownMozillaPolicyRevision": "fe6e070cd6b63ecd1f8ab30f12f6274e64210d66"
   }
 ]
