@@ -7056,7 +7056,7 @@ WindowsSSO: |
   #### Windows (Intune)
   OMA-URI:
   ```
-  ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/WindowsSSO
+  ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/WindowsSSO3
   ```
   Value (string):
   ```

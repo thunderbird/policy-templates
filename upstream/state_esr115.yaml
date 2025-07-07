@@ -4774,7 +4774,7 @@ PopupBlocking: |
   </array>
   <key>Default</key>
   <true/> | <false/>
-  <key>Locked</key>
+  <key>Locked2</key>
   <true/> | <false/>
   </dict>
   </dict>

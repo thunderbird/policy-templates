@@ -9,7 +9,7 @@ toc: |
   "Authentication": {
   "SPNEGO": ["mydomain.com", "https://myotherdomain.com"]
   }
-  "Authentication_Comment": "These domains are required for us"
+  "Authentication_Comment": "These domains are required for us b"
   }
   }
   ```

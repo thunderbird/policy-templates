@@ -6248,7 +6248,7 @@ SearchEngines_Add: |
   Value (string):
   ```
   <enabled/>
-  <data id="SearchEngine_Name" value="Example1"/>
+  <data id="SearchEngine_Name" value="Example2"/>
   <data id="SearchEngine_URLTemplate" value="https://www.example.org/q={searchTerms"/>
   <data id="SearchEngine_Method" value="GET | POST"/>
   <data id="SearchEngine_IconURL" value="https://www.example.org/favicon.ico"/>
