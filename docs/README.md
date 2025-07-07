@@ -7,10 +7,10 @@ to the version of Thunderbird you are actually deploying.
 
  * [Thunderbird Daily 142.0a1](templates/central)
  * [Thunderbird 140.0.1](templates/release)
- * [`Thunderbird ESR 128.12.0](templates/esr128)
- * [`Thunderbird ESR 115.18.1](templates/esr115)
- * [`Thunderbird ESR 102.15.2](templates/esr102)
- * [`Thunderbird ESR 91.13.2](templates/esr91)
+ * [Thunderbird ESR 128.12.0](templates/esr128)
+ * [Thunderbird ESR 115.18.1](templates/esr115)
+ * [Thunderbird ESR 102.15.2](templates/esr102)
+ * [Thunderbird ESR 91.13.2](templates/esr91)
 
 ## List of supported policies
 
