@@ -216,12 +216,12 @@ function rebrand(line) {
 function trimArray(arr) {
     let start = 0;
     let end = arr.length - 1;
-  
+
     while (start <= end && arr[start].trim() === '') start++;
     while (end >= start && arr[end].trim() === '') end--;
-  
+
     return arr.slice(start, end + 1);
-  }
+}
 
 /**
  * Converts a policy object containing Markdown-formatted documentation into a

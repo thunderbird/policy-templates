@@ -412,10 +412,10 @@ export async function getRevisionVersion(branch, tree, revision) {
 async function downloadPolicySchemaData(branch, tree, revision) {
     let schemaUrl = getHgDownloadUrl(branch, tree, revision, "raw-file", "policies-schema.json");
     let data = commentJson.parse(await readCachedUrl(schemaUrl, { temporary: revision == "tip" }));
-    
+
     data.version = await getRevisionVersion(branch, tree, revision);
     data.revision = revision;
-    
+
     return data;
 }
 
