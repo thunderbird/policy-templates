@@ -7,6 +7,7 @@ to the version of Thunderbird you are actually deploying.
 
  * [Thunderbird Daily 142.0a1](templates/central)
  * [Thunderbird 140.0.1](templates/release)
+ * [Thunderbird ESR 140.0](templates/esr140)
  * [Thunderbird ESR 128.12.0](templates/esr128)
  * [Thunderbird ESR 115.18.1](templates/esr115)
  * [Thunderbird ESR 102.15.2](templates/esr102)

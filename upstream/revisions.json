@@ -24,6 +24,12 @@
     "lastKnownMozillaPolicyRevision": "99168f42503f17aca5bbc48d31fdb4285e79a4f7"
   },
   {
+    "prefix": "Thunderbird ESR",
+    "tree": "esr140",
+    "majorVersion": 140,
+    "lastKnownMozillaPolicyRevision": "6550a728c57e3e9f4d19e14cf93e4fcc43e97c2d"
+  },
+  {
     "prefix": "Thunderbird",
     "tree": "release",
     "majorVersion": 140,
