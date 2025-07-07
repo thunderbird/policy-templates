@@ -8,7 +8,7 @@ export const DOCS_TEMPLATES_DIR_PATH = "../docs/templates";
 export const DOCS_README_PATH = "../docs/README.md";
 export const YAML_CONFIG_PATH = "../config/#tree#.yaml";
 
-export const UPSTREAM_README_PATH = "upstream/state_#tree#.json";
+export const UPSTREAM_README_PATH = "upstream/state_#tree#.yaml";
 export const UPSTREAM_REVISIONS_PATH = "upstream/revisions.json";
 
 export const HG_URL = `https://hg-edge.mozilla.org`;

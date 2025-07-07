@@ -423,17 +423,17 @@ async function downloadPolicySchemaData(branch, tree, revision) {
  * Get the PolicySchemaRevisions for the requested tree and download any missing
  * schema file. For Thunderbird all schema files are downloaded (or pulled from
  * the cache), for Mozilla only the newest ("tip") schema file and the one
- * corresponding to the last known state ("mozillaReferencePolicyRevision") are
+ * corresponding to the last known state ("lastKnownMozillaPolicyRevision") are
  * downloaded.
  * 
  * @param {string} tree - The tree to process (e.g. "release", "central").
- * @param {string} mozillaReferencePolicyRevision - The mercurial changeset
+ * @param {string} lastKnownMozillaPolicyRevision - The mercurial changeset
  *    identifier of the last known mozilla version of their policies.json in the
  *    specified tree.
  * 
  * @returns {PolicySchemaRevisions}
  */
-export async function getPolicySchemaRevisions(tree, mozillaReferencePolicyRevision) {
+export async function getPolicySchemaRevisions(tree, lastKnownMozillaPolicyRevision) {
     let data = {
         tree,
         comm: {
@@ -453,7 +453,7 @@ export async function getPolicySchemaRevisions(tree, mozillaReferencePolicyRevis
         // For mozilla, we just need the newest and the reference revision.
         // For comm, we need all revisions to be able to extract compatibility information.
         let neededRevisions = branch == "mozilla"
-            ? [revisions[0], mozillaReferencePolicyRevision]
+            ? [revisions[0], lastKnownMozillaPolicyRevision]
             : revisions.slice(0, 30)
 
 

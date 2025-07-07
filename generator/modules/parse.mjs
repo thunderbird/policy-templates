@@ -1,78 +1,51 @@
 import {
-    YAML_CONFIG_PATH, GIT_CHECKOUT_DIR_PATH,
-    MOZILLA_TEMPLATE_DIR_PATH, UPSTREAM_README_PATH, TREE_TEMPLATE,
+    GIT_CHECKOUT_DIR_PATH,
+    MOZILLA_TEMPLATE_DIR_PATH, UPSTREAM_README_PATH,
 } from "./constants.mjs";
 import { pullGitRepository } from "./git.mjs";
-import { getCachedCompatibilityInformation } from "./mercurial.mjs";
-import { ensureDir, fileExists, sortObjectByKeys, writePrettyJSONFile, writePrettyYAMLFile } from "./tools.mjs";
+import { fileExists, writeArrayOfStringsToFile } from "./tools.mjs";
 
-import commentJson from "comment-json";
 import fs from "node:fs/promises";
-import convert from "xml-js";
 import pathUtils from "path";
-import plist from "plist";
 import yaml from 'yaml';
-import GithubSlugger from 'github-slugger';
 
 /**
- * Parse the README files of a given mozilla policy template, or creates it if
- * missing (cloned from comm-central, if possible).
+ * Parse the README files of a given mozilla policy template and compare it against
+ * the version stored in /upstream.
  * 
  * @param {object} revisionData
  * @param {string} revisionData.name - Name of the template (e.g. Thunderbird 139).
  * @param {string} revisionData.tree - The tree to process (e.g. "release",
  *    "central").
+ *  * @param {string[]} thunderbirdPolicies - Flattened policy names of supported
+ *    policies, e.g. "InstallAddonsPermission_Allow".
+ * @param {string} mozillaGithubTag - The tag of the release in Mozilla's 
+ *    policy-templates repository, which should be used to compare against the
+ *    last known state in /upstream.
  * @returns {string[]} Array of changes
  */
-export async function getDocumentationChanges(revisionData) {
+export async function getDocumentationChanges(revisionData, thunderbirdPolicies, mozillaGithubTag) {
     const changeLog = [];
 
-    // Pull the current master of Thunderbird's policy-templates repository, and use
-    // the state stored in /state as the last known state to compare against the most
-    // recent state. When the script runs, it will update the local /state folder to
-    // report upstream changes. As long as the updated /state folder is not pushed
-    // back to the repository, a new run of this script will report the same "new"
-    // findings again. Pushing the updated /state folder will acknowledge the findings
-    // and not report them again.
-    // Note: This allows us to monitor Mozilla policies and get notified about changes.
-    //       We can then decide if the additions need to be ported for Thunderbird.
-    await pullGitRepository(
-        "https://github.com/thunderbird/policy-templates", "master", GIT_CHECKOUT_DIR_PATH
-    );
-    return [];
-
-    const updatedUpstreamTemplateConfig = {
-        tree: revisionData.tree,
-        version: revisionData.version,
-        mozillaReferenceTemplates: revisionData.mozillaReferenceTemplates,
-        readmeData: {},
-    }
-    // Get the upstream config data for this template.
-    const UPSTREAM_TEMPLATE_CONFIG_FILE_NAME = pathUtils.join(
+    // Get the last known upstream README data.
+    const UPSTREAM_LAST_KNOWN_README_PATH = pathUtils.join(
         GIT_CHECKOUT_DIR_PATH,
         UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
     );
-    let upstreamTemplateConfig = await fileExists(UPSTREAM_TEMPLATE_CONFIG_FILE_NAME)
-        ? commentJson.parse(await fs.readFile(UPSTREAM_TEMPLATE_CONFIG_FILE_NAME, 'utf8'))
-        : {};
-    if (!upstreamTemplateConfig.readmeData) upstreamTemplateConfig.readmeData = {};
+    let lastKnownReadmeData = await fileExists(UPSTREAM_LAST_KNOWN_README_PATH)
+        ? yaml.parseDocument(await fs.readFile(UPSTREAM_LAST_KNOWN_README_PATH, 'utf8')).toJSON()
+        : null;
 
-
-    // Read README files from Mozilla policy-templates repository.
-    let ref = revisionData.mozillaReferenceTemplates;
-    let dir = `${MOZILLA_TEMPLATE_DIR_PATH}/${ref}`;
-    await pullGitRepository("https://github.com/mozilla/policy-templates/", ref, dir);
-
+    // Pull the current upstream README data.
+    const dir = `${MOZILLA_TEMPLATE_DIR_PATH}/${mozillaGithubTag}`;
+    await pullGitRepository(
+        "https://github.com/mozilla/policy-templates/",
+        mozillaGithubTag,
+        dir
+    );
     // Later revisions moved the file into the /docs folder.
-    let paths = [`${dir}/docs/index.md`, `${dir}/README.md`];
-
-    // This parsing highly depends on the structure of the README and needs to be
-    // adjusted when its layout is changing. In the intro section we have lines like 
-    // | **[`3rdparty`](#3rdparty)** |
-    // Detailed descriptions are below level 3 headings (###) with potential subsections.
-
-    // Split on ### heading to get chunks of policy descriptions.
     let file;
+    let paths = [`${dir}/docs/index.md`, `${dir}/README.md`];
     for (let p of paths) {
         try {
             file = await fs.readFile(p, 'utf8');
@@ -83,71 +56,42 @@ export async function getDocumentationChanges(revisionData) {
     if (!file) {
         throw new Error(`Did not find mozilla policy template for ${tree}, ${rev}`)
     }
-    let data = file.split("\n### ");
 
-    // Shift out the header and process it.
-    for (let h of data.shift().split("\n").filter(e => e.startsWith("| **[`"))) {
-        let name = h
-            .match(/\*\*\[(.*?)\]/)[1] // extract name from the markdown link
-            .replace(/`/g, "") // unable to fix the regex to exclude those
-            .replace(" -> ", "_"); // flat hierarchy
+    // Split on ### heading to get chunks of policy descriptions.
+    // This parsing depends on the structure of the README. The first array entry
+    // will be the TOC. All other entries will be the markdown of the documentation
+    // of each policy, with the name of the policy in the first line.
+    const yamlEntries = [];
+    const data = file.split("\n### ");
+    const tocLines = trimArray(data.shift().split("\n").map(e => e.trim()));
+    const descriptions = data.map(policy => {
+        const arr = policy.split("\n").map(e => e.trim());
+        const name = arr.shift().replaceAll(" | ", "_");
+        const lines = trimArray(arr);
 
-        // Merge upstream Readme toc into jsonTemplateConfig.readmeData.
-        if (!jsonTemplateConfig.readmeData[name]) {
-            jsonTemplateConfig.readmeData[name] = {};
-        };
-        if (!jsonTemplateConfig.readmeData[name].toc) {
-            jsonTemplateConfig.readmeData[name].toc = h;
-        };
-
-        // Update upstream state.
-        const isSupported = supportedPolicies.some(e => e.policies.includes(name));
-        if (isSupported) {
-            if (!updatedUpstreamTemplateConfig.readmeData[name]) {
-                updatedUpstreamTemplateConfig.readmeData[name] = {};
-            };
-            updatedUpstreamTemplateConfig.readmeData[name].toc = h;
+        const isSupported = thunderbirdPolicies.some(e => e.policies.includes(name));
+        if (isSupported && lastKnownReadmeData && lastKnownReadmeData[name]) {
+            const lastKnownReadme = lastKnownReadmeData[name].split("\n").map(e => e.trim());
+            if (lastKnownReadme.join("\n").trim() != lines.join("\n").trim()) {
+                changeLog.push(` * \`${name}\``);
+            }
         }
-    }
+        return { name, lines }
+    })
 
-    // Process policies.
-    for (let p of data) {
-        let lines = p.split("\n");
-        let name = lines[0];
-        lines[0] = `## ${name}`;
-
-        name = name.replace(" | ", "_"); // flat hierarchy
-        if (
-            upstreamTemplateConfig.readmeData[name]?.content &&
-            upstreamTemplateConfig.readmeData[name].content.join("\n") != lines.join("\n")
-        ) {
-            changeLog.push(` * \`${name}\``);
-        }
-
-        // Merge upstream Readme content into jsonTemplateConfig.readmeData.
-        if (!jsonTemplateConfig.readmeData[name]) {
-            jsonTemplateConfig.readmeData[name] = {};
-        };
-        if (!jsonTemplateConfig.readmeData[name].content) {
-            jsonTemplateConfig.readmeData[name].content = lines;
-        }
-
-        // Update upstream state.
-        const isSupported = supportedPolicies.some(e => e.policies.includes(name));
-        if (isSupported) {
-            if (!updatedUpstreamTemplateConfig.readmeData[name]) {
-                updatedUpstreamTemplateConfig.readmeData[name] = {};
-            };
-            updatedUpstreamTemplateConfig.readmeData[name].content = lines;
-        }
+    descriptions.sort((a, b) => a.name.localeCompare(b.name));
+    yamlEntries.push(`toc: |`)
+    tocLines.forEach(line => yamlEntries.push(`  ${line}`))
+    for (let policy of descriptions) {
+        yamlEntries.push(`${policy.name}: |`);
+        policy.lines.forEach(line => yamlEntries.push(`  ${line}`))
     }
 
     const UPDATED_UPSTREAM_TEMPLATE_CONFIG_FILE_NAME = pathUtils.join(
         "..",
         UPSTREAM_README_PATH.replace("#tree#", revisionData.tree)
     );
-    updatedUpstreamTemplateConfig.readmeData = sortObjectByKeys(updatedUpstreamTemplateConfig.readmeData);
-    await writePrettyJSONFile(UPDATED_UPSTREAM_TEMPLATE_CONFIG_FILE_NAME, updatedUpstreamTemplateConfig);
+    await writeArrayOfStringsToFile(UPDATED_UPSTREAM_TEMPLATE_CONFIG_FILE_NAME, yamlEntries);
 
     return changeLog;
 }

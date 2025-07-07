@@ -232,16 +232,16 @@ export async function writePrettyJSONFile(filePath, json) {
 }
 
 /**
- * Simple helper function to produce pretty YAML files.
+ * Simple helper function save an array of strings to a file.
  *
  * @param {string} filePath - The path to write the JSON to.
- * @param {obj} json - The obj to write into the file.
+ * @param {string[]} arr - The array of strings to write into the file.
  */
-export async function writePrettyYAMLFile(filePath, yamlDocument) {
+export async function writeArrayOfStringsToFile(filePath, arr) {
     try {
-        return await fs.writeFile(filePath, yamlDocument.toString());
+        return await fs.writeFile(filePath, arr.join("\n"));
     } catch (err) {
-        console.error("Error in writePrettyYAMLFile()", filePath, err);
+        console.error("Error in writeArrayOfStringsToFile()", filePath, err);
         throw err;
     }
 }

@@ -34,7 +34,7 @@ export async function pullGitRepository(url, ref, dir) {
       force: true
     });
   } else {
-    console.log(`Updating ${url} (${ref})`);
+    console.log(`Pulling Github repository ${url} (${ref})`);
     await git.pull({
       // Use name of the script as the name of the pulling "author".
       author: { name: "update_policy_template.js" },
