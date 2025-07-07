@@ -171,8 +171,8 @@ for (let treeData of treesData) {
         changedDocumentation: [],
     }
     if (treeData.lastKnownMozillaPolicyRevision != revisionsData.mozilla.revisions[0].revision) {
-        treeData.lastKnownMozillaPolicyRevision = revisionsData.mozilla.revisions[0].revision;
         let lastKnownMozillaPolicyRevisionData = revisionsData.mozilla.revisions.find(r => r.revision == treeData.lastKnownMozillaPolicyRevision);
+        treeData.lastKnownMozillaPolicyRevision = revisionsData.mozilla.revisions[0].revision;
         let m_m_changes = getDifferencesBetweenPolicySchemas(lastKnownMozillaPolicyRevisionData, revisionsData.mozilla.revisions[0]);
         if (m_m_changes) {
             for (const { title, data, require_supported, log } of [
