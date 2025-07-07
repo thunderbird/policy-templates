@@ -12,7 +12,7 @@
 # - description:         A general description or introduction, which is printed
 #                        before the generated table of contents.
 # - policies:            A list of `Policy` objects, describing each policy. See
-#                        detailed format below.
+#                        detailed format description below.
 #
 # ------------------------------------------------------------------------------
 # Format specification for `Policy` objects
@@ -25,8 +25,8 @@
 #                        and any background information.
 # - preferencesAffected: Indicates which internal preferences are affected
 #                        by this policy. See detailed format description below.
-# - cck2Equivalent:      (Optional) For migration or legacy support, a reference
-#                        to an equivalent CCK2 setting if one exists.
+# - cck2Equivalent:      (Optional) A reference to an equivalent setting of the
+#                        legacy "Configuration & Customization Kit 2" tool (CCK2).
 # - gpo:                 A list of Windows Group Policy Objects (GPOs) associated
 #                        with the policy. See detailed format description below.
 # - intune:              A list of Intune OMA-URI mappings for MDM deployment.
@@ -96,9 +96,15 @@
 #        - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled'
 #          type: 'REG_DWORD'
 #          value: '0x1 | 0x0'
+#        - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled'
+#          type: 'REG_DWORD'
+#          value: '0x1 | 0x0'
 #
 #      intune:
 #        - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled'
+#          type: 'string'
+#          value: '<enabled/> or <disabled/>'
+#        - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled'
 #          type: 'string'
 #          value: '<enabled/> or <disabled/>'
 #
@@ -124,9 +130,9 @@
 # ------------------------------------------------------------------------------
 # Multiple option values (`gpo`, `intune`, `plist`, `json`)
 # ------------------------------------------------------------------------------
-# Somme f in the `gpo`, `intune`, `plist`, and `json` sections may contain multiple
-# options, separated by a pipe (`|`). This is used to indicate the possible values
-# that are accepted by the policy backend.
+# Some entries in the `gpo`, `intune`, `plist`, and `json` sections may contain
+# multiple options, separated by a pipe (`|`). This is used to indicate all the
+# possible values that are accepted by the policy backend.
 #
 # However, these are **not** valid configuration values directly. Only one of the
 # options must be selected and used in actual policy configuration.
