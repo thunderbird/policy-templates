@@ -1,44 +1,38 @@
 [
   {
-    "name": "Thunderbird ESR 91",
+    "prefix": "Thunderbird ESR",
     "tree": "esr91",
-    "version": 91,
-    "mozillaReferenceTemplates": "v3.10",
-    "mozillaReferencePolicyRevision": "9137f00be7b39e1174c62796fb64626bbf37a1d0"
+    "majorVersion": 91,
+    "lastKnownMozillaPolicyRevision": "9137f00be7b39e1174c62796fb64626bbf37a1d0"
   },
   {
-    "name": "Thunderbird ESR 102",
+    "prefix": "Thunderbird ESR",
     "tree": "esr102",
-    "version": 102,
-    "mozillaReferenceTemplates": "v4.12",
-    "mozillaReferencePolicyRevision": "656d54876405369eba969d43385aaca5511315a8"
+    "majorVersion": 102,
+    "lastKnownMozillaPolicyRevision": "656d54876405369eba969d43385aaca5511315a8"
   },
   {
-    "name": "Thunderbird ESR 115",
+    "prefix": "Thunderbird ESR",
     "tree": "esr115",
-    "version": 115,
-    "mozillaReferenceTemplates": "v5.12",
-    "mozillaReferencePolicyRevision": "3fc8d7913eb0fa7e3b39dc1fc3c88b936ecab3bb"
+    "majorVersion": 115,
+    "lastKnownMozillaPolicyRevision": "3fc8d7913eb0fa7e3b39dc1fc3c88b936ecab3bb"
   },
   {
-    "name": "Thunderbird ESR 128",
+    "prefix": "Thunderbird ESR",
     "tree": "esr128",
-    "version": 128,
-    "mozillaReferenceTemplates": "v6.11",
-    "mozillaReferencePolicyRevision": "99168f42503f17aca5bbc48d31fdb4285e79a4f7"
+    "majorVersion": 128,
+    "lastKnownMozillaPolicyRevision": "99168f42503f17aca5bbc48d31fdb4285e79a4f7"
   },
   {
-    "name": "Thunderbird 140",
+    "prefix": "Thunderbird",
     "tree": "release",
-    "version": 140,
-    "mozillaReferenceTemplates": "v7.0",
-    "mozillaReferencePolicyRevision": "07295ebdf891ade50ae5e921ec31f80d31e6cb9f"
+    "majorVersion": 140,
+    "lastKnownMozillaPolicyRevision": "07295ebdf891ade50ae5e921ec31f80d31e6cb9f"
   },
   {
-    "name": "Thunderbird Daily 142",
+    "prefix": "Thunderbird Daily",
     "tree": "central",
-    "version": 142,
-    "mozillaReferenceTemplates": "v7.0",
-    "mozillaReferencePolicyRevision": "9117dc7fce1cb431ab316313420d0ff32f43d298"
+    "majorVersion": 142,
+    "lastKnownMozillaPolicyRevision": "9117dc7fce1cb431ab316313420d0ff32f43d298"
   }
 ]
