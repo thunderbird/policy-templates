@@ -2,49 +2,66 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>EnterprisePoliciesEnabled</key>
-    <true/>
+    <key>3rdparty</key>
+    <dict>
+      <key>Extensions</key>
+      <dict>
+        <key>uBlock0@raymondhill.net</key>
+        <dict>
+          <key>adminSettings</key>
+          <dict>
+            <key>selectedFilterLists</key>
+            <array>
+              <string>ublock-privacy</string>
+              <string>ublock-badware</string>
+              <string>ublock-filters</string>
+              <string>user-filters</string>
+            </array>
+          </dict>
+        </dict>
+      </dict>
+    </dict>
     <key>AppAutoUpdate</key>
     <true/>
     <key>AppUpdatePin</key>
     <string>106.</string>
     <key>AppUpdateURL</key>
-    <string>https://www.example.com/update.xml</string>
+    <string>https://yoursite.com</string>
     <key>Authentication</key>
     <dict>
-      <key>SPNEGO</key>
-      <array>
-        <string>mydomain.com</string>
-        <string>https://myotherdomain.com</string>
-      </array>
+      <key>AllowNonFQDN</key>
+      <dict>
+        <key>NTLM</key>
+        <true/>
+        <key>SPNEGO</key>
+        <true/>
+      </dict>
+      <key>AllowProxies</key>
+      <dict>
+        <key>NTLM</key>
+        <true/>
+        <key>SPNEGO</key>
+        <true/>
+      </dict>
       <key>Delegated</key>
       <array>
         <string>mydomain.com</string>
         <string>https://myotherdomain.com</string>
       </array>
+      <key>Locked</key>
+      <true/>
       <key>NTLM</key>
       <array>
         <string>mydomain.com</string>
         <string>https://myotherdomain.com</string>
       </array>
-      <key>AllowNonFQDN</key>
-      <dict>
-        <key>SPNEGO</key>
-        <true/>
-        <key>NTLM</key>
-        <true/>
-      </dict>
-      <key>AllowProxies</key>
-      <dict>
-        <key>SPNEGO</key>
-        <true/>
-        <key>NTLM</key>
-        <true/>
-      </dict>
       <key>PrivateBrowsing</key>
       <true/>
-      <key>Locked</key>
-      <true/>
+      <key>SPNEGO</key>
+      <array>
+        <string>mydomain.com</string>
+        <string>https://myotherdomain.com</string>
+      </array>
     </dict>
     <key>BlockAboutAddons</key>
     <true/>
@@ -63,39 +80,32 @@
       <key>Install</key>
       <array>
         <string>cert1.der</string>
-        <string>cert2.pem</string>
+        <string>/Users/username/cert2.pem</string>
       </array>
     </dict>
     <key>Cookies</key>
     <dict>
       <key>Allow</key>
       <array>
-        <string>https://www.example.org/</string>
+        <string>http://example.com</string>
       </array>
+      <key>AllowSession</key>
+      <array>
+        <string>http://example.edu</string>
+      </array>
+      <key>Behavior</key>
+      <string>accept</string>
+      <key>BehaviorPrivateBrowsing</key>
+      <string>accept</string>
       <key>Block</key>
       <array>
-        <string>https://www.example.edu/</string>
+        <string>http://example.org</string>
       </array>
       <key>Locked</key>
       <true/>
     </dict>
     <key>DefaultDownloadDirectory</key>
     <string>${home}/Downloads</string>
-    <key>DownloadDirectory</key>
-    <string>${home}/Downloads</string>
-    <key>DNSOverHTTPS</key>
-    <dict>
-      <key>Enabled</key>
-      <false/>
-      <key>ProviderURL</key>
-      <string>URL_TO_ALTERNATE_PROVIDER</string>
-      <key>Locked</key>
-      <true/>
-      <key>ExcludedDomains</key>
-      <array>
-        <string>example.com</string>
-      </array>
-    </dict>
     <key>DisableAppUpdate</key>
     <true/>
     <key>DisableBuiltinPDFViewer</key>
@@ -106,22 +116,22 @@
       <true/>
       <key>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</key>
       <true/>
-      <key>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</key>
+      <key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
       <true/>
-      <key>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</key>
+      <key>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</key>
       <true/>
       <key>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</key>
       <true/>
-      <key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
-      <true/>
-      <key>TLS_RSA_WITH_AES_128_CBC_SHA</key>
-      <true/>
-      <key>TLS_RSA_WITH_AES_256_CBC_SHA</key>
+      <key>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</key>
       <true/>
       <key>TLS_RSA_WITH_3DES_EDE_CBC_SHA</key>
       <true/>
+      <key>TLS_RSA_WITH_AES_128_CBC_SHA</key>
+      <true/>
       <key>TLS_RSA_WITH_AES_128_GCM_SHA256</key>
       <false/>
+      <key>TLS_RSA_WITH_AES_256_CBC_SHA</key>
+      <true/>
       <key>TLS_RSA_WITH_AES_256_GCM_SHA384</key>
       <false/>
     </dict>
@@ -144,23 +154,47 @@
     <true/>
     <key>DisableTelemetry</key>
     <true/>
+    <key>DNSOverHTTPS</key>
+    <dict>
+      <key>Enabled</key>
+      <false/>
+      <key>ExcludedDomains</key>
+      <array>
+        <string>example.com</string>
+      </array>
+      <key>Fallback</key>
+      <true/>
+      <key>Locked</key>
+      <true/>
+      <key>ProviderURL</key>
+      <string>URL_TO_ALTERNATE_PROVIDER</string>
+    </dict>
+    <key>DownloadDirectory</key>
+    <string>${home}/Downloads</string>
     <key>Extensions</key>
     <dict>
       <key>Install</key>
       <array>
-        <string>https://addons.thunderbird.net/thunderbird/downloads/file/1053714/ghostery_privacy_ad_blocker-8.2.4-an+fx.xpi</string>
+        <string>https://addons.thunderbird.net/thunderbird/downloads/somefile.xpi</string>
+        <string>//path/to/xpi</string>
       </array>
-      <key>Uninstall</key>
-      <array/>
       <key>Locked</key>
       <array>
-        <string>thunderbird@ghostery.com</string>
+        <string>addon_id@mozilla.org</string>
+      </array>
+      <key>Uninstall</key>
+      <array>
+        <string>bad_addon_id@mozilla.org</string>
       </array>
     </dict>
     <key>ExtensionSettings</key>
     <dict>
       <key>*</key>
       <dict>
+        <key>allowed_types</key>
+        <array>
+          <string>extension</string>
+        </array>
         <key>blocked_install_message</key>
         <string>Custom error message.</string>
         <key>install_sources</key>
@@ -170,22 +204,74 @@
         <key>installation_mode</key>
         <string>blocked</string>
       </dict>
+      <key>https-everywhere@eff.org</key>
+      <dict>
+        <key>installation_mode</key>
+        <string>allowed</string>
+      </dict>
+      <key>uBlock0@raymondhill.net</key>
+      <dict>
+        <key>install_url</key>
+        <string>https://addons.thunderbird.net/thunderbird/downloads/latest/ublock-origin/latest.xpi</string>
+        <key>installation_mode</key>
+        <string>force_installed</string>
+      </dict>
     </dict>
     <key>ExtensionUpdate</key>
     <false/>
+    <key>Handlers</key>
+    <dict>
+      <key>extensions</key>
+      <dict>
+        <key>pdf</key>
+        <dict>
+          <key>action</key>
+          <string>useHelperApp</string>
+          <key>ask</key>
+          <true/>
+          <key>handlers</key>
+          <array>
+            <dict>
+              <key>name</key>
+              <string>Adobe Acrobat</string>
+              <key>path</key>
+              <string>/System/Applications/Preview.app</string>
+            </dict>
+          </array>
+        </dict>
+      </dict>
+      <key>mimeTypes</key>
+      <dict>
+        <key>application/msword</key>
+        <dict>
+          <key>action</key>
+          <string>useSystemDefault</string>
+          <key>ask</key>
+          <true/>
+        </dict>
+      </dict>
+    </dict>
     <key>HardwareAcceleration</key>
     <false/>
+    <key>InAppNotification_DonationEnabled</key>
+    <true/>
+    <key>InAppNotification_Enabled</key>
+    <true/>
+    <key>InAppNotification_MessageEnabled</key>
+    <true/>
+    <key>InAppNotification_SurveyEnabled</key>
+    <true/>
     <key>InstallAddonsPermission</key>
     <dict>
       <key>Allow</key>
       <array>
-        <string>https://example.org</string>
-        <string>https://example.edu</string>
+        <string>http://example.org</string>
+        <string>http://example.edu</string>
       </array>
       <key>Default</key>
       <false/>
     </dict>
-    <key>PrimaryPassword</key>
+    <key>ManualAppUpdateOnly</key>
     <true/>
     <key>NetworkPrediction</key>
     <false/>
@@ -202,39 +288,91 @@
       <key>EnablePermissions</key>
       <false/>
     </dict>
+    <key>Preferences</key>
+    <dict>
+      <key>accessibility.force_disabled</key>
+      <dict>
+        <key>Status</key>
+        <string>default</string>
+        <key>Value</key>
+        <integer>1</integer>
+      </dict>
+      <key>browser.cache.disk.parent_directory</key>
+      <dict>
+        <key>Status</key>
+        <string>user</string>
+        <key>Value</key>
+        <string>SOME_NATIVE_PATH</string>
+      </dict>
+    </dict>
+    <key>PrimaryPassword</key>
+    <true/>
+    <key>PromptForDownloadLocation</key>
+    <true/>
     <key>Proxy</key>
     <dict>
-      <key>Mode</key>
-      <string>manual</string>
-      <key>HTTPProxy</key>
-      <string>proxy.example.com:80</string>
-      <key>UseHTTPProxyForAllProtocols</key>
-      <true/>
-      <key>SSLProxy</key>
-      <string>proxy.example.com:80</string>
-      <key>FTPProxy</key>
-      <string>proxy.example.com:80</string>
-      <key>SOCKSProxy</key>
-      <string>proxy.example.com:80</string>
-      <key>Passthrough</key>
-      <string>&lt;local&gt;</string>
       <key>AutoConfigURL</key>
       <string>URL_TO_AUTOCONFIG</string>
       <key>AutoLogin</key>
       <true/>
-      <key>UseProxyForDNS</key>
-      <true/>
+      <key>FTPProxy</key>
+      <string>ftpproxy.example.com</string>
+      <key>HTTPProxy</key>
+      <string>httpproxy.example.com</string>
       <key>Locked</key>
+      <true/>
+      <key>Mode</key>
+      <string>none</string>
+      <key>Passthrough</key>
+      <string>&lt;local&gt;</string>
+      <key>SOCKSProxy</key>
+      <string>socksproxy.example.com</string>
+      <key>SOCKSVersion</key>
+      <string>4</string>
+      <key>SSLProxy</key>
+      <string>sslproxy.example.com</string>
+      <key>UseHTTPProxyForAllProtocols</key>
+      <true/>
+      <key>UseProxyForDNS</key>
       <true/>
     </dict>
     <key>RequestedLocales</key>
-    <array>
-      <string>de</string>
-      <string>en-US</string>
-    </array>
-    <key>SSLVersionMin</key>
-    <string>tls1.2</string>
+    <string>de,en-US</string>
+    <key>SearchEngines</key>
+    <dict>
+      <key>Add</key>
+      <array>
+        <dict>
+          <key>Alias</key>
+          <string>example</string>
+          <key>Description</key>
+          <string>Example Description</string>
+          <key>IconURL</key>
+          <string>https://www.example.org/favicon.ico</string>
+          <key>Method</key>
+          <string>GET</string>
+          <key>Name</key>
+          <string>Example1</string>
+          <key>PostData</key>
+          <string>name=value&amp;q={searchTerms}</string>
+          <key>SuggestURLTemplate</key>
+          <string>https://www.example.org/suggestions/q={searchTerms}</string>
+          <key>URLTemplate</key>
+          <string>https://www.example.org/q={searchTerms}</string>
+        </dict>
+      </array>
+      <key>Default</key>
+      <string>NAME_OF_SEARCH_ENGINE</string>
+      <key>PreventInstalls</key>
+      <true/>
+      <key>Remove</key>
+      <array>
+        <string>NAME_OF_SEARCH_ENGINE</string>
+      </array>
+    </dict>
     <key>SSLVersionMax</key>
     <string>tls1.3</string>
+    <key>SSLVersionMin</key>
+    <string>tls1.2</string>
   </dict>
 </plist>

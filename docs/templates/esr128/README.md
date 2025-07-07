@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Thunderbird ESR 128
+## Enterprise policy descriptions and templates for `Thunderbird ESR 128.12.0
 
 Policies can be specified by creating a file called `policies.json`:
 * Windows: place the file in a directory called `distribution` in the same
@@ -464,14 +464,6 @@ Value (string):
 <enabled/> or <disabled/>
 ```
 
-#### macOS
-```
-<dict>
-  <key>BackgroundAppUpdate</key>
-  <true/> | <false/>
-</dict>
-```
-
 #### policies.json
 ```
 {
@@ -693,7 +685,7 @@ Value (string):
 ```
 <dict>
   <key>CaptivePortal</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -1180,8 +1172,28 @@ Value (string):
 <dict>
   <key>DisabledCiphers</key>
     <dict>
-      <key>CIPHER_NAME</key>
-      <true/> | <false/>
+      <key>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</key>
+      <true/>
+      <key>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</key>
+      <true/>
+      <key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
+      <true/>
+      <key>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</key>
+      <true/>
+      <key>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</key>
+      <true/>
+      <key>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</key>
+      <true/>
+      <key>TLS_RSA_WITH_3DES_EDE_CBC_SHA</key>
+      <true/>
+      <key>TLS_RSA_WITH_AES_128_CBC_SHA</key>
+      <true/>
+      <key>TLS_RSA_WITH_AES_128_GCM_SHA256</key>
+      <false/>
+      <key>TLS_RSA_WITH_AES_256_CBC_SHA</key>
+      <true/>
+      <key>TLS_RSA_WITH_AES_256_GCM_SHA384</key>
+      <false/>
     </dict>
 </dict>
 ```
@@ -1629,7 +1641,7 @@ Value (string):
   <key>DNSOverHTTPS</key>
   <dict>
     <key>Enabled</key>
-    <true/> | <false/>
+    <false/> | <true/>
     <key>ProviderURL</key>
     <string>URL_TO_ALTERNATE_PROVIDER</string>
     <key>Locked</key>
@@ -1884,7 +1896,6 @@ Value (string):
       <string>Custom error message.</string>
       <key>install_sources</key>
       <array>
-        <string>about:addons</string>
         <string>https://addons.thunderbird.net/</string>
       </array>
       <key>installation_mode</key>
@@ -1968,7 +1979,7 @@ Value (string):
 ```
 <dict>
   <key>ExtensionUpdate</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -2104,25 +2115,6 @@ Value (string):
         <true/> | <false/>
       </dict>
     </dict>
-    <key>schemes</key>
-    <dict>
-      <key>mailto</key>
-      <dict>
-        <key>action</key>
-        <string>useHelperApp</string>
-        <key>ask</key>
-        <true/> | <false/>
-        <key>handlers</key>
-        <array>
-          <dict>
-            <key>name</key>
-            <string>Gmail</string>
-            <key>uriTemplate</key>
-            <string>https://mail.google.com/mail/?extsrc=mailto&url=%s</string>
-          </dict>
-        </array>
-      </dict>
-    </dict>
     <key>extensions</key>
     <dict>
       <key>pdf</key>
@@ -2214,7 +2206,7 @@ Value (string):
 ```
 <dict>
   <key>HardwareAcceleration</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -2281,7 +2273,7 @@ Value (string):
       <string>http://example.edu</string>
     </array>
     <key>Default</key>
-    <true/> | <false/>
+    <false/> | <true/>
   </dict>
 </dict>
 ```
@@ -2383,7 +2375,7 @@ Value (string):
 ```
 <dict>
   <key>NetworkPrediction</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -2427,7 +2419,7 @@ Value (string):
 ```
 <dict>
   <key>OfferToSaveLogins</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -2517,7 +2509,7 @@ Value (string):
 ```
 <dict>
   <key>PasswordManagerEnabled</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -2563,7 +2555,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/>or <disabled/>
+<enabled/> or <disabled/>
 ```
 
 #### macOS
@@ -2572,9 +2564,9 @@ Value (string):
   <key>PDFjs</key>
   <dict>
     <key>Enabled</key>
-    <true/> | <false/>
+    <false/> | <true/>
     <key>EnablePermissions</key>
-    <true/> | <false/>
+    <false/> | <true/>
   </dict>
 </dict>
 ```
@@ -3026,27 +3018,27 @@ Value (string):
     <key>Mode</key>
     <string>none | system | manual | autoDetect | autoConfig</string>
     <key>Locked</key>
-    <true> | </false>
+    <true/> | <false/>
     <key>HTTPProxy</key>
-    <string>https://httpproxy.example.com</string>
+    <string>httpproxy.example.com</string>
     <key>UseHTTPProxyForAllProtocols</key>
-    <true> | </false>
+    <true/> | <false/>
     <key>SSLProxy</key>
-    <string>https://sslproxy.example.com</string>
+    <string>sslproxy.example.com</string>
     <key>FTPProxy</key>
-    <string>https://ftpproxy.example.com</string>
+    <string>ftpproxy.example.com</string>
     <key>SOCKSProxy</key>
-    <string>https://socksproxy.example.com</string>
+    <string>socksproxy.example.com</string>
     <key>SOCKSVersion</key>
     <string>4 | 5</string>
     <key>Passthrough</key>
-    <string>&lt;local>&gt;</string>
+    <string>&lt;local&gt;</string>
     <key>AutoConfigURL</key>
     <string>URL_TO_AUTOCONFIG</string>
     <key>AutoLogin</key>
-    <true> | </false>
+    <true/> | <false/>
     <key>UseProxyForDNS</key>
-    <true> | </false>
+    <true/> | <false/>
   </dict>
 </dict>
 ```
@@ -3114,11 +3106,6 @@ Value (string):
     <string>de</string>
     <string>en-US</string>
   </array>
-</dict>
-
-or
-
-<dict>
   <key>RequestedLocales</key>
   <string>de,en-US</string>
 </dict>
@@ -3129,13 +3116,6 @@ or
 {
   "policies": {
     "RequestedLocales": ["de", "en-US"]
-  }
-}
-
-or
-
-{
-  "policies": {
     "RequestedLocales": "de,en-US"
   }
 }
@@ -3148,8 +3128,6 @@ or
 | `RequestedLocales` | 68.0 |  |
 
 ## SearchEngines
-
-As of Thunderbird 139, this policy is available in all versions of Thunderbird.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
@@ -3237,7 +3215,7 @@ Value (string):
         <key>PostData</key>
         <string>name=value&q={searchTerms}</string>
       </dict>
-    <array>
+    </array>
   </dict>
 </dict>
 ```
@@ -3272,7 +3250,7 @@ Value (string):
 
 ## SearchEngines | Default
 
-Set the default search engine.
+Set the default search engine. This policy is only available on the ESR.
 
 **CCK2 Equivalent:** `defaultSearchEngine`\
 **Preferences Affected:** N/A
@@ -3373,7 +3351,7 @@ Value (string):
 
 ## SearchEngines | Remove
 
-Hide built-in search engines.
+Hide built-in search engines. This policy is only available on the ESR.
 
 **CCK2 Equivalent:** `removeDefaultSearchEngines (removed all built-in engines)`\
 **Preferences Affected:** N/A
@@ -3433,7 +3411,7 @@ Set and lock the maximum version of TLS. (Thunderbird defaults to a maximum of T
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SSLVersionMax (REG_SZ) = "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+Software\Policies\Mozilla\Thunderbird\SSLVersionMax (REG_SZ) = "tls1.3" | "tls1.2" | "tls1.1" | "tls1"
 ```
 
 #### Windows (Intune)
@@ -3444,14 +3422,14 @@ OMA-URI:
 Value (string):
 ```
 <enabled/>
-<data id="SSLVersion" value="tls1 | tls1.2 | tls1.3"/>
+<data id="SSLVersion" value="tls1.3 | tls1.2 | tls1.1 | tls1"/>
 ```
 
 #### macOS
 ```
 <dict>
   <key>SSLVersionMax</key>
-  <string>tls1 | tls1.1 | tls1.2 | tls1.3</string>
+  <string>tls1.3 | tls1.2 | tls1.1 | tls1</string>
 </dict>
 ```
 
@@ -3459,7 +3437,7 @@ Value (string):
 ```
 {
   "policies": {
-    "SSLVersionMax": "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+    "SSLVersionMax": "tls1.3" | "tls1.2" | "tls1.1" | "tls1"
   }
 }
 ```
@@ -3479,7 +3457,7 @@ Set and lock the minimum version of TLS. (Thunderbird defaults to a minimum of T
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SSLVersionMin (REG_SZ) = "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+Software\Policies\Mozilla\Thunderbird\SSLVersionMin (REG_SZ) = "tls1.2" | "tls1.3" | "tls1.1" | "tls1"
 ```
 
 #### Windows (Intune)
@@ -3490,14 +3468,14 @@ OMA-URI:
 Value (string):
 ```
 <enabled/>
-<data id="SSLVersion" value="tls1 | tls1.2 | tls1.3"/>
+<data id="SSLVersion" value="tls1.2 | tls1.3 | tls1.1 | tls1"/>
 ```
 
 #### macOS
 ```
 <dict>
   <key>SSLVersionMin</key>
-  <string>tls1 | tls1.1 | tls1.2 | tls1.3</string>
+  <string>tls1.2 | tls1.3 | tls1.1 | tls1</string>
 </dict>
 ```
 
@@ -3505,7 +3483,7 @@ Value (string):
 ```
 {
   "policies": {
-    "SSLVersionMin": "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+    "SSLVersionMin": "tls1.2 | tls1.3 | tls1.1 | tls1"
   }
 }
 ```

@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Thunderbird ESR 91
+## Enterprise policy descriptions and templates for `Thunderbird ESR 91.13.2
 
 Policies can be specified by creating a file called `policies.json`:
 * Windows: place the file in a directory called `distribution` in the same
@@ -404,14 +404,6 @@ Value (string):
 <enabled/> or <disabled/>
 ```
 
-#### macOS
-```
-<dict>
-  <key>BackgroundAppUpdate</key>
-  <true/> | <false/>
-</dict>
-```
-
 #### policies.json
 ```
 {
@@ -633,7 +625,7 @@ Value (string):
 ```
 <dict>
   <key>CaptivePortal</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -1166,8 +1158,28 @@ Value (string):
 <dict>
   <key>DisabledCiphers</key>
     <dict>
-      <key>CIPHER_NAME</key>
-      <true/> | <false/>
+      <key>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</key>
+      <true/>
+      <key>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</key>
+      <true/>
+      <key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
+      <true/>
+      <key>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</key>
+      <true/>
+      <key>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</key>
+      <true/>
+      <key>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</key>
+      <true/>
+      <key>TLS_RSA_WITH_3DES_EDE_CBC_SHA</key>
+      <true/>
+      <key>TLS_RSA_WITH_AES_128_CBC_SHA</key>
+      <true/>
+      <key>TLS_RSA_WITH_AES_128_GCM_SHA256</key>
+      <false/>
+      <key>TLS_RSA_WITH_AES_256_CBC_SHA</key>
+      <true/>
+      <key>TLS_RSA_WITH_AES_256_GCM_SHA384</key>
+      <false/>
     </dict>
 </dict>
 ```
@@ -1601,7 +1613,7 @@ Value (string):
   <key>DNSOverHTTPS</key>
   <dict>
     <key>Enabled</key>
-    <true/> | <false/>
+    <false/> | <true/>
     <key>ProviderURL</key>
     <string>URL_TO_ALTERNATE_PROVIDER</string>
     <key>Locked</key>
@@ -1851,7 +1863,6 @@ Value (string):
       <string>Custom error message.</string>
       <key>install_sources</key>
       <array>
-        <string>about:addons</string>
         <string>https://addons.thunderbird.net/</string>
       </array>
       <key>installation_mode</key>
@@ -1934,7 +1945,7 @@ Value (string):
 ```
 <dict>
   <key>ExtensionUpdate</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -2061,25 +2072,6 @@ Value (string):
         <true/> | <false/>
       </dict>
     </dict>
-    <key>schemes</key>
-    <dict>
-      <key>mailto</key>
-      <dict>
-        <key>action</key>
-        <string>useHelperApp</string>
-        <key>ask</key>
-        <true/> | <false/>
-        <key>handlers</key>
-        <array>
-          <dict>
-            <key>name</key>
-            <string>Gmail</string>
-            <key>uriTemplate</key>
-            <string>https://mail.google.com/mail/?extsrc=mailto&url=%s</string>
-          </dict>
-        </array>
-      </dict>
-    </dict>
     <key>extensions</key>
     <dict>
       <key>pdf</key>
@@ -2171,7 +2163,7 @@ Value (string):
 ```
 <dict>
   <key>HardwareAcceleration</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -2238,7 +2230,7 @@ Value (string):
       <string>http://example.edu</string>
     </array>
     <key>Default</key>
-    <true/> | <false/>
+    <false/> | <true/>
   </dict>
 </dict>
 ```
@@ -2317,7 +2309,7 @@ Value (string):
 ```
 <dict>
   <key>NetworkPrediction</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -2361,7 +2353,7 @@ Value (string):
 ```
 <dict>
   <key>OfferToSaveLogins</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -2451,7 +2443,7 @@ Value (string):
 ```
 <dict>
   <key>PasswordManagerEnabled</key>
-  <true/> | <false/>
+  <false/> | <true/>
 </dict>
 ```
 
@@ -2481,7 +2473,7 @@ If `EnablePermissions` is set to true, the built-in PDF viewer will honor docume
 Note: DisableBuiltinPDFViewer has not been deprecated. You can either continue to use it, or switch to using PDFjs->Enabled to disable the built-in PDF viewer. This new permission was added because we needed a place for PDFjs->EnabledPermissions.
 
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** `pdfjs.diabled`, `pdfjs.enablePermissions`
+**Preferences Affected:** `pdfjs.disabled`, `pdfjs.enablePermissions`
 
 #### Windows (GPO)
 ```
@@ -2497,7 +2489,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/>or <disabled/>
+<enabled/> or <disabled/>
 ```
 
 #### macOS
@@ -2506,9 +2498,9 @@ Value (string):
   <key>PDFjs</key>
   <dict>
     <key>Enabled</key>
-    <true/> | <false/>
+    <false/> | <true/>
     <key>EnablePermissions</key>
-    <true/> | <false/>
+    <false/> | <true/>
   </dict>
 </dict>
 ```
@@ -2532,6 +2524,8 @@ Value (string):
 | `PDFjs`<br>`PDFjs_Enabled`<br>`PDFjs_EnablePermissions` | 91.0 |  |
 
 ## Preferences
+
+Set and lock preferences.
 
 **NOTE:** On Windows, in order to use this policy, you must clear all settings in the old **`Preferences (Deprecated)`** section for Thunderbird 78 and older.
 
@@ -2566,26 +2560,26 @@ as well as the following security preferences:
 
 | Preference | Type | Default |
 | --- | --- | --- |
-| security.default_personal_cert | string | Ask Every Time
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to Select Automatically, Thunderbird automatically chooses the default personal certificate.
-| security.insecure_connection_text.enabled | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to true, adds the words "Not Secure" for insecure sites.
-| security.insecure_connection_text.pbmode.enabled | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to true, adds the words "Not Secure" for insecure sites in private browsing.
-| security.insecure_field_warning.contextual.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If set to false, remove the warning for inscure login fields.
-| security.mixed_content.block_active_content | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, mixed active content (HTTP and HTTPS) is not blocked.
-| security.osclientcerts.autoload | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, client certificates are loaded from the operating system certificate store.
-| security.ssl.errorReporting.enabled | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, SSL errors cannot be sent to Mozilla.
-| security.tls.hello_downgrade_check | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, the TLS 1.3 downgrade check is disabled.
-| security.tls.version.enable-deprecated | boolean | false
-| &nbsp;&nbsp;&nbsp;&nbsp;If true, browser will accept TLS 1.0. and TLS 1.1
-| security.warn_submit_secure_to_insecure | boolean | true
-| &nbsp;&nbsp;&nbsp;&nbsp;If false, no warning is shown when submitting s form from https to http.
+| security.default_personal_cert | string | Ask Every Time |
+|     If set to Select Automatically, Thunderbird automatically chooses the default personal certificate. |
+| security.insecure_connection_text.enabled | boolean | false |
+|     If set to true, adds the words "Not Secure" for insecure sites. |
+| security.insecure_connection_text.pbmode.enabled | boolean | false |
+|     If set to true, adds the words "Not Secure" for insecure sites in private browsing. |
+| security.insecure_field_warning.contextual.enabled | boolean | true |
+|     If set to false, remove the warning for inscure login fields. |
+| security.mixed_content.block_active_content | boolean | true |
+|     If false, mixed active content (HTTP and HTTPS) is not blocked. |
+| security.osclientcerts.autoload | boolean | false |
+|     If true, client certificates are loaded from the operating system certificate store. |
+| security.ssl.errorReporting.enabled | boolean | true |
+|     If false, SSL errors cannot be sent to Mozilla. |
+| security.tls.hello_downgrade_check | boolean | true |
+|     If false, the TLS 1.3 downgrade check is disabled. |
+| security.tls.version.enable-deprecated | boolean | false |
+|     If true, browser will accept TLS 1.0. and TLS 1.1 |
+| security.warn_submit_secure_to_insecure | boolean | true |
+|     If false, no warning is shown when submitting s form from https to http. |
 
 Using the preference as the key, set the `Value` to the corresponding preference value.
 
@@ -2844,11 +2838,11 @@ Value (string):
 <enabled/>
 <data id="ProxyLocked" value="true | false"/>
 <data id="ConnectionType" value="none | system | manual | autoDetect | autoConfig"/>
-<data id="HTTPProxy" value="https://httpproxy.example.com"/>
+<data id="HTTPProxy" value="httpproxy.example.com"/>
 <data id="UseHTTPProxyForAllProtocols" value="true | false"/>
-<data id="SSLProxy" value="https://sslproxy.example.com"/>
-<data id="FTPProxy" value="https://ftpproxy.example.com"/>
-<data id="SOCKSProxy" value="https://socksproxy.example.com"/>
+<data id="SSLProxy" value="sslproxy.example.com"/>
+<data id="FTPProxy" value="ftpproxy.example.com"/>
+<data id="SOCKSProxy" value="socksproxy.example.com"/>
 <data id="SOCKSVersion" value="4 | 5"/>
 <data id="AutoConfigURL" value="URL_TO_AUTOCONFIG"/>
 <data id="Passthrough" value="<local>"/>
@@ -2864,27 +2858,27 @@ Value (string):
     <key>Mode</key>
     <string>none | system | manual | autoDetect | autoConfig</string>
     <key>Locked</key>
-    <true> | </false>
+    <true/> | <false/>
     <key>HTTPProxy</key>
-    <string>https://httpproxy.example.com</string>
+    <string>httpproxy.example.com</string>
     <key>UseHTTPProxyForAllProtocols</key>
-    <true> | </false>
+    <true/> | <false/>
     <key>SSLProxy</key>
-    <string>https://sslproxy.example.com</string>
+    <string>sslproxy.example.com</string>
     <key>FTPProxy</key>
-    <string>https://ftpproxy.example.com</string>
+    <string>ftpproxy.example.com</string>
     <key>SOCKSProxy</key>
-    <string>https://socksproxy.example.com</string>
+    <string>socksproxy.example.com</string>
     <key>SOCKSVersion</key>
     <string>4 | 5</string>
     <key>Passthrough</key>
-    <string>&lt;local>&gt;</string>
+    <string>&lt;local&gt;</string>
     <key>AutoConfigURL</key>
     <string>URL_TO_AUTOCONFIG</string>
     <key>AutoLogin</key>
-    <true> | </false>
+    <true/> | <false/>
     <key>UseProxyForDNS</key>
-    <true> | </false>
+    <true/> | <false/>
   </dict>
 </dict>
 ```
@@ -2952,11 +2946,6 @@ Value (string):
     <string>de</string>
     <string>en-US</string>
   </array>
-</dict>
-
-or
-
-<dict>
   <key>RequestedLocales</key>
   <string>de,en-US</string>
 </dict>
@@ -2967,13 +2956,6 @@ or
 {
   "policies": {
     "RequestedLocales": ["de", "en-US"]
-  }
-}
-
-or
-
-{
-  "policies": {
     "RequestedLocales": "de,en-US"
   }
 }
@@ -2994,7 +2976,7 @@ Set and lock the maximum version of TLS.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SSLVersionMax (REG_SZ) = "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+Software\Policies\Mozilla\Thunderbird\SSLVersionMax (REG_SZ) = "tls1.3" | "tls1.2" | "tls1.1" | "tls1"
 ```
 
 #### Windows (Intune)
@@ -3005,14 +2987,14 @@ OMA-URI:
 Value (string):
 ```
 <enabled/>
-<data id="SSLVersion" value="tls1 | tls1.2 | tls1.3"/>
+<data id="SSLVersion" value="tls1.3 | tls1.2 | tls1.1 | tls1"/>
 ```
 
 #### macOS
 ```
 <dict>
   <key>SSLVersionMax</key>
-  <string>tls1 | tls1.1 | tls1.2 | tls1.3</string>
+  <string>tls1.3 | tls1.2 | tls1.1 | tls1</string>
 </dict>
 ```
 
@@ -3020,7 +3002,7 @@ Value (string):
 ```
 {
   "policies": {
-    "SSLVersionMax": "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+    "SSLVersionMax": "tls1.3" | "tls1.2" | "tls1.1" | "tls1"
   }
 }
 ```
@@ -3040,7 +3022,7 @@ Set and lock the minimum version of TLS.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SSLVersionMin (REG_SZ) = "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+Software\Policies\Mozilla\Thunderbird\SSLVersionMin (REG_SZ) = "tls1.2" | "tls1.3" | "tls1.1" | "tls1"
 ```
 
 #### Windows (Intune)
@@ -3051,14 +3033,14 @@ OMA-URI:
 Value (string):
 ```
 <enabled/>
-<data id="SSLVersion" value="tls1 | tls1.2 | tls1.3"/>
+<data id="SSLVersion" value="tls1.2 | tls1.3 | tls1.1 | tls1"/>
 ```
 
 #### macOS
 ```
 <dict>
   <key>SSLVersionMin</key>
-  <string>tls1 | tls1.1 | tls1.2 | tls1.3</string>
+  <string>tls1.2 | tls1.3 | tls1.1 | tls1</string>
 </dict>
 ```
 
@@ -3066,7 +3048,7 @@ Value (string):
 ```
 {
   "policies": {
-    "SSLVersionMin": "tls1" | "tls1.1" | "tls1.2" | "tls1.3"
+    "SSLVersionMin": "tls1.2 | tls1.3 | tls1.1 | tls1"
   }
 }
 ```
