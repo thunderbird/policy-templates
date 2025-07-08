@@ -11,7 +11,7 @@ https://thunderbird.github.io/policy-templates/
 ## 📋 Features
 
 - **Documentation Generation**  
-  Builds documentation (README, `plist` files and `admx` files) for different
+  Builds documentation (README files and `PLIST` files, not yet `ADMX` files) for different
   Thunderbird versions:
   - ESR (Extended Support Release)
   - Release
