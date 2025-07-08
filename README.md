@@ -19,10 +19,10 @@ https://thunderbird.github.io/policy-templates/
 
 - **Change Detection**  
   Monitors Mozilla’s [`policy-templates`](https://github.com/mozilla/policy-templates)
-  repository and detects:
-  - New or removed policies
-  - Changed policy attributes
-  - Documentation updates
+  repository and the [`policies-schema.json`](https://searchfox.org/mozilla-central/source/browser/components/enterprisepolicies/schemas/policies-schema.json) file to detect:
+  - Newly added or removed policies
+  - Changes to policy attributes
+  - Updates to policy documentation
 
 - **GitHub Integration**  
   Automatically generates GitHub issues for policy changes that need to be
