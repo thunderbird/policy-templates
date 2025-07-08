@@ -8,8 +8,6 @@ ported to Thunderbird.
 The **generated** end-user documentation is available here:
 https://thunderbird.github.io/policy-templates/
 
----
-
 ## 📋 Features
 
 - **Documentation Generation**  
@@ -30,8 +28,9 @@ https://thunderbird.github.io/policy-templates/
   Automatically generates GitHub issues for policy changes that need to be
   reviewed or ported to Thunderbird (when run via a GitHub Action).
 
----
+## 📁 Project Structure
 
+```
 ├── config/                # YAML config files for the policy documentation per
 │                          # Thunderbird version (will be moved into comm-central soon).
 ├── docs/                  # The generated documentation. Can be used directly
@@ -39,8 +38,7 @@ https://thunderbird.github.io/policy-templates/
 ├── upstream/              # Stores last-known upstream revision states, used to
 │                          # identify changes since the last time the script run.
 └── generator/             # Source folder for the generator script.
-
----
+```
 
 ## 🛠️ Setup & Usage
 
@@ -68,8 +66,6 @@ node update_policy_templates.js
 This script can also be integrated into a CI workflow, such as **GitHub Actions**,
 to automate the generation and monitoring of policy templates.
 
----
-
 ## 🧠 Notes
 
 - Policies defined in the YAML files that are **not supported** by Thunderbird
@@ -78,8 +74,6 @@ to automate the generation and monitoring of policy templates.
   Revision state is stored in the `upstream/` directory.
 - YAML config files follow a **defined schema** for policy metadata. Refer to the
   format guide at the top of each YAML file for details.
-
----
 
 ## License
 
