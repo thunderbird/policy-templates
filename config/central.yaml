@@ -100,10 +100,10 @@
 #      intune:
 #        - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled'
 #          type: 'string'
-#          value: '<enabled/> or <disabled/>'
+#          value: '<enabled/> | <disabled/>'
 #        - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled'
 #          type: 'string'
-#          value: '<enabled/> or <disabled/>'
+#          value: '<enabled/> | <disabled/>'
 #
 # 2. **Multi-entry block format:**
 #    Use when multiple keys or URIs share the same type and value.
@@ -121,7 +121,7 @@
 #            ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled
 #            ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled
 #          type: 'string'
-#          value: '<enabled/> or <disabled/>'
+#          value: '<enabled/> | <disabled/>'
 #
 # ------------------------------------------------------------------------------
 # Multiple Option Values
@@ -313,16 +313,11 @@ policies:
       - mail.inappnotifications.message_enabled
       - mail.inappnotifications.enabled
     gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
-      - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
-      - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_SurveyEnabled'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
-      - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_MessageEnabled'
+      - key: |
+          Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled
+          Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled
+          Software\Policies\Mozilla\Thunderbird\InAppNotification_SurveyEnabled
+          Software\Policies\Mozilla\Thunderbird\InAppNotification_MessageEnabled
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
     intune:
@@ -332,7 +327,7 @@ policies:
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_SurveyEnabled
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_MessageEnabled
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>InAppNotification_Enabled</key>
@@ -567,7 +562,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/AppAutoUpdate'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>AppAutoUpdate</key>
@@ -719,10 +714,10 @@ policies:
           <data id="Authentication_AllowNonFQDN_SPNEGO" value="true | false"/>
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Authentication/Authentication_Locked'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Authentication/Authentication_PrivateBrowsing'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>Authentication</key>
@@ -804,7 +799,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/BackgroundAppUpdate'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     json: |
       {
         "policies": {
@@ -825,7 +820,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/BlockAboutAddons'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>BlockAboutAddons</key>
@@ -851,7 +846,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/BlockAboutConfig'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>BlockAboutConfig</key>
@@ -877,7 +872,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/BlockAboutProfiles'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>BlockAboutProfiles</key>
@@ -903,7 +898,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/BlockAboutSupport'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>BlockAboutSupport</key>
@@ -929,7 +924,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/CaptivePortal'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>CaptivePortal</key>
@@ -965,7 +960,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Certificates/Certificates_ImportEnterpriseRoots'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>Certificates</key>
@@ -1117,7 +1112,7 @@ policies:
           <data id="Permissions" value="1&#xF000;https://example.org"/>
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_Locked'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_Behavior'
         type: 'string'
         value: |
@@ -1184,41 +1179,35 @@ policies:
       - network.trr.mode
       - network.trr.uri
     gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Enabled'
+      - key: |
+          Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Enabled
+          Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Locked
+          Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Fallback
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
       - key: 'Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ProviderURL'
         type: 'REG_SZ'
         value: '"URL_TO_ALTERNATE_PROVIDER"'
-      - key: 'Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Locked'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
       - key: 'Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains\1'
         type: 'REG_SZ'
         value: '"example.com"'
-      - key: 'Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Fallback'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
     intune:
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Enabled'
+      - oma-uri: |
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Enabled
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Locked
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Fallback
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_ProviderURL'
         type: 'string'
         value: |
           <enabled/>
           <data id="String" value="URL_TO_ALTERNATE_PROVIDER"/>
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Locked'
-        type: 'string'
-        value: '<enabled/> or <disabled/>'
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_ExcludedDomains'
         type: 'string'
         value: |
           <enabled/>
           <data id="List" value="1&#xF000;example.com"/>
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Fallback'
-        type: 'string'
-        value: '<enabled/> or <disabled/>'
     plist: |
       <dict>
         <key>DNSOverHTTPS</key>
@@ -1288,7 +1277,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DisableAppUpdate'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>DisableAppUpdate</key>
@@ -1316,7 +1305,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DisableBuiltinPDFViewer'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>DisableBuiltinPDFViewer</key>
@@ -1343,7 +1332,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DisableDeveloperTools'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>DisableDeveloperTools</key>
@@ -1373,7 +1362,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DisableMasterPasswordCreation'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>DisableMasterPasswordCreation</key>
@@ -1398,7 +1387,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DisablePasswordReveal'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>DisablePasswordReveal</key>
@@ -1426,7 +1415,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DisableSafeMode'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>DisableSafeMode</key>
@@ -1453,19 +1442,17 @@ policies:
       - security.certerror.hideAddException
       - browser.safebrowsing.allowOverride
     gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass\InvalidCertificate'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
-      - key: 'Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass\SafeBrowsing'
+      - key: |
+          Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass\InvalidCertificate
+          Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass\SafeBrowsing
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
     intune:
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/P_DisableSecurityBypass_InvalidCertificate'
+      - oma-uri: |
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/P_DisableSecurityBypass_InvalidCertificate
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/P_DisableSecurityBypass_SafeBrowsing
         type: 'string'
-        value: '<enabled/> or <disabled/>'
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/P_DisableSecurityBypass_SafeBrowsing'
-        type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>DisableSecurityBypass</key>
@@ -1498,7 +1485,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DisableSystemAddonUpdate'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>DisableSystemAddonUpdate</key>
@@ -1532,7 +1519,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DisableTelemetry'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>DisableTelemetry</key>
@@ -1600,7 +1587,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_CIPHER_NAME'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>DisabledCiphers</key>
@@ -1633,7 +1620,26 @@ policies:
       {
         "policies": {
           "DisabledCiphers": {
-            "CIPHER_NAME": true | false,
+            "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": true | false,
+            "TLS_DHE_RSA_WITH_AES_256_CBC_SHA":" true | false,
+            "TLS_RSA_WITH_AES_128_CBC_SHA": true | false,
+            "TLS_RSA_WITH_AES_256_CBC_SHA": true | false,
+            "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": true | false,
+            "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": true | false,
+            "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": true | false,
+            "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": true | false,
+            "TLS_RSA_WITH_3DES_EDE_CBC_SHA": true | false,
+            "TLS_RSA_WITH_AES_128_GCM_SHA256": true | false,
+            "TLS_RSA_WITH_AES_256_GCM_SHA384": true | false,
+            "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256": true | false,
+            "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256": true | false,
+            "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384": true | false,
+            "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384": true | false,
+            "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA": true | false,
+            "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA": true | false,
+            "TLS_CHACHA20_POLY1305_SHA256": true | false,
+            "TLS_AES_128_GCM_SHA256": true | false,
+            "TLS_AES_256_GCM_SHA384": true | false
           }
         }
       }
@@ -1677,7 +1683,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Extensions/ExtensionUpdate'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>ExtensionUpdate</key>
@@ -1937,7 +1943,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/HardwareAcceleration'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>HardwareAcceleration</key>
@@ -2026,7 +2032,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/ManualAppUpdateOnly'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>ManualAppUpdateOnly</key>
@@ -2053,7 +2059,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/NetworkPrediction'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>NetworkPrediction</key>
@@ -2079,7 +2085,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/OfferToSaveLogins'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>OfferToSaveLogins</key>
@@ -2107,7 +2113,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/OfferToSaveLoginsDefault'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>OfferToSaveLoginsDefault</key>
@@ -2134,10 +2140,9 @@ policies:
       - pdfjs.disabled
       - pdfjs.enablePermissions
     gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\PDFjs\Enabled'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
-      - key: 'Software\Policies\Mozilla\Thunderbird\PDFjs\EnablePermissions'
+      - key: |
+          Software\Policies\Mozilla\Thunderbird\PDFjs\Enabled
+          Software\Policies\Mozilla\Thunderbird\PDFjs\EnablePermissions
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
     intune:
@@ -2145,7 +2150,7 @@ policies:
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~PDFjs/PDFjs_Enabled
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~PDFjs/PDFjs_EnablePermissions
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>PDFjs</key>
@@ -2180,7 +2185,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/PasswordManagerEnabled'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>PasswordManagerEnabled</key>
@@ -2210,7 +2215,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/PrimaryPassword'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>PrimaryPassword</key>
@@ -2236,7 +2241,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/PromptForDownloadLocation'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>PromptForDownloadLocation</key>
@@ -2301,15 +2306,16 @@ policies:
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\Mode'
         type: 'REG_SZ'
         value: '"none" | "system" | "manual" | "autoDetect" | "autoConfig"'
-      - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\Locked'
+      - key: |
+          Software\Policies\Mozilla\Thunderbird\Proxy\Locked
+          Software\Policies\Mozilla\Thunderbird\Proxy\UseHTTPProxyForAllProtocols
+          Software\Policies\Mozilla\Thunderbird\Proxy\AutoLogin
+          Software\Policies\Mozilla\Thunderbird\Proxy\UseProxyForDNS
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\HTTPProxy'
         type: 'REG_SZ'
         value: 'https://httpproxy.example.com'
-      - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\UseHTTPProxyForAllProtocols'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\SSLProxy'
         type: 'REG_SZ'
         value: 'https://sslproxy.example.com'
@@ -2328,16 +2334,15 @@ policies:
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\AutoConfigURL'
         type: 'REG_SZ'
         value: 'URL_TO_AUTOCONFIG'
-      - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\AutoLogin'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
-      - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\UseProxyForDNS'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
+
     intune:
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_Locked'
+      - oma-uri: |
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_Locked
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_UseHTTPProxyForAllProtocols
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_AutoLogin
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_UseProxyForDNS
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_ConnectionType'
         type: 'string'
         value: |
@@ -2348,9 +2353,6 @@ policies:
         value: |
           <enabled/>
           <data id="Proxy_HTTPProxy" value="httpproxy.example.com"/>
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_UseHTTPProxyForAllProtocols'
-        type: 'string'
-        value: '<enabled/> or <disabled/>'
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_SSLProxy'
         type: 'string'
         value: |
@@ -2372,12 +2374,6 @@ policies:
         value: |
           <enabled/>
           <data id="Proxy_Passthrough" value="&lt;local&gt;"/>
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_AutoLogin'
-        type: 'string'
-        value: '<enabled/> or <disabled/>'
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_UseProxyForDNS'
-        type: 'string'
-        value: '<enabled/> or <disabled/>'
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/Proxy'
         type: 'string'
         value: |
@@ -2694,7 +2690,7 @@ policies:
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Search/SearchEngines_PreventInstalls'
         type: 'string'
-        value: '<enabled/> or <disabled/>'
+        value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
         <key>SearchEngines</key>

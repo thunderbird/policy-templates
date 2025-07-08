@@ -29,7 +29,6 @@ function generateReadmeMarkdown(policies) {
             }\`](#${slugger.slug(key.replaceAll("_", " | "))
             })** | ${value.toc}`;
 
-        //console.log(value);
         readmeData[key].content = [
             `## ${key.replaceAll("_", " | ")}`,
             ``,
@@ -45,7 +44,12 @@ function generateReadmeMarkdown(policies) {
                 "",
                 "#### Windows (GPO)",
                 "```",
-                ...value.gpo.map(e => `${e.key} (${e.type}) = ${e.type == "REG_MULTI_SZ" ? "\n" : ""}${e.value.trim()}`),
+                ...value.gpo.flatMap(e => {
+                    // Multiple keys are given as a string, with a key on each
+                    // line. Render each as its own full key/type/value entry.
+                    let keys = e.key.split("\n").filter(Boolean);
+                    return keys.map(key => `${key} (${e.type}) = ${e.type == "REG_MULTI_SZ" ? "\n" : ""}${e.value.trim()}`)
+                }),
                 "```",
             )
         }
@@ -53,6 +57,9 @@ function generateReadmeMarkdown(policies) {
             readmeData[key].content.push(
                 "",
                 "#### Windows (Intune)",
+                // Multiple URIs are given as a string, with a URI on each line.
+                // Simple put all URIs as-is in the OMA-URI section, rendering
+                // type and value only once.
                 ...value.intune.flatMap(e => [
                     "OMA-URI:",
                     "```",

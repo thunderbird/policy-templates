@@ -161,7 +161,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -356,7 +356,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -364,7 +364,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -465,7 +465,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### policies.json
@@ -502,7 +502,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -547,7 +547,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -592,7 +592,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -637,7 +637,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -682,7 +682,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -742,7 +742,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -927,7 +927,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -1056,7 +1056,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1103,7 +1103,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1171,7 +1171,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1210,7 +1210,26 @@ Value (string):
 {
   "policies": {
     "DisabledCiphers": {
-      "CIPHER_NAME": true | false,
+      "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": true | false,
+      "TLS_DHE_RSA_WITH_AES_256_CBC_SHA":" true | false,
+      "TLS_RSA_WITH_AES_128_CBC_SHA": true | false,
+      "TLS_RSA_WITH_AES_256_CBC_SHA": true | false,
+      "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": true | false,
+      "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": true | false,
+      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": true | false,
+      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": true | false,
+      "TLS_RSA_WITH_3DES_EDE_CBC_SHA": true | false,
+      "TLS_RSA_WITH_AES_128_GCM_SHA256": true | false,
+      "TLS_RSA_WITH_AES_256_GCM_SHA384": true | false,
+      "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256": true | false,
+      "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256": true | false,
+      "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384": true | false,
+      "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384": true | false,
+      "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA": true | false,
+      "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA": true | false,
+      "TLS_CHACHA20_POLY1305_SHA256": true | false,
+      "TLS_AES_128_GCM_SHA256": true | false,
+      "TLS_AES_256_GCM_SHA384": true | false
     }
   }
 }
@@ -1244,7 +1263,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1293,7 +1312,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1338,7 +1357,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1385,7 +1404,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1434,18 +1453,11 @@ Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass\SafeBrowsing (REG_DW
 OMA-URI:
 ```
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/P_DisableSecurityBypass_InvalidCertificate
-```
-Value (string):
-```
-<enabled/> or <disabled/>
-```
-OMA-URI:
-```
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/P_DisableSecurityBypass_SafeBrowsing
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1498,7 +1510,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1547,7 +1559,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1593,20 +1605,22 @@ Configure DNS over HTTPS.
 #### Windows (GPO)
 ```
 Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Enabled (REG_DWORD) = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ProviderURL (REG_SZ) = "URL_TO_ALTERNATE_PROVIDER"
 Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Locked (REG_DWORD) = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains\1 (REG_SZ) = "example.com"
 Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Fallback (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ProviderURL (REG_SZ) = "URL_TO_ALTERNATE_PROVIDER"
+Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains\1 (REG_SZ) = "example.com"
 ```
 
 #### Windows (Intune)
 OMA-URI:
 ```
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Enabled
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Locked
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Fallback
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -1619,28 +1633,12 @@ Value (string):
 ```
 OMA-URI:
 ```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Locked
-```
-Value (string):
-```
-<enabled/> or <disabled/>
-```
-OMA-URI:
-```
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_ExcludedDomains
 ```
 Value (string):
 ```
 <enabled/>
 <data id="List" value="1&#xF000;example.com"/>
-```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Fallback
-```
-Value (string):
-```
-<enabled/> or <disabled/>
 ```
 
 #### macOS
@@ -1982,7 +1980,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2209,7 +2207,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2260,7 +2258,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2393,7 +2391,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2438,7 +2436,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2482,7 +2480,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2527,7 +2525,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2572,7 +2570,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2625,7 +2623,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2851,7 +2849,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2896,7 +2894,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2960,26 +2958,29 @@ Unless you lock this policy, changes the user already has in place will take eff
 ```
 Software\Policies\Mozilla\Thunderbird\Proxy\Mode (REG_SZ) = "none" | "system" | "manual" | "autoDetect" | "autoConfig"
 Software\Policies\Mozilla\Thunderbird\Proxy\Locked (REG_DWORD) = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Proxy\HTTPProxy (REG_SZ) = https://httpproxy.example.com
 Software\Policies\Mozilla\Thunderbird\Proxy\UseHTTPProxyForAllProtocols (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Proxy\AutoLogin (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Proxy\UseProxyForDNS (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\Proxy\HTTPProxy (REG_SZ) = https://httpproxy.example.com
 Software\Policies\Mozilla\Thunderbird\Proxy\SSLProxy (REG_SZ) = https://sslproxy.example.com
 Software\Policies\Mozilla\Thunderbird\Proxy\FTPProxy (REG_SZ) = https://ftpproxy.example.com
 Software\Policies\Mozilla\Thunderbird\Proxy\SOCKSProxy (REG_SZ) = https://socksproxy.example.com
 Software\Policies\Mozilla\Thunderbird\Proxy\SOCKSVersion (REG_DWORD) = 0x4 | 0x5
 Software\Policies\Mozilla\Thunderbird\Proxy\Passthrough (REG_SZ) = <local>
 Software\Policies\Mozilla\Thunderbird\Proxy\AutoConfigURL (REG_SZ) = URL_TO_AUTOCONFIG
-Software\Policies\Mozilla\Thunderbird\Proxy\AutoLogin (REG_DWORD) = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\Proxy\UseProxyForDNS (REG_DWORD) = 0x1 | 0x0
 ```
 
 #### Windows (Intune)
 OMA-URI:
 ```
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_Locked
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_UseHTTPProxyForAllProtocols
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_AutoLogin
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_UseProxyForDNS
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -2998,14 +2999,6 @@ Value (string):
 ```
 <enabled/>
 <data id="Proxy_HTTPProxy" value="httpproxy.example.com"/>
-```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_UseHTTPProxyForAllProtocols
-```
-Value (string):
-```
-<enabled/> or <disabled/>
 ```
 OMA-URI:
 ```
@@ -3043,22 +3036,6 @@ Value (string):
 ```
 <enabled/>
 <data id="Proxy_Passthrough" value="&lt;local&gt;"/>
-```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_AutoLogin
-```
-Value (string):
-```
-<enabled/> or <disabled/>
-```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_UseProxyForDNS
-```
-Value (string):
-```
-<enabled/> or <disabled/>
 ```
 OMA-URI:
 ```
@@ -3391,7 +3368,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS

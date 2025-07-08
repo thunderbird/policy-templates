@@ -151,7 +151,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -294,7 +294,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -302,7 +302,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -401,7 +401,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### policies.json
@@ -438,7 +438,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -483,7 +483,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -528,7 +528,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -573,7 +573,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -618,7 +618,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -678,7 +678,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -867,7 +867,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -884,7 +884,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -892,7 +892,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -900,7 +900,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -1040,7 +1040,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1085,7 +1085,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1150,7 +1150,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1222,7 +1222,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1271,7 +1271,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1316,7 +1316,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1363,7 +1363,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1413,7 +1413,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -1421,7 +1421,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1474,7 +1474,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1523,7 +1523,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -1579,7 +1579,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -1596,7 +1596,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -1939,7 +1939,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2157,7 +2157,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2303,7 +2303,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2347,7 +2347,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2392,7 +2392,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2437,7 +2437,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2490,7 +2490,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2711,7 +2711,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2756,7 +2756,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 
 #### macOS
@@ -2838,7 +2838,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -2864,7 +2864,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -2909,7 +2909,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
@@ -2917,7 +2917,7 @@ OMA-URI:
 ```
 Value (string):
 ```
-<enabled/> or <disabled/>
+<enabled/> | <disabled/>
 ```
 OMA-URI:
 ```
