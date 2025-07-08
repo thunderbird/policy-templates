@@ -1,3 +1,171 @@
+# ==============================================================================
+# Thunderbird Enterprise Policies YAML - Format Specification
+# ==============================================================================
+# This file defines the metadata and structure used to document Thunderbird's
+# enterprise policies.
+#
+# Markdown can be used in string fields, but **should be kept to a minimum**
+# to ensure consistent formatting in the generated documentation.
+#
+# ------------------------------------------------------------------------------
+# Top-Level Structure
+# ------------------------------------------------------------------------------
+# The YAML file consists of the following root-level entries:
+#
+# - description:             A general description/introduction printed before
+#                            the table of contents.
+# - policies:                A list of `Policy` objects, each describing a policy.
+#
+# ------------------------------------------------------------------------------
+# Policy Object Structure
+# ------------------------------------------------------------------------------
+# Each `Policy` object may define the following fields:
+#
+# - toc:                     A short description used in the generated table of
+#                            contents.
+# - content:                 A longer explanation of the policy’s purpose and
+#                            behavior.
+# - preferencesAffected:     Lists internal preferences affected by the policy.
+#                            See details in the section below.
+# - cck2Equivalent:          Reference to the equivalent legacy CCK2 setting used
+#                            in the "Configuration & Customization Kit 2" tool.
+# - gpo:                     A list of Windows Group Policy Objects. See format
+#                            details in the "GPO and Intune Objects" section.
+# - intune:                  A list of Intune OMA-URI entries for MDM deployment.
+# - plist:                   A macOS `plist` representation of the policy.
+# - json:                    JSON representation for cross-platform configuration.
+#
+# Fields that are not relevant to a specific policy may be omitted or explicitly
+# defined as empty.
+#
+# ------------------------------------------------------------------------------
+# String Field Conventions
+# ------------------------------------------------------------------------------
+# String values support two formatting styles:
+#
+# 1. **One-line string (preferred for short values):**
+#    Use single quotes (`'`) to wrap the string.
+#
+#    Example:
+#      description: 'Enables the feature.'
+#
+# 2. **Multi-line block (preferred for longer content):**
+#    Use a pipe (`|`) followed by indented lines.
+#
+#    Example:
+#      description: |
+#        Enables the feature and provides additional details.
+#        This setting is important for performance tuning.
+#
+# ------------------------------------------------------------------------------
+# Format for `preferencesAffected`
+# ------------------------------------------------------------------------------
+# This field documents which internal preferences are affected by the policy.
+#
+# Supported formats:
+#
+# 1. **List of preferences:**
+#    Rendered as a comma-separated list, each rendered as inline code.
+#
+#    Example:
+#      preferencesAffected:
+#        - browser.example.preference1
+#        - browser.example.preference2
+#
+# 2. **Free-form string description:**
+#    Used when a list is impractical.
+#
+#    Example:
+#      preferencesAffected: 'Many internal preferences may be affected.'
+#
+# ------------------------------------------------------------------------------
+# Format for `gpo` and `intune` Objects
+# ------------------------------------------------------------------------------
+# These sections define one or more keys or URIs, specifying their type and value.
+#
+# The `gpo.key` and `intune.oma-uri` fields support:
+#
+# 1. **Single-entry format:**
+#    Use for simple key/type/value triples.
+#
+#    Example:
+#      gpo:
+#        - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled'
+#          type: 'REG_DWORD'
+#          value: '0x1 | 0x0'
+#        - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled'
+#          type: 'REG_DWORD'
+#          value: '0x1 | 0x0'
+#
+#      intune:
+#        - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled'
+#          type: 'string'
+#          value: '<enabled/> | <disabled/>'
+#        - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled'
+#          type: 'string'
+#          value: '<enabled/> | <disabled/>'
+#
+# 2. **Multi-entry block format:**
+#    Use when multiple keys or URIs share the same type and value.
+#
+#    Example:
+#      gpo:
+#        - key: |
+#            Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled
+#            Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled
+#          type: 'REG_DWORD'
+#          value: '0x1 | 0x0'
+#
+#      intune:
+#        - oma-uri: |
+#            ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled
+#            ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled
+#          type: 'string'
+#          value: '<enabled/> | <disabled/>'
+#
+# ------------------------------------------------------------------------------
+# Multiple Option Values
+# ------------------------------------------------------------------------------
+# Some entries in `gpo`, `intune`, `plist`, and `json` blocks may include
+# multiple valid options separated by a pipe (`|`). This is used to indicate all
+# the possible values that are accepted by the policy backend.
+#
+# Example:
+#   gpo:
+#     - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled'
+#       type: 'REG_DWORD'
+#       value: '0x1 | 0x0'
+#
+#   intune:
+#     - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled'
+#       type: 'string'
+#       value: '<enabled/> | <disabled/>'
+#
+#   plist:
+#     <dict>
+#       <key>InAppNotification_Enabled</key>
+#       <true/> | <false/>
+#       <key>InAppNotification_DonationEnabled</key>
+#       <true/> | <false/>
+#     </dict>
+#
+#   json:
+#     {
+#       "policies": {
+#         "InAppNotification_Enabled": true | false,
+#         "InAppNotification_DonationEnabled": true | false,
+#         "InAppNotification_SurveyEnabled": true | false,
+#         "InAppNotification_MessageEnabled": true | false
+#       }
+#     }
+#
+# ------------------------------------------------------------------------------
+# Compliance and Maintenance
+# ------------------------------------------------------------------------------
+# Please follow this format strictly to ensure correct parsing and rendering
+# by the documentation generation tools.
+# ==============================================================================
+
 description: |
   Policies can be specified by creating a file called `policies.json`:
   * Windows: place the file in a directory called `distribution` in the same
@@ -1118,7 +1286,7 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\DisableDeveloperTools'
         type: 'REG_SZ'
-        value: '0x1 | 0x0`'
+        value: '0x1 | 0x0'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DisableDeveloperTools'
         type: 'string'
@@ -1325,27 +1493,9 @@ policies:
   DisabledCiphers:
     toc: 'Disable ciphers.'
     content: |
-      Disable specific cryptographic ciphers, listed below.
+      Disable specific cryptographic ciphers. For the full list of supported ciphers check the
+      compatibility table below. The examples given here cover only a small subset.
 
-      ```
-      TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-      TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
-      TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
-      TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
-      TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
-      TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-      TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
-      TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
-      TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
-      TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
-      TLS_DHE_RSA_WITH_AES_128_CBC_SHA
-      TLS_DHE_RSA_WITH_AES_256_CBC_SHA
-      TLS_RSA_WITH_AES_128_GCM_SHA256
-      TLS_RSA_WITH_AES_256_GCM_SHA384
-      TLS_RSA_WITH_AES_128_CBC_SHA
-      TLS_RSA_WITH_AES_256_CBC_SHA
-      TLS_RSA_WITH_3DES_EDE_CBC_SHA
-      ```
     cck2Equivalent:
     preferencesAffected:
       - security.ssl3.ecdhe_rsa_aes_128_gcm_sha256
@@ -1366,11 +1516,23 @@ policies:
       - security.ssl3.rsa_aes_256_sha
       - security.ssl3.deprecated.rsa_des_ede3_sha
     gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\DisabledCiphers\CIPHER_NAME'
+      - key: |
+          Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+          Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+          Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+          Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+          Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+          Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
     intune:
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_CIPHER_NAME'
+      - oma-uri: |
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
         type: 'string'
         value: '<enabled/> | <disabled/>'
     plist: |
@@ -1381,31 +1543,26 @@ policies:
             <true/>
             <key>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</key>
             <true/>
-            <key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
-            <true/>
             <key>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</key>
-            <true/>
-            <key>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</key>
             <true/>
             <key>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</key>
             <true/>
-            <key>TLS_RSA_WITH_3DES_EDE_CBC_SHA</key>
+            <key>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</key>
             <true/>
-            <key>TLS_RSA_WITH_AES_128_CBC_SHA</key>
+            <key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
             <true/>
-            <key>TLS_RSA_WITH_AES_128_GCM_SHA256</key>
-            <false/>
-            <key>TLS_RSA_WITH_AES_256_CBC_SHA</key>
-            <true/>
-            <key>TLS_RSA_WITH_AES_256_GCM_SHA384</key>
-            <false/>
           </dict>
       </dict>
     json: |
       {
         "policies": {
           "DisabledCiphers": {
-            "CIPHER_NAME": true | false,
+            "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": true | false,
+            "TLS_DHE_RSA_WITH_AES_256_CBC_SHA":" true | false,
+            "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": true | false,
+            "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": true | false,
+            "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": true | false,
+            "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": true | false,
           }
         }
       }

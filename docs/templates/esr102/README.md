@@ -798,7 +798,7 @@ Configure cookie preferences.
 `BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.
 
 | Value | Description
-| --- | ---
+| --- | --- |
 | accept | Accept all cookies
 | reject-foreign | Reject third party cookies
 | reject | Reject all cookies
@@ -1113,40 +1113,31 @@ Value (string):
 
 ## DisabledCiphers
 
-Disable specific cryptographic ciphers, listed below.
-
-```
-TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
-TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
-TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
-TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
-TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
-TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
-TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
-TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
-TLS_DHE_RSA_WITH_AES_128_CBC_SHA
-TLS_DHE_RSA_WITH_AES_256_CBC_SHA
-TLS_RSA_WITH_AES_128_GCM_SHA256
-TLS_RSA_WITH_AES_256_GCM_SHA384
-TLS_RSA_WITH_AES_128_CBC_SHA
-TLS_RSA_WITH_AES_256_CBC_SHA
-TLS_RSA_WITH_3DES_EDE_CBC_SHA
-```
+Disable specific cryptographic ciphers. For the full list of supported ciphers check the
+compatibility table below. The examples given here cover only a small subset.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_rsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_ecdsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_256_sha`, `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.deprecated.rsa_des_ede3_sha`
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisabledCiphers\CIPHER_NAME (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_DHE_RSA_WITH_AES_128_CBC_SHA (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_DHE_RSA_WITH_AES_256_CBC_SHA (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (REG_DWORD) = 0x1 | 0x0
 ```
 
 #### Windows (Intune)
 OMA-URI:
 ```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_CIPHER_NAME
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
 ```
 Value (string):
 ```
@@ -1162,24 +1153,14 @@ Value (string):
       <true/>
       <key>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</key>
       <true/>
-      <key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
-      <true/>
       <key>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</key>
-      <true/>
-      <key>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</key>
       <true/>
       <key>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</key>
       <true/>
-      <key>TLS_RSA_WITH_3DES_EDE_CBC_SHA</key>
+      <key>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</key>
       <true/>
-      <key>TLS_RSA_WITH_AES_128_CBC_SHA</key>
+      <key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
       <true/>
-      <key>TLS_RSA_WITH_AES_128_GCM_SHA256</key>
-      <false/>
-      <key>TLS_RSA_WITH_AES_256_CBC_SHA</key>
-      <true/>
-      <key>TLS_RSA_WITH_AES_256_GCM_SHA384</key>
-      <false/>
     </dict>
 </dict>
 ```
@@ -1189,7 +1170,12 @@ Value (string):
 {
   "policies": {
     "DisabledCiphers": {
-      "CIPHER_NAME": true | false,
+      "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": true | false,
+      "TLS_DHE_RSA_WITH_AES_256_CBC_SHA":" true | false,
+      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": true | false,
+      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": true | false,
+      "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": true | false,
+      "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": true | false,
     }
   }
 }
@@ -1212,7 +1198,7 @@ Remove access to all developer tools.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisableDeveloperTools (REG_SZ) = 0x1 | 0x0`
+Software\Policies\Mozilla\Thunderbird\DisableDeveloperTools (REG_SZ) = 0x1 | 0x0
 ```
 
 #### Windows (Intune)
