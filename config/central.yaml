@@ -1,58 +1,56 @@
-# ------------------------------------------------------------------------------
-# Format specification for Enterprise Policies YAML
-# ------------------------------------------------------------------------------
-# This file defines the metadata and documentation for Thunderbird's enterprise
-# policies.
+# ==============================================================================
+# Thunderbird Enterprise Policies YAML - Format Specification
+# ==============================================================================
+# This file defines the metadata and structure used to document Thunderbird's
+# enterprise policies.
 #
 # Markdown can be used in string fields, but **should be kept to a minimum**
 # to ensure consistent formatting in the generated documentation.
 #
-# The file has the following root entries:
+# ------------------------------------------------------------------------------
+# Top-Level Structure
+# ------------------------------------------------------------------------------
+# The YAML file consists of the following root-level entries:
 #
-# - description:         A general description or introduction, which is printed
-#                        before the generated table of contents.
-# - policies:            A list of `Policy` objects, describing each policy. See
-#                        detailed format description below.
+# - description:             A general description/introduction printed before
+#                            the table of contents.
+# - policies:                A list of `Policy` objects, each describing a policy.
 #
 # ------------------------------------------------------------------------------
-# Format specification for `Policy` objects
+# Policy Object Structure
 # ------------------------------------------------------------------------------
 # Each `Policy` object may define the following fields:
 #
-# - toc:                 A short description of what the policy does, to be used
-#                        in the generated table fo contents.
-# - content:             A long description of the policy, its behavior,
-#                        and any background information.
-# - preferencesAffected: Indicates which internal preferences are affected
-#                        by this policy. See detailed format description below.
-# - cck2Equivalent:      (Optional) A reference to an equivalent setting of the
-#                        legacy "Configuration & Customization Kit 2" tool (CCK2).
-# - gpo:                 A list of Windows Group Policy Objects (GPOs) associated
-#                        with the policy. See detailed format description below.
-# - intune:              A list of Intune OMA-URI mappings for MDM deployment.
-# - plist:               A macOS `plist` representation for managing the policy.
-# - json:                A JSON format showing how the policy is represented
-#                        in a cross-platform configuration file.
+# - toc:                     A short description used in the generated table of
+#                            contents.
+# - content:                 A longer explanation of the policy’s purpose and
+#                            behavior.
+# - preferencesAffected:     Lists internal preferences affected by the policy.
+#                            See details in the section below.
+# - cck2Equivalent:          Reference to the equivalent legacy CCK2 setting used
+#                            in the "Configuration & Customization Kit 2" tool.
+# - gpo:                     A list of Windows Group Policy Objects. See format
+#                            details in the "GPO and Intune Objects" section.
+# - intune:                  A list of Intune OMA-URI entries for MDM deployment.
+# - plist:                   A macOS `plist` representation of the policy.
+# - json:                    JSON representation for cross-platform configuration.
 #
-# These fields may not all be present in every policy block. Only the fields
-# relevant to a specific policy need to be defined. They can however be specified
-# as empty.
+# Fields that are not relevant to a specific policy may be omitted or explicitly
+# defined as empty.
 #
 # ------------------------------------------------------------------------------
-# General instructions for string fields
+# String Field Conventions
 # ------------------------------------------------------------------------------
-# String values can be provided in one of two formats:
+# String values support two formatting styles:
 #
-# 1. **One-line string:**
-#    This format is preferred for short values. The string is enclosed in single
-#    quotes (`'`).
+# 1. **One-line string (preferred for short values):**
+#    Use single quotes (`'`) to wrap the string.
 #
 #    Example:
 #      description: 'Enables the feature.'
 #
-# 2. **Multi-line block:**
-#    This format is preferred for longer or formatted content. The block does not
-#    need to be quoted, but must be introduced with a pipe (`|`).
+# 2. **Multi-line block (preferred for longer content):**
+#    Use a pipe (`|`) followed by indented lines.
 #
 #    Example:
 #      description: |
@@ -60,36 +58,35 @@
 #        This setting is important for performance tuning.
 #
 # ------------------------------------------------------------------------------
-# Format specification for `preferencesAffected`
+# Format for `preferencesAffected`
 # ------------------------------------------------------------------------------
-# This field is used to document which preferences are affected by the policy.
-# It can be expressed in two formats:
+# This field documents which internal preferences are affected by the policy.
+#
+# Supported formats:
 #
 # 1. **List of preferences:**
-#    When specific preferences are listed, they will be rendered as a comma-separated
-#    list and each item will appear as inline code.
+#    Rendered as a comma-separated list, each rendered as inline code.
 #
 #    Example:
 #      preferencesAffected:
 #        - browser.example.preference1
 #        - browser.example.preference2
 #
-# 2. **Free-form description:**
-#    When a list is not appropriate, a descriptive string may be used instead.
+# 2. **Free-form string description:**
+#    Used when a list is impractical.
 #
 #    Example:
 #      preferencesAffected: 'Many internal preferences may be affected.'
 #
 # ------------------------------------------------------------------------------
-# Format specification for `GPO` and `Intune` objects
+# Format for `gpo` and `intune` Objects
 # ------------------------------------------------------------------------------
-# These sections define multiple entries as a list. The `intune.oma-uri` and
-# `gpo.key` fields support two formats depending on the number of keys or URIs
-# that share the same settings. This avoids unnecessary duplication when multiple
-# entries have identical values.
+# These sections define one or more keys or URIs, specifying their type and value.
 #
-# 1. **Single one-line string:**
-#    Use this simple format to specify a key/type/value triple.
+# The `gpo.key` and `intune.oma-uri` fields support:
+#
+# 1. **Single-entry format:**
+#    Use for simple key/type/value triples.
 #
 #    Example:
 #      gpo:
@@ -108,9 +105,8 @@
 #          type: 'string'
 #          value: '<enabled/> or <disabled/>'
 #
-# 2. **Multi-line block string:**
-#    Use this format when multiple keys or URIs share the same `type` and `value`.
-#    Begin the block with a pipe (`|`), and list each entry on a new line.
+# 2. **Multi-entry block format:**
+#    Use when multiple keys or URIs share the same type and value.
 #
 #    Example:
 #      gpo:
@@ -128,16 +124,11 @@
 #          value: '<enabled/> or <disabled/>'
 #
 # ------------------------------------------------------------------------------
-# Multiple option values (`gpo`, `intune`, `plist`, `json`)
+# Multiple Option Values
 # ------------------------------------------------------------------------------
-# Some entries in the `gpo`, `intune`, `plist`, and `json` sections may contain
-# multiple options, separated by a pipe (`|`). This is used to indicate all the
-# possible values that are accepted by the policy backend.
-#
-# However, these are **not** valid configuration values directly. Only one of the
-# options must be selected and used in actual policy configuration.
-#
-# This format was chosen for documentation purposes to reflect supported values.
+# Some entries in `gpo`, `intune`, `plist`, and `json` blocks may include
+# multiple valid options separated by a pipe (`|`). This is used to indicate all
+# the possible values that are accepted by the policy backend.
 #
 # Example:
 #   gpo:
@@ -148,7 +139,7 @@
 #   intune:
 #     - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled'
 #       type: 'string'
-#       value: '<enabled/> or <disabled/>'
+#       value: '<enabled/> | <disabled/>'
 #
 #   plist:
 #     <dict>
@@ -169,8 +160,11 @@
 #     }
 #
 # ------------------------------------------------------------------------------
-# Please follow this format strictly to ensure proper parsing and rendering.
+# Compliance and Maintenance
 # ------------------------------------------------------------------------------
+# Please follow this format strictly to ensure correct parsing and rendering
+# by the documentation generation tools.
+# ==============================================================================
 
 description: |
   Policies can be specified by creating a file called `policies.json`:
