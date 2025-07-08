@@ -73,7 +73,8 @@ to automate the generation and monitoring of policy templates.
 - The script only reports changes that occurred **since the last known revision**.
   Revision state is stored in the `upstream/` directory.
 - YAML config files follow a **defined schema** for policy metadata. Refer to the
-  format guide at the top of each YAML file for details.
+  format guide at the top of each [YAML file](https://github.com/thunderbird/policy-templates/blob/master/config/central.yaml)
+  for details.
 
 ## License
 
