@@ -180,7 +180,15 @@ export async function generatePolicyReadme(template, thunderbirdPolicies, output
 
     let md = TREE_TEMPLATE
         .replace("__name__", template.name)
-        .replace("__desc__", `${template.tree == "central" ? DESC_DEFAULT_DAILY_TEMPLATE : ""}${template.description}`)
+        .replace("__desc__", `${template.tree == "central" ? DESC_DEFAULT_DAILY_TEMPLATE : ""}${
+            template.description
+                .replaceAll(
+                    `[thunderbird.admx]`,
+                    `[thunderbird.admx](https://github.com/thunderbird/policy-templates/tree/master/docs/templates/${template.tree}/windows)`)
+                .replaceAll(
+                    `[org.mozilla.thunderbird.plist]`,
+                    `[org.mozilla.thunderbird.plist](https://github.com/thunderbird/policy-templates/blob/master/docs/templates/${template.tree}/mac/org.mozilla.thunderbird.plist)`)
+        }`)
         .replace("__list_of_policies__", header.join("\n"))
         .replace("__details__", details.join("\n"));
 
