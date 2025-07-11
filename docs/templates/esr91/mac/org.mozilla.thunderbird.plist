@@ -83,31 +83,15 @@
     </dict>
     <key>Cookies</key>
     <dict>
-      <key>AcceptThirdParty</key>
-      <string>always</string>
       <key>Allow</key>
       <array>
         <string>http://example.com</string>
       </array>
-      <key>AllowSession</key>
-      <array>
-        <string>http://example.edu</string>
-      </array>
-      <key>Behavior</key>
-      <string>accept</string>
-      <key>BehaviorPrivateBrowsing</key>
-      <string>accept</string>
       <key>Block</key>
       <array>
         <string>http://example.org</string>
       </array>
-      <key>Default</key>
-      <true/>
-      <key>ExpireAtSessionEnd</key>
-      <true/>
       <key>Locked</key>
-      <true/>
-      <key>RejectTracker</key>
       <true/>
     </dict>
     <key>DefaultDownloadDirectory</key>

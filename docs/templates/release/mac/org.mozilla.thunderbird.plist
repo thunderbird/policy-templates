@@ -89,14 +89,6 @@
       <array>
         <string>http://example.com</string>
       </array>
-      <key>AllowSession</key>
-      <array>
-        <string>http://example.edu</string>
-      </array>
-      <key>Behavior</key>
-      <string>accept</string>
-      <key>BehaviorPrivateBrowsing</key>
-      <string>accept</string>
       <key>Block</key>
       <array>
         <string>http://example.org</string>
@@ -152,8 +144,6 @@
       <array>
         <string>example.com</string>
       </array>
-      <key>Fallback</key>
-      <true/>
       <key>Locked</key>
       <true/>
       <key>ProviderURL</key>
@@ -243,9 +233,9 @@
     </dict>
     <key>HardwareAcceleration</key>
     <false/>
-    <key>InAppNotification_DonationEnabled</key>
+    <key>InAppNotification_Disabled</key>
     <true/>
-    <key>InAppNotification_Enabled</key>
+    <key>InAppNotification_DonationEnabled</key>
     <true/>
     <key>InAppNotification_MessageEnabled</key>
     <true/>

@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Thunderbird ESR 140.0
+## Enterprise policy descriptions and templates for Thunderbird ESR 140.0.1
 
 Policies can be specified by creating a file called `policies.json`:
 * Windows: place the file in a directory called `distribution` in the same
@@ -199,7 +199,7 @@ You should specify a version that exists or is guaranteed to exist. If you speci
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\AppUpdatePin (REG_SZ) = "106."
+Software\Policies\Mozilla\Thunderbird\AppUpdatePin (REG_SZ) = 106.
 ```
 
 #### Windows (Intune)
@@ -245,7 +245,7 @@ Change the URL for application update if you are providing Thunderbird updates f
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\AppUpdateURL (REG_SZ) = "https://yoursite.com"
+Software\Policies\Mozilla\Thunderbird\AppUpdateURL (REG_SZ) = https://yoursite.com
 ```
 
 #### Windows (Intune)
@@ -295,12 +295,12 @@ See [Integrated authentication](https://htmlpreview.github.io/?https://github.co
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO\1 (REG_SZ) = "mydomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO\2 (REG_SZ) = "https://myotherdomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\Delegated\1 (REG_SZ) = "mydomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\Delegated\2 (REG_SZ) = "https://myotherdomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\NTLM\1 (REG_SZ) = "mydomain.com"
-Software\Policies\Mozilla\Thunderbird\Authentication\NTLM\2 (REG_SZ) = "https://myotherdomain.com"
+Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO\1 (REG_SZ) = mydomain.com
+Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO\2 (REG_SZ) = https://myotherdomain.com
+Software\Policies\Mozilla\Thunderbird\Authentication\Delegated\1 (REG_SZ) = mydomain.com
+Software\Policies\Mozilla\Thunderbird\Authentication\Delegated\2 (REG_SZ) = https://myotherdomain.com
+Software\Policies\Mozilla\Thunderbird\Authentication\NTLM\1 (REG_SZ) = mydomain.com
+Software\Policies\Mozilla\Thunderbird\Authentication\NTLM\2 (REG_SZ) = https://myotherdomain.com
 Software\Policies\Mozilla\Thunderbird\Authentication\AllowNonFQDN\SPNEGO (REG_DWORD) = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\Authentication\AllowNonFQDN\NTLM (REG_DWORD) = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\Authentication\AllowProxies\SPNEGO (REG_DWORD) = 0x1 | 0x0
@@ -798,8 +798,8 @@ Binary (DER) and ASCII (PEM) certificates are both supported.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Certificates\Install\1 (REG_SZ) = "cert1.der"
-Software\Policies\Mozilla\Thunderbird\Certificates\Install\2 (REG_SZ) = "C:\Users\username\cert2.pem"
+Software\Policies\Mozilla\Thunderbird\Certificates\Install\1 (REG_SZ) = cert1.der
+Software\Policies\Mozilla\Thunderbird\Certificates\Install\2 (REG_SZ) = C:\Users\username\cert2.pem
 ```
 
 #### Windows (Intune)
@@ -850,43 +850,17 @@ Configure cookie preferences.
 
 `Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.
 
-`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.
-
 `Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.
-
-`Behavior` sets the default behavior for cookies based on the values below.
-
-`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.
-
-| Value | Description
-| --- | --- |
-| accept | Accept all cookies
-| reject-foreign | Reject third party cookies
-| reject | Reject all cookies
-| limit-foreign | Reject third party cookies for sites you haven't visited
-| reject-tracker | Reject cookies for known trackers (default)
-| reject-tracker-and-partition-foreign | Reject cookies for known trackers and partition third-party cookies (Total Cookie Protection) (default for private browsing)
 
 `Locked` prevents the user from changing cookie preferences.
 
-`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)
-
-`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)
-
-`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)
-
-`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown-selective) instead)
-
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** `network.cookie.cookieBehavior`, `network.cookie.cookieBehavior.pbmode`, `network.cookie.lifetimePolicy`
+**Preferences Affected:** `network.cookie.cookieBehavior`, `network.cookie.lifetimePolicy`
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Cookies\Allow\1 (REG_SZ) = "https://example.com"
-Software\Policies\Mozilla\Thunderbird\Cookies\AllowSession\1 (REG_SZ) = "https://example.edu"
-Software\Policies\Mozilla\Thunderbird\Cookies\Block\1 (REG_SZ) = "https://example.org"
-Software\Policies\Mozilla\Thunderbird\Cookies\Behavior (REG_SZ) = "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign"
-Software\Policies\Mozilla\Thunderbird\Cookies\BehaviorPrivateBrowsing (REG_SZ) = "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign"
+Software\Policies\Mozilla\Thunderbird\Cookies\Allow\1 (REG_SZ) = https://example.com
+Software\Policies\Mozilla\Thunderbird\Cookies\Block\1 (REG_SZ) = https://example.org
 Software\Policies\Mozilla\Thunderbird\Cookies\Locked (REG_DWORD) = 0x1 | 0x0
 ```
 
@@ -899,15 +873,6 @@ Value (string):
 ```
 <enabled/>
 <data id="Permissions" value="1&#xF000;https://example.com"/>
-```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_AllowSession
-```
-Value (string):
-```
-<enabled/>
-<data id="Permissions" value="1&#xF000;https://example.edu"/>
 ```
 OMA-URI:
 ```
@@ -926,24 +891,6 @@ Value (string):
 ```
 <enabled/> | <disabled/>
 ```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_Behavior
-```
-Value (string):
-```
-<enabled/>
-<data id="Cookies_Behavior" value="accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign"/>
-```
-OMA-URI:
-```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_BehaviorPrivateBrowsing
-```
-Value (string):
-```
-<enabled/>
-<data id="Cookies_BehaviorPrivateBrowsing" value="accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign"/>
-```
 
 #### macOS
 ```
@@ -954,20 +901,12 @@ Value (string):
     <array>
       <string>http://example.com</string>
     </array>
-    <key>AllowSession</key>
-    <array>
-      <string>http://example.edu</string>
-    </array>
     <key>Block</key>
     <array>
       <string>http://example.org</string>
     </array>
     <key>Locked</key>
     <true/> | <false/>
-    <key>Behavior</key>
-    <string>accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign</string>
-    <key>BehaviorPrivateBrowsing</key>
-    <string>accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign</string>
   </dict>
 </dict>
 ```
@@ -978,11 +917,8 @@ Value (string):
   "policies": {
     "Cookies": {
       "Allow": ["http://example.org/"],
-      "AllowSession": ["http://example.edu/"],
       "Block": ["http://example.edu/"],
       "Locked": true | false,
-      "Behavior": "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign",
-      "BehaviorPrivateBrowsing": "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign",
     }
   }
 }
@@ -1005,7 +941,7 @@ You can use ${home} for the native home directory.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DefaultDownloadDirectory (REG_SZ) = "${home}\Downloads"
+Software\Policies\Mozilla\Thunderbird\DefaultDownloadDirectory (REG_EXPAND_SZ) = ${home}\Downloads
 ```
 
 #### Windows (Intune)
@@ -1212,7 +1148,7 @@ Remove access to all developer tools.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DisableDeveloperTools (REG_SZ) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\DisableDeveloperTools (REG_DWORD) = 0x1 | 0x0
 ```
 
 #### Windows (Intune)
@@ -1556,8 +1492,6 @@ Configure DNS over HTTPS.
 
 `ExcludedDomains` excludes domains from DNS over HTTPS.
 
-`Fallback` determines whether or not Thunderbird will use your default DNS resolver if there is a problem with the secure DNS provider.
-
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `network.trr.mode`, `network.trr.uri`
 
@@ -1565,9 +1499,8 @@ Configure DNS over HTTPS.
 ```
 Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Enabled (REG_DWORD) = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Locked (REG_DWORD) = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Fallback (REG_DWORD) = 0x1 | 0x0
-Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ProviderURL (REG_SZ) = "URL_TO_ALTERNATE_PROVIDER"
-Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains\1 (REG_SZ) = "example.com"
+Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ProviderURL (REG_SZ) = URL_TO_ALTERNATE_PROVIDER
+Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains\1 (REG_SZ) = example.com
 ```
 
 #### Windows (Intune)
@@ -1575,7 +1508,6 @@ OMA-URI:
 ```
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Enabled
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Locked
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Fallback
 ```
 Value (string):
 ```
@@ -1615,8 +1547,6 @@ Value (string):
     <array>
       <string>example.com</string>
     </array>
-    <key>Fallback</key>
-    <true/> | <false/>
   </dict>
 </dict>
 ```
@@ -1630,7 +1560,6 @@ Value (string):
       "ProviderURL": "URL_TO_ALTERNATE_PROVIDER",
       "Locked": true | false,
       "ExcludedDomains": ["example.com"],
-      "Fallback": true | false,
     }
   }
 }
@@ -1653,7 +1582,7 @@ You can use ${home} for the native home directory.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\DownloadDirectory (REG_SZ) = "${home}\Downloads"
+Software\Policies\Mozilla\Thunderbird\DownloadDirectory (REG_EXPAND_SZ) = ${home}\Downloads
 ```
 
 #### Windows (Intune)
@@ -1700,10 +1629,10 @@ This method will be deprecated in the near future.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Extensions\Install\1 (REG_SZ) = "https://addons.thunderbird.net/thunderbird/downloads/somefile.xpi"
-Software\Policies\Mozilla\Thunderbird\Extensions\Install\2 (REG_SZ) = "//path/to/xpi"
-Software\Policies\Mozilla\Thunderbird\Extensions\Uninstall\1 (REG_SZ) = "bad_addon_id@mozilla.org"
-Software\Policies\Mozilla\Thunderbird\Extensions\Locked\1 (REG_SZ) = "addon_id@mozilla.org"
+Software\Policies\Mozilla\Thunderbird\Extensions\Install\1 (REG_SZ) = https://addons.thunderbird.net/thunderbird/downloads/somefile.xpi
+Software\Policies\Mozilla\Thunderbird\Extensions\Install\2 (REG_SZ) = //path/to/xpi
+Software\Policies\Mozilla\Thunderbird\Extensions\Uninstall\1 (REG_SZ) = bad_addon_id@mozilla.org
+Software\Policies\Mozilla\Thunderbird\Extensions\Locked\1 (REG_SZ) = addon_id@mozilla.org
 ```
 
 #### Windows (Intune)
@@ -2199,7 +2128,7 @@ Configure TOAST, browser, and tab notifications within the context of the applic
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled (REG_DWORD) = 0x1 | 0x0
+Software\Policies\Mozilla\Thunderbird\InAppNotification_Disabled (REG_DWORD) = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled (REG_DWORD) = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\InAppNotification_SurveyEnabled (REG_DWORD) = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\InAppNotification_MessageEnabled (REG_DWORD) = 0x1 | 0x0
@@ -2208,7 +2137,7 @@ Software\Policies\Mozilla\Thunderbird\InAppNotification_MessageEnabled (REG_DWOR
 #### Windows (Intune)
 OMA-URI:
 ```
-./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled
+./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Disabled
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_SurveyEnabled
 ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_MessageEnabled
@@ -2221,7 +2150,7 @@ Value (string):
 #### macOS
 ```
 <dict>
-  <key>InAppNotification_Enabled</key>
+  <key>InAppNotification_Disabled</key>
   <true/> | <false/>
   <key>InAppNotification_DonationEnabled</key>
   <true/> | <false/>
@@ -2236,7 +2165,7 @@ Value (string):
 ```
 {
   "policies": {
-    "InAppNotification_Enabled": true | false,
+    "InAppNotification_Disabled": true | false,
     "InAppNotification_DonationEnabled": true | false,
     "InAppNotification_SurveyEnabled": true | false,
     "InAppNotification_MessageEnabled": true | false
@@ -2263,8 +2192,8 @@ Configure the default extension install policy as well as origins for extension 
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow\1 (REG_SZ) = "https://example.org"
-Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow\2 (REG_SZ) = "https://example.edu"
+Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow\1 (REG_SZ) = https://example.org
+Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow\2 (REG_SZ) = https://example.edu
 Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Default (REG_DWORD) = 0x1 | 0x0
 ```
 
@@ -2912,7 +2841,7 @@ Unless you lock this policy, changes the user already has in place will take eff
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\Proxy\Mode (REG_SZ) = "none" | "system" | "manual" | "autoDetect" | "autoConfig"
+Software\Policies\Mozilla\Thunderbird\Proxy\Mode (REG_SZ) = none | system | manual | autoDetect | autoConfig
 Software\Policies\Mozilla\Thunderbird\Proxy\Locked (REG_DWORD) = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\Proxy\UseHTTPProxyForAllProtocols (REG_DWORD) = 0x1 | 0x0
 Software\Policies\Mozilla\Thunderbird\Proxy\AutoLogin (REG_DWORD) = 0x1 | 0x0
@@ -3079,16 +3008,14 @@ Value (string):
 
 Set the the list of requested locales for the application in order of preference. It will cause the corresponding language pack to become active.
 
-Note: For Thunderbird 68, this can now be a string so that you can specify an empty value.
+Note: Since Thunderbird 68, this policy is a string so that you can specify an empty value.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\RequestedLocales\1 (REG_SZ) = "de"
-Software\Policies\Mozilla\Thunderbird\RequestedLocales\2 (REG_SZ) = "en-US"
-Software\Policies\Mozilla\Thunderbird\RequestedLocales (REG_SZ) = "de,en-US"
+Software\Policies\Mozilla\Thunderbird\RequestedLocales (REG_SZ) = de,en-US
 ```
 
 #### Windows (Intune)
@@ -3106,11 +3033,6 @@ Value (string):
 ```
 <dict>
   <key>RequestedLocales</key>
-  <array>
-    <string>de</string>
-    <string>en-US</string>
-  </array>
-  <key>RequestedLocales</key>
   <string>de,en-US</string>
 </dict>
 ```
@@ -3119,7 +3041,6 @@ Value (string):
 ```
 {
   "policies": {
-    "RequestedLocales": ["de", "en-US"]
     "RequestedLocales": "de,en-US"
   }
 }
@@ -3171,11 +3092,11 @@ Add new search engines. Although there are only five engines available in the AD
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Name (REG_SZ) = "Example1"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Method (REG_SZ) = "GET" | "POST"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\IconURL (REG_SZ) = "https://www.example.org/favicon.ico"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Alias (REG_SZ) = "example"
-Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Description (REG_SZ) = "Example Description"
+Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Name (REG_SZ) = Example1
+Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Method (REG_SZ) = GET | POST
+Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\IconURL (REG_SZ) = https://www.example.org/favicon.ico
+Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Alias (REG_SZ) = example
+Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Description (REG_SZ) = Example Description
 ```
 
 #### Windows (Intune)
@@ -3417,7 +3338,7 @@ Set and lock the maximum version of TLS. (Thunderbird defaults to a maximum of T
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SSLVersionMax (REG_SZ) = "tls1.3" | "tls1.2" | "tls1.1" | "tls1"
+Software\Policies\Mozilla\Thunderbird\SSLVersionMax (REG_SZ) = tls1.3 | tls1.2 | tls1.1 | tls1
 ```
 
 #### Windows (Intune)
@@ -3463,7 +3384,7 @@ Set and lock the minimum version of TLS. (Thunderbird defaults to a minimum of T
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SSLVersionMin (REG_SZ) = "tls1.2" | "tls1.3" | "tls1.1" | "tls1"
+Software\Policies\Mozilla\Thunderbird\SSLVersionMin (REG_SZ) = tls1.2 | tls1.3 | tls1.1 | tls1
 ```
 
 #### Windows (Intune)
