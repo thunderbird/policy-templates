@@ -2,12 +2,16 @@
  * See https://bugzilla.mozilla.org/show_bug.cgi?id=1732258
  */
 
+import { 
+    generateAdmxTemplates
+ } from "./modules/generate_admx.mjs";
 import {
     generatePolicyReadme,
-    adjustFirefoxAdmxFilesForThunderbird,
-    generatePlistFile,
     generateReadmeCompatibilityTable,
-} from "./modules/build.mjs";
+} from "./modules/generate_markdown.mjs";
+import {
+    generatePlistFile,
+} from "./modules/generate_plist.mjs";
 import {
     MAIN_TEMPLATE,
     DOCS_TEMPLATES_DIR_PATH, DOCS_README_PATH,
@@ -265,7 +269,11 @@ for (let treeData of treesData) {
 
     await generatePolicyReadme(template, thunderbirdPolicies, output_dir);
     await generatePlistFile(template, thunderbirdPolicies, output_dir);
-    //await adjustFirefoxAdmxFilesForThunderbird(template, thunderbirdPolicies, output_dir);
+    await generateAdmxTemplates(
+        template,
+        supportedPolicies,
+        output_dir
+    );
 
     MAIN_README_ENTRIES.unshift(
         ` * [${template.name}](templates/${template.tree})`

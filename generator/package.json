@@ -8,6 +8,7 @@
     "isomorphic-git": "^1.10.1",
     "plist": "^3.0.4",
     "xml-js": "^1.6.11",
+    "xmlbuilder2": "^3.1.1",
     "yaml": "^2.8.0"
   }
 }
