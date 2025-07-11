@@ -90,7 +90,7 @@
 #
 #    Example:
 #      gpo:
-#        - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled'
+#        - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_Disabled'
 #          type: 'REG_DWORD'
 #          value: '0x1 | 0x0'
 #        - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled'
@@ -98,7 +98,7 @@
 #          value: '0x1 | 0x0'
 #
 #      intune:
-#        - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled'
+#        - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Disabled'
 #          type: 'string'
 #          value: '<enabled/> | <disabled/>'
 #        - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled'
@@ -111,14 +111,14 @@
 #    Example:
 #      gpo:
 #        - key: |
-#            Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled
+#            Software\Policies\Mozilla\Thunderbird\InAppNotification_Disabled
 #            Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled
 #          type: 'REG_DWORD'
 #          value: '0x1 | 0x0'
 #
 #      intune:
 #        - oma-uri: |
-#            ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled
+#            ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Disabled
 #            ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled
 #          type: 'string'
 #          value: '<enabled/> | <disabled/>'
@@ -132,27 +132,27 @@
 #
 # Example:
 #   gpo:
-#     - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled'
+#     - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_Disabled'
 #       type: 'REG_DWORD'
 #       value: '0x1 | 0x0'
 #
 #   intune:
-#     - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled'
+#     - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Disabled'
 #       type: 'string'
 #       value: '<enabled/> | <disabled/>'
 #
-#   plist:
+#   plist: |
 #     <dict>
-#       <key>InAppNotification_Enabled</key>
+#       <key>InAppNotification_Disabled</key>
 #       <true/> | <false/>
 #       <key>InAppNotification_DonationEnabled</key>
 #       <true/> | <false/>
 #     </dict>
 #
-#   json:
+#   json: |
 #     {
 #       "policies": {
-#         "InAppNotification_Enabled": true | false,
+#         "InAppNotification_Disabled": true | false,
 #         "InAppNotification_DonationEnabled": true | false,
 #         "InAppNotification_SurveyEnabled": true | false,
 #         "InAppNotification_MessageEnabled": true | false
@@ -228,6 +228,7 @@ policies:
               "installation_mode": "allowed"
             }
           }
+        category: 'Extensions'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Extensions/ExtensionSettings'
         type: 'string'
@@ -314,7 +315,7 @@ policies:
       - mail.inappnotifications.enabled
     gpo:
       - key: |
-          Software\Policies\Mozilla\Thunderbird\InAppNotification_Enabled
+          Software\Policies\Mozilla\Thunderbird\InAppNotification_Disabled
           Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled
           Software\Policies\Mozilla\Thunderbird\InAppNotification_SurveyEnabled
           Software\Policies\Mozilla\Thunderbird\InAppNotification_MessageEnabled
@@ -322,7 +323,7 @@ policies:
         value: '0x1 | 0x0'
     intune:
       - oma-uri: |
-          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Enabled
+          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_Disabled
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_DonationEnabled
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_SurveyEnabled
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/InAppNotification_MessageEnabled
@@ -330,7 +331,7 @@ policies:
         value: '<enabled/> | <disabled/>'
     plist: |
       <dict>
-        <key>InAppNotification_Enabled</key>
+        <key>InAppNotification_Disabled</key>
         <true/> | <false/>
         <key>InAppNotification_DonationEnabled</key>
         <true/> | <false/>
@@ -342,7 +343,7 @@ policies:
     json: |
       {
         "policies": {
-          "InAppNotification_Enabled": true | false,
+          "InAppNotification_Disabled": true | false,
           "InAppNotification_DonationEnabled": true | false,
           "InAppNotification_SurveyEnabled": true | false,
           "InAppNotification_MessageEnabled": true | false
@@ -589,7 +590,8 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\AppUpdatePin'
         type: 'REG_SZ'
-        value: '"106."'
+        value: '106.'
+        required: true
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/AppUpdatePin'
         type: 'string'
@@ -617,7 +619,8 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\AppUpdateURL'
         type: 'REG_SZ'
-        value: '"https://yoursite.com"'
+        value: 'https://yoursite.com'
+        required: true
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/AppUpdateURL'
         type: 'string'
@@ -656,40 +659,52 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO\1'
         type: 'REG_SZ'
-        value: '"mydomain.com"'
+        value: 'mydomain.com'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\SPNEGO\2'
         type: 'REG_SZ'
-        value: '"https://myotherdomain.com"'
+        value: 'https://myotherdomain.com'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\Delegated\1'
         type: 'REG_SZ'
-        value: '"mydomain.com"'
+        value: 'mydomain.com'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\Delegated\2'
         type: 'REG_SZ'
-        value: '"https://myotherdomain.com"'
+        value: 'https://myotherdomain.com'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\NTLM\1'
         type: 'REG_SZ'
-        value: '"mydomain.com"'
+        value: 'mydomain.com'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\NTLM\2'
         type: 'REG_SZ'
-        value: '"https://myotherdomain.com"'
+        value: 'https://myotherdomain.com'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\AllowNonFQDN\SPNEGO'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\AllowNonFQDN\NTLM'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\AllowProxies\SPNEGO'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\AllowProxies\NTLM'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\Locked'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Authentication'
       - key: 'Software\Policies\Mozilla\Thunderbird\Authentication\PrivateBrowsing'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Authentication'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Authentication/Authentication_SPNEGO'
         type: 'string'
@@ -957,6 +972,7 @@ policies:
       - key: 'Software\Policies\Mozilla\Thunderbird\Certificates\ImportEnterpriseRoots'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Certificates'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Certificates/Certificates_ImportEnterpriseRoots'
         type: 'string'
@@ -1006,10 +1022,12 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\Certificates\Install\1'
         type: 'REG_SZ'
-        value: '"cert1.der"'
+        value: 'cert1.der'
+        category: 'Certificates'
       - key: 'Software\Policies\Mozilla\Thunderbird\Certificates\Install\2'
         type: 'REG_SZ'
-        value: '"C:\Users\username\cert2.pem"'
+        value: 'C:\Users\username\cert2.pem'
+        category: 'Certificates'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Certificates/Certificates_Install'
         type: 'string'
@@ -1042,69 +1060,32 @@ policies:
 
       `Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.
 
-      `AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.
-
       `Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.
 
-      `Behavior` sets the default behavior for cookies based on the values below.
-
-      `BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.
-
-      | Value | Description
-      | --- | --- |
-      | accept | Accept all cookies
-      | reject-foreign | Reject third party cookies
-      | reject | Reject all cookies
-      | limit-foreign | Reject third party cookies for sites you haven't visited
-      | reject-tracker | Reject cookies for known trackers (default)
-      | reject-tracker-and-partition-foreign | Reject cookies for known trackers and partition third-party cookies (Total Cookie Protection) (default for private browsing)
-
       `Locked` prevents the user from changing cookie preferences.
-
-      `Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)
-
-      `AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)
-
-      `RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)
-
-      `ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown-selective) instead)
     cck2Equivalent:
     preferencesAffected:
       - network.cookie.cookieBehavior
-      - network.cookie.cookieBehavior.pbmode
       - network.cookie.lifetimePolicy
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\Cookies\Allow\1'
         type: 'REG_SZ'
-        value: '"https://example.com"'
-      - key: 'Software\Policies\Mozilla\Thunderbird\Cookies\AllowSession\1'
-        type: 'REG_SZ'
-        value: '"https://example.edu"'
+        value: 'https://example.com'
+        category: 'Cookies'
       - key: 'Software\Policies\Mozilla\Thunderbird\Cookies\Block\1'
         type: 'REG_SZ'
-        value: '"https://example.org"'
-      - key: 'Software\Policies\Mozilla\Thunderbird\Cookies\Behavior'
-        type: 'REG_SZ'
-        value: '"accept" | "reject-foreign" | "reject" | "limit-foreign" |
-          "reject-tracker" | "reject-tracker-and-partition-foreign"'
-      - key: 'Software\Policies\Mozilla\Thunderbird\Cookies\BehaviorPrivateBrowsing'
-        type: 'REG_SZ'
-        value: '"accept" | "reject-foreign" | "reject" | "limit-foreign" |
-          "reject-tracker" | "reject-tracker-and-partition-foreign"'
+        value: 'https://example.org'
+        category: 'Cookies'
       - key: 'Software\Policies\Mozilla\Thunderbird\Cookies\Locked'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Cookies'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_Allow'
         type: 'string'
         value: |
           <enabled/>
           <data id="Permissions" value="1&#xF000;https://example.com"/>
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_AllowSession'
-        type: 'string'
-        value: |
-          <enabled/>
-          <data id="Permissions" value="1&#xF000;https://example.edu"/>
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_Block'
         type: 'string'
         value: |
@@ -1113,16 +1094,6 @@ policies:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_Locked'
         type: 'string'
         value: '<enabled/> | <disabled/>'
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_Behavior'
-        type: 'string'
-        value: |
-          <enabled/>
-          <data id="Cookies_Behavior" value="accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign"/>
-      - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Cookies/Cookies_BehaviorPrivateBrowsing'
-        type: 'string'
-        value: |
-          <enabled/>
-          <data id="Cookies_BehaviorPrivateBrowsing" value="accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign"/>
     plist: |
       <dict>
         <key>Cookies</key>
@@ -1131,20 +1102,12 @@ policies:
           <array>
             <string>http://example.com</string>
           </array>
-          <key>AllowSession</key>
-          <array>
-            <string>http://example.edu</string>
-          </array>
           <key>Block</key>
           <array>
             <string>http://example.org</string>
           </array>
           <key>Locked</key>
           <true/> | <false/>
-          <key>Behavior</key>
-          <string>accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign</string>
-          <key>BehaviorPrivateBrowsing</key>
-          <string>accept | reject-foreign | reject | limit-foreign | reject-tracker | reject-tracker-and-partition-foreign</string>
         </dict>
       </dict>
     json: |
@@ -1152,11 +1115,8 @@ policies:
         "policies": {
           "Cookies": {
             "Allow": ["http://example.org/"],
-            "AllowSession": ["http://example.edu/"],
             "Block": ["http://example.edu/"],
             "Locked": true | false,
-            "Behavior": "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign",
-            "BehaviorPrivateBrowsing": "accept" | "reject-foreign" | "reject" | "limit-foreign" | "reject-tracker" | "reject-tracker-and-partition-foreign",
           }
         }
       }
@@ -1172,8 +1132,6 @@ policies:
       `Locked` prevents the user from changing DNS over HTTPS preferences.
 
       `ExcludedDomains` excludes domains from DNS over HTTPS.
-
-      `Fallback` determines whether or not Thunderbird will use your default DNS resolver if there is a problem with the secure DNS provider.
     cck2Equivalent:
     preferencesAffected:
       - network.trr.mode
@@ -1182,20 +1140,21 @@ policies:
       - key: |
           Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Enabled
           Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Locked
-          Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Fallback
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'DNSOverHTTPS'
       - key: 'Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ProviderURL'
         type: 'REG_SZ'
-        value: '"URL_TO_ALTERNATE_PROVIDER"'
+        value: 'URL_TO_ALTERNATE_PROVIDER'
+        category: 'DNSOverHTTPS'
       - key: 'Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains\1'
         type: 'REG_SZ'
-        value: '"example.com"'
+        value: 'example.com'
+        category: 'DNSOverHTTPS'
     intune:
       - oma-uri: |
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Enabled
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Locked
-          ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_Fallback
         type: 'string'
         value: '<enabled/> | <disabled/>'
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DNSOverHTTPS/DNSOverHTTPS_ProviderURL'
@@ -1222,8 +1181,6 @@ policies:
           <array>
             <string>example.com</string>
           </array>
-          <key>Fallback</key>
-          <true/> | <false/>
         </dict>
       </dict>
     json: |
@@ -1234,7 +1191,6 @@ policies:
             "ProviderURL": "URL_TO_ALTERNATE_PROVIDER",
             "Locked": true | false,
             "ExcludedDomains": ["example.com"],
-            "Fallback": true | false,
           }
         }
       }
@@ -1250,8 +1206,8 @@ policies:
       - browser.download.folderList
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\DefaultDownloadDirectory'
-        type: 'REG_SZ'
-        value: '"${home}\Downloads"'
+        type: 'REG_EXPAND_SZ'
+        value: '${home}\Downloads'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DefaultDownloadDirectory'
         type: 'string'
@@ -1327,7 +1283,7 @@ policies:
       - devtools.policy.disabled
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\DisableDeveloperTools'
-        type: 'REG_SZ'
+        type: 'REG_DWORD'
         value: '0x1 | 0x0'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DisableDeveloperTools'
@@ -1569,6 +1525,7 @@ policies:
           Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'DisabledCiphers'
     intune:
       - oma-uri: |
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~DisabledCiphers/DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA
@@ -1623,8 +1580,8 @@ policies:
       - browser.download.useDownloadDir
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\DownloadDirectory'
-        type: 'REG_SZ'
-        value: '"${home}\Downloads"'
+        type: 'REG_EXPAND_SZ'
+        value: '${home}\Downloads'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/DownloadDirectory'
         type: 'string'
@@ -1647,6 +1604,7 @@ policies:
       - key: 'Software\Policies\Mozilla\Thunderbird\ExtensionUpdate'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Extensions'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Extensions/ExtensionUpdate'
         type: 'string'
@@ -1682,16 +1640,19 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\Extensions\Install\1'
         type: 'REG_SZ'
-        value: '"https://addons.thunderbird.net/thunderbird/downloads/somefile.xpi"'
+        value: 'https://addons.thunderbird.net/thunderbird/downloads/somefile.xpi'
+        category: 'Extensions'
       - key: 'Software\Policies\Mozilla\Thunderbird\Extensions\Install\2'
         type: 'REG_SZ'
-        value: '"//path/to/xpi"'
+        value: '//path/to/xpi'
+        category: 'Extensions'
       - key: 'Software\Policies\Mozilla\Thunderbird\Extensions\Uninstall\1'
         type: 'REG_SZ'
-        value: '"bad_addon_id@mozilla.org"'
+        value: 'bad_addon_id@mozilla.org'
+        category: 'Extensions'
       - key: 'Software\Policies\Mozilla\Thunderbird\Extensions\Locked\1'
         type: 'REG_SZ'
-        value: '"addon_id@mozilla.org"'
+        value: 'addon_id@mozilla.org'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Extensions/Extensions_Install'
         type: 'string'
@@ -1940,13 +1901,16 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow\1'
         type: 'REG_SZ'
-        value: '"https://example.org"'
+        value: 'https://example.org'
+        category: 'Addons'
       - key: 'Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Allow\2'
         type: 'REG_SZ'
-        value: '"https://example.edu"'
+        value: 'https://example.edu'
+        category: 'Addons'
       - key: 'Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Default'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Addons'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Addons/InstallAddonsPermission_Allow'
         type: 'string'
@@ -2112,6 +2076,7 @@ policies:
           Software\Policies\Mozilla\Thunderbird\PDFjs\EnablePermissions
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'PDFjs'
     intune:
       - oma-uri: |
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~PDFjs/PDFjs_Enabled
@@ -2272,7 +2237,8 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\Mode'
         type: 'REG_SZ'
-        value: '"none" | "system" | "manual" | "autoDetect" | "autoConfig"'
+        value: 'none | system | manual | autoDetect | autoConfig'
+        category: 'ProxySettings'
       - key: |
           Software\Policies\Mozilla\Thunderbird\Proxy\Locked
           Software\Policies\Mozilla\Thunderbird\Proxy\UseHTTPProxyForAllProtocols
@@ -2280,28 +2246,35 @@ policies:
           Software\Policies\Mozilla\Thunderbird\Proxy\UseProxyForDNS
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'ProxySettings'
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\HTTPProxy'
         type: 'REG_SZ'
         value: 'https://httpproxy.example.com'
+        category: 'ProxySettings'
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\SSLProxy'
         type: 'REG_SZ'
         value: 'https://sslproxy.example.com'
+        category: 'ProxySettings'
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\FTPProxy'
         type: 'REG_SZ'
         value: 'https://ftpproxy.example.com'
+        category: 'ProxySettings'
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\SOCKSProxy'
         type: 'REG_SZ'
         value: 'https://socksproxy.example.com'
+        category: 'ProxySettings'
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\SOCKSVersion'
         type: 'REG_DWORD'
         value: '0x4 | 0x5'
+        category: 'ProxySettings'
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\Passthrough'
         type: 'REG_SZ'
         value: '<local>'
+        category: 'ProxySettings'
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\AutoConfigURL'
         type: 'REG_SZ'
         value: 'URL_TO_AUTOCONFIG'
-
+        category: 'ProxySettings'
     intune:
       - oma-uri: |
           ./Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~ProxySettings/Proxy_Locked
@@ -2412,19 +2385,13 @@ policies:
     content: |
       Set the the list of requested locales for the application in order of preference. It will cause the corresponding language pack to become active.
 
-      Note: For Thunderbird 68, this can now be a string so that you can specify an empty value.
+      Note: Since Thunderbird 68, this policy is a string so that you can specify an empty value.
     cck2Equivalent:
     preferencesAffected:
     gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\RequestedLocales\1'
-        type: 'REG_SZ'
-        value: '"de"'
-      - key: 'Software\Policies\Mozilla\Thunderbird\RequestedLocales\2'
-        type: 'REG_SZ'
-        value: '"en-US"'
       - key: 'Software\Policies\Mozilla\Thunderbird\RequestedLocales'
         type: 'REG_SZ'
-        value: '"de,en-US"'
+        value: 'de,en-US'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/RequestedLocalesString'
         type: 'string'
@@ -2434,17 +2401,11 @@ policies:
     plist: |
       <dict>
         <key>RequestedLocales</key>
-        <array>
-          <string>de</string>
-          <string>en-US</string>
-        </array>
-        <key>RequestedLocales</key>
         <string>de,en-US</string>
       </dict>
     json: |
       {
         "policies": {
-          "RequestedLocales": ["de", "en-US"]
           "RequestedLocales": "de,en-US"
         }
       }
@@ -2458,7 +2419,7 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\SSLVersionMax'
         type: 'REG_SZ'
-        value: '"tls1.3" | "tls1.2" | "tls1.1" | "tls1"'
+        value: 'tls1.3 | tls1.2 | tls1.1 | tls1'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/SSLVersionMax'
         type: 'string'
@@ -2486,7 +2447,7 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\SSLVersionMin'
         type: 'REG_SZ'
-        value: '"tls1.2" | "tls1.3" | "tls1.1" | "tls1"'
+        value: 'tls1.2 | tls1.3 | tls1.1 | tls1'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird/SSLVersionMin'
         type: 'string'
@@ -2538,19 +2499,24 @@ policies:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Name'
         type: 'REG_SZ'
-        value: '"Example1"'
+        value: 'Example1'
+        category: 'Search'
       - key: 'Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Method'
         type: 'REG_SZ'
-        value: '"GET" | "POST"'
+        value: 'GET | POST'
+        category: 'Search'
       - key: 'Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\IconURL'
         type: 'REG_SZ'
-        value: '"https://www.example.org/favicon.ico"'
+        value: 'https://www.example.org/favicon.ico'
+        category: 'Search'
       - key: 'Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Alias'
         type: 'REG_SZ'
-        value: '"example"'
+        value: 'example'
+        category: 'Search'
       - key: 'Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Description'
         type: 'REG_SZ'
-        value: '"Example Description"'
+        value: 'Example Description'
+        category: 'Search'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Search/SearchEngines_1'
         type: 'string'
@@ -2621,6 +2587,8 @@ policies:
       - key: 'Software\Policies\Mozilla\Thunderbird\SearchEngines\Default'
         type: 'REG_SZ'
         value: 'NAME_OF_SEARCH_ENGINE'
+        required: true
+        category: 'Search'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Search/SearchEngines_Default'
         type: 'string'
@@ -2654,6 +2622,7 @@ policies:
       - key: 'Software\Policies\Mozilla\Thunderbird\SearchEngines\PreventInstalls'
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
+        category: 'Search'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Search/SearchEngines_PreventInstalls'
         type: 'string'
@@ -2685,6 +2654,7 @@ policies:
       - key: 'Software\Policies\Mozilla\Thunderbird\SearchEngines\Remove\1'
         type: 'REG_SZ'
         value: 'NAME_OF_SEARCH_ENGINE'
+        category: 'Search'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Search/SearchEngines_Remove'
         type: 'string'
