@@ -165,7 +165,7 @@ function groupByEntriesByKeyType(gpoEntries) {
  *
  */
 function handleValueEntry({ entry, valueName, id, rootElement }) {
-    const isPolicyRoot = rootElement.node.nodeName === 'policy';
+    const rootNodeName = rootElement.node.nodeName;
     switch (entry.type) {
         case 'REG_DWORD': {
             const values = entry.value.split('|').map(v => v.trim());
@@ -174,36 +174,60 @@ function handleValueEntry({ entry, valueName, id, rootElement }) {
                 values.some(v => parseInt(v, 0) === 0) &&
                 values.some(v => parseInt(v, 0) === 1);
             if (isBooleanLike) {
-                if (isPolicyRoot) {
-                    // Do not use the value attribute for <enabledValue> or
-                    // <disabledValue> nodes. See "Group Policy ADMX Syntax
-                    // Reference Guide", page 81.
-                    rootElement.ele('enabledValue').ele('decimal').txt('1');
-                    rootElement.ele('disabledValue').ele('decimal').txt('0');
-                } else {
-                    // We're under an <elements> or <item> node, so we can't use
-                    // <enabledValue>/<disabledValue>. As a fallback, we generate
-                    // an <enum> (rendered as a dropdown) instead of a checkbox,
-                    // since checkboxes are only allowed directly under <policy>
-                    // nodes.
-                    const enumElem = rootElement
-                        .ele('enum', {
-                            id: `${id}_Enum`,
-                            valueName,
-                        });
-                    enumElem
-                        .ele('item', { displayName: '$(string.Enabled)' })
-                        .ele('value')
-                        .ele('decimal').txt('1');
-                    enumElem
-                        .ele('item', { displayName: '$(string.Disabled)' })
-                        .ele('value')
-                        .ele('decimal').txt('0');
+                switch (rootNodeName) {
+                    case 'policy': {
+                        // Do not use the value attribute for <enabledValue> or
+                        // <disabledValue> nodes. See "Group Policy ADMX Syntax
+                        // Reference Guide", page 81.
+                        rootElement.ele('enabledValue').ele('decimal').txt('1');
+                        rootElement.ele('disabledValue').ele('decimal').txt('0');
+                        break;
+                    }
+                    case 'elements': {
+                        // If we are under an <elements> node, we can't use an
+                        // <enabledValue> / <disabledValue> node pair, but we
+                        // can use a <boolean> node.
+                        const boolElem = rootElement
+                            .ele('boolean', {
+                                id: `${id}_Bool`,
+                                valueName,
+                            });
+                        boolElem
+                            .ele('trueValue')
+                            .ele('decimal', { value: '1'});
+                        boolElem
+                            .ele('falseValue')
+                            .ele('decimal', { value: '0'});
+                        break;
+                    }
+                    case 'item': {
+                        // If we are under an <elements> node, we can't use an
+                        // <enabledValue> / <disabledValue> node pair, and also
+                        // not a <boolean> node. As a fallback we generate an
+                        // <enum> node (rendered as a dropdown).
+                        const enumElem = rootElement
+                            .ele('enum', {
+                                id: `${id}_Enum`,
+                                valueName,
+                            });
+                        enumElem
+                            .ele('item', { displayName: '$(string.Enabled)' })
+                            .ele('value')
+                            .ele('decimal').txt('1');
+                        enumElem
+                            .ele('item', { displayName: '$(string.Disabled)' })
+                            .ele('value')
+                            .ele('decimal').txt('0');
+                        break;
+                    }
+                    default:
+                        console.warn(`Unsupported root node: ${rootNodeName}`);
+                        break;
                 }
             } else {
                 // If the provided root node is a <policy> node, we need to add
                 // an <elements> wrapper node.
-                const baseElement = isPolicyRoot
+                const baseElement = rootNodeName === 'policy'
                     ? rootElement.ele('elements')
                     : rootElement
                 const enumElem = baseElement
@@ -230,7 +254,7 @@ function handleValueEntry({ entry, valueName, id, rootElement }) {
         case 'REG_EXPAND_SZ': {
             // If the provided root node is a <policy> node, we need to add an
             // <elements> wrapper node.
-            const baseElement = isPolicyRoot
+            const baseElement = rootNodeName === 'policy'
                 ? rootElement.ele('elements')
                 : rootElement
             const enums = entry.value.split("|").map(e => e.trim()).filter(Boolean);
@@ -270,7 +294,7 @@ function handleValueEntry({ entry, valueName, id, rootElement }) {
         case 'REG_MULTI_SZ': {
             // If the provided root node is a <policy> node, we need to add an
             // <elements> wrapper node.
-            const baseElement = isPolicyRoot
+            const baseElement = rootNodeName === 'policy'
                 ? rootElement.ele('elements')
                 : rootElement
             const multiTextAttrs = {

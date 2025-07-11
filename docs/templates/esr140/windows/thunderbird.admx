@@ -82,60 +82,44 @@
       <supportedOn ref="SUPPORTED_ID_3"/>
       <parentCategory ref="Authentication_category"/>
       <elements>
-        <enum id="Authentication_AllowNonFQDN_SPNEGO_Enum" valueName="SPNEGO">
-          <item displayName="$(string.Enabled)">
-            <value>
-              <decimal>1</decimal>
-            </value>
-          </item>
-          <item displayName="$(string.Disabled)">
-            <value>
-              <decimal>0</decimal>
-            </value>
-          </item>
-        </enum>
-        <enum id="Authentication_AllowNonFQDN_NTLM_Enum" valueName="NTLM">
-          <item displayName="$(string.Enabled)">
-            <value>
-              <decimal>1</decimal>
-            </value>
-          </item>
-          <item displayName="$(string.Disabled)">
-            <value>
-              <decimal>0</decimal>
-            </value>
-          </item>
-        </enum>
+        <boolean id="Authentication_AllowNonFQDN_SPNEGO_Bool" valueName="SPNEGO">
+          <trueValue>
+            <decimal value="1"/>
+          </trueValue>
+          <falseValue>
+            <decimal value="0"/>
+          </falseValue>
+        </boolean>
+        <boolean id="Authentication_AllowNonFQDN_NTLM_Bool" valueName="NTLM">
+          <trueValue>
+            <decimal value="1"/>
+          </trueValue>
+          <falseValue>
+            <decimal value="0"/>
+          </falseValue>
+        </boolean>
       </elements>
     </policy>
     <policy name="Authentication_AllowProxies" class="Both" displayName="$(string.Authentication_AllowProxies)" explainText="$(string.Authentication_AllowProxies_Explain)" key="Software\Policies\Mozilla\Thunderbird\Authentication\AllowProxies" presentation="$(presentation.Authentication_AllowProxies)">
       <supportedOn ref="SUPPORTED_ID_3"/>
       <parentCategory ref="Authentication_category"/>
       <elements>
-        <enum id="Authentication_AllowProxies_SPNEGO_Enum" valueName="SPNEGO">
-          <item displayName="$(string.Enabled)">
-            <value>
-              <decimal>1</decimal>
-            </value>
-          </item>
-          <item displayName="$(string.Disabled)">
-            <value>
-              <decimal>0</decimal>
-            </value>
-          </item>
-        </enum>
-        <enum id="Authentication_AllowProxies_NTLM_Enum" valueName="NTLM">
-          <item displayName="$(string.Enabled)">
-            <value>
-              <decimal>1</decimal>
-            </value>
-          </item>
-          <item displayName="$(string.Disabled)">
-            <value>
-              <decimal>0</decimal>
-            </value>
-          </item>
-        </enum>
+        <boolean id="Authentication_AllowProxies_SPNEGO_Bool" valueName="SPNEGO">
+          <trueValue>
+            <decimal value="1"/>
+          </trueValue>
+          <falseValue>
+            <decimal value="0"/>
+          </falseValue>
+        </boolean>
+        <boolean id="Authentication_AllowProxies_NTLM_Bool" valueName="NTLM">
+          <trueValue>
+            <decimal value="1"/>
+          </trueValue>
+          <falseValue>
+            <decimal value="0"/>
+          </falseValue>
+        </boolean>
       </elements>
     </policy>
     <policy name="Authentication_Delegated" class="Both" displayName="$(string.Authentication_Delegated)" explainText="$(string.Authentication_Delegated_Explain)" presentation="$(presentation.Authentication_Delegated)">
