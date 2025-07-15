@@ -369,19 +369,7 @@ export function getHgDownloadUrl(branch, tree, revision, mode, fileName) {
         default:
             throw new Error(`Unknown file: ${fileName}`)
     }
-
-    let query = ""
-    switch (mode) {
-        case "raw-file":
-        case "log":
-            break;
-        case "json-log":
-            query = "?revcount=125"
-            break;
-        default:
-            throw new Error(`Unknown mode: ${mode}`)
-    }
-    return `${HG_URL}/${path}/${mode}/${revision}/${folder}/${filePath}${query}`;
+    return `${HG_URL}/${path}/${mode}/${revision}/${folder}/${filePath}`;
 }
 
 /**
@@ -447,15 +435,45 @@ export async function getPolicySchemaRevisions(tree, lastKnownMozillaPolicyRevis
     console.log(`Processing ${tree}`);
 
     for (let branch of ["mozilla", "comm"]) {
-        let logUrl = getHgDownloadUrl(branch, tree, "tip", "json-log", "policies-schema.json");
-        let revisions = commentJson.parse(await readCachedUrl(logUrl, { temporary: true })).entries.map(e => e.node);
+        let lastFoundRevision = "tip";
+        let version;
+        let neededRevisions = [];
+
+        // Read all revisions until TB68, which introduced support for enterprise
+        // policies.
+        do {
+            let logUrl = getHgDownloadUrl(branch, tree, lastFoundRevision, "json-log", "policies-schema.json");
+            let revisions = commentJson
+                .parse(await readCachedUrl(logUrl, { temporary: true }))
+                .entries.map(e => e.node);
+            lastFoundRevision = revisions.at(-1);
+            version = Number(
+                await getRevisionVersion(branch, tree, lastFoundRevision).then(v => v.split(".")[0])
+            )
+
+            // Add all found revisions, except the last one, which we will get
+            // in the next round, if needed.
+            neededRevisions.push(...revisions.slice(0,-1));
+
+            // Abort, if we only found the requested revision.
+            if (revisions.length == 1 && revisions[0] == lastFoundRevision) {
+                break;
+            }
+            
+            // Early exit for the mozilla-branch.
+            if (branch == "mozilla" && revisions.find(e => e == lastKnownMozillaPolicyRevision)) {
+                break;
+            }
+        } while (version > 67)
 
         // For mozilla, we just need the newest and the reference revision.
         // For comm, we need all revisions to be able to extract compatibility information.
-        let neededRevisions = branch == "mozilla"
-            ? [revisions[0], lastKnownMozillaPolicyRevision]
-            : revisions.slice(0, 30)
-
+        if (branch == "mozilla") {
+            neededRevisions = [
+                neededRevisions[0],
+                neededRevisions.find(e => e == lastKnownMozillaPolicyRevision)
+            ]
+        }
 
         for (let revision of neededRevisions) {
             let schemaData = await downloadPolicySchemaData(branch, tree, revision);
