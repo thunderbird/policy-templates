@@ -27,13 +27,13 @@
     "prefix": "Thunderbird ESR",
     "tree": "esr140",
     "majorVersion": 140,
-    "lastKnownMozillaPolicyRevision": "6550a728c57e3e9f4d19e14cf93e4fcc43e97c2d"
+    "lastKnownMozillaPolicyRevision": "ec9ad37f99760ae8a9699c883ef36488085a7770"
   },
   {
     "prefix": "Thunderbird",
     "tree": "release",
     "majorVersion": 140,
-    "lastKnownMozillaPolicyRevision": "07295ebdf891ade50ae5e921ec31f80d31e6cb9f"
+    "lastKnownMozillaPolicyRevision": "c3bba5162c988aa7e1791df8827c1a1575eddcc1"
   },
   {
     "prefix": "Thunderbird Daily",
