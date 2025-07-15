@@ -1021,11 +1021,11 @@ policies:
     preferencesAffected:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\Certificates\Install\1'
-        type: 'REG_SZ'
+        type: 'REG_EXPAND_SZ'
         value: 'cert1.der'
         category: 'Certificates'
       - key: 'Software\Policies\Mozilla\Thunderbird\Certificates\Install\2'
-        type: 'REG_SZ'
+        type: 'REG_EXPAND_SZ'
         value: 'C:\Users\username\cert2.pem'
         category: 'Certificates'
     intune:
@@ -1644,11 +1644,11 @@ policies:
     preferencesAffected:
     gpo:
       - key: 'Software\Policies\Mozilla\Thunderbird\Extensions\Install\1'
-        type: 'REG_SZ'
+        type: 'REG_EXPAND_SZ'
         value: 'https://addons.thunderbird.net/thunderbird/downloads/somefile.xpi'
         category: 'Extensions'
       - key: 'Software\Policies\Mozilla\Thunderbird\Extensions\Install\2'
-        type: 'REG_SZ'
+        type: 'REG_EXPAND_SZ'
         value: '//path/to/xpi'
         category: 'Extensions'
       - key: 'Software\Policies\Mozilla\Thunderbird\Extensions\Uninstall\1'
@@ -1658,6 +1658,7 @@ policies:
       - key: 'Software\Policies\Mozilla\Thunderbird\Extensions\Locked\1'
         type: 'REG_SZ'
         value: 'addon_id@mozilla.org'
+        category: 'Extensions'
     intune:
       - oma-uri: './Device/Vendor/MSFT/Policy/Config/Thunderbird~Policy~thunderbird~Extensions/Extensions_Install'
         type: 'string'
@@ -2506,6 +2507,7 @@ policies:
         type: 'REG_SZ'
         value: 'Example1'
         category: 'Search'
+        required: true,
       - key: 'Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\Method'
         type: 'REG_SZ'
         value: 'GET | POST'
