@@ -315,10 +315,10 @@ policies:
       - mail.inappnotifications.enabled
     gpo:
       - key: |
-          Software\Policies\Mozilla\Thunderbird\InAppNotification_Disabled
-          Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled
-          Software\Policies\Mozilla\Thunderbird\InAppNotification_SurveyEnabled
-          Software\Policies\Mozilla\Thunderbird\InAppNotification_MessageEnabled
+          Software\Policies\Mozilla\Thunderbird\InAppNotification\Disabled
+          Software\Policies\Mozilla\Thunderbird\InAppNotification\DonationEnabled
+          Software\Policies\Mozilla\Thunderbird\InAppNotification\SurveyEnabled
+          Software\Policies\Mozilla\Thunderbird\InAppNotification\MessageEnabled
         type: 'REG_DWORD'
         value: '0x1 | 0x0'
     intune:
