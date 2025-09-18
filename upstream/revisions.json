@@ -32,13 +32,13 @@
   {
     "prefix": "Thunderbird",
     "tree": "release",
-    "majorVersion": 142,
+    "majorVersion": 143,
     "lastKnownMozillaPolicyRevision": "4ac1f53240ae07b78a2d32e162df74f064aeec96"
   },
   {
     "prefix": "Thunderbird Daily",
     "tree": "central",
-    "majorVersion": 144,
+    "majorVersion": 145,
     "lastKnownMozillaPolicyRevision": "0ae0b7c6bc9e458614109f8f01183144169cf90f"
   }
 ]
