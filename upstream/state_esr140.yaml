@@ -78,6 +78,7 @@ toc: |
   | **[`ExtensionUpdate`](#extensionupdate)** | Control extension updates.
   | **[`FirefoxHome`](#firefoxhome)** | Customize the Firefox Home page.
   | **[`FirefoxSuggest`](#firefoxsuggest)** | Customize Firefox Suggest.
+  | **[`GenerativeAI`](#generativeai)** | Configure generative AI features.
   | **[`GoToIntranetSiteForSingleWordEntryInAddressBar`](#gotointranetsiteforsinglewordentryinaddressbar)** | Force direct intranet site navigation instead of searching when typing single word entries in the address bar.
   | **[`Handlers`](#handlers)** | Configure default application handlers.
   | **[`HardwareAcceleration`](#hardwareacceleration)** | Control hardware acceleration.
@@ -112,7 +113,7 @@ toc: |
   | **[`PrivateBrowsingModeAvailability`](#privatebrowsingmodeavailability)** | Set availability of private browsing mode.
   | **[`PromptForDownloadLocation`](#promptfordownloadlocation)** | Ask where to save each file before downloading.
   | **[`Proxy`](#proxy)** | Configure proxy settings.
-  | **[`RequestedLocales`](#requestedlocales)** | Set the the list of requested locales for the application in order of preference.
+  | **[`RequestedLocales`](#requestedlocales)** | Set the list of requested locales for the application in order of preference.
   | **[`SanitizeOnShutdown` (All)](#sanitizeonshutdown-all)** | Clear all data on shutdown.
   | **[`SanitizeOnShutdown` (Selective)](#sanitizeonshutdown-selective)** | Clear data on shutdown.
   | **[`SearchBar`](#searchbar)** | Set whether or not search bar is displayed.
@@ -132,6 +133,7 @@ toc: |
   | **[`TranslateEnabled`](#translateenabled)** | Enable or disable webpage translation.
   | **[`UserMessaging`](#usermessaging)** | Don't show certain messages to the user.
   | **[`UseSystemPrintDialog`](#usesystemprintdialog)** | Print using the system print dialog instead of print preview.
+  | **[`VisualSearchEnabled`](#visualsearchenabled)** | Enable or disable visual search.
   | **[`WebsiteFilter`](#websitefilter)** | Block websites from being visited.
   | **[`WindowsSSO`](#windowssso)** | Allow Windows single sign-on for Microsoft, work, and school accounts.
 3rdparty: |
@@ -3149,9 +3151,9 @@ ExemptDomainFileTypePairsFromFileTypeDownloadWarnings: |
 Extensions: |
   Control the installation, uninstallation and locking of extensions.
   
-  We strongly recommend that you use the **[`ExtensionSettings`](#extensionsettings)** policy. It has the same functionality and adds more. It does not support native paths, though, so you'll have to use file:/// URLs.
+  Note: The **[`ExtensionSettings`](#extensionsettings)** policy was added in Firefox 69. It provides additional functionality and is closer in compatibility to Chrome and Edge. It does not support native paths, though, so you'll have to use file:/// URLs. I'd recommend trying it before using this policy. Any future improvements will happen in that policy.
   
-  This method will be deprecated in the near future.
+  We will not, however, be removing this policy.
   
   `Install` is a list of URLs or native paths for extensions to be installed.
   
@@ -3254,7 +3256,7 @@ ExtensionSettings: |
   | `install_url`| Maps to a URL indicating where Firefox can download a force_installed or normal_installed extension.  If installing from the local file system, use a [```file:///``` URL](https://en.wikipedia.org/wiki/File_URI_scheme). If installing from the addons.mozilla.org, use the following URL (substituting ID with the extension ID or with the short name from the URL on AMO), https://addons.mozilla.org/firefox/downloads/latest/ID/latest.xpi. Languages packs are available from https://releases.mozilla.org/pub/firefox/releases/VERSION/PLATFORM/xpi/LANGUAGE.xpi. If you need to update the extension, you can change the name of the extension and it will be automatically updated. Extensions installed from file URLs will additional be updated when their internal version changes.
   | `install_sources` | A list of sources from which installing extensions is allowed using URL match patterns. **This is unnecessary if you are only allowing the installation of certain extensions by ID.** Each item in this list is an extension-style match pattern. Users will be able to easily install items from any URL that matches an item in this list. Both the location of the *.xpi file and the page where the download is started from (i.e.  the referrer) must be allowed by these patterns. This setting can be used only for the default configuration.
   | `allowed_types` | This setting whitelists the allowed types of extension/apps that can be installed in Firefox. The value is a list of strings, each of which should be one of the following: "extension", "theme", "dictionary", "locale" This setting can be used only for the default configuration.
-  | `blocked_install_message` | This maps to a string specifying the error message to display to users if they're blocked from installing an extension. This setting allows you to append text to the generic error message displayed when the extension is blocked. This could be be used to direct users to your help desk, explain why a particular extension is blocked, or something else. This setting can be used only for the default configuration.
+  | `blocked_install_message` | This maps to a string specifying the error message to display to users if they're blocked from installing an extension. This setting allows you to append text to the generic error message displayed when the extension is blocked. This could be used to direct users to your help desk, explain why a particular extension is blocked, or something else. This setting can be used only for the default configuration.
   | `restricted_domains` | An array of domains on which content scripts can't be run. This setting can be used only for the default configuration.
   | `updates_disabled` | (Firefox 89, Firefox ESR 78.11) Boolean that indicates whether or not to disable automatic updates for an individual extension.
   | `default_area` | (Firefox 113) String that indicates where to place the extension icon by default. Possible values are `navbar` and `menupanel`.
@@ -3440,7 +3442,7 @@ ExtensionUpdate: |
 FirefoxHome: |
   Customize the Firefox Home page.
   
-  **Compatibility:** Firefox 68, Firefox ESR 68 (SponsoredTopSites and SponsoredPocket were added in Firefox 95, Firefox ESR 91.4, Snippets was deprecated in Firefox 122, Stories and SponsoredStories were added in Firefox 141 to replace Pocket and SponsoredPocket.)
+  **Compatibility:** Firefox 68, Firefox ESR 68 (SponsoredTopSites and SponsoredPocket were added in Firefox 95, Firefox ESR 91.4, Snippets was deprecated in Firefox 122, Stories and SponsoredStories were added in Firefox 141 to replace Pocket and SponsoredPocket.)\
   **CCK2 Equivalent:** N/A\
   **Preferences Affected:** `browser.newtabpage.activity-stream.showSearch`, `browser.newtabpage.activity-stream.feeds.topsites`, `browser.newtabpage.activity-stream.feeds.section.highlights`, `browser.newtabpage.activity-stream.feeds.section.topstories`, `browser.newtabpage.activity-stream.feeds.snippets`, `browser.newtabpage.activity-stream.showSponsoredTopSites`, `browser.newtabpage.activity-stream.showSponsored`
   
@@ -3590,6 +3592,69 @@ FirefoxSuggest: |
   "WebSuggestions": true | false,
   "SponsoredSuggestions": true | false,
   "ImproveSuggest": true | false,
+  "Locked": true | false
+  }
+  }
+  }
+  ```
+GenerativeAI: |
+  Configure generative AI features.
+  
+  `Chatbot` If false, AI chatbots are not available in the sidebar.
+  
+  `LinkPreviews` If false, AI is not used to generate link previews (Firefox 144).
+  
+  `TabGroups` If false,  AI is not used to suggest names and tabs for tab groups (Firefox 144).
+  
+  `Locked` prevents the user from changing generative AI preferences.
+  
+  **Compatibility:** Firefox 144, Firefox ESR 140.4\
+  **CCK2 Equivalent:** N/A\
+  **Preferences Affected:** `browser.ml.chat.enabled`, `browser.ml.linkPreview.optin`, `browser.tabs.groups.smart.userEnabled`
+  
+  #### Windows (GPO)
+  ```
+  Software\Policies\Mozilla\Firefox\GenerativeAI\Chatbot = 0x1 | 0x0
+  Software\Policies\Mozilla\Firefox\GenerativeAI\LinkPreviews = 0x1 | 0x0
+  Software\Policies\Mozilla\Firefox\GenerativeAI\TabGroups = 0x1 | 0x0
+  Software\Policies\Mozilla\Firefox\GenerativeAI\Locked = 0x1 | 0x0
+  ```
+  #### Windows (Intune)
+  OMA-URI:
+  ```
+  ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~GenerativeAI/GenerativeAI_Chatbot
+  ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~GenerativeAI/GenerativeAI_LinkPreviews
+  ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~GenerativeAI/GenerativeAI_TabGroups
+  ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~GenerativeAI/GenerativeAI_Locked
+  ```
+  Value (string):
+  ```
+  <enabled/> or <disabled/>
+  ```
+  #### macOS
+  ```
+  <dict>
+  <key>GenerativeAI</key>
+  <dict>
+  <key>Chatbot</key>
+  <true/> | <false/>
+  <key>LinkPreviews</key>
+  <true/> | <false/>
+  <key>TabGroups</key>
+  <true/> | <false/>
+  <key>Locked</key>
+  <true/> | <false/>
+  </dict>
+  </dict>
+  ```
+  #### policies.json
+  ```
+  {
+  "policies": {
+  "GenerativeAI": {
+  "Chatbot": true | false,
+  "LinkPreviews": true | false,
+  "TabGroups": true | false,
   "Locked": true | false
   }
   }
@@ -5583,6 +5648,8 @@ Preferences: |
   | &nbsp;&nbsp;&nbsp;&nbsp;If true, browser will accept TLS 1.0. and TLS 1.1. (Firefox 86, Firefox 78.8)
   | security.warn_submit_secure_to_insecure | boolean | true
   | &nbsp;&nbsp;&nbsp;&nbsp;If false, no warning is shown when submitting a form from https to http.
+  | security.webauthn.always_allow_direct_attestation | boolean | false
+  | &nbsp;&nbsp;&nbsp;&nbsp;If true, unnecessary (redundant) WebAuthn prompts are not shown.
   
   Using the preference as the key, set the `Value` to the corresponding preference value.
   
@@ -5920,7 +5987,7 @@ Proxy: |
   ```
   #### Windows (Intune)
   **Note**
-  These setttings were moved to a category to make them easier to configure via Intune.
+  These settings were moved to a category to make them easier to configure via Intune.
   
   OMA-URI:
   ```
@@ -6083,7 +6150,7 @@ Proxy: |
   }
   ```
 RequestedLocales: |
-  Set the the list of requested locales for the application in order of preference. It will cause the corresponding language pack to become active.
+  Set the list of requested locales for the application in order of preference. It will cause the corresponding language pack to become active.
   
   Note: For Firefox 68, this can now be a string so that you can specify an empty value.
   
@@ -7104,6 +7171,41 @@ UseSystemPrintDialog: |
   {
   "policies": {
   "UseSystemPrintDialog": true | false
+  }
+  }
+  ```
+VisualSearchEnabled: |
+  Enable or disable visual search.
+  
+  **Compatibility:** Firefox 144\
+  **CCK2 Equivalent:** N/A\
+  **Preferences Affected:** `browser.search.visualSearch.featureGate`
+  
+  #### Windows (GPO)
+  ```
+  Software\Policies\Mozilla\Firefox\VisualSearchEnabled = 0x1 | 0x0
+  ```
+  #### Windows (Intune)
+  OMA-URI:
+  ```
+  ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox/VisualSearchEnabled
+  ```
+  Value (string):
+  ```
+  <enabled/> or <disabled/>
+  ```
+  #### macOS
+  ```
+  <dict>
+  <key>VisualSearchEnabled</key>
+  <true/> | <false/>
+  </dict>
+  ```
+  #### policies.json
+  ```
+  {
+  "policies": {
+  "VisualSearchEnabled": true | false
   }
   }
   ```
