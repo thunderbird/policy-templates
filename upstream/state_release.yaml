@@ -604,7 +604,7 @@ AutofillCreditCardEnabled: |
 AutoLaunchProtocolsFromOrigins: |
   Define a list of external protocols that can be used from listed origins without prompting the user. The origin is the scheme plus the hostname.
   
-  The syntax of this policy is exactly the same as the [Chrome AutoLaunchProtocolsFromOrigins policy](https://cloud.google.com/docs/chrome-enterprise/policies/?policy=AutoLaunchProtocolsFromOrigins) except that you can only use valid origins (not just hostnames). This also means that you cannot specify an asterisk for all origins.
+  The syntax of this policy is exactly the same as the [Chrome AutoLaunchProtocolsFromOrigins policy](https://chromeenterprise.google/policies/#AutoLaunchProtocolsFromOrigins) except that you can only use valid origins (not just hostnames). This also means that you cannot specify an asterisk for all origins.
   
   The schema is:
   ```
@@ -2870,7 +2870,9 @@ EnableTrackingProtection: |
   
   If `Value` is set to false, tracking protection is disabled and locked in both the regular browser and private browsing.
   
-  If `Value` is set to true, tracking protection is enabled by default in both the regular browser and private browsing and the `Locked` value determines whether or not a user can change it.
+  If `Value` is set to true, tracking protection is enabled by default in both the regular browser and private browsing.
+  
+  If `Locked` is set to true, users cannot change tracking protection values.
   
   If `Cryptomining` is set to true, cryptomining scripts on websites are blocked.
   
@@ -2884,9 +2886,15 @@ EnableTrackingProtection: |
   
   `Category` can be either ```strict``` or ```standard```. If category is set, it overrides all other settings except `Exceptions` and the user cannot change the category. (Firefox 142, Firefox ESR 140.2)
   
-  **Compatibility:** Firefox 60, Firefox ESR 60 (Cryptomining and Fingerprinting added in 70/68.2, Exceptions added in 73/68.5. Category added in Firefox 142/140.2.)\
+  IF `BaselineExceptions` is true, Firefox will automatically apply exceptions required to avoid major website breakage. (Firefox 145)
+  
+  If `ConvenienceExceptions`is true, Firefox will apply exceptions automatically that are only required to fix minor issues and make convenience features available. (Firefox 145)
+  
+  Note: Users can change `BaselineExceptions` and `ConvenienceExceptions` even when `Category` is set to ```strict``` unless `Locked` is set to true.
+  
+  **Compatibility:** Firefox 60, Firefox ESR 60 (Cryptomining and Fingerprinting added in 70/68.2, Exceptions added in 73/68.5. Category added in Firefox 142/140.2. BaselineExceptions and ConvenienceExceptions added in Firefox 145)\
   **CCK2 Equivalent:** N/A\
-  **Preferences Affected:** `privacy.trackingprotection.enabled`, `privacy.trackingprotection.pbmode.enabled`, `privacy.trackingprotection.cryptomining.enabled`, `privacy.trackingprotection.fingerprinting.enabled`
+  **Preferences Affected:** `privacy.trackingprotection.enabled`, `privacy.trackingprotection.pbmode.enabled`, `privacy.trackingprotection.cryptomining.enabled`, `privacy.trackingprotection.fingerprinting.enabled`, `privacy.fingerprintingProtection`, `privacy.trackingprotection.emailtracking.enabled`, `privacy.trackingprotection.emailtracking.pbmode.enabled`, `privacy.trackingprotection.allow_list.baseline.enabled`, `privacy.trackingprotection.allow_list.convenience.enabled`
   
   #### Windows (GPO)
   ```
@@ -2898,6 +2906,8 @@ EnableTrackingProtection: |
   Software\Policies\Mozilla\Firefox\EnableTrackingProtection\SuspectedFingerprinting = 0x1 | 0x0
   Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Exceptions\1 = "https://example.com"
   Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Category = "strict" | "standard"
+  Software\Policies\Mozilla\Firefox\EnableTrackingProtection\BaselineExceptions = 0x1 | 0x0
+  Software\Policies\Mozilla\Firefox\EnableTrackingProtection\ConvenienceExceptions = 0x1 | 0x0
   ```
   #### Windows (Intune)
   OMA-URI:
@@ -2965,6 +2975,22 @@ EnableTrackingProtection: |
   ```
   <enabled/> or <disabled/>
   ```
+  OMA-URI:
+  ```
+  ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~TrackingProtection/H_TrackingProtection_BaselineExceptions
+  ```
+  Value (string):
+  ```
+  <enabled/> or <disabled/>
+  ```
+  OMA-URI:
+  ```
+  ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~TrackingProtection/H_TrackingProtection_ConvenienceExceptions
+  ```
+  Value (string):
+  ```
+  <enabled/> or <disabled/>
+  ```
   #### macOS
   ```
   <dict>
@@ -2988,6 +3014,10 @@ EnableTrackingProtection: |
   <array>
   <string>https://example.com</string>
   </array>
+  <key>BaselineExceptions</key>
+  <true/> | <false/>
+  <key>ConvenienceExceptions</key>
+  <true/> | <false/>
   </dict>
   </dict>
   ```
@@ -3003,7 +3033,9 @@ EnableTrackingProtection: |
   "EmailTracking": true | false,
   "SuspectedFingerprinting": true | false,
   "Category": "strict" | "standard",
-  "Exceptions": ["https://example.com"]
+  "Exceptions": ["https://example.com"],
+  "BaselineExceptions": true | false,
+  "ConvenienceExceptions": true | false
   }
   }
   }
@@ -3600,20 +3632,23 @@ FirefoxSuggest: |
 GenerativeAI: |
   Configure generative AI features.
   
-  `Chatbot` If false, AI chatbots are not available in the sidebar.
+  `Enabled` Controls whether generative AI features are enabled by default. If false, all generative AI features are disabled by default. Individual generative AI policies can override this setting.
   
-  `LinkPreviews` If false, AI is not used to generate link previews (Firefox 144).
+  `Chatbot` Controls access to AI chatbots in the sidebar. If false, AI chatbots are not available in the sidebar.
   
-  `TabGroups` If false,  AI is not used to suggest names and tabs for tab groups (Firefox 144).
+  `LinkPreviews` (Firefox 144+) Controls whether AI is used to generate link previews. If false, AI is not used to generate link previews.
   
-  `Locked` prevents the user from changing generative AI preferences.
+  `TabGroups` (Firefox 144+) Controls whether AI is used to suggest names and tabs for tab groups. If false, AI is not used to suggest names or tabs for tab groups.
+  
+  `Locked` Prevents the user from changing generative AI preferences.
   
   **Compatibility:** Firefox 144, Firefox ESR 140.4\
   **CCK2 Equivalent:** N/A\
-  **Preferences Affected:** `browser.ml.chat.enabled`, `browser.ml.linkPreview.optin`, `browser.tabs.groups.smart.userEnabled`
+  **Preferences Affected:** `browser.ml.chat.enabled`, `browser.ml.chat.page`, `browser.ml.linkPreview.optin`, `browser.tabs.groups.smart.userEnabled`
   
   #### Windows (GPO)
   ```
+  Software\Policies\Mozilla\Firefox\GenerativeAI\Enabled = 0x1 | 0x0
   Software\Policies\Mozilla\Firefox\GenerativeAI\Chatbot = 0x1 | 0x0
   Software\Policies\Mozilla\Firefox\GenerativeAI\LinkPreviews = 0x1 | 0x0
   Software\Policies\Mozilla\Firefox\GenerativeAI\TabGroups = 0x1 | 0x0
@@ -3622,6 +3657,7 @@ GenerativeAI: |
   #### Windows (Intune)
   OMA-URI:
   ```
+  ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~GenerativeAI/GenerativeAI_Enabled
   ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~GenerativeAI/GenerativeAI_Chatbot
   ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~GenerativeAI/GenerativeAI_LinkPreviews
   ./Device/Vendor/MSFT/Policy/Config/Firefox~Policy~firefox~GenerativeAI/GenerativeAI_TabGroups
@@ -3636,6 +3672,8 @@ GenerativeAI: |
   <dict>
   <key>GenerativeAI</key>
   <dict>
+  <key>Enabled</key>
+  <true/> | <false/>
   <key>Chatbot</key>
   <true/> | <false/>
   <key>LinkPreviews</key>
@@ -3652,6 +3690,7 @@ GenerativeAI: |
   {
   "policies": {
   "GenerativeAI": {
+  "Enabled": true | false,
   "Chatbot": true | false,
   "LinkPreviews": true | false,
   "TabGroups": true | false,
