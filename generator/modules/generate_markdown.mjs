@@ -51,25 +51,6 @@ function generateReadmeMarkdown(policies) {
                 "```",
             )
         }
-        if (value.intune && value.intune.length > 0) {
-            readmeData[key].content.push(
-                "",
-                "#### Windows (Intune)",
-                // Multiple URIs are given as a string, with a URI on each line.
-                // Simple put all URIs as-is in the OMA-URI section, rendering
-                // type and value only once.
-                ...value.intune.flatMap(e => [
-                    "OMA-URI:",
-                    "```",
-                    e['oma-uri'].trim(),
-                    "```",
-                    `Value (${e.type}):`,
-                    "```",
-                    e.value.trim(),
-                    "```",
-                ])
-            )
-        }
         if (value.plist && value.plist.length > 0) {
             readmeData[key].content.push(
                 "",
