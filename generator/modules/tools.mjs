@@ -1,14 +1,8 @@
-import bent from "bent";
 import fs from "node:fs/promises";
-import https from "https";
-import commentJson from "comment-json";
 
 import {
-    BUILD_HUB_URL, PERSISTENT_SCHEMA_CACHE_FILE, TEMPORARY_SCHEMA_CACHE_FILE
+    PERSISTENT_SCHEMA_CACHE_FILE, TEMPORARY_SCHEMA_CACHE_FILE
 } from "./constants.mjs";
-
-const requestJson = bent('GET', 'json', 200);
-const requestText = bent("GET", "string", 200);
 
 // The temporary cache is still written to disc, but can be easily cleared
 // without interfering with the persistent cache.
@@ -20,6 +14,32 @@ const DEBUG_LEVEL = 0;
 function debug(...args) {
     if (DEBUG_LEVEL > 0) {
         console.debug(...args);
+    }
+}
+
+/**
+ * Error caused by invalid input (command line arguments, local repositories or
+ * branches). Command line scripts exit with code 2 on these errors.
+ */
+export class InputError extends Error { }
+
+/**
+ * Run the main function of a command line script. Invalid input exits the script
+ * with code 2 and prints the usage information.
+ *
+ * @param {string} usage - The usage information of the script.
+ * @param {function} main - The async main function of the script.
+ */
+export async function runCommandLine(usage, main) {
+    try {
+        await main();
+    } catch (ex) {
+        if (ex instanceof InputError || ex.code?.startsWith("ERR_PARSE_ARGS")) {
+            console.error(`Error: ${ex.message}`);
+            console.error(usage);
+            process.exit(2);
+        }
+        throw ex;
     }
 }
 
@@ -37,122 +57,6 @@ export function sortObjectByKeys(obj) {
             sorted[key] = obj[key];
             return sorted;
         }, {});
-}
-
-/**
- * Filters an array to remove duplicate entries, preserving the order
- * of the first occurrence of each unique value.
- *
- * @param {Array} arr - The input array that may contain duplicate values.
- * @returns {Array} A new array with only unique values from the input.
- */
-function filterUniqueEntries(arr) {
-    return arr.reduce((acc, item) => {
-        if (!acc.includes(item)) {
-            acc.push(item);
-        }
-        return acc;
-    }, []);
-}
-
-/**
- * Pull the list of known ESR versions from product-details.mozilla.org, by
- * looking for releases which end with "esr". Sadly, the category flag is not a
- * good identifier.
- * 
- * Also pull latest RELEASE and DAILY version from product-details.mozilla.org, by
- * looking at LATEST_THUNDERBIRD_VERSION and LATEST_THUNDERBIRD_NIGHTLY_VERSION.
- * 
- * @returns {object}
- * @param {string[]} ESR - list of known Thunderbird ESR versions
- * @param {string} DAILY - current Thunderbird DAILY version
- * @param {string} RELEASE - current Thunderbird RELEASE version
- */
-export async function getThunderbirdVersions() {
-    let { releases } = await requestJson("https://product-details.mozilla.org/1.0/thunderbird.json")
-    let ESR_VERSIONS = Object.entries(releases)
-        .filter(([name, value]) => name.endsWith("esr"))
-        .map(([name, value]) => Number(value.version.split(".")[0]))
-        .filter(v => v > 60);
-    // ESR releases stopped after 38.* and resumed with 115.*, hardcode the
-    // values in between.
-    ESR_VERSIONS.push(45, 52, 60, 68, 78, 91, 102);
-
-    const {
-        LATEST_THUNDERBIRD_VERSION,
-        LATEST_THUNDERBIRD_NIGHTLY_VERSION,
-    } = await requestJson("https://product-details.mozilla.org/1.0/thunderbird_versions.json");
-
-    return {
-        ESR: filterUniqueEntries(ESR_VERSIONS).sort((a, b) => a - b),
-        DAILY: Number(LATEST_THUNDERBIRD_NIGHTLY_VERSION.split(".").at(0)),
-        RELEASE: Number(LATEST_THUNDERBIRD_VERSION.split(".").at(0)),
-    }
-}
-
-/**
- * Query BUILD_HUB_URL to get the first revision for a given release.
- *
- * @param {string} branch - "mozilla" or "comm"
- * @param {string} tree - The tree to process (e.g. "release", "central").
- * @param {string} versionMatch - A string which is matched against the target
- *    version, for example "115.*".
- *
- * @returns {string} revision/changeset
- */
-export async function getFirstRevisionFromBuildHub(branch, tree, versionMatch) {
-    try {
-        const postData = JSON.stringify({
-            size: 1,
-            query: {
-                bool: {
-                    must: [
-                        { term: { "source.tree": `${branch}-${tree}` } },
-                        { wildcard: { "target.version": versionMatch } },
-                    ]
-                }
-            },
-            sort: [{ "download.date": { order: "asc" } }],
-        });
-
-        const options = {
-            hostname: BUILD_HUB_URL,
-            port: 443,
-            path: "/api/search",
-            method: "POST",
-        };
-
-        // Create the HTTP request.
-        const task = Promise.withResolvers();
-        const req = https.request(options, (res) => {
-            let responseData = "";
-
-            // A chunk of data has been received.
-            res.on("data", (chunk) => {
-                responseData += chunk;
-            });
-
-            // The whole response has been received.
-            res.on("end", () => {
-                task.resolve(responseData);
-            });
-        });
-
-        // Handle errors.
-        req.on("error", (error) => {
-            task.reject(error.message);
-        });
-
-        // Send the POST data.
-        req.write(postData);
-        req.end();
-
-        let data = commentJson.parse(await task.promise);
-        return data.hits.hits[0]._source.source.revision;
-    } catch (ex) {
-        console.error(ex);
-        throw new Error(`Failed to retrieve revision from ${BUILD_HUB_URL}`);
-    }
 }
 
 /**
@@ -184,36 +88,33 @@ export async function ensureDir(path) {
 }
 
 /**
- * bent based request variant with hard timeout on client side.
+ * fetch based request variant with hard timeout on client side.
  * 
  * @param {string} url - url to GET
- * @returns - text content
+ * @returns - text content, or null if the url does not exist or could not be
+ *    downloaded
  */
 export async function request(url) {
     console.log(` - downloading ${url}`);
     // Retry on error, using a hard timeout enforced from the client side.
-    let rv;
-    for (let i = 0; (!rv && i < 5); i++) {
+    for (let i = 0; i < 5; i++) {
         if (i > 0) {
             console.error("Retry", i);
         }
-        // Rate limit the first request already, otherwise hg.mozilla.org will block us.
-        await new Promise(resolve => setTimeout(resolve, 2500));
-
-        let killTimer;
-        let killSwitch = new Promise((resolve, reject) => { killTimer = setTimeout(reject, 15000, "HardTimeout"); })
-        rv = await Promise
-            .race([requestText(url), killSwitch])
-            .catch(err => {
-                console.error('Error in  request', err);
+        try {
+            const response = await fetch(url, { signal: AbortSignal.timeout(15000) });
+            if (response.status == 404) {
                 return null;
-            });
-
-        // node will continue to "wait" after the script finished, if we do not
-        // clear the timeouts.
-        clearTimeout(killTimer);
+            }
+            if (response.ok) {
+                return await response.text();
+            }
+            console.error('Error in request', response.status, response.statusText);
+        } catch (err) {
+            console.error('Error in request', err);
+        }
     }
-    return rv;
+    return null;
 }
 
 /**
@@ -244,26 +145,6 @@ export async function writeArrayOfStringsToFile(filePath, arr) {
         console.error("Error in writeArrayOfStringsToFile()", filePath, err);
         throw err;
     }
-}
-
-/**
- * Simple helper function to parse command line arguments.
- *
- * @returns {object} command line arguments and their values
- */
-export function parseArgs(argv = process.argv.slice(2)) {
-    const args = {};
-    for (const arg of argv) {
-        if (arg.startsWith("--")) {
-            const [key, value] = arg.slice(2).split("=");
-            if (!value) {
-                args[key] = true;
-            } else {
-                args[key] = value.toLowerCase();
-            }
-        }
-    }
-    return args;
 }
 
 /**

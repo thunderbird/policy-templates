@@ -2,7 +2,7 @@ import {
     DESC_DEFAULT_DAILY_TEMPLATE,
     TREE_TEMPLATE,
 } from "./constants.mjs";
-import { getCachedCompatibilityInformation } from "./mercurial.mjs";
+import { getCompatibilityInformation } from "./compatibility.mjs";
 import { ensureDir } from "./tools.mjs";
 import fs from "node:fs/promises";
 import GithubSlugger from 'github-slugger';
@@ -134,10 +134,10 @@ export function generateReadmeCompatibilityTable(compatInfo) {
  * @param {TemplateData} template 
  * @param {string[]} thunderbirdPolicies - Flattened policy names of supported
  *    policies, e.g. "InstallAddonsPermission_Allow".
+ * @param {CompatibilityData} compatData - The compatibility data of the branch.
  * @param {string} output_dir - Path to save the generated README file.
  */
-export async function generatePolicyReadme(template, thunderbirdPolicies, output_dir) {
-    let tree = template.tree;
+export async function generatePolicyReadme(template, thunderbirdPolicies, compatData, output_dir) {
     let thunderbirdReadmeData = generateReadmeMarkdown(template.policies);
 
     let header = [];
@@ -166,7 +166,7 @@ export async function generatePolicyReadme(template, thunderbirdPolicies, output
                 details.push(...readmeData.content.filter(e => !e.includes("**Compatibility:**")));
                 details.push("");
                 details.push("#### Compatibility");
-                let distinctCompatInfo = getCachedCompatibilityInformation(/* distinct */ true, tree, policy);
+                let distinctCompatInfo = getCompatibilityInformation(compatData, { distinct: true, policyName: policy });
                 details.push(...generateReadmeCompatibilityTable(distinctCompatInfo));
             }
         }
@@ -179,8 +179,9 @@ export async function generatePolicyReadme(template, thunderbirdPolicies, output
     }
 
     let md = TREE_TEMPLATE
-        .replace("__name__", template.name)
-        .replace("__desc__", `${template.tree == "central" ? DESC_DEFAULT_DAILY_TEMPLATE : ""}${
+        // Use replacer functions, as the text may contain "$" patterns.
+        .replace("__name__", () => template.name)
+        .replace("__desc__", () => `${template.tree == "main" ? DESC_DEFAULT_DAILY_TEMPLATE : ""}${
             template.description
                 .replaceAll(
                     `[thunderbird.admx]`,
@@ -189,8 +190,8 @@ export async function generatePolicyReadme(template, thunderbirdPolicies, output
                     `[org.mozilla.thunderbird.plist]`,
                     `[org.mozilla.thunderbird.plist](https://github.com/thunderbird/policy-templates/blob/master/docs/templates/${template.tree}/mac/org.mozilla.thunderbird.plist)`)
         }`)
-        .replace("__list_of_policies__", header.join("\n"))
-        .replace("__details__", details.join("\n"));
+        .replace("__list_of_policies__", () => header.join("\n"))
+        .replace("__details__", () => details.join("\n"));
 
     await ensureDir(output_dir);
     await fs.writeFile(`${output_dir}/README.md`, md);

@@ -1,21 +1,29 @@
-export const GIT_CHECKOUT_DIR_PATH = "../data/gitstate";
-export const MOZILLA_TEMPLATE_DIR_PATH = "../data/mozilla-policy-templates";
-
 export const PERSISTENT_SCHEMA_CACHE_FILE = 'persistent_schema_cache.json';
 export const TEMPORARY_SCHEMA_CACHE_FILE = 'temporary_schema_cache.json';
 
 export const DOCS_TEMPLATES_DIR_PATH = "../docs/templates";
 export const DOCS_README_PATH = "../docs/README.md";
-export const YAML_CONFIG_PATH = "../config/#tree#.yaml";
 
-export const UPSTREAM_README_PATH = "upstream/state_#tree#.yaml";
-export const UPSTREAM_REVISIONS_PATH = "upstream/revisions.json";
+export const GITHUB_API_URL = "https://api.github.com";
+export const GITHUB_RAW_URL = "https://raw.githubusercontent.com";
 
-export const HG_URL = `https://hg-edge.mozilla.org`;
-export const BUILD_HUB_URL = "buildhub.moz.tools";
+export const THUNDERBIRD_REPOSITORY = "thunderbird/thunderbird-desktop";
+export const FIREFOX_REPOSITORY = "mozilla-firefox/firefox";
 
-export const SOURCE_PATH_POLICIES_SCHEMA_JSON = "components/enterprisepolicies/schemas/policies-schema.json";
-export const SOURCE_PATH_VERSION_TXT = "config/version.txt"
+export const THUNDERBIRD_POLICIES_SCHEMA_PATH = "mail/components/enterprisepolicies/schemas/policies-schema.json";
+export const THUNDERBIRD_POLICIES_YAML_PATH = "mail/components/enterprisepolicies/documentation/policies.yaml";
+export const THUNDERBIRD_VERSION_PATH = "mail/config/version.txt";
+export const FIREFOX_POLICIES_SCHEMA_PATH = "browser/components/enterprisepolicies/schemas/policies-schema.json";
+
+// The Firefox branch used to find policies which are not supported by Thunderbird.
+export const FIREFOX_REFERENCE_BRANCH = "main";
+
+export const BRANCH_PREFIXES = {
+    main: "Thunderbird Daily",
+    beta: "Thunderbird Beta",
+    release: "Thunderbird",
+    esr: "Thunderbird ESR",
+};
 
 export const MAIN_TEMPLATE = `## Enterprise policy descriptions and templates for Thunderbird
 
