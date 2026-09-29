@@ -410,13 +410,18 @@ async function downloadPolicySchemaData(branch, tree, revision) {
 /**
  * Get the PolicySchemaRevisions for the requested tree and download any missing
  * schema file. For Thunderbird all schema files are downloaded (or pulled from
- * the cache), for Mozilla only the newest schema file is downloaded.
+ * the cache), for Mozilla only the newest ("tip") schema file and the one
+ * corresponding to the last known state ("lastKnownMozillaPolicyRevision") are
+ * downloaded.
  * 
  * @param {string} tree - The tree to process (e.g. "release", "central").
+ * @param {string} lastKnownMozillaPolicyRevision - The mercurial changeset
+ *    identifier of the last known mozilla version of their policies.json in the
+ *    specified tree.
  * 
  * @returns {PolicySchemaRevisions}
  */
-export async function getPolicySchemaRevisions(tree) {
+export async function getPolicySchemaRevisions(tree, lastKnownMozillaPolicyRevision) {
     let data = {
         tree,
         comm: {
@@ -441,13 +446,6 @@ export async function getPolicySchemaRevisions(tree) {
             let revisions = commentJson
                 .parse(await readCachedUrl(logUrl, { temporary: true }))
                 .entries.map(e => e.node);
-
-            // For mozilla, we just need the newest revision.
-            if (branch == "mozilla") {
-                neededRevisions = [revisions[0]];
-                break;
-            }
-
             lastFoundRevision = revisions.at(-1);
             version = Number(
                 await getRevisionVersion(branch, tree, lastFoundRevision).then(v => v.split(".")[0])
@@ -461,7 +459,21 @@ export async function getPolicySchemaRevisions(tree) {
             if (revisions.length == 1 && revisions[0] == lastFoundRevision) {
                 break;
             }
+            
+            // Early exit for the mozilla-branch.
+            if (branch == "mozilla" && revisions.find(e => e == lastKnownMozillaPolicyRevision)) {
+                break;
+            }
         } while (version > 67)
+
+        // For mozilla, we just need the newest and the reference revision.
+        // For comm, we need all revisions to be able to extract compatibility information.
+        if (branch == "mozilla") {
+            neededRevisions = [
+                neededRevisions[0],
+                neededRevisions.find(e => e == lastKnownMozillaPolicyRevision)
+            ]
+        }
 
         for (let revision of neededRevisions) {
             let schemaData = await downloadPolicySchemaData(branch, tree, revision);
