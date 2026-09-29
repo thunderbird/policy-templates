@@ -1,150 +1,3 @@
-# ==============================================================================
-# Thunderbird Enterprise Policies YAML - Format Specification
-# ==============================================================================
-# This file defines the metadata and structure used to document Thunderbird's
-# enterprise policies.
-#
-# Markdown can be used in string fields, but **should be kept to a minimum**
-# to ensure consistent formatting in the generated documentation.
-#
-# ------------------------------------------------------------------------------
-# Top-Level Structure
-# ------------------------------------------------------------------------------
-# The YAML file consists of the following root-level entries:
-#
-# - description:             A general description/introduction printed before
-#                            the table of contents.
-# - policies:                A list of `Policy` objects, each describing a policy.
-#
-# ------------------------------------------------------------------------------
-# Policy Object Structure
-# ------------------------------------------------------------------------------
-# Each `Policy` object may define the following fields:
-#
-# - toc:                     A short description used in the generated table of
-#                            contents.
-# - content:                 A longer explanation of the policy’s purpose and
-#                            behavior.
-# - preferencesAffected:     Lists internal preferences affected by the policy.
-#                            See details in the section below.
-# - cck2Equivalent:          Reference to the equivalent legacy CCK2 setting used
-#                            in the "Configuration & Customization Kit 2" tool.
-# - gpo:                     A list of Windows Group Policy Objects. See format
-#                            details in the "GPO Objects" section.
-# - plist:                   A macOS `plist` representation of the policy.
-# - json:                    JSON representation for cross-platform configuration.
-#
-# Fields that are not relevant to a specific policy may be omitted or explicitly
-# defined as empty.
-#
-# ------------------------------------------------------------------------------
-# String Field Conventions
-# ------------------------------------------------------------------------------
-# String values support two formatting styles:
-#
-# 1. **One-line string (preferred for short values):**
-#    Use single quotes (`'`) to wrap the string.
-#
-#    Example:
-#      description: 'Enables the feature.'
-#
-# 2. **Multi-line block (preferred for longer content):**
-#    Use a pipe (`|`) followed by indented lines.
-#
-#    Example:
-#      description: |
-#        Enables the feature and provides additional details.
-#        This setting is important for performance tuning.
-#
-# ------------------------------------------------------------------------------
-# Format for `preferencesAffected`
-# ------------------------------------------------------------------------------
-# This field documents which internal preferences are affected by the policy.
-#
-# Supported formats:
-#
-# 1. **List of preferences:**
-#    Rendered as a comma-separated list, each rendered as inline code.
-#
-#    Example:
-#      preferencesAffected:
-#        - browser.example.preference1
-#        - browser.example.preference2
-#
-# 2. **Free-form string description:**
-#    Used when a list is impractical.
-#
-#    Example:
-#      preferencesAffected: 'Many internal preferences may be affected.'
-#
-# ------------------------------------------------------------------------------
-# Format for `gpo` Objects
-# ------------------------------------------------------------------------------
-# This section defines one or more keys, specifying their type and value.
-#
-# The `gpo.key` field supports:
-#
-# 1. **Single-entry format:**
-#    Use for simple key/type/value triples.
-#
-#    Example:
-#      gpo:
-#        - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_Disabled'
-#          type: 'REG_DWORD'
-#          value: '0x1 | 0x0'
-#        - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled'
-#          type: 'REG_DWORD'
-#          value: '0x1 | 0x0'
-#
-# 2. **Multi-entry block format:**
-#    Use when multiple keys share the same type and value.
-#
-#    Example:
-#      gpo:
-#        - key: |
-#            Software\Policies\Mozilla\Thunderbird\InAppNotification_Disabled
-#            Software\Policies\Mozilla\Thunderbird\InAppNotification_DonationEnabled
-#          type: 'REG_DWORD'
-#          value: '0x1 | 0x0'
-#
-# ------------------------------------------------------------------------------
-# Multiple Option Values
-# ------------------------------------------------------------------------------
-# Some entries in `gpo`, `plist`, and `json` blocks may include
-# multiple valid options separated by a pipe (`|`). This is used to indicate all
-# the possible values that are accepted by the policy backend.
-#
-# Example:
-#   gpo:
-#     - key: 'Software\Policies\Mozilla\Thunderbird\InAppNotification_Disabled'
-#       type: 'REG_DWORD'
-#       value: '0x1 | 0x0'
-#
-#   plist: |
-#     <dict>
-#       <key>InAppNotification_Disabled</key>
-#       <true/> | <false/>
-#       <key>InAppNotification_DonationEnabled</key>
-#       <true/> | <false/>
-#     </dict>
-#
-#   json: |
-#     {
-#       "policies": {
-#         "InAppNotification_Disabled": true | false,
-#         "InAppNotification_DonationEnabled": true | false,
-#         "InAppNotification_SurveyEnabled": true | false,
-#         "InAppNotification_MessageEnabled": true | false
-#       }
-#     }
-#
-# ------------------------------------------------------------------------------
-# Compliance and Maintenance
-# ------------------------------------------------------------------------------
-# Please follow this format strictly to ensure correct parsing and rendering
-# by the documentation generation tools.
-# ==============================================================================
-
 description: |
   Policies can be specified by creating a file called `policies.json`:
   * Windows: place the file in a directory called `distribution` in the same
@@ -282,22 +135,27 @@ policies:
         value: '0x1 | 0x0'
     plist: |
       <dict>
-        <key>InAppNotification_Disabled</key>
-        <true/> | <false/>
-        <key>InAppNotification_DonationEnabled</key>
-        <true/> | <false/>
-        <key>InAppNotification_SurveyEnabled</key>
-        <true/> | <false/>
-        <key>InAppNotification_MessageEnabled</key>
-        <true/> | <false/>
+        <key>InAppNotification</key>
+        <dict>
+          <key>Disabled</key>
+          <true/> | <false/>
+          <key>DonationEnabled</key>
+          <true/> | <false/>
+          <key>SurveyEnabled</key>
+          <true/> | <false/>
+          <key>MessageEnabled</key>
+          <true/> | <false/>
+        </dict>
       </dict>
     json: |
       {
         "policies": {
-          "InAppNotification_Disabled": true | false,
-          "InAppNotification_DonationEnabled": true | false,
-          "InAppNotification_SurveyEnabled": true | false,
-          "InAppNotification_MessageEnabled": true | false
+          "InAppNotification": {
+            "Disabled": true | false,
+            "DonationEnabled": true | false,
+            "SurveyEnabled": true | false,
+            "MessageEnabled": true | false
+          }
         }
       }
   Preferences:
@@ -823,6 +681,15 @@ policies:
     content:
     cck2Equivalent:
     preferencesAffected:
+    json: |
+      {
+        "policies": {
+          "Certificates": {
+            "ImportEnterpriseRoots": true | false,
+            "Install": ["cert1.der", "/home/username/cert2.pem"]
+          }
+        }
+      }
   Certificates_ImportEnterpriseRoots:
     toc: 'Trust certificates that have been added to the operating system
       certificate store by a user or administrator.'
@@ -945,10 +812,6 @@ policies:
           <array>
             <string>http://example.com</string>
           </array>
-          <key>AllowSession</key>
-          <array>
-            <string>http://example.edu</string>
-          </array>
           <key>Block</key>
           <array>
             <string>http://example.org</string>
@@ -962,9 +825,8 @@ policies:
         "policies": {
           "Cookies": {
             "Allow": ["http://example.org/"],
-            "AllowSession": ["http://example.edu/"],
             "Block": ["http://example.edu/"],
-            "Locked": true | false,
+            "Locked": true | false
           }
         }
       }
@@ -993,7 +855,7 @@ policies:
         category: 'DNSOverHTTPS'
       - key: 'Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ProviderURL'
         type: 'REG_SZ'
-        value: 'URL_TO_ALTERNATE_PROVIDER'
+        value: 'https://dns.example.com/dns-query'
         category: 'DNSOverHTTPS'
       - key: 'Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\ExcludedDomains\1'
         type: 'REG_SZ'
@@ -1006,7 +868,7 @@ policies:
           <key>Enabled</key>
           <false/> | <true/>
           <key>ProviderURL</key>
-          <string>URL_TO_ALTERNATE_PROVIDER</string>
+          <string>https://dns.example.com/dns-query</string>
           <key>Locked</key>
           <true/> | <false/>
           <key>ExcludedDomains</key>
@@ -1020,9 +882,9 @@ policies:
         "policies": {
           "DNSOverHTTPS": {
             "Enabled":  true | false,
-            "ProviderURL": "URL_TO_ALTERNATE_PROVIDER",
+            "ProviderURL": "https://dns.example.com/dns-query",
             "Locked": true | false,
-            "ExcludedDomains": ["example.com"],
+            "ExcludedDomains": ["example.com"]
           }
         }
       }
@@ -1045,6 +907,12 @@ policies:
         <key>DefaultDownloadDirectory</key>
         <string>${home}/Downloads</string>
       </dict>
+    json: |
+      {
+        "policies": {
+          "DefaultDownloadDirectory": "${home}/Downloads"
+        }
+      }
   DisableAppUpdate:
     toc: 'Turn off application updates.'
     content: |
@@ -1072,7 +940,7 @@ policies:
     content: |
       Disable the built in PDF viewer. PDF files are downloaded and sent externally.
 
-      Note: As of Thunderbird 140, this policy no longer completely disables PDF.js; it changes the handler to send PDF files to the operating system. Embedded PDF files are shown in the browser. If you need to completely disable PDF.js, you can use the [`PDFjs`](#pdfjs) policy. 
+      Note: As of Thunderbird 140, this policy no longer completely disables PDF.js; it changes the handler to send PDF files to the operating system. Embedded PDF files are shown in the browser. If you need to completely disable PDF.js, you can use the [`PDFjs`](#pdfjs) policy.
     cck2Equivalent:
       - disablePDFjs
     preferencesAffected:
@@ -1089,6 +957,74 @@ policies:
       {
         "policies": {
           "DisableBuiltinPDFViewer": true | false
+        }
+      }
+  DisableChat:
+    toc: 'Disable the Chat feature.'
+    content: |
+      Disable the Chat feature.
+    cck2Equivalent:
+    preferencesAffected:
+      - mail.chat.enabled
+    gpo:
+      - key: 'Software\Policies\Mozilla\Thunderbird\DisableChat'
+        type: 'REG_DWORD'
+        value: '0x1 | 0x0'
+    plist: |
+      <dict>
+        <key>DisableChat</key>
+        <true/> | <false/>
+      </dict>
+    json: |
+      {
+        "policies": {
+          "DisableChat": true | false
+        }
+      }
+  DisableCommunity:
+    toc: 'Don’t show community features in the UI (such as Donate, Get Involved, Share Ideas etc.)'
+    content: |
+      Don’t show community features in the UI (such as Donate, Get Involved, Share Ideas etc.)
+    cck2Equivalent:
+    preferencesAffected:
+      - mail.community_features.enabled
+      - mailnews.start_page.enabled
+      - mail.accounthub.thundermail.enabled
+    gpo:
+      - key: 'Software\Policies\Mozilla\Thunderbird\DisableCommunity'
+        type: 'REG_DWORD'
+        value: '0x1 | 0x0'
+    plist: |
+      <dict>
+        <key>DisableCommunity</key>
+        <true/> | <false/>
+      </dict>
+    json: |
+      {
+        "policies": {
+          "DisableCommunity": true | false
+        }
+      }
+  DisableDataCollectionSettings:
+    toc: 'Prevent the user from changing data collection settings.'
+    content: |
+      Prevent the user from changing data collection settings.
+    cck2Equivalent:
+    preferencesAffected:
+      - mail.data_collection_settings.enabled
+    gpo:
+      - key: 'Software\Policies\Mozilla\Thunderbird\DisableDataCollectionSettings'
+        type: 'REG_DWORD'
+        value: '0x1 | 0x0'
+    plist: |
+      <dict>
+        <key>DisableDataCollectionSettings</key>
+        <true/> | <false/>
+      </dict>
+    json: |
+      {
+        "policies": {
+          "DisableDataCollectionSettings": true | false
         }
       }
   DisableDeveloperTools:
@@ -1112,6 +1048,50 @@ policies:
       {
         "policies": {
           "DisableDeveloperTools": true | false
+        }
+      }
+  DisableExperimentalFeatures:
+    toc: 'Disable experimental features in Thunderbird.'
+    content: |
+      Disable experimental features in Thunderbird.
+    cck2Equivalent:
+    preferencesAffected:
+      - mail.experimental_features_settings.enabled
+    gpo:
+      - key: 'Software\Policies\Mozilla\Thunderbird\DisableExperimentalFeatures'
+        type: 'REG_DWORD'
+        value: '0x1 | 0x0'
+    plist: |
+      <dict>
+        <key>DisableExperimentalFeatures</key>
+        <true/> | <false/>
+      </dict>
+    json: |
+      {
+        "policies": {
+          "DisableExperimentalFeatures": true | false
+        }
+      }
+  DisableFileLink:
+    toc: 'Disable the Filelink feature.'
+    content: |
+      Disable the Filelink feature.
+    cck2Equivalent:
+    preferencesAffected:
+      - mail.cloud_files.enabled
+    gpo:
+      - key: 'Software\Policies\Mozilla\Thunderbird\DisableFileLink'
+        type: 'REG_DWORD'
+        value: '0x1 | 0x0'
+    plist: |
+      <dict>
+        <key>DisableFileLink</key>
+        <true/> | <false/>
+      </dict>
+    json: |
+      {
+        "policies": {
+          "DisableFileLink": true | false
         }
       }
   DisableMasterPasswordCreation:
@@ -1140,6 +1120,28 @@ policies:
           "DisableMasterPasswordCreation": true | false
         }
       }
+  DisableMessageForwardingFilters:
+    toc: 'Prevent message filters from automatically forwarding messages.'
+    content: |
+      Prevent message filters from automatically forwarding messages.
+    cck2Equivalent:
+    preferencesAffected:
+      - mail.filters.forward.enabled
+    gpo:
+      - key: 'Software\Policies\Mozilla\Thunderbird\DisableMessageForwardingFilters'
+        type: 'REG_DWORD'
+        value: '0x1 | 0x0'
+    plist: |
+      <dict>
+        <key>DisableMessageForwardingFilters</key>
+        <true/> | <false/>
+      </dict>
+    json: |
+      {
+        "policies": {
+          "DisableMessageForwardingFilters": true | false
+        }
+      }
   DisablePasswordReveal:
     toc: 'Do not allow passwords to be revealed in saved logins.'
     content: |
@@ -1159,6 +1161,28 @@ policies:
       {
         "policies": {
           "DisablePasswordReveal": true | false
+        }
+      }
+  DisableQRExport:
+    toc: 'Disable the generation of the QR code to export account settings and credentials.'
+    content: |
+      Disable the generation of the QR code to export account settings and credentials.
+    cck2Equivalent:
+    preferencesAffected:
+      - mail.qrexport.enabled
+    gpo:
+      - key: 'Software\Policies\Mozilla\Thunderbird\DisableQRExport'
+        type: 'REG_DWORD'
+        value: '0x1 | 0x0'
+    plist: |
+      <dict>
+        <key>DisableQRExport</key>
+        <true/> | <false/>
+      </dict>
+    json: |
+      {
+        "policies": {
+          "DisableQRExport": true | false
         }
       }
   DisableSafeMode:
@@ -1275,6 +1299,28 @@ policies:
           "DisableTelemetry": true | false
         }
       }
+  DisableUpdateSettings:
+    toc: 'Prevent the user from changing application update settings.'
+    content: |
+      Prevent the user from changing application update settings.
+    cck2Equivalent:
+    preferencesAffected:
+      - mail.update_settings.enabled
+    gpo:
+      - key: 'Software\Policies\Mozilla\Thunderbird\DisableUpdateSettings'
+        type: 'REG_DWORD'
+        value: '0x1 | 0x0'
+    plist: |
+      <dict>
+        <key>DisableUpdateSettings</key>
+        <true/> | <false/>
+      </dict>
+    json: |
+      {
+        "policies": {
+          "DisableUpdateSettings": true | false
+        }
+      }
   DisabledCiphers:
     toc: 'Disable ciphers.'
     content: |
@@ -1337,11 +1383,11 @@ policies:
         "policies": {
           "DisabledCiphers": {
             "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": true | false,
-            "TLS_DHE_RSA_WITH_AES_256_CBC_SHA":" true | false,
+            "TLS_DHE_RSA_WITH_AES_256_CBC_SHA": true | false,
             "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": true | false,
             "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": true | false,
             "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": true | false,
-            "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": true | false,
+            "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": true | false
           }
         }
       }
@@ -1365,6 +1411,12 @@ policies:
         <key>DownloadDirectory</key>
         <string>${home}/Downloads</string>
       </dict>
+    json: |
+      {
+        "policies": {
+          "DownloadDirectory": "${home}/Downloads"
+        }
+      }
   ExtensionUpdate:
     toc: 'Control extension updates.'
     content: |
@@ -1692,6 +1744,7 @@ policies:
       {
         "policies": {
           "NetworkPrediction": true | false
+        }
       }
   OfferToSaveLogins:
     toc: 'Control whether or not Thunderbird offers to save passwords.'
@@ -1939,7 +1992,7 @@ policies:
         category: 'ProxySettings'
       - key: 'Software\Policies\Mozilla\Thunderbird\Proxy\AutoConfigURL'
         type: 'REG_SZ'
-        value: 'URL_TO_AUTOCONFIG'
+        value: 'https://proxy.example.com/proxy.pac'
         category: 'ProxySettings'
     plist: |
       <dict>
@@ -1964,7 +2017,7 @@ policies:
           <key>Passthrough</key>
           <string>&lt;local&gt;</string>
           <key>AutoConfigURL</key>
-          <string>URL_TO_AUTOCONFIG</string>
+          <string>https://proxy.example.com/proxy.pac</string>
           <key>AutoLogin</key>
           <true/> | <false/>
           <key>UseProxyForDNS</key>
@@ -1984,7 +2037,7 @@ policies:
             "SOCKSProxy": "hostname",
             "SOCKSVersion": 4 | 5,
             "Passthrough": "<local>",
-            "AutoConfigURL": "URL_TO_AUTOCONFIG",
+            "AutoConfigURL": "https://proxy.example.com/proxy.pac",
             "AutoLogin": true | false,
             "UseProxyForDNS": true | false
           }
@@ -2012,6 +2065,45 @@ policies:
       {
         "policies": {
           "RequestedLocales": "de,en-US"
+        }
+      }
+  SecurityDevices:
+    toc: 'Add or delete PKCS #11 modules.'
+    content: |
+      Add or delete PKCS #11 modules.
+    cck2Equivalent:
+    preferencesAffected:
+    gpo:
+      - key: 'Software\Policies\Mozilla\Thunderbird\SecurityDevices\Add\NAME_OF_DEVICE_TO_ADD'
+        type: 'REG_SZ'
+        value: 'PATH_TO_LIBRARY_FOR_DEVICE'
+      - key: 'Software\Policies\Mozilla\Thunderbird\SecurityDevices\Delete\1'
+        type: 'REG_SZ'
+        value: 'NAME_OF_DEVICE_TO_DELETE'
+    plist: |
+      <dict>
+        <key>SecurityDevices</key>
+        <dict>
+          <key>Add</key>
+          <dict>
+            <key>NAME_OF_DEVICE_TO_ADD</key>
+            <string>PATH_TO_LIBRARY_FOR_DEVICE</string>
+          </dict>
+          <key>Delete</key>
+          <array>
+            <string>NAME_OF_DEVICE_TO_DELETE</string>
+          </array>
+        </dict>
+      </dict>
+    json: |
+      {
+        "policies": {
+          "SecurityDevices": {
+            "Add": {
+              "NAME_OF_DEVICE_TO_ADD": "PATH_TO_LIBRARY_FOR_DEVICE"
+            },
+            "Delete": ["NAME_OF_DEVICE_TO_DELETE"]
+          }
         }
       }
   SSLVersionMax:
@@ -2055,7 +2147,7 @@ policies:
     json: |
       {
         "policies": {
-          "SSLVersionMin": "tls1.2 | tls1.3 | tls1.1 | tls1"
+          "SSLVersionMin": "tls1.2" | "tls1.3" | "tls1.1" | "tls1"
         }
       }
   SearchEngines:
@@ -2064,6 +2156,28 @@ policies:
       As of Thunderbird 139, this policy is available in all versions of Thunderbird.
     cck2Equivalent:
     preferencesAffected:
+    json: |
+      {
+        "policies": {
+          "SearchEngines": {
+            "Add": [
+              {
+                "Name": "Example1",
+                "URLTemplate": "https://www.example.org/q={searchTerms}",
+                "Method": "GET" | "POST",
+                "IconURL": "https://www.example.org/favicon.ico",
+                "Alias": "example",
+                "Description": "Description",
+                "PostData": "name=value&q={searchTerms}",
+                "SuggestURLTemplate": "https://www.example.org/suggestions/q={searchTerms}"
+              }
+            ],
+            "Default": "NAME_OF_SEARCH_ENGINE",
+            "PreventInstalls": true | false,
+            "Remove": ["NAME_OF_SEARCH_ENGINE"]
+          }
+        }
+      }
   SearchEngines_Add:
     toc: 'Add new search engines.'
     content: |

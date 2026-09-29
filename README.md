@@ -78,7 +78,7 @@ To use a different YAML file instead of the branch’s `policies.yaml` file (for
 example one of the files in `config/`):
 
 ```bash
-node update_policy_templates.js --branch=main --policies-yaml=../config/central.yaml
+node update_policy_templates.js --branch=main --policies-yaml=../config/main.yaml
 ```
 
 ## 🧠 Notes

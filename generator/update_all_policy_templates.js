@@ -16,7 +16,7 @@ const MIN_ESR = 115;
 // Files used instead of the branch's policies.yaml, until the in-tree files
 // include all changes. Paths are relative to the generator folder.
 const POLICIES_YAML_OVERRIDES = new Map([
-    ["main", "../config/central.yaml"],
+    ["main", "../config/main.yaml"],
     ["release", "../config/release.yaml"],
     ["esr140", "../config/esr140.yaml"],
     ["esr128", "../config/esr128.yaml"],
