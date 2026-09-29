@@ -88,6 +88,10 @@ function compareVersion(a, b) {
     return 0;
 }
 
+// A pattern of patternProperties matching any name, optionally excluding some
+// names, e.g. "^.*$", "^(?!\*$).*$" or "^(?!Add$|Delete$).*$".
+const CATCH_ALL_PATTERN = /^\^(\(\?!.*\))?\.\*\$$/;
+
 /**
  * Extract a flat list of policy names found in a schema file. Hierarchy is
  * preserved by joining levels with "_".
@@ -100,7 +104,13 @@ function extractFlatPolicyNamesFromPolicySchema(data) {
     let properties = [];
     for (let key of ["properties", "patternProperties"]) {
         if (data[key]) {
-            for (let [name, entry] of Object.entries(data[key])) {
+            for (let [pattern, entry] of Object.entries(data[key])) {
+                // Patterns matching any name are refined over time by excluding
+                // names (e.g. "^.*$" became "^(?!\*$).*$"), which does not
+                // change the policy itself. Use a single canonical name for them.
+                let name = key == "patternProperties" && CATCH_ALL_PATTERN.test(pattern)
+                    ? "^.*$"
+                    : pattern;
                 properties.push(name)
                 let subs = extractFlatPolicyNamesFromPolicySchema(entry);
                 if (subs.length > 0) properties.push(...subs.map(e => `${name}_${e}`))

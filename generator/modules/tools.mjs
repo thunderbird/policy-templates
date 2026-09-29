@@ -148,17 +148,19 @@ export async function writeArrayOfStringsToFile(filePath, arr) {
 }
 
 /**
- * Simple helper function to download a URL and cache its content in SCHEMA_CACHE.
- * Reading the same URL at a later time will retrieve the content from the cache.
+ * Simple helper function to cache a value in SCHEMA_CACHE. Reading the same key
+ * at a later time will retrieve the value from the cache.
  *
- * @param {string} url
+ * @param {string} key
+ * @param {function} producer - async function returning the value (a string)
+ *    for the given key, or null if there is none (which is not cached)
  * @param {boolean} temporary - if the temporary cache is used, which is stored
  *    in a separate file and can be easily cleared independently of the persistent
  *    cache
  *
- * @returns {string} content of url
+ * @returns {string} the value
  */
-export async function readCachedUrl(url, options) {
+export async function readCachedValue(key, producer, options) {
     const temporary = options?.temporary ?? false;
     const cache = temporary
         ? { type: 'temporary', file: TEMPORARY_SCHEMA_CACHE_FILE }
@@ -174,16 +176,31 @@ export async function readCachedUrl(url, options) {
         }
     }
 
-    if (!SCHEMA_CACHE[cache.type].has(url)) {
-        const rev = await request(url);
-        if (!rev) {
+    if (!SCHEMA_CACHE[cache.type].has(key)) {
+        const value = await producer();
+        if (!value) {
             return null;
         };
-        SCHEMA_CACHE[cache.type].set(url, rev);
+        SCHEMA_CACHE[cache.type].set(key, value);
         await writePrettyJSONFile(
             cache.file,
             Array.from(SCHEMA_CACHE[cache.type].entries())
         );
     }
-    return SCHEMA_CACHE[cache.type].get(url);
+    return SCHEMA_CACHE[cache.type].get(key);
+}
+
+/**
+ * Simple helper function to download a URL and cache its content in SCHEMA_CACHE.
+ * Reading the same URL at a later time will retrieve the content from the cache.
+ *
+ * @param {string} url
+ * @param {boolean} temporary - if the temporary cache is used, which is stored
+ *    in a separate file and can be easily cleared independently of the persistent
+ *    cache
+ *
+ * @returns {string} content of url
+ */
+export async function readCachedUrl(url, options) {
+    return readCachedValue(url, () => request(url), options);
 }

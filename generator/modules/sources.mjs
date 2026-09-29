@@ -5,7 +5,7 @@ import { promisify } from "node:util";
 import {
     FIREFOX_REPOSITORY, GITHUB_API_URL, GITHUB_RAW_URL, THUNDERBIRD_REPOSITORY,
 } from "./constants.mjs";
-import { InputError, readCachedUrl } from "./tools.mjs";
+import { InputError, readCachedUrl, readCachedValue } from "./tools.mjs";
 
 const execFileAsync = promisify(execFile);
 
@@ -132,8 +132,9 @@ export class LocalGitSource {
 /**
  * Read files and their history from a GitHub repository. Only the list of
  * branches and commits is requested from the GitHub API, files are downloaded
- * from raw.githubusercontent.com and cached, as the content of a file at a given
- * commit never changes.
+ * from raw.githubusercontent.com. Files and histories are cached, as the content
+ * and the history of a file at a given commit never change. Only the list of
+ * branches is requested on each run.
  */
 export class GitHubSource {
     // Map of branch names to their commits, requested once.
@@ -202,10 +203,13 @@ export class GitHubSource {
     }
 
     async getFileHistory(commit, path) {
-        const commits = await this.#apiAllPages(
-            `/commits?sha=${commit}&path=${encodeURIComponent(path)}`
+        // The history of a given commit never changes and can be cached.
+        const query = `/commits?sha=${commit}&path=${encodeURIComponent(path)}`;
+        const history = await readCachedValue(
+            `${GITHUB_API_URL}/repos/${this.repository}${query}`,
+            async () => JSON.stringify((await this.#apiAllPages(query)).map(e => e.sha))
         );
-        return commits.map(e => e.sha);
+        return JSON.parse(history);
     }
 
     async readFile(commit, path) {
