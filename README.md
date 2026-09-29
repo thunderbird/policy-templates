@@ -3,9 +3,6 @@
 This project automates the generation of Thunderbird’s enterprise policy
 documentation.
 
-The monitoring of Mozilla’s upstream policies lives in the [`monitor/`](monitor/)
-folder.
-
 The **generated** end-user documentation is available here:
 https://thunderbird.github.io/policy-templates/
 
@@ -33,8 +30,7 @@ https://thunderbird.github.io/policy-templates/
 │                          # policies.yaml files include all their changes.
 ├── docs/                  # The generated documentation. Can be used directly
 │                          # as a GitHub Page.
-├── generator/             # Source folder for the generator script.
-└── monitor/               # Monitor for Mozilla's upstream policies.
+└── generator/             # Source folder for the generator script.
 ```
 
 ## 🛠️ Setup & Usage
