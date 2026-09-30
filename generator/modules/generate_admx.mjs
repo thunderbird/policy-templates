@@ -7,7 +7,8 @@ function getTemplateRevision(template) {
     let v = template.version.split(".");
     let major = v[0];
     let minor = Number(v[1]);
-    let patch = Number(v[2]);
+    // Versions like 157.0 have no patch number.
+    let patch = Number(v[2] ?? 0);
     let rv;
 
     // ADMX specs allow xxxx.xxxxx for the revision field.
