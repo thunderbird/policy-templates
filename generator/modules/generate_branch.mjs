@@ -26,7 +26,7 @@ import {
     THUNDERBIRD_POLICIES_SCHEMA_PATH, THUNDERBIRD_POLICIES_YAML_PATH,
     THUNDERBIRD_VERSION_PATH,
 } from "./constants.mjs";
-import { InputError } from "./tools.mjs";
+import { InputError, PolicyYamlError } from "./tools.mjs";
 
 import commentJson from "comment-json";
 import fs from "node:fs/promises";
@@ -156,11 +156,13 @@ export async function generateBranch({ tb, ff, branch, policiesYamlPath }) {
     const supportedPolicies = getCompatibilityInformation(compatData, { distinct: true })
         .filter(e => e.first != "");
 
-    // Generate the docs.
-    const output_dir = pathUtils.join(DOCS_TEMPLATES_DIR_PATH, branch);
-    await fs.rm(output_dir, { recursive: true, force: true });
-
-    const template = yaml.parseDocument(policiesYaml).toJSON();
+    const document = yaml.parseDocument(policiesYaml);
+    if (document.errors.length) {
+        throw new PolicyYamlError(
+            `Invalid YAML in ${policiesYamlPath ?? THUNDERBIRD_POLICIES_YAML_PATH}: ${document.errors[0].message.split("\n")[0]}`
+        );
+    }
+    const template = document.toJSON();
     // The GPO and plist examples are derived from the json example of each
     // policy, and the choices are added based on the schema. The schema of main
     // also marks the JSON values of older branches.
@@ -171,6 +173,11 @@ export async function generateBranch({ tb, ff, branch, policiesYamlPath }) {
     template.tree = branch;
     template.version = (await tb.readFile(commit, THUNDERBIRD_VERSION_PATH)).trim();
     template.name = `${getBranchPrefix(branch)} ${template.version}`;
+
+    // Generate the docs. The previous docs are only removed now, so they are
+    // kept if the input is invalid.
+    const output_dir = pathUtils.join(DOCS_TEMPLATES_DIR_PATH, branch);
+    await fs.rm(output_dir, { recursive: true, force: true });
 
     await generatePolicyReadme(template, thunderbirdPolicies, compatData, output_dir);
     await generatePlistFile(template, thunderbirdPolicies, output_dir);

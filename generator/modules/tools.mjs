@@ -24,8 +24,15 @@ function debug(...args) {
 export class InputError extends Error { }
 
 /**
+ * Error in the content of a policies.yaml file. Command line scripts exit with
+ * code 2 on these errors, without printing the usage information.
+ */
+export class PolicyYamlError extends InputError { }
+
+/**
  * Run the main function of a command line script. Invalid input exits the script
- * with code 2 and prints the usage information.
+ * with code 2 and prints the usage information (except for errors in the
+ * content of a policies.yaml file).
  *
  * @param {string} usage - The usage information of the script.
  * @param {function} main - The async main function of the script.
@@ -36,7 +43,9 @@ export async function runCommandLine(usage, main) {
     } catch (ex) {
         if (ex instanceof InputError || ex.code?.startsWith("ERR_PARSE_ARGS")) {
             console.error(`Error: ${ex.message}`);
-            console.error(usage);
+            if (!(ex instanceof PolicyYamlError)) {
+                console.error(usage);
+            }
             process.exit(2);
         }
         throw ex;

@@ -1,4 +1,4 @@
-import { InputError } from "./tools.mjs";
+import { PolicyYamlError } from "./tools.mjs";
 
 const GPO_BASE_KEY = "Software\\Policies\\Mozilla\\Thunderbird";
 const FORMATS = ["gpo", "plist", "json"];
@@ -283,10 +283,10 @@ export function deriveFormats(template, schemas) {
         try {
             example = JSON.parse(policy?.json ?? "").policies;
         } catch (e) {
-            throw new InputError(`The policy entry ${name} has no valid json example: ${e.message}`);
+            throw new PolicyYamlError(`The policy entry ${name} has no valid json example: ${e.message}`);
         }
         if (!isPlainObject(example)) {
-            throw new InputError(`The json example of ${name} has no "policies" object.`);
+            throw new PolicyYamlError(`The json example of ${name} has no "policies" object.`);
         }
 
         const values = Object.fromEntries(Object.entries(example).map(
