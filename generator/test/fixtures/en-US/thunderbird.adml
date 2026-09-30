@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName/>
+  <description/>
+  <resources>
+    <stringTable>
+      <string id="SUPPORTED_1">Test 1.0 and later</string>
+      <string id="Test_category">Test</string>
+      <string id="Sub_category">Sub</string>
+      <string id="Locked">Locked</string>
+      <string id="Locked_Explain">Locks the settings.</string>
+      <string id="Homepage">Homepage</string>
+      <string id="Homepage_Explain">Sets the homepage.</string>
+      <string id="Mode">Mode</string>
+      <string id="Mode_Explain">Sets the mode.</string>
+      <string id="Mode_none">none</string>
+      <string id="Mode_manual">manual</string>
+      <string id="Allow">Allow</string>
+      <string id="Allow_Explain">Allowed sites.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Homepage">
+        <textBox refId="Homepage_Input">
+          <label>Homepage</label>
+        </textBox>
+      </presentation>
+      <presentation id="Mode">
+        <dropdownList refId="Mode_Enum">Mode</dropdownList>
+      </presentation>
+      <presentation id="Allow">
+        <listBox refId="Allow_List">Allow</listBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

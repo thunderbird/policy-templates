@@ -12,6 +12,10 @@ import {
     deriveFormats,
 } from "./derive_examples.mjs";
 import {
+    formatProblems,
+    validateAdmx,
+} from "./validate_admx.mjs";
+import {
     addSupportedSince,
     addUnsupportedPolicies,
     buildCompatibilityData,
@@ -174,18 +178,36 @@ export async function generateBranch({ tb, ff, branch, policiesYamlPath }) {
     template.version = (await tb.readFile(commit, THUNDERBIRD_VERSION_PATH)).trim();
     template.name = `${getBranchPrefix(branch)} ${template.version}`;
 
-    // Generate the docs. The previous docs are only removed now, so they are
-    // kept if the input is invalid.
+    // Generate the docs into a temporary folder. It is not placed inside the
+    // templates folder, as generateOverview() lists all folders in there.
     const output_dir = pathUtils.join(DOCS_TEMPLATES_DIR_PATH, branch);
-    await fs.rm(output_dir, { recursive: true, force: true });
+    const tmp_dir = pathUtils.join(DOCS_TEMPLATES_DIR_PATH, "..", `.tmp-${branch}`);
+    await fs.rm(tmp_dir, { recursive: true, force: true });
+    try {
+        await generatePolicyReadme(template, thunderbirdPolicies, compatData, tmp_dir);
+        await generatePlistFile(template, thunderbirdPolicies, tmp_dir);
+        await generateAdmxTemplates(
+            template,
+            supportedPolicies,
+            tmp_dir
+        );
 
-    await generatePolicyReadme(template, thunderbirdPolicies, compatData, output_dir);
-    await generatePlistFile(template, thunderbirdPolicies, output_dir);
-    await generateAdmxTemplates(
-        template,
-        supportedPolicies,
-        output_dir
-    );
+        // Every generated template must be valid, see validate_admx.mjs.
+        const problems = await validateAdmx({
+            admx: pathUtils.join(tmp_dir, "windows", "thunderbird.admx"),
+            adml: pathUtils.join(tmp_dir, "windows", "en-US", "thunderbird.adml"),
+        });
+        if (problems.length) {
+            throw new Error(`The generated ADMX/ADML files of ${branch} are invalid:\n${formatProblems(problems)}`);
+        }
+
+        // The previous docs are only replaced now, so they are kept if the
+        // input or the generated templates are invalid.
+        await fs.rm(output_dir, { recursive: true, force: true });
+        await fs.rename(tmp_dir, output_dir);
+    } finally {
+        await fs.rm(tmp_dir, { recursive: true, force: true });
+    }
 
     if (branch == "main") {
         await generateOverview(compatData);

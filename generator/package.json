@@ -1,10 +1,14 @@
 {
   "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
   "dependencies": {
     "comment-json": "^4.1.1",
     "github-slugger": "^2.0.0",
     "plist": "^3.0.4",
     "xmlbuilder2": "^3.1.1",
+    "xmllint-wasm": "^5.3.0",
     "yaml": "^2.8.0"
   }
 }

@@ -40,7 +40,7 @@ https://thunderbird.github.io/policy-templates/
 
 ### 📦 Requirements
 
-- Node.js **20+**
+- Node.js **22+**
 - `git`, when reading from local checkouts
 
 ### 🚀 Installation
@@ -82,6 +82,26 @@ example one of the files in `config/`):
 
 ```bash
 node update_policy_templates.js --branch=main --policies-yaml=../config/main.yaml
+```
+
+### ✅ Validation
+
+Every generated ADMX/ADML template is validated at the end of a run: against the
+official schemas of Microsoft (`generator/schemas/admx/`, see its README), and
+by checking the references between the ADMX and the ADML file (strings,
+presentations, categories, supportedOn definitions). A run with invalid
+templates fails.
+
+To validate existing templates (by default all in `docs/templates/`):
+
+```bash
+node validate_templates.js [folder ...]
+```
+
+To run the tests of the validation:
+
+```bash
+npm test
 ```
 
 ## 🧠 Notes

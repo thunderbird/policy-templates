@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <policyNamespaces>
+    <target prefix="test" namespace="Test.Policies.Fixture"/>
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0"/>
+  <supportedOn>
+    <definitions>
+      <definition name="SUPPORTED_1" displayName="$(string.SUPPORTED_1)"/>
+    </definitions>
+  </supportedOn>
+  <categories>
+    <category name="Test_category" displayName="$(string.Test_category)"/>
+    <category name="Sub_category" displayName="$(string.Sub_category)">
+      <parentCategory ref="Test_category"/>
+    </category>
+  </categories>
+  <policies>
+    <policy name="Locked" class="Both" displayName="$(string.Locked)" explainText="$(string.Locked_Explain)" key="Software\Policies\Test" valueName="Locked">
+      <parentCategory ref="Test_category"/>
+      <supportedOn ref="SUPPORTED_1"/>
+      <enabledValue>
+        <decimal value="1"/>
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0"/>
+      </disabledValue>
+    </policy>
+    <policy name="Homepage" class="Both" displayName="$(string.Homepage)" explainText="$(string.Homepage_Explain)" key="Software\Policies\Test" presentation="$(presentation.Homepage)">
+      <parentCategory ref="Sub_category"/>
+      <supportedOn ref="SUPPORTED_1"/>
+      <elements>
+        <text id="Homepage_Input" valueName="Homepage"/>
+      </elements>
+    </policy>
+    <policy name="Mode" class="Both" displayName="$(string.Mode)" explainText="$(string.Mode_Explain)" key="Software\Policies\Test" presentation="$(presentation.Mode)">
+      <parentCategory ref="Sub_category"/>
+      <supportedOn ref="SUPPORTED_1"/>
+      <elements>
+        <enum id="Mode_Enum" valueName="Mode">
+          <item displayName="$(string.Mode_none)">
+            <value>
+              <string>none</string>
+            </value>
+          </item>
+          <item displayName="$(string.Mode_manual)">
+            <value>
+              <string>manual</string>
+            </value>
+          </item>
+        </enum>
+      </elements>
+    </policy>
+    <policy name="Allow" class="Both" displayName="$(string.Allow)" explainText="$(string.Allow_Explain)" key="Software\Policies\Test\Allow" presentation="$(presentation.Allow)">
+      <parentCategory ref="Sub_category"/>
+      <supportedOn ref="SUPPORTED_1"/>
+      <elements>
+        <list id="Allow_List" key="Software\Policies\Test\Allow" valuePrefix=""/>
+      </elements>
+    </policy>
+  </policies>
+</policyDefinitions>
