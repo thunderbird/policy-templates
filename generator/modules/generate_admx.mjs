@@ -148,13 +148,15 @@ class ADM_BUILDER {
         return policyFragment
     }
 
-    handlePresentationEntry({ rootElement, id, entry }) {
+    handlePresentationEntry({ rootElement, id, entry, mode }) {
+        // The label of a control is the name of its registry value.
+        const label = entry.key.split("\\").at(-1);
         switch (entry.type) {
             case "REG_DWORD": {
                 if (isBooleanLikeEntry(entry)) {
                     rootElement.ele('checkBox', { refId: `${id}_Bool` })
                 } else {
-                    rootElement.ele('dropdownList', { refId: `${id}_Enum` }).txt('Fake Label');;
+                    rootElement.ele('dropdownList', { refId: `${id}_Enum` }).txt(label);
                 }
                 break;
             }
@@ -164,9 +166,9 @@ class ADM_BUILDER {
                 if (enums.length == 1) {
                     rootElement
                         .ele('textBox', { refId: `${id}_Input` })
-                        .ele('label', { refId: this.getStringId(`${id}_Input_Label`, `Label for textbox ${id}_Input`) });
+                        .ele('label').txt(label);
                 } else {
-                    rootElement.ele('dropdownList', { refId: `${id}_Enum` }).txt('Fake Label');;
+                    rootElement.ele('dropdownList', { refId: `${id}_Enum` }).txt(label);
                 }
                 break;
             }
