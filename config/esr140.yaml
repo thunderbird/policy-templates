@@ -41,7 +41,6 @@ policies:
       *As of Thunderbird 85, Thunderbird ESR 78.7, installing a theme makes it the default.*
     cck2Equivalent:
     preferencesAffected:
-    category: 'Extensions'
     json: |
       {
         "policies": {
@@ -62,6 +61,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Extensions'
   InAppNotification:
     toc: 'Configure TOAST, browser, and tab notifications within the context of the
       application.'
@@ -232,13 +233,14 @@ policies:
       You should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, Thunderbird will update beyond that version.
     cck2Equivalent:
     preferencesAffected:
-    required: ['AppUpdatePin']
     json: |
       {
         "policies": {
           "AppUpdatePin": "106."
         }
       }
+    admx:
+      required: ['AppUpdatePin']
   AppUpdateURL:
     toc: 'Change the URL for application update.'
     content: |
@@ -246,13 +248,14 @@ policies:
     cck2Equivalent:
     preferencesAffected:
       - app.update.url
-    required: ['AppUpdateURL']
     json: |
       {
         "policies": {
           "AppUpdateURL": "https://yoursite.com"
         }
       }
+    admx:
+      required: ['AppUpdateURL']
   Authentication:
     toc: 'Configure sites that support integrated authentication.'
     content: |
@@ -271,7 +274,6 @@ policies:
       - network.automatic-ntlm-auth.allow-proxies
       - network.negotiate-auth.allow-proxies
       - network.auth.private-browsing-sso
-    category: 'Authentication'
     json: |
       {
         "policies": {
@@ -292,6 +294,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Authentication'
   BackgroundAppUpdate:
     toc: 'Enable or disable the background updater (Windows only).'
     content: |
@@ -384,42 +388,25 @@ policies:
     content:
     cck2Equivalent:
     preferencesAffected:
-    category: 'Certificates'
     json: |
       {
         "policies": {
           "Certificates": {
             "ImportEnterpriseRoots": true,
-            "Install": ["cert1.der", "/home/username/cert2.pem"]
+            "Install": [
+              "cert1.der",
+              {
+                "FORMAT_DEPENDENT_VALUES": {
+                  "json": "/home/username/cert2.pem",
+                  "gpo": "C:\\Users\\username\\cert2.pem"
+                }
+              }
+            ]
           }
         }
       }
-    gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\Certificates\ImportEnterpriseRoots'
-        type: 'REG_DWORD'
-        value: '0x1 | 0x0'
-        category: 'Certificates'
-      - key: 'Software\Policies\Mozilla\Thunderbird\Certificates\Install\1'
-        type: 'REG_SZ'
-        value: 'cert1.der'
-        category: 'Certificates'
-      - key: 'Software\Policies\Mozilla\Thunderbird\Certificates\Install\2'
-        type: 'REG_SZ'
-        value: 'C:\Users\username\cert2.pem'
-        category: 'Certificates'
-    plist: |
-      <dict>
-        <key>Certificates</key>
-        <dict>
-          <key>ImportEnterpriseRoots</key>
-          <true/> | <false/>
-          <key>Install</key>
-          <array>
-            <string>cert1.der</string>
-            <string>/Users/username/cert2.pem</string>
-          </array>
-        </dict>
-      </dict>
+    admx:
+      category: 'Certificates'
   Certificates_ImportEnterpriseRoots:
     toc: 'Trust certificates that have been added to the operating system
       certificate store by a user or administrator.'
@@ -432,7 +419,6 @@ policies:
     cck2Equivalent:
     preferencesAffected:
       - security.enterprise_roots.enabled
-    category: 'Certificates'
     json: |
       {
         "policies": {
@@ -441,6 +427,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Certificates'
   Certificates_Install:
     toc: 'Install certificates into the Thunderbird certificate store.'
     content: |
@@ -467,35 +455,24 @@ policies:
     cck2Equivalent:
       - certs.ca
     preferencesAffected:
-    category: 'Certificates'
     json: |
       {
         "policies": {
           "Certificates": {
-            "Install": ["cert1.der", "/home/username/cert2.pem"]
+            "Install": [
+              "cert1.der",
+              {
+                "FORMAT_DEPENDENT_VALUES": {
+                  "json": "/home/username/cert2.pem",
+                  "gpo": "C:\\Users\\username\\cert2.pem"
+                }
+              }
+            ]
           }
         }
       }
-    gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\Certificates\Install\1'
-        type: 'REG_SZ'
-        value: 'cert1.der'
-        category: 'Certificates'
-      - key: 'Software\Policies\Mozilla\Thunderbird\Certificates\Install\2'
-        type: 'REG_SZ'
-        value: 'C:\Users\username\cert2.pem'
-        category: 'Certificates'
-    plist: |
-      <dict>
-        <key>Certificates</key>
-        <dict>
-          <key>Install</key>
-          <array>
-            <string>cert1.der</string>
-            <string>/Users/username/cert2.pem</string>
-          </array>
-        </dict>
-      </dict>
+    admx:
+      category: 'Certificates'
   Cookies:
     toc: 'Configure cookie preferences.'
     content: |
@@ -510,7 +487,6 @@ policies:
     preferencesAffected:
       - network.cookie.cookieBehavior
       - network.cookie.lifetimePolicy
-    category: 'Cookies'
     json: |
       {
         "policies": {
@@ -521,6 +497,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Cookies'
   DNSOverHTTPS:
     toc: 'Configure DNS over HTTPS.'
     content: |
@@ -537,7 +515,6 @@ policies:
     preferencesAffected:
       - network.trr.mode
       - network.trr.uri
-    category: 'DNSOverHTTPS'
     json: |
       {
         "policies": {
@@ -549,6 +526,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'DNSOverHTTPS'
   DefaultDownloadDirectory:
     toc: 'Set the default download directory.'
     content: |
@@ -559,17 +538,19 @@ policies:
     preferencesAffected:
       - browser.download.dir
       - browser.download.folderList
-    expandable: ['DefaultDownloadDirectory']
     json: |
       {
         "policies": {
-          "DefaultDownloadDirectory": "${home}/Downloads"
+          "DefaultDownloadDirectory": {
+            "FORMAT_DEPENDENT_VALUES": {
+              "json": "${home}/Downloads",
+              "gpo": "${home}\\Downloads"
+            }
+          }
         }
       }
-    gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\DefaultDownloadDirectory'
-        type: 'REG_EXPAND_SZ'
-        value: '${home}\Downloads'
+    admx:
+      expandable: ['DefaultDownloadDirectory']
   DisableAppUpdate:
     toc: 'Turn off application updates.'
     content: |
@@ -740,7 +721,6 @@ policies:
       - security.tls13.chacha20_poly1305_sha256
       - security.tls13.aes_128_gcm_sha256
       - security.tls13.aes_256_gcm_sha384
-    category: 'DisabledCiphers'
     json: |
       {
         "policies": {
@@ -754,6 +734,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'DisabledCiphers'
   DownloadDirectory:
     toc: 'Set and lock the download directory.'
     content: |
@@ -765,17 +747,19 @@ policies:
       - browser.download.dir
       - browser.download.folderList
       - browser.download.useDownloadDir
-    expandable: ['DownloadDirectory']
     json: |
       {
         "policies": {
-          "DownloadDirectory": "${home}/Downloads"
+          "DownloadDirectory": {
+            "FORMAT_DEPENDENT_VALUES": {
+              "json": "${home}/Downloads",
+              "gpo": "${home}\\Downloads"
+            }
+          }
         }
       }
-    gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\DownloadDirectory'
-        type: 'REG_EXPAND_SZ'
-        value: '${home}\Downloads'
+    admx:
+      expandable: ['DownloadDirectory']
   ExtensionUpdate:
     toc: 'Control extension updates.'
     content: |
@@ -783,13 +767,14 @@ policies:
     cck2Equivalent:
     preferencesAffected:
       - extensions.update.enabled
-    category: 'Extensions'
     json: |
       {
         "policies": {
           "ExtensionUpdate": true
         }
       }
+    admx:
+      category: 'Extensions'
   Extensions:
     toc: 'Control the installation, uninstallation and locking of extensions.'
     content: |
@@ -807,7 +792,6 @@ policies:
     cck2Equivalent:
       - addons
     preferencesAffected:
-    category: 'Extensions'
     json: |
       {
         "policies": {
@@ -818,6 +802,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Extensions'
   Handlers:
     toc: 'Configure default application handlers.'
     content: |
@@ -866,7 +852,12 @@ policies:
                 "handlers": [
                   {
                     "name": "Adobe Acrobat",
-                    "path": "/usr/bin/acroread"
+                    "path": {
+                      "FORMAT_DEPENDENT_VALUES": {
+                        "json": "/usr/bin/acroread",
+                        "gpo": "C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\AcroRd32.exe"
+                      }
+                    }
                   }
                 ]
               }
@@ -874,96 +865,6 @@ policies:
           }
         }
       }
-    gpo:
-      - key: 'Software\Policies\Mozilla\Thunderbird\Handlers'
-        type: 'REG_MULTI_SZ'
-        value: |
-          {
-            "mimeTypes": {
-              "application/msword": {
-                "action": "useSystemDefault",
-                "ask": false
-              }
-            },
-            "schemes": {
-              "mailto": {
-                "action": "useHelperApp",
-                "ask": true,
-                "handlers": [
-                  {
-                    "name": "Gmail",
-                    "uriTemplate": "https://mail.google.com/mail/?extsrc=mailto&url=%s"
-                  }
-                ]
-              }
-            },
-            "extensions": {
-              "pdf": {
-                "action": "useHelperApp",
-                "ask": true,
-                "handlers": [
-                  {
-                    "name": "Adobe Acrobat",
-                    "path": "C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\AcroRd32.exe"
-                  }
-                ]
-              }
-            }
-          }
-    plist: |
-      <dict>
-        <key>Handlers</key>
-        <dict>
-          <key>mimeTypes</key>
-          <dict>
-            <key>application/msword</key>
-            <dict>
-              <key>action</key>
-              <string>useSystemDefault</string>
-              <key>ask</key>
-              <false/>
-            </dict>
-          </dict>
-          <key>schemes</key>
-          <dict>
-            <key>mailto</key>
-            <dict>
-              <key>action</key>
-              <string>useHelperApp</string>
-              <key>ask</key>
-              <true/>
-              <key>handlers</key>
-              <array>
-                <dict>
-                  <key>name</key>
-                  <string>Gmail</string>
-                  <key>uriTemplate</key>
-                  <string>https://mail.google.com/mail/?extsrc=mailto&amp;url=%s</string>
-                </dict>
-              </array>
-            </dict>
-          </dict>
-          <key>extensions</key>
-          <dict>
-            <key>pdf</key>
-            <dict>
-              <key>action</key>
-              <string>useHelperApp</string>
-              <key>ask</key>
-              <true/>
-              <key>handlers</key>
-              <array>
-                <dict>
-                  <key>name</key>
-                  <string>Adobe Acrobat</string>
-                  <key>path</key>
-                  <string>/System/Applications/Preview.app</string>
-                </dict>
-              </array>
-            </dict>
-          </dict>
-        </dict>
-      </dict>
   HardwareAcceleration:
     toc: 'Control hardware acceleration.'
     content: |
@@ -992,7 +893,6 @@ policies:
       - xpinstall.enabled
       - browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons
       - browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features
-    category: 'Addons'
     json: |
       {
         "policies": {
@@ -1002,6 +902,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Addons'
   ManualAppUpdateOnly:
     toc: 'Allow manual updates only and do not notify the user about updates.'
     content: |
@@ -1078,7 +980,6 @@ policies:
     preferencesAffected:
       - pdfjs.disabled
       - pdfjs.enablePermissions
-    category: 'PDFjs'
     json: |
       {
         "policies": {
@@ -1088,6 +989,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'PDFjs'
   PasswordManagerEnabled:
     toc: 'Remove (some) access to the password manager.'
     content: |
@@ -1181,7 +1084,6 @@ policies:
       - network.proxy.ssl_port
       - network.proxy.socks
       - network.proxy.socks_port
-    category: 'ProxySettings'
     json: |
       {
         "policies": {
@@ -1201,6 +1103,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'ProxySettings'
   RequestedLocales:
     toc: 'Set the the list of requested locales for the application in order of
       preference.'
@@ -1248,8 +1152,6 @@ policies:
       As of Thunderbird 139, this policy is available in all versions of Thunderbird.
     cck2Equivalent:
     preferencesAffected:
-    category: 'Search'
-    required: ['SearchEngines/Default']
     json: |
       {
         "policies": {
@@ -1272,6 +1174,9 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Search'
+      required: ['SearchEngines/Default']
   SearchEngines_Add:
     toc: 'Add new search engines.'
     content: |
@@ -1297,7 +1202,6 @@ policies:
     cck2Equivalent:
       - searchplugins
     preferencesAffected:
-    category: 'Search'
     json: |
       {
         "policies": {
@@ -1317,6 +1221,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Search'
   SearchEngines_Default:
     toc: 'Set the default search engine.'
     content: |
@@ -1324,8 +1230,6 @@ policies:
     cck2Equivalent:
       - defaultSearchEngine
     preferencesAffected:
-    category: 'Search'
-    required: ['SearchEngines/Default']
     json: |
       {
         "policies": {
@@ -1334,6 +1238,9 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Search'
+      required: ['SearchEngines/Default']
   SearchEngines_PreventInstalls:
     toc: 'Prevent installing search engines from webpages.'
     content: |
@@ -1341,7 +1248,6 @@ policies:
     cck2Equivalent:
       - disableSearchEngineInstall
     preferencesAffected:
-    category: 'Search'
     json: |
       {
         "policies": {
@@ -1350,6 +1256,8 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Search'
   SearchEngines_Remove:
     toc: 'Hide built-in search engines.'
     content: |
@@ -1357,7 +1265,6 @@ policies:
     cck2Equivalent:
       - removeDefaultSearchEngines (removed all built-in engines)
     preferencesAffected:
-    category: 'Search'
     json: |
       {
         "policies": {
@@ -1366,3 +1273,5 @@ policies:
           }
         }
       }
+    admx:
+      category: 'Search'

@@ -2,6 +2,9 @@ import { PolicyYamlError } from "./tools.mjs";
 
 const GPO_BASE_KEY = "Software\\Policies\\Mozilla\\Thunderbird";
 const FORMATS = ["gpo", "plist", "json"];
+// The key of a value which differs per format, e.g. a path which is written in
+// the Windows style for the GPO example.
+const FORMAT_DEPENDENT_VALUES = "FORMAT_DEPENDENT_VALUES";
 
 function isPlainObject(value) {
     return !!value && typeof value == "object" && !Array.isArray(value);
@@ -211,13 +214,13 @@ function toDword(value) {
  * Build the GPO entries of a value: objects become subkeys, array entries
  * numbered subkeys, values declared as JSON in the schema a single REG_MULTI_SZ.
  */
-function toGpo(value, { key, path, schemaPath, policy }) {
+function toGpo(value, { key, path, schemaPath, admx }) {
     const entry = (type, entryValue) => ({
         key,
         type,
         value: entryValue,
-        ...(policy.category && { category: policy.category }),
-        ...(matchesPath(path, policy.required) && { required: true }),
+        ...(admx.category && { category: admx.category }),
+        ...(matchesPath(path, admx.required) && { required: true }),
         // An ADMX template can not represent registry keys named after
         // arbitrary values, like the extension id in 3rdparty.
         ...(schemaPath.dynamic && { admx: false }),
@@ -231,7 +234,7 @@ function toGpo(value, { key, path, schemaPath, policy }) {
         if (typeof first == "boolean" || typeof first == "number") {
             return [entry("REG_DWORD", renderChoice(value, toDword))];
         }
-        const type = matchesPath(path, policy.expandable) ? "REG_EXPAND_SZ" : "REG_SZ";
+        const type = matchesPath(path, admx.expandable) ? "REG_EXPAND_SZ" : "REG_SZ";
         return [entry(type, renderChoice(value, String))];
     }
     if (Array.isArray(value)) {
@@ -239,39 +242,64 @@ function toGpo(value, { key, path, schemaPath, policy }) {
             key: `${key}\\${i + 1}`,
             path: [...path, String(i)],
             schemaPath: schemaPath.item(),
-            policy,
+            admx,
         }));
     }
     return Object.entries(value).flatMap(([name, item]) => toGpo(item, {
         key: `${key}\\${name}`,
         path: [...path, name],
         schemaPath: schemaPath.property(name),
-        policy,
+        admx,
     }));
 }
 
-const gpoKeys = gpo => gpo
-    .flatMap(e => e.key.split("\n").map(key => key.trim()).filter(Boolean))
-    .sort();
-const plistKeys = plist => [...plist.matchAll(/<key>([^<]*)<\/key>/g)]
-    .map(match => match[1])
-    .sort();
-
 /**
- * A given gpo or plist example is used as written, e.g. to show paths in the
- * style of the platform. Its structure must however match the json example.
+ * Get the value of the json example for the given format: a value which differs
+ * per format is written as { "FORMAT_DEPENDENT_VALUES": { "json": …, "gpo": …,
+ * "plist": … } }, with a required json value.
  */
-function checkOverride(name, format, given, derived, getKeys) {
-    if (JSON.stringify(getKeys(given)) != JSON.stringify(getKeys(derived))) {
-        console.log(`  --> WARNING: The ${format} example of ${name} does not match its json example.`);
+function selectFormat(value, format, name) {
+    if (Array.isArray(value)) {
+        return value.map(item => selectFormat(item, format, name));
     }
+    if (!isPlainObject(value)) {
+        return value;
+    }
+    const keys = Object.keys(value);
+    if (!keys.includes(FORMAT_DEPENDENT_VALUES)) {
+        return Object.fromEntries(keys.map(key => [key, selectFormat(value[key], format, name)]));
+    }
+
+    const error = message => new PolicyYamlError(
+        `The json example of ${name} has invalid ${FORMAT_DEPENDENT_VALUES}: ${message}`
+    );
+    if (keys.length > 1) {
+        throw error(`it must be the only key of its object.`);
+    }
+    const values = value[FORMAT_DEPENDENT_VALUES];
+    if (!isPlainObject(values)) {
+        throw error(`it must be an object.`);
+    }
+    const unknown = Object.keys(values).filter(key => !FORMATS.includes(key));
+    if (unknown.length) {
+        throw error(`unknown key ${unknown.join(", ")}.`);
+    }
+    if (!("json" in values)) {
+        throw error(`the json value is missing.`);
+    }
+    for (const [key, item] of Object.entries(values)) {
+        if (!isScalar(item) || typeof item != typeof values.json) {
+            throw error(`the ${key} value is not a ${typeof values.json} like the json value.`);
+        }
+    }
+    return values[format] ?? values.json;
 }
 
 /**
  * Derive the gpo and plist examples of each policy from its json example (a
- * policies.json file), and add the choices given by the schema. Given gpo and
- * plist examples are used as written. The `formats` of a policy limit the
- * generated examples.
+ * policies.json file), and add the choices given by the schema. The `formats`
+ * of a policy limit the generated examples, its `admx` hints are used for the
+ * GPO entries.
  *
  * @param {TemplateData} template
  * @param {Object[]} schemas - The policy schema of the branch, followed by the
@@ -279,6 +307,17 @@ function checkOverride(name, format, given, derived, getKeys) {
  */
 export function deriveFormats(template, schemas) {
     for (const [name, policy] of Object.entries(template.policies)) {
+        for (const field of ["gpo", "plist"]) {
+            if (policy?.[field]) {
+                throw new PolicyYamlError(`The policy entry ${name} has a ${field} example, which is derived from its json example. Use a per-format value instead.`);
+            }
+        }
+        for (const field of ["category", "required", "expandable"]) {
+            if (policy?.[field]) {
+                throw new PolicyYamlError(`The policy entry ${name} has ${field} outside of its admx hints.`);
+            }
+        }
+
         let example;
         try {
             example = JSON.parse(policy?.json ?? "").policies;
@@ -289,38 +328,27 @@ export function deriveFormats(template, schemas) {
             throw new PolicyYamlError(`The json example of ${name} has no "policies" object.`);
         }
 
-        const values = Object.fromEntries(Object.entries(example).map(
-            ([key, value]) => [key, addChoices(value, SchemaPath.forPolicy(schemas, key))]
-        ));
-        const gpo = Object.entries(values).flatMap(([key, value]) => toGpo(value, {
-            key: `${GPO_BASE_KEY}\\${key}`,
-            path: [key],
-            schemaPath: SchemaPath.forPolicy(schemas, key),
-            policy,
-        }));
-        const plist = toPlist(values);
-
-        if (policy.gpo) {
-            checkOverride(name, "gpo", policy.gpo, gpo, gpoKeys);
-        } else {
-            policy.gpo = gpo;
-        }
-        if (policy.plist) {
-            checkOverride(name, "plist", policy.plist, plist, plistKeys);
-        } else {
-            policy.plist = plist;
-        }
-        policy.json = toJson({ policies: values });
+        // The value of the example for each format, with the choices given by
+        // the schema.
+        const values = Object.fromEntries(FORMATS.map(format => [
+            format,
+            Object.fromEntries(Object.entries(example).map(([key, value]) => [
+                key,
+                addChoices(selectFormat(value, format, name), SchemaPath.forPolicy(schemas, key)),
+            ])),
+        ]));
+        const admx = policy.admx ?? {};
 
         const formats = policy.formats ?? FORMATS;
-        if (!formats.includes("gpo")) {
-            policy.gpo = [];
-        }
-        if (!formats.includes("plist")) {
-            policy.plist = null;
-        }
-        if (!formats.includes("json")) {
-            policy.json = null;
-        }
+        policy.gpo = formats.includes("gpo")
+            ? Object.entries(values.gpo).flatMap(([key, value]) => toGpo(value, {
+                key: `${GPO_BASE_KEY}\\${key}`,
+                path: [key],
+                schemaPath: SchemaPath.forPolicy(schemas, key),
+                admx,
+            }))
+            : [];
+        policy.plist = formats.includes("plist") ? toPlist(values.plist) : null;
+        policy.json = formats.includes("json") ? toJson({ policies: values.json }) : null;
     }
 }

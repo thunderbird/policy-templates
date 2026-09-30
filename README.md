@@ -89,10 +89,12 @@ node update_policy_templates.js --branch=main --policies-yaml=../config/main.yam
 - Policies defined in the YAML files that are **not supported** by Thunderbird
   are excluded from the generated outputs.
 - YAML files follow a **defined schema** for policy metadata: each policy has a
-  valid `policies.json` example (`json`), from which the GPO and plist examples
-  are derived. The accepted values of booleans and enums are taken from the
-  policy schema. `gpo` and `plist` examples are only given where their values
-  differ (e.g. paths), and `formats` limits the included examples. Refer to the
+  `policies.json` example (`json`, valid JSON), from which the GPO and plist
+  examples are derived. The accepted values of booleans and enums are taken
+  from the policy schema. Values which differ per format (Windows paths for the
+  GPO example) are declared inline with `FORMAT_DEPENDENT_VALUES`, hints for
+  the ADMX template are given in `admx`, and `formats` limits the included
+  examples. Refer to the
   [format specification](https://github.com/thunderbird/thunderbird-desktop/blob/main/mail/components/enterprisepolicies/documentation/README.md)
   for details.
 
