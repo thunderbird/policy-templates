@@ -605,19 +605,33 @@ class ADM_BUILDER {
         const policyNodes = [];
         const sortedPolicies = Object.entries(template.policies).sort((a, b) => a[0].localeCompare(b[0]));
 
+        const getKeys = policyData => (policyData.gpo ?? [])
+            .filter(e => e.admx !== false)
+            .flatMap(e => e.key.split("\n").filter(Boolean));
+
         for (const [policyName, policyData] of sortedPolicies) {
             if (!policyData.gpo) continue;
 
-            const gpoEntries = policyData.gpo.flatMap(e => {
-                const keys = e.key.split("\n").filter(Boolean);
-                return keys.map(key => ({
-                    key,
-                    type: e.type,
-                    value: e.value,
-                    required: e.required,
-                    category: e.category,
-                }));
-            });
+            // Registry keys which are also documented by a sub-entry (e.g.
+            // Certificates_Install) are left to that sub-entry, instead of
+            // generating them again for the parent entry (e.g. Certificates).
+            const subEntryKeys = new Set(sortedPolicies
+                .filter(([name]) => name.startsWith(`${policyName}_`))
+                .flatMap(([, data]) => getKeys(data)));
+
+            const gpoEntries = policyData.gpo
+                .filter(e => e.admx !== false)
+                .flatMap(e => {
+                    const keys = e.key.split("\n").filter(Boolean);
+                    return keys.map(key => ({
+                        key,
+                        type: e.type,
+                        value: e.value,
+                        required: e.required,
+                        category: e.category,
+                    }));
+                })
+                .filter(e => !subEntryKeys.has(e.key));
             const { lists, groups, singles } = this.groupByEntriesByKeyType(gpoEntries);
 
             // 1. Handle lists.

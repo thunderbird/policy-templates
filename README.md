@@ -20,7 +20,8 @@ https://thunderbird.github.io/policy-templates/
   schema. The history of the schema determines in which version each policy
   became supported: the version of the release branch (or of the branch itself,
   if the policy is not yet released), plus the ESR version if the policy was
-  backported to an ESR branch.
+  backported to an ESR branch. The Windows (GPO) and macOS (plist) examples are
+  derived from the `policies.json` example of each policy.
 
 ## 📁 Project Structure
 

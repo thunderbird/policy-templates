@@ -17,7 +17,9 @@ const MIN_ESR = 115;
 // include all changes. Paths are relative to the generator folder.
 const POLICIES_YAML_OVERRIDES = new Map([
     ["main", "../config/main.yaml"],
+    ["beta", "../config/beta.yaml"],
     ["release", "../config/release.yaml"],
+    ["esr153", "../config/esr153.yaml"],
     ["esr140", "../config/esr140.yaml"],
     ["esr128", "../config/esr128.yaml"],
     ["esr115", "../config/esr115.yaml"],

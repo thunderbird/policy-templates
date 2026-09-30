@@ -9,6 +9,9 @@ import {
     generatePlistFile,
 } from "./generate_plist.mjs";
 import {
+    deriveFormats,
+} from "./derive_examples.mjs";
+import {
     addSupportedSince,
     addUnsupportedPolicies,
     buildCompatibilityData,
@@ -20,7 +23,8 @@ import {
     DOCS_README_PATH, DOCS_TEMPLATES_DIR_PATH,
     FIREFOX_POLICIES_SCHEMA_PATH, FIREFOX_REFERENCE_BRANCH,
     MAIN_TEMPLATE,
-    THUNDERBIRD_POLICIES_YAML_PATH, THUNDERBIRD_VERSION_PATH,
+    THUNDERBIRD_POLICIES_SCHEMA_PATH, THUNDERBIRD_POLICIES_YAML_PATH,
+    THUNDERBIRD_VERSION_PATH,
 } from "./constants.mjs";
 import { InputError } from "./tools.mjs";
 
@@ -157,6 +161,13 @@ export async function generateBranch({ tb, ff, branch, policiesYamlPath }) {
     await fs.rm(output_dir, { recursive: true, force: true });
 
     const template = yaml.parseDocument(policiesYaml).toJSON();
+    // The GPO and plist examples are derived from the json example of each
+    // policy, and the choices are added based on the schema. The schema of main
+    // also marks the JSON values of older branches.
+    deriveFormats(template, [
+        await getThunderbirdSchema(tb, commit),
+        await getThunderbirdSchema(tb, await tb.resolveBranch("main")),
+    ]);
     template.tree = branch;
     template.version = (await tb.readFile(commit, THUNDERBIRD_VERSION_PATH)).trim();
     template.name = `${getBranchPrefix(branch)} ${template.version}`;
@@ -173,6 +184,17 @@ export async function generateBranch({ tb, ff, branch, policiesYamlPath }) {
         await generateOverview(compatData);
     }
     return true;
+}
+
+/**
+ * Read Thunderbird's policy schema of the given commit.
+ *
+ * @param {LocalGitSource|GitHubSource} tb - The Thunderbird source.
+ * @param {string} commit
+ * @returns {Promise<Object>}
+ */
+async function getThunderbirdSchema(tb, commit) {
+    return commentJson.parse(await tb.readFile(commit, THUNDERBIRD_POLICIES_SCHEMA_PATH));
 }
 
 /**

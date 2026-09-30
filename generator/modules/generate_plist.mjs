@@ -56,12 +56,14 @@ export async function generatePlistFile(template, thunderbirdPolicies, output_di
     const mergedObject = {};
     for (const entry of plistEntries) {
         try {
-            // Use only the first XML tag before the pipe for each value, and also
-            // only keep the first provided string value.
-            const cleaned = entry.replace(/(<[^>]+>\s*\|\s*<[^>]+>)/g, match => {
-                // For XML tags separated by |
-                return match.split('|')[0].trim();
-            }).replace(/<string>([^<]+)<\/string>/g, (match, content) => {
+            // Use only the first value of each choice, and also only keep the
+            // first provided string value.
+            const cleaned = entry.replace(
+                // For values separated by |, e.g. <true/> | <false/> or
+                // <string>a</string> | <string>b</string>
+                /(<\w+\/>|<(\w+)>[^<]*<\/\2>)(?:\s*\|\s*(?:<\w+\/>|<(\w+)>[^<]*<\/\3>))+/g,
+                "$1"
+            ).replace(/<string>([^<]+)<\/string>/g, (match, content) => {
                 // For <string> that contains multiple options separated by '|'
                 const firstOption = content.split('|')[0].trim();
                 return `<string>${firstOption}</string>`;
