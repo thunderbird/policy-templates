@@ -126,7 +126,7 @@ function renderChoice(value, render) {
  * Render a value as JSON: two spaces indentation, arrays of scalars on a single
  * line, choices as `a | b`.
  */
-export function toJson(value, indent = "") {
+function toJson(value, indent = "") {
     const inner = indent + "  ";
     if (value?.$oneOf) {
         return renderChoice(value, v => JSON.stringify(v));

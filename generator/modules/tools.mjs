@@ -1,21 +1,9 @@
 import fs from "node:fs/promises";
 
-import {
-    PERSISTENT_SCHEMA_CACHE_FILE, TEMPORARY_SCHEMA_CACHE_FILE
-} from "./constants.mjs";
+import { PERSISTENT_SCHEMA_CACHE_FILE } from "./constants.mjs";
 
-// The temporary cache is still written to disc, but can be easily cleared
-// without interfering with the persistent cache.
-const SCHEMA_CACHE = {};
-
-// Debug logging (0 - errors and basic logs only, 1 - verbose debug)
-const DEBUG_LEVEL = 0;
-
-function debug(...args) {
-    if (DEBUG_LEVEL > 0) {
-        console.debug(...args);
-    }
-}
+// The cached values, read from PERSISTENT_SCHEMA_CACHE_FILE on first use.
+let SCHEMA_CACHE = null;
 
 /**
  * Error caused by invalid input (command line arguments, local repositories or
@@ -49,38 +37,6 @@ export async function runCommandLine(usage, main) {
             process.exit(2);
         }
         throw ex;
-    }
-}
-
-/**
- * Returns a new object with the same key-value pairs as the input object,
- * but with keys sorted in ascending alphabetical order.
- *
- * @param {Object} obj - The input object to sort.
- * @returns {Object} A new object with keys sorted alphabetically.
- */
-export function sortObjectByKeys(obj) {
-    return Object.keys(obj)
-        .sort()
-        .reduce((sorted, key) => {
-            sorted[key] = obj[key];
-            return sorted;
-        }, {});
-}
-
-/**
- * Asynchronously checks whether a given file or directory exists.
- *
- * @param {string} path - The path to the file or directory to check.
- * @returns {Promise<boolean>} - Resolves to `true` if the path exists,
- *    otherwise `false`.
- */
-export async function fileExists(path) {
-    try {
-        await fs.access(path);
-        return true;
-    } catch {
-        return false;
     }
 }
 
@@ -142,61 +98,38 @@ export async function writePrettyJSONFile(filePath, json) {
 }
 
 /**
- * Simple helper function save an array of strings to a file.
- *
- * @param {string} filePath - The path to write the JSON to.
- * @param {string[]} arr - The array of strings to write into the file.
- */
-export async function writeArrayOfStringsToFile(filePath, arr) {
-    try {
-        return await fs.writeFile(filePath, arr.join("\n"));
-    } catch (err) {
-        console.error("Error in writeArrayOfStringsToFile()", filePath, err);
-        throw err;
-    }
-}
-
-/**
  * Simple helper function to cache a value in SCHEMA_CACHE. Reading the same key
  * at a later time will retrieve the value from the cache.
  *
  * @param {string} key
  * @param {function} producer - async function returning the value (a string)
  *    for the given key, or null if there is none (which is not cached)
- * @param {boolean} temporary - if the temporary cache is used, which is stored
- *    in a separate file and can be easily cleared independently of the persistent
- *    cache
  *
  * @returns {string} the value
  */
-export async function readCachedValue(key, producer, options) {
-    const temporary = options?.temporary ?? false;
-    const cache = temporary
-        ? { type: 'temporary', file: TEMPORARY_SCHEMA_CACHE_FILE }
-        : { type: 'persistent', file: PERSISTENT_SCHEMA_CACHE_FILE };
-
-    if (!SCHEMA_CACHE[cache.type]) {
+export async function readCachedValue(key, producer) {
+    if (!SCHEMA_CACHE) {
         try {
-            const data = await fs.readFile(cache.file, 'utf-8');
-            SCHEMA_CACHE[cache.type] = new Map(JSON.parse(data));
+            const data = await fs.readFile(PERSISTENT_SCHEMA_CACHE_FILE, 'utf-8');
+            SCHEMA_CACHE = new Map(JSON.parse(data));
         } catch (ex) {
             // Cache file does not yet exist.
-            SCHEMA_CACHE[cache.type] = new Map();
+            SCHEMA_CACHE = new Map();
         }
     }
 
-    if (!SCHEMA_CACHE[cache.type].has(key)) {
+    if (!SCHEMA_CACHE.has(key)) {
         const value = await producer();
         if (!value) {
             return null;
         };
-        SCHEMA_CACHE[cache.type].set(key, value);
+        SCHEMA_CACHE.set(key, value);
         await writePrettyJSONFile(
-            cache.file,
-            Array.from(SCHEMA_CACHE[cache.type].entries())
+            PERSISTENT_SCHEMA_CACHE_FILE,
+            Array.from(SCHEMA_CACHE.entries())
         );
     }
-    return SCHEMA_CACHE[cache.type].get(key);
+    return SCHEMA_CACHE.get(key);
 }
 
 /**
@@ -204,12 +137,9 @@ export async function readCachedValue(key, producer, options) {
  * Reading the same URL at a later time will retrieve the content from the cache.
  *
  * @param {string} url
- * @param {boolean} temporary - if the temporary cache is used, which is stored
- *    in a separate file and can be easily cleared independently of the persistent
- *    cache
  *
  * @returns {string} content of url
  */
-export async function readCachedUrl(url, options) {
-    return readCachedValue(url, () => request(url), options);
+export async function readCachedUrl(url) {
+    return readCachedValue(url, () => request(url));
 }

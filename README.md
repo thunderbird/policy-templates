@@ -16,19 +16,21 @@ https://thunderbird.github.io/policy-templates/
   - Beta (`beta`)
   - Daily (`main`)
 
-  The documentation is based on the branch’s `policies.yaml` file and its policy
-  schema. The history of the schema determines in which version each policy
-  became supported: the version of the release branch (or of the branch itself,
-  if the policy is not yet released), plus the ESR version if the policy was
-  backported to an ESR branch. The Windows (GPO) and macOS (plist) examples are
-  derived from the `policies.json` example of each policy.
+  The documentation is based on a `policies.yaml` file (the branch’s own file,
+  or its file in `config/`) and the branch’s policy schema. The history of the
+  schema determines in which version each policy became supported: the version
+  of the release branch (or of the branch itself, if the policy is not yet
+  released), plus the ESR version if the policy was backported to an ESR branch.
+  The Windows (GPO) and macOS (plist) examples are derived from the
+  `policies.json` example of each policy.
 
 ## 📁 Project Structure
 
 ```
-├── config/                # YAML config files for the policy documentation, to be
-│                          # used with --policies-yaml until the in-tree
-│                          # policies.yaml files include all their changes.
+├── config/                # The policies.yaml files of each branch, used by
+│                          # update_all_policy_templates.js instead of the
+│                          # in-tree files, which do not yet use the current
+│                          # format (see POLICIES_YAML_OVERRIDES).
 ├── docs/                  # The generated documentation. Can be used directly
 │                          # as a GitHub Page.
 └── generator/             # Source folder for the generator script.
@@ -86,7 +88,11 @@ node update_policy_templates.js --branch=main --policies-yaml=../config/main.yam
 
 - Policies defined in the YAML files that are **not supported** by Thunderbird
   are excluded from the generated outputs.
-- YAML files follow a **defined schema** for policy metadata. Refer to the
+- YAML files follow a **defined schema** for policy metadata: each policy has a
+  valid `policies.json` example (`json`), from which the GPO and plist examples
+  are derived. The accepted values of booleans and enums are taken from the
+  policy schema. `gpo` and `plist` examples are only given where their values
+  differ (e.g. paths), and `formats` limits the included examples. Refer to the
   [format specification](https://github.com/thunderbird/thunderbird-desktop/blob/main/mail/components/enterprisepolicies/documentation/README.md)
   for details.
 

@@ -1,5 +1,4 @@
 export const PERSISTENT_SCHEMA_CACHE_FILE = 'persistent_schema_cache.json';
-export const TEMPORARY_SCHEMA_CACHE_FILE = 'temporary_schema_cache.json';
 
 export const DOCS_TEMPLATES_DIR_PATH = "../docs/templates";
 export const DOCS_README_PATH = "../docs/README.md";
