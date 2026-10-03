@@ -1,10 +1,14 @@
-import { PolicyYamlError } from "./tools.mjs";
+import { CATCH_ALL_PATTERN, OPEN_NAME } from "./compatibility.mjs";
+import {
+    getExample, getPolicyData, getSchemaSettings, getSettingTree, hasFormat, withoutTrailingPeriod,
+} from "./schema_settings.mjs";
 
-const GPO_BASE_KEY = "Software\\Policies\\Mozilla\\Thunderbird";
-const FORMATS = ["gpo", "plist", "json"];
-// The key of a value which differs per format, e.g. a path which is written in
-// the Windows style for the GPO example.
-const FORMAT_DEPENDENT_VALUES = "FORMAT_DEPENDENT_VALUES";
+// The fields of a docs section which are taken from the schema node of the
+// section as they are (a string or a list of strings), by schema key.
+const SECTION_FIELDS = {
+    "x-cck2-equivalent": "cck2Equivalent",
+    "x-preferences-affected": "preferencesAffected",
+};
 
 function isPlainObject(value) {
     return !!value && typeof value == "object" && !Array.isArray(value);
@@ -28,112 +32,73 @@ function resolveRef(schema, node) {
 }
 
 /**
- * Schema lookups along the path of an example value. Each step keeps the
- * matching node of every given schema: the branch schema first, then the
- * schema of main, which also marks the JSON values of older branches.
+ * Schema lookups along the path of an example value, in the policy schema of
+ * the branch (with its overlay).
  */
 class SchemaPath {
-    constructor(schemas, nodes, dynamic = false) {
-        this.schemas = schemas;
-        this.nodes = nodes;
-        // Whether the path runs through a patternProperties name, like the
-        // extension id in 3rdparty.Extensions.<id>.
-        this.dynamic = dynamic;
+    /**
+     * @param {Object} schema
+     * @param {?Object} rawNode - The node of the step, before resolving a `$ref`
+     *    (which may have annotations like "x-expand-env-vars" next to it).
+     * @param {boolean} expandable - Whether a parent has "x-expand-env-vars".
+     */
+    constructor(schema, rawNode, expandable = false) {
+        this.schema = schema;
+        this.rawNode = rawNode ?? null;
+        this.node = resolveRef(schema, rawNode) ?? null;
+        // Like in the ADMX template, a text value is REG_EXPAND_SZ if it or a
+        // parent has "x-expand-env-vars".
+        this.expandable = expandable || !!rawNode?.["x-expand-env-vars"] || !!this.node?.["x-expand-env-vars"];
     }
 
-    static forPolicy(schemas, name) {
-        return new SchemaPath(
-            schemas,
-            schemas.map(schema => resolveRef(schema, schema?.properties?.[name]))
-        );
+    static forPolicy(schema, name) {
+        return new SchemaPath(schema, schema?.properties?.[name]);
     }
 
     property(key) {
-        let dynamic = this.dynamic;
-        const nodes = this.nodes.map((node, i) => {
-            if (!node) {
-                return null;
-            }
-            if (node.properties?.[key]) {
-                return resolveRef(this.schemas[i], node.properties[key]);
-            }
-            for (const [pattern, child] of Object.entries(node.patternProperties ?? {})) {
-                if (new RegExp(pattern).test(key)) {
-                    dynamic = true;
-                    return resolveRef(this.schemas[i], child);
-                }
-            }
-            if (isPlainObject(node.additionalProperties)) {
-                dynamic = true;
-                return resolveRef(this.schemas[i], node.additionalProperties);
-            }
-            return null;
-        });
-        return new SchemaPath(this.schemas, nodes, dynamic);
+        const node = this.node;
+        let child = null;
+        if (node?.properties?.[key]) {
+            child = node.properties[key];
+        } else if (node) {
+            child = Object.entries(node.patternProperties ?? {}).find(([pattern]) => new RegExp(pattern).test(key))?.[1] ??
+                (isPlainObject(node.additionalProperties) ? node.additionalProperties : null);
+        }
+        return new SchemaPath(this.schema, child, this.expandable);
     }
 
     item() {
-        return new SchemaPath(
-            this.schemas,
-            this.nodes.map((node, i) => node?.items ? resolveRef(this.schemas[i], node.items) : null),
-            this.dynamic
-        );
+        return new SchemaPath(this.schema, this.node?.items ?? null, this.expandable);
     }
 
-    get node() {
-        return this.nodes.find(Boolean);
-    }
-
-    get types() {
-        return this.node?.type ? [this.node.type].flat() : [];
+    /**
+     * The names of the child settings: the fixed properties, and OPEN_NAME if
+     * the names of some children are chosen when configuring the policy.
+     */
+    get childNames() {
+        const node = this.node;
+        if (!node) {
+            return [];
+        }
+        const names = Object.keys(node.properties ?? {});
+        if (Object.keys(node.patternProperties ?? {}).some(pattern => CATCH_ALL_PATTERN.test(pattern)) ||
+            isPlainObject(node.additionalProperties)) {
+            names.push(OPEN_NAME);
+        }
+        return names;
     }
 
     get isJson() {
-        return this.nodes.some(node =>
-            node?.contentMediaType == "application/json" || node?.type == "JSON"
-        );
+        return this.node?.contentMediaType == "application/json" || this.node?.type == "JSON";
     }
-}
-
-/**
- * Add the choices given by the schema: every accepted value of a boolean or of
- * an enum, starting with the value of the example. Values which the schema
- * declares as JSON are kept as they are, since their examples use single
- * values on purpose (e.g. the installation_mode of each extension).
- */
-function addChoices(value, schemaPath) {
-    if (schemaPath.isJson) {
-        return value;
-    }
-    if (Array.isArray(value)) {
-        return value.map(item => addChoices(item, schemaPath.item()));
-    }
-    if (isPlainObject(value)) {
-        return Object.fromEntries(Object.entries(value).map(
-            ([key, item]) => [key, addChoices(item, schemaPath.property(key))]
-        ));
-    }
-    const choices = schemaPath.node?.enum ??
-        (typeof value == "boolean" && schemaPath.types.includes("boolean") ? [true, false] : null);
-    if (choices?.includes(value) && choices.length > 1) {
-        return { $oneOf: [value, ...choices.filter(choice => choice !== value)] };
-    }
-    return value;
-}
-
-function renderChoice(value, render) {
-    return value?.$oneOf ? value.$oneOf.map(render).join(" | ") : render(value);
 }
 
 /**
  * Render a value as JSON: two spaces indentation, arrays of scalars on a single
- * line, choices as `a | b`.
+ * line.
  */
 function toJson(value, indent = "") {
     const inner = indent + "  ";
-    if (value?.$oneOf) {
-        return renderChoice(value, v => JSON.stringify(v));
-    }
     if (Array.isArray(value)) {
         if (value.every(isScalar)) {
             return `[${value.map(v => toJson(v)).join(", ")}]`;
@@ -168,12 +133,12 @@ function toPlistScalar(value) {
 }
 
 /**
- * Render a value as a plist fragment, choices as `<true/> | <false/>`.
+ * Render a value as a plist fragment.
  */
 function toPlist(value, indent = "") {
     const inner = indent + "  ";
     if (isScalar(value)) {
-        return indent + renderChoice(value, toPlistScalar);
+        return indent + toPlistScalar(value);
     }
     if (Array.isArray(value)) {
         return [
@@ -192,18 +157,6 @@ function toPlist(value, indent = "") {
     ].join("\n");
 }
 
-/**
- * Check whether an example path (e.g. ["SearchEngines", "Add", "0", "Name"])
- * matches one of the given path patterns (e.g. "SearchEngines/Add/*\/Name").
- */
-function matchesPath(path, patterns = []) {
-    return patterns.some(pattern => {
-        const parts = pattern.split("/");
-        return parts.length == path.length &&
-            parts.every((part, i) => part == "*" || part == path[i]);
-    });
-}
-
 function toDword(value) {
     return typeof value == "boolean"
         ? (value ? "0x1" : "0x0")
@@ -214,141 +167,221 @@ function toDword(value) {
  * Build the GPO entries of a value: objects become subkeys, array entries
  * numbered subkeys, values declared as JSON in the schema a single REG_MULTI_SZ.
  */
-function toGpo(value, { key, path, schemaPath, admx }) {
-    const entry = (type, entryValue) => ({
-        key,
-        type,
-        value: entryValue,
-        ...(admx.category && { category: admx.category }),
-        ...(matchesPath(path, admx.required) && { required: true }),
-        // An ADMX template can not represent registry keys named after
-        // arbitrary values, like the extension id in 3rdparty.
-        ...(schemaPath.dynamic && { admx: false }),
-    });
+function toGpo(value, { key, schemaPath }) {
+    const entry = (type, entryValue) => ({ key, type, value: entryValue });
 
     if (schemaPath.isJson) {
         return [entry("REG_MULTI_SZ", toJson(value))];
     }
     if (isScalar(value)) {
-        const first = value?.$oneOf ? value.$oneOf[0] : value;
-        if (typeof first == "boolean" || typeof first == "number") {
-            return [entry("REG_DWORD", renderChoice(value, toDword))];
+        if (typeof value == "boolean" || typeof value == "number") {
+            return [entry("REG_DWORD", toDword(value))];
         }
-        const type = matchesPath(path, admx.expandable) ? "REG_EXPAND_SZ" : "REG_SZ";
-        return [entry(type, renderChoice(value, String))];
+        const type = schemaPath.expandable ? "REG_EXPAND_SZ" : "REG_SZ";
+        return [entry(type, String(value))];
     }
     if (Array.isArray(value)) {
         return value.flatMap((item, i) => toGpo(item, {
             key: `${key}\\${i + 1}`,
-            path: [...path, String(i)],
             schemaPath: schemaPath.item(),
-            admx,
         }));
     }
-    return Object.entries(value).flatMap(([name, item]) => toGpo(item, {
-        key: `${key}\\${name}`,
-        path: [...path, name],
-        schemaPath: schemaPath.property(name),
-        admx,
+    return Object.entries(value).flatMap(([property, item]) => toGpo(item, {
+        key: `${key}\\${property}`,
+        schemaPath: schemaPath.property(property),
     }));
 }
 
 /**
- * Get the value of the json example for the given format: a value which differs
- * per format is written as { "FORMAT_DEPENDENT_VALUES": { "json": …, "gpo": …,
- * "plist": … } }, with a required json value.
+ * Get the setting path of a docs section from its name, e.g. ["SearchEngines", "Add"]
+ * for "SearchEngines_Add" or ["SecurityDevices", "[name]"] for
+ * "SecurityDevices_[name]". The names of settings may contain "_" themselves
+ * (e.g. the ciphers of DisabledCiphers), so they are matched against the schema.
+ *
+ * @returns {{path: string[], schemaPath: SchemaPath}}
  */
-function selectFormat(value, format, name) {
-    if (Array.isArray(value)) {
-        return value.map(item => selectFormat(item, format, name));
+function resolveEntryPath(name, schema) {
+    const [policy, ...rest] = name.split("_");
+    let schemaPath = SchemaPath.forPolicy(schema, policy);
+    if (!schemaPath.node) {
+        throw new Error(`The section ${name} is not named after a policy of the schema.`);
     }
-    if (!isPlainObject(value)) {
-        return value;
-    }
-    const keys = Object.keys(value);
-    if (!keys.includes(FORMAT_DEPENDENT_VALUES)) {
-        return Object.fromEntries(keys.map(key => [key, selectFormat(value[key], format, name)]));
-    }
-
-    const error = message => new PolicyYamlError(
-        `The json example of ${name} has invalid ${FORMAT_DEPENDENT_VALUES}: ${message}`
-    );
-    if (keys.length > 1) {
-        throw error(`it must be the only key of its object.`);
-    }
-    const values = value[FORMAT_DEPENDENT_VALUES];
-    if (!isPlainObject(values)) {
-        throw error(`it must be an object.`);
-    }
-    const unknown = Object.keys(values).filter(key => !FORMATS.includes(key));
-    if (unknown.length) {
-        throw error(`unknown key ${unknown.join(", ")}.`);
-    }
-    if (!("json" in values)) {
-        throw error(`the json value is missing.`);
-    }
-    for (const [key, item] of Object.entries(values)) {
-        if (!isScalar(item) || typeof item != typeof values.json) {
-            throw error(`the ${key} value is not a ${typeof values.json} like the json value.`);
+    const path = [policy];
+    let remaining = rest.join("_");
+    while (remaining) {
+        const match = schemaPath.childNames
+            .filter(child => remaining == child || remaining.startsWith(`${child}_`))
+            .sort((a, b) => b.length - a.length)[0];
+        if (!match) {
+            throw new Error(`The section ${name} is not named after a policy or one of its settings.`);
         }
+        path.push(match);
+        schemaPath = schemaPath.property(match);
+        remaining = remaining.slice(match.length + 1);
     }
-    return values[format] ?? values.json;
+    return { path, schemaPath };
 }
 
 /**
- * Derive the gpo and plist examples of each policy from its json example (a
- * policies.json file), and add the choices given by the schema. The `formats`
- * of a policy limit the generated examples, its `admx` hints are used for the
- * GPO entries.
- *
- * @param {TemplateData} template
- * @param {Object[]} schemas - The policy schema of the branch, followed by the
- *    policy schema of main.
+ * Put the example value of an entry at its setting path, e.g.
+ * { SearchEngines: { Add: value } }. An OPEN_NAME segment holds the object of
+ * names and values itself.
  */
-export function deriveFormats(template, schemas) {
-    for (const [name, policy] of Object.entries(template.policies)) {
-        for (const field of ["gpo", "plist"]) {
-            if (policy?.[field]) {
-                throw new PolicyYamlError(`The policy entry ${name} has a ${field} example, which is derived from its json example. Use a per-format value instead.`);
-            }
+function wrapExample(path, value) {
+    let wrapped = value;
+    for (let i = path.length - 1; i > 0; i--) {
+        if (path[i] != OPEN_NAME) {
+            wrapped = { [path[i]]: wrapped };
         }
-        for (const field of ["category", "required", "expandable"]) {
-            if (policy?.[field]) {
-                throw new PolicyYamlError(`The policy entry ${name} has ${field} outside of its admx hints.`);
-            }
+    }
+    return { [path[0]]: wrapped };
+}
+
+// The note for settings with "x-expand-env-vars": the docs describe all
+// formats, but only Windows expands environment variables (in REG_EXPAND_SZ
+// values set via Group Policy).
+const EXPAND_ENV_VARS_NOTE = "Environment variables like %USERPROFILE% are only expanded when the policy is set via Group Policy.";
+
+/**
+ * Add the note for settings with "x-expand-env-vars" to a text.
+ */
+function withEnvVarsNote(text, { expandEnvVars }, separator) {
+    return expandEnvVars ? [text, EXPAND_ENV_VARS_NOTE].filter(Boolean).join(separator) : text;
+}
+
+/**
+ * Get the settings of a docs section as a tree (see getSettingTree()), for
+ * the blocks of the docs: the child settings of the section's setting, without
+ * the settings which have a docs section of their own. Settings with
+ * "x-expand-env-vars" get a note, choices are only kept if they have
+ * descriptions, and a setting is only marked as deprecated if its parent is
+ * not.
+ *
+ * @param {Object} node - A node of the tree of the policy.
+ * @param {string[]} sections - The setting paths of all docs sections, joined by "/".
+ * @returns {{name: string, type: string, choices: ?Object[], children: Object[]}}
+ */
+function getSectionTree(node, sections) {
+    const convert = (child, parentDeprecated) => ({
+        name: child.name,
+        title: child.title ? withoutTrailingPeriod(child.title) : null,
+        type: child.type,
+        description: withEnvVarsNote(child.description?.trimEnd(), child, " "),
+        deprecated: child.deprecated && !parentDeprecated,
+        ...getSectionTree(child, sections),
+    });
+    return {
+        name: node.name,
+        type: node.type,
+        choices: node.choices?.some(choice => choice.description) ? node.choices : null,
+        children: node.children
+            .filter(child => !sections.includes(child.path.join("/")))
+            .map(child => convert(child, node.deprecated)),
+    };
+}
+
+/**
+ * Get the texts of a docs section from the texts of the settings in the
+ * schema (see getSchemaSettings()): the name for the ToC line ("title", none
+ * without it), the text ("description" followed by "x-help"), whether it is
+ * deprecated, and the tree of its settings which have no docs section of their
+ * own (see getSectionTree()).
+ *
+ * @param {Map<string, Object>} texts - The texts of the policy by path.
+ * @param {Object} tree - The tree of the policy, see getSettingTree().
+ * @param {string[]} path - The setting path of the section.
+ * @param {string[]} sections - The setting paths of all docs sections, joined by "/".
+ */
+function getSectionTexts(texts, tree, path, sections) {
+    const own = texts.get(path.join("/"));
+    let node = tree;
+    for (const name of path.slice(1)) {
+        node = node.children.find(child => child.name == name);
+    }
+    return {
+        // The ToC line: the name, without a trailing full stop.
+        title: own?.title ? withoutTrailingPeriod(own.title) : null,
+        description: withEnvVarsNote(
+            [own?.description, own?.help].filter(Boolean).map(text => text.trim()).join("\n\n"),
+            own ?? {},
+            "\n\n"
+        ),
+        deprecated: !!own?.deprecated,
+        settingTree: getSectionTree(node, sections),
+    };
+}
+
+/**
+ * Get the docs sections of a policy: the policy itself, and each of its
+ * settings with an "x-help" of its own (a long text needs a section), named
+ * by their setting path, joined by "_" (e.g. "SearchEngines_Add").
+ *
+ * @param {Map<string, Object>} texts - The texts of the policy by path.
+ * @returns {string[]}
+ */
+function getSectionNames(texts) {
+    return [...texts].filter(([key, own]) => !key.includes("/") || own.help)
+        .map(([key]) => key.replaceAll("/", "_"));
+}
+
+/**
+ * Derive the docs sections from the policy schema: every policy, and every
+ * setting with an "x-help" of its own. Each gets its texts, the fields of
+ * SECTION_FIELDS of its node, and its json, gpo and plist examples with the
+ * choices given by the schema. The example of a section is the example of its
+ * policy or setting (e.g. SearchEngines_Add), see getExample(): generated from
+ * the schema and the hand-written examples of its settings ("x-examples-gpo"
+ * for the GPO example, e.g. with Windows paths). The "x-formats" of a policy
+ * limit the examples.
+ *
+ * Each section has: `title`, `description`, `deprecated`, `settingTree`,
+ * `cck2Equivalent`, `preferencesAffected`, `json`, `gpo` and `plist`.
+ *
+ * @param {Object} schema - The policy schema of the branch (with its overlay).
+ * @param {SchemaL10n} l10n - Resolves the texts given as Fluent messages.
+ * @param {string} registryKey - The registry key of the product's policies
+ *    (registry-key in product.yaml), for the GPO examples.
+ * @returns {Object<string, Object>} the sections by name, e.g.
+ *    "SearchEngines_Add"
+ */
+export function deriveSections(schema, l10n, registryKey) {
+    const policies = {};
+    const entries = Object.keys(schema.properties ?? {})
+        .flatMap(policyName => getSectionNames(getSchemaSettings(schema, policyName, l10n).texts))
+        .map(name => {
+            policies[name] = {};
+            return { name, policy: policies[name], ...resolveEntryPath(name, schema) };
+        });
+    const sections = entries.map(({ path }) => path.join("/"));
+    const textsByPolicy = new Map();
+    const treeByPolicy = new Map();
+
+    for (const { policy, path, schemaPath } of entries) {
+        if (!textsByPolicy.has(path[0])) {
+            textsByPolicy.set(path[0], getSchemaSettings(schema, path[0], l10n).texts);
+            treeByPolicy.set(path[0], getSettingTree(schema, path[0], l10n));
+        }
+        Object.assign(policy, getSectionTexts(textsByPolicy.get(path[0]), treeByPolicy.get(path[0]), path, sections));
+        for (const [key, field] of Object.entries(SECTION_FIELDS)) {
+            policy[field] = schemaPath.rawNode?.[key];
         }
 
-        let example;
-        try {
-            example = JSON.parse(policy?.json ?? "").policies;
-        } catch (e) {
-            throw new PolicyYamlError(`The policy entry ${name} has no valid json example: ${e.message}`);
-        }
-        if (!isPlainObject(example)) {
-            throw new PolicyYamlError(`The json example of ${name} has no "policies" object.`);
-        }
+        const policyData = getPolicyData(schema, path[0]);
+        const example = {
+            json: wrapExample(path, getExample(schema, path)),
+            gpo: wrapExample(path, getExample(schema, path, { format: "gpo" })),
+        };
+        example.plist = example.json;
 
-        // The value of the example for each format, with the choices given by
-        // the schema.
-        const values = Object.fromEntries(FORMATS.map(format => [
-            format,
-            Object.fromEntries(Object.entries(example).map(([key, value]) => [
-                key,
-                addChoices(selectFormat(value, format, name), SchemaPath.forPolicy(schemas, key)),
-            ])),
-        ]));
-        const admx = policy.admx ?? {};
-
-        const formats = policy.formats ?? FORMATS;
-        policy.gpo = formats.includes("gpo")
-            ? Object.entries(values.gpo).flatMap(([key, value]) => toGpo(value, {
-                key: `${GPO_BASE_KEY}\\${key}`,
-                path: [key],
-                schemaPath: SchemaPath.forPolicy(schemas, key),
-                admx,
+        // Only the examples of the formats of the policy (see "x-formats").
+        policy.gpo = hasFormat(policyData, "gpo")
+            ? Object.entries(example.gpo).flatMap(([key, value]) => toGpo(value, {
+                key: `${registryKey}\\${key}`,
+                schemaPath: SchemaPath.forPolicy(schema, key),
             }))
             : [];
-        policy.plist = formats.includes("plist") ? toPlist(values.plist) : null;
-        policy.json = formats.includes("json") ? toJson({ policies: values.json }) : null;
+        policy.plist = hasFormat(policyData, "plist") ? toPlist(example.plist) : null;
+        policy.json = hasFormat(policyData, "json") ? toJson({ policies: example.json }) : null;
     }
+    return policies;
 }

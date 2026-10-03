@@ -116,6 +116,15 @@ test("a prefix without using declaration", async () => {
     }), [/the prefix "Mozilla" is not declared by a <using> element/]);
 });
 
+test("a prefix with using declaration", async () => {
+    assertProblems(await validateChanged({
+        admx: [
+            [`<target prefix="test" namespace="Test.Policies.Fixture"/>`, `<target prefix="test" namespace="Test.Policies.Fixture"/>\n    <using prefix="Mozilla" namespace="Mozilla.Policies"/>`],
+            [`<category name="Test_category" displayName="$(string.Test_category)"/>`, `<category name="Test_category" displayName="$(string.Test_category)">\n      <parentCategory ref="Mozilla:Cat_Mozilla"/>\n    </category>`],
+        ],
+    }), []);
+});
+
 test("a supportedOn definition which does not exist", async () => {
     assertProblems(await validateChanged({
         admx: [[`<supportedOn ref="SUPPORTED_1"/>`, `<supportedOn ref="SUPPORTED_2"/>`]],

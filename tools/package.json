@@ -1,0 +1,9 @@
+{
+  "name": "policy-templates-tools",
+  "private": true,
+  "type": "module",
+  "description": "Helpers to maintain the inputs of the generator, see README.md.",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}

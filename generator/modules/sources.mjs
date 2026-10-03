@@ -1,10 +1,9 @@
 import { execFile } from "node:child_process";
+import fs from "node:fs/promises";
 import pathUtils from "node:path";
 import { promisify } from "node:util";
 
-import {
-    FIREFOX_REPOSITORY, GITHUB_API_URL, GITHUB_RAW_URL, THUNDERBIRD_REPOSITORY,
-} from "./constants.mjs";
+import { GITHUB_API_URL, GITHUB_RAW_URL, MOZILLA_POLICY_TEMPLATES_REPOSITORY } from "./constants.mjs";
 import { InputError, readCachedUrl, readCachedValue } from "./tools.mjs";
 
 const execFileAsync = promisify(execFile);
@@ -13,22 +12,37 @@ const execFileAsync = promisify(execFile);
  * Command line options (for util.parseArgs()) to select the sources.
  */
 export const SOURCE_OPTIONS = {
-    "local": { type: "string" },
-    "local-tb": { type: "string" },
-    "local-ff": { type: "string" },
+    "product-config": { type: "string" },
+    "checkout": { type: "string" },
 };
 
 export const SOURCE_USAGE = `
-   --local=path     - Path to a local Firefox checkout with a Thunderbird checkout
-                      in its comm/ folder. Reads both repositories locally.
-   --local-tb=path  - Path to a local Thunderbird checkout.
-   --local-ff=path  - Path to a local Firefox checkout.
+   --product-config=path
+                      - The product folder (required), e.g.
+                        products/thunderbird, see its product.yaml.
+   --checkout=path    - Path to a local checkout of the product's repository,
+                        e.g. to generate the documentation for local, not yet
+                        pushed changes. Without it, the product is read from
+                        GitHub (source.repository in product.yaml).
+   In a local checkout, the branch "main" is its working tree: whatever is
+   checked out, including uncommitted changes. Other branches are read from
+   their local branch, else from origin.
 
-   Repositories without a local checkout are read from GitHub.`;
+   Mozilla's base ADMX/ADML files are always read from
+   https://github.com/${MOZILLA_POLICY_TEMPLATES_REPOSITORY}.`;
+
+// The branch of a local checkout which is read from its working tree.
+const WORKING_TREE_BRANCH = "main";
+
+/**
+ * The "commit" of the working tree of a local checkout: what is checked out,
+ * including uncommitted changes.
+ */
+export const WORKING_TREE = "WORKING_TREE";
 
 /**
  * Read files and their history from a local git repository, using the native
- * git command.
+ * git command. The branch "main" is the working tree of the checkout.
  */
 export class LocalGitSource {
     /**
@@ -79,14 +93,19 @@ export class LocalGitSource {
     }
 
     /**
-     * Resolve a branch to a commit. A local branch is preferred over the remote
-     * (origin) branch, so local commits which have not been pushed are used.
+     * Resolve a branch to a commit. The branch "main" is the working tree
+     * (WORKING_TREE). For other branches, a local branch is preferred over the
+     * remote (origin) branch, so local commits which have not been pushed are
+     * used.
      *
      * @param {string} name - Name of the branch, e.g. "esr140".
      * @returns {Promise<string|null>} the commit, or null if the branch does not
      *    exist
      */
     async resolveBranch(name) {
+        if (name == WORKING_TREE_BRANCH) {
+            return WORKING_TREE;
+        }
         for (const ref of [`refs/heads/${name}`, `refs/remotes/origin/${name}`]) {
             try {
                 return (await this.#git(["rev-parse", "--verify", "--quiet", `${ref}^{commit}`])).trim();
@@ -105,6 +124,11 @@ export class LocalGitSource {
      * @returns {Promise<string[]>}
      */
     async getFileHistory(commit, path) {
+        // The working tree is the newest revision, followed by the history of
+        // what is checked out.
+        if (commit == WORKING_TREE) {
+            return [WORKING_TREE, ...await this.getFileHistory("HEAD", path)];
+        }
         const log = await this.#git(["rev-list", commit, "--", path]);
         return log.split("\n").filter(Boolean);
     }
@@ -118,6 +142,16 @@ export class LocalGitSource {
      *    exist at the given commit
      */
     async readFile(commit, path) {
+        if (commit == WORKING_TREE) {
+            try {
+                return await fs.readFile(pathUtils.join(this.dir, path), "utf8");
+            } catch (ex) {
+                if (ex.code == "ENOENT") {
+                    return null;
+                }
+                throw ex;
+            }
+        }
         try {
             return await this.#git(["show", `${commit}:${path}`]);
         } catch (ex) {
@@ -218,29 +252,18 @@ export class GitHubSource {
 }
 
 /**
- * Create the Thunderbird and Firefox sources from the parsed command line
- * options (see SOURCE_OPTIONS).
+ * Create the sources from the parsed command line options (see
+ * SOURCE_OPTIONS): the product's repository, and the source of Mozilla's base
+ * ADMX/ADML files, which is always read from GitHub.
  *
  * @param {Object} options - The values returned by util.parseArgs().
- * @returns {Promise<{tb: LocalGitSource|GitHubSource, ff: LocalGitSource|GitHubSource}>}
+ * @param {Product} product - See loadProduct().
+ * @returns {Promise<{app: LocalGitSource|GitHubSource, mozilla: GitHubSource, product: Product}>}
  */
-export async function createSources(options) {
-    let localTb = options["local-tb"];
-    let localFf = options["local-ff"];
-    if (options.local) {
-        if (localTb || localFf) {
-            throw new InputError("--local cannot be combined with --local-tb or --local-ff.");
-        }
-        localTb = pathUtils.join(options.local, "comm");
-        localFf = options.local;
-    }
-
-    const tb = localTb
-        ? new LocalGitSource(localTb)
-        : new GitHubSource(THUNDERBIRD_REPOSITORY);
-    const ff = localFf
-        ? new LocalGitSource(localFf)
-        : new GitHubSource(FIREFOX_REPOSITORY);
-
-    return { tb: await tb.init(), ff: await ff.init() };
+export async function createSources(options, product) {
+    const app = options.checkout
+        ? new LocalGitSource(options.checkout)
+        : new GitHubSource(product.source.repository);
+    const mozilla = new GitHubSource(MOZILLA_POLICY_TEMPLATES_REPOSITORY);
+    return { app: await app.init(), mozilla: await mozilla.init(), product };
 }

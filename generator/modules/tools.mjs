@@ -1,9 +1,21 @@
 import fs from "node:fs/promises";
 
-import { PERSISTENT_SCHEMA_CACHE_FILE } from "./constants.mjs";
+import { DOWNLOAD_CACHE_FILE } from "./constants.mjs";
 
-// The cached values, read from PERSISTENT_SCHEMA_CACHE_FILE on first use.
-let SCHEMA_CACHE = null;
+// The cached values, read from the cache file on first use.
+let DOWNLOAD_CACHE = null;
+let downloadCacheFile = DOWNLOAD_CACHE_FILE;
+
+/**
+ * Use another cache file, e.g. in tests. The cache is read again from it on
+ * the next use.
+ *
+ * @param {?string} path - The file, or nothing for the default one.
+ */
+export function setDownloadCacheFile(path) {
+    downloadCacheFile = path ?? DOWNLOAD_CACHE_FILE;
+    DOWNLOAD_CACHE = null;
+}
 
 /**
  * Error caused by invalid input (command line arguments, local repositories or
@@ -12,15 +24,16 @@ let SCHEMA_CACHE = null;
 export class InputError extends Error { }
 
 /**
- * Error in the content of a policies.yaml file. Command line scripts exit with
- * code 2 on these errors, without printing the usage information.
+ * Error in the content of the inputs (e.g. the documentation in the policy
+ * schema or its overlay). Command line scripts exit with code 2 on these
+ * errors, without printing the usage information.
  */
-export class PolicyYamlError extends InputError { }
+export class ContentError extends InputError { }
 
 /**
  * Run the main function of a command line script. Invalid input exits the script
  * with code 2 and prints the usage information (except for errors in the
- * content of a policies.yaml file).
+ * content of the inputs, see ContentError).
  *
  * @param {string} usage - The usage information of the script.
  * @param {function} main - The async main function of the script.
@@ -31,7 +44,7 @@ export async function runCommandLine(usage, main) {
     } catch (ex) {
         if (ex instanceof InputError || ex.code?.startsWith("ERR_PARSE_ARGS")) {
             console.error(`Error: ${ex.message}`);
-            if (!(ex instanceof PolicyYamlError)) {
+            if (!(ex instanceof ContentError)) {
                 console.error(usage);
             }
             process.exit(2);
@@ -98,7 +111,7 @@ export async function writePrettyJSONFile(filePath, json) {
 }
 
 /**
- * Simple helper function to cache a value in SCHEMA_CACHE. Reading the same key
+ * Simple helper function to cache a value in DOWNLOAD_CACHE. Reading the same key
  * at a later time will retrieve the value from the cache.
  *
  * @param {string} key
@@ -108,32 +121,36 @@ export async function writePrettyJSONFile(filePath, json) {
  * @returns {string} the value
  */
 export async function readCachedValue(key, producer) {
-    if (!SCHEMA_CACHE) {
-        try {
-            const data = await fs.readFile(PERSISTENT_SCHEMA_CACHE_FILE, 'utf-8');
-            SCHEMA_CACHE = new Map(JSON.parse(data));
-        } catch (ex) {
-            // Cache file does not yet exist.
-            SCHEMA_CACHE = new Map();
-        }
-    }
-
-    if (!SCHEMA_CACHE.has(key)) {
+    await loadDownloadCache();
+    if (!DOWNLOAD_CACHE.has(key)) {
         const value = await producer();
         if (!value) {
             return null;
         };
-        SCHEMA_CACHE.set(key, value);
-        await writePrettyJSONFile(
-            PERSISTENT_SCHEMA_CACHE_FILE,
-            Array.from(SCHEMA_CACHE.entries())
-        );
+        DOWNLOAD_CACHE.set(key, value);
+        await writeDownloadCache();
     }
-    return SCHEMA_CACHE.get(key);
+    return DOWNLOAD_CACHE.get(key);
+}
+
+async function loadDownloadCache() {
+    if (!DOWNLOAD_CACHE) {
+        try {
+            DOWNLOAD_CACHE = new Map(JSON.parse(await fs.readFile(downloadCacheFile, "utf-8")));
+        } catch (ex) {
+            // Cache file does not yet exist.
+            DOWNLOAD_CACHE = new Map();
+        }
+    }
+    return DOWNLOAD_CACHE;
+}
+
+async function writeDownloadCache() {
+    await writePrettyJSONFile(downloadCacheFile, Array.from(DOWNLOAD_CACHE.entries()));
 }
 
 /**
- * Simple helper function to download a URL and cache its content in SCHEMA_CACHE.
+ * Simple helper function to download a URL and cache its content in DOWNLOAD_CACHE.
  * Reading the same URL at a later time will retrieve the content from the cache.
  *
  * @param {string} url
@@ -142,4 +159,61 @@ export async function readCachedValue(key, producer) {
  */
 export async function readCachedUrl(url) {
     return readCachedValue(url, () => request(url));
+}
+
+/**
+ * Download a URL whose content may change (e.g. a file on a branch), with the
+ * cache: the content is stored with its ETag / Last-Modified, and every call
+ * asks the server conditionally whether it changed (304 Not Modified keeps the
+ * cached content). A server without these headers sends the content each
+ * time. If the server can't be reached, the cached content is used. Used for
+ * the cachedFetch() of the product extensions.
+ *
+ * @param {string} url
+ * @returns {Promise<?string>} the content, or null if the URL does not exist
+ */
+export async function readRevalidatedUrl(url) {
+    const cache = await loadDownloadCache();
+    const key = `revalidated:${url}`;
+    const cached = cache.has(key) ? JSON.parse(cache.get(key)) : null;
+    const headers = {};
+    if (cached?.etag) {
+        headers["If-None-Match"] = cached.etag;
+    }
+    if (cached?.lastModified) {
+        headers["If-Modified-Since"] = cached.lastModified;
+    }
+    for (let i = 0; i < 5; i++) {
+        try {
+            const response = await fetch(url, { headers, signal: AbortSignal.timeout(15000) });
+            if (response.status == 304 && cached) {
+                return cached.text;
+            }
+            if (response.status == 404) {
+                return null;
+            }
+            if (response.ok) {
+                const text = await response.text();
+                const entry = JSON.stringify({
+                    text,
+                    etag: response.headers.get("etag") ?? undefined,
+                    lastModified: response.headers.get("last-modified") ?? undefined,
+                });
+                if (entry != cache.get(key)) {
+                    console.log(` - downloaded ${url}`);
+                    cache.set(key, entry);
+                    await writeDownloadCache();
+                }
+                return text;
+            }
+            console.error("Error in request", url, response.status, response.statusText);
+        } catch (err) {
+            console.error("Error in request", url, err.message);
+        }
+    }
+    if (cached) {
+        console.warn(` - ${url} could not be downloaded, using the cached content`);
+        return cached.text;
+    }
+    throw new Error(`${url} could not be downloaded.`);
 }

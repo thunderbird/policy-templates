@@ -1,0 +1,25 @@
+# A product for the tests, see loadProduct().
+source:
+  repository: example/product
+  schema: schemas/policies-schema.json
+  version: config/version.txt
+  fluent:
+    - locales/brand.ftl
+channels:
+  main: Nightly
+  beta: Beta
+  release: ""
+  esr: ESR
+admx:
+  registry-key: Software\Policies\Example\Product
+  namespace: Example.Policies.Product
+plist:
+  domain: org.example.product
+docs-url: https://example.org/docs
+templates-repository: https://github.com/example/templates
+l10n:
+  repository: example/l10n
+  changesets: locales/l10n-changesets.json
+  fluent:
+    - "{locale}/brand.ftl"
+    - "{locale}/policies.ftl"

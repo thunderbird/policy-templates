@@ -1,3 +1,6 @@
 node_modules
-persistent_schema_cache.json
-docs/
+download_cache.json
+# Local editor settings.
+.vscode/
+# The temporary build folders of update_all_policy_templates.js (<output>.temp).
+*.temp/

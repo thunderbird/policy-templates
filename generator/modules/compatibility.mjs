@@ -1,10 +1,6 @@
 
 import commentJson from "comment-json";
 
-import {
-    THUNDERBIRD_POLICIES_SCHEMA_PATH, THUNDERBIRD_VERSION_PATH
-} from "./constants.mjs";
-
 /**
  * @typedef {Object} PolicySchemaData
  * @property {string} version - The version string belonging to this schema data
@@ -35,28 +31,25 @@ import {
  * @typedef {Object.<string, {
  *   min?: string,
  *   max?: string,
- *   supportedSince?: string,
- *   unsupported?: boolean
+ *   supportedSince?: string
  * }>} CompatibilityData
  *
  * Represents compatibility information for the policies of a single branch.
  *
  * - Keys are policy names (e.g., "Handlers", "DefaultBrowser").
  * - Values define the `min` and optional `max` version of the policy and the
- *   formatted `supportedSince` version (see addSupportedSince()), or the
- *   `unsupported` flag if the policy is only supported by Firefox.
+ *   formatted `supportedSince` version (see addSupportedSince()).
  *
  * Example:
  * {
- *   "SomePolicy": { min: "136.0a1", supportedSince: "136.0, 128.8.0esr" },
- *   "OtherPolicy": { unsupported: true }
+ *   "SomePolicy": { min: "136.0a1", supportedSince: "136.0, 128.8.0esr" }
  * }
  */
 
 /**
  * @typedef {Object} PolicyCompatibilityEntry
  * @property {string} key - A string in the format "minVersion - maxVersion"
- * @property {string} first - The earliest Thunderbird version where the policy is supported
+ * @property {string} first - The earliest version where the policy is supported
  * @property {string} last - The last version where the policy is supported
  * @property {string[]} policies - A list of policy keys that share this compatibility range
  */
@@ -90,7 +83,54 @@ function compareVersion(a, b) {
 
 // A pattern of patternProperties matching any name, optionally excluding some
 // names, e.g. "^.*$", "^(?!\*$).*$" or "^(?!Add$|Delete$).*$".
-const CATCH_ALL_PATTERN = /^\^(\(\?!.*\))?\.\*\$$/;
+export const CATCH_ALL_PATTERN = /^\^(\(\?!.*\))?\.\*\$$/;
+
+// The name of a setting whose key is chosen when configuring the policy, like
+// the device name in SecurityDevices.Add, matched by a CATCH_ALL_PATTERN.
+export const OPEN_NAME = "[name]";
+
+/**
+ * Get the names of the settings matched by a pattern of patternProperties: a
+ * pattern matching any name (CATCH_ALL_PATTERN) is OPEN_NAME, a pattern of
+ * plain alternatives like "^(mimeTypes|extensions|schemes)$" is each of its
+ * names (so each is documented and tracked on its own, e.g. when a name is
+ * added later), any other pattern is used as it is.
+ *
+ * @param {string} pattern
+ * @returns {string[]}
+ */
+export function getPatternNames(pattern) {
+    return getPatternAlternatives(pattern) ?? (CATCH_ALL_PATTERN.test(pattern) ? [OPEN_NAME] : [pattern]);
+}
+
+/**
+ * Get the label of the settings matched by a pattern of patternProperties, for
+ * the Settings of the docs: OPEN_NAME for a pattern matching any name, the
+ * names of a pattern of plain alternatives in parentheses, e.g.
+ * "(mimeTypes|extensions|schemes)" (one setting, as the schema has one node
+ * and one description for them), else the pattern itself.
+ *
+ * @param {string} pattern
+ * @returns {string}
+ */
+export function getPatternLabel(pattern) {
+    const alternatives = getPatternAlternatives(pattern);
+    return alternatives ? `(${alternatives.join("|")})` : getPatternNames(pattern)[0];
+}
+
+/**
+ * Get the names of a pattern of plain alternatives like "^(a|b|c)$".
+ *
+ * @param {string} pattern
+ * @returns {?string[]} null for other patterns
+ */
+function getPatternAlternatives(pattern) {
+    if (CATCH_ALL_PATTERN.test(pattern)) {
+        return null;
+    }
+    const alternatives = pattern.match(/^\^\(([\w-]+(?:\|[\w-]+)*)\)\$$/);
+    return alternatives ? alternatives[1].split("|") : null;
+}
 
 /**
  * Extract a flat list of policy names found in a schema file. Hierarchy is
@@ -107,13 +147,17 @@ function extractFlatPolicyNamesFromPolicySchema(data) {
             for (let [pattern, entry] of Object.entries(data[key])) {
                 // Patterns matching any name are refined over time by excluding
                 // names (e.g. "^.*$" became "^(?!\*$).*$"), which does not
-                // change the policy itself. Use a single canonical name for them.
-                let name = key == "patternProperties" && CATCH_ALL_PATTERN.test(pattern)
-                    ? "^.*$"
-                    : pattern;
-                properties.push(name)
+                // change the policy itself. Use a single canonical name for
+                // them, "[name]", which is also used by the docs sections of
+                // such a setting (e.g. "SecurityDevices_[name]").
+                // A pattern of alternatives is split into its names, so a name
+                // added later gets its own version.
+                let names = key == "patternProperties" ? getPatternNames(pattern) : [pattern];
                 let subs = extractFlatPolicyNamesFromPolicySchema(entry);
-                if (subs.length > 0) properties.push(...subs.map(e => `${name}_${e}`))
+                for (let name of names) {
+                    properties.push(name);
+                    properties.push(...subs.map(e => `${name}_${e}`));
+                }
             }
         }
     }
@@ -125,27 +169,31 @@ function extractFlatPolicyNamesFromPolicySchema(data) {
 const SCHEMA_REVISIONS_CACHE = new Map();
 
 /**
- * Get all revisions of Thunderbird's policy schema file in the history of the
+ * Get all revisions of the product's policy schema file in the history of the
  * given commit, newest first.
  *
- * @param {LocalGitSource|GitHubSource} source - The Thunderbird source.
+ * @param {LocalGitSource|GitHubSource} source - The product's source.
  * @param {string} commit - The commit to read the history from.
+ * @param {Object} paths - The paths of the files in the source, see the
+ *    source of loadProduct().
+ * @param {string} paths.schema
+ * @param {string} paths.version
  *
  * @returns {Promise<PolicySchemaData[]>}
  */
-export function getSchemaRevisions(source, commit) {
-    const key = `${source.description}:${commit}`;
+export function getSchemaRevisions(source, commit, paths) {
+    const key = `${source.description}:${commit}:${paths.schema}`;
     if (!SCHEMA_REVISIONS_CACHE.has(key)) {
-        SCHEMA_REVISIONS_CACHE.set(key, readSchemaRevisions(source, commit));
+        SCHEMA_REVISIONS_CACHE.set(key, readSchemaRevisions(source, commit, paths));
     }
     return SCHEMA_REVISIONS_CACHE.get(key);
 }
 
-async function readSchemaRevisions(source, commit) {
+async function readSchemaRevisions(source, commit, paths) {
     let revisions = [];
-    for (let revision of await source.getFileHistory(commit, THUNDERBIRD_POLICIES_SCHEMA_PATH)) {
-        let data = commentJson.parse(await source.readFile(revision, THUNDERBIRD_POLICIES_SCHEMA_PATH));
-        data.version = (await source.readFile(revision, THUNDERBIRD_VERSION_PATH)).trim();
+    for (let revision of await source.getFileHistory(commit, paths.schema)) {
+        let data = commentJson.parse(await source.readFile(revision, paths.schema));
+        data.version = (await source.readFile(revision, paths.version)).trim();
         data.revision = revision;
         revisions.push(data);
     }
@@ -167,7 +215,7 @@ function normalizeVersion(version) {
  * Build the compatibility data of a single branch from the revisions of its
  * policy schema file.
  *
- * This function determines the minimum and maximum Thunderbird versions in
+ * This function determines the minimum and maximum versions in
  * which each policy is supported.
  *
  * @param {PolicySchemaData[]} revisions - Array returned by getSchemaRevisions().
@@ -203,7 +251,7 @@ export function buildCompatibilityData(revisions) {
     }
 
     // If the last version a policy was seen is the latest known version,
-    // max is removed — implying it's still supported and not deprecated.
+    // max is removed, implying it's still supported and not deprecated.
     for (let policy of Object.keys(compatData)) {
         if (compatData[policy].max == absolute_max)
             delete compatData[policy].max;
@@ -254,32 +302,10 @@ export function addSupportedSince(compatData, { branch, release, esrs }) {
 }
 
 /**
- * Add the policies of Firefox's policy schema, which are not supported by
- * Thunderbird, to the given compatibility data.
- *
- * @param {CompatibilityData} compatData - Object returned by buildCompatibilityData().
- * @param {Object} firefoxSchema - Firefox's policy schema.
- *
- * @returns {CompatibilityData} a new object including the unsupported policies
- */
-export function addUnsupportedPolicies(compatData, firefoxSchema) {
-    let rv = { ...compatData };
-    for (let raw_policy of extractFlatPolicyNamesFromPolicySchema(firefoxSchema)) {
-        let policy = raw_policy.trim().replace(/'/g, "");
-        if (!rv[policy]) {
-            rv[policy] = {
-                unsupported: true
-            };
-        }
-    }
-    return rv;
-}
-
-/**
  * Retrieves and groups policy compatibility information.
  *
  * This function organizes entries of the given compatibility data to determine
- * when specific policies were introduced or became unsupported. It optionally
+ * when specific policies were introduced and removed. It optionally
  * groups entries with identical compatibility ranges.
  *
  * @param {CompatibilityData} compatData - Object returned by buildCompatibilityData().
@@ -301,18 +327,8 @@ export function getCompatibilityInformation(compatData, { distinct, policyName }
     // Group filtered entries by identical compat data.
     let compatInfo = [];
     for (let entry of entries) {
-        // Skip unsupported policy properties, if the root policy itself is not supported as well.
-        let root = entry.split("_").shift();
-        if (root != entry && compatData[entry].unsupported && compatData[root]?.unsupported) continue;
-
-        let first = "";
-        let last = "";
-        if (compatData[entry].supportedSince) {
-            first = compatData[entry].supportedSince;
-        }
-        if (!compatData[entry].unsupported) {
-            last = compatData[entry].max ? normalizeVersion(compatData[entry].max) : "";
-        }
+        const first = compatData[entry].supportedSince ?? "";
+        const last = compatData[entry].max ? normalizeVersion(compatData[entry].max) : "";
 
         let key = `${first} - ${last}`;
         let distinctEntry = compatInfo.find(e => e.key == key);

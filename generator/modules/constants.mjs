@@ -1,61 +1,37 @@
-export const PERSISTENT_SCHEMA_CACHE_FILE = 'persistent_schema_cache.json';
+import pathUtils from "node:path";
 
-export const DOCS_TEMPLATES_DIR_PATH = "../docs/templates";
-export const DOCS_README_PATH = "../docs/README.md";
+// The folder of the generator, independent of the working directory (the
+// generator and the tools in tools/ use the same files).
+const GENERATOR_DIR_PATH = pathUtils.join(import.meta.dirname, "..");
+
+export const DOWNLOAD_CACHE_FILE = pathUtils.join(GENERATOR_DIR_PATH, "download_cache.json");
 
 export const GITHUB_API_URL = "https://api.github.com";
 export const GITHUB_RAW_URL = "https://raw.githubusercontent.com";
 
-export const THUNDERBIRD_REPOSITORY = "thunderbird/thunderbird-desktop";
-export const FIREFOX_REPOSITORY = "mozilla-firefox/firefox";
+// Mozilla's base ADMX/ADML files, which define the "Mozilla" category used by
+// the templates of all Mozilla products. They are shipped unchanged.
+export const MOZILLA_POLICY_TEMPLATES_REPOSITORY = "mozilla/policy-templates";
+export const MOZILLA_POLICY_TEMPLATES_BRANCH = "master";
+export const MOZILLA_ADMX_PATH = "windows/mozilla.admx";
+export const MOZILLA_ADML_PATH = "windows/en-US/mozilla.adml";
 
-export const THUNDERBIRD_POLICIES_SCHEMA_PATH = "mail/components/enterprisepolicies/schemas/policies-schema.json";
-export const THUNDERBIRD_POLICIES_YAML_PATH = "mail/components/enterprisepolicies/documentation/policies.yaml";
-export const THUNDERBIRD_VERSION_PATH = "mail/config/version.txt";
-export const FIREFOX_POLICIES_SCHEMA_PATH = "browser/components/enterprisepolicies/schemas/policies-schema.json";
-
-// The Firefox branch used to find policies which are not supported by Thunderbird.
-export const FIREFOX_REFERENCE_BRANCH = "main";
-
-export const BRANCH_PREFIXES = {
-    main: "Thunderbird Daily",
-    beta: "Thunderbird Beta",
-    release: "Thunderbird",
-    esr: "Thunderbird ESR",
+// The ADMX controls which are labelled with the title of their setting, by
+// kind. The others, and the controls of settings without title, show the name
+// of the setting, which matches the docs and policies.json. See "Labels of the
+// ADMX controls" in the README.
+export const ADMX_TITLE_LABELS = {
+    // A list box: edited in a dialog of its own, which doesn't show the name
+    // of the ADMX policy.
+    list: true,
+    // A control in a group (several settings in one ADMX policy): the name of
+    // the ADMX policy only names the group.
+    group: true,
+    // The only control of its ADMX policy: its title is already the name of
+    // the ADMX policy, shown right above it.
+    single: false,
 };
 
-export const MAIN_TEMPLATE = `## Enterprise policy descriptions and templates for Thunderbird
-
-While the templates for the most recent version of Thunderbird will probably also
-work with older releases of Thunderbird, they may contain new policies which are
-not supported in older releases. We suggest to use the templates which correspond
-to the version of Thunderbird you are actually deploying.
-
-__list__
-
-## List of supported policies
-
-The following table states for each policy, when Thunderbird started to support it,
-or when it has been deprecated. It also includes all policies currently supported
-by Firefox, which are not supported by Thunderbird.
-
-__compatibility__
-
-`
-
-export const TREE_TEMPLATE = `## Enterprise policy descriptions and templates for __name__
-
-__desc__
-
-| Policy Name | Description
-|:--- |:--- |
-__list_of_policies__
-
-__details__
-
-`;
-
-export const DESC_DEFAULT_DAILY_TEMPLATE = `**These policies are in active development and might contain changes that do
-not work with current release or ESR versions of Thunderbird.**
-
-`;
+// The height in lines of the box for a JSON value in the ADMX (Windows
+// default: 3).
+export const ADMX_JSON_BOX_HEIGHT = 12;

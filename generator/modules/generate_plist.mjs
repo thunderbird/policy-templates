@@ -1,94 +1,61 @@
+import { writeOutput } from "./branches.mjs";
+import { getExample, getPolicyData, hasFormat } from "./schema_settings.mjs";
 import { ensureDir } from "./tools.mjs";
 import fs from "node:fs/promises";
+import pathUtils from "node:path";
 import plist from "plist";
 
 /**
- * Generate the example plist file policies support by Thunderbird on MacOs.
- * 
- * @param {TemplateData} template
- * @param {string[]} thunderbirdPolicies - Flattened policy names of supported
- *    policies, e.g. "InstallAddonsPermission_Allow".
- * @param {string} output_dir - path to save the adjusted PLIST files.
+ * Sort the keys of all objects, also inside arrays.
  */
-export async function generatePlistFile(template, thunderbirdPolicies, output_dir) {
-    function sortKeysRecursively(obj) {
-        if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
-            // Sort the keys and rebuild object
-            const sorted = {};
-            Object.keys(obj)
-                .sort((a, b) => a.localeCompare(b))
-                .forEach(key => {
-                    sorted[key] = sortKeysRecursively(obj[key]);
-                });
-            return sorted;
-        } else if (Array.isArray(obj)) {
-            // Recursively sort dicts inside arrays
-            return obj.map(item => sortKeysRecursively(item));
-        } else {
-            // Primitive value, return as is
-            return obj;
-        }
+function sortKeysRecursively(value) {
+    if (Array.isArray(value)) {
+        return value.map(sortKeysRecursively);
     }
-    function deepMerge(target, source) {
-        for (const key of Object.keys(source)) {
-            if (
-                typeof target[key] === 'object' &&
-                typeof source[key] === 'object' &&
-                !Array.isArray(target[key]) &&
-                !Array.isArray(source[key])
-            ) {
-                // Recursively merge nested dictionaries
-                deepMerge(target[key], source[key]);
-            } else {
-                // For arrays or primitives, overwrite
-                target[key] = source[key];
-            }
-        }
-        return target;
+    if (value && typeof value == "object") {
+        return Object.fromEntries(Object.keys(value)
+            .sort((a, b) => a.localeCompare(b))
+            .map(key => [key, sortKeysRecursively(value[key])]));
     }
+    return value;
+}
 
-    const plistEntries = Object.entries(template.policies)
-        .sort((a, b) => a[0].localeCompare(b[0]))
-        .filter(e => thunderbirdPolicies.includes(e[0]))
-        .map(e => e[1].plist)
-        .filter(Boolean);
-
-    const mergedObject = {};
-    for (const entry of plistEntries) {
-        try {
-            // Use only the first value of each choice, and also only keep the
-            // first provided string value.
-            const cleaned = entry.replace(
-                // For values separated by |, e.g. <true/> | <false/> or
-                // <string>a</string> | <string>b</string>
-                /(<\w+\/>|<(\w+)>[^<]*<\/\2>)(?:\s*\|\s*(?:<\w+\/>|<(\w+)>[^<]*<\/\3>))+/g,
-                "$1"
-            ).replace(/<string>([^<]+)<\/string>/g, (match, content) => {
-                // For <string> that contains multiple options separated by '|'
-                const firstOption = content.split('|')[0].trim();
-                return `<string>${firstOption}</string>`;
-            });
-
-            // Wrap into a valid plist structure.
-            const wrapped = `<?xml version="1.0" encoding="UTF-8"?>
-  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-  <plist version="1.0">
-    ${cleaned}
-  </plist>`;
-
-            // Parse the cleaned plist fragment.
-            const parsed = plist.parse(wrapped);
-
-            // Merge keys into the result.
-            deepMerge(mergedObject, sortKeysRecursively(parsed));
-        } catch (err) {
-            console.error(`Invalid plist entry:\n${entry}`);
-            console.error(`Error: ${err.message}`);
+/**
+ * Build the macOS template: a plist file with every supported policy of the
+ * branch with the format "plist" (see "x-formats"), each with the first of its
+ * "examples" in the policy schema.
+ *
+ * @param {Object} schema - The policy schema of the branch (with its overlay).
+ * @param {string[]} supportedPolicyNames - Flattened names of the supported
+ *    policies, e.g. "InstallAddonsPermission_Allow".
+ * @returns {string}
+ */
+export function buildPlistTemplate(schema, supportedPolicyNames) {
+    const policies = {};
+    for (const policyName of Object.keys(schema.properties ?? {})) {
+        const policyData = getPolicyData(schema, policyName);
+        if (!supportedPolicyNames.includes(policyName) || !hasFormat(policyData, "plist")) {
+            continue;
         }
+        policies[policyName] = getExample(schema, [policyName]);
     }
+    return plist.build(sortKeysRecursively(policies));
+}
 
-    // Convert merged object back to plist string.
-    const plist_tb = plist.build(mergedObject);
-    await ensureDir(`${output_dir}/mac`);
-    await fs.writeFile(`${output_dir}/mac/org.mozilla.thunderbird.plist`, plist_tb);
+/**
+ * Generate the macOS template of a branch (its plist/ folder), see
+ * buildPlistTemplate().
+ *
+ * @param {BranchData} branchData - See loadBranch().
+ * @param {Object} options
+ * @param {string} options.output - The docs folder, see writeOutput().
+ */
+export async function generateMacTemplate(branchData, { output }) {
+    await writeOutput(output, branchData.branch, "plist", async dir => {
+        await ensureDir(pathUtils.join(dir, "plist"));
+        await fs.writeFile(
+            pathUtils.join(dir, "plist", `${branchData.product.plist.domain}.plist`),
+            buildPlistTemplate(branchData.schema, branchData.supportedPolicyNames)
+        );
+    });
 }
