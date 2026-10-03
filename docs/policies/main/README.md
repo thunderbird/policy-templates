@@ -98,7 +98,7 @@ Installation:
 | **[`PromptForDownloadLocation`](#promptfordownloadlocation)** | Ask where to save files when downloading.
 | **[`Proxy`](#proxy)** | Configure proxy settings.
 | **[`RequestedLocales`](#requestedlocales)** | Set the list of requested locales for the application in order of preference.
-| **[`SearchEngines`](#searchengines)** | Configure search engine settings.
+| **[`SearchEngines`](#searchengines)** | Configure search engine settings. This policy is only available on the Extended Support Release (ESR) version.
 | **[`SearchEngines -> Add`](#searchengines--add)** | Add new search engines.
 | **[`SearchEngines -> Default`](#searchengines--default)** | Set the default search engine, which is used to search the web from Thunderbird.
 | **[`SearchEngines -> DefaultPrivate`](#searchengines--defaultprivate)** | Set the default search engine for private browsing.
@@ -3567,7 +3567,7 @@ Software\Policies\Mozilla\Thunderbird\RequestedLocales (REG_SZ) = de,en-US
 
 ## SearchEngines
 
-Configure search engine settings.
+Configure search engine settings. This policy is only available on the Extended Support Release (ESR) version.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A

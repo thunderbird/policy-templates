@@ -1486,7 +1486,7 @@
           "examples": [["NAME_OF_SEARCH_ENGINE"]]
         }
       },
-      "x-description-l10n-id": "policy-SearchEngines2"
+      "x-description-l10n-id": "policy-SearchEngines"
     },
 
     "SecurityDevices": {
