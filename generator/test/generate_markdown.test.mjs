@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { generateReadmeCompatibilityTable, renderSettingTree } from "../modules/generate_markdown.mjs";
+import { generateReadmeCompatibilityTable, generateReadmeMarkdown, renderSettingTree } from "../modules/generate_markdown.mjs";
 
 
 const node = (name, description, children = [], extra = {}) => ({ name, description, deprecated: false, choices: null, children, ...extra });
@@ -109,4 +109,19 @@ test("the compatibility table shows the versions of the product", () => {
 test("a setting with a title shows it after its name", () => {
     const tree = { choices: null, children: [node("Mode", "The mode.", [], { title: "Proxy method", type: "string" })] };
     assert.deepEqual(renderSettingTree(tree).slice(4, 6), ["`Mode` Proxy method (string)", "> *The mode.*"]);
+});
+
+test("the table of contents shows the description, the heading the title", () => {
+    const section = (fields) => ({ description: "", settingTree: { choices: null, children: [] }, json: null, gpo: [], plist: null, ...fields });
+    const data = generateReadmeMarkdown({
+        AppAutoUpdate: section({ title: "Automatic updates", summary: "Enable automatic updates.", description: "Enable automatic updates.\n\nMore." }),
+        SearchEngines_Add: section({ title: null, summary: "Add search\nengines | more.", description: "Add search engines." }),
+        Old: section({ title: null, summary: "Old.", deprecated: true }),
+    });
+    assert.equal(data.AppAutoUpdate.toc, "| **[`AppAutoUpdate`](#appautoupdate)** | Enable automatic updates.");
+    assert.equal(data.AppAutoUpdate.content[0], "## AppAutoUpdate: Automatic updates {#appautoupdate}");
+    // Without a title, the heading is the name, and its anchor is the same.
+    assert.equal(data.SearchEngines_Add.toc, "| **[`SearchEngines -> Add`](#searchengines--add)** | Add search engines \\| more.");
+    assert.equal(data.SearchEngines_Add.content[0], "## SearchEngines | Add");
+    assert.equal(data.Old.toc, "| **[`Old`](#old)** | **Deprecated.** Old.");
 });

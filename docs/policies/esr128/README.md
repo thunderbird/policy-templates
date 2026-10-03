@@ -41,59 +41,59 @@ Installation:
 
 | Policy Name | Description
 |:--- |:--- |
-| **[`3rdparty`](#3rdparty)** | 
-| **[`AppAutoUpdate`](#appautoupdate)** | Automatic updates
-| **[`AppUpdatePin`](#appupdatepin)** | 
-| **[`AppUpdateURL`](#appupdateurl)** | 
-| **[`Authentication`](#authentication)** | 
-| **[`BackgroundAppUpdate`](#backgroundappupdate)** | Background updates
-| **[`BlockAboutAddons`](#blockaboutaddons)** | 
-| **[`BlockAboutConfig`](#blockaboutconfig)** | 
-| **[`BlockAboutProfiles`](#blockaboutprofiles)** | 
-| **[`BlockAboutSupport`](#blockaboutsupport)** | 
-| **[`CaptivePortal`](#captiveportal)** | Captive portal detection
-| **[`Certificates`](#certificates)** | 
-| **[`Certificates -> ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | Trust certificates that have been added to the operating system certificate store by a user or administrator
-| **[`Certificates -> Install`](#certificates--install)** | Install certificates into the Thunderbird certificate store
-| **[`Cookies`](#cookies)** | 
-| **[`DefaultDownloadDirectory`](#defaultdownloaddirectory)** | 
-| **[`DisableAppUpdate`](#disableappupdate)** | 
-| **[`DisableBuiltinPDFViewer`](#disablebuiltinpdfviewer)** | 
-| **[`DisabledCiphers`](#disabledciphers)** | 
-| **[`DisableDeveloperTools`](#disabledevelopertools)** | 
-| **[`DisableMasterPasswordCreation`](#disablemasterpasswordcreation)** | Prevent creating a primary password
-| **[`DisablePasswordReveal`](#disablepasswordreveal)** | 
-| **[`DisableSafeMode`](#disablesafemode)** | Disable safe mode
-| **[`DisableSecurityBypass`](#disablesecuritybypass)** | 
-| **[`DisableSystemAddonUpdate`](#disablesystemaddonupdate)** | 
-| **[`DisableTelemetry`](#disabletelemetry)** | 
-| **[`DNSOverHTTPS`](#dnsoverhttps)** | 
-| **[`DownloadDirectory`](#downloaddirectory)** | 
-| **[`Extensions`](#extensions)** | 
-| **[`ExtensionSettings`](#extensionsettings)** | 
-| **[`ExtensionUpdate`](#extensionupdate)** | Automatic extension updates
-| **[`Handlers`](#handlers)** | 
-| **[`HardwareAcceleration`](#hardwareacceleration)** | Use hardware acceleration
-| **[`InstallAddonsPermission`](#installaddonspermission)** | 
-| **[`ManualAppUpdateOnly`](#manualappupdateonly)** | 
-| **[`NetworkPrediction`](#networkprediction)** | Network prediction (DNS prefetching)
-| **[`OfferToSaveLogins`](#offertosavelogins)** | Offer to save passwords
-| **[`OfferToSaveLoginsDefault`](#offertosaveloginsdefault)** | Offer to save passwords by default
-| **[`PasswordManagerEnabled`](#passwordmanagerenabled)** | 
-| **[`PDFjs`](#pdfjs)** | 
-| **[`Preferences`](#preferences)** | 
-| **[`PrimaryPassword`](#primarypassword)** | 
-| **[`PromptForDownloadLocation`](#promptfordownloadlocation)** | 
-| **[`Proxy`](#proxy)** | 
-| **[`RequestedLocales`](#requestedlocales)** | 
-| **[`SearchEngines`](#searchengines)** | 
-| **[`SearchEngines -> Add`](#searchengines--add)** | Add new search engines
-| **[`SearchEngines -> Default`](#searchengines--default)** | Set the default search engine
-| **[`SearchEngines -> DefaultPrivate`](#searchengines--defaultprivate)** | Set the default search engine for private browsing
-| **[`SearchEngines -> PreventInstalls`](#searchengines--preventinstalls)** | Prevent installing search engines from webpages
-| **[`SearchEngines -> Remove`](#searchengines--remove)** | Hide built-in search engines
-| **[`SSLVersionMax`](#sslversionmax)** | 
-| **[`SSLVersionMin`](#sslversionmin)** | 
+| **[`3rdparty`](#3rdparty)** | Set policies that WebExtensions can access via chrome.storage.managed.
+| **[`AppAutoUpdate`](#appautoupdate)** | Enable or disable automatic application update.
+| **[`AppUpdatePin`](#appupdatepin)** | Prevent Thunderbird from being updated beyond the specified version.
+| **[`AppUpdateURL`](#appupdateurl)** | Set custom app update URL.
+| **[`Authentication`](#authentication)** | Configure integrated authentication for websites that support it.
+| **[`BackgroundAppUpdate`](#backgroundappupdate)** | Enable or disable the background updater.
+| **[`BlockAboutAddons`](#blockaboutaddons)** | Block access to the Add-ons Manager (about:addons).
+| **[`BlockAboutConfig`](#blockaboutconfig)** | Block access to the about:config page.
+| **[`BlockAboutProfiles`](#blockaboutprofiles)** | Block access to the about:profiles page.
+| **[`BlockAboutSupport`](#blockaboutsupport)** | Block access to the about:support page.
+| **[`CaptivePortal`](#captiveportal)** | Enable or disable captive portal support.
+| **[`Certificates`](#certificates)** | Add certificates or use built-in certificates.
+| **[`Certificates -> ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | Trust certificates that have been added to the operating system certificate store by a user or administrator.
+| **[`Certificates -> Install`](#certificates--install)** | Install certificates into the Thunderbird certificate store.
+| **[`Cookies`](#cookies)** | Allow or deny websites to set cookies.
+| **[`DefaultDownloadDirectory`](#defaultdownloaddirectory)** | Set the default download directory.
+| **[`DisableAppUpdate`](#disableappupdate)** | Prevent Thunderbird from updating.
+| **[`DisableBuiltinPDFViewer`](#disablebuiltinpdfviewer)** | Disable PDF.js, the built-in PDF viewer in Thunderbird.
+| **[`DisabledCiphers`](#disabledciphers)** | Disable ciphers.
+| **[`DisableDeveloperTools`](#disabledevelopertools)** | Block access to the developer tools.
+| **[`DisableMasterPasswordCreation`](#disablemasterpasswordcreation)** | If true, a master password can’t be created.
+| **[`DisablePasswordReveal`](#disablepasswordreveal)** | Meant to prevent passwords from being revealed in saved logins. In this version, this policy has no effect.
+| **[`DisableSafeMode`](#disablesafemode)** | Disable the feature to restart in Safe Mode. Note: the Shift key to enter Safe Mode can only be disabled on Windows using Group Policy.
+| **[`DisableSecurityBypass`](#disablesecuritybypass)** | Prevent the user from bypassing certain security warnings.
+| **[`DisableSystemAddonUpdate`](#disablesystemaddonupdate)** | Prevent Thunderbird from installing and updating system add-ons.
+| **[`DisableTelemetry`](#disabletelemetry)** | Turn off Telemetry.
+| **[`DNSOverHTTPS`](#dnsoverhttps)** | Configure DNS over HTTPS.
+| **[`DownloadDirectory`](#downloaddirectory)** | Set and lock the download directory.
+| **[`Extensions`](#extensions)** | Install, uninstall or lock extensions. The Install option takes URLs or paths as parameters. The Uninstall and Locked options take extension IDs.
+| **[`ExtensionSettings`](#extensionsettings)** | Manage all aspects of extension installation.
+| **[`ExtensionUpdate`](#extensionupdate)** | Enable or disable automatic extension updates.
+| **[`Handlers`](#handlers)** | Configure default application handlers.
+| **[`HardwareAcceleration`](#hardwareacceleration)** | If false, turn off hardware acceleration.
+| **[`InstallAddonsPermission`](#installaddonspermission)** | Allow certain websites to install add-ons.
+| **[`ManualAppUpdateOnly`](#manualappupdateonly)** | Allow manual updates only and do not notify the user about updates.
+| **[`NetworkPrediction`](#networkprediction)** | Enable or disable network prediction (DNS prefetching).
+| **[`OfferToSaveLogins`](#offertosavelogins)** | Enforce the setting to allow Thunderbird to offer to remember saved logins and passwords. Both true and false values are accepted.
+| **[`OfferToSaveLoginsDefault`](#offertosaveloginsdefault)** | Set the default value for allowing Thunderbird to offer to remember saved logins and passwords. Both true and false values are accepted.
+| **[`PasswordManagerEnabled`](#passwordmanagerenabled)** | Enable saving passwords to the password manager.
+| **[`PDFjs`](#pdfjs)** | Disable or configure PDF.js, the built-in PDF viewer in Thunderbird.
+| **[`Preferences`](#preferences)** | Set and lock the value for a subset of preferences.
+| **[`PrimaryPassword`](#primarypassword)** | Require or prevent using a Primary Password.
+| **[`PromptForDownloadLocation`](#promptfordownloadlocation)** | Ask where to save files when downloading.
+| **[`Proxy`](#proxy)** | Configure proxy settings.
+| **[`RequestedLocales`](#requestedlocales)** | Set the list of requested locales for the application in order of preference.
+| **[`SearchEngines`](#searchengines)** | Configure search engine settings.
+| **[`SearchEngines -> Add`](#searchengines--add)** | Add new search engines.
+| **[`SearchEngines -> Default`](#searchengines--default)** | Set the default search engine, which is used to search the web from Thunderbird.
+| **[`SearchEngines -> DefaultPrivate`](#searchengines--defaultprivate)** | Set the default search engine for private browsing.
+| **[`SearchEngines -> PreventInstalls`](#searchengines--preventinstalls)** | Prevent installing search engines from webpages.
+| **[`SearchEngines -> Remove`](#searchengines--remove)** | Hide built-in search engines.
+| **[`SSLVersionMax`](#sslversionmax)** | Set the maximum SSL version.
+| **[`SSLVersionMin`](#sslversionmin)** | Set the minimum SSL version.
 
 ## 3rdparty
 
@@ -175,7 +175,7 @@ Software\Policies\Mozilla\Thunderbird\3rdparty\Extensions\uBlock0@raymondhill.ne
 |:--- | ---:| ---:|
 | `3rdparty`<br>`3rdparty_Extensions`<br>`3rdparty_Extensions_[name]` | 78.0 |  |
 
-## AppAutoUpdate
+## AppAutoUpdate: Automatic updates {#appautoupdate}
 
 Enable or disable automatic application update.
 
@@ -451,7 +451,7 @@ Software\Policies\Mozilla\Thunderbird\Authentication\PrivateBrowsing (REG_DWORD)
 |:--- | ---:| ---:|
 | `Authentication`<br>`Authentication_SPNEGO`<br>`Authentication_Delegated`<br>`Authentication_NTLM`<br>`Authentication_AllowNonFQDN`<br>`Authentication_AllowNonFQDN_SPNEGO`<br>`Authentication_AllowNonFQDN_NTLM`<br>`Authentication_AllowProxies`<br>`Authentication_AllowProxies_SPNEGO`<br>`Authentication_AllowProxies_NTLM`<br>`Authentication_Locked`<br>`Authentication_PrivateBrowsing` | 78.0 |  |
 
-## BackgroundAppUpdate
+## BackgroundAppUpdate: Background updates {#backgroundappupdate}
 
 Enable or disable the background updater.
 
@@ -680,7 +680,7 @@ Software\Policies\Mozilla\Thunderbird\BlockAboutSupport (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `BlockAboutSupport` | 68.0 |  |
 
-## CaptivePortal
+## CaptivePortal: Captive portal detection {#captiveportal}
 
 Enable or disable captive portal support.
 
@@ -785,7 +785,7 @@ Software\Policies\Mozilla\Thunderbird\Certificates\Install\2 (REG_EXPAND_SZ) = C
 |:--- | ---:| ---:|
 | `Certificates`<br>`Certificates_ImportEnterpriseRoots`<br>`Certificates_Install` | 68.0 |  |
 
-## Certificates | ImportEnterpriseRoots
+## Certificates | ImportEnterpriseRoots: Trust certificates that have been added to the operating system certificate store by a user or administrator {#certificates--importenterpriseroots}
 
 Trust certificates that have been added to the operating system certificate store by a user or administrator.
 
@@ -839,7 +839,7 @@ Software\Policies\Mozilla\Thunderbird\Certificates\ImportEnterpriseRoots (REG_DW
 |:--- | ---:| ---:|
 | `Certificates_ImportEnterpriseRoots` | 68.0 |  |
 
-## Certificates | Install
+## Certificates | Install: Install certificates into the Thunderbird certificate store {#certificates--install}
 
 Install certificates into the Thunderbird certificate store.
 
@@ -1347,7 +1347,7 @@ Software\Policies\Mozilla\Thunderbird\DisableDeveloperTools (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableDeveloperTools` | 68.0 |  |
 
-## DisableMasterPasswordCreation
+## DisableMasterPasswordCreation: Prevent creating a primary password {#disablemasterpasswordcreation}
 
 If true, a master password can’t be created.
 
@@ -1445,7 +1445,7 @@ Software\Policies\Mozilla\Thunderbird\DisablePasswordReveal (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisablePasswordReveal` | 78.0 |  |
 
-## DisableSafeMode
+## DisableSafeMode: Disable safe mode {#disablesafemode}
 
 Disable the feature to restart in Safe Mode. Note: the Shift key to enter Safe Mode can only be disabled on Windows using Group Policy.
 
@@ -2004,7 +2004,7 @@ Software\Policies\Mozilla\Thunderbird\ExtensionSettings (REG_MULTI_SZ) =
 | `ExtensionSettings_[name]_updates_disabled` | 92.0 |  |
 | `ExtensionSettings_[name]_private_browsing` | 136.0, 128.8.0esr |  |
 
-## ExtensionUpdate
+## ExtensionUpdate: Automatic extension updates {#extensionupdate}
 
 Enable or disable automatic extension updates.
 
@@ -2232,7 +2232,7 @@ Software\Policies\Mozilla\Thunderbird\Handlers (REG_MULTI_SZ) =
 |:--- | ---:| ---:|
 | `Handlers`<br>`Handlers_mimeTypes`<br>`Handlers_mimeTypes_[name]`<br>`Handlers_mimeTypes_[name]_action`<br>`Handlers_mimeTypes_[name]_ask`<br>`Handlers_mimeTypes_[name]_handlers`<br>`Handlers_extensions`<br>`Handlers_extensions_[name]`<br>`Handlers_extensions_[name]_action`<br>`Handlers_extensions_[name]_ask`<br>`Handlers_extensions_[name]_handlers`<br>`Handlers_schemes`<br>`Handlers_schemes_[name]`<br>`Handlers_schemes_[name]_action`<br>`Handlers_schemes_[name]_ask`<br>`Handlers_schemes_[name]_handlers` | 92.0 |  |
 
-## HardwareAcceleration
+## HardwareAcceleration: Use hardware acceleration {#hardwareacceleration}
 
 If false, turn off hardware acceleration.
 
@@ -2398,7 +2398,7 @@ Software\Policies\Mozilla\Thunderbird\ManualAppUpdateOnly (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `ManualAppUpdateOnly` | 92.0 |  |
 
-## NetworkPrediction
+## NetworkPrediction: Network prediction (DNS prefetching) {#networkprediction}
 
 Enable or disable network prediction (DNS prefetching).
 
@@ -2447,7 +2447,7 @@ Software\Policies\Mozilla\Thunderbird\NetworkPrediction (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `NetworkPrediction` | 92.0 |  |
 
-## OfferToSaveLogins
+## OfferToSaveLogins: Offer to save passwords {#offertosavelogins}
 
 Enforce the setting to allow Thunderbird to offer to remember saved logins and passwords. Both true and false values are accepted.
 
@@ -2494,7 +2494,7 @@ Software\Policies\Mozilla\Thunderbird\OfferToSaveLogins (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `OfferToSaveLogins` | 92.0 |  |
 
-## OfferToSaveLoginsDefault
+## OfferToSaveLoginsDefault: Offer to save passwords by default {#offertosaveloginsdefault}
 
 Set the default value for allowing Thunderbird to offer to remember saved logins and passwords. Both true and false values are accepted.
 
@@ -3191,7 +3191,7 @@ Software\Policies\Mozilla\Thunderbird\SearchEngines\Remove\1 (REG_SZ) = NAME_OF_
 |:--- | ---:| ---:|
 | `SearchEngines`<br>`SearchEngines_Add`<br>`SearchEngines_Default`<br>`SearchEngines_DefaultPrivate`<br>`SearchEngines_PreventInstalls`<br>`SearchEngines_Remove` | 108.0 |  |
 
-## SearchEngines | Add
+## SearchEngines | Add: Add new search engines {#searchengines--add}
 
 Add new search engines.
 
@@ -3311,7 +3311,7 @@ Software\Policies\Mozilla\Thunderbird\SearchEngines\Add\1\SuggestURLTemplate (RE
 |:--- | ---:| ---:|
 | `SearchEngines_Add` | 108.0 |  |
 
-## SearchEngines | Default
+## SearchEngines | Default: Set the default search engine {#searchengines--default}
 
 Set the default search engine, which is used to search the web from Thunderbird.
 
@@ -3363,7 +3363,7 @@ Software\Policies\Mozilla\Thunderbird\SearchEngines\Default (REG_SZ) = NAME_OF_S
 |:--- | ---:| ---:|
 | `SearchEngines_Default` | 108.0 |  |
 
-## SearchEngines | DefaultPrivate
+## SearchEngines | DefaultPrivate: Set the default search engine for private browsing {#searchengines--defaultprivate}
 
 Set the default search engine for private browsing.
 
@@ -3415,7 +3415,7 @@ Software\Policies\Mozilla\Thunderbird\SearchEngines\DefaultPrivate (REG_SZ) = NA
 |:--- | ---:| ---:|
 | `SearchEngines_DefaultPrivate` | 108.0 |  |
 
-## SearchEngines | PreventInstalls
+## SearchEngines | PreventInstalls: Prevent installing search engines from webpages {#searchengines--preventinstalls}
 
 Prevent installing search engines from webpages.
 
@@ -3467,7 +3467,7 @@ Software\Policies\Mozilla\Thunderbird\SearchEngines\PreventInstalls (REG_DWORD) 
 |:--- | ---:| ---:|
 | `SearchEngines_PreventInstalls` | 108.0 |  |
 
-## SearchEngines | Remove
+## SearchEngines | Remove: Hide built-in search engines {#searchengines--remove}
 
 Hide built-in search engines.
 

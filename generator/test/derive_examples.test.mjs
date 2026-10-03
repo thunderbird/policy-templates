@@ -170,6 +170,8 @@ test("the texts of a policy are taken from the schema", () => {
     // followed by the x-help.
     assert.equal(Auth.title, null);
     assert.equal(Auth.description, "Configure authentication in Thunderbird.\n\nHelp of Auth.");
+    // The line in the table of contents: the description alone.
+    assert.equal(Auth.summary, "Configure authentication in Thunderbird.");
     assert.equal(Auth.deprecated, false);
     // The settings as blocks, following the nesting of the schema.
     assert.deepEqual(treeLines(Auth.settingTree), [
@@ -208,6 +210,7 @@ test("a section of a setting shows its part of the example and its own texts", (
     const { Auth, Auth_Locked } = derive();
     assert.match(Auth_Locked.json, /"Auth": \{\n {6}"Locked": true\n/);
     assert.equal(Auth_Locked.title, "Lock it");
+    assert.equal(Auth_Locked.summary, "Locks it.");
     assert.equal(Auth_Locked.description, "Locks it.\n\nMore about locking.");
     assert.equal(Auth_Locked.deprecated, true);
     // A setting with its own x-help is described in its own section only.

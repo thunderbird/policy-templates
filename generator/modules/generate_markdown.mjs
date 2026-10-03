@@ -136,16 +136,28 @@ export function renderSettingTree(tree) {
     ];
 }
 
-function generateReadmeMarkdown(policies) {
+/**
+ * Render the docs sections (see deriveSections()): per section its line in
+ * the table of contents (its description) and its content, whose heading is
+ * the name of the section followed by its title, if it has one. A heading with
+ * a title gets the id of the heading without it ({#…}, kramdown), so the
+ * anchors don't depend on the titles.
+ *
+ * @param {Object<string, Object>} policies - The sections by name.
+ * @returns {Object<string, {toc: string, content: string[]}>}
+ */
+export function generateReadmeMarkdown(policies) {
     // Build the JSON readmeData.
     const readmeData = {}
     for (let [key, value] of Object.entries(policies)) {
         readmeData[key] = {}
+        const summary = escape_pipes((value.summary ?? "").replace(/\s*\n\s*/g, " "));
         readmeData[key].toc = `| **[\`${key.replaceAll("_", " -> ")
-            }\`](#${getPolicyAnchor(key)})** | ${value.deprecated ? "**Deprecated.** " : ""}${value.title ?? ""}`;
+            }\`](#${getPolicyAnchor(key)})** | ${value.deprecated ? "**Deprecated.** " : ""}${summary}`;
 
+        const heading = key.replaceAll("_", " | ");
         readmeData[key].content = [
-            `## ${key.replaceAll("_", " | ")}`,
+            value.title ? `## ${heading}: ${value.title} {#${getPolicyAnchor(key)}}` : `## ${heading}`,
             ``,
             ...(value.deprecated ? ["**Deprecated.**", ""] : []),
             // Each text is followed by a blank line.

@@ -282,10 +282,11 @@ function getSectionTree(node, sections) {
 
 /**
  * Get the texts of a docs section from the texts of the settings in the
- * schema (see getSchemaSettings()): the name for the ToC line ("title", none
- * without it), the text ("description" followed by "x-help"), whether it is
- * deprecated, and the tree of its settings which have no docs section of their
- * own (see getSectionTree()).
+ * schema (see getSchemaSettings()): the name for its heading ("title", none
+ * without it), the line in the table of contents (its "description" alone),
+ * the text ("description" followed by "x-help"), whether it is deprecated, and
+ * the tree of its settings which have no docs section of their own (see
+ * getSectionTree()).
  *
  * @param {Map<string, Object>} texts - The texts of the policy by path.
  * @param {Object} tree - The tree of the policy, see getSettingTree().
@@ -299,8 +300,10 @@ function getSectionTexts(texts, tree, path, sections) {
         node = node.children.find(child => child.name == name);
     }
     return {
-        // The ToC line: the name, without a trailing full stop.
+        // The name in the heading, without a trailing full stop.
         title: own?.title ? withoutTrailingPeriod(own.title) : null,
+        // The line in the table of contents.
+        summary: own?.description?.trim() || null,
         description: withEnvVarsNote(
             [own?.description, own?.help].filter(Boolean).map(text => text.trim()).join("\n\n"),
             own ?? {},
@@ -334,7 +337,7 @@ function getSectionNames(texts) {
  * for the GPO example, e.g. with Windows paths). The "x-formats" of a policy
  * limit the examples.
  *
- * Each section has: `title`, `description`, `deprecated`, `settingTree`,
+ * Each section has: `title`, `summary`, `description`, `deprecated`, `settingTree`,
  * `cck2Equivalent`, `preferencesAffected`, `json`, `gpo` and `plist`.
  *
  * @param {Object} schema - The policy schema of the branch, see loadBranch().

@@ -47,136 +47,136 @@ Installation:
 
 | Policy Name | Description
 |:--- |:--- |
-| **[`3rdparty`](#3rdparty)** | 
-| **[`AIControls`](#aicontrols)** | 
-| **[`AllowedDomainsForApps`](#alloweddomainsforapps)** | 
-| **[`AllowFileSelectionDialogs`](#allowfileselectiondialogs)** | 
-| **[`AppAutoUpdate`](#appautoupdate)** | 
-| **[`AppUpdatePin`](#appupdatepin)** | 
-| **[`AppUpdateURL`](#appupdateurl)** | 
-| **[`Authentication`](#authentication)** | 
-| **[`AutofillAddressEnabled`](#autofilladdressenabled)** | 
-| **[`AutofillCreditCardEnabled`](#autofillcreditcardenabled)** | 
-| **[`AutoLaunchProtocolsFromOrigins`](#autolaunchprotocolsfromorigins)** | 
-| **[`BackgroundAppUpdate`](#backgroundappupdate)** | 
-| **[`BlockAboutAddons`](#blockaboutaddons)** | 
-| **[`BlockAboutConfig`](#blockaboutconfig)** | 
-| **[`BlockAboutProfiles`](#blockaboutprofiles)** | 
-| **[`BlockAboutSupport`](#blockaboutsupport)** | 
-| **[`Bookmarks`](#bookmarks)** | 
-| **[`BrowserDataBackup`](#browserdatabackup)** | 
-| **[`CaptivePortal`](#captiveportal)** | 
-| **[`Certificates`](#certificates)** | 
-| **[`Certificates -> ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | 
-| **[`Certificates -> Install`](#certificates--install)** | 
-| **[`ClearOnShutdown`](#clearonshutdown)** | 
-| **[`CNSA2KeyAgreementEnabled`](#cnsa2keyagreementenabled)** | 
-| **[`Containers`](#containers)** | 
-| **[`ContentAnalysis`](#contentanalysis)** | 
-| **[`Cookies`](#cookies)** | 
-| **[`DefaultBrowserSettingEnabled`](#defaultbrowsersettingenabled)** | 
-| **[`DefaultDownloadDirectory`](#defaultdownloaddirectory)** | 
-| **[`DefaultSerialGuardSetting`](#defaultserialguardsetting)** | 
-| **[`DisableAccounts`](#disableaccounts)** | 
-| **[`DisableAppUpdate`](#disableappupdate)** | 
-| **[`DisableBuiltinPDFViewer`](#disablebuiltinpdfviewer)** | 
-| **[`DisabledCiphers`](#disabledciphers)** | 
-| **[`DisableDefaultBrowserAgent`](#disabledefaultbrowseragent)** | 
-| **[`DisableDeveloperTools`](#disabledevelopertools)** | 
-| **[`DisableEncryptedClientHello`](#disableencryptedclienthello)** | 
-| **[`DisableFeedbackCommands`](#disablefeedbackcommands)** | 
-| **[`DisableFirefoxAccounts`](#disablefirefoxaccounts)** | 
-| **[`DisableFirefoxScreenshots`](#disablefirefoxscreenshots)** | 
-| **[`DisableFirefoxStudies`](#disablefirefoxstudies)** | 
-| **[`DisableForgetButton`](#disableforgetbutton)** | 
-| **[`DisableFormHistory`](#disableformhistory)** | 
-| **[`DisableLaunchOnLogin`](#disablelaunchonlogin)** | 
-| **[`DisableMasterPasswordCreation`](#disablemasterpasswordcreation)** | 
-| **[`DisablePasswordReveal`](#disablepasswordreveal)** | 
-| **[`DisablePocket`](#disablepocket)** | 
-| **[`DisablePrivateBrowsing`](#disableprivatebrowsing)** | 
-| **[`DisableProfileImport`](#disableprofileimport)** | 
-| **[`DisableProfileRefresh`](#disableprofilerefresh)** | 
-| **[`DisableRemoteImprovements`](#disableremoteimprovements)** | 
-| **[`DisableRemoteSettingsAndAcceptSecurityConsequences`](#disableremotesettingsandacceptsecurityconsequences)** | 
-| **[`DisableSafeMode`](#disablesafemode)** | 
-| **[`DisableSecurityBypass`](#disablesecuritybypass)** | 
-| **[`DisableSetDesktopBackground`](#disablesetdesktopbackground)** | 
-| **[`DisableSystemAddonUpdate`](#disablesystemaddonupdate)** | 
-| **[`DisableTelemetry`](#disabletelemetry)** | 
-| **[`DisableThirdPartyModuleBlocking`](#disablethirdpartymoduleblocking)** | 
-| **[`DisplayBookmarksToolbar`](#displaybookmarkstoolbar)** | 
-| **[`DisplayMenuBar`](#displaymenubar)** | 
-| **[`DNSOverHTTPS`](#dnsoverhttps)** | 
-| **[`DontCheckDefaultBrowser`](#dontcheckdefaultbrowser)** | 
-| **[`DownloadDirectory`](#downloaddirectory)** | 
-| **[`EnableTrackingProtection`](#enabletrackingprotection)** | 
-| **[`EncryptedMediaExtensions`](#encryptedmediaextensions)** | 
-| **[`ExemptDomainFileTypePairsFromFileTypeDownloadWarnings`](#exemptdomainfiletypepairsfromfiletypedownloadwarnings)** | 
-| **[`Extensions`](#extensions)** | 
-| **[`ExtensionSettings`](#extensionsettings)** | 
-| **[`ExtensionUpdate`](#extensionupdate)** | 
-| **[`FirefoxHome`](#firefoxhome)** | 
-| **[`FirefoxSuggest`](#firefoxsuggest)** | 
-| **[`GenerativeAI`](#generativeai)** | 
-| **[`GoToIntranetSiteForSingleWordEntryInAddressBar`](#gotointranetsiteforsinglewordentryinaddressbar)** | 
-| **[`Handlers`](#handlers)** | 
-| **[`HardwareAcceleration`](#hardwareacceleration)** | 
-| **[`Homepage`](#homepage)** | 
-| **[`HttpAllowlist`](#httpallowlist)** | 
-| **[`HttpsOnlyMode`](#httpsonlymode)** | 
-| **[`InstallAddonsPermission`](#installaddonspermission)** | 
-| **[`IPProtectionAvailable`](#ipprotectionavailable)** | 
-| **[`LegacyProfiles`](#legacyprofiles)** | 
-| **[`LegacySameSiteCookieBehaviorEnabled`](#legacysamesitecookiebehaviorenabled)** | 
-| **[`LegacySameSiteCookieBehaviorEnabledForDomainList`](#legacysamesitecookiebehaviorenabledfordomainlist)** | 
-| **[`LocalFileLinks`](#localfilelinks)** | 
-| **[`LocalNetworkAccess`](#localnetworkaccess)** | 
-| **[`ManagedBookmarks`](#managedbookmarks)** | 
-| **[`ManualAppUpdateOnly`](#manualappupdateonly)** | 
-| **[`MicrosoftEntraSSO`](#microsoftentrasso)** | 
-| **[`NetworkPrediction`](#networkprediction)** | 
-| **[`NewTabPage`](#newtabpage)** | 
-| **[`NoDefaultBookmarks`](#nodefaultbookmarks)** | 
-| **[`OfferToSaveLogins`](#offertosavelogins)** | 
-| **[`OfferToSaveLoginsDefault`](#offertosaveloginsdefault)** | 
-| **[`OverrideFirstRunPage`](#overridefirstrunpage)** | 
-| **[`OverridePostUpdatePage`](#overridepostupdatepage)** | 
-| **[`PasswordManagerEnabled`](#passwordmanagerenabled)** | 
-| **[`PasswordManagerExceptions`](#passwordmanagerexceptions)** | 
-| **[`PDFjs`](#pdfjs)** | 
-| **[`Permissions`](#permissions)** | 
-| **[`PictureInPicture`](#pictureinpicture)** | 
-| **[`PopupBlocking`](#popupblocking)** | 
-| **[`PostQuantumKeyAgreementEnabled`](#postquantumkeyagreementenabled)** | 
-| **[`Preferences`](#preferences)** | 
-| **[`PrimaryPassword`](#primarypassword)** | 
-| **[`PrintingEnabled`](#printingenabled)** | 
-| **[`PrivateBrowsingModeAvailability`](#privatebrowsingmodeavailability)** | 
-| **[`PromptForDownloadLocation`](#promptfordownloadlocation)** | 
-| **[`Proxy`](#proxy)** | 
-| **[`RelaunchRequired`](#relaunchrequired)** | 
-| **[`RequestedLocales`](#requestedlocales)** | 
-| **[`SanitizeOnShutdown`](#sanitizeonshutdown)** | 
-| **[`SearchBar`](#searchbar)** | 
-| **[`SearchEngines`](#searchengines)** | 
-| **[`SearchEngines -> Add`](#searchengines--add)** | 
-| **[`SearchSuggestEnabled`](#searchsuggestenabled)** | 
-| **[`SecurityDevices`](#securitydevices)** | 
-| **[`ShowHomeButton`](#showhomebutton)** | 
-| **[`SitePolicies`](#sitepolicies)** | 
-| **[`SkipTermsOfUse`](#skiptermsofuse)** | 
-| **[`SSLVersionMax`](#sslversionmax)** | 
-| **[`SSLVersionMin`](#sslversionmin)** | 
-| **[`StartDownloadsInTempDirectory`](#startdownloadsintempdirectory)** | 
-| **[`SupportMenu`](#supportmenu)** | 
-| **[`TranslateEnabled`](#translateenabled)** | 
-| **[`UserMessaging`](#usermessaging)** | 
-| **[`UseSystemPrintDialog`](#usesystemprintdialog)** | 
-| **[`VisualSearchEnabled`](#visualsearchenabled)** | 
-| **[`WebsiteFilter`](#websitefilter)** | 
-| **[`WindowsSSO`](#windowssso)** | 
-| **[`XSLTEnabled`](#xsltenabled)** | 
+| **[`3rdparty`](#3rdparty)** | Provide configuration to WebExtensions, which they can read through the `storage.managed` API.
+| **[`AIControls`](#aicontrols)** | Controls access to AI features: Translations, PDF alt text generation, smart tab groups, display summaries in link previews, AI chatbot in the sidebar, smart windows and on-device speech recognition. The `Default` value applies to all AI features, unless overridden by a specific feature.
+| **[`AllowedDomainsForApps`](#alloweddomainsforapps)** | Define domains allowed to access Google Workspace.
+| **[`AllowFileSelectionDialogs`](#allowfileselectiondialogs)** | Enable or disable file selection dialogs.
+| **[`AppAutoUpdate`](#appautoupdate)** | Enable or disable automatic application update.
+| **[`AppUpdatePin`](#appupdatepin)** | Prevent Firefox from being updated beyond the specified version.
+| **[`AppUpdateURL`](#appupdateurl)** | Change the URL for application update if you are providing Firefox updates from a custom update server.
+| **[`Authentication`](#authentication)** | Configure sites that support integrated authentication.
+| **[`AutofillAddressEnabled`](#autofilladdressenabled)** | Enables or disables autofill for addresses.
+| **[`AutofillCreditCardEnabled`](#autofillcreditcardenabled)** | Enables or disables autofill for payment methods.
+| **[`AutoLaunchProtocolsFromOrigins`](#autolaunchprotocolsfromorigins)** | Define a list of external protocols that can be used from listed origins without prompting the user.
+| **[`BackgroundAppUpdate`](#backgroundappupdate)** | Enable or disable automatic application update in the background, when the application is not running.
+| **[`BlockAboutAddons`](#blockaboutaddons)** | Block access to the Add-ons Manager ('about:addons').
+| **[`BlockAboutConfig`](#blockaboutconfig)** | Block access to 'about:config'.
+| **[`BlockAboutProfiles`](#blockaboutprofiles)** | Block access to About Profiles ('about:profiles').
+| **[`BlockAboutSupport`](#blockaboutsupport)** | Block access to Troubleshooting Information ('about:support').
+| **[`Bookmarks`](#bookmarks)** | Add bookmarks in either the bookmarks toolbar or menu. Use 'ManagedBookmarks' instead.
+| **[`BrowserDataBackup`](#browserdatabackup)** | Disable backup or restore of profile data.
+| **[`CaptivePortal`](#captiveportal)** | Enable or disable the detection of captive portals.
+| **[`Certificates`](#certificates)** | Install and manage certificates.
+| **[`Certificates -> ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | Trust certificates that have been added to the operating system certificate store by a user or administrator.
+| **[`Certificates -> Install`](#certificates--install)** | Install certificates into the Firefox certificate store. If only a filename is specified, Firefox searches for the file in the following locations:
+| **[`ClearOnShutdown`](#clearonshutdown)** | Clear browsing data when the browser closes. Only the named categories are enforced.
+| **[`CNSA2KeyAgreementEnabled`](#cnsa2keyagreementenabled)** | Enable the CNSA 2.0 ML-KEM-1024 key agreement for TLS.
+| **[`Containers`](#containers)** | Set policies related to Multi-Account Containers.
+| **[`ContentAnalysis`](#contentanalysis)** | Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
+| **[`Cookies`](#cookies)** | Configure cookie preferences.
+| **[`DefaultBrowserSettingEnabled`](#defaultbrowsersettingenabled)** | Control whether the user can set Firefox as the default browser. If set to false, the default browser check is disabled and the controls for setting Firefox as the default browser are removed from the preferences.
+| **[`DefaultDownloadDirectory`](#defaultdownloaddirectory)** | Set the default download directory.
+| **[`DefaultSerialGuardSetting`](#defaultserialguardsetting)** | Set the default permission for websites requesting access to serial ports through the Web Serial API.
+| **[`DisableAccounts`](#disableaccounts)** | Disable account-based services, including sync.
+| **[`DisableAppUpdate`](#disableappupdate)** | Turn off application updates within Firefox.
+| **[`DisableBuiltinPDFViewer`](#disablebuiltinpdfviewer)** | Disable the built in PDF viewer.
+| **[`DisabledCiphers`](#disabledciphers)** | Disable specific cryptographic ciphers, listed below.
+| **[`DisableDefaultBrowserAgent`](#disabledefaultbrowseragent)** | Prevent the default browser agent from taking any actions.
+| **[`DisableDeveloperTools`](#disabledevelopertools)** | Remove access to all developer tools.
+| **[`DisableEncryptedClientHello`](#disableencryptedclienthello)** | Disable the TLS Feature for Encrypted Client Hello.
+| **[`DisableFeedbackCommands`](#disablefeedbackcommands)** | Disable the menus for reporting sites (Submit Feedback, Report Deceptive Site).
+| **[`DisableFirefoxAccounts`](#disablefirefoxaccounts)** | Disable Firefox Accounts integration (Sync).
+| **[`DisableFirefoxScreenshots`](#disablefirefoxscreenshots)** | Remove access to Firefox Screenshots.
+| **[`DisableFirefoxStudies`](#disablefirefoxstudies)** | Disable Firefox studies (Shield).
+| **[`DisableForgetButton`](#disableforgetbutton)** | Disable the "Forget" button.
+| **[`DisableFormHistory`](#disableformhistory)** | Turn off saving information on web forms and the search bar.
+| **[`DisableLaunchOnLogin`](#disablelaunchonlogin)** | Prevent Firefox from launching automatically when the user logs in, and prevent the user from enabling this setting.
+| **[`DisableMasterPasswordCreation`](#disablemasterpasswordcreation)** | Remove the master password functionality.
+| **[`DisablePasswordReveal`](#disablepasswordreveal)** | Do not allow passwords to be shown in saved logins.
+| **[`DisablePocket`](#disablepocket)** | Remove Pocket in the Firefox UI.
+| **[`DisablePrivateBrowsing`](#disableprivatebrowsing)** | Remove access to private browsing.
+| **[`DisableProfileImport`](#disableprofileimport)** | Remove the ability to import data from other browsers.
+| **[`DisableProfileRefresh`](#disableprofilerefresh)** | Disable the Refresh Firefox button on 'about:support' and 'support.mozilla.org', as well as the prompt that displays offering to refresh Firefox when you haven't used it in a while.
+| **[`DisableRemoteImprovements`](#disableremoteimprovements)** | Prevent Firefox from applying performance, stability, and feature changes between updates.
+| **[`DisableRemoteSettingsAndAcceptSecurityConsequences`](#disableremotesettingsandacceptsecurityconsequences)** | Disable Remote Settings updates, stopping Firefox from receiving updated data such as blocklists, and accept the resulting security consequences.
+| **[`DisableSafeMode`](#disablesafemode)** | Disable safe mode (Troubleshoot Mode) within the browser.
+| **[`DisableSecurityBypass`](#disablesecuritybypass)** | Prevent the user from bypassing security in certain cases.
+| **[`DisableSetDesktopBackground`](#disablesetdesktopbackground)** | Remove the "Set As Desktop Background..." menuitem when right clicking on an image.
+| **[`DisableSystemAddonUpdate`](#disablesystemaddonupdate)** | Prevent system add-ons from being installed or updated.
+| **[`DisableTelemetry`](#disabletelemetry)** | Prevent the upload of telemetry data.
+| **[`DisableThirdPartyModuleBlocking`](#disablethirdpartymoduleblocking)** | Do not allow blocking third-party modules from the 'about:third-party' page.
+| **[`DisplayBookmarksToolbar`](#displaybookmarkstoolbar)** | Set the initial state of the bookmarks toolbar.
+| **[`DisplayMenuBar`](#displaymenubar)** | Set the state of the menubar.
+| **[`DNSOverHTTPS`](#dnsoverhttps)** | Configure DNS over HTTPS (DoH).
+| **[`DontCheckDefaultBrowser`](#dontcheckdefaultbrowser)** | Don't check if Firefox is the default browser at startup.
+| **[`DownloadDirectory`](#downloaddirectory)** | Set and lock the download directory.
+| **[`EnableTrackingProtection`](#enabletrackingprotection)** | Configure tracking protection.
+| **[`EncryptedMediaExtensions`](#encryptedmediaextensions)** | Enable or disable Encrypted Media Extensions and optionally lock it.
+| **[`ExemptDomainFileTypePairsFromFileTypeDownloadWarnings`](#exemptdomainfiletypepairsfromfiletypedownloadwarnings)** | Disable warnings based on file extension for specific file types on domains.
+| **[`Extensions`](#extensions)** | Control the installation, uninstallation and locking of extensions.
+| **[`ExtensionSettings`](#extensionsettings)** | Manage all aspects of extensions.
+| **[`ExtensionUpdate`](#extensionupdate)** | Control extension updates.
+| **[`FirefoxHome`](#firefoxhome)** | Customize the Firefox Home page.
+| **[`FirefoxSuggest`](#firefoxsuggest)** | Customize Firefox Suggest (US only).
+| **[`GenerativeAI`](#generativeai)** | Configure generative AI features.
+| **[`GoToIntranetSiteForSingleWordEntryInAddressBar`](#gotointranetsiteforsinglewordentryinaddressbar)** | Whether to always go through the DNS server before sending a single word search string to a search engine.
+| **[`Handlers`](#handlers)** | Configure default application handlers.
+| **[`HardwareAcceleration`](#hardwareacceleration)** | Control hardware acceleration.
+| **[`Homepage`](#homepage)** | Configure the default homepage and how Firefox starts.
+| **[`HttpAllowlist`](#httpallowlist)** | Configure sites that will not be upgraded to HTTPS.
+| **[`HttpsOnlyMode`](#httpsonlymode)** | Configure HTTPS-Only Mode.
+| **[`InstallAddonsPermission`](#installaddonspermission)** | Configure the default extension install policy as well as origins for extension installs are allowed.
+| **[`IPProtectionAvailable`](#ipprotectionavailable)** | Control whether Firefox's built-in IP Protection (VPN) is available to users. When disabled, the feature is turned off and cannot be used.
+| **[`LegacyProfiles`](#legacyprofiles)** | Disable the feature enforcing a separate profile for each installation.
+| **[`LegacySameSiteCookieBehaviorEnabled`](#legacysamesitecookiebehaviorenabled)** | Enable default legacy SameSite cookie behavior setting.
+| **[`LegacySameSiteCookieBehaviorEnabledForDomainList`](#legacysamesitecookiebehaviorenabledfordomainlist)** | Revert to legacy SameSite behavior for cookies on specified sites.
+| **[`LocalFileLinks`](#localfilelinks)** | Enable linking to local files by origin.
+| **[`LocalNetworkAccess`](#localnetworkaccess)** | Configure local network access security features.
+| **[`ManagedBookmarks`](#managedbookmarks)** | Configures a list of bookmarks managed by an administrator that cannot be changed by the user.
+| **[`ManualAppUpdateOnly`](#manualappupdateonly)** | Switch to manual updates only.
+| **[`MicrosoftEntraSSO`](#microsoftentrasso)** | Allow single sign-on for Microsoft Entra accounts on macOS.
+| **[`NetworkPrediction`](#networkprediction)** | Enable or disable network prediction (DNS prefetching).
+| **[`NewTabPage`](#newtabpage)** | Enable or disable the New Tab page.
+| **[`NoDefaultBookmarks`](#nodefaultbookmarks)** | Disable the creation of default bookmarks.
+| **[`OfferToSaveLogins`](#offertosavelogins)** | Control whether or not Firefox offers to save passwords.
+| **[`OfferToSaveLoginsDefault`](#offertosaveloginsdefault)** | Sets the default value of 'signon.rememberSignons' without locking it.
+| **[`OverrideFirstRunPage`](#overridefirstrunpage)** | Override the first run page.
+| **[`OverridePostUpdatePage`](#overridepostupdatepage)** | Override the upgrade page.
+| **[`PasswordManagerEnabled`](#passwordmanagerenabled)** | Remove access to the password manager via preferences and blocks about:logins on Firefox 70.
+| **[`PasswordManagerExceptions`](#passwordmanagerexceptions)** | Prevent Firefox from saving passwords for specific sites.
+| **[`PDFjs`](#pdfjs)** | Disable or configure PDF.js, the built-in PDF viewer.
+| **[`Permissions`](#permissions)** | Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
+| **[`PictureInPicture`](#pictureinpicture)** | Enable or disable Picture-in-Picture as well as prevent the user from enabling or disabling it (Locked).
+| **[`PopupBlocking`](#popupblocking)** | Allow certain websites to display popups and be redirected by third-party frames.
+| **[`PostQuantumKeyAgreementEnabled`](#postquantumkeyagreementenabled)** | Enable post-quantum key agreement for TLS.
+| **[`Preferences`](#preferences)** | Set and lock preferences.
+| **[`PrimaryPassword`](#primarypassword)** | Require or prevent using a primary (formerly master) password.
+| **[`PrintingEnabled`](#printingenabled)** | Enable or disable printing.
+| **[`PrivateBrowsingModeAvailability`](#privatebrowsingmodeavailability)** | Set availability of private browsing mode.
+| **[`PromptForDownloadLocation`](#promptfordownloadlocation)** | Ask where to save each file before downloading.
+| **[`Proxy`](#proxy)** | Configure proxy settings.
+| **[`RelaunchRequired`](#relaunchrequired)** | Control relaunch behavior.
+| **[`RequestedLocales`](#requestedlocales)** | Set the list of requested locales for the application in order of preference.
+| **[`SanitizeOnShutdown`](#sanitizeonshutdown)** | Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
+| **[`SearchBar`](#searchbar)** | Set whether or not search bar is displayed.
+| **[`SearchEngines`](#searchengines)** | The following policies allow for configuring search engines in Firefox.
+| **[`SearchEngines -> Add`](#searchengines--add)** | Add new search engines. Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
+| **[`SearchSuggestEnabled`](#searchsuggestenabled)** | Enable search suggestions.
+| **[`SecurityDevices`](#securitydevices)** | Install PKCS #11 modules.
+| **[`ShowHomeButton`](#showhomebutton)** | Show the home button on the toolbar.
+| **[`SitePolicies`](#sitepolicies)** | Fine grained control over policies for specific sites.
+| **[`SkipTermsOfUse`](#skiptermsofuse)** | Configure display settings for the Firefox Terms of Use and Privacy Notice on startup.
+| **[`SSLVersionMax`](#sslversionmax)** | Set and lock the maximum version of TLS.
+| **[`SSLVersionMin`](#sslversionmin)** | Set and lock the minimum version of TLS.
+| **[`StartDownloadsInTempDirectory`](#startdownloadsintempdirectory)** | Force downloads to start off in a local, temporary location rather than the default download directory.
+| **[`SupportMenu`](#supportmenu)** | Add a menuitem to the help menu for specifying support information.
+| **[`TranslateEnabled`](#translateenabled)** | Enable or disable webpage translation.
+| **[`UserMessaging`](#usermessaging)** | Prevent Firefox from messaging the user in certain situations.
+| **[`UseSystemPrintDialog`](#usesystemprintdialog)** | Use the system print dialog instead of the print preview window.
+| **[`VisualSearchEnabled`](#visualsearchenabled)** | Enable or disable visual search.
+| **[`WebsiteFilter`](#websitefilter)** | Block websites from being visited.
+| **[`WindowsSSO`](#windowssso)** | Allow Windows single sign-on for Microsoft, work, and school accounts.
+| **[`XSLTEnabled`](#xsltenabled)** | Enable or disable support for the XSLTProcessor JavaScript API and the XSLT processing instruction.
 
 ## 3rdparty
 

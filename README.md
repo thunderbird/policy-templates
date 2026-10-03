@@ -221,7 +221,9 @@ npm test
   the **policy schema**, like the ADMX template (see below): every policy has
   a section, and so has every setting with an `x-help` of its own (e.g.
   `SearchEngines_Add`, `SecurityDevices_[name]` for the settings with open
-  names). Its line in the table of contents shows the `title`, its text the
+  names). Its line in the table of contents shows the `description`, its
+  heading the name followed by the `title` (if it has one, the anchor stays
+  the one of the name), its text the
   `description` followed by the `x-help`, then its settings which have no
   section of their own, as blocks following the nesting of the schema (also
   inside JSON values): each with its title, its type (including its values),
