@@ -25,7 +25,7 @@ function sortKeysRecursively(value) {
  * branch with the format "plist" (see "x-formats"), each with the first of its
  * "examples" in the policy schema.
  *
- * @param {Object} schema - The policy schema of the branch (with its overlay).
+ * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {string[]} supportedPolicyNames - Flattened names of the supported
  *    policies, e.g. "InstallAddonsPermission_Allow".
  * @returns {string}

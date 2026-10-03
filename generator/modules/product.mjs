@@ -5,8 +5,9 @@
  *
  * A product folder holds:
  * - product.yaml: the identity of the product (see loadProduct()),
- * - overrides/: per branch, an overlay for its policy schema
- *   (<branch>.schema.json), see mergeSchemaOverlay(),
+ * - overrides/: per branch, the full policy schema (<branch>.schema.json),
+ *   which the generator uses instead of the schema of the product's
+ *   repository, see getSchemaFile(),
  * - templates/: the frame texts of the docs (overview.md, branch.md), with
  *   placeholders (e.g. __name__) and %ifdef blocks, see preprocess(),
  * - site/: files copied unchanged into the docs folder (e.g. a stylesheet),
@@ -194,16 +195,22 @@ async function loadExtensions(dir, templates) {
 }
 
 /**
- * Get the overlay of the policy schema of a branch in the product folder
- * (overrides/<branch>.schema.json), if it exists.
+ * Get the product's policy schema of a branch (overrides/<branch>.schema.json),
+ * the full schema: the generator uses it instead of the schema of the
+ * product's repository.
  *
  * @param {Product} product
  * @param {string} branch
- * @returns {Promise<?string>} the path
+ * @returns {Promise<string>} the path
  */
-export async function getSchemaOverlay(product, branch) {
+export async function getSchemaFile(product, branch) {
     const path = pathUtils.join(product.overridesDir, `${branch}.schema.json`);
-    return fs.access(path).then(() => path, () => null);
+    try {
+        await fs.access(path);
+    } catch {
+        throw new InputError(`The product has no schema for ${branch} (${path}).`);
+    }
+    return path;
 }
 
 /**

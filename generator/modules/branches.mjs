@@ -5,7 +5,7 @@ import {
     getSchemaRevisions,
 } from "./compatibility.mjs";
 import { SchemaL10n } from "./l10n.mjs";
-import { getChannelLabel, getSchemaOverlay, loadProduct, parseBranches } from "./product.mjs";
+import { getChannelLabel, getSchemaFile, loadProduct, parseBranches } from "./product.mjs";
 import { SOURCE_OPTIONS, SOURCE_USAGE, createSources } from "./sources.mjs";
 import { InputError, ensureDir, runCommandLine } from "./tools.mjs";
 
@@ -121,35 +121,6 @@ function getBranchSortKey(branch) {
 }
 
 /**
- * Merge an overlay onto a policy schema: the overlay has the structure of the
- * schema (e.g. { "properties": { "Cookies": { "description": … } } }) and adds
- * texts, examples and hints to its nodes, for branches whose schema doesn't
- * have them yet. Objects are merged, other values replaced.
- * The overlay can not add settings: every object of the overlay must exist in
- * the schema, except the values of keywords starting with "x-". A value null
- * removes the keyword (e.g. a text which main no longer has).
- *
- * @param {Object} schema - Modified in place.
- * @param {Object} overlay
- * @param {string} where - The path, for error messages.
- */
-export function mergeSchemaOverlay(schema, overlay, where) {
-    const isObject = value => !!value && typeof value == "object" && !Array.isArray(value);
-    for (const [key, value] of Object.entries(overlay)) {
-        if (isObject(value) && !key.startsWith("x-")) {
-            if (!isObject(schema[key])) {
-                throw new InputError(`The schema overlay ${where}.${key} has no counterpart in the policy schema.`);
-            }
-            mergeSchemaOverlay(schema[key], value, `${where}.${key}`);
-        } else if (value === null) {
-            delete schema[key];
-        } else {
-            schema[key] = value;
-        }
-    }
-}
-
-/**
  * Get the ESR branches of the product's repository, sorted by version. Their
  * history tells which policies were backported.
  *
@@ -182,28 +153,45 @@ async function getBranchCompatibilityData(app, product, branch) {
 }
 
 /**
+ * Read the policy schema of a commit of the product's repository
+ * (source.schema in product.yaml): not the product's own schema of the branch
+ * (see loadBranch()), but the one it is compared with, e.g. by the drift check
+ * of tools/check_schemas.js.
+ *
+ * @param {LocalGitSource|GitHubSource} app - The product's source.
+ * @param {Product} product
+ * @param {string} commit
+ * @returns {Promise<?Object>} null if the commit has no schema
+ */
+export async function readRepositorySchema(app, product, commit) {
+    const text = await app.readFile(commit, product.source.schema);
+    return text === null ? null : commentJson.parse(text);
+}
+
+/**
  * Load what the docs and templates of a branch are generated from.
  *
  * @param {Object} params
  * @param {LocalGitSource|GitHubSource} params.app - The product's source.
  * @param {Product} params.product - See loadProduct().
  * @param {string} params.branch - The branch, e.g. "main", "release" or "esr140".
- * @param {?string} [params.schemaOverlayPath] - Path to a file with texts and
- *    examples for the policy schema of the branch, see mergeSchemaOverlay(). By
- *    default the overlay of the branch in the product's overrides/ folder, null
- *    for none.
  *
  * @returns {Promise<BranchData>} with
  *    - product, branch, commit, version and name (e.g. "Thunderbird ESR
  *      140.3.0"),
- *    - schema: the policy schema of the branch, with its overlay,
+ *    - schema: the policy schema of the branch, from the product folder
+ *      (overrides/<branch>.schema.json), see getSchemaFile(),
  *    - l10n: resolves the texts given as Fluent messages (Fluent files of the
  *      branch),
  *    - compatData: the compatibility data,
  *    - supportedPolicyNames: the flattened names of the supported policies,
  *    - supportedPolicies: the supported policies grouped by version.
  */
-export async function loadBranch({ app, product, branch, schemaOverlayPath }) {
+export async function loadBranch({ app, product, branch }) {
+    // The product's own schema of the branch, the authority for the docs and
+    // the templates. The product's repository gives the version, the Fluent
+    // files and the compatibility (the history of its schema).
+    const schema = commentJson.parse(await fs.readFile(await getSchemaFile(product, branch), "utf8"));
     const commit = await resolveBranch(app, branch);
 
     // Find supported policies. The version in which a policy became supported
@@ -233,14 +221,6 @@ export async function loadBranch({ app, product, branch, schemaOverlayPath }) {
     const supportedPolicies = getCompatibilityInformation(compatData, { distinct: true })
         .filter(e => e.first != "");
 
-    const schema = commentJson.parse(await app.readFile(commit, product.source.schema));
-    if (schemaOverlayPath === undefined) {
-        schemaOverlayPath = await getSchemaOverlay(product, branch);
-    }
-    if (schemaOverlayPath) {
-        console.log(` - policy schema extended by ${pathUtils.relative(process.cwd(), schemaOverlayPath)}`);
-        mergeSchemaOverlay(schema, JSON.parse(await fs.readFile(schemaOverlayPath, "utf8")), schemaOverlayPath);
-    }
     const l10n = await loadL10n(app, product, commit);
     const version = (await app.readFile(commit, product.source.version)).trim();
 
@@ -321,11 +301,6 @@ export async function runTool({ usage, options = {}, outputs, prepare, finish })
     const fullUsage = `${usage}
    --output=path      - The docs folder to write to (required). The files of
                         each branch go to <path>/policies/<branch>/.${BRANCHES_USAGE}
-   --schema-overlay=path
-                      - Path to a file with texts and examples which are merged
-                        onto the policy schema of the branch (by default the
-                        overlay of the branch in the product's overrides/
-                        folder, <branch>.schema.json).
 ${SOURCE_USAGE}
 `;
     await runCommandLine(fullUsage, async () => {
@@ -333,7 +308,6 @@ ${SOURCE_USAGE}
             options: {
                 ...SOURCE_OPTIONS,
                 ...BRANCHES_OPTION,
-                "schema-overlay": { type: "string" },
                 "output": { type: "string" },
                 ...options,
             },
@@ -342,7 +316,7 @@ ${SOURCE_USAGE}
             throw new InputError("--output is required.");
         }
         const { sources, branches } = await parseCommonOptions(values);
-        for (const option of ["schema-overlay", ...Object.keys(options)]) {
+        for (const option of Object.keys(options)) {
             if (values[option] && branches.length != 1) {
                 throw new InputError(`--${option} can only be used with a single branch.`);
             }
@@ -351,11 +325,7 @@ ${SOURCE_USAGE}
         const buildDir = prepare ? await prepare(values.output, branches) : values.output;
         for (const branch of branches) {
             console.log(`Processing ${branch}`);
-            const branchData = await loadBranch({
-                ...sources,
-                branch,
-                schemaOverlayPath: values["schema-overlay"],
-            });
+            const branchData = await loadBranch({ ...sources, branch });
             for (const generate of outputs) {
                 await generate(branchData, values, { ...sources, branches }, buildDir);
             }

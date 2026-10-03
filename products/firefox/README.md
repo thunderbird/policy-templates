@@ -1,33 +1,38 @@
-# Firefox (exploration)
+# Firefox (proof of concept)
 
-A product folder for Firefox, built only from Firefox's GitHub repository
-(`mozilla-firefox/firefox`) and Mozilla's rendered policy documentation
-(`docs/index.md` of `mozilla/policy-templates`), with the generator unchanged.
+A product folder for Firefox, to see whether the generator can produce
+complete templates for another product. Its output is in `docs/firefox/`.
 
 ```sh
-# Build the overlays (downloads the schemas of all branches and the docs):
-products/firefox/scripts/build_overlays.sh /tmp/firefox-build
-# Generate the docs, ADMX and plist templates:
 node generator/update_all_policy_templates.js --product-config=products/firefox \
-    --output=/tmp/firefox-docs --branches=main,beta,release,esr153,esr140,esr128,esr115
+    --output=docs/firefox --branches=main,beta,release,esr153,esr140,esr128,esr115
 ```
 
-## What the overlays do
+## How the schemas were made
 
-- `scripts/fix_unions.py`: gives the policies with several forms one form,
-  as the generator handles neither `anyOf` nor type lists of simple and
-  structured values:
+The schemas in `overrides/` (the full policy schema of each branch) were built
+once, from Firefox's schemas on GitHub (`mozilla-firefox/firefox`) and
+Mozilla's rendered policy documentation (`docs/index.md` of
+`mozilla/policy-templates`, which Mozilla has since replaced by
+https://firefox-admin-docs.mozilla.org/). They are not maintained further.
+
+- **Union types:** the policies with several forms got one form, as the
+  generator handles neither `anyOf` nor type lists of simple and structured
+  values:
   - boolean or object (`BrowserDataBackup`, `ClearOnShutdown`,
     `SanitizeOnShutdown`): the object;
   - boolean or string choice (`DisplayMenuBar`, `DisplayBookmarksToolbar`):
     the choice;
   - the old `JSON` type in type lists (ESR 140 and older, e.g.
     `ExtensionSettings`): `contentMediaType: application/json`.
-- `scripts/import_docs.py`: what the docs have beyond the schema: the help
-  texts (`x-help`), the CCK2 equivalents and the preferences affected.
-- `tools/sync_overlays.js`: derives the overlays of beta, release and the
-  ESR branches from main. The ESR schemas (153 and older) have no texts,
-  examples or categories.
+- **Imported from the docs:** what they have beyond the schema: the help texts
+  (`x-help`), the CCK2 equivalents and the preferences affected. Tables and
+  code blocks of the docs were left out.
+- **Older branches:** the ESR schemas (153 and older) have no texts, examples
+  or categories. They got main's, for the settings they have.
+
+`tools/check_schemas.js` reports the union-type changes as drift from
+Firefox's schemas. That's expected.
 
 ## Results
 
@@ -44,10 +49,9 @@ node generator/update_all_policy_templates.js --product-config=products/firefox 
 
 ## Open points
 
-- The ESR overlays use main's examples, of which 35 use settings or values
-  the branch doesn't have (see `tools/check_overlays.js`).
+- The ESR schemas use main's examples, of which 35 use settings or values the
+  branch doesn't have (see `tools/check_schemas.js`).
 - 21 CCK2 equivalents are on settings without a docs section of their own,
   so they aren't shown.
 - The compatibility shows no ESR backports older than ESR 115: the
   repository only has the branches esr115 and newer.
-- Help texts with tables or code blocks in the docs lose those parts.

@@ -58,10 +58,9 @@ https://thunderbird.github.io/policy-templates/
 │   │                      # namespace, the plist domain, the links, and
 │   │                      # where its localized Fluent files are (l10n). The
 │   │                      # ADMX file name and prefix are the folder's name.
-│   ├── overrides/         # Per branch: <branch>.schema.json, the
-│   │                      # documentation of a branch whose policy schema
-│   │                      # doesn't have it yet (a schema overlay), derived
-│   │                      # from main by tools/sync_overlays.js.
+│   ├── overrides/         # Per branch: <branch>.schema.json, the full policy
+│   │                      # schema of the branch, which the generator uses
+│   │                      # instead of the schema of the product's repository.
 │   ├── templates/         # The frame texts of the docs: overview.md (the
 │   │                      # overview) and branch.md (the page of a branch).
 │   ├── extensions/        # JavaScript called by the templates (see below),
@@ -106,15 +105,14 @@ it is. The context is a fixed set of plain, frozen data (see
 - `product`: the name of the product folder, e.g. `"thunderbird"`;
 - `branch`: the branch being rendered (`"main"` for the overview);
 - `branches`: all branches of the run as `{ branch, name, version, docsUrl }`;
-- `schema(locale = "en-US")`: the policy schema of the branch, with its
-  overlay, with the Fluent IDs replaced by their texts in the given locale.
+- `schema(locale = "en-US")`: the product's policy schema of the branch, with
+  the Fluent IDs replaced by their texts in the given locale.
   Other locales are the translations the branch ships: read from the
   product's l10n repository at the commit which the branch pins for the
   locale (`l10n.changesets` in `product.yaml`, e.g.
   `mail/locales/l10n-changesets.json`), with the English texts as fallback.
-  The locales of that file are the available ones. Texts which the schema or
-  its overlay holds as plain English (all texts of the overlays) stay
-  English;
+  The locales of that file are the available ones. Texts which the schema
+  holds as plain English stay English;
 - `compatibility`: the product's own compatibility as
   `{ name, first, last }` per policy and setting;
 - `cachedFetch(url)`: the content of a URL through the download cache. Every
@@ -168,10 +166,6 @@ tools replace their part in the target without protection:
 node generate_admx.js --product-config=../products/thunderbird --output=../docs --branches=esr140
 ```
 
-A branch uses `<branch>.schema.json` in the product's `overrides/` folder, if
-it exists, as the schema overlay for a branch whose policy schema doesn't have
-the documentation yet (see below).
-
 By default, the product's files are read from GitHub (`source.repository`
 in `product.yaml`), and downloaded files are cached in
 `generator/download_cache.json`. To read from a local checkout of the
@@ -182,20 +176,23 @@ the working tree of the checkout: whatever is checked out, including
 uncommitted changes. For the other branches, the local branch is used if it
 exists, otherwise `origin/<branch>`.
 
-Every branch only uses its own policy schema. For a branch whose schema
-doesn't have the texts, examples and hints yet (the ESR branches, and beta and
-release until the changes of main reach them), they come from a schema overlay,
-which has to be complete. To use another overlay, use
-`--schema-overlay=<path>` (with a single branch). An overlay has the
-structure of the schema (`{ "properties": { "Cookies": { "description": … } } }`);
-objects are merged, other values replaced (`null` removes a value), and it can
-not add settings.
+### 📄 The policy schemas
 
-The overlays are derived from main, and every difference from main states its
-reason (`x-differs-from-main`). Only `x-preferences-affected` and
-`x-cck2-equivalent` are not derived: each overlay keeps the values of its
-branch. They are maintained with the helpers in
-[`tools/`](tools/README.md), which the generator doesn't use.
+The product folder is the authority for the policy schemas: every branch has
+its full schema in `overrides/<branch>.schema.json`, with its structure
+(policies, settings, types, values) and its documentation (texts, examples,
+hints). The generator uses it instead of the schema of the product's
+repository, and a branch without one is an error. Texts may be the IDs of
+Fluent messages (e.g. `x-description-l10n-id`), resolved with the Fluent files
+of the branch in the product's repository (`source.fluent`). Where a branch
+behaves differently from main, its schema says why in a `$comment`.
+
+The product's repository still gives the version of each branch, its Fluent
+files and its compatibility data (from the history of its schema,
+`source.schema`). To notice what changes there, e.g. a new policy,
+[`tools/check_schemas.js`](tools/README.md) compares each schema of the
+product folder with the repository's schema of the branch (the drift), and
+checks the rules of the documentation.
 
 ### ✅ Validation
 

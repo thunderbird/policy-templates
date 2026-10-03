@@ -1,54 +1,21 @@
 /**
- * The documentation of the branches other than main: their schema overlays
- * (<branch>.schema.json in the product's overrides/ folder) are derived from
- * main (see syncOverlay()), and checked against main (see compareWithMain())
- * and against the rules of the documentation (see checkDocumentation()).
- * Where a branch behaves differently from main, the node in the overlay keeps
- * its own texts and states why with "x-differs-from-main". Used by the tools
- * in this folder, not by the generator.
+ * Checks of the product's policy schemas (overrides/<branch>.schema.json in
+ * the product folder), used by the tools in this folder, not by the generator:
+ * - checkDocumentation(): the rules of the documentation,
+ * - findDrift(): what the schema of the product's repository (e.g. comm) has
+ *   and the product's file doesn't, e.g. a new policy upstream.
  */
 
-import { CATCH_ALL_PATTERN } from "../../generator/modules/compatibility.mjs";
 import { resolveRef } from "../../generator/modules/schema_settings.mjs";
 
-// The fields of a schema node which document it. Texts may be Fluent
-// messages on main (see l10n.mjs), the overlays hold them as plain English.
-const TEXT_FIELDS = ["title", "description", "x-help"];
-const VALUE_FIELDS = ["examples", "x-examples-gpo", "x-formats", "x-expand-env-vars", "x-deprecated"];
-// Fields which are always taken from main, also on nodes with
-// "x-differs-from-main": they don't depend on the behaviour of the branch.
-const MAIN_FIELDS = ["x-category"];
 // The fields of the docs sections which are not part of the texts, see
-// checkDocumentation(). They are facts about each branch's code, so they are
-// not derived from main: each overlay keeps its own.
+// checkDocumentation().
 const SECTION_FIELDS = ["x-preferences-affected", "x-cck2-equivalent"];
-export const DOC_FIELDS = [...TEXT_FIELDS, ...VALUE_FIELDS];
-const CHOICE_FIELDS = ["title", "description"];
-export const DIFFERS_KEY = "x-differs-from-main";
 
 const FREE_TEXT_TYPES = ["string", "URL", "URLorEmpty", "origin"];
 
 const isObject = value => !!value && typeof value == "object" && !Array.isArray(value);
 const same = (a, b) => JSON.stringify(a) == JSON.stringify(b);
-
-/**
- * The documentation fields of a node, with the texts resolved.
- *
- * @param {Object} node - Resolved, see resolveRef().
- * @param {SchemaL10n} l10n
- * @param {string} where
- * @returns {Object} field → value (undefined if not set)
- */
-function getDocFields(node, l10n, where) {
-    const fields = {};
-    for (const field of TEXT_FIELDS) {
-        fields[field] = l10n.get(node, field, where) || undefined;
-    }
-    for (const field of [...VALUE_FIELDS, ...MAIN_FIELDS]) {
-        fields[field] = node?.[field];
-    }
-    return fields;
-}
 
 /**
  * The values of a node with a fixed set of them (from "oneOf" with "const",
@@ -62,218 +29,6 @@ function getValues(node) {
         return node.oneOf.map(choice => choice.const);
     }
     return node?.enum ?? null;
-}
-
-/**
- * The texts of the values of a node: value (as JSON) → { title, description }.
- *
- * @param {Object} node - Resolved.
- * @param {SchemaL10n} l10n
- * @param {string} where
- * @returns {Map<string, Object>}
- */
-function getChoiceTexts(node, l10n, where) {
-    const texts = new Map();
-    if (node?.oneOf?.every(choice => "const" in choice)) {
-        for (const choice of node.oneOf) {
-            const entry = {};
-            for (const field of CHOICE_FIELDS) {
-                const text = l10n.get(choice, field, `${where}=${choice.const}`);
-                if (text) {
-                    entry[field] = text;
-                }
-            }
-            texts.set(JSON.stringify(choice.const), entry);
-        }
-    }
-    return texts;
-}
-
-/**
- * The child nodes of a raw schema node which a branch and main have in
- * common: the same property name, the same pattern (or both a catch-all), or
- * the entries of a list. Children of a "$ref" are not visited, the shared
- * definitions only hold types.
- *
- * @param {Object} node - The raw node of the branch.
- * @param {Object} mainNode - The raw node of main.
- * @returns {Array<{keys: string[], name: string, node: Object, mainNode: ?Object}>}
- *    keys: the path from the node to the child in the schema
- */
-function getChildPairs(node, mainNode) {
-    const pairs = [];
-    for (const [name, child] of Object.entries(node?.properties ?? {})) {
-        pairs.push({ keys: ["properties", name], name, node: child, mainNode: mainNode?.properties?.[name] ?? null });
-    }
-    const mainPatterns = Object.entries(mainNode?.patternProperties ?? {});
-    for (const [pattern, child] of Object.entries(node?.patternProperties ?? {})) {
-        const match = mainPatterns.find(([mainPattern]) =>
-            mainPattern == pattern || (CATCH_ALL_PATTERN.test(mainPattern) && CATCH_ALL_PATTERN.test(pattern))
-        );
-        pairs.push({ keys: ["patternProperties", pattern], name: `<${pattern}>`, node: child, mainNode: match?.[1] ?? null });
-    }
-    if (isObject(node?.items)) {
-        pairs.push({ keys: ["items"], name: "[]", node: node.items, mainNode: isObject(mainNode?.items) ? mainNode.items : null });
-    }
-    return pairs;
-}
-
-/**
- * Get the overlay of a branch derived from main: for every node which main has
- * too, main's documentation fields and the texts of the values the branch has.
- * Nodes with "x-differs-from-main" keep their fields from the current
- * overlay (except "x-category", which is always main's), as do nodes main
- * doesn't have. Other keywords of the current
- * overlay (e.g. "contentMediaType") are kept.
- *
- * @param {Object} params
- * @param {Object} params.base - The policy schema of the branch, without
- *    overlay.
- * @param {Object} params.overlay - The current overlay (not modified).
- * @param {{schema: Object, l10n: SchemaL10n}} params.main
- * @param {SchemaL10n} params.l10n - The texts of the branch (its schema has
- *    no Fluent messages, but is read the same way).
- * @returns {Object} the new overlay
- */
-export function syncOverlay({ base, overlay, main, l10n }) {
-    const result = structuredClone(overlay);
-
-    function sync(node, mainNode, target, where) {
-        const resolved = resolveRef(base, node);
-        const mainResolved = resolveRef(main.schema, mainNode);
-        const own = getDocFields(resolved, l10n, where);
-        const wanted = getDocFields(mainResolved, main.l10n, where);
-        for (const field of [...(target[DIFFERS_KEY] ? [] : DOC_FIELDS), ...MAIN_FIELDS]) {
-            if (wanted[field] === undefined) {
-                // Main has no such field: remove the branch's own.
-                if (own[field] === undefined) {
-                    delete target[field];
-                } else {
-                    target[field] = null;
-                }
-            } else if (same(own[field], wanted[field])) {
-                delete target[field];
-            } else {
-                target[field] = wanted[field];
-            }
-        }
-        if (!target[DIFFERS_KEY]) {
-            syncChoices(resolved, mainResolved, target, where);
-        }
-        for (const child of getChildPairs(node, mainNode)) {
-            if (!child.mainNode) {
-                continue;
-            }
-            let childTarget = target;
-            for (const key of child.keys) {
-                childTarget[key] ??= {};
-                childTarget = childTarget[key];
-            }
-            sync(child.node, child.mainNode, childTarget, `${where}.${child.name}`);
-        }
-    }
-
-    // The values keep their order and keywords, with main's texts. A "oneOf"
-    // is only added to an "enum" if main has texts for the values.
-    function syncChoices(resolved, mainResolved, target, where) {
-        const values = getValues(resolved);
-        if (!values) {
-            delete target.oneOf;
-            return;
-        }
-        const mainTexts = getChoiceTexts(mainResolved, main.l10n, where);
-        const ownChoices = resolved.oneOf?.every(choice => "const" in choice) ? resolved.oneOf : null;
-        const oneOf = values.map((value, index) => {
-            const { title, description, ...rest } = ownChoices?.[index] ?? { const: value };
-            return { ...rest, ...mainTexts.get(JSON.stringify(value)) };
-        });
-        const hasTexts = oneOf.some(choice => choice.title || choice.description);
-        if (ownChoices ? same(ownChoices, oneOf) : !hasTexts) {
-            delete target.oneOf;
-        } else {
-            target.oneOf = oneOf;
-        }
-    }
-
-    result.properties ??= {};
-    for (const [name, node] of Object.entries(base.properties ?? {})) {
-        const mainNode = main.schema.properties?.[name];
-        if (mainNode) {
-            result.properties[name] ??= {};
-            sync(node, mainNode, result.properties[name], name);
-        }
-    }
-    return prune(result);
-}
-
-// Remove empty objects (but not empty values of "x-" keywords).
-function prune(value) {
-    if (!isObject(value)) {
-        return value;
-    }
-    for (const [key, child] of Object.entries(value)) {
-        if (isObject(child) && !key.startsWith("x-") && key != "examples") {
-            prune(child);
-            if (!Object.keys(child).length) {
-                delete value[key];
-            }
-        }
-    }
-    return value;
-}
-
-/**
- * Compare the documentation of a branch (with its overlay) with main.
- *
- * @param {{schema: Object, l10n: SchemaL10n}} branch
- * @param {{schema: Object, l10n: SchemaL10n}} main
- * @returns {string[]} the problems: fields which differ from main on nodes
- *    without "x-differs-from-main", and nodes with "x-differs-from-main"
- *    which don't differ
- */
-export function compareWithMain(branch, main) {
-    const problems = [];
-
-    function compare(node, mainNode, where) {
-        const resolved = resolveRef(branch.schema, node);
-        const mainResolved = resolveRef(main.schema, mainNode);
-        const own = getDocFields(resolved, branch.l10n, where);
-        const wanted = getDocFields(mainResolved, main.l10n, where);
-        const differing = DOC_FIELDS.filter(field => !same(own[field], wanted[field]));
-        // Not covered by "x-differs-from-main".
-        for (const field of MAIN_FIELDS.filter(field => !same(own[field], wanted[field]))) {
-            problems.push(`${where}: differs from main in ${field}`);
-        }
-        const values = getValues(resolved) ?? [];
-        const ownTexts = getChoiceTexts(resolved, branch.l10n, where);
-        const mainTexts = getChoiceTexts(mainResolved, main.l10n, where);
-        for (const value of values) {
-            const key = JSON.stringify(value);
-            if (mainTexts.size && !same(ownTexts.get(key) ?? {}, mainTexts.get(key) ?? {})) {
-                differing.push(`value ${key}`);
-            }
-        }
-        if (resolved?.[DIFFERS_KEY]) {
-            if (!differing.length) {
-                problems.push(`${where}: has "${DIFFERS_KEY}", but its documentation is the same as on main`);
-            }
-        } else if (differing.length) {
-            problems.push(`${where}: differs from main in ${differing.join(", ")}`);
-        }
-        for (const child of getChildPairs(node, mainNode)) {
-            if (child.mainNode) {
-                compare(child.node, child.mainNode, `${where}.${child.name}`);
-            }
-        }
-    }
-
-    for (const [name, node] of Object.entries(branch.schema.properties ?? {})) {
-        const mainNode = main.schema.properties?.[name];
-        if (mainNode) {
-            compare(node, mainNode, name);
-        }
-    }
-    return problems;
 }
 
 const getTypes = node => (node?.type ? [node.type].flat() : []);
@@ -474,4 +229,68 @@ export function checkDocumentation({ schema, l10n }) {
         findNestedFormats(rest, name);
     }
     return problems;
+}
+
+// The keys which define what a setting accepts. A different value of one of
+// them upstream is drift; other keys (texts, examples, "x-" hints) may differ,
+// the product's files are the authority for them.
+const STRUCTURE_KEYS = [
+    "type", "enum", "const", "pattern", "$ref", "required", "additionalProperties",
+    "contentMediaType", "minimum", "maximum", "format",
+];
+// The keys whose values are schema nodes, walked by findDrift().
+const NODE_MAPS = ["properties", "patternProperties", "definitions"];
+
+/**
+ * Find what the schema of the product's repository has and the product's own
+ * schema of the branch doesn't:
+ * - a node (a policy, a setting, a definition) which is missing,
+ * - a key of a node which is missing (e.g. a new "enum", or a "description"),
+ * - a different value of a key which defines what a setting accepts (see
+ *   STRUCTURE_KEYS), e.g. a new value of an "enum". The values of the choices
+ *   ("oneOf" with "const") are compared, not their texts.
+ *
+ * @param {Object} params
+ * @param {Object} params.upstream - The schema of the product's repository.
+ * @param {Object} params.ours - The product's schema of the branch.
+ * @returns {string[]} the differences
+ */
+export function findDrift({ upstream, ours }) {
+    const found = [];
+    const constValues = node => (node.oneOf ?? []).filter(choice => "const" in choice).map(choice => choice.const);
+
+    function compare(up, own, where) {
+        for (const [key, value] of Object.entries(up)) {
+            if (!(key in own)) {
+                found.push(`${where}: missing "${key}"`);
+                continue;
+            }
+            if (NODE_MAPS.includes(key) && isObject(value)) {
+                for (const [name, child] of Object.entries(value)) {
+                    const childWhere = key == "properties" ? `${where}.${name}`.replace(/^\./, "")
+                        : `${where}.<${name}>`.replace(/^\./, "");
+                    if (!(name in own[key])) {
+                        found.push(`${childWhere}: missing`);
+                    } else if (isObject(child) && isObject(own[key][name])) {
+                        compare(child, own[key][name], childWhere);
+                    } else if (!same(child, own[key][name])) {
+                        // Not a node, e.g. a misplaced "required" list in
+                        // "properties" of an old schema.
+                        found.push(`${childWhere}: is ${JSON.stringify(own[key][name])}, upstream ${JSON.stringify(child)}`);
+                    }
+                }
+            } else if (key == "items" && isObject(value) && isObject(own.items)) {
+                compare(value, own.items, `${where}[]`);
+            } else if (key == "oneOf" && Array.isArray(value)) {
+                const missing = constValues(up).filter(v => !constValues(own).some(o => same(o, v)));
+                if (missing.length) {
+                    found.push(`${where}: missing values ${missing.map(v => JSON.stringify(v)).join(", ")}`);
+                }
+            } else if (STRUCTURE_KEYS.includes(key) && !same(value, own[key])) {
+                found.push(`${where}: "${key}" is ${JSON.stringify(own[key])}, upstream ${JSON.stringify(value)}`);
+            }
+        }
+    }
+    compare(upstream, ours, "");
+    return found.map(entry => entry.replace(/^: /, "(root): "));
 }

@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 
 import { deriveSections } from "../modules/derive_examples.mjs";
-import { mergeSchemaOverlay } from "../modules/branches.mjs";
 import { SchemaL10n } from "../modules/l10n.mjs";
 
 const BASE_KEY = "Software\\Policies\\Mozilla\\Thunderbird";
@@ -230,24 +229,6 @@ test("a section of a setting without hand-written example gets a generated one",
     branch.properties.Auth.properties.AllowNonFQDN["x-help"] = "More about non-FQDN hosts.";
     const { Auth_AllowNonFQDN } = derive(branch);
     assert.match(Auth_AllowNonFQDN.json, /"AllowNonFQDN": \{\n {8}"SPNEGO": true,\n {8}"NTLM": true\n/);
-});
-
-test("a schema overlay adds texts and examples, but no settings", () => {
-    const schema = structuredClone(SCHEMA);
-    mergeSchemaOverlay(schema, {
-        properties: {
-            Flag: { description: "Overlaid.", examples: [false] },
-            Path: { "x-expand-env-vars": false },
-        },
-    }, "overlay");
-    assert.equal(schema.properties.Flag.description, "Overlaid.");
-    assert.deepEqual(schema.properties.Flag.examples, [false]);
-    assert.equal(schema.properties.Flag.type, "boolean");
-    assert.equal(schema.properties.Path["x-expand-env-vars"], false);
-    assert.throws(
-        () => mergeSchemaOverlay(schema, { properties: { Unknown: { description: "New." } } }, "overlay"),
-        /overlay.properties.Unknown has no counterpart in the policy schema/
-    );
 });
 
 test("the sections come from the schema: every policy and every setting with an x-help", () => {

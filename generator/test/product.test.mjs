@@ -6,7 +6,7 @@ import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { formatBranchName } from "../modules/branches.mjs";
-import { getBranchKind, getChannelLabel, getSchemaOverlay, loadProduct, parseBranches, preprocess } from "../modules/product.mjs";
+import { getBranchKind, getChannelLabel, getSchemaFile, loadProduct, parseBranches, preprocess } from "../modules/product.mjs";
 import { ContentError, InputError } from "../modules/tools.mjs";
 
 const PRODUCT_DIR = pathUtils.join(pathUtils.dirname(fileURLToPath(import.meta.url)), "fixtures", "product");
@@ -79,10 +79,10 @@ test("the name of a branch is the brand name, the channel label and the version"
     assert.equal(formatBranchName(product, "release", "Product", "152.0"), "Product 152.0");
 });
 
-test("the schema overlay of a branch is used if it exists", async () => {
+test("the schema of a branch is the product's file, which must exist", async () => {
     const product = await loadProduct(PRODUCT_DIR);
-    assert.equal(await getSchemaOverlay(product, "beta"), pathUtils.join(PRODUCT_DIR, "overrides", "beta.schema.json"));
-    assert.equal(await getSchemaOverlay(product, "main"), null);
+    assert.equal(await getSchemaFile(product, "beta"), pathUtils.join(PRODUCT_DIR, "overrides", "beta.schema.json"));
+    await assert.rejects(getSchemaFile(product, "esr99"), /The product has no schema for esr99 \(.*overrides\/esr99.schema.json\)/);
 });
 
 test("a branch defines its kind for the %ifdef blocks", () => {

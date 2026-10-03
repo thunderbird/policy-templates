@@ -33,7 +33,7 @@ function resolveRef(schema, node) {
 
 /**
  * Schema lookups along the path of an example value, in the policy schema of
- * the branch (with its overlay).
+ * the branch.
  */
 class SchemaPath {
     /**
@@ -337,7 +337,7 @@ function getSectionNames(texts) {
  * Each section has: `title`, `description`, `deprecated`, `settingTree`,
  * `cck2Equivalent`, `preferencesAffected`, `json`, `gpo` and `plist`.
  *
- * @param {Object} schema - The policy schema of the branch (with its overlay).
+ * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {SchemaL10n} l10n - Resolves the texts given as Fluent messages.
  * @param {string} registryKey - The registry key of the product's policies
  *    (registry-key in product.yaml), for the GPO examples.

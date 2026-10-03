@@ -25,7 +25,7 @@ export class InputError extends Error { }
 
 /**
  * Error in the content of the inputs (e.g. the documentation in the policy
- * schema or its overlay). Command line scripts exit with code 2 on these
+ * schema). Command line scripts exit with code 2 on these
  * errors, without printing the usage information.
  */
 export class ContentError extends InputError { }

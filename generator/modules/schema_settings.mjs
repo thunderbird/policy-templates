@@ -37,8 +37,7 @@ export function resolveRef(schema, node) {
 }
 
 /**
- * A setting of the policy schema of a branch (with its overlay, see
- * mergeSchemaOverlay()).
+ * A setting of the policy schema of a branch (see loadBranch()).
  */
 class SchemaSetting {
     constructor(schema, l10n, node) {
@@ -164,7 +163,7 @@ const toDword = value => typeof value == "boolean"
  * choices of the schema as value, and keys relative to the product's registry
  * key, e.g. "Cookies\\Behavior"), and the texts of each setting by path.
  *
- * @param {Object} schema - The policy schema of the branch (with its overlay).
+ * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {string} policyName
  * @param {SchemaL10n} l10n - Resolves the texts given as Fluent messages.
  * @returns {{entries: Object[], texts: Map<string, Object>}}
@@ -373,7 +372,7 @@ function getBaseTypeLabel(setting) {
  * it also walks into JSON values. The settings of the entries of a list are
  * the children of the list.
  *
- * @param {Object} schema - The policy schema of the branch (with its overlay).
+ * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {string} policyName
  * @param {SchemaL10n} l10n - Resolves the texts given as Fluent messages.
  * @returns {?Object} the node of the policy, null if it is not in the schema
@@ -551,7 +550,7 @@ function getValuePart(value, node, schema, path) {
  * examples of the settings below it. For an open name (OPEN_NAME), the value
  * is the object of the open names.
  *
- * @param {Object} schema - The policy schema of the branch (with its overlay).
+ * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {string[]} path - The policy name, followed by the setting names.
  * @param {Object} [options]
  * @param {string} [options.format] - "gpo" for the Windows (GPO) variant.
@@ -599,7 +598,7 @@ export const FORMATS = ["gpo", "plist", "json"];
  * if not given), and "x-category" (the category it is listed under, like in
  * Firefox's schema). The examples of a policy come from getExample().
  *
- * @param {Object} schema - The policy schema of the branch (with its overlay).
+ * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {string} policyName
  * @returns {{formats: ?string[], category: ?string}}
  */

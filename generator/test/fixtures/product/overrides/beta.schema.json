@@ -1,1 +1,6 @@
-{}
+{
+  "type": "object",
+  "properties": {
+    "Flag": { "type": "boolean", "description": "A flag." }
+  }
+}

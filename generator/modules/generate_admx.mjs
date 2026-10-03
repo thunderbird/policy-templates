@@ -845,8 +845,8 @@ class ADM_BUILDER {
      *
      * @param {AdmxTemplate} template - See generateAdmxTemplates().
      * @param {Object[]} supportedPolicies - The compatibility information.
-     * @param {Object} schema - The policy schema of the branch (with its
-     *    overlay).
+     * @param {Object} schema - The policy schema of the branch, see
+     *    loadBranch().
      * @param {SchemaL10n} l10n - Resolves the texts given as Fluent messages.
      * @returns {string}
      */
@@ -1091,7 +1091,7 @@ class ADM_BUILDER {
  * @param {AdmxTemplate} template
  * @param {Object[]} supportedPolicies - The compatibility information.
  * @param {string} output_dir
- * @param {Object} schema - The policy schema of the branch (with its overlay).
+ * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {SchemaL10n} l10n - Resolves the texts given as Fluent messages.
  */
 export async function generateAdmxTemplates(template, supportedPolicies, output_dir, schema, l10n) {
