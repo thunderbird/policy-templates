@@ -1,0 +1,17 @@
+/* The Settings sections of the policy docs: the descriptions are blockquotes
+   (see renderSettingTree() in generator/modules/generate_markdown.mjs), shown
+   as a plain indent below their setting. */
+.settings blockquote {
+  border: none;
+  background: none;
+  color: inherit;
+  padding: 0 0 0 1.5em;
+  margin: 0 0 0.5em 0;
+}
+.settings blockquote p,
+.settings > p {
+  margin: 0;
+}
+.settings ul {
+  margin-bottom: 0.5em;
+}

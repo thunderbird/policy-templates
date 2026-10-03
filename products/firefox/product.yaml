@@ -1,0 +1,38 @@
+# The identity of Firefox, the same for all its brandings (Nightly, Beta,
+# release, ESR). Names come from the product's brand.ftl; the branches to
+# generate and the target folder are command-line flags (--branches, --output).
+
+# Where the product's sources are: the repository on GitHub (used without a
+# local checkout, see --checkout), and the paths of the inputs inside it.
+source:
+  repository: mozilla-firefox/firefox
+  schema: browser/components/enterprisepolicies/schemas/policies-schema.json
+  version: browser/config/version.txt
+  fluent:
+    - browser/branding/official/locales/en-US/brand.ftl
+    - browser/locales/en-US/browser/policies/policies-descriptions.ftl
+
+# The name of a branch is the brand name (brand.ftl, -brand-short-name)
+# followed by the label of its channel, e.g. "Firefox ESR 140.4.0".
+channels:
+  main: Nightly
+  beta: Beta
+  release: ""
+  esr: ESR
+
+# Windows: the registry key the product reads its policies from
+# (SOFTWARE\Policies\Mozilla\<MOZ_APP_BASENAME>), and the namespace of the
+# ADMX template, the same as Mozilla's own firefox.admx.
+admx:
+  registry-key: Software\Policies\Mozilla\Firefox
+  namespace: Mozilla.Policies.Firefox
+
+# macOS: the preference domain the product reads its policies from
+# (MOZ_MACBUNDLE_ID). The generated template is named after it:
+# plist/org.mozilla.firefox.plist.
+plist:
+  domain: org.mozilla.firefox
+
+# Links in the generated files.
+docs-url: https://mozilla.github.io/policy-templates
+templates-repository: https://github.com/mozilla/policy-templates
