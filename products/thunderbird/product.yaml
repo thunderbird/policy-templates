@@ -1,0 +1,56 @@
+# The identity of the product, the same for all its brandings (Daily, Beta,
+# release, ESR). Names come from the product's brand.ftl; the branches to
+# generate and the target folder are command-line flags (--branches, --output).
+
+# Where the product's sources are: the repository on GitHub (used without a
+# local checkout, see --checkout), and the paths of the inputs inside it.
+source:
+  repository: thunderbird/thunderbird-desktop
+  schema: mail/components/enterprisepolicies/schemas/policies-schema.json
+  version: mail/config/version.txt
+  fluent:
+    - mail/branding/thunderbird/locales/en-US/brand.ftl
+    - mail/locales/en-US/messenger/policies/policies-descriptions.ftl
+
+# The name of a branch is the brand name (brand.ftl, -brand-short-name)
+# followed by the label of its channel, e.g. "Thunderbird ESR 140.17.0".
+channels:
+  main: Daily
+  beta: Beta
+  release: ""
+  esr: ESR
+
+# Windows: the registry key the product reads its policies from
+# (SOFTWARE\Policies\Mozilla\<MOZ_APP_BASENAME>), and the namespace of the
+# ADMX template, its identity for Windows, which must never change. The
+# template's file name and prefix are the product's name (the name of this
+# folder), like firefox.admx.
+admx:
+  registry-key: Software\Policies\Mozilla\Thunderbird
+  namespace: Mozilla.Policies.Thunderbird
+
+# macOS: the preference domain the product reads its policies from
+# (MOZ_MACBUNDLE_ID). The generated template is named after it:
+# plist/org.mozilla.thunderbird.plist.
+plist:
+  domain: org.mozilla.thunderbird
+
+# Links in the generated files.
+docs-url: https://thunderbird.github.io/policy-templates
+templates-repository: https://github.com/thunderbird/policy-templates
+
+# Where the localized Fluent files are, for the schema(locale) of the
+# extensions: the l10n repository, the file of the product's repository which
+# pins its commit per locale for each branch, and the files, with "{locale}"
+# for the locale.
+#
+# The files are the counterparts of source.fluent. They could be derived from
+# it (Mozilla's l10n repositories drop "locales/en-US/" from the in-tree path
+# and put the locale in front), but they are listed explicitly: the paths the
+# generator reads are visible here, and nothing depends on that convention.
+l10n:
+  repository: thunderbird/thunderbird-l10n
+  changesets: mail/locales/l10n-changesets.json
+  fluent:
+    - "{locale}/mail/branding/thunderbird/brand.ftl"
+    - "{locale}/mail/messenger/policies/policies-descriptions.ftl"

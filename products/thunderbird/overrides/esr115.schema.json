@@ -1,0 +1,1335 @@
+{
+  "properties": {
+    "ExtensionSettings": {
+      "description": "Manage all aspects of extension installation.",
+      "x-help": "Manage all aspects of extensions. This policy is based heavily on the [Chrome policy](https://dev.chromium.org/administrators/policy-list-3/extension-settings-full) of the same name.\n\nThis policy maps an extension ID to its configuration. With an extension ID, the configuration will be applied to the specified extension only. A default configuration can be set for the special ID \"*\", which will apply to all extensions that don't have a custom configuration set in this policy.\n\nTo obtain an extension ID, install the extension and go to about:support. You will see the ID in the Extensions section.\n\nInstalling a theme makes it the default.",
+      "contentMediaType": "application/json",
+      "examples": [
+        {
+          "*": {
+            "blocked_install_message": "Custom error message.",
+            "install_sources": [
+              "about:addons",
+              "https://addons.thunderbird.net/"
+            ],
+            "installation_mode": "blocked",
+            "allowed_types": [
+              "extension"
+            ]
+          },
+          "uBlock0@raymondhill.net": {
+            "installation_mode": "force_installed",
+            "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/ublock-origin/latest.xpi"
+          },
+          "https-everywhere@eff.org": {
+            "installation_mode": "allowed"
+          }
+        }
+      ],
+      "properties": {
+        "*": {
+          "description": "The default settings for all extensions which have no entry of their own. Its `installation_mode` and `allowed_types` also apply to an extension whose own entry has no `installation_mode`.",
+          "properties": {
+            "installation_mode": {
+              "description": "Whether extensions can be installed.",
+              "oneOf": [
+                {
+                  "const": "allowed",
+                  "title": "Allowed",
+                  "description": "Users can install extensions."
+                },
+                {
+                  "const": "blocked",
+                  "title": "Blocked",
+                  "description": "No extension can be installed. An extension is only exempt if its own entry in this policy sets `installation_mode` to `allowed`, `force_installed` or `normal_installed`."
+                }
+              ],
+              "x-differs-from-main": "On this branch only an own entry with installation_mode allowed, force_installed or normal_installed exempts an extension from a blocked default. On main any own entry does (Bug 2075227)."
+            },
+            "allowed_types": {
+              "description": "The types of add-ons which can be installed.",
+              "items": {
+                "oneOf": [
+                  {
+                    "const": "extension",
+                    "title": "Extension",
+                    "description": "Ordinary extensions."
+                  },
+                  {
+                    "const": "dictionary",
+                    "title": "Spelling dictionary",
+                    "description": "Spell-checking dictionaries."
+                  },
+                  {
+                    "const": "locale",
+                    "title": "Language pack",
+                    "description": "Language packs that translate the Thunderbird interface."
+                  },
+                  {
+                    "const": "theme",
+                    "title": "Theme",
+                    "description": "Themes that change the appearance of Thunderbird."
+                  }
+                ]
+              }
+            },
+            "blocked_install_message": {
+              "description": "A message shown to the user when the installation of an extension is blocked."
+            },
+            "install_sources": {
+              "description": "The sources from which extensions can be installed, as URL match patterns (e.g. `https://addons.thunderbird.net/*`)."
+            },
+            "restricted_domains": {
+              "description": "The domains on which content scripts of extensions can't run."
+            }
+          },
+          "x-differs-from-main": "On this branch only an own entry with installation_mode allowed, force_installed or normal_installed exempts an extension from a blocked default. On main any own entry does (Bug 2075227)."
+        }
+      },
+      "patternProperties": {
+        "^.*$": {
+          "description": "The settings of one extension, by its ID. They take precedence over the default settings.",
+          "properties": {
+            "installation_mode": {
+              "description": "How the extension is installed.",
+              "oneOf": [
+                {
+                  "const": "allowed",
+                  "title": "Allowed",
+                  "description": "The extension may be installed, even when extensions are blocked by default."
+                },
+                {
+                  "const": "blocked",
+                  "title": "Blocked",
+                  "description": "The extension cannot be installed, and is uninstalled if already present."
+                },
+                {
+                  "const": "force_installed",
+                  "title": "Force installed",
+                  "description": "The extension is installed automatically and the user can neither disable nor remove it."
+                },
+                {
+                  "const": "normal_installed",
+                  "title": "Normal installed",
+                  "description": "The extension is installed automatically. The user can disable it but cannot remove it."
+                }
+              ]
+            },
+            "blocked_install_message": {
+              "description": "A message shown to the user when the installation of this extension is blocked."
+            },
+            "updates_disabled": {
+              "description": "If true, the extension is not updated automatically."
+            },
+            "install_url": {
+              "description": "The URL from which the extension is installed with `force_installed` and `normal_installed`, e.g. from addons.thunderbird.net or a `file:///` URL. It is required for these modes. Without it, this extension and the ones which follow it in this policy are neither installed nor removed.",
+              "x-differs-from-main": "On this branch a missing install_url stops the policy. Main installs from update_url or addons.thunderbird.net instead (Bug 2062510, Bug 2068266)."
+            }
+          }
+        }
+      },
+      "x-category": "Extensions"
+    },
+    "Preferences": {
+      "description": "Set and lock the value for a subset of preferences.",
+      "x-help": "Set and lock preferences.\n\nYou can also set default preferences and user preferences, and clear the user value of a preference.\n\nUsing the preference as the key, set the `Value` to the corresponding preference value.\n\nDefault preferences can be modified by the user.\n\nIf a value is locked, it is also set as the default.\n\nUser preferences persist across invocations of Thunderbird. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy.\n\nUser preferences persist even if the policy is removed, so if you need to remove them, set their `Status` to `clear`.\n\nIMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.\n\nOnly these preferences can be set:\n\n- `accessibility.*`\n- `app.update.*` (except `app.update.channel`, `app.update.lastUpdateTime` and `app.update.migrated`)\n- `browser.*`\n- `calendar.*`\n- `chat.*`\n- `datareporting.policy.*`\n- `dom.*`\n- `extensions.*`\n- `general.autoScroll*`\n- `general.smoothScroll*`\n- `geo.*`\n- `gfx.*`\n- `intl.*`\n- `layers.*`\n- `layout.*`\n- `mail.*`\n- `mailnews.*`\n- `media.*`\n- `network.*`\n- `pdfjs.*`\n- `places.*`\n- `print.*`\n- `security.default_personal_cert`\n- `security.insecure_connection_text.enabled`\n- `security.insecure_connection_text.pbmode.enabled`\n- `security.insecure_field_warning.contextual.enabled`\n- `security.mixed_content.block_active_content`\n- `security.osclientcerts.autoload`\n- `security.ssl.errorReporting.enabled`\n- `security.tls.hello_downgrade_check`\n- `security.tls.version.enable-deprecated`\n- `security.warn_submit_secure_to_insecure`\n- `signon.*`\n- `spellchecker.*`\n- `ui.*`\n- `widget.*`",
+      "contentMediaType": "application/json",
+      "examples": [
+        {
+          "accessibility.force_disabled": {
+            "Value": 1,
+            "Status": "default"
+          },
+          "browser.cache.disk.parent_directory": {
+            "Value": "SOME_NATIVE_PATH",
+            "Status": "user"
+          }
+        }
+      ],
+      "patternProperties": {
+        "^.*$": {
+          "description": "One preference, by its name, as an object with `Value` and `Status`. A value alone (e.g. `true`) sets and locks the default value of the preference.",
+          "properties": {
+            "Value": {
+              "description": "The value of the preference."
+            },
+            "Status": {
+              "description": "How the value is set.",
+              "oneOf": [
+                {
+                  "const": "default",
+                  "title": "Set the default value",
+                  "description": "Change the preference's default value. A value the user has already set still wins."
+                },
+                {
+                  "const": "locked",
+                  "title": "Set and lock",
+                  "description": "Change the preference's default value and prevent the user from changing it."
+                },
+                {
+                  "const": "user",
+                  "title": "Set as a user value",
+                  "description": "Set the preference as though the user had set it, so the value is written to the profile."
+                },
+                {
+                  "const": "clear",
+                  "title": "Clear the user value",
+                  "description": "Remove any value the user has set, reverting the preference to its default."
+                }
+              ]
+            }
+          }
+        }
+      },
+      "x-category": "Security",
+      "x-cck2-equivalent": "preferences",
+      "x-preferences-affected": "Many"
+    },
+    "3rdparty": {
+      "description": "Set policies that WebExtensions can access via chrome.storage.managed.",
+      "x-help": "Each entry is the managed storage of one extension, which the extension reads with `browser.storage.managed` and uses as its settings. For more information, see [Adding policy support to your extension](https://extensionworkshop.com/documentation/enterprise/enterprise-development/#how-to-add-policy).",
+      "properties": {
+        "Extensions": {
+          "description": "The managed storage of each extension, one JSON object per extension ID, which the extension reads with `browser.storage.managed`.",
+          "patternProperties": {
+            "^.*$": {
+              "description": "The managed storage entries of one extension. Their format is defined by the extension."
+            }
+          },
+          "examples": [
+            {
+              "uBlock0@raymondhill.net": {
+                "adminSettings": {
+                  "selectedFilterLists": [
+                    "ublock-privacy",
+                    "ublock-badware",
+                    "ublock-filters",
+                    "user-filters"
+                  ]
+                }
+              }
+            }
+          ],
+          "title": "Managed storage of extensions"
+        }
+      },
+      "x-category": "Security"
+    },
+    "AppAutoUpdate": {
+      "description": "Enable or disable automatic application update.",
+      "x-help": "Install application updates automatically. If this policy is enabled, updates are installed without asking the user (the operating system might still ask for approval). If it is disabled, updates are downloaded, and the user chooses when to install them. In both cases, the user can't change the setting. If updates are turned off with `DisableAppUpdate`, this policy has no effect.",
+      "x-category": "Device update settings",
+      "title": "Automatic updates",
+      "x-preferences-affected": [
+        "app.update.auto"
+      ]
+    },
+    "AppUpdatePin": {
+      "description": "Prevent Thunderbird from being updated beyond the specified version.",
+      "x-help": "You can specify the version as `xx.` and Thunderbird will be updated with all minor versions, but will not be updated beyond the major version.\n\nYou can also specify the version as `xx.xx` and Thunderbird will be updated with all patch versions, but will not be updated beyond the minor version.\n\nYou should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, Thunderbird will update beyond that version.",
+      "examples": [
+        "106."
+      ],
+      "x-category": "Device update settings"
+    },
+    "AppUpdateURL": {
+      "description": "Set custom app update URL.",
+      "x-help": "Change the URL for application update if you are providing Thunderbird updates from a custom update server.",
+      "examples": [
+        "https://yoursite.com"
+      ],
+      "x-category": "Device update settings",
+      "x-preferences-affected": [
+        "app.update.url"
+      ]
+    },
+    "Authentication": {
+      "description": "Configure integrated authentication for websites that support it.",
+      "x-help": "Configure sites that support integrated authentication.\n\nSee [Integrated authentication](https://htmlpreview.github.io/?https://github.com/mdn/archived-content/blob/main/files/en-us/mozilla/integrated_authentication/raw.html) for more information.",
+      "properties": {
+        "SPNEGO": {
+          "title": "Sites allowed to use SPNEGO",
+          "description": "Websites which may use integrated authentication via SPNEGO (Kerberos).",
+          "examples": [
+            [
+              "mydomain.com",
+              "https://myotherdomain.com"
+            ]
+          ]
+        },
+        "Delegated": {
+          "title": "Sites allowed to receive delegated credentials",
+          "description": "Websites to which Thunderbird may delegate the authorization of the user.",
+          "examples": [
+            [
+              "mydomain.com",
+              "https://myotherdomain.com"
+            ]
+          ]
+        },
+        "NTLM": {
+          "title": "Sites allowed to use NTLM",
+          "description": "Websites which may use integrated authentication via NTLM.",
+          "examples": [
+            [
+              "mydomain.com",
+              "https://myotherdomain.com"
+            ]
+          ]
+        },
+        "AllowNonFQDN": {
+          "title": "Allow integrated authentication for non-FQDN hosts",
+          "description": "Allows integrated authentication for hosts which are not given as fully qualified domain names.",
+          "properties": {
+            "SPNEGO": {
+              "title": "Allow SPNEGO"
+            },
+            "NTLM": {
+              "title": "Allow NTLM"
+            }
+          }
+        },
+        "AllowProxies": {
+          "title": "Allow integrated authentication for proxies",
+          "description": "Allows integrated authentication for proxy servers.",
+          "properties": {
+            "SPNEGO": {
+              "title": "Allow SPNEGO"
+            },
+            "NTLM": {
+              "title": "Allow NTLM"
+            }
+          }
+        },
+        "Locked": {
+          "title": "Lock the integrated authentication settings",
+          "description": "Prevents the user from changing the integrated authentication settings. The settings are locked unless this is false."
+        },
+        "PrivateBrowsing": {
+          "title": "Integrated authentication in private browsing",
+          "description": "Enables integrated authentication in private browsing."
+        }
+      },
+      "x-category": "Authentication",
+      "x-preferences-affected": [
+        "network.negotiate-auth.trusted-uris",
+        "network.negotiate-auth.delegation-uris",
+        "network.automatic-ntlm-auth.trusted-uris",
+        "network.automatic-ntlm-auth.allow-non-fqdn",
+        "network.negotiate-auth.allow-non-fqdn",
+        "network.automatic-ntlm-auth.allow-proxies",
+        "network.negotiate-auth.allow-proxies",
+        "network.auth.private-browsing-sso"
+      ]
+    },
+    "BackgroundAppUpdate": {
+      "description": "Enable or disable the background updater.",
+      "x-help": "Install application updates in the background, also when Thunderbird is not running (only on Windows). If this policy is enabled, updates may be installed in the background without asking the user (the operating system might still ask for approval). If it is disabled, no updates are installed while Thunderbird is not running. In both cases, the user can't change the setting. If updates are turned off with `DisableAppUpdate`, or automatic updates with `AppAutoUpdate`, this policy has no effect. If background updates don't run, check the [requirements in this support article](https://support.mozilla.org/en-US/kb/enable-background-updates-thunderbird-windows).",
+      "x-formats": [
+        "gpo",
+        "json"
+      ],
+      "x-category": "Device update settings",
+      "title": "Background updates",
+      "x-preferences-affected": [
+        "app.update.background.enabled"
+      ]
+    },
+    "BlockAboutAddons": {
+      "description": "Block access to the Add-ons Manager (about:addons).",
+      "x-help": "Users can no longer open it to install, remove, enable or disable add-ons, or to change their options. Add-ons can still be managed with the Extensions and ExtensionSettings policies.\n\nIf this policy is disabled or not configured, the Add-ons Manager is available.",
+      "x-category": "Extensions",
+      "x-cck2-equivalent": [
+        "disableAddonsManager"
+      ]
+    },
+    "BlockAboutConfig": {
+      "description": "Block access to the about:config page.",
+      "x-help": "Block access to about:config.",
+      "x-category": "Security",
+      "x-cck2-equivalent": [
+        "disableAboutConfig"
+      ]
+    },
+    "BlockAboutProfiles": {
+      "description": "Block access to the about:profiles page.",
+      "x-help": "Block access to About Profiles (about:profiles).",
+      "x-category": "Security",
+      "x-cck2-equivalent": [
+        "disableAboutProfiles"
+      ]
+    },
+    "BlockAboutSupport": {
+      "description": "Block access to the about:support page.",
+      "x-help": "Block access to Troubleshooting Information (about:support).",
+      "x-category": "Security",
+      "x-cck2-equivalent": [
+        "disableAboutSupport"
+      ]
+    },
+    "CaptivePortal": {
+      "description": "Enable or disable captive portal support.",
+      "x-help": "Detect captive portals, the login pages of networks in hotels or airports which have to be passed before the internet can be used. If this policy is enabled, the detection is turned on. If it is disabled, it is turned off. In both cases, the user can't change the setting. If this policy is not configured, the user can change the setting.",
+      "x-category": "Network security",
+      "title": "Captive portal detection",
+      "x-preferences-affected": [
+        "network.captive-portal-service.enabled"
+      ]
+    },
+    "Certificates": {
+      "description": "Add certificates or use built-in certificates.",
+      "properties": {
+        "ImportEnterpriseRoots": {
+          "title": "Trust certificates that have been added to the operating system certificate store by a user or administrator.",
+          "x-help": "Note: This policy only works on Windows and macOS. For Linux discussion, see [bug 1600509](https://bugzilla.mozilla.org/show_bug.cgi?id=1600509).\n\nSee https://support.mozilla.org/kb/setting-certificate-authorities-firefox for more detail.",
+          "description": "Trust certificates that have been added to the operating system certificate store by a user or administrator.",
+          "x-preferences-affected": [
+            "security.enterprise_roots.enabled"
+          ]
+        },
+        "Install": {
+          "title": "Install certificates into the Thunderbird certificate store.",
+          "x-help": "If only a filename is specified, Thunderbird searches for the file in the following locations:\n\n- Windows\n  - %USERPROFILE%\\AppData\\Local\\Mozilla\\Certificates\n  - %USERPROFILE%\\AppData\\Roaming\\Mozilla\\Certificates\n- macOS\n  - /Library/Application Support/Mozilla/Certificates\n  - ~/Library/Application Support/Mozilla/Certificates\n- Linux\n  - /usr/lib/mozilla/certificates\n  - /usr/lib64/mozilla/certificates\n  - ~/.mozilla/certificates\n\nA fully qualified path can be used, including UNC paths. You should use the native path style for your operating system.\n\nIf you are specifying the path in the policies.json file on Windows, you need to escape your backslashes (`\\\\`) which means that for UNC paths, you need to escape both (`\\\\\\\\`). If you use group policy, you only need one backslash.\n\nCertificates are installed using the trust string `CT,CT,`.\n\nBinary (DER) and ASCII (PEM) certificates are both supported.",
+          "x-expand-env-vars": true,
+          "examples": [
+            [
+              "cert1.der",
+              "/home/username/cert2.pem"
+            ]
+          ],
+          "x-examples-gpo": [
+            [
+              "cert1.der",
+              "C:\\Users\\username\\cert2.pem"
+            ]
+          ],
+          "description": "Install certificates into the Thunderbird certificate store.",
+          "x-cck2-equivalent": [
+            "certs.ca"
+          ]
+        }
+      },
+      "x-category": "Certificate management"
+    },
+    "Cookies": {
+      "description": "Allow or deny websites to set cookies.",
+      "x-help": "Configure cookie preferences.",
+      "properties": {
+        "Allow": {
+          "title": "Sites which may always set cookies",
+          "description": "A list of origins (not domains) where cookies are always allowed. You must include http or https.",
+          "examples": [
+            [
+              "http://example.org/"
+            ]
+          ]
+        },
+        "Block": {
+          "title": "Sites which may never set cookies",
+          "description": "A list of origins (not domains) where cookies are always blocked. You must include http or https.",
+          "examples": [
+            [
+              "http://example.edu/"
+            ]
+          ]
+        },
+        "Default": {
+          "title": "Accept cookies",
+          "description": "Determines whether cookies are accepted at all."
+        },
+        "AcceptThirdParty": {
+          "title": "Accept third-party cookies",
+          "description": "Determines how third-party cookies are handled.",
+          "oneOf": [
+            {
+              "const": "always",
+              "title": "Always",
+              "description": "Accept all third-party cookies."
+            },
+            {
+              "const": "never",
+              "title": "Never",
+              "description": "Reject all third-party cookies."
+            },
+            {
+              "const": "from-visited",
+              "title": "From visited sites only",
+              "description": "Accept third-party cookies only from sites the user has visited."
+            }
+          ]
+        },
+        "ExpireAtSessionEnd": {
+          "title": "Keep cookies only until the end of the session.",
+          "x-deprecated": true,
+          "description": "This setting has no effect anymore."
+        },
+        "Locked": {
+          "title": "Lock the cookie preferences",
+          "description": "Prevents the user from changing cookie preferences."
+        }
+      },
+      "x-category": "Network security",
+      "x-preferences-affected": [
+        "network.cookie.cookieBehavior",
+        "network.cookie.cookieBehavior.pbmode"
+      ]
+    },
+    "DNSOverHTTPS": {
+      "description": "Configure DNS over HTTPS.",
+      "x-help": "With DNS over HTTPS, host names are resolved through an encrypted connection to a DNS over HTTPS provider, instead of the DNS resolver of the operating system. The user can change these settings, unless the Locked setting is used.",
+      "properties": {
+        "Enabled": {
+          "title": "Enable DNS over HTTPS",
+          "description": "Determines whether DNS over HTTPS is enabled."
+        },
+        "ProviderURL": {
+          "title": "DNS over HTTPS provider",
+          "description": "The URL of another DNS over HTTPS provider.",
+          "examples": [
+            "https://dns.example.com/dns-query"
+          ]
+        },
+        "ExcludedDomains": {
+          "title": "Domains excluded from DNS over HTTPS",
+          "description": "Domains which are resolved without DNS over HTTPS.",
+          "examples": [
+            [
+              "example.com"
+            ]
+          ]
+        },
+        "Locked": {
+          "title": "Lock the DNS over HTTPS settings",
+          "description": "Prevents the user from changing DNS over HTTPS preferences."
+        }
+      },
+      "x-category": "Network security",
+      "x-preferences-affected": [
+        "network.trr.mode",
+        "network.trr.uri",
+        "network.trr.excluded-domains"
+      ]
+    },
+    "DefaultDownloadDirectory": {
+      "description": "Set the default download directory.",
+      "x-help": "You can use ${home} for the native home directory.",
+      "x-expand-env-vars": true,
+      "examples": [
+        "${home}/Downloads"
+      ],
+      "x-examples-gpo": [
+        "${home}\\Downloads"
+      ],
+      "x-category": "Downloads",
+      "x-preferences-affected": [
+        "browser.download.dir",
+        "browser.download.folderList"
+      ]
+    },
+    "DisableAppUpdate": {
+      "description": "Prevent Thunderbird from updating.",
+      "x-help": "Turn off application updates within Thunderbird.",
+      "x-category": "Device update settings",
+      "x-cck2-equivalent": [
+        "disableFirefoxUpdates"
+      ]
+    },
+    "DisableBuiltinPDFViewer": {
+      "description": "Disable PDF.js, the built-in PDF viewer in Thunderbird.",
+      "x-help": "Disable the built in PDF viewer. PDF files are downloaded and sent externally.",
+      "x-differs-from-main": "On this branch the policy sets and locks pdfjs.disabled, which disables PDF.js completely. Main only sends PDF files to the operating system (Bug 2062510).",
+      "x-category": "Printing",
+      "x-cck2-equivalent": [
+        "disablePDFjs"
+      ],
+      "x-preferences-affected": [
+        "pdfjs.disabled"
+      ]
+    },
+    "DisableDeveloperTools": {
+      "description": "Block access to the developer tools.",
+      "x-help": "Remove access to all developer tools.",
+      "x-category": "Security",
+      "x-cck2-equivalent": [
+        "removeDeveloperTools"
+      ],
+      "x-preferences-affected": [
+        "devtools.policy.disabled",
+        "devtools.chrome.enabled"
+      ]
+    },
+    "DisableMasterPasswordCreation": {
+      "description": "If true, a master password can’t be created.",
+      "x-help": "Remove the master password functionality.\n\nIf this value is true, it works the same as setting [`PrimaryPassword`](#primarypassword) to false and removes the primary password functionality.\n\nIf both `DisableMasterPasswordCreation` and `PrimaryPassword` are used, `DisableMasterPasswordCreation` takes precedence.",
+      "x-category": "Password manager",
+      "title": "Prevent creating a primary password",
+      "x-cck2-equivalent": [
+        "noMasterPassword"
+      ]
+    },
+    "DisablePasswordReveal": {
+      "description": "Meant to prevent passwords from being revealed in saved logins. In this version, this policy has no effect.",
+      "x-help": "Meant to prevent passwords from being shown in saved logins. In this version, this policy has no effect, because the saved passwords dialog of Thunderbird does not check it.",
+      "x-differs-from-main": "On this branch the saved passwords dialog doesn't check the policy, so it has no effect. Main checks it (Bug 2058522).",
+      "x-category": "Password manager"
+    },
+    "DisableSafeMode": {
+      "description": "Disable the feature to restart in Safe Mode. Note: the Shift key to enter Safe Mode can only be disabled on Windows using Group Policy.",
+      "x-help": "Disable safe mode within the browser.\n\nOn Windows, this disables safe mode via the command line as well.",
+      "x-category": "Security",
+      "title": "Disable safe mode",
+      "x-cck2-equivalent": [
+        "disableSafeMode"
+      ]
+    },
+    "DisableSecurityBypass": {
+      "description": "Prevent the user from bypassing certain security warnings.",
+      "x-help": "Prevent the user from bypassing security in certain cases.\n\nThese policies only affect what happens when an error is shown. They do not affect any settings in preferences.",
+      "properties": {
+        "InvalidCertificate": {
+          "title": "Prevent exceptions for invalid certificates",
+          "description": "Prevents adding an exception when an invalid certificate is shown."
+        },
+        "SafeBrowsing": {
+          "title": "Prevent visiting harmful sites anyway",
+          "description": "Prevents selecting \"ignore the risk\" and visiting a harmful site anyway."
+        }
+      },
+      "x-category": "Certificate management",
+      "x-preferences-affected": [
+        "security.certerror.hideAddException",
+        "browser.safebrowsing.allowOverride"
+      ]
+    },
+    "DisableSystemAddonUpdate": {
+      "description": "Prevent Thunderbird from installing and updating system add-ons.",
+      "x-help": "Prevent system add-ons from being installed or updated.",
+      "x-category": "Device update settings"
+    },
+    "DisableTelemetry": {
+      "description": "Turn off Telemetry.",
+      "x-help": "Prevent the upload of telemetry data.\n\nLocal storage of telemetry data is disabled as well.\n\nMozilla recommends that you do not disable telemetry. Information collected through telemetry helps us build a better product for businesses like yours.",
+      "x-category": "Miscellaneous",
+      "x-cck2-equivalent": [
+        "disableTelemetry"
+      ],
+      "x-preferences-affected": [
+        "datareporting.healthreport.uploadEnabled",
+        "datareporting.policy.dataSubmissionEnabled",
+        "toolkit.telemetry.archive.enabled"
+      ]
+    },
+    "DisabledCiphers": {
+      "description": "Disable ciphers.",
+      "x-help": "Disable specific cryptographic ciphers.",
+      "properties": {
+        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": {
+          "title": "Disable TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+        },
+        "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": {
+          "title": "Disable TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+        },
+        "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256": {
+          "title": "Disable TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256"
+        },
+        "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256": {
+          "title": "Disable TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"
+        },
+        "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384": {
+          "title": "Disable TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+        },
+        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384": {
+          "title": "Disable TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+        },
+        "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": {
+          "title": "Disable TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
+        },
+        "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA": {
+          "title": "Disable TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
+        },
+        "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": {
+          "title": "Disable TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+        },
+        "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA": {
+          "title": "Disable TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
+        },
+        "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": {
+          "title": "Disable TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
+        },
+        "TLS_DHE_RSA_WITH_AES_256_CBC_SHA": {
+          "title": "Disable TLS_DHE_RSA_WITH_AES_256_CBC_SHA"
+        },
+        "TLS_RSA_WITH_AES_128_GCM_SHA256": {
+          "title": "Disable TLS_RSA_WITH_AES_128_GCM_SHA256"
+        },
+        "TLS_RSA_WITH_AES_256_GCM_SHA384": {
+          "title": "Disable TLS_RSA_WITH_AES_256_GCM_SHA384"
+        },
+        "TLS_RSA_WITH_AES_128_CBC_SHA": {
+          "title": "Disable TLS_RSA_WITH_AES_128_CBC_SHA"
+        },
+        "TLS_RSA_WITH_AES_256_CBC_SHA": {
+          "title": "Disable TLS_RSA_WITH_AES_256_CBC_SHA"
+        },
+        "TLS_RSA_WITH_3DES_EDE_CBC_SHA": {
+          "title": "Disable TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+        }
+      },
+      "x-category": "Network security",
+      "x-preferences-affected": [
+        "security.ssl3.ecdhe_rsa_aes_128_gcm_sha256",
+        "security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256",
+        "security.ssl3.ecdhe_ecdsa_chacha20_poly1305_sha256",
+        "security.ssl3.ecdhe_rsa_chacha20_poly1305_sha256",
+        "security.ssl3.ecdhe_ecdsa_aes_256_gcm_sha384",
+        "security.ssl3.ecdhe_rsa_aes_256_gcm_sha384",
+        "security.ssl3.ecdhe_rsa_aes_128_sha",
+        "security.ssl3.ecdhe_ecdsa_aes_128_sha",
+        "security.ssl3.ecdhe_rsa_aes_256_sha",
+        "security.ssl3.ecdhe_ecdsa_aes_256_sha",
+        "security.ssl3.dhe_rsa_aes_128_sha",
+        "security.ssl3.dhe_rsa_aes_256_sha",
+        "security.ssl3.rsa_aes_128_gcm_sha256",
+        "security.ssl3.rsa_aes_256_gcm_sha384",
+        "security.ssl3.rsa_aes_128_sha",
+        "security.ssl3.rsa_aes_256_sha",
+        "security.ssl3.deprecated.rsa_des_ede3_sha"
+      ]
+    },
+    "DownloadDirectory": {
+      "description": "Set and lock the download directory.",
+      "x-help": "You can use ${home} for the native home directory.",
+      "x-expand-env-vars": true,
+      "examples": [
+        "${home}/Downloads"
+      ],
+      "x-examples-gpo": [
+        "${home}\\Downloads"
+      ],
+      "x-category": "Downloads",
+      "x-preferences-affected": [
+        "browser.download.dir",
+        "browser.download.folderList",
+        "browser.download.useDownloadDir"
+      ]
+    },
+    "ExtensionUpdate": {
+      "description": "Enable or disable automatic extension updates.",
+      "x-help": "Turn off automatic updates of extensions. If this policy is disabled, extensions are no longer updated automatically, and the user can't turn it on. If it is enabled or not configured, the user's setting applies.",
+      "x-category": "Extensions",
+      "title": "Automatic extension updates",
+      "x-preferences-affected": [
+        "extensions.update.enabled"
+      ]
+    },
+    "Extensions": {
+      "description": "Install, uninstall or lock extensions. The Install option takes URLs or paths as parameters. The Uninstall and Locked options take extension IDs.",
+      "x-help": "Control the installation, uninstallation and locking of extensions.\n\nWe strongly recommend that you use the **[`ExtensionSettings`](#extensionsettings)** policy. It has the same functionality and adds more. It does not support native paths, though, so you'll have to use file:/// URLs.",
+      "properties": {
+        "Install": {
+          "title": "Extensions to install",
+          "description": "A list of URLs or native paths of extensions to be installed.",
+          "x-expand-env-vars": true,
+          "examples": [
+            [
+              "https://addons.thunderbird.net/thunderbird/downloads/somefile.xpi",
+              "//path/to/xpi"
+            ]
+          ]
+        },
+        "Uninstall": {
+          "title": "Extensions to uninstall",
+          "description": "A list of extension IDs which are uninstalled if found.",
+          "examples": [
+            [
+              "bad_addon_id@mozilla.org"
+            ]
+          ]
+        },
+        "Locked": {
+          "title": "Extensions which can't be disabled or removed",
+          "description": "A list of extension IDs which the user can't disable or uninstall.",
+          "examples": [
+            [
+              "addon_id@mozilla.org"
+            ]
+          ]
+        }
+      },
+      "x-category": "Extensions",
+      "x-cck2-equivalent": [
+        "addons"
+      ]
+    },
+    "Handlers": {
+      "description": "Configure default application handlers.",
+      "x-help": "This policy is based on the internal format of `handlers.json`.\n\nYou can configure handlers based on a mime type (`mimeTypes`), a file's extension (`extensions`), or a protocol (`schemes`).\n\nWithin each handler type, you specify the given mimeType/extension/scheme as a key.",
+      "contentMediaType": "application/json",
+      "examples": [
+        {
+          "mimeTypes": {
+            "application/msword": {
+              "action": "useSystemDefault",
+              "ask": false
+            }
+          },
+          "schemes": {
+            "mailto": {
+              "action": "useHelperApp",
+              "ask": true,
+              "handlers": [
+                {
+                  "name": "Gmail",
+                  "uriTemplate": "https://mail.google.com/mail/?extsrc=mailto&url=%s"
+                }
+              ]
+            }
+          },
+          "extensions": {
+            "pdf": {
+              "action": "useHelperApp",
+              "ask": true,
+              "handlers": [
+                {
+                  "name": "Adobe Acrobat",
+                  "path": "/usr/bin/acroread"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "x-examples-gpo": [
+        {
+          "mimeTypes": {
+            "application/msword": {
+              "action": "useSystemDefault",
+              "ask": false
+            }
+          },
+          "schemes": {
+            "mailto": {
+              "action": "useHelperApp",
+              "ask": true,
+              "handlers": [
+                {
+                  "name": "Gmail",
+                  "uriTemplate": "https://mail.google.com/mail/?extsrc=mailto&url=%s"
+                }
+              ]
+            }
+          },
+          "extensions": {
+            "pdf": {
+              "action": "useHelperApp",
+              "ask": true,
+              "handlers": [
+                {
+                  "name": "Adobe Acrobat",
+                  "path": "C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\AcroRd32.exe"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "patternProperties": {
+        "^(mimeTypes|extensions|schemes)$": {
+          "description": "How content is matched: by its MIME type (`mimeTypes`), by the extension of its file name (`extensions`), or by its protocol (`schemes`).",
+          "patternProperties": {
+            "^.*$": {
+              "description": "One MIME type, file extension or protocol, with how its content is handled.",
+              "properties": {
+                "action": {
+                  "description": "What happens with the content.",
+                  "oneOf": [
+                    {
+                      "const": "saveToDisk",
+                      "title": "Save to disk",
+                      "description": "Download the file instead of opening it."
+                    },
+                    {
+                      "const": "useHelperApp",
+                      "title": "Open with a helper application",
+                      "description": "Open the content with an application listed in `handlers`."
+                    },
+                    {
+                      "const": "useSystemDefault",
+                      "title": "Open with the system default application",
+                      "description": "Open the content with the application the operating system associates with that type."
+                    }
+                  ]
+                },
+                "ask": {
+                  "description": "If true, the user is asked what to do with the content. If false, the action is taken without asking."
+                },
+                "handlers": {
+                  "description": "The applications which can handle the content. The first one is the default. Each entry has either a `path` or a `uriTemplate`.",
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "description": "The name of the application."
+                      },
+                      "path": {
+                        "description": "The path of the executable of the application."
+                      },
+                      "uriTemplate": {
+                        "description": "The URL of a web application. It has to use https and contain %s, which is replaced by the URL of the content."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "x-category": "Security"
+    },
+    "HardwareAcceleration": {
+      "description": "If false, turn off hardware acceleration.",
+      "x-help": "Control hardware acceleration.",
+      "x-category": "Miscellaneous",
+      "title": "Use hardware acceleration",
+      "x-preferences-affected": [
+        "layers.acceleration.disabled"
+      ]
+    },
+    "InstallAddonsPermission": {
+      "description": "Allow certain websites to install add-ons.",
+      "x-help": "Configure the default extension install policy and the origins from which extensions can be installed. This policy does not override turning off all extension installs.",
+      "properties": {
+        "Allow": {
+          "title": "Sites allowed to install extensions",
+          "description": "A list of origins where extension installs are allowed.",
+          "examples": [
+            [
+              "http://example.org/",
+              "http://example.edu/"
+            ]
+          ]
+        },
+        "Default": {
+          "title": "Allow extension installs by default",
+          "description": "Determines whether or not extension installs are allowed by default."
+        }
+      },
+      "x-category": "Extensions",
+      "x-cck2-equivalent": [
+        "permissions.install"
+      ],
+      "x-preferences-affected": [
+        "xpinstall.enabled"
+      ]
+    },
+    "ManualAppUpdateOnly": {
+      "description": "Allow manual updates only and do not notify the user about updates.",
+      "x-help": "Switch to manual updates only.\n\nIf this policy is enabled:\n\n1. The user will never be prompted to install updates.\n2. Thunderbird will not check for updates in the background, though it will check automatically when an update UI is displayed (such as the one in the About dialog). This check will be used to show \"Update to version X\" in the UI, but will not automatically download the update or prompt the user to update in any other way.\n3. The update UI will work as expected, unlike when using DisableAppUpdate.\n\nThis policy is primarily intended for advanced end users, not for enterprises, but it is available via GPO.",
+      "x-category": "Device update settings"
+    },
+    "NetworkPrediction": {
+      "description": "Enable or disable network prediction (DNS prefetching).",
+      "x-help": "With network prediction, Thunderbird resolves the host names of links in advance, so they load faster.\n\nIf this policy is enabled, network prediction is turned on. If it is disabled, network prediction is turned off. In both cases, the user can't change the setting. If this policy is not configured, the user can change the setting.",
+      "x-category": "Network security",
+      "title": "Network prediction (DNS prefetching)",
+      "x-preferences-affected": [
+        "network.dns.disablePrefetch",
+        "network.dns.disablePrefetchFromHTTPS"
+      ]
+    },
+    "OfferToSaveLogins": {
+      "description": "Enforce the setting to allow Thunderbird to offer to remember saved logins and passwords. Both true and false values are accepted.",
+      "x-help": "Control whether or not Thunderbird offers to save passwords.",
+      "x-category": "Password manager",
+      "title": "Offer to save passwords",
+      "x-cck2-equivalent": [
+        "dontRememberPasswords"
+      ],
+      "x-preferences-affected": [
+        "signon.rememberSignons"
+      ]
+    },
+    "OfferToSaveLoginsDefault": {
+      "description": "Set the default value for allowing Thunderbird to offer to remember saved logins and passwords. Both true and false values are accepted.",
+      "x-help": "Sets the default value of signon.rememberSignons without locking it.",
+      "x-category": "Password manager",
+      "title": "Offer to save passwords by default",
+      "x-cck2-equivalent": [
+        "dontRememberPasswords"
+      ],
+      "x-preferences-affected": [
+        "signon.rememberSignons"
+      ]
+    },
+    "PDFjs": {
+      "description": "Disable or configure PDF.js, the built-in PDF viewer in Thunderbird.",
+      "x-help": "Disable or configure PDF.js, the built-in PDF viewer.\n\nNote: DisableBuiltinPDFViewer has not been deprecated. You can either continue to use it, or switch to using PDFjs->Enabled to disable the built-in PDF viewer.",
+      "properties": {
+        "Enabled": {
+          "title": "Enable the built-in PDF viewer",
+          "description": "If set to false, the built-in PDF viewer is disabled."
+        },
+        "EnablePermissions": {
+          "title": "Honor the permissions of PDF documents",
+          "description": "Meant to make the built-in PDF viewer honor document permissions like preventing the copying of text. In this version, the value of this setting is ignored. If it is set, document permissions are honored unless `Enabled` is set to true.",
+          "x-differs-from-main": "On this branch pdfjs.enablePermissions is set from !Enabled, so the value of EnablePermissions is ignored. Main uses its value (Bug 2062510)."
+        }
+      },
+      "x-category": "Printing",
+      "x-preferences-affected": [
+        "pdfjs.disabled",
+        "pdfjs.enablePermissions"
+      ]
+    },
+    "PasswordManagerEnabled": {
+      "description": "Enable saving passwords to the password manager.",
+      "x-help": "Remove access to the password manager via the settings, and block about:logins.",
+      "x-category": "Password manager",
+      "x-preferences-affected": [
+        "pref.privacy.disable_button.view_passwords",
+        "signon.rememberSignons"
+      ]
+    },
+    "PrimaryPassword": {
+      "description": "Require or prevent using a Primary Password.",
+      "x-help": "Require or prevent using a primary (formerly master) password.\n\nIf this value is true, a primary password is required. If this value is false, it works the same as if [`DisableMasterPasswordCreation`](#disablemasterpasswordcreation) was true and removes the primary password functionality.\n\nIf both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMasterPasswordCreation takes precedence.",
+      "x-category": "Password manager",
+      "x-cck2-equivalent": [
+        "noMasterPassword"
+      ]
+    },
+    "PromptForDownloadLocation": {
+      "description": "Ask where to save files when downloading.",
+      "x-help": "Ask where to save each file before downloading.",
+      "x-category": "Downloads",
+      "x-preferences-affected": [
+        "browser.download.useDownloadDir"
+      ]
+    },
+    "Proxy": {
+      "description": "Configure proxy settings.",
+      "x-help": "These settings correspond to the connection settings in Thunderbird preferences.\nTo specify ports, append them to the hostnames with a colon (:).\n\nUnless you lock this policy, changes the user already has in place will take effect.",
+      "properties": {
+        "Mode": {
+          "title": "Proxy method",
+          "description": "The proxy method being used.",
+          "oneOf": [
+            {
+              "const": "none",
+              "title": "No proxy",
+              "description": "Connect directly, without a proxy."
+            },
+            {
+              "const": "system",
+              "title": "Use system settings",
+              "description": "Use the proxy configured in the operating system."
+            },
+            {
+              "const": "manual",
+              "title": "Manual configuration",
+              "description": "Use the proxy hosts given in `HTTPProxy`, `SSLProxy`, and `SOCKSProxy`."
+            },
+            {
+              "const": "autoDetect",
+              "title": "Auto-detect (WPAD)",
+              "description": "Discover the proxy settings for this network automatically."
+            },
+            {
+              "const": "autoConfig",
+              "title": "Automatic proxy configuration (PAC)",
+              "description": "Use the proxy auto-configuration file at `AutoConfigURL`."
+            }
+          ]
+        },
+        "Locked": {
+          "title": "Lock the proxy settings",
+          "description": "Prevents the user from changing the proxy settings.",
+          "x-differs-from-main": "On this branch Locked sets and locks the proxy prefs. Main only sets them as defaults (Bug 2062510)."
+        },
+        "AutoConfigURL": {
+          "title": "Automatic proxy configuration URL",
+          "description": "The URL of a proxy configuration file (only used if the proxy method is `autoConfig`).",
+          "examples": [
+            "https://proxy.example.com/proxy.pac"
+          ]
+        },
+        "FTPProxy": {
+          "title": "FTP proxy",
+          "description": "This setting has no effect, because support for FTP proxies was removed.",
+          "examples": [
+            "hostname"
+          ],
+          "x-deprecated": true
+        },
+        "HTTPProxy": {
+          "title": "HTTP proxy",
+          "description": "The HTTP proxy server.",
+          "examples": [
+            "hostname"
+          ]
+        },
+        "SSLProxy": {
+          "title": "SSL proxy",
+          "description": "The SSL proxy server.",
+          "examples": [
+            "hostname"
+          ]
+        },
+        "SOCKSProxy": {
+          "title": "SOCKS proxy",
+          "description": "The SOCKS proxy server.",
+          "examples": [
+            "hostname"
+          ]
+        },
+        "SOCKSVersion": {
+          "title": "SOCKS version",
+          "description": "The SOCKS version.",
+          "oneOf": [
+            {
+              "const": 4,
+              "title": "SOCKS v4",
+              "description": "Use version 4 of the SOCKS protocol to reach `SOCKSProxy`."
+            },
+            {
+              "const": 5,
+              "title": "SOCKS v5",
+              "description": "Use version 5 of the SOCKS protocol to reach `SOCKSProxy`."
+            }
+          ]
+        },
+        "UseHTTPProxyForAllProtocols": {
+          "title": "Use the HTTP proxy for all protocols",
+          "description": "Whether the HTTP proxy is also used for all other protocols."
+        },
+        "Passthrough": {
+          "title": "No proxy for",
+          "description": "Hostnames or IP addresses which are not proxied, separated by commas. Use `<local>` to bypass proxying for all hostnames which do not contain periods.",
+          "examples": [
+            "<local>, .example.com, 192.168.1.0/24"
+          ]
+        },
+        "UseProxyForDNS": {
+          "title": "Proxy DNS when using SOCKS v5",
+          "description": "Use the proxy for DNS requests when using SOCKS v5."
+        },
+        "AutoLogin": {
+          "title": "Don't prompt for authentication if the password is saved",
+          "description": "Don't prompt for authentication if the password is saved. If the proxy requires authentication and its password is saved, Thunderbird logs in without asking. If that login fails, the user is asked again."
+        }
+      },
+      "x-differs-from-main": "On this branch Locked sets and locks the proxy prefs. Main only sets them as defaults (Bug 2062510).",
+      "x-category": "Network security",
+      "x-cck2-equivalent": [
+        "networkProxy*"
+      ],
+      "x-preferences-affected": [
+        "network.proxy.type",
+        "network.proxy.autoconfig_url",
+        "network.proxy.socks_remote_dns",
+        "signon.autologin.proxy",
+        "network.proxy.socks_version",
+        "network.proxy.no_proxies_on",
+        "network.proxy.share_proxy_settings",
+        "network.proxy.http",
+        "network.proxy.http_port",
+        "network.proxy.ssl",
+        "network.proxy.ssl_port",
+        "network.proxy.socks",
+        "network.proxy.socks_port"
+      ]
+    },
+    "RequestedLocales": {
+      "description": "Set the list of requested locales for the application in order of preference.",
+      "x-help": "The corresponding language packs become active.\n\nNote: This policy can also be a string, so that you can specify an empty value.",
+      "examples": [
+        "de,en-US"
+      ],
+      "x-category": "Miscellaneous"
+    },
+    "SSLVersionMax": {
+      "description": "Set the maximum SSL version.",
+      "x-help": "Set and lock the maximum version of TLS. (Thunderbird defaults to a maximum of TLS 1.3.)",
+      "oneOf": [
+        {
+          "const": "tls1",
+          "title": "TLS 1.0"
+        },
+        {
+          "const": "tls1.1",
+          "title": "TLS 1.1"
+        },
+        {
+          "const": "tls1.2",
+          "title": "TLS 1.2"
+        },
+        {
+          "const": "tls1.3",
+          "title": "TLS 1.3"
+        }
+      ],
+      "x-category": "Network security",
+      "x-preferences-affected": [
+        "security.tls.version.max"
+      ]
+    },
+    "SSLVersionMin": {
+      "description": "Set the minimum SSL version.",
+      "x-help": "Set and lock the minimum version of TLS. (Thunderbird defaults to a minimum of TLS 1.2.)",
+      "oneOf": [
+        {
+          "const": "tls1",
+          "title": "TLS 1.0"
+        },
+        {
+          "const": "tls1.1",
+          "title": "TLS 1.1"
+        },
+        {
+          "const": "tls1.2",
+          "title": "TLS 1.2"
+        },
+        {
+          "const": "tls1.3",
+          "title": "TLS 1.3"
+        }
+      ],
+      "x-category": "Network security",
+      "x-preferences-affected": [
+        "security.tls.version.min"
+      ]
+    },
+    "SearchEngines": {
+      "description": "Configure search engine settings.",
+      "x-help": "This policy is only applied if the version of Thunderbird ends with \"esr\", e.g. 115.16.0esr. Other versions ignore it.",
+      "properties": {
+        "Add": {
+          "title": "Add new search engines.",
+          "x-help": "Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.",
+          "items": {
+            "properties": {
+              "Name": {
+                "title": "Name",
+                "description": "The name of the search engine (required).",
+                "examples": [
+                  "Example1"
+                ]
+              },
+              "IconURL": {
+                "title": "Icon URL",
+                "description": "A URL for the icon to use.",
+                "examples": [
+                  "https://www.example.org/favicon.ico"
+                ]
+              },
+              "Alias": {
+                "title": "Alias",
+                "description": "A keyword to use for the engine.",
+                "examples": [
+                  "example"
+                ]
+              },
+              "Description": {
+                "title": "Description",
+                "description": "A description of the search engine.",
+                "examples": [
+                  "Description"
+                ]
+              },
+              "Encoding": {
+                "title": "Encoding",
+                "description": "The query charset for the engine. It defaults to UTF-8.",
+                "examples": [
+                  "UTF-8"
+                ]
+              },
+              "Method": {
+                "title": "Method",
+                "description": "The HTTP method.",
+                "oneOf": [
+                  {
+                    "const": "GET",
+                    "title": "GET",
+                    "description": "Send the search terms as part of the URL."
+                  },
+                  {
+                    "const": "POST",
+                    "title": "POST",
+                    "description": "Send the search terms in the request body, using `PostData`."
+                  }
+                ]
+              },
+              "URLTemplate": {
+                "title": "Search URL",
+                "description": "The search URL with {searchTerms} to substitute for the search term (required).",
+                "examples": [
+                  "https://www.example.org/q={searchTerms}"
+                ]
+              },
+              "PostData": {
+                "title": "POST data",
+                "description": "The POST data as name value pairs separated by &.",
+                "examples": [
+                  "name=value&q={searchTerms}"
+                ]
+              },
+              "SuggestURLTemplate": {
+                "title": "Suggestions URL",
+                "description": "A search suggestions URL with {searchTerms} to substitute for the search term.",
+                "examples": [
+                  "https://www.example.org/suggestions/q={searchTerms}"
+                ]
+              }
+            }
+          },
+          "description": "Add new search engines.",
+          "x-cck2-equivalent": [
+            "searchplugins"
+          ]
+        },
+        "Default": {
+          "title": "Set the default search engine.",
+          "x-help": "The search engine is given by its name, either a built-in search engine or one added with Add. It is set when the policy is applied for the first time and whenever the name changes, so the user can choose another default search engine in the meantime.",
+          "examples": [
+            "NAME_OF_SEARCH_ENGINE"
+          ],
+          "description": "Set the default search engine, which is used to search the web from Thunderbird.",
+          "x-cck2-equivalent": [
+            "defaultSearchEngine"
+          ]
+        },
+        "PreventInstalls": {
+          "title": "Prevent installing search engines from webpages.",
+          "x-help": "This setting has no effect in Thunderbird.",
+          "description": "Prevent installing search engines from webpages.",
+          "x-cck2-equivalent": [
+            "disableSearchEngineInstall"
+          ]
+        },
+        "Remove": {
+          "title": "Hide built-in search engines.",
+          "x-help": "The search engines are given by their names. They are hidden when the policy is applied for the first time and whenever the list changes.",
+          "examples": [
+            [
+              "NAME_OF_SEARCH_ENGINE"
+            ]
+          ],
+          "description": "Hide built-in search engines.",
+          "x-cck2-equivalent": [
+            "removeDefaultSearchEngines (removed all built-in engines)"
+          ]
+        },
+        "DefaultPrivate": {
+          "title": "Set the default search engine for private browsing.",
+          "x-help": "This setting has no effect in Thunderbird.",
+          "examples": [
+            "NAME_OF_SEARCH_ENGINE"
+          ],
+          "description": "Set the default search engine for private browsing."
+        }
+      },
+      "x-differs-from-main": "On this branch SearchEngines is enterprise_only, which Gecko only applies in builds whose version ends with \"esr\". Main has no such limit.",
+      "x-category": "Search"
+    }
+  }
+}
