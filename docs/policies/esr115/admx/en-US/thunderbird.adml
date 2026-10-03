@@ -1,0 +1,1236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources revision="115.1801" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName/>
+  <description/>
+  <resources>
+    <stringTable>
+      <string id="3rdparty_Extensions">Managed storage of extensions</string>
+      <string id="3rdparty_Extensions_Explain">The managed storage of each extension, one JSON object per extension ID, which the extension reads with browser.storage.managed.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#3rdparty
+</string>
+      <string id="AppAutoUpdate">Automatic updates</string>
+      <string id="AppAutoUpdate_Explain">Enable or disable automatic application update.
+
+Install application updates automatically. If this policy is enabled, updates are installed without asking the user (the operating system might still ask for approval). If it is disabled, updates are downloaded, and the user chooses when to install them. In both cases, the user can't change the setting. If updates are turned off with DisableAppUpdate, this policy has no effect.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#appautoupdate
+</string>
+      <string id="AppUpdatePin">AppUpdatePin</string>
+      <string id="AppUpdatePin_Explain">Prevent Thunderbird from being updated beyond the specified version.
+
+You can specify the version as xx. and Thunderbird will be updated with all minor versions, but will not be updated beyond the major version.
+
+You can also specify the version as xx.xx and Thunderbird will be updated with all patch versions, but will not be updated beyond the minor version.
+
+You should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, Thunderbird will update beyond that version.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#appupdatepin
+</string>
+      <string id="AppUpdateURL">AppUpdateURL</string>
+      <string id="AppUpdateURL_Explain">Set custom app update URL.
+
+Change the URL for application update if you are providing Thunderbird updates from a custom update server.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#appupdateurl
+</string>
+      <string id="Authentication_SPNEGO">Sites allowed to use SPNEGO</string>
+      <string id="Authentication_SPNEGO_Explain">Websites which may use integrated authentication via SPNEGO (Kerberos).
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#authentication
+</string>
+      <string id="Authentication_Delegated">Sites allowed to receive delegated credentials</string>
+      <string id="Authentication_Delegated_Explain">Websites to which Thunderbird may delegate the authorization of the user.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#authentication
+</string>
+      <string id="Authentication_NTLM">Sites allowed to use NTLM</string>
+      <string id="Authentication_NTLM_Explain">Websites which may use integrated authentication via NTLM.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#authentication
+</string>
+      <string id="Authentication_AllowNonFQDN">Allow integrated authentication for non-FQDN hosts</string>
+      <string id="Authentication_AllowNonFQDN_Explain">Allows integrated authentication for hosts which are not given as fully qualified domain names.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#authentication
+</string>
+      <string id="Authentication_AllowProxies">Allow integrated authentication for proxies</string>
+      <string id="Authentication_AllowProxies_Explain">Allows integrated authentication for proxy servers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#authentication
+</string>
+      <string id="Authentication_Locked">Lock the integrated authentication settings</string>
+      <string id="Authentication_Locked_Explain">Prevents the user from changing the integrated authentication settings. The settings are locked unless this is false.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#authentication
+</string>
+      <string id="Authentication_PrivateBrowsing">Integrated authentication in private browsing</string>
+      <string id="Authentication_PrivateBrowsing_Explain">Enables integrated authentication in private browsing.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#authentication
+</string>
+      <string id="BackgroundAppUpdate">Background updates</string>
+      <string id="BackgroundAppUpdate_Explain">Enable or disable the background updater.
+
+Install application updates in the background, also when Thunderbird is not running (only on Windows). If this policy is enabled, updates may be installed in the background without asking the user (the operating system might still ask for approval). If it is disabled, no updates are installed while Thunderbird is not running. In both cases, the user can't change the setting. If updates are turned off with DisableAppUpdate, or automatic updates with AppAutoUpdate, this policy has no effect. If background updates don't run, check the requirements in this support article (https://support.mozilla.org/en-US/kb/enable-background-updates-thunderbird-windows).
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#backgroundappupdate
+</string>
+      <string id="BlockAboutAddons">BlockAboutAddons</string>
+      <string id="BlockAboutAddons_Explain">Block access to the Add-ons Manager (about:addons).
+
+Users can no longer open it to install, remove, enable or disable add-ons, or to change their options. Add-ons can still be managed with the Extensions and ExtensionSettings policies.
+
+If this policy is disabled or not configured, the Add-ons Manager is available.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#blockaboutaddons
+</string>
+      <string id="BlockAboutConfig">BlockAboutConfig</string>
+      <string id="BlockAboutConfig_Explain">Block access to the about:config page.
+
+Block access to about:config.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#blockaboutconfig
+</string>
+      <string id="BlockAboutProfiles">BlockAboutProfiles</string>
+      <string id="BlockAboutProfiles_Explain">Block access to the about:profiles page.
+
+Block access to About Profiles (about:profiles).
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#blockaboutprofiles
+</string>
+      <string id="BlockAboutSupport">BlockAboutSupport</string>
+      <string id="BlockAboutSupport_Explain">Block access to the about:support page.
+
+Block access to Troubleshooting Information (about:support).
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#blockaboutsupport
+</string>
+      <string id="CaptivePortal">Captive portal detection</string>
+      <string id="CaptivePortal_Explain">Enable or disable captive portal support.
+
+Detect captive portals, the login pages of networks in hotels or airports which have to be passed before the internet can be used. If this policy is enabled, the detection is turned on. If it is disabled, it is turned off. In both cases, the user can't change the setting. If this policy is not configured, the user can change the setting.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#captiveportal
+</string>
+      <string id="Certificates_Install">Install certificates into the Thunderbird certificate store</string>
+      <string id="Certificates_Install_Explain">Install certificates into the Thunderbird certificate store.
+
+If only a filename is specified, Thunderbird searches for the file in the following locations:
+
+- Windows
+  - %USERPROFILE%\AppData\Local\Mozilla\Certificates
+  - %USERPROFILE%\AppData\Roaming\Mozilla\Certificates
+- macOS
+  - /Library/Application Support/Mozilla/Certificates
+  - ~/Library/Application Support/Mozilla/Certificates
+- Linux
+  - /usr/lib/mozilla/certificates
+  - /usr/lib64/mozilla/certificates
+  - ~/.mozilla/certificates
+
+A fully qualified path can be used, including UNC paths. You should use the native path style for your operating system.
+
+If you are specifying the path in the policies.json file on Windows, you need to escape your backslashes (\\) which means that for UNC paths, you need to escape both (\\\\). If you use group policy, you only need one backslash.
+
+Certificates are installed using the trust string CT,CT,.
+
+Binary (DER) and ASCII (PEM) certificates are both supported.
+
+Environment variables like %USERPROFILE% are expanded.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#certificates
+</string>
+      <string id="Certificates_ImportEnterpriseRoots">Trust certificates that have been added to the operating system certificate store by a user or administrator</string>
+      <string id="Certificates_ImportEnterpriseRoots_Explain">Trust certificates that have been added to the operating system certificate store by a user or administrator.
+
+Note: This policy only works on Windows and macOS. For Linux discussion, see bug 1600509 (https://bugzilla.mozilla.org/show_bug.cgi?id=1600509).
+
+See https://support.mozilla.org/kb/setting-certificate-authorities-firefox for more detail.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#certificates
+</string>
+      <string id="Cookies_Allow">Sites which may always set cookies</string>
+      <string id="Cookies_Allow_Explain">A list of origins (not domains) where cookies are always allowed. You must include http or https.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#cookies
+</string>
+      <string id="Cookies_Block">Sites which may never set cookies</string>
+      <string id="Cookies_Block_Explain">A list of origins (not domains) where cookies are always blocked. You must include http or https.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#cookies
+</string>
+      <string id="Cookies_Default">Accept cookies</string>
+      <string id="Cookies_Default_Explain">Determines whether cookies are accepted at all.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#cookies
+</string>
+      <string id="Cookies_AcceptThirdParty">Accept third-party cookies</string>
+      <string id="Cookies_AcceptThirdParty_Explain">Determines how third-party cookies are handled.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#cookies
+</string>
+      <string id="Cookies_AcceptThirdParty_always">Always</string>
+      <string id="Cookies_AcceptThirdParty_never">Never</string>
+      <string id="Cookies_AcceptThirdParty_from_visited">From visited sites only</string>
+      <string id="Cookies_ExpireAtSessionEnd">Keep cookies only until the end of the session (deprecated)</string>
+      <string id="Cookies_ExpireAtSessionEnd_Explain">Deprecated.
+
+This setting has no effect anymore.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#cookies
+</string>
+      <string id="Cookies_Locked">Lock the cookie preferences</string>
+      <string id="Cookies_Locked_Explain">Prevents the user from changing cookie preferences.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#cookies
+</string>
+      <string id="DefaultDownloadDirectory">DefaultDownloadDirectory</string>
+      <string id="DefaultDownloadDirectory_Explain">Set the default download directory.
+
+You can use ${home} for the native home directory.
+
+Environment variables like %USERPROFILE% are expanded.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#defaultdownloaddirectory
+</string>
+      <string id="DisableAppUpdate">DisableAppUpdate</string>
+      <string id="DisableAppUpdate_Explain">Prevent Thunderbird from updating.
+
+Turn off application updates within Thunderbird.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disableappupdate
+</string>
+      <string id="DisableBuiltinPDFViewer">DisableBuiltinPDFViewer</string>
+      <string id="DisableBuiltinPDFViewer_Explain">Disable PDF.js, the built-in PDF viewer in Thunderbird.
+
+Disable the built in PDF viewer. PDF files are downloaded and sent externally.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disablebuiltinpdfviewer
+</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256">Disable TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256">Disable TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256">Disable TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256">Disable TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384">Disable TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384">Disable TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA">Disable TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA">Disable TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA">Disable TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA">Disable TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA">Disable TLS_DHE_RSA_WITH_AES_128_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA">Disable TLS_DHE_RSA_WITH_AES_256_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256">Disable TLS_RSA_WITH_AES_128_GCM_SHA256</string>
+      <string id="DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384">Disable TLS_RSA_WITH_AES_256_GCM_SHA384</string>
+      <string id="DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA">Disable TLS_RSA_WITH_AES_128_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA">Disable TLS_RSA_WITH_AES_256_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA">Disable TLS_RSA_WITH_3DES_EDE_CBC_SHA</string>
+      <string id="DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA_Explain">Disable ciphers.
+
+Disable specific cryptographic ciphers.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledciphers
+</string>
+      <string id="DisableDeveloperTools">DisableDeveloperTools</string>
+      <string id="DisableDeveloperTools_Explain">Block access to the developer tools.
+
+Remove access to all developer tools.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabledevelopertools
+</string>
+      <string id="DisableMasterPasswordCreation">Prevent creating a primary password</string>
+      <string id="DisableMasterPasswordCreation_Explain">If true, a master password can’t be created.
+
+Remove the master password functionality.
+
+If this value is true, it works the same as setting PrimaryPassword (#primarypassword) to false and removes the primary password functionality.
+
+If both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMasterPasswordCreation takes precedence.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disablemasterpasswordcreation
+</string>
+      <string id="DisablePasswordReveal">DisablePasswordReveal</string>
+      <string id="DisablePasswordReveal_Explain">Meant to prevent passwords from being revealed in saved logins. In this version, this policy has no effect.
+
+Meant to prevent passwords from being shown in saved logins. In this version, this policy has no effect, because the saved passwords dialog of Thunderbird does not check it.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disablepasswordreveal
+</string>
+      <string id="DisableSafeMode">Disable safe mode</string>
+      <string id="DisableSafeMode_Explain">Disable the feature to restart in Safe Mode. Note: the Shift key to enter Safe Mode can only be disabled on Windows using Group Policy.
+
+Disable safe mode within the browser.
+
+On Windows, this disables safe mode via the command line as well.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disablesafemode
+</string>
+      <string id="DisableSecurityBypass_InvalidCertificate">Prevent exceptions for invalid certificates</string>
+      <string id="DisableSecurityBypass_InvalidCertificate_Explain">Prevents adding an exception when an invalid certificate is shown.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disablesecuritybypass
+</string>
+      <string id="DisableSecurityBypass_SafeBrowsing">Prevent visiting harmful sites anyway</string>
+      <string id="DisableSecurityBypass_SafeBrowsing_Explain">Prevents selecting "ignore the risk" and visiting a harmful site anyway.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disablesecuritybypass
+</string>
+      <string id="DisableSystemAddonUpdate">DisableSystemAddonUpdate</string>
+      <string id="DisableSystemAddonUpdate_Explain">Prevent Thunderbird from installing and updating system add-ons.
+
+Prevent system add-ons from being installed or updated.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disablesystemaddonupdate
+</string>
+      <string id="DisableTelemetry">DisableTelemetry</string>
+      <string id="DisableTelemetry_Explain">Turn off Telemetry.
+
+Prevent the upload of telemetry data.
+
+Local storage of telemetry data is disabled as well.
+
+Mozilla recommends that you do not disable telemetry. Information collected through telemetry helps us build a better product for businesses like yours.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#disabletelemetry
+</string>
+      <string id="DNSOverHTTPS_ExcludedDomains">Domains excluded from DNS over HTTPS</string>
+      <string id="DNSOverHTTPS_ExcludedDomains_Explain">Domains which are resolved without DNS over HTTPS.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#dnsoverhttps
+</string>
+      <string id="DNSOverHTTPS_Enabled">Enable DNS over HTTPS</string>
+      <string id="DNSOverHTTPS_Enabled_Explain">Determines whether DNS over HTTPS is enabled.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#dnsoverhttps
+</string>
+      <string id="DNSOverHTTPS_ProviderURL">DNS over HTTPS provider</string>
+      <string id="DNSOverHTTPS_ProviderURL_Explain">The URL of another DNS over HTTPS provider.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#dnsoverhttps
+</string>
+      <string id="DNSOverHTTPS_Locked">Lock the DNS over HTTPS settings</string>
+      <string id="DNSOverHTTPS_Locked_Explain">Prevents the user from changing DNS over HTTPS preferences.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#dnsoverhttps
+</string>
+      <string id="DownloadDirectory">DownloadDirectory</string>
+      <string id="DownloadDirectory_Explain">Set and lock the download directory.
+
+You can use ${home} for the native home directory.
+
+Environment variables like %USERPROFILE% are expanded.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#downloaddirectory
+</string>
+      <string id="Extensions_Install">Extensions to install</string>
+      <string id="Extensions_Install_Explain">A list of URLs or native paths of extensions to be installed.
+
+Environment variables like %USERPROFILE% are expanded.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#extensions
+</string>
+      <string id="Extensions_Uninstall">Extensions to uninstall</string>
+      <string id="Extensions_Uninstall_Explain">A list of extension IDs which are uninstalled if found.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#extensions
+</string>
+      <string id="Extensions_Locked">Extensions which can't be disabled or removed</string>
+      <string id="Extensions_Locked_Explain">A list of extension IDs which the user can't disable or uninstall.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#extensions
+</string>
+      <string id="ExtensionSettings">ExtensionSettings</string>
+      <string id="ExtensionSettings_Explain">Manage all aspects of extension installation.
+
+Manage all aspects of extensions. This policy is based heavily on the Chrome policy (https://dev.chromium.org/administrators/policy-list-3/extension-settings-full) of the same name.
+
+This policy maps an extension ID to its configuration. With an extension ID, the configuration will be applied to the specified extension only. A default configuration can be set for the special ID "*", which will apply to all extensions that don't have a custom configuration set in this policy.
+
+To obtain an extension ID, install the extension and go to about:support. You will see the ID in the Extensions section.
+
+Installing a theme makes it the default.
+
+*: The default settings for all extensions which have no entry of their own. Its installation_mode and allowed_types also apply to an extension whose own entry has no installation_mode.
+  installation_mode: Whether extensions can be installed.
+    allowed: Users can install extensions.
+    blocked: No extension can be installed. An extension is only exempt if its own entry in this policy sets installation_mode to allowed, force_installed or normal_installed.
+  allowed_types: The types of add-ons which can be installed.
+    extension: Ordinary extensions.
+    dictionary: Spell-checking dictionaries.
+    locale: Language packs that translate the Thunderbird interface.
+    theme: Themes that change the appearance of Thunderbird.
+  blocked_install_message: A message shown to the user when the installation of an extension is blocked.
+  install_sources: The sources from which extensions can be installed, as URL match patterns (e.g. https://addons.thunderbird.net/*).
+  restricted_domains: The domains on which content scripts of extensions can't run.
+[name]: The settings of one extension, by its ID. They take precedence over the default settings.
+  installation_mode: How the extension is installed.
+    allowed: The extension may be installed, even when extensions are blocked by default.
+    blocked: The extension cannot be installed, and is uninstalled if already present.
+    force_installed: The extension is installed automatically and the user can neither disable nor remove it.
+    normal_installed: The extension is installed automatically. The user can disable it but cannot remove it.
+  install_url: The URL from which the extension is installed with force_installed and normal_installed, e.g. from addons.thunderbird.net or a file:/// URL. It is required for these modes. Without it, this extension and the ones which follow it in this policy are neither installed nor removed.
+  blocked_install_message: A message shown to the user when the installation of this extension is blocked.
+  updates_disabled: If true, the extension is not updated automatically.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#extensionsettings
+</string>
+      <string id="ExtensionUpdate">Automatic extension updates</string>
+      <string id="ExtensionUpdate_Explain">Enable or disable automatic extension updates.
+
+Turn off automatic updates of extensions. If this policy is disabled, extensions are no longer updated automatically, and the user can't turn it on. If it is enabled or not configured, the user's setting applies.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#extensionupdate
+</string>
+      <string id="Handlers">Handlers</string>
+      <string id="Handlers_Explain">Configure default application handlers.
+
+This policy is based on the internal format of handlers.json.
+
+You can configure handlers based on a mime type (mimeTypes), a file's extension (extensions), or a protocol (schemes).
+
+Within each handler type, you specify the given mimeType/extension/scheme as a key.
+
+(mimeTypes|extensions|schemes): How content is matched: by its MIME type (mimeTypes), by the extension of its file name (extensions), or by its protocol (schemes).
+  [name]: One MIME type, file extension or protocol, with how its content is handled.
+    action: What happens with the content.
+      saveToDisk: Download the file instead of opening it.
+      useHelperApp: Open the content with an application listed in handlers.
+      useSystemDefault: Open the content with the application the operating system associates with that type.
+    ask: If true, the user is asked what to do with the content. If false, the action is taken without asking.
+    handlers: The applications which can handle the content. The first one is the default. Each entry has either a path or a uriTemplate.
+      name: The name of the application.
+      path: The path of the executable of the application.
+      uriTemplate: The URL of a web application. It has to use https and contain %s, which is replaced by the URL of the content.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#handlers
+</string>
+      <string id="HardwareAcceleration">Use hardware acceleration</string>
+      <string id="HardwareAcceleration_Explain">If false, turn off hardware acceleration.
+
+Control hardware acceleration.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#hardwareacceleration
+</string>
+      <string id="InstallAddonsPermission_Allow">Sites allowed to install extensions</string>
+      <string id="InstallAddonsPermission_Allow_Explain">A list of origins where extension installs are allowed.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#installaddonspermission
+</string>
+      <string id="InstallAddonsPermission_Default">Allow extension installs by default</string>
+      <string id="InstallAddonsPermission_Default_Explain">Determines whether or not extension installs are allowed by default.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#installaddonspermission
+</string>
+      <string id="ManualAppUpdateOnly">ManualAppUpdateOnly</string>
+      <string id="ManualAppUpdateOnly_Explain">Allow manual updates only and do not notify the user about updates.
+
+Switch to manual updates only.
+
+If this policy is enabled:
+
+1. The user will never be prompted to install updates.
+2. Thunderbird will not check for updates in the background, though it will check automatically when an update UI is displayed (such as the one in the About dialog). This check will be used to show "Update to version X" in the UI, but will not automatically download the update or prompt the user to update in any other way.
+3. The update UI will work as expected, unlike when using DisableAppUpdate.
+
+This policy is primarily intended for advanced end users, not for enterprises, but it is available via GPO.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#manualappupdateonly
+</string>
+      <string id="NetworkPrediction">Network prediction (DNS prefetching)</string>
+      <string id="NetworkPrediction_Explain">Enable or disable network prediction (DNS prefetching).
+
+With network prediction, Thunderbird resolves the host names of links in advance, so they load faster.
+
+If this policy is enabled, network prediction is turned on. If it is disabled, network prediction is turned off. In both cases, the user can't change the setting. If this policy is not configured, the user can change the setting.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#networkprediction
+</string>
+      <string id="OfferToSaveLogins">Offer to save passwords</string>
+      <string id="OfferToSaveLogins_Explain">Enforce the setting to allow Thunderbird to offer to remember saved logins and passwords. Both true and false values are accepted.
+
+Control whether or not Thunderbird offers to save passwords.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#offertosavelogins
+</string>
+      <string id="OfferToSaveLoginsDefault">Offer to save passwords by default</string>
+      <string id="OfferToSaveLoginsDefault_Explain">Set the default value for allowing Thunderbird to offer to remember saved logins and passwords. Both true and false values are accepted.
+
+Sets the default value of signon.rememberSignons without locking it.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#offertosaveloginsdefault
+</string>
+      <string id="PasswordManagerEnabled">PasswordManagerEnabled</string>
+      <string id="PasswordManagerEnabled_Explain">Enable saving passwords to the password manager.
+
+Remove access to the password manager via the settings, and block about:logins.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#passwordmanagerenabled
+</string>
+      <string id="PDFjs_Enabled">Enable the built-in PDF viewer</string>
+      <string id="PDFjs_Enabled_Explain">If set to false, the built-in PDF viewer is disabled.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#pdfjs
+</string>
+      <string id="PDFjs_EnablePermissions">Honor the permissions of PDF documents</string>
+      <string id="PDFjs_EnablePermissions_Explain">Meant to make the built-in PDF viewer honor document permissions like preventing the copying of text. In this version, the value of this setting is ignored. If it is set, document permissions are honored unless Enabled is set to true.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#pdfjs
+</string>
+      <string id="Preferences">Preferences</string>
+      <string id="Preferences_Explain">Set and lock the value for a subset of preferences.
+
+Set and lock preferences.
+
+You can also set default preferences and user preferences, and clear the user value of a preference.
+
+Using the preference as the key, set the Value to the corresponding preference value.
+
+Default preferences can be modified by the user.
+
+If a value is locked, it is also set as the default.
+
+User preferences persist across invocations of Thunderbird. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy.
+
+User preferences persist even if the policy is removed, so if you need to remove them, set their Status to clear.
+
+IMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.
+
+Only these preferences can be set:
+
+- accessibility.*
+- app.update.* (except app.update.channel, app.update.lastUpdateTime and app.update.migrated)
+- browser.*
+- calendar.*
+- chat.*
+- datareporting.policy.*
+- dom.*
+- extensions.*
+- general.autoScroll*
+- general.smoothScroll*
+- geo.*
+- gfx.*
+- intl.*
+- layers.*
+- layout.*
+- mail.*
+- mailnews.*
+- media.*
+- network.*
+- pdfjs.*
+- places.*
+- print.*
+- security.default_personal_cert
+- security.insecure_connection_text.enabled
+- security.insecure_connection_text.pbmode.enabled
+- security.insecure_field_warning.contextual.enabled
+- security.mixed_content.block_active_content
+- security.osclientcerts.autoload
+- security.ssl.errorReporting.enabled
+- security.tls.hello_downgrade_check
+- security.tls.version.enable-deprecated
+- security.warn_submit_secure_to_insecure
+- signon.*
+- spellchecker.*
+- ui.*
+- widget.*
+
+[name]: One preference, by its name, as an object with Value and Status. A value alone (e.g. true) sets and locks the default value of the preference.
+  Value: The value of the preference.
+  Status: How the value is set.
+    default: Change the preference's default value. A value the user has already set still wins.
+    locked: Change the preference's default value and prevent the user from changing it.
+    user: Set the preference as though the user had set it, so the value is written to the profile.
+    clear: Remove any value the user has set, reverting the preference to its default.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#preferences
+</string>
+      <string id="PrimaryPassword">PrimaryPassword</string>
+      <string id="PrimaryPassword_Explain">Require or prevent using a Primary Password.
+
+Require or prevent using a primary (formerly master) password.
+
+If this value is true, a primary password is required. If this value is false, it works the same as if DisableMasterPasswordCreation (#disablemasterpasswordcreation) was true and removes the primary password functionality.
+
+If both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMasterPasswordCreation takes precedence.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#primarypassword
+</string>
+      <string id="PromptForDownloadLocation">PromptForDownloadLocation</string>
+      <string id="PromptForDownloadLocation_Explain">Ask where to save files when downloading.
+
+Ask where to save each file before downloading.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#promptfordownloadlocation
+</string>
+      <string id="Proxy_Mode">Proxy method</string>
+      <string id="Proxy_Mode_Explain">The proxy method being used.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_Mode_none">No proxy</string>
+      <string id="Proxy_Mode_system">Use system settings</string>
+      <string id="Proxy_Mode_manual">Manual configuration</string>
+      <string id="Proxy_Mode_autoDetect">Auto-detect (WPAD)</string>
+      <string id="Proxy_Mode_autoConfig">Automatic proxy configuration (PAC)</string>
+      <string id="Proxy_Locked">Lock the proxy settings</string>
+      <string id="Proxy_Locked_Explain">Prevents the user from changing the proxy settings.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_AutoConfigURL">Automatic proxy configuration URL</string>
+      <string id="Proxy_AutoConfigURL_Explain">The URL of a proxy configuration file (only used if the proxy method is autoConfig).
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_FTPProxy">FTP proxy (deprecated)</string>
+      <string id="Proxy_FTPProxy_Explain">Deprecated.
+
+This setting has no effect, because support for FTP proxies was removed.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_HTTPProxy">HTTP proxy</string>
+      <string id="Proxy_HTTPProxy_Explain">The HTTP proxy server.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_SSLProxy">SSL proxy</string>
+      <string id="Proxy_SSLProxy_Explain">The SSL proxy server.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_SOCKSProxy">SOCKS proxy</string>
+      <string id="Proxy_SOCKSProxy_Explain">The SOCKS proxy server.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_SOCKSVersion">SOCKS version</string>
+      <string id="Proxy_SOCKSVersion_Explain">The SOCKS version.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_SOCKSVersion_4">SOCKS v4</string>
+      <string id="Proxy_SOCKSVersion_5">SOCKS v5</string>
+      <string id="Proxy_UseHTTPProxyForAllProtocols">Use the HTTP proxy for all protocols</string>
+      <string id="Proxy_UseHTTPProxyForAllProtocols_Explain">Whether the HTTP proxy is also used for all other protocols.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_Passthrough">No proxy for</string>
+      <string id="Proxy_Passthrough_Explain">Hostnames or IP addresses which are not proxied, separated by commas. Use &lt;local&gt; to bypass proxying for all hostnames which do not contain periods.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_UseProxyForDNS">Proxy DNS when using SOCKS v5</string>
+      <string id="Proxy_UseProxyForDNS_Explain">Use the proxy for DNS requests when using SOCKS v5.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="Proxy_AutoLogin">Don't prompt for authentication if the password is saved</string>
+      <string id="Proxy_AutoLogin_Explain">Don't prompt for authentication if the password is saved. If the proxy requires authentication and its password is saved, Thunderbird logs in without asking. If that login fails, the user is asked again.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#proxy
+</string>
+      <string id="RequestedLocales">RequestedLocales</string>
+      <string id="RequestedLocales_Explain">Set the list of requested locales for the application in order of preference.
+
+The corresponding language packs become active.
+
+Note: This policy can also be a string, so that you can specify an empty value.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#requestedlocales
+</string>
+      <string id="SearchEngines_Add_1">Add new search engines (1)</string>
+      <string id="SearchEngines_Add_1_Explain">Add new search engines.
+
+Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#searchengines
+
+Name: The name of the search engine (required).
+
+Icon URL: A URL for the icon to use.
+
+Alias: A keyword to use for the engine.
+
+Description: A description of the search engine.
+
+Encoding: The query charset for the engine. It defaults to UTF-8.
+
+Method: The HTTP method.
+
+Search URL: The search URL with {searchTerms} to substitute for the search term (required).
+
+POST data: The POST data as name value pairs separated by &amp;.
+
+Suggestions URL: A search suggestions URL with {searchTerms} to substitute for the search term.
+</string>
+      <string id="SearchEngines_Add_1_Method_GET">GET</string>
+      <string id="SearchEngines_Add_1_Method_POST">POST</string>
+      <string id="SearchEngines_Add_2">Add new search engines (2)</string>
+      <string id="SearchEngines_Add_2_Explain">Add new search engines.
+
+Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#searchengines
+
+Name: The name of the search engine (required).
+
+Icon URL: A URL for the icon to use.
+
+Alias: A keyword to use for the engine.
+
+Description: A description of the search engine.
+
+Encoding: The query charset for the engine. It defaults to UTF-8.
+
+Method: The HTTP method.
+
+Search URL: The search URL with {searchTerms} to substitute for the search term (required).
+
+POST data: The POST data as name value pairs separated by &amp;.
+
+Suggestions URL: A search suggestions URL with {searchTerms} to substitute for the search term.
+</string>
+      <string id="SearchEngines_Add_2_Method_GET">GET</string>
+      <string id="SearchEngines_Add_2_Method_POST">POST</string>
+      <string id="SearchEngines_Add_3">Add new search engines (3)</string>
+      <string id="SearchEngines_Add_3_Explain">Add new search engines.
+
+Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#searchengines
+
+Name: The name of the search engine (required).
+
+Icon URL: A URL for the icon to use.
+
+Alias: A keyword to use for the engine.
+
+Description: A description of the search engine.
+
+Encoding: The query charset for the engine. It defaults to UTF-8.
+
+Method: The HTTP method.
+
+Search URL: The search URL with {searchTerms} to substitute for the search term (required).
+
+POST data: The POST data as name value pairs separated by &amp;.
+
+Suggestions URL: A search suggestions URL with {searchTerms} to substitute for the search term.
+</string>
+      <string id="SearchEngines_Add_3_Method_GET">GET</string>
+      <string id="SearchEngines_Add_3_Method_POST">POST</string>
+      <string id="SearchEngines_Add_4">Add new search engines (4)</string>
+      <string id="SearchEngines_Add_4_Explain">Add new search engines.
+
+Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#searchengines
+
+Name: The name of the search engine (required).
+
+Icon URL: A URL for the icon to use.
+
+Alias: A keyword to use for the engine.
+
+Description: A description of the search engine.
+
+Encoding: The query charset for the engine. It defaults to UTF-8.
+
+Method: The HTTP method.
+
+Search URL: The search URL with {searchTerms} to substitute for the search term (required).
+
+POST data: The POST data as name value pairs separated by &amp;.
+
+Suggestions URL: A search suggestions URL with {searchTerms} to substitute for the search term.
+</string>
+      <string id="SearchEngines_Add_4_Method_GET">GET</string>
+      <string id="SearchEngines_Add_4_Method_POST">POST</string>
+      <string id="SearchEngines_Add_5">Add new search engines (5)</string>
+      <string id="SearchEngines_Add_5_Explain">Add new search engines.
+
+Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#searchengines
+
+Name: The name of the search engine (required).
+
+Icon URL: A URL for the icon to use.
+
+Alias: A keyword to use for the engine.
+
+Description: A description of the search engine.
+
+Encoding: The query charset for the engine. It defaults to UTF-8.
+
+Method: The HTTP method.
+
+Search URL: The search URL with {searchTerms} to substitute for the search term (required).
+
+POST data: The POST data as name value pairs separated by &amp;.
+
+Suggestions URL: A search suggestions URL with {searchTerms} to substitute for the search term.
+</string>
+      <string id="SearchEngines_Add_5_Method_GET">GET</string>
+      <string id="SearchEngines_Add_5_Method_POST">POST</string>
+      <string id="SearchEngines_Remove">Hide built-in search engines</string>
+      <string id="SearchEngines_Remove_Explain">Hide built-in search engines.
+
+The search engines are given by their names. They are hidden when the policy is applied for the first time and whenever the list changes.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#searchengines
+</string>
+      <string id="SearchEngines_Default">Set the default search engine</string>
+      <string id="SearchEngines_Default_Explain">Set the default search engine, which is used to search the web from Thunderbird.
+
+The search engine is given by its name, either a built-in search engine or one added with Add. It is set when the policy is applied for the first time and whenever the name changes, so the user can choose another default search engine in the meantime.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#searchengines
+</string>
+      <string id="SearchEngines_DefaultPrivate">Set the default search engine for private browsing</string>
+      <string id="SearchEngines_DefaultPrivate_Explain">Set the default search engine for private browsing.
+
+This setting has no effect in Thunderbird.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#searchengines
+</string>
+      <string id="SearchEngines_PreventInstalls">Prevent installing search engines from webpages</string>
+      <string id="SearchEngines_PreventInstalls_Explain">Prevent installing search engines from webpages.
+
+This setting has no effect in Thunderbird.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#searchengines
+</string>
+      <string id="SSLVersionMax">SSLVersionMax</string>
+      <string id="SSLVersionMax_Explain">Set the maximum SSL version.
+
+Set and lock the maximum version of TLS. (Thunderbird defaults to a maximum of TLS 1.3.)
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#sslversionmax
+</string>
+      <string id="SSLVersionMax_tls1">TLS 1.0</string>
+      <string id="SSLVersionMax_tls1_1">TLS 1.1</string>
+      <string id="SSLVersionMax_tls1_2">TLS 1.2</string>
+      <string id="SSLVersionMax_tls1_3">TLS 1.3</string>
+      <string id="SSLVersionMin">SSLVersionMin</string>
+      <string id="SSLVersionMin_Explain">Set the minimum SSL version.
+
+Set and lock the minimum version of TLS. (Thunderbird defaults to a minimum of TLS 1.2.)
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr115/#sslversionmin
+</string>
+      <string id="SSLVersionMin_tls1">TLS 1.0</string>
+      <string id="SSLVersionMin_tls1_1">TLS 1.1</string>
+      <string id="SSLVersionMin_tls1_2">TLS 1.2</string>
+      <string id="SSLVersionMin_tls1_3">TLS 1.3</string>
+      <string id="SUPPORTED_ID_0">Thunderbird 78.0 - *</string>
+      <string id="SUPPORTED_ID_1">Thunderbird 75.0 - *</string>
+      <string id="SUPPORTED_ID_2">Thunderbird 104.0 - *</string>
+      <string id="SUPPORTED_ID_3">Thunderbird 68.0 - *</string>
+      <string id="SUPPORTED_ID_4">Thunderbird 92.0 - *</string>
+      <string id="SUPPORTED_ID_5">Thunderbird 76.0 - *</string>
+      <string id="SUPPORTED_ID_6">Thunderbird 102.0 - *</string>
+      <string id="SUPPORTED_ID_7">Thunderbird 77.0 - *</string>
+      <string id="SUPPORTED_ID_8">Thunderbird 108.0 - *</string>
+      <string id="thunderbird">Mozilla Thunderbird</string>
+      <string id="cat_Security">Security</string>
+      <string id="cat_Device_update_settings">Device update settings</string>
+      <string id="cat_Authentication">Authentication</string>
+      <string id="cat_Extensions">Extensions</string>
+      <string id="cat_Network_security">Network security</string>
+      <string id="cat_Certificate_management">Certificate management</string>
+      <string id="Certificates_category">Certificates</string>
+      <string id="Cookies_category">Cookies</string>
+      <string id="cat_Downloads">Downloads</string>
+      <string id="cat_Printing">Printing</string>
+      <string id="DisabledCiphers_category">DisabledCiphers</string>
+      <string id="cat_Password_manager">Password manager</string>
+      <string id="DisableSecurityBypass_category">DisableSecurityBypass</string>
+      <string id="cat_Miscellaneous">Miscellaneous</string>
+      <string id="DNSOverHTTPS_category">DNSOverHTTPS</string>
+      <string id="InstallAddonsPermission_category">InstallAddonsPermission</string>
+      <string id="PDFjs_category">PDFjs</string>
+      <string id="Proxy_category">Proxy</string>
+      <string id="cat_Search">Search</string>
+      <string id="SearchEngines_category">SearchEngines</string>
+      <string id="SearchEngines_Add_category">Add</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="3rdparty_Extensions">
+        <listBox refId="3rdparty_Extensions_List">Managed storage of extensions</listBox>
+      </presentation>
+      <presentation id="AppUpdatePin">
+        <textBox refId="AppUpdatePin_Input">
+          <label>AppUpdatePin</label>
+        </textBox>
+      </presentation>
+      <presentation id="AppUpdateURL">
+        <textBox refId="AppUpdateURL_Input">
+          <label>AppUpdateURL</label>
+        </textBox>
+      </presentation>
+      <presentation id="Authentication_SPNEGO">
+        <listBox refId="Authentication_SPNEGO_List">Sites allowed to use SPNEGO</listBox>
+      </presentation>
+      <presentation id="Authentication_Delegated">
+        <listBox refId="Authentication_Delegated_List">Sites allowed to receive delegated credentials</listBox>
+      </presentation>
+      <presentation id="Authentication_NTLM">
+        <listBox refId="Authentication_NTLM_List">Sites allowed to use NTLM</listBox>
+      </presentation>
+      <presentation id="Authentication_AllowNonFQDN">
+        <checkBox refId="Authentication_AllowNonFQDN_SPNEGO_Bool">Allow SPNEGO</checkBox>
+        <checkBox refId="Authentication_AllowNonFQDN_NTLM_Bool">Allow NTLM</checkBox>
+      </presentation>
+      <presentation id="Authentication_AllowProxies">
+        <checkBox refId="Authentication_AllowProxies_SPNEGO_Bool">Allow SPNEGO</checkBox>
+        <checkBox refId="Authentication_AllowProxies_NTLM_Bool">Allow NTLM</checkBox>
+      </presentation>
+      <presentation id="Certificates_Install">
+        <listBox refId="Certificates_Install_List">Install certificates into the Thunderbird certificate store</listBox>
+      </presentation>
+      <presentation id="Cookies_Allow">
+        <listBox refId="Cookies_Allow_List">Sites which may always set cookies</listBox>
+      </presentation>
+      <presentation id="Cookies_Block">
+        <listBox refId="Cookies_Block_List">Sites which may never set cookies</listBox>
+      </presentation>
+      <presentation id="Cookies_AcceptThirdParty">
+        <dropdownList refId="Cookies_AcceptThirdParty_Enum">AcceptThirdParty</dropdownList>
+      </presentation>
+      <presentation id="DefaultDownloadDirectory">
+        <textBox refId="DefaultDownloadDirectory_Input">
+          <label>DefaultDownloadDirectory</label>
+        </textBox>
+      </presentation>
+      <presentation id="DNSOverHTTPS_ExcludedDomains">
+        <listBox refId="DNSOverHTTPS_ExcludedDomains_List">Domains excluded from DNS over HTTPS</listBox>
+      </presentation>
+      <presentation id="DNSOverHTTPS_ProviderURL">
+        <textBox refId="DNSOverHTTPS_ProviderURL_Input">
+          <label>ProviderURL</label>
+        </textBox>
+      </presentation>
+      <presentation id="DownloadDirectory">
+        <textBox refId="DownloadDirectory_Input">
+          <label>DownloadDirectory</label>
+        </textBox>
+      </presentation>
+      <presentation id="Extensions_Install">
+        <listBox refId="Extensions_Install_List">Extensions to install</listBox>
+      </presentation>
+      <presentation id="Extensions_Uninstall">
+        <listBox refId="Extensions_Uninstall_List">Extensions to uninstall</listBox>
+      </presentation>
+      <presentation id="Extensions_Locked">
+        <listBox refId="Extensions_Locked_List">Extensions which can't be disabled or removed</listBox>
+      </presentation>
+      <presentation id="ExtensionSettings">
+        <text>ExtensionSettings</text>
+        <multiTextBox refId="ExtensionSettings_Input" defaultHeight="12"/>
+      </presentation>
+      <presentation id="Handlers">
+        <text>Handlers</text>
+        <multiTextBox refId="Handlers_Input" defaultHeight="12"/>
+      </presentation>
+      <presentation id="InstallAddonsPermission_Allow">
+        <listBox refId="InstallAddonsPermission_Allow_List">Sites allowed to install extensions</listBox>
+      </presentation>
+      <presentation id="Preferences">
+        <text>Preferences</text>
+        <multiTextBox refId="Preferences_Input" defaultHeight="12"/>
+      </presentation>
+      <presentation id="Proxy_Mode">
+        <dropdownList refId="Proxy_Mode_Enum">Mode</dropdownList>
+      </presentation>
+      <presentation id="Proxy_AutoConfigURL">
+        <textBox refId="Proxy_AutoConfigURL_Input">
+          <label>AutoConfigURL</label>
+        </textBox>
+      </presentation>
+      <presentation id="Proxy_FTPProxy">
+        <textBox refId="Proxy_FTPProxy_Input">
+          <label>FTPProxy</label>
+        </textBox>
+      </presentation>
+      <presentation id="Proxy_HTTPProxy">
+        <textBox refId="Proxy_HTTPProxy_Input">
+          <label>HTTPProxy</label>
+        </textBox>
+      </presentation>
+      <presentation id="Proxy_SSLProxy">
+        <textBox refId="Proxy_SSLProxy_Input">
+          <label>SSLProxy</label>
+        </textBox>
+      </presentation>
+      <presentation id="Proxy_SOCKSProxy">
+        <textBox refId="Proxy_SOCKSProxy_Input">
+          <label>SOCKSProxy</label>
+        </textBox>
+      </presentation>
+      <presentation id="Proxy_SOCKSVersion">
+        <dropdownList refId="Proxy_SOCKSVersion_Enum">SOCKSVersion</dropdownList>
+      </presentation>
+      <presentation id="Proxy_Passthrough">
+        <textBox refId="Proxy_Passthrough_Input">
+          <label>Passthrough</label>
+        </textBox>
+      </presentation>
+      <presentation id="RequestedLocales">
+        <listBox refId="RequestedLocales_List">RequestedLocales</listBox>
+      </presentation>
+      <presentation id="SearchEngines_Add_1">
+        <textBox refId="SearchEngines_Add_1_Name_Input">
+          <label>Name</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_1_IconURL_Input">
+          <label>Icon URL</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_1_Alias_Input">
+          <label>Alias</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_1_Description_Input">
+          <label>Description</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_1_Encoding_Input">
+          <label>Encoding</label>
+        </textBox>
+        <dropdownList refId="SearchEngines_Add_1_Method_Enum">Method</dropdownList>
+        <textBox refId="SearchEngines_Add_1_URLTemplate_Input">
+          <label>Search URL</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_1_PostData_Input">
+          <label>POST data</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_1_SuggestURLTemplate_Input">
+          <label>Suggestions URL</label>
+        </textBox>
+      </presentation>
+      <presentation id="SearchEngines_Add_2">
+        <textBox refId="SearchEngines_Add_2_Name_Input">
+          <label>Name</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_2_IconURL_Input">
+          <label>Icon URL</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_2_Alias_Input">
+          <label>Alias</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_2_Description_Input">
+          <label>Description</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_2_Encoding_Input">
+          <label>Encoding</label>
+        </textBox>
+        <dropdownList refId="SearchEngines_Add_2_Method_Enum">Method</dropdownList>
+        <textBox refId="SearchEngines_Add_2_URLTemplate_Input">
+          <label>Search URL</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_2_PostData_Input">
+          <label>POST data</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_2_SuggestURLTemplate_Input">
+          <label>Suggestions URL</label>
+        </textBox>
+      </presentation>
+      <presentation id="SearchEngines_Add_3">
+        <textBox refId="SearchEngines_Add_3_Name_Input">
+          <label>Name</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_3_IconURL_Input">
+          <label>Icon URL</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_3_Alias_Input">
+          <label>Alias</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_3_Description_Input">
+          <label>Description</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_3_Encoding_Input">
+          <label>Encoding</label>
+        </textBox>
+        <dropdownList refId="SearchEngines_Add_3_Method_Enum">Method</dropdownList>
+        <textBox refId="SearchEngines_Add_3_URLTemplate_Input">
+          <label>Search URL</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_3_PostData_Input">
+          <label>POST data</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_3_SuggestURLTemplate_Input">
+          <label>Suggestions URL</label>
+        </textBox>
+      </presentation>
+      <presentation id="SearchEngines_Add_4">
+        <textBox refId="SearchEngines_Add_4_Name_Input">
+          <label>Name</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_4_IconURL_Input">
+          <label>Icon URL</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_4_Alias_Input">
+          <label>Alias</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_4_Description_Input">
+          <label>Description</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_4_Encoding_Input">
+          <label>Encoding</label>
+        </textBox>
+        <dropdownList refId="SearchEngines_Add_4_Method_Enum">Method</dropdownList>
+        <textBox refId="SearchEngines_Add_4_URLTemplate_Input">
+          <label>Search URL</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_4_PostData_Input">
+          <label>POST data</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_4_SuggestURLTemplate_Input">
+          <label>Suggestions URL</label>
+        </textBox>
+      </presentation>
+      <presentation id="SearchEngines_Add_5">
+        <textBox refId="SearchEngines_Add_5_Name_Input">
+          <label>Name</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_5_IconURL_Input">
+          <label>Icon URL</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_5_Alias_Input">
+          <label>Alias</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_5_Description_Input">
+          <label>Description</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_5_Encoding_Input">
+          <label>Encoding</label>
+        </textBox>
+        <dropdownList refId="SearchEngines_Add_5_Method_Enum">Method</dropdownList>
+        <textBox refId="SearchEngines_Add_5_URLTemplate_Input">
+          <label>Search URL</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_5_PostData_Input">
+          <label>POST data</label>
+        </textBox>
+        <textBox refId="SearchEngines_Add_5_SuggestURLTemplate_Input">
+          <label>Suggestions URL</label>
+        </textBox>
+      </presentation>
+      <presentation id="SearchEngines_Remove">
+        <listBox refId="SearchEngines_Remove_List">Hide built-in search engines</listBox>
+      </presentation>
+      <presentation id="SearchEngines_Default">
+        <textBox refId="SearchEngines_Default_Input">
+          <label>Default</label>
+        </textBox>
+      </presentation>
+      <presentation id="SearchEngines_DefaultPrivate">
+        <textBox refId="SearchEngines_DefaultPrivate_Input">
+          <label>DefaultPrivate</label>
+        </textBox>
+      </presentation>
+      <presentation id="SSLVersionMax">
+        <dropdownList refId="SSLVersionMax_Enum">SSLVersionMax</dropdownList>
+      </presentation>
+      <presentation id="SSLVersionMin">
+        <dropdownList refId="SSLVersionMin_Enum">SSLVersionMin</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>
