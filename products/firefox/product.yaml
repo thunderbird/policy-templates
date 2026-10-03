@@ -34,5 +34,5 @@ plist:
   domain: org.mozilla.firefox
 
 # Links in the generated files.
-docs-url: https://mozilla.github.io/policy-templates
-templates-repository: https://github.com/mozilla/policy-templates
+docs-url: https://thunderbird.github.io/policy-templates/firefox
+templates-repository: https://github.com/thunderbird/policy-templates

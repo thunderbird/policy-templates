@@ -12,8 +12,8 @@ Policies can be specified by creating a file called `policies.json`:
 The `policies.json` must use the UTF-8 encoding.
 
 Alternatively, policies can be specified via platform-specific methods:
-* Windows: [firefox.admx](https://github.com/mozilla/policy-templates/tree/master/docs/policies/beta/admx) - use with Group Policy or Intune
-* Mac: [org.mozilla.firefox.plist](https://github.com/mozilla/policy-templates/blob/master/docs/policies/beta/plist/org.mozilla.firefox.plist) - use with configuration profiles
+* Windows: [firefox.admx](https://github.com/thunderbird/policy-templates/tree/master/docs/firefox/policies/beta/admx) - use with Group Policy or Intune
+* Mac: [org.mozilla.firefox.plist](https://github.com/thunderbird/policy-templates/blob/master/docs/firefox/policies/beta/plist/org.mozilla.firefox.plist) - use with configuration profiles
 
 This document provides examples in these formats for all policies.
 
@@ -25,10 +25,10 @@ Mozilla's `mozilla.admx`. Both templates are needed. The `mozilla.admx`
 provided here is Mozilla's unchanged file, and may already be installed together
 with the Thunderbird templates.
 
-* [firefox.admx](https://mozilla.github.io/policy-templates/policies/beta/admx/firefox.admx) and
-  [en-US/firefox.adml](https://mozilla.github.io/policy-templates/policies/beta/admx/en-US/firefox.adml)
-* [mozilla.admx](https://mozilla.github.io/policy-templates/policies/beta/admx/mozilla.admx) and
-  [en-US/mozilla.adml](https://mozilla.github.io/policy-templates/policies/beta/admx/en-US/mozilla.adml)
+* [firefox.admx](https://thunderbird.github.io/policy-templates/firefox/policies/beta/admx/firefox.admx) and
+  [en-US/firefox.adml](https://thunderbird.github.io/policy-templates/firefox/policies/beta/admx/en-US/firefox.adml)
+* [mozilla.admx](https://thunderbird.github.io/policy-templates/firefox/policies/beta/admx/mozilla.admx) and
+  [en-US/mozilla.adml](https://thunderbird.github.io/policy-templates/firefox/policies/beta/admx/en-US/mozilla.adml)
 
 Installation:
 

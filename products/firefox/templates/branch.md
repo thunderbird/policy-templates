@@ -17,8 +17,8 @@ Policies can be specified by creating a file called `policies.json`:
 The `policies.json` must use the UTF-8 encoding.
 
 Alternatively, policies can be specified via platform-specific methods:
-* Windows: [firefox.admx](__templates_repository__/tree/master/docs/policies/__branch__/admx) - use with Group Policy or Intune
-* Mac: [org.mozilla.firefox.plist](__templates_repository__/blob/master/docs/policies/__branch__/plist/org.mozilla.firefox.plist) - use with configuration profiles
+* Windows: [firefox.admx](__templates_repository__/tree/master/docs/firefox/policies/__branch__/admx) - use with Group Policy or Intune
+* Mac: [org.mozilla.firefox.plist](__templates_repository__/blob/master/docs/firefox/policies/__branch__/plist/org.mozilla.firefox.plist) - use with configuration profiles
 
 This document provides examples in these formats for all policies.
 

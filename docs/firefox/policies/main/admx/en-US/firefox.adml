@@ -11,7 +11,7 @@ Allow WebExtensions to configure policy. For more information, see Adding policy
 
 For GPO and Intune, the extension developer should provide an ADMX file.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#3rdparty
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#3rdparty
 </string>
       <string id="AIControls_Default">Default</string>
       <string id="AIControls_Default_Explain">Controls access to AI features: Translations, PDF alt text generation, smart tab groups, display summaries in link previews, AI chatbot in the sidebar, smart windows and on-device speech recognition. The Default value applies to all AI features, unless overridden by a specific feature.
@@ -36,7 +36,7 @@ All keys accept the following sub-keys:
   - blocked disables the feature and users won't see it. For on-device AI, any models already downloaded are removed.
 - Locked: if true, the user cannot change the setting.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#aicontrols
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#aicontrols
 </string>
       <string id="AIControls_Default_Value_available">Available</string>
       <string id="AIControls_Default_Value_blocked">Blocked</string>
@@ -63,7 +63,7 @@ All keys accept the following sub-keys:
   - blocked disables the feature and users won't see it. For on-device AI, any models already downloaded are removed.
 - Locked: if true, the user cannot change the setting.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#aicontrols
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#aicontrols
 </string>
       <string id="AIControls_Translations_Value_available">Available</string>
       <string id="AIControls_Translations_Value_blocked">Blocked</string>
@@ -90,7 +90,7 @@ All keys accept the following sub-keys:
   - blocked disables the feature and users won't see it. For on-device AI, any models already downloaded are removed.
 - Locked: if true, the user cannot change the setting.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#aicontrols
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#aicontrols
 </string>
       <string id="AIControls_PDFAltText_Value_available">Available</string>
       <string id="AIControls_PDFAltText_Value_blocked">Blocked</string>
@@ -117,7 +117,7 @@ All keys accept the following sub-keys:
   - blocked disables the feature and users won't see it. For on-device AI, any models already downloaded are removed.
 - Locked: if true, the user cannot change the setting.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#aicontrols
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#aicontrols
 </string>
       <string id="AIControls_SmartTabGroups_Value_available">Available</string>
       <string id="AIControls_SmartTabGroups_Value_blocked">Blocked</string>
@@ -144,7 +144,7 @@ All keys accept the following sub-keys:
   - blocked disables the feature and users won't see it. For on-device AI, any models already downloaded are removed.
 - Locked: if true, the user cannot change the setting.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#aicontrols
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#aicontrols
 </string>
       <string id="AIControls_LinkPreviewKeyPoints_Value_available">Available</string>
       <string id="AIControls_LinkPreviewKeyPoints_Value_blocked">Blocked</string>
@@ -171,7 +171,7 @@ All keys accept the following sub-keys:
   - blocked disables the feature and users won't see it. For on-device AI, any models already downloaded are removed.
 - Locked: if true, the user cannot change the setting.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#aicontrols
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#aicontrols
 </string>
       <string id="AIControls_SidebarChatbot_Value_available">Available</string>
       <string id="AIControls_SidebarChatbot_Value_blocked">Blocked</string>
@@ -198,7 +198,7 @@ All keys accept the following sub-keys:
   - blocked disables the feature and users won't see it. For on-device AI, any models already downloaded are removed.
 - Locked: if true, the user cannot change the setting.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#aicontrols
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#aicontrols
 </string>
       <string id="AIControls_SmartWindow_Value_available">Available</string>
       <string id="AIControls_SmartWindow_Value_blocked">Blocked</string>
@@ -225,7 +225,7 @@ All keys accept the following sub-keys:
   - blocked disables the feature and users won't see it. For on-device AI, any models already downloaded are removed.
 - Locked: if true, the user cannot change the setting.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#aicontrols
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#aicontrols
 </string>
       <string id="AIControls_SpeechRecognition_Value_available">available</string>
       <string id="AIControls_SpeechRecognition_Value_blocked">blocked</string>
@@ -236,12 +236,12 @@ This policy is based on the Chrome policy (https://chromeenterprise.google/polic
 
 If this policy is enabled, users can only access Google Workspace using accounts from the specified domains. If you want to allow Gmail, you can add consumer_accounts to the list.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#alloweddomainsforapps
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#alloweddomainsforapps
 </string>
       <string id="AllowFileSelectionDialogs">AllowFileSelectionDialogs</string>
       <string id="AllowFileSelectionDialogs_Explain">Enable or disable file selection dialogs.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#allowfileselectiondialogs
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#allowfileselectiondialogs
 </string>
       <string id="AppAutoUpdate">AppAutoUpdate</string>
       <string id="AppAutoUpdate_Explain">Enable or disable automatic application update.
@@ -252,7 +252,7 @@ If set to false, application updates are downloaded but the user can choose when
 
 If you have disabled updates via DisableAppUpdate, this policy has no effect.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#appautoupdate
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#appautoupdate
 </string>
       <string id="AppUpdatePin">AppUpdatePin</string>
       <string id="AppUpdatePin_Explain">Prevent Firefox from being updated beyond the specified version.
@@ -265,12 +265,12 @@ Note: The value MUST end in a dot(.).
 
 You should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, Firefox will update beyond that version.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#appupdatepin
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#appupdatepin
 </string>
       <string id="AppUpdateURL">AppUpdateURL</string>
       <string id="AppUpdateURL_Explain">Change the URL for application update if you are providing Firefox updates from a custom update server.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#appupdateurl
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#appupdateurl
 </string>
       <string id="Authentication_SPNEGO">SPNEGO</string>
       <string id="Authentication_SPNEGO_Explain">Configure sites that support integrated authentication.
@@ -279,7 +279,7 @@ See Integrated authentication (https://htmlpreview.github.io/?https://github.com
 
 PrivateBrowsing enables integrated authentication in private browsing.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#authentication
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#authentication
 </string>
       <string id="Authentication_Delegated">Delegated</string>
       <string id="Authentication_Delegated_Explain">Configure sites that support integrated authentication.
@@ -288,7 +288,7 @@ See Integrated authentication (https://htmlpreview.github.io/?https://github.com
 
 PrivateBrowsing enables integrated authentication in private browsing.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#authentication
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#authentication
 </string>
       <string id="Authentication_NTLM">NTLM</string>
       <string id="Authentication_NTLM_Explain">Configure sites that support integrated authentication.
@@ -297,7 +297,7 @@ See Integrated authentication (https://htmlpreview.github.io/?https://github.com
 
 PrivateBrowsing enables integrated authentication in private browsing.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#authentication
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#authentication
 </string>
       <string id="Authentication_AllowNonFQDN">AllowNonFQDN</string>
       <string id="Authentication_AllowNonFQDN_Explain">Configure sites that support integrated authentication.
@@ -306,7 +306,7 @@ See Integrated authentication (https://htmlpreview.github.io/?https://github.com
 
 PrivateBrowsing enables integrated authentication in private browsing.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#authentication
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#authentication
 </string>
       <string id="Authentication_AllowProxies">AllowProxies</string>
       <string id="Authentication_AllowProxies_Explain">Configure sites that support integrated authentication.
@@ -315,7 +315,7 @@ See Integrated authentication (https://htmlpreview.github.io/?https://github.com
 
 PrivateBrowsing enables integrated authentication in private browsing.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#authentication
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#authentication
 </string>
       <string id="Authentication_Locked">Locked</string>
       <string id="Authentication_Locked_Explain">Configure sites that support integrated authentication.
@@ -324,7 +324,7 @@ See Integrated authentication (https://htmlpreview.github.io/?https://github.com
 
 PrivateBrowsing enables integrated authentication in private browsing.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#authentication
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#authentication
 </string>
       <string id="Authentication_PrivateBrowsing">PrivateBrowsing</string>
       <string id="Authentication_PrivateBrowsing_Explain">Configure sites that support integrated authentication.
@@ -333,21 +333,21 @@ See Integrated authentication (https://htmlpreview.github.io/?https://github.com
 
 PrivateBrowsing enables integrated authentication in private browsing.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#authentication
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#authentication
 </string>
       <string id="AutofillAddressEnabled">AutofillAddressEnabled</string>
       <string id="AutofillAddressEnabled_Explain">Enables or disables autofill for addresses.
 
 This only applies when address autofill is enabled for a particular Firefox version or region. See this page (https://support.mozilla.org/kb/automatically-fill-your-address-web-forms) for more information.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#autofilladdressenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#autofilladdressenabled
 </string>
       <string id="AutofillCreditCardEnabled">AutofillCreditCardEnabled</string>
       <string id="AutofillCreditCardEnabled_Explain">Enables or disables autofill for payment methods.
 
 This only applies when payment method autofill is enabled for a particular Firefox version or region. See this page (https://support.mozilla.org/kb/credit-card-autofill) for more information.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#autofillcreditcardenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#autofillcreditcardenabled
 </string>
       <string id="AutoLaunchProtocolsFromOrigins">AutoLaunchProtocolsFromOrigins</string>
       <string id="AutoLaunchProtocolsFromOrigins_Explain">Define a list of external protocols that can be used from listed origins without prompting the user.
@@ -359,7 +359,7 @@ The syntax of this policy is exactly the same as the Chrome AutoLaunchProtocolsF
 allowed_origins
 protocol
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#autolaunchprotocolsfromorigins
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#autolaunchprotocolsfromorigins
 </string>
       <string id="BackgroundAppUpdate">BackgroundAppUpdate</string>
       <string id="BackgroundAppUpdate_Explain">Enable or disable automatic application update in the background, when the application is not running.
@@ -372,27 +372,27 @@ If you have disabled updates via DisableAppUpdate or disabled automatic updates 
 
 If you are having trouble getting the background task to run, verify your configuration with the "Requirements to run" section in this support document (https://support.mozilla.org/en-US/kb/enable-background-updates-firefox-windows).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#backgroundappupdate
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#backgroundappupdate
 </string>
       <string id="BlockAboutAddons">BlockAboutAddons</string>
       <string id="BlockAboutAddons_Explain">Block access to the Add-ons Manager ('about:addons').
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#blockaboutaddons
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#blockaboutaddons
 </string>
       <string id="BlockAboutConfig">BlockAboutConfig</string>
       <string id="BlockAboutConfig_Explain">Block access to 'about:config'.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#blockaboutconfig
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#blockaboutconfig
 </string>
       <string id="BlockAboutProfiles">BlockAboutProfiles</string>
       <string id="BlockAboutProfiles_Explain">Block access to About Profiles ('about:profiles').
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#blockaboutprofiles
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#blockaboutprofiles
 </string>
       <string id="BlockAboutSupport">BlockAboutSupport</string>
       <string id="BlockAboutSupport_Explain">Block access to Troubleshooting Information ('about:support').
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#blockaboutsupport
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#blockaboutsupport
 </string>
       <string id="Bookmarks_1">Bookmarks (1)</string>
       <string id="Bookmarks_1_Explain">Add bookmarks in either the bookmarks toolbar or menu. Use 'ManagedBookmarks' instead.
@@ -403,7 +403,7 @@ Add bookmarks in either the bookmarks toolbar or menu. Only Title and URL are re
 
 If you want to clear all bookmarks set with this policy, you can set the value to an empty array ([]). This can be on Windows via the new Bookmarks (JSON) policy available with GPO and Intune.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#bookmarks
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#bookmarks
 </string>
       <string id="Bookmarks_1_Placement_toolbar">Bookmarks toolbar</string>
       <string id="Bookmarks_1_Placement_menu">Bookmarks menu</string>
@@ -416,7 +416,7 @@ Add bookmarks in either the bookmarks toolbar or menu. Only Title and URL are re
 
 If you want to clear all bookmarks set with this policy, you can set the value to an empty array ([]). This can be on Windows via the new Bookmarks (JSON) policy available with GPO and Intune.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#bookmarks
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#bookmarks
 </string>
       <string id="Bookmarks_2_Placement_toolbar">Bookmarks toolbar</string>
       <string id="Bookmarks_2_Placement_menu">Bookmarks menu</string>
@@ -429,7 +429,7 @@ Add bookmarks in either the bookmarks toolbar or menu. Only Title and URL are re
 
 If you want to clear all bookmarks set with this policy, you can set the value to an empty array ([]). This can be on Windows via the new Bookmarks (JSON) policy available with GPO and Intune.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#bookmarks
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#bookmarks
 </string>
       <string id="Bookmarks_3_Placement_toolbar">Bookmarks toolbar</string>
       <string id="Bookmarks_3_Placement_menu">Bookmarks menu</string>
@@ -442,7 +442,7 @@ Add bookmarks in either the bookmarks toolbar or menu. Only Title and URL are re
 
 If you want to clear all bookmarks set with this policy, you can set the value to an empty array ([]). This can be on Windows via the new Bookmarks (JSON) policy available with GPO and Intune.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#bookmarks
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#bookmarks
 </string>
       <string id="Bookmarks_4_Placement_toolbar">Bookmarks toolbar</string>
       <string id="Bookmarks_4_Placement_menu">Bookmarks menu</string>
@@ -455,7 +455,7 @@ Add bookmarks in either the bookmarks toolbar or menu. Only Title and URL are re
 
 If you want to clear all bookmarks set with this policy, you can set the value to an empty array ([]). This can be on Windows via the new Bookmarks (JSON) policy available with GPO and Intune.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#bookmarks
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#bookmarks
 </string>
       <string id="Bookmarks_5_Placement_toolbar">Bookmarks toolbar</string>
       <string id="Bookmarks_5_Placement_menu">Bookmarks menu</string>
@@ -466,7 +466,7 @@ Backup and restore can be disabled individually.
 
 Note: The policy can be used to disable backup and restore if it would otherwise be enabled, but cannot be used to force backup or restore to be enabled under conditions where it would not otherwise be (such as a platform on which backup or restore are not yet supported).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#browserdatabackup
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#browserdatabackup
 </string>
       <string id="BrowserDataBackup_AllowRestore">AllowRestore</string>
       <string id="BrowserDataBackup_AllowRestore_Explain">Disable backup or restore of profile data.
@@ -475,12 +475,12 @@ Backup and restore can be disabled individually.
 
 Note: The policy can be used to disable backup and restore if it would otherwise be enabled, but cannot be used to force backup or restore to be enabled under conditions where it would not otherwise be (such as a platform on which backup or restore are not yet supported).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#browserdatabackup
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#browserdatabackup
 </string>
       <string id="CaptivePortal">CaptivePortal</string>
       <string id="CaptivePortal_Explain">Enable or disable the detection of captive portals.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#captiveportal
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#captiveportal
 </string>
       <string id="Certificates_Install">Install</string>
       <string id="Certificates_Install_Explain">Install certificates into the Firefox certificate store. If only a filename is specified, Firefox searches for the file in the following locations:
@@ -504,7 +504,7 @@ Certificates are installed using the trust string CT,CT,.
 
 Binary (DER) and ASCII (PEM) certificates are both supported.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#certificates
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#certificates
 </string>
       <string id="Certificates_ImportEnterpriseRoots">ImportEnterpriseRoots</string>
       <string id="Certificates_ImportEnterpriseRoots_Explain">Trust certificates that have been added to the operating system certificate store by a user or administrator.
@@ -513,42 +513,42 @@ Note: This policy only works on Windows and macOS. For Linux discussion, see bug
 
 See https://support.mozilla.org/kb/setting-certificate-authorities-firefox for more detail.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#certificates
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#certificates
 </string>
       <string id="ClearOnShutdown_Exceptions">Exceptions</string>
       <string id="ClearOnShutdown_Exceptions_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#clearonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#clearonshutdown
 </string>
       <string id="ClearOnShutdown_BrowsingHistoryAndDownloads">BrowsingHistoryAndDownloads</string>
       <string id="ClearOnShutdown_BrowsingHistoryAndDownloads_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#clearonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#clearonshutdown
 </string>
       <string id="ClearOnShutdown_CookiesAndStorage">CookiesAndStorage</string>
       <string id="ClearOnShutdown_CookiesAndStorage_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#clearonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#clearonshutdown
 </string>
       <string id="ClearOnShutdown_Cache">Cache</string>
       <string id="ClearOnShutdown_Cache_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#clearonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#clearonshutdown
 </string>
       <string id="ClearOnShutdown_FormData">FormData</string>
       <string id="ClearOnShutdown_FormData_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#clearonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#clearonshutdown
 </string>
       <string id="ClearOnShutdown_SiteSettings">SiteSettings</string>
       <string id="ClearOnShutdown_SiteSettings_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#clearonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#clearonshutdown
 </string>
       <string id="CNSA2KeyAgreementEnabled">CNSA2KeyAgreementEnabled</string>
       <string id="CNSA2KeyAgreementEnabled_Explain">Enable the CNSA 2.0 ML-KEM-1024 key agreement for TLS.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cnsa2keyagreementenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cnsa2keyagreementenabled
 </string>
       <string id="Containers_Default">Default</string>
       <string id="Containers_Default_Explain">Set policies related to Multi-Account Containers.
@@ -563,7 +563,7 @@ name
 icon
 color
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#containers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#containers
 </string>
       <string id="ContentAnalysis_InterceptionPoints_Clipboard">Clipboard</string>
       <string id="ContentAnalysis_InterceptionPoints_Clipboard_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -611,7 +611,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_InterceptionPoints_ClipboardCopy">ClipboardCopy</string>
       <string id="ContentAnalysis_InterceptionPoints_ClipboardCopy_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -659,7 +659,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_InterceptionPoints_Download">Download</string>
       <string id="ContentAnalysis_InterceptionPoints_Download_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -707,7 +707,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_InterceptionPoints_DragAndDrop">DragAndDrop</string>
       <string id="ContentAnalysis_InterceptionPoints_DragAndDrop_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -755,7 +755,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_InterceptionPoints_FileUpload">FileUpload</string>
       <string id="ContentAnalysis_InterceptionPoints_FileUpload_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -803,7 +803,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_InterceptionPoints_Print">Print</string>
       <string id="ContentAnalysis_InterceptionPoints_Print_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -851,7 +851,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_Enabled">Enabled</string>
       <string id="ContentAnalysis_Enabled_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -899,7 +899,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_PipePathName">PipePathName</string>
       <string id="ContentAnalysis_PipePathName_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -947,7 +947,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_AgentTimeout">AgentTimeout</string>
       <string id="ContentAnalysis_AgentTimeout_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -995,7 +995,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_AgentTimeout_0">0</string>
       <string id="ContentAnalysis_AllowUrlRegexList">AllowUrlRegexList</string>
@@ -1044,7 +1044,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_DenyUrlRegexList">DenyUrlRegexList</string>
       <string id="ContentAnalysis_DenyUrlRegexList_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -1092,7 +1092,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_AgentName">AgentName</string>
       <string id="ContentAnalysis_AgentName_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -1140,7 +1140,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_ClientSignature">ClientSignature</string>
       <string id="ContentAnalysis_ClientSignature_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -1188,7 +1188,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_IsPerUser">IsPerUser</string>
       <string id="ContentAnalysis_IsPerUser_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -1236,7 +1236,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_MaxConnectionsCount">MaxConnectionsCount</string>
       <string id="ContentAnalysis_MaxConnectionsCount_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -1284,7 +1284,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_MaxConnectionsCount_0">0</string>
       <string id="ContentAnalysis_ShowBlockedResult">ShowBlockedResult</string>
@@ -1333,7 +1333,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_DefaultResult">DefaultResult</string>
       <string id="ContentAnalysis_DefaultResult_Explain">Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -1381,7 +1381,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_DefaultResult_0">0</string>
       <string id="ContentAnalysis_TimeoutResult">TimeoutResult</string>
@@ -1430,7 +1430,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="ContentAnalysis_TimeoutResult_0">0</string>
       <string id="ContentAnalysis_BypassForSameTabOperations">BypassForSameTabOperations</string>
@@ -1479,7 +1479,7 @@ ShowBlockedResult indicates whether Firefox should show a notification when a DL
 
 TimeoutResult indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than AgentTimeout seconds. The default is 0.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#contentanalysis
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#contentanalysis
 </string>
       <string id="Cookies_Allow">Allow</string>
       <string id="Cookies_Allow_Explain">Configure cookie preferences.
@@ -1504,7 +1504,7 @@ RejectTracker only rejects cookies for trackers. (Deprecated. Use Behavior inste
 
 ExpireAtSessionEnd determines when cookies expire. (Deprecated. Use SanitizeOnShutdown (#sanitizeonshutdown-selective) instead)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cookies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cookies
 </string>
       <string id="Cookies_AllowSession">AllowSession</string>
       <string id="Cookies_AllowSession_Explain">Configure cookie preferences.
@@ -1529,7 +1529,7 @@ RejectTracker only rejects cookies for trackers. (Deprecated. Use Behavior inste
 
 ExpireAtSessionEnd determines when cookies expire. (Deprecated. Use SanitizeOnShutdown (#sanitizeonshutdown-selective) instead)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cookies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cookies
 </string>
       <string id="Cookies_Block">Block</string>
       <string id="Cookies_Block_Explain">Configure cookie preferences.
@@ -1554,7 +1554,7 @@ RejectTracker only rejects cookies for trackers. (Deprecated. Use Behavior inste
 
 ExpireAtSessionEnd determines when cookies expire. (Deprecated. Use SanitizeOnShutdown (#sanitizeonshutdown-selective) instead)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cookies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cookies
 </string>
       <string id="Cookies_Default">Default</string>
       <string id="Cookies_Default_Explain">Configure cookie preferences.
@@ -1579,7 +1579,7 @@ RejectTracker only rejects cookies for trackers. (Deprecated. Use Behavior inste
 
 ExpireAtSessionEnd determines when cookies expire. (Deprecated. Use SanitizeOnShutdown (#sanitizeonshutdown-selective) instead)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cookies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cookies
 </string>
       <string id="Cookies_AcceptThirdParty">AcceptThirdParty</string>
       <string id="Cookies_AcceptThirdParty_Explain">Configure cookie preferences.
@@ -1604,7 +1604,7 @@ RejectTracker only rejects cookies for trackers. (Deprecated. Use Behavior inste
 
 ExpireAtSessionEnd determines when cookies expire. (Deprecated. Use SanitizeOnShutdown (#sanitizeonshutdown-selective) instead)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cookies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cookies
 </string>
       <string id="Cookies_AcceptThirdParty_always">Always</string>
       <string id="Cookies_AcceptThirdParty_never">Never</string>
@@ -1632,7 +1632,7 @@ RejectTracker only rejects cookies for trackers. (Deprecated. Use Behavior inste
 
 ExpireAtSessionEnd determines when cookies expire. (Deprecated. Use SanitizeOnShutdown (#sanitizeonshutdown-selective) instead)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cookies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cookies
 </string>
       <string id="Cookies_ExpireAtSessionEnd">ExpireAtSessionEnd</string>
       <string id="Cookies_ExpireAtSessionEnd_Explain">Configure cookie preferences.
@@ -1657,7 +1657,7 @@ RejectTracker only rejects cookies for trackers. (Deprecated. Use Behavior inste
 
 ExpireAtSessionEnd determines when cookies expire. (Deprecated. Use SanitizeOnShutdown (#sanitizeonshutdown-selective) instead)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cookies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cookies
 </string>
       <string id="Cookies_Locked">Locked</string>
       <string id="Cookies_Locked_Explain">Configure cookie preferences.
@@ -1682,7 +1682,7 @@ RejectTracker only rejects cookies for trackers. (Deprecated. Use Behavior inste
 
 ExpireAtSessionEnd determines when cookies expire. (Deprecated. Use SanitizeOnShutdown (#sanitizeonshutdown-selective) instead)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cookies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cookies
 </string>
       <string id="Cookies_Behavior">Behavior</string>
       <string id="Cookies_Behavior_Explain">Configure cookie preferences.
@@ -1707,7 +1707,7 @@ RejectTracker only rejects cookies for trackers. (Deprecated. Use Behavior inste
 
 ExpireAtSessionEnd determines when cookies expire. (Deprecated. Use SanitizeOnShutdown (#sanitizeonshutdown-selective) instead)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cookies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cookies
 </string>
       <string id="Cookies_Behavior_accept">Accept all cookies</string>
       <string id="Cookies_Behavior_reject_foreign">Reject third-party cookies</string>
@@ -1739,7 +1739,7 @@ RejectTracker only rejects cookies for trackers. (Deprecated. Use Behavior inste
 
 ExpireAtSessionEnd determines when cookies expire. (Deprecated. Use SanitizeOnShutdown (#sanitizeonshutdown-selective) instead)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#cookies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#cookies
 </string>
       <string id="Cookies_BehaviorPrivateBrowsing_accept">Accept all cookies</string>
       <string id="Cookies_BehaviorPrivateBrowsing_reject_foreign">Reject third-party cookies</string>
@@ -1751,31 +1751,31 @@ For more information visit: https://mozilla.github.io/policy-templates/policies/
       <string id="DefaultBrowserSettingEnabled">DefaultBrowserSettingEnabled</string>
       <string id="DefaultBrowserSettingEnabled_Explain">Control whether the user can set Firefox as the default browser. If set to false, the default browser check is disabled and the controls for setting Firefox as the default browser are removed from the preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#defaultbrowsersettingenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#defaultbrowsersettingenabled
 </string>
       <string id="DefaultDownloadDirectory">DefaultDownloadDirectory</string>
       <string id="DefaultDownloadDirectory_Explain">Set the default download directory.
 
 You can use ${home} for the native home directory.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#defaultdownloaddirectory
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#defaultdownloaddirectory
 </string>
       <string id="DefaultSerialGuardSetting">DefaultSerialGuardSetting</string>
       <string id="DefaultSerialGuardSetting_Explain">Set the default permission for websites requesting access to serial ports through the Web Serial API.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#defaultserialguardsetting
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#defaultserialguardsetting
 </string>
       <string id="DefaultSerialGuardSetting_2">Block serial port access</string>
       <string id="DefaultSerialGuardSetting_3">Ask when a site requests access</string>
       <string id="DisableAccounts">DisableAccounts</string>
       <string id="DisableAccounts_Explain">Disable account-based services, including sync.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disableaccounts
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disableaccounts
 </string>
       <string id="DisableAppUpdate">DisableAppUpdate</string>
       <string id="DisableAppUpdate_Explain">Turn off application updates within Firefox.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disableappupdate
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disableappupdate
 </string>
       <string id="DisableBuiltinPDFViewer">DisableBuiltinPDFViewer</string>
       <string id="DisableBuiltinPDFViewer_Explain">Disable the built in PDF viewer.
@@ -1784,7 +1784,7 @@ PDF files are downloaded and sent externally.
 
 Note: As of Firefox 140, this policy no longer completely disables PDF.js; it changes the handler to send PDF files to the operating system. Embedded PDF files are shown in the browser. If you need to completely disable PDF.js, you can use the PDFjs (#pdfjs) policy.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablebuiltinpdfviewer
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablebuiltinpdfviewer
 </string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1795,7 +1795,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256">TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</string>
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1806,7 +1806,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256">TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256</string>
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1817,7 +1817,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256">TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1828,7 +1828,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384">TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384</string>
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1839,7 +1839,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1850,7 +1850,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA">TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1861,7 +1861,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA">TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1872,7 +1872,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA">TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1883,7 +1883,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA">TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1894,7 +1894,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA">TLS_DHE_RSA_WITH_AES_128_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1905,7 +1905,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA">TLS_DHE_RSA_WITH_AES_256_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1916,7 +1916,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256">TLS_RSA_WITH_AES_128_GCM_SHA256</string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1927,7 +1927,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384">TLS_RSA_WITH_AES_256_GCM_SHA384</string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1938,7 +1938,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA">TLS_RSA_WITH_AES_128_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1949,7 +1949,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA">TLS_RSA_WITH_AES_256_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1960,7 +1960,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA">TLS_RSA_WITH_3DES_EDE_CBC_SHA</string>
       <string id="DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1971,7 +1971,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_CHACHA20_POLY1305_SHA256">TLS_CHACHA20_POLY1305_SHA256</string>
       <string id="DisabledCiphers_TLS_CHACHA20_POLY1305_SHA256_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1982,7 +1982,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_AES_128_GCM_SHA256">TLS_AES_128_GCM_SHA256</string>
       <string id="DisabledCiphers_TLS_AES_128_GCM_SHA256_Explain">Disable specific cryptographic ciphers, listed below.
@@ -1993,7 +1993,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisabledCiphers_TLS_AES_256_GCM_SHA384">TLS_AES_256_GCM_SHA384</string>
       <string id="DisabledCiphers_TLS_AES_256_GCM_SHA384_Explain">Disable specific cryptographic ciphers, listed below.
@@ -2004,7 +2004,7 @@ Note:
 
 This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledciphers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledciphers
 </string>
       <string id="DisableDefaultBrowserAgent">DisableDefaultBrowserAgent</string>
       <string id="DisableDefaultBrowserAgent_Explain">Prevent the default browser agent from taking any actions.
@@ -2013,54 +2013,54 @@ Only applicable to Windows; other platforms don’t have the agent.
 
 The browser agent is a Windows-only scheduled task which runs in the background to collect and submit data about the browser that the user has set as their OS default. More information is available here (https://firefox-source-docs.mozilla.org/toolkit/mozapps/defaultagent/default-browser-agent/index.html).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledefaultbrowseragent
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledefaultbrowseragent
 </string>
       <string id="DisableDeveloperTools">DisableDeveloperTools</string>
       <string id="DisableDeveloperTools_Explain">Remove access to all developer tools.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabledevelopertools
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabledevelopertools
 </string>
       <string id="DisableEncryptedClientHello">DisableEncryptedClientHello</string>
       <string id="DisableEncryptedClientHello_Explain">Disable the TLS Feature for Encrypted Client Hello.
 
 Note that TLS Client Hellos will still contain an ECH extension, but this extension will not be used by Firefox during the TLS handshake.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disableencryptedclienthello
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disableencryptedclienthello
 </string>
       <string id="DisableFeedbackCommands">DisableFeedbackCommands</string>
       <string id="DisableFeedbackCommands_Explain">Disable the menus for reporting sites (Submit Feedback, Report Deceptive Site).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablefeedbackcommands
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablefeedbackcommands
 </string>
       <string id="DisableFirefoxAccounts">DisableFirefoxAccounts</string>
       <string id="DisableFirefoxAccounts_Explain">Disable Firefox Accounts integration (Sync).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablefirefoxaccounts
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablefirefoxaccounts
 </string>
       <string id="DisableFirefoxScreenshots">DisableFirefoxScreenshots</string>
       <string id="DisableFirefoxScreenshots_Explain">Remove access to Firefox Screenshots.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablefirefoxscreenshots
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablefirefoxscreenshots
 </string>
       <string id="DisableFirefoxStudies">DisableFirefoxStudies</string>
       <string id="DisableFirefoxStudies_Explain">Disable Firefox studies (Shield).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablefirefoxstudies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablefirefoxstudies
 </string>
       <string id="DisableForgetButton">DisableForgetButton</string>
       <string id="DisableForgetButton_Explain">Disable the "Forget" button.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disableforgetbutton
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disableforgetbutton
 </string>
       <string id="DisableFormHistory">DisableFormHistory</string>
       <string id="DisableFormHistory_Explain">Turn off saving information on web forms and the search bar.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disableformhistory
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disableformhistory
 </string>
       <string id="DisableLaunchOnLogin">DisableLaunchOnLogin</string>
       <string id="DisableLaunchOnLogin_Explain">Prevent Firefox from launching automatically when the user logs in, and prevent the user from enabling this setting.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablelaunchonlogin
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablelaunchonlogin
 </string>
       <string id="DisableMasterPasswordCreation">DisableMasterPasswordCreation</string>
       <string id="DisableMasterPasswordCreation_Explain">Remove the master password functionality.
@@ -2069,36 +2069,36 @@ If this value is true, it works the same as setting PrimaryPassword (#primarypas
 
 If both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMasterPasswordCreation takes precedent.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablemasterpasswordcreation
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablemasterpasswordcreation
 </string>
       <string id="DisablePasswordReveal">DisablePasswordReveal</string>
       <string id="DisablePasswordReveal_Explain">Do not allow passwords to be shown in saved logins.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablepasswordreveal
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablepasswordreveal
 </string>
       <string id="DisablePocket">DisablePocket</string>
       <string id="DisablePocket_Explain">Remove Pocket in the Firefox UI.
 
 It does not remove it from the new tab page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablepocket
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablepocket
 </string>
       <string id="DisablePrivateBrowsing">DisablePrivateBrowsing</string>
       <string id="DisablePrivateBrowsing_Explain">Remove access to private browsing.
 
 This policy is superseded by PrivateBrowsingModeAvailability (#privatebrowsingmodeavailability)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disableprivatebrowsing
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disableprivatebrowsing
 </string>
       <string id="DisableProfileImport">DisableProfileImport</string>
       <string id="DisableProfileImport_Explain">Remove the ability to import data from other browsers.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disableprofileimport
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disableprofileimport
 </string>
       <string id="DisableProfileRefresh">DisableProfileRefresh</string>
       <string id="DisableProfileRefresh_Explain">Disable the Refresh Firefox button on 'about:support' and 'support.mozilla.org', as well as the prompt that displays offering to refresh Firefox when you haven't used it in a while.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disableprofilerefresh
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disableprofilerefresh
 </string>
       <string id="DisableRemoteImprovements">DisableRemoteImprovements</string>
       <string id="DisableRemoteImprovements_Explain">Prevent Firefox from applying performance, stability, and feature changes between updates.
@@ -2107,19 +2107,19 @@ For more information, see Manage remote improvements settings in Firefox (https:
 
 Note: This policy is not correctly reflected in preferences. This will be fixed soon.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disableremoteimprovements
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disableremoteimprovements
 </string>
       <string id="DisableRemoteSettingsAndAcceptSecurityConsequences">DisableRemoteSettingsAndAcceptSecurityConsequences</string>
       <string id="DisableRemoteSettingsAndAcceptSecurityConsequences_Explain">Disable Remote Settings updates, stopping Firefox from receiving updated data such as blocklists, and accept the resulting security consequences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disableremotesettingsandacceptsecurityconsequences
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disableremotesettingsandacceptsecurityconsequences
 </string>
       <string id="DisableSafeMode">DisableSafeMode</string>
       <string id="DisableSafeMode_Explain">Disable safe mode (Troubleshoot Mode) within the browser.
 
 On Windows, this disables safe mode via the command line as well.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablesafemode
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablesafemode
 </string>
       <string id="DisableSecurityBypass_InvalidCertificate">InvalidCertificate</string>
       <string id="DisableSecurityBypass_InvalidCertificate_Explain">Prevent the user from bypassing security in certain cases.
@@ -2130,7 +2130,7 @@ SafeBrowsing prevents selecting "ignore the risk" and visiting a harmful site an
 
 These policies only affect what happens when an error is shown, they do not affect any settings in preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablesecuritybypass
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablesecuritybypass
 </string>
       <string id="DisableSecurityBypass_SafeBrowsing">SafeBrowsing</string>
       <string id="DisableSecurityBypass_SafeBrowsing_Explain">Prevent the user from bypassing security in certain cases.
@@ -2141,17 +2141,17 @@ SafeBrowsing prevents selecting "ignore the risk" and visiting a harmful site an
 
 These policies only affect what happens when an error is shown, they do not affect any settings in preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablesecuritybypass
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablesecuritybypass
 </string>
       <string id="DisableSetDesktopBackground">DisableSetDesktopBackground</string>
       <string id="DisableSetDesktopBackground_Explain">Remove the "Set As Desktop Background..." menuitem when right clicking on an image.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablesetdesktopbackground
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablesetdesktopbackground
 </string>
       <string id="DisableSystemAddonUpdate">DisableSystemAddonUpdate</string>
       <string id="DisableSystemAddonUpdate_Explain">Prevent system add-ons from being installed or updated.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablesystemaddonupdate
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablesystemaddonupdate
 </string>
       <string id="DisableTelemetry">DisableTelemetry</string>
       <string id="DisableTelemetry_Explain">Prevent the upload of telemetry data.
@@ -2160,14 +2160,14 @@ As of Firefox 83 and Firefox ESR 78.5, local storage of telemetry data is disabl
 
 Mozilla recommends that you do not disable telemetry. Information collected through telemetry helps us build a better product for businesses like yours.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disabletelemetry
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disabletelemetry
 </string>
       <string id="DisableThirdPartyModuleBlocking">DisableThirdPartyModuleBlocking</string>
       <string id="DisableThirdPartyModuleBlocking_Explain">Do not allow blocking third-party modules from the 'about:third-party' page.
 
 This policy only works on Windows through GPO (not policies.json).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#disablethirdpartymoduleblocking
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#disablethirdpartymoduleblocking
 </string>
       <string id="DisplayBookmarksToolbar">DisplayBookmarksToolbar</string>
       <string id="DisplayBookmarksToolbar_Explain">Set the initial state of the bookmarks toolbar.
@@ -2180,7 +2180,7 @@ never means the bookmarks toolbar is not shown.
 
 newtab means the bookmarks toolbar is only shown on the new tab page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#displaybookmarkstoolbar
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#displaybookmarkstoolbar
 </string>
       <string id="DisplayBookmarksToolbar_always">Always</string>
       <string id="DisplayBookmarksToolbar_never">Never</string>
@@ -2196,7 +2196,7 @@ default-on means the menubar is on by default but can be hidden.
 
 default-off means the menubar is off by default but can be shown.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#displaymenubar
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#displaymenubar
 </string>
       <string id="DisplayMenuBar_always">Always shown</string>
       <string id="DisplayMenuBar_never">Always hidden</string>
@@ -2215,7 +2215,7 @@ ExcludedDomains excludes domains from DNS over HTTPS.
 
 Fallback determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#dnsoverhttps
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#dnsoverhttps
 </string>
       <string id="DNSOverHTTPS_Enabled">Enabled</string>
       <string id="DNSOverHTTPS_Enabled_Explain">Configure DNS over HTTPS (DoH).
@@ -2230,7 +2230,7 @@ ExcludedDomains excludes domains from DNS over HTTPS.
 
 Fallback determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#dnsoverhttps
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#dnsoverhttps
 </string>
       <string id="DNSOverHTTPS_ProviderURL">ProviderURL</string>
       <string id="DNSOverHTTPS_ProviderURL_Explain">Configure DNS over HTTPS (DoH).
@@ -2245,7 +2245,7 @@ ExcludedDomains excludes domains from DNS over HTTPS.
 
 Fallback determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#dnsoverhttps
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#dnsoverhttps
 </string>
       <string id="DNSOverHTTPS_Fallback">Fallback</string>
       <string id="DNSOverHTTPS_Fallback_Explain">Configure DNS over HTTPS (DoH).
@@ -2260,7 +2260,7 @@ ExcludedDomains excludes domains from DNS over HTTPS.
 
 Fallback determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#dnsoverhttps
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#dnsoverhttps
 </string>
       <string id="DNSOverHTTPS_Locked">Locked</string>
       <string id="DNSOverHTTPS_Locked_Explain">Configure DNS over HTTPS (DoH).
@@ -2275,19 +2275,19 @@ ExcludedDomains excludes domains from DNS over HTTPS.
 
 Fallback determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#dnsoverhttps
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#dnsoverhttps
 </string>
       <string id="DontCheckDefaultBrowser">DontCheckDefaultBrowser</string>
       <string id="DontCheckDefaultBrowser_Explain">Don't check if Firefox is the default browser at startup.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#dontcheckdefaultbrowser
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#dontcheckdefaultbrowser
 </string>
       <string id="DownloadDirectory">DownloadDirectory</string>
       <string id="DownloadDirectory_Explain">Set and lock the download directory.
 
 You can use ${home} for the native home directory.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#downloaddirectory
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#downloaddirectory
 </string>
       <string id="EnableTrackingProtection_Exceptions">Exceptions</string>
       <string id="EnableTrackingProtection_Exceptions_Explain">Configure tracking protection.
@@ -2318,7 +2318,7 @@ If ConvenienceExceptionsis true, Firefox will apply exceptions automatically tha
 
 Note: Users can change BaselineExceptions and ConvenienceExceptions even when Category is set to strict unless Locked is set to true. If Locked is set to true, the defaults are used unless a different value is specified in policy for BaselineExceptions and ConvenienceExceptions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#enabletrackingprotection
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_Value">Value</string>
       <string id="EnableTrackingProtection_Value_Explain">Configure tracking protection.
@@ -2349,7 +2349,7 @@ If ConvenienceExceptionsis true, Firefox will apply exceptions automatically tha
 
 Note: Users can change BaselineExceptions and ConvenienceExceptions even when Category is set to strict unless Locked is set to true. If Locked is set to true, the defaults are used unless a different value is specified in policy for BaselineExceptions and ConvenienceExceptions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#enabletrackingprotection
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_Locked">Locked</string>
       <string id="EnableTrackingProtection_Locked_Explain">Configure tracking protection.
@@ -2380,7 +2380,7 @@ If ConvenienceExceptionsis true, Firefox will apply exceptions automatically tha
 
 Note: Users can change BaselineExceptions and ConvenienceExceptions even when Category is set to strict unless Locked is set to true. If Locked is set to true, the defaults are used unless a different value is specified in policy for BaselineExceptions and ConvenienceExceptions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#enabletrackingprotection
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_Cryptomining">Cryptomining</string>
       <string id="EnableTrackingProtection_Cryptomining_Explain">Configure tracking protection.
@@ -2411,7 +2411,7 @@ If ConvenienceExceptionsis true, Firefox will apply exceptions automatically tha
 
 Note: Users can change BaselineExceptions and ConvenienceExceptions even when Category is set to strict unless Locked is set to true. If Locked is set to true, the defaults are used unless a different value is specified in policy for BaselineExceptions and ConvenienceExceptions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#enabletrackingprotection
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_Fingerprinting">Fingerprinting</string>
       <string id="EnableTrackingProtection_Fingerprinting_Explain">Configure tracking protection.
@@ -2442,7 +2442,7 @@ If ConvenienceExceptionsis true, Firefox will apply exceptions automatically tha
 
 Note: Users can change BaselineExceptions and ConvenienceExceptions even when Category is set to strict unless Locked is set to true. If Locked is set to true, the defaults are used unless a different value is specified in policy for BaselineExceptions and ConvenienceExceptions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#enabletrackingprotection
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_EmailTracking">EmailTracking</string>
       <string id="EnableTrackingProtection_EmailTracking_Explain">Configure tracking protection.
@@ -2473,7 +2473,7 @@ If ConvenienceExceptionsis true, Firefox will apply exceptions automatically tha
 
 Note: Users can change BaselineExceptions and ConvenienceExceptions even when Category is set to strict unless Locked is set to true. If Locked is set to true, the defaults are used unless a different value is specified in policy for BaselineExceptions and ConvenienceExceptions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#enabletrackingprotection
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_SuspectedFingerprinting">SuspectedFingerprinting</string>
       <string id="EnableTrackingProtection_SuspectedFingerprinting_Explain">Configure tracking protection.
@@ -2504,7 +2504,7 @@ If ConvenienceExceptionsis true, Firefox will apply exceptions automatically tha
 
 Note: Users can change BaselineExceptions and ConvenienceExceptions even when Category is set to strict unless Locked is set to true. If Locked is set to true, the defaults are used unless a different value is specified in policy for BaselineExceptions and ConvenienceExceptions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#enabletrackingprotection
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_Category">Category</string>
       <string id="EnableTrackingProtection_Category_Explain">Configure tracking protection.
@@ -2535,7 +2535,7 @@ If ConvenienceExceptionsis true, Firefox will apply exceptions automatically tha
 
 Note: Users can change BaselineExceptions and ConvenienceExceptions even when Category is set to strict unless Locked is set to true. If Locked is set to true, the defaults are used unless a different value is specified in policy for BaselineExceptions and ConvenienceExceptions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#enabletrackingprotection
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_Category_standard">Standard</string>
       <string id="EnableTrackingProtection_Category_strict">Strict</string>
@@ -2568,7 +2568,7 @@ If ConvenienceExceptionsis true, Firefox will apply exceptions automatically tha
 
 Note: Users can change BaselineExceptions and ConvenienceExceptions even when Category is set to strict unless Locked is set to true. If Locked is set to true, the defaults are used unless a different value is specified in policy for BaselineExceptions and ConvenienceExceptions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#enabletrackingprotection
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_ConvenienceExceptions">ConvenienceExceptions</string>
       <string id="EnableTrackingProtection_ConvenienceExceptions_Explain">Configure tracking protection.
@@ -2599,7 +2599,7 @@ If ConvenienceExceptionsis true, Firefox will apply exceptions automatically tha
 
 Note: Users can change BaselineExceptions and ConvenienceExceptions even when Category is set to strict unless Locked is set to true. If Locked is set to true, the defaults are used unless a different value is specified in policy for BaselineExceptions and ConvenienceExceptions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#enabletrackingprotection
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#enabletrackingprotection
 </string>
       <string id="EncryptedMediaExtensions_Enabled">Enabled</string>
       <string id="EncryptedMediaExtensions_Enabled_Explain">Enable or disable Encrypted Media Extensions and optionally lock it.
@@ -2608,7 +2608,7 @@ If Enabled is set to false, encrypted media extensions (like Widevine) are not d
 
 If Locked is set to true and Enabled is set to false, Firefox will not download encrypted media extensions (like Widevine) or ask the user to install them.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#encryptedmediaextensions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#encryptedmediaextensions
 </string>
       <string id="EncryptedMediaExtensions_Locked">Locked</string>
       <string id="EncryptedMediaExtensions_Locked_Explain">Enable or disable Encrypted Media Extensions and optionally lock it.
@@ -2617,7 +2617,7 @@ If Enabled is set to false, encrypted media extensions (like Widevine) are not d
 
 If Locked is set to true and Enabled is set to false, Firefox will not download encrypted media extensions (like Widevine) or ask the user to install them.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#encryptedmediaextensions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#encryptedmediaextensions
 </string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_1">ExemptDomainFileTypePairsFromFileTypeDownloadWarnings (1)</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_1_Explain">Disable warnings based on file extension for specific file types on domains.
@@ -2626,7 +2626,7 @@ This policy is based on the Chrome policy (https://chromeenterprise.google/polic
 
 Important: The documentation for the policy for both Edge and Chrome is incorrect. The domains value must be a domain, not a URL pattern. Also, we do not support using * to mean all domains.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#exemptdomainfiletypepairsfromfiletypedownloadwarnings
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#exemptdomainfiletypepairsfromfiletypedownloadwarnings
 </string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_2">ExemptDomainFileTypePairsFromFileTypeDownloadWarnings (2)</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_2_Explain">Disable warnings based on file extension for specific file types on domains.
@@ -2635,7 +2635,7 @@ This policy is based on the Chrome policy (https://chromeenterprise.google/polic
 
 Important: The documentation for the policy for both Edge and Chrome is incorrect. The domains value must be a domain, not a URL pattern. Also, we do not support using * to mean all domains.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#exemptdomainfiletypepairsfromfiletypedownloadwarnings
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#exemptdomainfiletypepairsfromfiletypedownloadwarnings
 </string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_3">ExemptDomainFileTypePairsFromFileTypeDownloadWarnings (3)</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_3_Explain">Disable warnings based on file extension for specific file types on domains.
@@ -2644,7 +2644,7 @@ This policy is based on the Chrome policy (https://chromeenterprise.google/polic
 
 Important: The documentation for the policy for both Edge and Chrome is incorrect. The domains value must be a domain, not a URL pattern. Also, we do not support using * to mean all domains.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#exemptdomainfiletypepairsfromfiletypedownloadwarnings
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#exemptdomainfiletypepairsfromfiletypedownloadwarnings
 </string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_4">ExemptDomainFileTypePairsFromFileTypeDownloadWarnings (4)</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_4_Explain">Disable warnings based on file extension for specific file types on domains.
@@ -2653,7 +2653,7 @@ This policy is based on the Chrome policy (https://chromeenterprise.google/polic
 
 Important: The documentation for the policy for both Edge and Chrome is incorrect. The domains value must be a domain, not a URL pattern. Also, we do not support using * to mean all domains.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#exemptdomainfiletypepairsfromfiletypedownloadwarnings
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#exemptdomainfiletypepairsfromfiletypedownloadwarnings
 </string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_5">ExemptDomainFileTypePairsFromFileTypeDownloadWarnings (5)</string>
       <string id="ExemptDomainFileTypePairsFromFileTypeDownloadWarnings_5_Explain">Disable warnings based on file extension for specific file types on domains.
@@ -2662,7 +2662,7 @@ This policy is based on the Chrome policy (https://chromeenterprise.google/polic
 
 Important: The documentation for the policy for both Edge and Chrome is incorrect. The domains value must be a domain, not a URL pattern. Also, we do not support using * to mean all domains.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#exemptdomainfiletypepairsfromfiletypedownloadwarnings
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#exemptdomainfiletypepairsfromfiletypedownloadwarnings
 </string>
       <string id="Extensions_Install">Install</string>
       <string id="Extensions_Install_Explain">Control the installation, uninstallation and locking of extensions.
@@ -2677,7 +2677,7 @@ Uninstall is a list of extension IDs that should be uninstalled if found.
 
 Locked is a list of extension IDs that the user cannot disable or uninstall.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#extensions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#extensions
 </string>
       <string id="Extensions_Uninstall">Uninstall</string>
       <string id="Extensions_Uninstall_Explain">Control the installation, uninstallation and locking of extensions.
@@ -2692,7 +2692,7 @@ Uninstall is a list of extension IDs that should be uninstalled if found.
 
 Locked is a list of extension IDs that the user cannot disable or uninstall.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#extensions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#extensions
 </string>
       <string id="Extensions_Locked">Locked</string>
       <string id="Extensions_Locked_Explain">Control the installation, uninstallation and locking of extensions.
@@ -2707,7 +2707,7 @@ Uninstall is a list of extension IDs that should be uninstalled if found.
 
 Locked is a list of extension IDs that the user cannot disable or uninstall.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#extensions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#extensions
 </string>
       <string id="ExtensionSettings">ExtensionSettings</string>
       <string id="ExtensionSettings_Explain">Manage all aspects of extensions.
@@ -2761,112 +2761,112 @@ The configuration for each extension is another dictionary that can contain the 
   blocked_permissions
   allowed_permissions
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#extensionsettings
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#extensionsettings
 </string>
       <string id="ExtensionUpdate">ExtensionUpdate</string>
       <string id="ExtensionUpdate_Explain">Control extension updates.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#extensionupdate
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#extensionupdate
 </string>
       <string id="FirefoxHome_Widgets_Blocked">Blocked</string>
       <string id="FirefoxHome_Widgets_Blocked_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_Widgets">Widgets</string>
       <string id="FirefoxHome_Widgets_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_Search">Search</string>
       <string id="FirefoxHome_Search_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_Weather">Weather</string>
       <string id="FirefoxHome_Weather_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_TopSites">TopSites</string>
       <string id="FirefoxHome_TopSites_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_SponsoredTopSites">SponsoredTopSites</string>
       <string id="FirefoxHome_SponsoredTopSites_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_Highlights">Highlights</string>
       <string id="FirefoxHome_Highlights_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_Pocket">Pocket</string>
       <string id="FirefoxHome_Pocket_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_Stories">Stories</string>
       <string id="FirefoxHome_Stories_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_SponsoredPocket">SponsoredPocket</string>
       <string id="FirefoxHome_SponsoredPocket_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_SponsoredStories">SponsoredStories</string>
       <string id="FirefoxHome_SponsoredStories_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_Snippets">Snippets</string>
       <string id="FirefoxHome_Snippets_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxHome_Locked">Locked</string>
       <string id="FirefoxHome_Locked_Explain">Customize the Firefox Home page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxhome
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxhome
 </string>
       <string id="FirefoxSuggest_WebSuggestions">WebSuggestions</string>
       <string id="FirefoxSuggest_WebSuggestions_Explain">Customize Firefox Suggest (US only).
 
 As of Firefox 146, WebSuggestions turns off Suggest completely.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxsuggest
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxsuggest
 </string>
       <string id="FirefoxSuggest_SponsoredSuggestions">SponsoredSuggestions</string>
       <string id="FirefoxSuggest_SponsoredSuggestions_Explain">Customize Firefox Suggest (US only).
 
 As of Firefox 146, WebSuggestions turns off Suggest completely.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxsuggest
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxsuggest
 </string>
       <string id="FirefoxSuggest_ImproveSuggest">ImproveSuggest</string>
       <string id="FirefoxSuggest_ImproveSuggest_Explain">Customize Firefox Suggest (US only).
 
 As of Firefox 146, WebSuggestions turns off Suggest completely.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxsuggest
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxsuggest
 </string>
       <string id="FirefoxSuggest_OnlineEnabled">OnlineEnabled</string>
       <string id="FirefoxSuggest_OnlineEnabled_Explain">Customize Firefox Suggest (US only).
 
 As of Firefox 146, WebSuggestions turns off Suggest completely.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxsuggest
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxsuggest
 </string>
       <string id="FirefoxSuggest_Locked">Locked</string>
       <string id="FirefoxSuggest_Locked_Explain">Customize Firefox Suggest (US only).
 
 As of Firefox 146, WebSuggestions turns off Suggest completely.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#firefoxsuggest
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#firefoxsuggest
 </string>
       <string id="GenerativeAI_Chatbot">Chatbot</string>
       <string id="GenerativeAI_Chatbot_Explain">Configure generative AI features.
@@ -2881,7 +2881,7 @@ TabGroups (Firefox 144+) Controls whether AI is used to suggest names and tabs f
 
 Locked Prevents the user from changing generative AI preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#generativeai
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#generativeai
 </string>
       <string id="GenerativeAI_SmartWindow">SmartWindow</string>
       <string id="GenerativeAI_SmartWindow_Explain">Configure generative AI features.
@@ -2896,7 +2896,7 @@ TabGroups (Firefox 144+) Controls whether AI is used to suggest names and tabs f
 
 Locked Prevents the user from changing generative AI preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#generativeai
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#generativeai
 </string>
       <string id="GenerativeAI_LinkPreviews">LinkPreviews</string>
       <string id="GenerativeAI_LinkPreviews_Explain">Configure generative AI features.
@@ -2911,7 +2911,7 @@ TabGroups (Firefox 144+) Controls whether AI is used to suggest names and tabs f
 
 Locked Prevents the user from changing generative AI preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#generativeai
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#generativeai
 </string>
       <string id="GenerativeAI_TabGroups">TabGroups</string>
       <string id="GenerativeAI_TabGroups_Explain">Configure generative AI features.
@@ -2926,7 +2926,7 @@ TabGroups (Firefox 144+) Controls whether AI is used to suggest names and tabs f
 
 Locked Prevents the user from changing generative AI preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#generativeai
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#generativeai
 </string>
       <string id="GenerativeAI_Enabled">Enabled</string>
       <string id="GenerativeAI_Enabled_Explain">Configure generative AI features.
@@ -2941,7 +2941,7 @@ TabGroups (Firefox 144+) Controls whether AI is used to suggest names and tabs f
 
 Locked Prevents the user from changing generative AI preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#generativeai
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#generativeai
 </string>
       <string id="GenerativeAI_Locked">Locked</string>
       <string id="GenerativeAI_Locked_Explain">Configure generative AI features.
@@ -2956,7 +2956,7 @@ TabGroups (Firefox 144+) Controls whether AI is used to suggest names and tabs f
 
 Locked Prevents the user from changing generative AI preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#generativeai
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#generativeai
 </string>
       <string id="GoToIntranetSiteForSingleWordEntryInAddressBar">GoToIntranetSiteForSingleWordEntryInAddressBar</string>
       <string id="GoToIntranetSiteForSingleWordEntryInAddressBar_Explain">Whether to always go through the DNS server before sending a single word search string to a search engine.
@@ -2971,7 +2971,7 @@ You can also whitelist a domain suffix that is not part of the Public Suffix Lis
 
 Additionally, if you want users to see a "Did you mean to go to 'YOUR_DOMAIN'" prompt below the URL bar if they land on a search results page instead of an intranet domain that provides a response, set the pref browser.urlbar.dnsResolveSingleWordsAfterSearch to 1. Enabling this will cause the browser to commit a DNS check after every single word search. If the browser receives a response from the intranet, a prompt will ask the user if they'd like to instead navigate to YOUR_DOMAIN. If the user presses the yes button, browser.fixup.domainwhitelist.YOUR_DOMAIN will be set to true.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#gotointranetsiteforsinglewordentryinaddressbar
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#gotointranetsiteforsinglewordentryinaddressbar
 </string>
       <string id="Handlers">Handlers</string>
       <string id="Handlers_Explain">Configure default application handlers.
@@ -2994,12 +2994,12 @@ Within each handler type, you specify the given mimeType/extension/scheme as a k
       path
       uriTemplate
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#handlers
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#handlers
 </string>
       <string id="HardwareAcceleration">HardwareAcceleration</string>
       <string id="HardwareAcceleration_Explain">Control hardware acceleration.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#hardwareacceleration
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#hardwareacceleration
 </string>
       <string id="Homepage_Additional">Additional</string>
       <string id="Homepage_Additional_Explain">Configure the default homepage and how Firefox starts.
@@ -3012,7 +3012,7 @@ Additional allows for more than one homepage.
 
 StartPage is how Firefox starts.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#homepage
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#homepage
 </string>
       <string id="Homepage_URL">URL</string>
       <string id="Homepage_URL_Explain">Configure the default homepage and how Firefox starts.
@@ -3025,7 +3025,7 @@ Additional allows for more than one homepage.
 
 StartPage is how Firefox starts.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#homepage
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#homepage
 </string>
       <string id="Homepage_Locked">Locked</string>
       <string id="Homepage_Locked_Explain">Configure the default homepage and how Firefox starts.
@@ -3038,7 +3038,7 @@ Additional allows for more than one homepage.
 
 StartPage is how Firefox starts.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#homepage
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#homepage
 </string>
       <string id="Homepage_StartPage">StartPage</string>
       <string id="Homepage_StartPage_Explain">Configure the default homepage and how Firefox starts.
@@ -3051,7 +3051,7 @@ Additional allows for more than one homepage.
 
 StartPage is how Firefox starts.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#homepage
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#homepage
 </string>
       <string id="Homepage_StartPage_none">Blank page</string>
       <string id="Homepage_StartPage_homepage">Homepage</string>
@@ -3068,19 +3068,19 @@ Additional allows for more than one homepage.
 
 StartPage is how Firefox starts.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#homepage
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#homepage
 </string>
       <string id="HttpAllowlist">HttpAllowlist</string>
       <string id="HttpAllowlist_Explain">Configure sites that will not be upgraded to HTTPS.
 
 The sites are specified as a list of origins.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#httpallowlist
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#httpallowlist
 </string>
       <string id="HttpsOnlyMode">HttpsOnlyMode</string>
       <string id="HttpsOnlyMode_Explain">Configure HTTPS-Only Mode.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#httpsonlymode
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#httpsonlymode
 </string>
       <string id="HttpsOnlyMode_allowed">Available</string>
       <string id="HttpsOnlyMode_disallowed">Off and locked</string>
@@ -3095,7 +3095,7 @@ Allow is a list of origins where extension installs are allowed.
 
 Default determines whether or not extension installs are allowed by default.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#installaddonspermission
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#installaddonspermission
 </string>
       <string id="InstallAddonsPermission_Default">Default</string>
       <string id="InstallAddonsPermission_Default_Explain">Configure the default extension install policy as well as origins for extension installs are allowed.
@@ -3106,14 +3106,14 @@ Allow is a list of origins where extension installs are allowed.
 
 Default determines whether or not extension installs are allowed by default.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#installaddonspermission
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#installaddonspermission
 </string>
       <string id="IPProtectionAvailable">IPProtectionAvailable</string>
       <string id="IPProtectionAvailable_Explain">Control whether Firefox's built-in IP Protection (VPN) is available to users. When disabled, the feature is turned off and cannot be used.
 
 Prevent the built-in VPN from being available to users.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#ipprotectionavailable
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#ipprotectionavailable
 </string>
       <string id="LegacyProfiles">LegacyProfiles</string>
       <string id="LegacyProfiles_Explain">Disable the feature enforcing a separate profile for each installation.
@@ -3124,51 +3124,51 @@ If this policy set to false, Firefox will create a new profile for each unique i
 
 This policy only work on Windows via GPO (not policies.json).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#legacyprofiles
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#legacyprofiles
 </string>
       <string id="LegacySameSiteCookieBehaviorEnabled">LegacySameSiteCookieBehaviorEnabled</string>
       <string id="LegacySameSiteCookieBehaviorEnabled_Explain">Enable default legacy SameSite cookie behavior setting.
 
 If this policy is set to true, it reverts all cookies to legacy SameSite behavior which means that cookies that don't explicitly specify a SameSite attribute are treated as if they were SameSite=None.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#legacysamesitecookiebehaviorenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#legacysamesitecookiebehaviorenabled
 </string>
       <string id="LegacySameSiteCookieBehaviorEnabledForDomainList">LegacySameSiteCookieBehaviorEnabledForDomainList</string>
       <string id="LegacySameSiteCookieBehaviorEnabledForDomainList_Explain">Revert to legacy SameSite behavior for cookies on specified sites.
 
 If this policy is set to true, cookies set for domains in this list will revert to legacy SameSite behavior which means that cookies that don't explicitly specify a SameSite attribute are treated as if they were SameSite=None.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#legacysamesitecookiebehaviorenabledfordomainlist
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#legacysamesitecookiebehaviorenabledfordomainlist
 </string>
       <string id="LocalFileLinks">LocalFileLinks</string>
       <string id="LocalFileLinks_Explain">Enable linking to local files by origin.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#localfilelinks
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#localfilelinks
 </string>
       <string id="LocalNetworkAccess_SkipDomains">SkipDomains</string>
       <string id="LocalNetworkAccess_SkipDomains_Explain">Configure local network access security features.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#localnetworkaccess
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#localnetworkaccess
 </string>
       <string id="LocalNetworkAccess_Enabled">Enabled</string>
       <string id="LocalNetworkAccess_Enabled_Explain">Configure local network access security features.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#localnetworkaccess
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#localnetworkaccess
 </string>
       <string id="LocalNetworkAccess_BlockTrackers">BlockTrackers</string>
       <string id="LocalNetworkAccess_BlockTrackers_Explain">Configure local network access security features.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#localnetworkaccess
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#localnetworkaccess
 </string>
       <string id="LocalNetworkAccess_EnablePrompting">EnablePrompting</string>
       <string id="LocalNetworkAccess_EnablePrompting_Explain">Configure local network access security features.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#localnetworkaccess
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#localnetworkaccess
 </string>
       <string id="LocalNetworkAccess_Locked">Locked</string>
       <string id="LocalNetworkAccess_Locked_Explain">Configure local network access security features.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#localnetworkaccess
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#localnetworkaccess
 </string>
       <string id="ManagedBookmarks">ManagedBookmarks</string>
       <string id="ManagedBookmarks_Explain">Configures a list of bookmarks managed by an administrator that cannot be changed by the user.
@@ -3186,7 +3186,7 @@ name
 toplevel_name
 url
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#managedbookmarks
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#managedbookmarks
 </string>
       <string id="ManualAppUpdateOnly">ManualAppUpdateOnly</string>
       <string id="ManualAppUpdateOnly_Explain">Switch to manual updates only.
@@ -3199,41 +3199,41 @@ If this policy is enabled:
 
 This policy is primarily intended for advanced end users, not for enterprises, but it is available via GPO.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#manualappupdateonly
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#manualappupdateonly
 </string>
       <string id="MicrosoftEntraSSO">MicrosoftEntraSSO</string>
       <string id="MicrosoftEntraSSO_Explain">Allow single sign-on for Microsoft Entra accounts on macOS.
 
 If this policy is set to true, Firefox will use credentials stored in the Company Portal to sign in to Microsoft Entra accounts.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#microsoftentrasso
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#microsoftentrasso
 </string>
       <string id="NetworkPrediction">NetworkPrediction</string>
       <string id="NetworkPrediction_Explain">Enable or disable network prediction (DNS prefetching).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#networkprediction
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#networkprediction
 </string>
       <string id="NewTabPage">NewTabPage</string>
       <string id="NewTabPage_Explain">Enable or disable the New Tab page.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#newtabpage
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#newtabpage
 </string>
       <string id="NoDefaultBookmarks">NoDefaultBookmarks</string>
       <string id="NoDefaultBookmarks_Explain">Disable the creation of default bookmarks.
 
 This policy is only effective if the user profile has not been created yet.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#nodefaultbookmarks
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#nodefaultbookmarks
 </string>
       <string id="OfferToSaveLogins">OfferToSaveLogins</string>
       <string id="OfferToSaveLogins_Explain">Control whether or not Firefox offers to save passwords.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#offertosavelogins
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#offertosavelogins
 </string>
       <string id="OfferToSaveLoginsDefault">OfferToSaveLoginsDefault</string>
       <string id="OfferToSaveLoginsDefault_Explain">Sets the default value of 'signon.rememberSignons' without locking it.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#offertosaveloginsdefault
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#offertosaveloginsdefault
 </string>
       <string id="OverrideFirstRunPage">OverrideFirstRunPage</string>
       <string id="OverrideFirstRunPage_Explain">Override the first run page.
@@ -3242,26 +3242,26 @@ If the value is an empty string (""), the first run page is not displayed.
 
 Starting with Firefox 83, Firefox ESR 78.5, you can also specify multiple URLS separated by a vertical bar (|).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#overridefirstrunpage
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#overridefirstrunpage
 </string>
       <string id="OverridePostUpdatePage">OverridePostUpdatePage</string>
       <string id="OverridePostUpdatePage_Explain">Override the upgrade page.
 
 If the value is an empty string (""), no extra pages are displayed when Firefox is upgraded.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#overridepostupdatepage
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#overridepostupdatepage
 </string>
       <string id="PasswordManagerEnabled">PasswordManagerEnabled</string>
       <string id="PasswordManagerEnabled_Explain">Remove access to the password manager via preferences and blocks about:logins on Firefox 70.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#passwordmanagerenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#passwordmanagerenabled
 </string>
       <string id="PasswordManagerExceptions">PasswordManagerExceptions</string>
       <string id="PasswordManagerExceptions_Explain">Prevent Firefox from saving passwords for specific sites.
 
 The sites are specified as a list of origins.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#passwordmanagerexceptions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#passwordmanagerexceptions
 </string>
       <string id="PDFjs_Enabled">Enabled</string>
       <string id="PDFjs_Enabled_Explain">Disable or configure PDF.js, the built-in PDF viewer.
@@ -3272,7 +3272,7 @@ If EnablePermissions is set to true, the built-in PDF viewer will honor document
 
 Note: DisableBuiltinPDFViewer has not been deprecated. You can either continue to use it, or switch to using PDFjs-&gt;Enabled to disable the built-in PDF viewer. This new permission was added because we needed a place for PDFjs-&gt;EnabledPermissions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#pdfjs
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#pdfjs
 </string>
       <string id="PDFjs_EnablePermissions">EnablePermissions</string>
       <string id="PDFjs_EnablePermissions_Explain">Disable or configure PDF.js, the built-in PDF viewer.
@@ -3283,7 +3283,7 @@ If EnablePermissions is set to true, the built-in PDF viewer will honor document
 
 Note: DisableBuiltinPDFViewer has not been deprecated. You can either continue to use it, or switch to using PDFjs-&gt;Enabled to disable the built-in PDF viewer. This new permission was added because we needed a place for PDFjs-&gt;EnabledPermissions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#pdfjs
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#pdfjs
 </string>
       <string id="Permissions_Camera_Allow">Allow</string>
       <string id="Permissions_Camera_Allow_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3300,7 +3300,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Camera_Block">Block</string>
       <string id="Permissions_Camera_Block_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3317,7 +3317,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Microphone_Allow">Allow</string>
       <string id="Permissions_Microphone_Allow_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3334,7 +3334,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Microphone_Block">Block</string>
       <string id="Permissions_Microphone_Block_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3351,7 +3351,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Autoplay_Allow">Allow</string>
       <string id="Permissions_Autoplay_Allow_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3368,7 +3368,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Autoplay_Block">Block</string>
       <string id="Permissions_Autoplay_Block_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3385,7 +3385,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Location_Allow">Allow</string>
       <string id="Permissions_Location_Allow_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3402,7 +3402,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Location_Block">Block</string>
       <string id="Permissions_Location_Block_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3419,7 +3419,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Notifications_Allow">Allow</string>
       <string id="Permissions_Notifications_Allow_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3436,7 +3436,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Notifications_Block">Block</string>
       <string id="Permissions_Notifications_Block_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3453,7 +3453,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_VirtualReality_Allow">Allow</string>
       <string id="Permissions_VirtualReality_Allow_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3470,7 +3470,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_VirtualReality_Block">Block</string>
       <string id="Permissions_VirtualReality_Block_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3487,7 +3487,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_ScreenShare_Allow">Allow</string>
       <string id="Permissions_ScreenShare_Allow_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3504,7 +3504,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_ScreenShare_Block">Block</string>
       <string id="Permissions_ScreenShare_Block_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3521,7 +3521,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Camera">Camera</string>
       <string id="Permissions_Camera_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3538,7 +3538,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Microphone">Microphone</string>
       <string id="Permissions_Microphone_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3555,7 +3555,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Autoplay">Autoplay</string>
       <string id="Permissions_Autoplay_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3572,7 +3572,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Autoplay_Default_allow_audio_video">Allow audio and video</string>
       <string id="Permissions_Autoplay_Default_block_audio">Block audio</string>
@@ -3592,7 +3592,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_Notifications">Notifications</string>
       <string id="Permissions_Notifications_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3609,7 +3609,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_VirtualReality">VirtualReality</string>
       <string id="Permissions_VirtualReality_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3626,7 +3626,7 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="Permissions_ScreenShare">ScreenShare</string>
       <string id="Permissions_ScreenShare_Explain">Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
@@ -3643,17 +3643,17 @@ Locked prevents the user from changing preferences for the feature.
 
 Default specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#permissions
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#permissions
 </string>
       <string id="PictureInPicture_Enabled">Enabled</string>
       <string id="PictureInPicture_Enabled_Explain">Enable or disable Picture-in-Picture as well as prevent the user from enabling or disabling it (Locked).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#pictureinpicture
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#pictureinpicture
 </string>
       <string id="PictureInPicture_Locked">Locked</string>
       <string id="PictureInPicture_Locked_Explain">Enable or disable Picture-in-Picture as well as prevent the user from enabling or disabling it (Locked).
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#pictureinpicture
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#pictureinpicture
 </string>
       <string id="PopupBlocking_Allow">Allow</string>
       <string id="PopupBlocking_Allow_Explain">Allow certain websites to display popups and be redirected by third-party frames.
@@ -3666,7 +3666,7 @@ Default determines whether or not pop-up windows are allowed by default.
 
 Locked prevents the user from changing pop-up preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#popupblocking
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#popupblocking
 </string>
       <string id="PopupBlocking_Default">Default</string>
       <string id="PopupBlocking_Default_Explain">Allow certain websites to display popups and be redirected by third-party frames.
@@ -3679,7 +3679,7 @@ Default determines whether or not pop-up windows are allowed by default.
 
 Locked prevents the user from changing pop-up preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#popupblocking
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#popupblocking
 </string>
       <string id="PopupBlocking_Locked">Locked</string>
       <string id="PopupBlocking_Locked_Explain">Allow certain websites to display popups and be redirected by third-party frames.
@@ -3692,12 +3692,12 @@ Default determines whether or not pop-up windows are allowed by default.
 
 Locked prevents the user from changing pop-up preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#popupblocking
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#popupblocking
 </string>
       <string id="PostQuantumKeyAgreementEnabled">PostQuantumKeyAgreementEnabled</string>
       <string id="PostQuantumKeyAgreementEnabled_Explain">Enable post-quantum key agreement for TLS.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#postquantumkeyagreementenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#postquantumkeyagreementenabled
 </string>
       <string id="Preferences">Preferences</string>
       <string id="Preferences_Explain">Set and lock preferences.
@@ -3741,7 +3741,7 @@ Status
     boolean: Store Value as a boolean.
     string: Store Value as a string.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#preferences
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#preferences
 </string>
       <string id="PrimaryPassword">PrimaryPassword</string>
       <string id="PrimaryPassword_Explain">Require or prevent using a primary (formerly master) password.
@@ -3750,12 +3750,12 @@ If this value is true, a primary password is required. If this value is false, i
 
 If both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMasterPasswordCreation takes precedent.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#primarypassword
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#primarypassword
 </string>
       <string id="PrintingEnabled">PrintingEnabled</string>
       <string id="PrintingEnabled_Explain">Enable or disable printing.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#printingenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#printingenabled
 </string>
       <string id="PrivateBrowsingModeAvailability">PrivateBrowsingModeAvailability</string>
       <string id="PrivateBrowsingModeAvailability_Explain">Set availability of private browsing mode.
@@ -3766,7 +3766,7 @@ This policy supersedes DisablePrivateBrowsing (#disableprivatebrowsing)
 
 Note: This policy missed Firefox ESR 128.2, but it will be in Firefox ESR 128.3.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#privatebrowsingmodeavailability
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#privatebrowsingmodeavailability
 </string>
       <string id="PrivateBrowsingModeAvailability_0">Available</string>
       <string id="PrivateBrowsingModeAvailability_1">Disabled</string>
@@ -3774,7 +3774,7 @@ For more information visit: https://mozilla.github.io/policy-templates/policies/
       <string id="PromptForDownloadLocation">PromptForDownloadLocation</string>
       <string id="PromptForDownloadLocation_Explain">Ask where to save each file before downloading.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#promptfordownloadlocation
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#promptfordownloadlocation
 </string>
       <string id="Proxy_Mode">Mode</string>
       <string id="Proxy_Mode_Explain">Configure proxy settings.
@@ -3808,7 +3808,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_Mode_none">No proxy</string>
       <string id="Proxy_Mode_system">Use system settings</string>
@@ -3847,7 +3847,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_AutoConfigURL">AutoConfigURL</string>
       <string id="Proxy_AutoConfigURL_Explain">Configure proxy settings.
@@ -3881,7 +3881,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_FTPProxy">FTPProxy</string>
       <string id="Proxy_FTPProxy_Explain">Configure proxy settings.
@@ -3915,7 +3915,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_HTTPProxy">HTTPProxy</string>
       <string id="Proxy_HTTPProxy_Explain">Configure proxy settings.
@@ -3949,7 +3949,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_SSLProxy">SSLProxy</string>
       <string id="Proxy_SSLProxy_Explain">Configure proxy settings.
@@ -3983,7 +3983,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_SOCKSProxy">SOCKSProxy</string>
       <string id="Proxy_SOCKSProxy_Explain">Configure proxy settings.
@@ -4017,7 +4017,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_SOCKSVersion">SOCKSVersion</string>
       <string id="Proxy_SOCKSVersion_Explain">Configure proxy settings.
@@ -4051,7 +4051,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_SOCKSVersion_4">SOCKS v4</string>
       <string id="Proxy_SOCKSVersion_5">SOCKS v5</string>
@@ -4087,7 +4087,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_Passthrough">Passthrough</string>
       <string id="Proxy_Passthrough_Explain">Configure proxy settings.
@@ -4121,7 +4121,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_UseProxyForDNS">UseProxyForDNS</string>
       <string id="Proxy_UseProxyForDNS_Explain">Configure proxy settings.
@@ -4155,7 +4155,7 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="Proxy_AutoLogin">AutoLogin</string>
       <string id="Proxy_AutoLogin_Explain">Configure proxy settings.
@@ -4189,19 +4189,19 @@ AutoLogin means do not prompt for authentication if password is saved.
 
 UseProxyForDNS to use proxy DNS when using SOCKS v5.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#proxy
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#proxy
 </string>
       <string id="RelaunchRequired_RestartTimeOfDay">RestartTimeOfDay</string>
       <string id="RelaunchRequired_RestartTimeOfDay_Explain">Control relaunch behavior.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#relaunchrequired
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#relaunchrequired
 </string>
       <string id="RelaunchRequired_RestartTimeOfDay_Hour_0">0</string>
       <string id="RelaunchRequired_RestartTimeOfDay_Minute_0">0</string>
       <string id="RelaunchRequired_NotificationPeriodHours">NotificationPeriodHours</string>
       <string id="RelaunchRequired_NotificationPeriodHours_Explain">Control relaunch behavior.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#relaunchrequired
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#relaunchrequired
 </string>
       <string id="RelaunchRequired_NotificationPeriodHours_0">0</string>
       <string id="RequestedLocales">RequestedLocales</string>
@@ -4211,7 +4211,7 @@ It will cause the corresponding language pack to become active.
 
 Note: For Firefox 68, this can now be a string so that you can specify an empty value.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#requestedlocales
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#requestedlocales
 </string>
       <string id="SanitizeOnShutdown_Exceptions">Exceptions</string>
       <string id="SanitizeOnShutdown_Exceptions_Explain">Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
@@ -4238,7 +4238,7 @@ OfflineApps Offline Website Data (Deprecated - part of Cookies)
 
 Locked prevents the user from changing these preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sanitizeonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sanitizeonshutdown
 </string>
       <string id="SanitizeOnShutdown_Cache">Cache</string>
       <string id="SanitizeOnShutdown_Cache_Explain">Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
@@ -4265,7 +4265,7 @@ OfflineApps Offline Website Data (Deprecated - part of Cookies)
 
 Locked prevents the user from changing these preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sanitizeonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sanitizeonshutdown
 </string>
       <string id="SanitizeOnShutdown_Cookies">Cookies</string>
       <string id="SanitizeOnShutdown_Cookies_Explain">Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
@@ -4292,7 +4292,7 @@ OfflineApps Offline Website Data (Deprecated - part of Cookies)
 
 Locked prevents the user from changing these preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sanitizeonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sanitizeonshutdown
 </string>
       <string id="SanitizeOnShutdown_Downloads">Downloads</string>
       <string id="SanitizeOnShutdown_Downloads_Explain">Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
@@ -4319,7 +4319,7 @@ OfflineApps Offline Website Data (Deprecated - part of Cookies)
 
 Locked prevents the user from changing these preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sanitizeonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sanitizeonshutdown
 </string>
       <string id="SanitizeOnShutdown_FormData">FormData</string>
       <string id="SanitizeOnShutdown_FormData_Explain">Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
@@ -4346,7 +4346,7 @@ OfflineApps Offline Website Data (Deprecated - part of Cookies)
 
 Locked prevents the user from changing these preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sanitizeonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sanitizeonshutdown
 </string>
       <string id="SanitizeOnShutdown_History">History</string>
       <string id="SanitizeOnShutdown_History_Explain">Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
@@ -4373,7 +4373,7 @@ OfflineApps Offline Website Data (Deprecated - part of Cookies)
 
 Locked prevents the user from changing these preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sanitizeonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sanitizeonshutdown
 </string>
       <string id="SanitizeOnShutdown_Sessions">Sessions</string>
       <string id="SanitizeOnShutdown_Sessions_Explain">Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
@@ -4400,7 +4400,7 @@ OfflineApps Offline Website Data (Deprecated - part of Cookies)
 
 Locked prevents the user from changing these preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sanitizeonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sanitizeonshutdown
 </string>
       <string id="SanitizeOnShutdown_SiteSettings">SiteSettings</string>
       <string id="SanitizeOnShutdown_SiteSettings_Explain">Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
@@ -4427,7 +4427,7 @@ OfflineApps Offline Website Data (Deprecated - part of Cookies)
 
 Locked prevents the user from changing these preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sanitizeonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sanitizeonshutdown
 </string>
       <string id="SanitizeOnShutdown_OfflineApps">OfflineApps</string>
       <string id="SanitizeOnShutdown_OfflineApps_Explain">Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
@@ -4454,7 +4454,7 @@ OfflineApps Offline Website Data (Deprecated - part of Cookies)
 
 Locked prevents the user from changing these preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sanitizeonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sanitizeonshutdown
 </string>
       <string id="SanitizeOnShutdown_Locked">Locked</string>
       <string id="SanitizeOnShutdown_Locked_Explain">Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
@@ -4481,12 +4481,12 @@ OfflineApps Offline Website Data (Deprecated - part of Cookies)
 
 Locked prevents the user from changing these preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sanitizeonshutdown
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sanitizeonshutdown
 </string>
       <string id="SearchBar">SearchBar</string>
       <string id="SearchBar_Explain">Set whether or not search bar is displayed.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchbar
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchbar
 </string>
       <string id="SearchBar_unified">Address bar only</string>
       <string id="SearchBar_separate">Separate search box</string>
@@ -4511,7 +4511,7 @@ SuggestURLTemplate is a search suggestions URL with {searchTerms} to substitute 
 
 Encoding is the query charset for the engine. It defaults to UTF-8.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchengines
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchengines
 </string>
       <string id="SearchEngines_Add_1_Method_GET">GET</string>
       <string id="SearchEngines_Add_1_Method_POST">POST</string>
@@ -4536,7 +4536,7 @@ SuggestURLTemplate is a search suggestions URL with {searchTerms} to substitute 
 
 Encoding is the query charset for the engine. It defaults to UTF-8.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchengines
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchengines
 </string>
       <string id="SearchEngines_Add_2_Method_GET">GET</string>
       <string id="SearchEngines_Add_2_Method_POST">POST</string>
@@ -4561,7 +4561,7 @@ SuggestURLTemplate is a search suggestions URL with {searchTerms} to substitute 
 
 Encoding is the query charset for the engine. It defaults to UTF-8.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchengines
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchengines
 </string>
       <string id="SearchEngines_Add_3_Method_GET">GET</string>
       <string id="SearchEngines_Add_3_Method_POST">POST</string>
@@ -4586,7 +4586,7 @@ SuggestURLTemplate is a search suggestions URL with {searchTerms} to substitute 
 
 Encoding is the query charset for the engine. It defaults to UTF-8.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchengines
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchengines
 </string>
       <string id="SearchEngines_Add_4_Method_GET">GET</string>
       <string id="SearchEngines_Add_4_Method_POST">POST</string>
@@ -4611,97 +4611,97 @@ SuggestURLTemplate is a search suggestions URL with {searchTerms} to substitute 
 
 Encoding is the query charset for the engine. It defaults to UTF-8.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchengines
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchengines
 </string>
       <string id="SearchEngines_Add_5_Method_GET">GET</string>
       <string id="SearchEngines_Add_5_Method_POST">POST</string>
       <string id="SearchEngines_Remove">Remove</string>
       <string id="SearchEngines_Remove_Explain">Hide built-in search engines.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchengines
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchengines
 </string>
       <string id="SearchEngines_Default">Default</string>
       <string id="SearchEngines_Default_Explain">Set the default search engine.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchengines
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchengines
 </string>
       <string id="SearchEngines_DefaultPrivate">DefaultPrivate</string>
       <string id="SearchEngines_DefaultPrivate_Explain">The following policies allow for configuring search engines in Firefox.
 
 As of Firefox 139, this policy is available in all versions of Firefox.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchengines
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchengines
 </string>
       <string id="SearchEngines_PreventInstalls">PreventInstalls</string>
       <string id="SearchEngines_PreventInstalls_Explain">Prevent installing search engines from webpages.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchengines
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchengines
 </string>
       <string id="SearchSuggestEnabled">SearchSuggestEnabled</string>
       <string id="SearchSuggestEnabled_Explain">Enable search suggestions.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#searchsuggestenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#searchsuggestenabled
 </string>
       <string id="SecurityDevices_Add">Add</string>
       <string id="SecurityDevices_Add_Explain">Install PKCS #11 modules.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#securitydevices
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#securitydevices
 </string>
       <string id="SecurityDevices">SecurityDevices</string>
       <string id="SecurityDevices_Explain">Install PKCS #11 modules.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#securitydevices
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#securitydevices
 </string>
       <string id="SecurityDevices_Delete">Delete</string>
       <string id="SecurityDevices_Delete_Explain">Install PKCS #11 modules.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#securitydevices
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#securitydevices
 </string>
       <string id="ShowHomeButton">ShowHomeButton</string>
       <string id="ShowHomeButton_Explain">Show the home button on the toolbar.
 
 Future versions of Firefox will not show the home button by default.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#showhomebutton
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#showhomebutton
 </string>
       <string id="SitePolicies_1">SitePolicies (1)</string>
       <string id="SitePolicies_1_Explain">Fine grained control over policies for specific sites.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sitepolicies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sitepolicies
 </string>
       <string id="SitePolicies_2">SitePolicies (2)</string>
       <string id="SitePolicies_2_Explain">Fine grained control over policies for specific sites.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sitepolicies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sitepolicies
 </string>
       <string id="SitePolicies_3">SitePolicies (3)</string>
       <string id="SitePolicies_3_Explain">Fine grained control over policies for specific sites.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sitepolicies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sitepolicies
 </string>
       <string id="SitePolicies_4">SitePolicies (4)</string>
       <string id="SitePolicies_4_Explain">Fine grained control over policies for specific sites.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sitepolicies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sitepolicies
 </string>
       <string id="SitePolicies_5">SitePolicies (5)</string>
       <string id="SitePolicies_5_Explain">Fine grained control over policies for specific sites.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sitepolicies
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sitepolicies
 </string>
       <string id="SkipTermsOfUse">SkipTermsOfUse</string>
       <string id="SkipTermsOfUse_Explain">Configure display settings for the Firefox Terms of Use and Privacy Notice on startup.
 
 If true, don't display the Firefox Terms of Use (https://www.mozilla.org/about/legal/terms/firefox/) and Privacy Notice (https://www.mozilla.org/privacy/firefox/) upon startup. You represent that you accept and have the authority to accept the Terms of Use on behalf of all individuals to whom you provide access to this browser.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#skiptermsofuse
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#skiptermsofuse
 </string>
       <string id="SSLVersionMax">SSLVersionMax</string>
       <string id="SSLVersionMax_Explain">Set and lock the maximum version of TLS.
 
 (Firefox defaults to a maximum of TLS 1.3.)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sslversionmax
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sslversionmax
 </string>
       <string id="SSLVersionMax_tls1">TLS 1.0</string>
       <string id="SSLVersionMax_tls1_1">TLS 1.1</string>
@@ -4712,7 +4712,7 @@ For more information visit: https://mozilla.github.io/policy-templates/policies/
 
 (Firefox defaults to a minimum of TLS 1.2.)
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#sslversionmin
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#sslversionmin
 </string>
       <string id="SSLVersionMin_tls1">TLS 1.0</string>
       <string id="SSLVersionMin_tls1_1">TLS 1.1</string>
@@ -4721,22 +4721,22 @@ For more information visit: https://mozilla.github.io/policy-templates/policies/
       <string id="StartDownloadsInTempDirectory">StartDownloadsInTempDirectory</string>
       <string id="StartDownloadsInTempDirectory_Explain">Force downloads to start off in a local, temporary location rather than the default download directory.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#startdownloadsintempdirectory
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#startdownloadsintempdirectory
 </string>
       <string id="SupportMenu_Title">Title</string>
       <string id="SupportMenu_Title_Explain">Add a menuitem to the help menu for specifying support information.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#supportmenu
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#supportmenu
 </string>
       <string id="SupportMenu_URL">URL</string>
       <string id="SupportMenu_URL_Explain">Add a menuitem to the help menu for specifying support information.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#supportmenu
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#supportmenu
 </string>
       <string id="SupportMenu_AccessKey">AccessKey</string>
       <string id="SupportMenu_AccessKey_Explain">Add a menuitem to the help menu for specifying support information.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#supportmenu
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#supportmenu
 </string>
       <string id="TranslateEnabled">TranslateEnabled</string>
       <string id="TranslateEnabled_Explain">Enable or disable webpage translation.
@@ -4745,7 +4745,7 @@ Note: Web page translation is done completely on the client, so there is no data
 
 If you only want to disable the popup, you can set the pref browser.translations.automaticallyPopup to false using the Preferences (#preferences) policy.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#translateenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#translateenabled
 </string>
       <string id="UserMessaging_WhatsNew">WhatsNew</string>
       <string id="UserMessaging_WhatsNew_Explain">Prevent Firefox from messaging the user in certain situations.
@@ -4766,7 +4766,7 @@ FirefoxLabs If false, don't show the "Firefox Labs" section in Preferences. (Fir
 
 Locked prevents the user from changing user messaging preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#usermessaging
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#usermessaging
 </string>
       <string id="UserMessaging_ExtensionRecommendations">ExtensionRecommendations</string>
       <string id="UserMessaging_ExtensionRecommendations_Explain">Prevent Firefox from messaging the user in certain situations.
@@ -4787,7 +4787,7 @@ FirefoxLabs If false, don't show the "Firefox Labs" section in Preferences. (Fir
 
 Locked prevents the user from changing user messaging preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#usermessaging
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#usermessaging
 </string>
       <string id="UserMessaging_FeatureRecommendations">FeatureRecommendations</string>
       <string id="UserMessaging_FeatureRecommendations_Explain">Prevent Firefox from messaging the user in certain situations.
@@ -4808,7 +4808,7 @@ FirefoxLabs If false, don't show the "Firefox Labs" section in Preferences. (Fir
 
 Locked prevents the user from changing user messaging preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#usermessaging
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#usermessaging
 </string>
       <string id="UserMessaging_UrlbarInterventions">UrlbarInterventions</string>
       <string id="UserMessaging_UrlbarInterventions_Explain">Prevent Firefox from messaging the user in certain situations.
@@ -4829,7 +4829,7 @@ FirefoxLabs If false, don't show the "Firefox Labs" section in Preferences. (Fir
 
 Locked prevents the user from changing user messaging preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#usermessaging
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#usermessaging
 </string>
       <string id="UserMessaging_SkipOnboarding">SkipOnboarding</string>
       <string id="UserMessaging_SkipOnboarding_Explain">Prevent Firefox from messaging the user in certain situations.
@@ -4850,7 +4850,7 @@ FirefoxLabs If false, don't show the "Firefox Labs" section in Preferences. (Fir
 
 Locked prevents the user from changing user messaging preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#usermessaging
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#usermessaging
 </string>
       <string id="UserMessaging_MoreFromMozilla">MoreFromMozilla</string>
       <string id="UserMessaging_MoreFromMozilla_Explain">Prevent Firefox from messaging the user in certain situations.
@@ -4871,7 +4871,7 @@ FirefoxLabs If false, don't show the "Firefox Labs" section in Preferences. (Fir
 
 Locked prevents the user from changing user messaging preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#usermessaging
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#usermessaging
 </string>
       <string id="UserMessaging_FirefoxLabs">FirefoxLabs</string>
       <string id="UserMessaging_FirefoxLabs_Explain">Prevent Firefox from messaging the user in certain situations.
@@ -4892,7 +4892,7 @@ FirefoxLabs If false, don't show the "Firefox Labs" section in Preferences. (Fir
 
 Locked prevents the user from changing user messaging preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#usermessaging
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#usermessaging
 </string>
       <string id="UserMessaging_Locked">Locked</string>
       <string id="UserMessaging_Locked_Explain">Prevent Firefox from messaging the user in certain situations.
@@ -4913,17 +4913,17 @@ FirefoxLabs If false, don't show the "Firefox Labs" section in Preferences. (Fir
 
 Locked prevents the user from changing user messaging preferences.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#usermessaging
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#usermessaging
 </string>
       <string id="UseSystemPrintDialog">UseSystemPrintDialog</string>
       <string id="UseSystemPrintDialog_Explain">Use the system print dialog instead of the print preview window.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#usesystemprintdialog
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#usesystemprintdialog
 </string>
       <string id="VisualSearchEnabled">VisualSearchEnabled</string>
       <string id="VisualSearchEnabled_Explain">Enable or disable visual search.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#visualsearchenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#visualsearchenabled
 </string>
       <string id="WebsiteFilter">WebsiteFilter</string>
       <string id="WebsiteFilter_Explain">Block websites from being visited.
@@ -4940,19 +4940,19 @@ As of Firefox 83 and Firefox ESR 78.5, file URLs are supported.
 Block
 Exceptions
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#websitefilter
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#websitefilter
 </string>
       <string id="WindowsSSO">WindowsSSO</string>
       <string id="WindowsSSO_Explain">Allow Windows single sign-on for Microsoft, work, and school accounts.
 
 If this policy is set to true, Firefox will use credentials stored in Windows to sign in to Microsoft, work, and school accounts.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#windowssso
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#windowssso
 </string>
       <string id="XSLTEnabled">XSLTEnabled</string>
       <string id="XSLTEnabled_Explain">Enable or disable support for the XSLTProcessor JavaScript API and the XSLT processing instruction.
 
-For more information visit: https://mozilla.github.io/policy-templates/policies/main/#xsltenabled
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/main/#xsltenabled
 </string>
       <string id="SUPPORTED_ID_0">Firefox 67.0 - *</string>
       <string id="SUPPORTED_ID_1">Firefox 150.0 - *</string>
