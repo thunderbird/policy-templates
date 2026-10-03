@@ -325,8 +325,6 @@ Software\Policies\Mozilla\Thunderbird\AppUpdateURL (REG_SZ) = https://yoursite.c
 
 Configure integrated authentication for websites that support it.
 
-Configure sites that support integrated authentication.
-
 See [Integrated authentication](https://htmlpreview.github.io/?https://github.com/mdn/archived-content/blob/main/files/en-us/mozilla/integrated_authentication/raw.html) for more information.
 
 **CCK2 Equivalent:** N/A\

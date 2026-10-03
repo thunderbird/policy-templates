@@ -161,7 +161,7 @@
         }
       },
       "x-description-l10n-id": "policy-Authentication",
-      "x-help": "Configure sites that support integrated authentication.\n\nSee [Integrated authentication](https://htmlpreview.github.io/?https://github.com/mdn/archived-content/blob/main/files/en-us/mozilla/integrated_authentication/raw.html) for more information."
+      "x-help": "See [Integrated authentication](https://htmlpreview.github.io/?https://github.com/mdn/archived-content/blob/main/files/en-us/mozilla/integrated_authentication/raw.html) for more information."
     },
 
     "BackgroundAppUpdate": {
