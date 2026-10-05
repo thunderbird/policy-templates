@@ -210,9 +210,11 @@ export function getSchemaSettings(schema, policyName, l10n) {
         const types = setting.types;
         if (types.includes("array") && node.items) {
             // A list, which is preferred for settings which can also be a
-            // single value (e.g. RequestedLocales).
+            // single value (e.g. RequestedLocales). A list of objects becomes
+            // numbered sets of their settings, unless its entries are JSON
+            // values: then it is a plain list with one JSON value per entry.
             const item = setting.item();
-            if (item.node?.properties) {
+            if (item.node?.properties && !item.isJson) {
                 for (const [name] of Object.entries(item.node.properties)) {
                     walk(item.child(name), {
                         keyParts: [...keyParts, LIST_ENTRY, name],
@@ -411,6 +413,9 @@ export function getSettingTree(schema, policyName, l10n) {
             deprecated,
             expandEnvVars: setting.expandEnvVars,
             json: setting.isJson,
+            // A list whose entries are JSON values (one per line in the ADMX
+            // template).
+            jsonEntries: container != setting && container.isJson,
             choices,
             children: children.filter(Boolean),
         };

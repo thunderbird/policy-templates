@@ -24,8 +24,9 @@ import pathUtils from "node:path";
  * @param {boolean} [texts.deprecated]
  * @param {boolean} [texts.expandEnvVars] - Whether Windows expands environment
  *    variables in the value ("x-expand-env-vars").
- * @param {Object} [texts.fields] - The node of a JSON value in the tree of the
- *    policy (see getSettingTree()), whose fields are listed.
+ * @param {Object} [texts.fields] - The node of a JSON value, or of a list of
+ *    JSON values, in the tree of the policy (see getSettingTree()), whose
+ *    fields are listed.
  * @param {boolean} [texts.link] - Whether to link to the documentation.
  * @param {string} branchDocsUrl - The URL of the documentation of the branch,
  *    see getPolicyDocsUrl().
@@ -37,7 +38,11 @@ export function getExplainText(name, { help, deprecated, expandEnvVars, fields, 
     if (expandEnvVars) {
         text = `${text.trimEnd()}\n\nEnvironment variables like %USERPROFILE% are expanded.\n`;
     }
-    // A JSON value is entered as text, so its fields are listed.
+    // A JSON value is entered as text, so its fields are listed. A list of
+    // JSON values has one value per line.
+    if (fields?.jsonEntries) {
+        text = `${text.trimEnd()}\n\nEach line of the list is one entry, as JSON.\n`;
+    }
     const fieldLines = fields ? getFieldLines(fields, "") : [];
     if (fieldLines.length) {
         text = `${text.trimEnd()}\n\n${fieldLines.join("\n")}\n`;
@@ -279,7 +284,7 @@ class ADM_BUILDER {
             help: help ?? "",
             deprecated,
             expandEnvVars: !!setting?.expandEnvVars || controls.some(control => control.type == "REG_EXPAND_SZ"),
-            fields: treeNode?.json ? treeNode : undefined,
+            fields: treeNode?.json || treeNode?.jsonEntries ? treeNode : undefined,
             link: true,
         }, context.docsUrl);
         const controlTexts = controls
@@ -930,7 +935,11 @@ class ADM_BUILDER {
                 const listBaseKey = this.findBaseKey(entries.map(e => e.key));
                 const path = this.getRelativeKeyParts(listBaseKey);
                 if (entries.length === 1) {
-                    // Simple REG_SZ/REG_EXPAND_SZ List.
+                    // Simple REG_SZ/REG_EXPAND_SZ List, or a list of JSON
+                    // values (REG_MULTI_SZ), entered as one JSON value per
+                    // line.
+                    const label = getControlLabel(settingTexts, path, "list");
+                    const json = entries[0].type == "REG_MULTI_SZ";
                     planned.push({
                         name: listId,
                         type: "list",
@@ -940,7 +949,7 @@ class ADM_BUILDER {
                             texts(path),
                             listId,
                             listBaseKey,
-                            { ...entries[0], label: getControlLabel(settingTexts, path, "list"), category },
+                            { ...entries[0], label: json ? `${label} (one JSON value per line)` : label, category },
                             supportedPolicies
                         ),
                     });

@@ -157,6 +157,21 @@ test("x-examples-gpo is used for the GPO example, x-expand-env-vars next to a $r
     assert.match(Path.json, /"Path": "\/home\/user\/file"/);
 });
 
+test("a list of JSON values has one JSON value per entry in the GPO example", () => {
+    const schema = structuredClone(SCHEMA);
+    schema.properties.Engines = {
+        type: "array",
+        description: "Engines.",
+        items: { type: "object", contentMediaType: "application/json", properties: { Name: { type: "string" } } },
+        examples: [[{ Name: "A" }, { Name: "B" }]],
+    };
+    const { Engines } = derive(schema);
+    assert.deepEqual(Engines.gpo.map(e => [e.key, e.type, e.value]), [
+        [`${BASE_KEY}\\Engines\\1`, "REG_MULTI_SZ", '{\n  "Name": "A"\n}'],
+        [`${BASE_KEY}\\Engines\\2`, "REG_MULTI_SZ", '{\n  "Name": "B"\n}'],
+    ]);
+});
+
 test("x-formats limits the examples", () => {
     const { WindowsFlag } = derive();
     assert.equal(WindowsFlag.gpo.length, 1);

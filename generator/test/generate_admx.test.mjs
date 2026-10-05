@@ -177,6 +177,36 @@ test("the help text of a JSON value lists its fields", async () => {
     );
 });
 
+test("a list of JSON values is one list box with one value per line, not numbered sets", async () => {
+    const engine = (json) => ({
+        type: "object",
+        ...(json ? { contentMediaType: "application/json" } : {}),
+        required: ["Name"],
+        properties: {
+            Name: { type: "string", description: "The name." },
+            Url: { type: "string", description: "The URL." },
+        },
+    });
+    const { admx, adml } = await generate(
+        {
+            properties: {
+                Engines: { type: "array", title: "Search engines", description: "Add engines.", items: engine(true) },
+                Old: { type: "array", description: "Add engines.", items: engine(false) },
+            },
+        },
+        ["Engines", "Old"]
+    );
+    assert.match(admx, /<list id="Engines_List" key="Software\\Policies\\Example\\Product\\Engines" valuePrefix=""\/>/);
+    assert.doesNotMatch(admx, /<policy name="Engines_1"/);
+    assert.match(adml, /<listBox refId="Engines_List">Search engines \(one JSON value per line\)<\/listBox>/);
+    assert.equal(
+        string(adml, "Engines_Explain"),
+        `Add engines.\n\nEach line of the list is one entry, as JSON.\n\nName: The name.\nUrl: The URL.\n\n${docsLink("engines")}\n`
+    );
+    // Without contentMediaType, a list of objects stays numbered sets.
+    assert.match(admx, /<policy name="Old_1"/);
+});
+
 test("policies without the format gpo are left out", async () => {
     const { admx } = await generate(
         {
