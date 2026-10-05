@@ -11,7 +11,6 @@ are deploying.
  * [Thunderbird ESR 153.4.1](policies/esr153)
  * [Thunderbird ESR 140.17.0](policies/esr140)
  * [Thunderbird ESR 128.14.0](policies/esr128)
- * [Thunderbird ESR 115.18.1](policies/esr115)
 
 ## List of supported policies
 
@@ -237,36 +236,6 @@ supports it, when it was removed, and whether Firefox supports it.
 | `Preferences_[name]_Status` | 92.0 |  | ✅ |
 | `Preferences_[name]_Type` | ❌ |  | ✅ |
 | `Preferences_[name]_Value` | 92.0 |  | ✅ |
-| `Preferences_accessibility.force_disabled` | 78.0 | 89.0 | ❌ |
-| `Preferences_browser.cache.disk.enable` | 78.0 | 89.0 | ❌ |
-| `Preferences_browser.cache.disk.parent_directory` | 68.0 | 89.0 | ❌ |
-| `Preferences_browser.fixup.dns_first_for_single_words` | 68.0 | 77.0 | ❌ |
-| `Preferences_browser.safebrowsing.malware.enabled` | 78.0 | 89.0 | ❌ |
-| `Preferences_browser.safebrowsing.phishing.enabled` | 78.0 | 89.0 | ❌ |
-| `Preferences_browser.search.update` | 78.0 | 89.0 | ❌ |
-| `Preferences_browser.urlbar.suggest.bookmark` | 68.0 | 77.0 | ❌ |
-| `Preferences_browser.urlbar.suggest.history` | 68.0 | 77.0 | ❌ |
-| `Preferences_browser.urlbar.suggest.openpage` | 68.0 | 77.0 | ❌ |
-| `Preferences_datareporting.policy.dataSubmissionPolicyBypassNotification` | 78.0 | 89.0 | ❌ |
-| `Preferences_dom.allow_scripts_to_close_windows` | 78.0 | 89.0 | ❌ |
-| `Preferences_dom.disable_window_flip` | 78.0 | 89.0 | ❌ |
-| `Preferences_dom.disable_window_move_resize` | 78.0 | 89.0 | ❌ |
-| `Preferences_dom.event.contextmenu.enabled` | 78.0 | 89.0 | ❌ |
-| `Preferences_dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl` | 78.0 | 89.0 | ❌ |
-| `Preferences_dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl` | 78.0 | 89.0 | ❌ |
-| `Preferences_extensions.blocklist.enabled` | 78.0 | 89.0 | ❌ |
-| `Preferences_geo.enabled` | 78.0 | 89.0 | ❌ |
-| `Preferences_intl.accept_languages` | 78.0 | 89.0 | ❌ |
-| `Preferences_network.IDN_show_punycode` | 68.0 | 89.0 | ❌ |
-| `Preferences_network.dns.disableIPv6` | 78.0 | 89.0 | ❌ |
-| `Preferences_places.history.enabled` | 78.0 | 89.0 | ❌ |
-| `Preferences_print.save_print_settings` | 78.0 | 89.0 | ❌ |
-| `Preferences_security.default_personal_cert` | 78.0 | 89.0 | ❌ |
-| `Preferences_security.mixed_content.block_active_content` | 78.0 | 89.0 | ❌ |
-| `Preferences_security.osclientcerts.autoload` | 78.0 | 89.0 | ❌ |
-| `Preferences_security.ssl.errorReporting.enabled` | 78.0 | 89.0 | ❌ |
-| `Preferences_security.tls.hello_downgrade_check` | 78.0 | 89.0 | ❌ |
-| `Preferences_widget.content.gtk-theme-override` | 78.0 | 89.0 | ❌ |
 | `PrimaryPassword` | 92.0 |  | ✅ |
 | `PrintingEnabled` | ❌ |  | ✅ |
 | `PrivateBrowsingModeAvailability` | ❌ |  | ✅ |

@@ -98,7 +98,7 @@ Installation:
 | **[`SSLVersionMax`](#sslversionmax)** | Set the maximum SSL version.
 | **[`SSLVersionMin`](#sslversionmin)** | Set the minimum SSL version.
 
-## 3rdparty
+## 3rdparty: Policies for Extensions {#3rdparty}
 
 Set policies that WebExtensions can access via chrome.storage.managed.
 
@@ -225,7 +225,7 @@ Software\Policies\Mozilla\Thunderbird\AppAutoUpdate (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `AppAutoUpdate` | 75.0 |  |
 
-## AppUpdatePin
+## AppUpdatePin: Pin updates to a specific version {#appupdatepin}
 
 Prevent Thunderbird from being updated beyond the specified version.
 
@@ -276,7 +276,7 @@ Software\Policies\Mozilla\Thunderbird\AppUpdatePin (REG_SZ) = 106.
 |:--- | ---:| ---:|
 | `AppUpdatePin` | 104.0 |  |
 
-## AppUpdateURL
+## AppUpdateURL: Custom Update URL {#appupdateurl}
 
 Set custom app update URL.
 
@@ -323,7 +323,7 @@ Software\Policies\Mozilla\Thunderbird\AppUpdateURL (REG_SZ) = https://yoursite.c
 |:--- | ---:| ---:|
 | `AppUpdateURL` | 68.0 |  |
 
-## Authentication
+## Authentication: Authentication {#authentication}
 
 Configure integrated authentication for websites that support it.
 
@@ -491,7 +491,7 @@ Software\Policies\Mozilla\Thunderbird\BackgroundAppUpdate (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `BackgroundAppUpdate` | 92.0 |  |
 
-## BlockAboutAddons
+## BlockAboutAddons: Block Add-ons Manager {#blockaboutaddons}
 
 Block access to the Add-ons Manager (about:addons).
 
@@ -540,7 +540,7 @@ Software\Policies\Mozilla\Thunderbird\BlockAboutAddons (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `BlockAboutAddons` | 68.0 |  |
 
-## BlockAboutConfig
+## BlockAboutConfig: Block about:config {#blockaboutconfig}
 
 Block access to the about:config page.
 
@@ -587,7 +587,7 @@ Software\Policies\Mozilla\Thunderbird\BlockAboutConfig (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `BlockAboutConfig` | 68.0 |  |
 
-## BlockAboutProfiles
+## BlockAboutProfiles: Block about:profiles {#blockaboutprofiles}
 
 Block access to the about:profiles page.
 
@@ -634,7 +634,7 @@ Software\Policies\Mozilla\Thunderbird\BlockAboutProfiles (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `BlockAboutProfiles` | 68.0 |  |
 
-## BlockAboutSupport
+## BlockAboutSupport: Block Troubleshooting Information {#blockaboutsupport}
 
 Block access to the about:support page.
 
@@ -728,7 +728,7 @@ Software\Policies\Mozilla\Thunderbird\CaptivePortal (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `CaptivePortal` | 78.0 |  |
 
-## Certificates
+## Certificates: Certificates {#certificates}
 
 Add certificates or use built-in certificates.
 
@@ -917,7 +917,7 @@ Software\Policies\Mozilla\Thunderbird\Certificates\Install\2 (REG_EXPAND_SZ) = C
 |:--- | ---:| ---:|
 | `Certificates_Install` | 68.0 |  |
 
-## Cookies
+## Cookies: Cookies {#cookies}
 
 Allow or deny websites to set cookies.
 
@@ -1008,7 +1008,7 @@ Software\Policies\Mozilla\Thunderbird\Cookies\Locked (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `Cookies`<br>`Cookies_Allow`<br>`Cookies_Block`<br>`Cookies_Default`<br>`Cookies_AcceptThirdParty`<br>`Cookies_ExpireAtSessionEnd`<br>`Cookies_Locked` | 78.0 |  |
 
-## DefaultDownloadDirectory
+## DefaultDownloadDirectory: Default Download Directory {#defaultdownloaddirectory}
 
 Set the default download directory.
 
@@ -1057,7 +1057,7 @@ Software\Policies\Mozilla\Thunderbird\DefaultDownloadDirectory (REG_EXPAND_SZ) =
 |:--- | ---:| ---:|
 | `DefaultDownloadDirectory` | 78.0 |  |
 
-## DisableAppUpdate
+## DisableAppUpdate: Disable Update {#disableappupdate}
 
 Prevent Thunderbird from updating.
 
@@ -1104,7 +1104,7 @@ Software\Policies\Mozilla\Thunderbird\DisableAppUpdate (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableAppUpdate` | 68.0 |  |
 
-## DisableBuiltinPDFViewer
+## DisableBuiltinPDFViewer: Disable Built-in PDF Viewer (PDF.js) {#disablebuiltinpdfviewer}
 
 Disable PDF.js, the built-in PDF viewer in Thunderbird.
 
@@ -1151,7 +1151,7 @@ Software\Policies\Mozilla\Thunderbird\DisableBuiltinPDFViewer (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableBuiltinPDFViewer` | 92.0 |  |
 
-## DisabledCiphers
+## DisabledCiphers: Disabled Ciphers {#disabledciphers}
 
 Disable ciphers.
 
@@ -1301,7 +1301,7 @@ Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_RSA_WITH_3DES_EDE_CBC_
 | `DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA` | 102.0 |  |
 | `DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384` | 92.0 |  |
 
-## DisableDeveloperTools
+## DisableDeveloperTools: Disable Developer Tools {#disabledevelopertools}
 
 Block access to the developer tools.
 
@@ -1399,7 +1399,7 @@ Software\Policies\Mozilla\Thunderbird\DisableMasterPasswordCreation (REG_DWORD) 
 |:--- | ---:| ---:|
 | `DisableMasterPasswordCreation` | 68.0 |  |
 
-## DisablePasswordReveal
+## DisablePasswordReveal: Do not allow passwords to be revealed in saved logins {#disablepasswordreveal}
 
 Do not allow passwords to be revealed in saved logins.
 
@@ -1495,7 +1495,7 @@ Software\Policies\Mozilla\Thunderbird\DisableSafeMode (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableSafeMode` | 78.0 |  |
 
-## DisableSecurityBypass
+## DisableSecurityBypass: Prevent Bypassing Security Warnings {#disablesecuritybypass}
 
 Prevent the user from bypassing certain security warnings.
 
@@ -1557,7 +1557,7 @@ Software\Policies\Mozilla\Thunderbird\DisableSecurityBypass\SafeBrowsing (REG_DW
 |:--- | ---:| ---:|
 | `DisableSecurityBypass`<br>`DisableSecurityBypass_InvalidCertificate`<br>`DisableSecurityBypass_SafeBrowsing` | 68.0 |  |
 
-## DisableSystemAddonUpdate
+## DisableSystemAddonUpdate: Disable System Addon Updates {#disablesystemaddonupdate}
 
 Prevent Thunderbird from installing and updating system add-ons.
 
@@ -1604,7 +1604,7 @@ Software\Policies\Mozilla\Thunderbird\DisableSystemAddonUpdate (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableSystemAddonUpdate` | 77.0 |  |
 
-## DisableTelemetry
+## DisableTelemetry: Disable Telemetry {#disabletelemetry}
 
 Turn off Telemetry.
 
@@ -1655,7 +1655,7 @@ Software\Policies\Mozilla\Thunderbird\DisableTelemetry (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableTelemetry` | 78.0 |  |
 
-## DNSOverHTTPS
+## DNSOverHTTPS: DNS Over HTTPS {#dnsoverhttps}
 
 Configure DNS over HTTPS.
 
@@ -1731,7 +1731,7 @@ Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Locked (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DNSOverHTTPS`<br>`DNSOverHTTPS_Enabled`<br>`DNSOverHTTPS_ProviderURL`<br>`DNSOverHTTPS_ExcludedDomains`<br>`DNSOverHTTPS_Locked` | 92.0 |  |
 
-## DownloadDirectory
+## DownloadDirectory: Download Directory {#downloaddirectory}
 
 Set and lock the download directory.
 
@@ -1780,7 +1780,7 @@ Software\Policies\Mozilla\Thunderbird\DownloadDirectory (REG_EXPAND_SZ) = ${home
 |:--- | ---:| ---:|
 | `DownloadDirectory` | 78.0 |  |
 
-## Extensions
+## Extensions: Extensions {#extensions}
 
 Install, uninstall or lock extensions. The Install option takes URLs or paths as parameters. The Uninstall and Locked options take extension IDs.
 
@@ -1857,7 +1857,7 @@ Software\Policies\Mozilla\Thunderbird\Extensions\Locked\1 (REG_SZ) = addon_id@mo
 |:--- | ---:| ---:|
 | `Extensions`<br>`Extensions_Install`<br>`Extensions_Uninstall`<br>`Extensions_Locked` | 68.0 |  |
 
-## ExtensionSettings
+## ExtensionSettings: Extension Management {#extensionsettings}
 
 Manage all aspects of extension installation.
 
@@ -2055,7 +2055,7 @@ Software\Policies\Mozilla\Thunderbird\ExtensionUpdate (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `ExtensionUpdate` | 68.0 |  |
 
-## Handlers
+## Handlers: Handlers {#handlers}
 
 Configure default application handlers.
 
@@ -2283,7 +2283,7 @@ Software\Policies\Mozilla\Thunderbird\HardwareAcceleration (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `HardwareAcceleration` | 78.0 |  |
 
-## InAppNotification
+## InAppNotification: In-App Notifications {#inappnotification}
 
 Enable or disable notification types.
 
@@ -2357,7 +2357,7 @@ Software\Policies\Mozilla\Thunderbird\InAppNotification\Disabled (REG_DWORD) = 0
 |:--- | ---:| ---:|
 | `InAppNotification`<br>`InAppNotification_DonationEnabled`<br>`InAppNotification_SurveyEnabled`<br>`InAppNotification_MessageEnabled`<br>`InAppNotification_Disabled` | 139.0 |  |
 
-## InstallAddonsPermission
+## InstallAddonsPermission: Addons {#installaddonspermission}
 
 Allow certain websites to install add-ons.
 
@@ -2421,7 +2421,7 @@ Software\Policies\Mozilla\Thunderbird\InstallAddonsPermission\Default (REG_DWORD
 |:--- | ---:| ---:|
 | `InstallAddonsPermission`<br>`InstallAddonsPermission_Allow`<br>`InstallAddonsPermission_Default` | 68.0 |  |
 
-## ManualAppUpdateOnly
+## ManualAppUpdateOnly: Manual Update Only {#manualappupdateonly}
 
 Allow manual updates only and do not notify the user about updates.
 
@@ -2619,7 +2619,7 @@ Software\Policies\Mozilla\Thunderbird\OfferToSaveLoginsDefault (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `OfferToSaveLoginsDefault` | 92.0 |  |
 
-## PasswordManagerEnabled
+## PasswordManagerEnabled: Password Manager {#passwordmanagerenabled}
 
 Enable saving passwords to the password manager.
 
@@ -2666,7 +2666,7 @@ Software\Policies\Mozilla\Thunderbird\PasswordManagerEnabled (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `PasswordManagerEnabled` | 78.0 |  |
 
-## PDFjs
+## PDFjs: PDF.js {#pdfjs}
 
 Disable or configure PDF.js, the built-in PDF viewer in Thunderbird.
 
@@ -2728,7 +2728,7 @@ Software\Policies\Mozilla\Thunderbird\PDFjs\EnablePermissions (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `PDFjs`<br>`PDFjs_Enabled`<br>`PDFjs_EnablePermissions` | 92.0 |  |
 
-## Preferences
+## Preferences: Preferences {#preferences}
 
 Set and lock the value for a subset of preferences.
 
@@ -2871,11 +2871,8 @@ Software\Policies\Mozilla\Thunderbird\Preferences (REG_MULTI_SZ) =
 |:--- | ---:| ---:|
 | `Preferences` | 68.0 |  |
 | `Preferences_[name]`<br>`Preferences_[name]_Value`<br>`Preferences_[name]_Status` | 92.0 |  |
-| `Preferences_accessibility.force_disabled`<br>`Preferences_browser.cache.disk.enable`<br>`Preferences_browser.safebrowsing.phishing.enabled`<br>`Preferences_browser.safebrowsing.malware.enabled`<br>`Preferences_browser.search.update`<br>`Preferences_datareporting.policy.dataSubmissionPolicyBypassNotification`<br>`Preferences_dom.allow_scripts_to_close_windows`<br>`Preferences_dom.disable_window_flip`<br>`Preferences_dom.disable_window_move_resize`<br>`Preferences_dom.event.contextmenu.enabled`<br>`Preferences_dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl`<br>`Preferences_dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl`<br>`Preferences_extensions.blocklist.enabled`<br>`Preferences_geo.enabled`<br>`Preferences_intl.accept_languages`<br>`Preferences_network.dns.disableIPv6`<br>`Preferences_places.history.enabled`<br>`Preferences_print.save_print_settings`<br>`Preferences_security.default_personal_cert`<br>`Preferences_security.mixed_content.block_active_content`<br>`Preferences_security.osclientcerts.autoload`<br>`Preferences_security.ssl.errorReporting.enabled`<br>`Preferences_security.tls.hello_downgrade_check`<br>`Preferences_widget.content.gtk-theme-override` | 78.0 | 89.0 |
-| `Preferences_browser.cache.disk.parent_directory`<br>`Preferences_network.IDN_show_punycode` | 68.0 | 89.0 |
-| `Preferences_browser.fixup.dns_first_for_single_words`<br>`Preferences_browser.urlbar.suggest.openpage`<br>`Preferences_browser.urlbar.suggest.history`<br>`Preferences_browser.urlbar.suggest.bookmark` | 68.0 | 77.0 |
 
-## PrimaryPassword
+## PrimaryPassword: Primary (Master) Password {#primarypassword}
 
 Require or prevent using a Primary Password.
 
@@ -2926,7 +2923,7 @@ Software\Policies\Mozilla\Thunderbird\PrimaryPassword (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `PrimaryPassword` | 92.0 |  |
 
-## PromptForDownloadLocation
+## PromptForDownloadLocation: Prompt for download location {#promptfordownloadlocation}
 
 Ask where to save files when downloading.
 
@@ -2973,7 +2970,7 @@ Software\Policies\Mozilla\Thunderbird\PromptForDownloadLocation (REG_DWORD) = 0x
 |:--- | ---:| ---:|
 | `PromptForDownloadLocation` | 78.0 |  |
 
-## Proxy
+## Proxy: Proxy Settings {#proxy}
 
 Configure proxy settings.
 
@@ -3109,7 +3106,7 @@ Software\Policies\Mozilla\Thunderbird\Proxy\AutoLogin (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `Proxy`<br>`Proxy_Mode`<br>`Proxy_Locked`<br>`Proxy_AutoConfigURL`<br>`Proxy_FTPProxy`<br>`Proxy_HTTPProxy`<br>`Proxy_SSLProxy`<br>`Proxy_SOCKSProxy`<br>`Proxy_SOCKSVersion`<br>`Proxy_UseHTTPProxyForAllProtocols`<br>`Proxy_Passthrough`<br>`Proxy_UseProxyForDNS`<br>`Proxy_AutoLogin` | 68.0 |  |
 
-## RequestedLocales
+## RequestedLocales: Requested locale {#requestedlocales}
 
 Set the list of requested locales for the application in order of preference.
 
@@ -3124,7 +3121,7 @@ Note: This policy can also be a string, so that you can specify an empty value.
 
 <div class="settings" markdown="1">
 
-`RequestedLocales` (string or array)
+`RequestedLocales` (string or list of strings)
 
 </div>
 
@@ -3132,11 +3129,21 @@ Note: This policy can also be a string, so that you can specify an empty value.
 
 #### Windows (GPO)
 ```
+Software\Policies\Mozilla\Thunderbird\RequestedLocales\1 (REG_SZ) = de
+Software\Policies\Mozilla\Thunderbird\RequestedLocales\2 (REG_SZ) = en-US
 Software\Policies\Mozilla\Thunderbird\RequestedLocales (REG_SZ) = de,en-US
 ```
 
 #### macOS
 ```
+<dict>
+  <key>RequestedLocales</key>
+  <array>
+    <string>de</string>
+    <string>en-US</string>
+  </array>
+</dict>
+
 <dict>
   <key>RequestedLocales</key>
   <string>de,en-US</string>
@@ -3145,6 +3152,12 @@ Software\Policies\Mozilla\Thunderbird\RequestedLocales (REG_SZ) = de,en-US
 
 #### policies.json
 ```
+{
+  "policies": {
+    "RequestedLocales": ["de", "en-US"]
+  }
+}
+
 {
   "policies": {
     "RequestedLocales": "de,en-US"
@@ -3158,7 +3171,7 @@ Software\Policies\Mozilla\Thunderbird\RequestedLocales (REG_SZ) = de,en-US
 |:--- | ---:| ---:|
 | `RequestedLocales` | 68.0 |  |
 
-## SearchEngines
+## SearchEngines: Search {#searchengines}
 
 Configure search engine settings.
 
@@ -3597,7 +3610,7 @@ Software\Policies\Mozilla\Thunderbird\SearchEngines\Remove\1 (REG_SZ) = NAME_OF_
 |:--- | ---:| ---:|
 | `SearchEngines_Remove` | 108.0 |  |
 
-## SecurityDevices
+## SecurityDevices: Security Devices {#securitydevices}
 
 Add or delete PKCS #11 modules.
 
@@ -3613,7 +3626,7 @@ Add or delete PKCS #11 modules, e.g. for smart cards or hardware security tokens
 `Add` PKCS #11 modules to add (object)
 > *The names of the devices to add, with the paths of their libraries.*
 - `[name]` (string)
-  > *The path of the library of one device, by the name of the device.*
+  > *The path of the library of one device, by the name of the device. Environment variables like %USERPROFILE% are only expanded when the policy is set via Group Policy.*
 
 `Delete` PKCS #11 modules to delete (list of strings)
 > *The names of the devices to delete.*
@@ -3624,7 +3637,7 @@ Add or delete PKCS #11 modules, e.g. for smart cards or hardware security tokens
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SecurityDevices\Add\NAME_OF_DEVICE_TO_ADD (REG_SZ) = PATH_TO_LIBRARY_FOR_DEVICE
+Software\Policies\Mozilla\Thunderbird\SecurityDevices\Add\NAME_OF_DEVICE_TO_ADD (REG_EXPAND_SZ) = PATH_TO_LIBRARY_FOR_DEVICE
 Software\Policies\Mozilla\Thunderbird\SecurityDevices\Delete\1 (REG_SZ) = NAME_OF_DEVICE_TO_DELETE
 ```
 
@@ -3674,6 +3687,8 @@ The older form of this policy, with the names of the devices to add directly in 
 
 It is still supported, but ignored if `Add` or `Delete` is used.
 
+Environment variables like %USERPROFILE% are only expanded when the policy is set via Group Policy.
+
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
 
@@ -3689,7 +3704,7 @@ It is still supported, but ignored if `Add` or `Delete` is used.
 
 #### Windows (GPO)
 ```
-Software\Policies\Mozilla\Thunderbird\SecurityDevices\NAME_OF_DEVICE_TO_ADD (REG_SZ) = PATH_TO_LIBRARY_FOR_DEVICE
+Software\Policies\Mozilla\Thunderbird\SecurityDevices\NAME_OF_DEVICE_TO_ADD (REG_EXPAND_SZ) = PATH_TO_LIBRARY_FOR_DEVICE
 ```
 
 #### macOS
@@ -3720,7 +3735,7 @@ Software\Policies\Mozilla\Thunderbird\SecurityDevices\NAME_OF_DEVICE_TO_ADD (REG
 |:--- | ---:| ---:|
 | `SecurityDevices_[name]` | 152.0 |  |
 
-## SSLVersionMax
+## SSLVersionMax: Maximum SSL version enabled {#sslversionmax}
 
 Set the maximum SSL version.
 
@@ -3767,7 +3782,7 @@ Software\Policies\Mozilla\Thunderbird\SSLVersionMax (REG_SZ) = tls1
 |:--- | ---:| ---:|
 | `SSLVersionMax` | 68.0 |  |
 
-## SSLVersionMin
+## SSLVersionMin: Minimum SSL version enabled {#sslversionmin}
 
 Set the minimum SSL version.
 

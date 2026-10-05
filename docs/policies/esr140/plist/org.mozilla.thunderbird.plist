@@ -364,7 +364,10 @@
       <true/>
     </dict>
     <key>RequestedLocales</key>
-    <string>de,en-US</string>
+    <array>
+      <string>de</string>
+      <string>en-US</string>
+    </array>
     <key>SearchEngines</key>
     <dict>
       <key>Add</key>

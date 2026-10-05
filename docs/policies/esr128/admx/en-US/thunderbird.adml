@@ -16,7 +16,7 @@ Install application updates automatically. If this policy is enabled, updates ar
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#appautoupdate
 </string>
-      <string id="AppUpdatePin">AppUpdatePin</string>
+      <string id="AppUpdatePin">Pin updates to a specific version</string>
       <string id="AppUpdatePin_Explain">Prevent Thunderbird from being updated beyond the specified version.
 
 You can specify the version as xx. and Thunderbird will be updated with all minor versions, but will not be updated beyond the major version.
@@ -27,7 +27,7 @@ You should specify a version that exists or is guaranteed to exist. If you speci
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#appupdatepin
 </string>
-      <string id="AppUpdateURL">AppUpdateURL</string>
+      <string id="AppUpdateURL">Custom Update URL</string>
       <string id="AppUpdateURL_Explain">Set custom app update URL.
 
 Change the URL for application update if you are providing Thunderbird updates from a custom update server.
@@ -76,7 +76,7 @@ Install application updates in the background, also when Thunderbird is not runn
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#backgroundappupdate
 </string>
-      <string id="BlockAboutAddons">BlockAboutAddons</string>
+      <string id="BlockAboutAddons">Block Add-ons Manager</string>
       <string id="BlockAboutAddons_Explain">Block access to the Add-ons Manager (about:addons).
 
 Users can no longer open it to install, remove, enable or disable add-ons, or to change their options. Add-ons can still be managed with the Extensions and ExtensionSettings policies.
@@ -85,21 +85,21 @@ If this policy is disabled or not configured, the Add-ons Manager is available.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#blockaboutaddons
 </string>
-      <string id="BlockAboutConfig">BlockAboutConfig</string>
+      <string id="BlockAboutConfig">Block about:config</string>
       <string id="BlockAboutConfig_Explain">Block access to the about:config page.
 
 Block access to about:config.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#blockaboutconfig
 </string>
-      <string id="BlockAboutProfiles">BlockAboutProfiles</string>
+      <string id="BlockAboutProfiles">Block about:profiles</string>
       <string id="BlockAboutProfiles_Explain">Block access to the about:profiles page.
 
 Block access to About Profiles (about:profiles).
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#blockaboutprofiles
 </string>
-      <string id="BlockAboutSupport">BlockAboutSupport</string>
+      <string id="BlockAboutSupport">Block Troubleshooting Information</string>
       <string id="BlockAboutSupport_Explain">Block access to the about:support page.
 
 Block access to Troubleshooting Information (about:support).
@@ -185,7 +185,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#cookies
 </string>
-      <string id="DefaultDownloadDirectory">DefaultDownloadDirectory</string>
+      <string id="DefaultDownloadDirectory">Default Download Directory</string>
       <string id="DefaultDownloadDirectory_Explain">Set the default download directory.
 
 You can use ${home} for the native home directory.
@@ -194,14 +194,14 @@ Environment variables like %USERPROFILE% are expanded.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#defaultdownloaddirectory
 </string>
-      <string id="DisableAppUpdate">DisableAppUpdate</string>
+      <string id="DisableAppUpdate">Disable Update</string>
       <string id="DisableAppUpdate_Explain">Prevent Thunderbird from updating.
 
 Turn off application updates within Thunderbird.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#disableappupdate
 </string>
-      <string id="DisableBuiltinPDFViewer">DisableBuiltinPDFViewer</string>
+      <string id="DisableBuiltinPDFViewer">Disable Built-in PDF Viewer (PDF.js)</string>
       <string id="DisableBuiltinPDFViewer_Explain">Disable PDF.js, the built-in PDF viewer in Thunderbird.
 
 Disable the built in PDF viewer. PDF files are downloaded and sent externally.
@@ -327,7 +327,7 @@ Disable specific cryptographic ciphers.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#disabledciphers
 </string>
-      <string id="DisableDeveloperTools">DisableDeveloperTools</string>
+      <string id="DisableDeveloperTools">Disable Developer Tools</string>
       <string id="DisableDeveloperTools_Explain">Block access to the developer tools.
 
 Remove access to all developer tools.
@@ -345,7 +345,7 @@ If both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMaste
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#disablemasterpasswordcreation
 </string>
-      <string id="DisablePasswordReveal">DisablePasswordReveal</string>
+      <string id="DisablePasswordReveal">Do not allow passwords to be revealed in saved logins</string>
       <string id="DisablePasswordReveal_Explain">Meant to prevent passwords from being revealed in saved logins. In this version, this policy has no effect.
 
 Meant to prevent passwords from being shown in saved logins. In this version, this policy has no effect, because the saved passwords dialog of Thunderbird does not check it.
@@ -371,14 +371,14 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#disablesecuritybypass
 </string>
-      <string id="DisableSystemAddonUpdate">DisableSystemAddonUpdate</string>
+      <string id="DisableSystemAddonUpdate">Disable System Addon Updates</string>
       <string id="DisableSystemAddonUpdate_Explain">Prevent Thunderbird from installing and updating system add-ons.
 
 Prevent system add-ons from being installed or updated.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#disablesystemaddonupdate
 </string>
-      <string id="DisableTelemetry">DisableTelemetry</string>
+      <string id="DisableTelemetry">Disable Telemetry</string>
       <string id="DisableTelemetry_Explain">Turn off Telemetry.
 
 Prevent the upload of telemetry data.
@@ -409,7 +409,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#dnsoverhttps
 </string>
-      <string id="DownloadDirectory">DownloadDirectory</string>
+      <string id="DownloadDirectory">Download Directory</string>
       <string id="DownloadDirectory_Explain">Set and lock the download directory.
 
 You can use ${home} for the native home directory.
@@ -435,7 +435,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#extensions
 </string>
-      <string id="ExtensionSettings">ExtensionSettings</string>
+      <string id="ExtensionSettings">Extension Management</string>
       <string id="ExtensionSettings_Explain">Manage all aspects of extension installation.
 
 Manage all aspects of extensions. This policy is based heavily on the Chrome policy (https://dev.chromium.org/administrators/policy-list-3/extension-settings-full) of the same name.
@@ -518,7 +518,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#installaddonspermission
 </string>
-      <string id="ManualAppUpdateOnly">ManualAppUpdateOnly</string>
+      <string id="ManualAppUpdateOnly">Manual Update Only</string>
       <string id="ManualAppUpdateOnly_Explain">Allow manual updates only and do not notify the user about updates.
 
 Switch to manual updates only.
@@ -556,7 +556,7 @@ Sets the default value of signon.rememberSignons without locking it.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#offertosaveloginsdefault
 </string>
-      <string id="PasswordManagerEnabled">PasswordManagerEnabled</string>
+      <string id="PasswordManagerEnabled">Password Manager</string>
       <string id="PasswordManagerEnabled_Explain">Enable saving passwords to the password manager.
 
 Remove access to the password manager via the settings, and block about:logins.
@@ -641,7 +641,7 @@ Only these preferences can be set:
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#preferences
 </string>
-      <string id="PrimaryPassword">PrimaryPassword</string>
+      <string id="PrimaryPassword">Primary (Master) Password</string>
       <string id="PrimaryPassword_Explain">Require or prevent using a Primary Password.
 
 Require or prevent using a primary (formerly master) password.
@@ -652,7 +652,7 @@ If both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMaste
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#primarypassword
 </string>
-      <string id="PromptForDownloadLocation">PromptForDownloadLocation</string>
+      <string id="PromptForDownloadLocation">Prompt for download location</string>
       <string id="PromptForDownloadLocation_Explain">Ask where to save files when downloading.
 
 Ask where to save each file before downloading.
@@ -728,8 +728,17 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#proxy
 </string>
-      <string id="RequestedLocales">RequestedLocales</string>
+      <string id="RequestedLocales">Requested locale</string>
       <string id="RequestedLocales_Explain">Set the list of requested locales for the application in order of preference.
+
+The corresponding language packs become active.
+
+Note: This policy can also be a string, so that you can specify an empty value.
+
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#requestedlocales
+</string>
+      <string id="RequestedLocalesString">Requested locale (string)</string>
+      <string id="RequestedLocalesString_Explain">Set the list of requested locales for the application in order of preference.
 
 The corresponding language packs become active.
 
@@ -900,7 +909,7 @@ This setting has no effect in Thunderbird.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#searchengines
 </string>
-      <string id="SSLVersionMax">SSLVersionMax</string>
+      <string id="SSLVersionMax">Maximum SSL version enabled</string>
       <string id="SSLVersionMax_Explain">Set the maximum SSL version.
 
 Set and lock the maximum version of TLS. (Thunderbird defaults to a maximum of TLS 1.3.)
@@ -911,7 +920,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
       <string id="SSLVersionMax_tls1_1">TLS 1.1</string>
       <string id="SSLVersionMax_tls1_2">TLS 1.2</string>
       <string id="SSLVersionMax_tls1_3">TLS 1.3</string>
-      <string id="SSLVersionMin">SSLVersionMin</string>
+      <string id="SSLVersionMin">Minimum SSL version enabled</string>
       <string id="SSLVersionMin_Explain">Set the minimum SSL version.
 
 Set and lock the minimum version of TLS. (Thunderbird defaults to a minimum of TLS 1.2.)
@@ -932,27 +941,19 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
       <string id="SUPPORTED_ID_7">Thunderbird 77.0 - *</string>
       <string id="SUPPORTED_ID_8">Thunderbird 108.0 - *</string>
       <string id="thunderbird">Mozilla Thunderbird</string>
-      <string id="cat_Security">Security</string>
-      <string id="cat_Device_update_settings">Device update settings</string>
+      <string id="cat_3rdparty">Policies for Extensions</string>
       <string id="cat_Authentication">Authentication</string>
+      <string id="cat_Certificates">Certificates</string>
+      <string id="cat_Cookies">Cookies</string>
+      <string id="cat_DisabledCiphers">Disabled Ciphers</string>
+      <string id="cat_DisableSecurityBypass">Prevent Bypassing Security Warnings</string>
+      <string id="cat_DNSOverHTTPS">DNS Over HTTPS</string>
       <string id="cat_Extensions">Extensions</string>
-      <string id="cat_Network_security">Network security</string>
-      <string id="cat_Certificate_management">Certificate management</string>
-      <string id="Certificates_category">Certificates</string>
-      <string id="Cookies_category">Cookies</string>
-      <string id="cat_Downloads">Downloads</string>
-      <string id="cat_Printing">Printing</string>
-      <string id="DisabledCiphers_category">DisabledCiphers</string>
-      <string id="cat_Password_manager">Password manager</string>
-      <string id="DisableSecurityBypass_category">DisableSecurityBypass</string>
-      <string id="cat_Miscellaneous">Miscellaneous</string>
-      <string id="DNSOverHTTPS_category">DNSOverHTTPS</string>
-      <string id="InstallAddonsPermission_category">InstallAddonsPermission</string>
-      <string id="PDFjs_category">PDFjs</string>
-      <string id="Proxy_category">Proxy</string>
-      <string id="cat_Search">Search</string>
-      <string id="SearchEngines_category">SearchEngines</string>
-      <string id="SearchEngines_Add_category">Add</string>
+      <string id="cat_InstallAddonsPermission">Addons</string>
+      <string id="cat_PDFjs">PDF.js</string>
+      <string id="cat_Proxy">Proxy Settings</string>
+      <string id="cat_SearchEngines">Search</string>
+      <string id="cat_SearchEngines_Add">Add new search engines</string>
     </stringTable>
     <presentationTable>
       <presentation id="3rdparty_Extensions">
@@ -1076,7 +1077,12 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
         </textBox>
       </presentation>
       <presentation id="RequestedLocales">
-        <listBox refId="RequestedLocales_List">RequestedLocales</listBox>
+        <listBox refId="RequestedLocales_List">Requested locale</listBox>
+      </presentation>
+      <presentation id="RequestedLocalesString">
+        <textBox refId="RequestedLocalesString_Input">
+          <label>RequestedLocales</label>
+        </textBox>
       </presentation>
       <presentation id="SearchEngines_Add_1">
         <textBox refId="SearchEngines_Add_1_Name_Input">

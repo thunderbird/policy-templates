@@ -139,7 +139,7 @@
       <array>
         <dict>
           <key>color</key>
-          <string>cyan</string>
+          <string>blue</string>
           <key>icon</key>
           <string>pet</string>
           <key>name</key>
@@ -171,13 +171,6 @@
         <dict>
           <key>Enabled</key>
           <true/>
-          <key>PlainTextOnly</key>
-          <true/>
-        </dict>
-        <key>ClipboardCopy</key>
-        <dict>
-          <key>Enabled</key>
-          <false/>
           <key>PlainTextOnly</key>
           <true/>
         </dict>
@@ -327,12 +320,8 @@
     <string>${home}/Downloads</string>
     <key>EnableTrackingProtection</key>
     <dict>
-      <key>BaselineExceptions</key>
-      <true/>
       <key>Category</key>
       <string>strict</string>
-      <key>ConvenienceExceptions</key>
-      <true/>
       <key>Cryptomining</key>
       <true/>
       <key>EmailTracking</key>
@@ -443,16 +432,6 @@
       <true/>
       <key>TopSites</key>
       <true/>
-      <key>Widgets</key>
-      <dict>
-        <key>Blocked</key>
-        <array>
-          <string>crossword</string>
-          <string>stocks</string>
-        </array>
-        <key>Enabled</key>
-        <true/>
-      </dict>
     </dict>
     <key>FirefoxSuggest</key>
     <dict>

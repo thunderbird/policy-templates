@@ -139,7 +139,7 @@
       <array>
         <dict>
           <key>color</key>
-          <string>cyan</string>
+          <string>blue</string>
           <key>icon</key>
           <string>pet</string>
           <key>name</key>
@@ -165,55 +165,12 @@
       <string>https://example.com/.* https://subdomain.example.com/.*</string>
       <key>Enabled</key>
       <true/>
-      <key>InterceptionPoints</key>
-      <dict>
-        <key>Clipboard</key>
-        <dict>
-          <key>Enabled</key>
-          <true/>
-          <key>PlainTextOnly</key>
-          <true/>
-        </dict>
-        <key>ClipboardCopy</key>
-        <dict>
-          <key>Enabled</key>
-          <false/>
-          <key>PlainTextOnly</key>
-          <true/>
-        </dict>
-        <key>Download</key>
-        <dict>
-          <key>Enabled</key>
-          <false/>
-        </dict>
-        <key>DragAndDrop</key>
-        <dict>
-          <key>Enabled</key>
-          <true/>
-          <key>PlainTextOnly</key>
-          <true/>
-        </dict>
-        <key>FileUpload</key>
-        <dict>
-          <key>Enabled</key>
-          <true/>
-        </dict>
-        <key>Print</key>
-        <dict>
-          <key>Enabled</key>
-          <true/>
-        </dict>
-      </dict>
       <key>IsPerUser</key>
       <true/>
-      <key>MaxConnectionsCount</key>
-      <integer>32</integer>
       <key>PipePathName</key>
       <string>pipe_custom_name</string>
       <key>ShowBlockedResult</key>
       <true/>
-      <key>TimeoutResult</key>
-      <integer>0</integer>
     </dict>
     <key>Cookies</key>
     <dict>
@@ -327,12 +284,6 @@
     <string>${home}/Downloads</string>
     <key>EnableTrackingProtection</key>
     <dict>
-      <key>BaselineExceptions</key>
-      <true/>
-      <key>Category</key>
-      <string>strict</string>
-      <key>ConvenienceExceptions</key>
-      <true/>
       <key>Cryptomining</key>
       <true/>
       <key>EmailTracking</key>
@@ -344,8 +295,6 @@
       <key>Fingerprinting</key>
       <true/>
       <key>Locked</key>
-      <true/>
-      <key>SuspectedFingerprinting</key>
       <true/>
       <key>Value</key>
       <true/>
@@ -435,24 +384,10 @@
       <true/>
       <key>SponsoredPocket</key>
       <true/>
-      <key>SponsoredStories</key>
-      <true/>
       <key>SponsoredTopSites</key>
-      <true/>
-      <key>Stories</key>
       <true/>
       <key>TopSites</key>
       <true/>
-      <key>Widgets</key>
-      <dict>
-        <key>Blocked</key>
-        <array>
-          <string>crossword</string>
-          <string>stocks</string>
-        </array>
-        <key>Enabled</key>
-        <true/>
-      </dict>
     </dict>
     <key>FirefoxSuggest</key>
     <dict>
@@ -707,21 +642,6 @@
         <key>Locked</key>
         <true/>
       </dict>
-      <key>ScreenShare</key>
-      <dict>
-        <key>Allow</key>
-        <array>
-          <string>https://example.org</string>
-        </array>
-        <key>Block</key>
-        <array>
-          <string>https://example.edu</string>
-        </array>
-        <key>BlockNewRequests</key>
-        <true/>
-        <key>Locked</key>
-        <true/>
-      </dict>
       <key>VirtualReality</key>
       <dict>
         <key>Allow</key>
@@ -902,8 +822,6 @@
       <key>ExtensionRecommendations</key>
       <false/>
       <key>FeatureRecommendations</key>
-      <false/>
-      <key>FirefoxLabs</key>
       <false/>
       <key>Locked</key>
       <true/>

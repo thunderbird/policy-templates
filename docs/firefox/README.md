@@ -13,7 +13,6 @@ Firefox you are deploying.
  * [Firefox ESR 153.5.0](policies/esr153)
  * [Firefox ESR 140.17.1](policies/esr140)
  * [Firefox ESR 128.14.1](policies/esr128)
- * [Firefox ESR 115.43.0](policies/esr115)
 
 ## List of supported policies
 
@@ -69,14 +68,13 @@ supports it, and when it was removed.
 | `Authentication_PrivateBrowsing` | 78.0 |  |
 | `Authentication_SPNEGO` | 61.0 |  |
 | `AutoLaunchProtocolsFromOrigins` | 90.0 |  |
-| `AutofillAddressEnabled` | 125.0, 115.10.0esr |  |
-| `AutofillCreditCardEnabled` | 125.0, 115.10.0esr |  |
+| `AutofillAddressEnabled` | 125.0 |  |
+| `AutofillCreditCardEnabled` | 125.0 |  |
 | `BackgroundAppUpdate` | 88.0 |  |
 | `BlockAboutAddons` | 60.0 |  |
 | `BlockAboutConfig` | 60.0 |  |
 | `BlockAboutProfiles` | 60.0 |  |
 | `BlockAboutSupport` | 60.0 |  |
-| `BlockSetDesktopBackground` | 60.0 | 61.0 |
 | `Bookmarks` | 60.0 |  |
 | `BrowserDataBackup` | 146.0 |  |
 | `BrowserDataBackup_AllowBackup` | 146.0 |  |
@@ -101,7 +99,6 @@ supports it, and when it was removed.
 | `ContentAnalysis_AllowUrlRegexList` | 125.0 |  |
 | `ContentAnalysis_BypassForSameTabOperations` | 126.0 |  |
 | `ContentAnalysis_ClientSignature` | 126.0 |  |
-| `ContentAnalysis_DefaultAllow` | 125.0 | 127.0 |
 | `ContentAnalysis_DefaultResult` | 127.0 |  |
 | `ContentAnalysis_DenyUrlRegexList` | 125.0 |  |
 | `ContentAnalysis_Enabled` | 125.0 |  |
@@ -137,7 +134,6 @@ supports it, and when it was removed.
 | `Cookies_ExpireAtSessionEnd` | 61.0 |  |
 | `Cookies_Locked` | 61.0 |  |
 | `Cookies_RejectTracker` | 63.0 |  |
-| `CreateMasterPassword` | 60.0 | 61.0 |
 | `DNSOverHTTPS` | 64.0 |  |
 | `DNSOverHTTPS_Enabled` | 64.0 |  |
 | `DNSOverHTTPS_ExcludedDomains` | 75.0 |  |
@@ -173,7 +169,6 @@ supports it, and when it was removed.
 | `DisableSecurityBypass_InvalidCertificate` | 61.0 |  |
 | `DisableSecurityBypass_SafeBrowsing` | 61.0 |  |
 | `DisableSetDesktopBackground` | 61.0 |  |
-| `DisableSysAddonUpdate` | 60.0 | 61.0 |
 | `DisableSystemAddonUpdate` | 61.0 |  |
 | `DisableTelemetry` | 61.0 |  |
 | `DisableThirdPartyModuleBlocking` | 110.0 |  |
@@ -262,17 +257,12 @@ supports it, and when it was removed.
 | `FirefoxHome_Widgets` | 156.0, 153.3.0esr |  |
 | `FirefoxHome_Widgets_Blocked` | 156.0, 153.3.0esr |  |
 | `FirefoxHome_Widgets_Enabled` | 156.0, 153.3.0esr |  |
-| `FirefoxSuggest` | 118.0, 115.3.0esr |  |
-| `FirefoxSuggest_ImproveSuggest` | 118.0, 115.3.0esr |  |
-| `FirefoxSuggest_Locked` | 118.0, 115.3.0esr |  |
+| `FirefoxSuggest` | 118.0 |  |
+| `FirefoxSuggest_ImproveSuggest` | 118.0 |  |
+| `FirefoxSuggest_Locked` | 118.0 |  |
 | `FirefoxSuggest_OnlineEnabled` | 146.0 |  |
-| `FirefoxSuggest_SponsoredSuggestions` | 118.0, 115.3.0esr |  |
-| `FirefoxSuggest_WebSuggestions` | 118.0, 115.3.0esr |  |
-| `FlashPlugin` | 60.0 | 115.0 |
-| `FlashPlugin_Allow` | 60.0 | 115.0 |
-| `FlashPlugin_Block` | 60.0 | 115.0 |
-| `FlashPlugin_Default` | 61.0 | 115.0 |
-| `FlashPlugin_Locked` | 61.0 | 115.0 |
+| `FirefoxSuggest_SponsoredSuggestions` | 118.0 |  |
+| `FirefoxSuggest_WebSuggestions` | 118.0 |  |
 | `GenerativeAI` | 144.0, 140.4.0esr |  |
 | `GenerativeAI_Chatbot` | 144.0, 140.4.0esr |  |
 | `GenerativeAI_Enabled` | 144.0, 140.4.0esr |  |
@@ -307,13 +297,9 @@ supports it, and when it was removed.
 | `HttpAllowlist` | 127.0 |  |
 | `HttpsOnlyMode` | 127.0 |  |
 | `IPProtectionAvailable` | 151.0 |  |
-| `InstallAddons` | 60.0 | 61.0 |
 | `InstallAddonsPermission` | 61.0 |  |
 | `InstallAddonsPermission_Allow` | 61.0 |  |
 | `InstallAddonsPermission_Default` | 61.0 |  |
-| `InstallAddons_Allow` | 60.0 | 61.0 |
-| `InstallAddons_Block` | 60.0 | 60.0 |
-| `InstallAddons_Default` | 61.0 | 61.0 |
 | `LegacyProfiles` | 71.0 |  |
 | `LegacySameSiteCookieBehaviorEnabled` | 76.0 |  |
 | `LegacySameSiteCookieBehaviorEnabledForDomainList` | 76.0 |  |
@@ -326,7 +312,6 @@ supports it, and when it was removed.
 | `LocalNetworkAccess_SkipDomains` | 146.0 |  |
 | `ManagedBookmarks` | 82.0 |  |
 | `ManualAppUpdateOnly` | 87.0 |  |
-| `MasterPassword` | 79.0 | 80.0 |
 | `MicrosoftEntraSSO` | 133.0, 128.5.0esr |  |
 | `NetworkPrediction` | 67.0 |  |
 | `NewTabPage` | 68.0 |  |
@@ -383,67 +368,14 @@ supports it, and when it was removed.
 | `PopupBlocking_Allow` | 61.0 |  |
 | `PopupBlocking_Default` | 61.0 |  |
 | `PopupBlocking_Locked` | 61.0 |  |
-| `Popups` | 60.0 | 61.0 |
-| `Popups_Allow` | 60.0 | 61.0 |
-| `Popups_Block` | 60.0 | 60.0 |
 | `PostQuantumKeyAgreementEnabled` | 127.0 |  |
 | `Preferences` | 68.0 |  |
 | `Preferences_[name]` | 82.0 |  |
 | `Preferences_[name]_Status` | 82.0 |  |
-| `Preferences_[name]_Type` | 123.0, 115.8.0esr |  |
+| `Preferences_[name]_Type` | 123.0 |  |
 | `Preferences_[name]_Value` | 82.0 |  |
-| `Preferences_accessibility.force_disabled` | 71.0 | 81.0 |
-| `Preferences_app.update.auto` | 68.0 | 75.0 |
-| `Preferences_browser.bookmarks.autoExportHTML` | 71.0 | 81.0 |
-| `Preferences_browser.bookmarks.file` | 71.0 | 81.0 |
-| `Preferences_browser.bookmarks.restore_default_bookmarks` | 71.0 | 81.0 |
-| `Preferences_browser.cache.disk.enable` | 68.0 | 81.0 |
-| `Preferences_browser.cache.disk.parent_directory` | 68.0 | 81.0 |
-| `Preferences_browser.fixup.dns_first_for_single_words` | 68.0 | 81.0 |
-| `Preferences_browser.newtabpage.activity-stream.default.sites` | 73.0 | 81.0 |
-| `Preferences_browser.places.importBookmarksHTML` | 71.0 | 81.0 |
-| `Preferences_browser.safebrowsing.malware.enabled` | 71.0 | 81.0 |
-| `Preferences_browser.safebrowsing.phishing.enabled` | 71.0 | 81.0 |
-| `Preferences_browser.search.update` | 68.0 | 81.0 |
-| `Preferences_browser.slowStartup.notificationDisabled` | 71.0 | 81.0 |
-| `Preferences_browser.tabs.warnOnClose` | 68.0 | 81.0 |
-| `Preferences_browser.taskbar.previews.enable` | 71.0 | 81.0 |
-| `Preferences_browser.urlbar.dnsResolveSingleWordsAfterSearch` | 79.0 | 81.0 |
-| `Preferences_browser.urlbar.suggest.bookmark` | 68.0 | 81.0 |
-| `Preferences_browser.urlbar.suggest.history` | 68.0 | 81.0 |
-| `Preferences_browser.urlbar.suggest.openpage` | 68.0 | 81.0 |
-| `Preferences_datareporting.policy.dataSubmissionPolicyBypassNotification` | 69.0 | 81.0 |
-| `Preferences_dom.allow_scripts_to_close_windows` | 71.0 | 81.0 |
-| `Preferences_dom.disable_window_flip` | 68.0 | 81.0 |
-| `Preferences_dom.disable_window_move_resize` | 68.0 | 81.0 |
-| `Preferences_dom.event.contextmenu.enabled` | 68.0 | 81.0 |
-| `Preferences_dom.keyboardevent.keypress.hack.dispatch_non_printable_keys.addl` | 69.0 | 81.0 |
-| `Preferences_dom.keyboardevent.keypress.hack.use_legacy_keycode_and_charcode.addl` | 69.0 | 81.0 |
-| `Preferences_extensions.blocklist.enabled` | 71.0 | 81.0 |
-| `Preferences_extensions.getAddons.showPane` | 68.0 | 81.0 |
-| `Preferences_extensions.htmlaboutaddons.recommendations.enabled` | 73.0 | 81.0 |
-| `Preferences_geo.enabled` | 71.0 | 81.0 |
-| `Preferences_intl.accept_languages` | 71.0 | 81.0 |
-| `Preferences_media.eme.enabled` | 71.0 | 81.0 |
-| `Preferences_media.gmp-gmpopenh264.enabled` | 68.0 | 81.0 |
-| `Preferences_media.gmp-widevinecdm.enabled` | 68.0 | 81.0 |
-| `Preferences_media.peerconnection.enabled` | 73.0 | 81.0 |
-| `Preferences_media.peerconnection.ice.obfuscate_host_addresses.blocklist` | 79.0 | 81.0 |
-| `Preferences_media.peerconnection.ice.obfuscate_host_addresses.whitelist` | 73.0 | 79.0 |
-| `Preferences_network.IDN_show_punycode` | 68.0 | 81.0 |
-| `Preferences_network.dns.disableIPv6` | 68.0 | 81.0 |
-| `Preferences_places.history.enabled` | 68.0 | 81.0 |
-| `Preferences_print.save_print_settings` | 71.0 | 81.0 |
-| `Preferences_privacy.file_unique_origin` | 69.0 | 81.0 |
-| `Preferences_security.default_personal_cert` | 68.0 | 81.0 |
-| `Preferences_security.mixed_content.block_active_content` | 71.0 | 81.0 |
-| `Preferences_security.osclientcerts.autoload` | 73.0 | 81.0 |
-| `Preferences_security.ssl.errorReporting.enabled` | 68.0 | 81.0 |
-| `Preferences_security.tls.hello_downgrade_check` | 73.0 | 81.0 |
-| `Preferences_ui.key.menuAccessKeyFocuses` | 68.0 | 81.0 |
-| `Preferences_widget.content.gtk-theme-override` | 73.0 | 81.0 |
 | `PrimaryPassword` | 80.0 |  |
-| `PrintingEnabled` | 120.0, 115.5.0esr |  |
+| `PrintingEnabled` | 120.0 |  |
 | `PrivateBrowsingModeAvailability` | 130.0, 128.3.0esr |  |
 | `PromptForDownloadLocation` | 68.0 |  |
 | `Proxy` | 61.0 |  |
@@ -464,7 +396,6 @@ supports it, and when it was removed.
 | `RelaunchRequired_RestartTimeOfDay` | 150.0 |  |
 | `RelaunchRequired_RestartTimeOfDay_Hour` | 150.0 |  |
 | `RelaunchRequired_RestartTimeOfDay_Minute` | 150.0 |  |
-| `RememberPasswords` | 60.0 | 61.0 |
 | `RequestedLocales` | 64.0 |  |
 | `SSLVersionMax` | 66.0 |  |
 | `SSLVersionMin` | 66.0 |  |
@@ -516,25 +447,7 @@ supports it, and when it was removed.
 | `WebsiteFilter` | 61.0 |  |
 | `WebsiteFilter_Block` | 61.0 |  |
 | `WebsiteFilter_Exceptions` | 61.0 |  |
-| `Windows10SSO` | 91.0 | 91.0 |
 | `WindowsSSO` | 91.0 |  |
 | `XSLTEnabled` | 151.0 |  |
-| `block_about_config` | 60.0 | 60.0 |
-| `block_set_desktop_background` | 60.0 | 60.0 |
-| `cookies` | 60.0 | 60.0 |
-| `cookies_allow` | 60.0 | 60.0 |
-| `cookies_block` | 60.0 | 60.0 |
-| `display_bookmarks_toolbar` | 60.0 | 60.0 |
-| `display_menu_bar` | 60.0 | 60.0 |
-| `dont_check_default_browser` | 60.0 | 60.0 |
-| `flash_plugin` | 60.0 | 60.0 |
-| `flash_plugin_allow` | 60.0 | 60.0 |
-| `flash_plugin_block` | 60.0 | 60.0 |
-| `install_addons` | 60.0 | 60.0 |
-| `install_addons_allow` | 60.0 | 60.0 |
-| `install_addons_block` | 60.0 | 60.0 |
-| `popups` | 60.0 | 60.0 |
-| `popups_allow` | 60.0 | 60.0 |
-| `popups_block` | 60.0 | 60.0 |
 
 

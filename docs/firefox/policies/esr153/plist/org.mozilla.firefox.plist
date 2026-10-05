@@ -165,10 +165,6 @@
       <true/>
       <key>CookiesAndStorage</key>
       <true/>
-      <key>Exceptions</key>
-      <array>
-        <string>https://example.com</string>
-      </array>
     </dict>
     <key>Containers</key>
     <dict>
@@ -208,13 +204,6 @@
         <dict>
           <key>Enabled</key>
           <true/>
-          <key>PlainTextOnly</key>
-          <true/>
-        </dict>
-        <key>ClipboardCopy</key>
-        <dict>
-          <key>Enabled</key>
-          <false/>
           <key>PlainTextOnly</key>
           <true/>
         </dict>
@@ -992,31 +981,6 @@
         <dict>
           <key>DisableJit</key>
           <true/>
-        </dict>
-      </dict>
-      <dict>
-        <key>Match</key>
-        <array>
-          <string>*.example.net</string>
-        </array>
-        <key>Policies</key>
-        <dict>
-          <key>HttpsOnly</key>
-          <true/>
-        </dict>
-      </dict>
-      <dict>
-        <key>Match</key>
-        <array>
-          <string>*.example.com</string>
-        </array>
-        <key>Policies</key>
-        <dict>
-          <key>Container</key>
-          <dict>
-            <key>id</key>
-            <string>work</string>
-          </dict>
         </dict>
       </dict>
     </array>
