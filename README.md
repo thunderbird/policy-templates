@@ -194,6 +194,24 @@ files and its compatibility data (from the history of its schema,
 product folder with the repository's schema of the branch (the drift), and
 checks the rules of the documentation.
 
+### 🔄 Automatic updates
+
+The workflow `.github/workflows/update-docs.yml` regenerates the docs every
+day at 04:00 UTC, Thunderbird into `docs/` and Firefox into `docs/firefox/`,
+reading the products from GitHub, and commits `docs/` if it changed. The
+branches it generates are listed in the workflow (`BRANCHES`): edit them when
+an ESR branch is added or dropped.
+
+It can also be started by hand (Actions › Update the docs › Run workflow).
+With "publish" off, it doesn't commit, but uploads the generated `docs/` as an
+artifact, e.g. to check the result first.
+
+The workflow uses the token GitHub issues for each run (no personal token),
+which needs to be allowed to write to the repository: the organisation's
+Actions settings must allow `contents: write` for workflows. GitHub disables
+scheduled workflows after 60 days without activity in the repository, so the
+workflow enables itself again at the end of every run.
+
 ### ✅ Validation
 
 Every generated ADMX/ADML template is validated before it is written: against the

@@ -1,0 +1,87 @@
+# Regenerate the docs (Thunderbird in docs/, Firefox in docs/firefox/) every
+# day from the products' sources on GitHub, and commit them if they changed.
+
+name: Update the docs
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Commit the changed docs (off: only upload them as an artifact)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write # Push the docs.
+  actions: write # Keep this workflow enabled, see the last step.
+
+concurrency: update-docs
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    env:
+      # The branches of both products. Edit when an ESR branch is added or
+      # dropped.
+      BRANCHES: main,beta,release,esr153,esr140,esr128,esr115
+      PUBLISH: ${{ github.event_name == 'schedule' || inputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: generator/package-lock.json
+
+      - name: Install the dependencies
+        run: npm ci
+        working-directory: generator
+
+      # The files the generator downloaded, e.g. the history of the policy
+      # schemas: each run starts from the cache of the last one.
+      - uses: actions/cache@v4
+        with:
+          path: generator/download_cache.json
+          key: download-cache-${{ github.run_id }}
+          restore-keys: download-cache-
+
+      - name: Generate the docs
+        env:
+          # Raises the limit of the GitHub API, see generator/modules/sources.mjs.
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          # Thunderbird first: its run replaces all of docs/.
+          node generator/update_all_policy_templates.js --product-config=products/thunderbird --output=docs --branches="$BRANCHES"
+          node generator/update_all_policy_templates.js --product-config=products/firefox --output=docs/firefox --branches="$BRANCHES"
+
+      - name: Commit the changed docs
+        if: env.PUBLISH == 'true'
+        run: |
+          git add docs
+          if git diff --cached --quiet; then
+            echo "The docs are unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898729+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update the generated docs."
+          git push
+
+      - name: Upload the docs
+        if: env.PUBLISH != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: docs/
+
+      # GitHub disables scheduled workflows after 60 days without activity in
+      # the repository. Enabling the workflow again resets that time, without
+      # a commit.
+      - name: Keep the workflow enabled
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow enable update-docs.yml --repo "${{ github.repository }}"
