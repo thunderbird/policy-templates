@@ -1,6 +1,7 @@
 import { CATCH_ALL_PATTERN, OPEN_NAME } from "./compatibility.mjs";
 import {
-    getExamples, getPolicyData, getSchemaSettings, getSettingTree, hasFormat, isJsonList, withoutTrailingPeriod,
+    getExamples, getPolicyData, getSchemaSettings, getSettingTree, hasFormat, isJsonList, isJsonNode, isJsonObject,
+    withoutTrailingPeriod,
 } from "./schema_settings.mjs";
 
 // The fields of a docs section which are taken from the schema node of the
@@ -41,9 +42,11 @@ class SchemaPath {
      * @param {?Object} rawNode - The node of the step, before resolving a `$ref`
      *    (which may have annotations like "x-expand-env-vars" next to it).
      * @param {boolean} expandable - Whether a parent has "x-expand-env-vars".
+     * @param {Object} [options] - See getSchemaOptions().
      */
-    constructor(schema, rawNode, expandable = false) {
+    constructor(schema, rawNode, expandable = false, options = {}) {
         this.schema = schema;
+        this.options = options;
         this.rawNode = rawNode ?? null;
         this.node = resolveRef(schema, rawNode) ?? null;
         // A text value is REG_EXPAND_SZ if it or a parent has
@@ -52,8 +55,8 @@ class SchemaPath {
         this.expandable = expandable || !!rawNode?.["x-expand-env-vars"] || !!this.node?.["x-expand-env-vars"];
     }
 
-    static forPolicy(schema, name) {
-        return new SchemaPath(schema, schema?.properties?.[name]);
+    static forPolicy(schema, name, options = {}) {
+        return new SchemaPath(schema, schema?.properties?.[name], false, options);
     }
 
     property(key) {
@@ -65,11 +68,11 @@ class SchemaPath {
             child = Object.entries(node.patternProperties ?? {}).find(([pattern]) => new RegExp(pattern).test(key))?.[1] ??
                 (isPlainObject(node.additionalProperties) ? node.additionalProperties : null);
         }
-        return new SchemaPath(this.schema, child, this.expandable);
+        return new SchemaPath(this.schema, child, this.expandable, this.options);
     }
 
     item() {
-        return new SchemaPath(this.schema, this.node?.items ?? null, this.expandable);
+        return new SchemaPath(this.schema, this.node?.items ?? null, this.expandable, this.options);
     }
 
     /**
@@ -89,11 +92,11 @@ class SchemaPath {
         return names;
     }
 
-    // A JSON value, or a list which the ADMX template offers as one JSON value
-    // (see isJsonList()).
+    // A JSON value, or a list or an object which the ADMX template offers as
+    // one JSON value (see isJsonList() and isJsonObject()).
     get isJson() {
-        return this.node?.contentMediaType == "application/json" || this.node?.type == "JSON"
-            || isJsonList(this.schema, this.node);
+        return isJsonNode(this.node) || isJsonList(this.schema, this.node)
+            || (!!this.options.jsonObjects && isJsonObject(this.schema, this.node));
     }
 }
 
@@ -350,13 +353,14 @@ function getSectionNames(texts) {
  * @param {SchemaL10n} l10n - Resolves the texts given as Fluent messages.
  * @param {string} registryKey - The registry key of the product's policies
  *    (admx.registry-key in product.yaml), for the GPO examples.
+ * @param {Object} [options] - See getSchemaOptions().
  * @returns {Object<string, Object>} the sections by name, e.g.
  *    "SearchEngines_Add"
  */
-export function deriveSections(schema, l10n, registryKey) {
+export function deriveSections(schema, l10n, registryKey, options = {}) {
     const policies = {};
     const entries = Object.keys(schema.properties ?? {})
-        .flatMap(policyName => getSectionNames(getSchemaSettings(schema, policyName, l10n).texts))
+        .flatMap(policyName => getSectionNames(getSchemaSettings(schema, policyName, l10n, options).texts))
         .map(name => {
             policies[name] = {};
             return { name, policy: policies[name], ...resolveEntryPath(name, schema) };
@@ -367,8 +371,8 @@ export function deriveSections(schema, l10n, registryKey) {
 
     for (const { policy, path, schemaPath } of entries) {
         if (!textsByPolicy.has(path[0])) {
-            textsByPolicy.set(path[0], getSchemaSettings(schema, path[0], l10n).texts);
-            treeByPolicy.set(path[0], getSettingTree(schema, path[0], l10n));
+            textsByPolicy.set(path[0], getSchemaSettings(schema, path[0], l10n, options).texts);
+            treeByPolicy.set(path[0], getSettingTree(schema, path[0], l10n, options));
         }
         Object.assign(policy, getSectionTexts(textsByPolicy.get(path[0]), treeByPolicy.get(path[0]), path, sections));
         for (const [key, field] of Object.entries(SECTION_FIELDS)) {
@@ -388,7 +392,7 @@ export function deriveSections(schema, l10n, registryKey) {
         policy.gpo = hasFormat(policyData, "gpo")
             ? examples.gpo.flatMap(example => Object.entries(example).flatMap(([key, value]) => toGpo(value, {
                 key: `${registryKey}\\${key}`,
-                schemaPath: SchemaPath.forPolicy(schema, key),
+                schemaPath: SchemaPath.forPolicy(schema, key, options),
             })))
             : [];
         policy.plist = hasFormat(policyData, "plist") ? examples.plist.map(example => toPlist(example)).join("\n\n") : null;

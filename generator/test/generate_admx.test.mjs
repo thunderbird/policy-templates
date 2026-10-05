@@ -37,13 +37,16 @@ const L10N = new SchemaL10n([
  *
  * @param {Object} schema - The policy schema, with the texts of the settings.
  * @param {string[]} supported - The IDs of the supported ADMX policies.
+ * @param {Object} [options]
+ * @param {string} [options.version] - The version of the branch, else the one
+ *    of TEMPLATE.
  * @returns {Promise<{admx: string, adml: string}>}
  */
-async function generate(schema, supported) {
+async function generate(schema, supported, { version } = {}) {
     const supportedPolicies = [{ key: "140", first: "140", last: "", policies: supported }];
     const dir = await fs.mkdtemp(pathUtils.join(os.tmpdir(), "generate-admx-"));
     try {
-        await generateAdmxTemplates(TEMPLATE, supportedPolicies, dir, schema, L10N);
+        await generateAdmxTemplates({ ...TEMPLATE, ...(version && { version }) }, supportedPolicies, dir, schema, L10N);
         const files = {
             admx: pathUtils.join(dir, "admx", "product.admx"),
             adml: pathUtils.join(dir, "admx", "en-US", "product.adml"),
@@ -661,6 +664,42 @@ test("a list of objects whose entries hold a list or an object is one JSON value
     );
     // A list of objects with plain settings stays numbered sets.
     assert.match(admx, /<policy name="Flat_1"/);
+});
+
+test("before 153, an object whose open names hold lists or objects is one JSON value, not a list of names and values", async () => {
+    const schema = {
+        properties: {
+            Settings: {
+                type: "object",
+                description: "Settings per extension.",
+                properties: { "*": { type: "object", description: "All extensions." } },
+                patternProperties: {
+                    "^.*$": {
+                        type: "object",
+                        description: "One extension.",
+                        properties: { Mode: { type: "string", description: "The mode." } },
+                    },
+                },
+            },
+            Paths: {
+                type: "object",
+                description: "Paths by name.",
+                patternProperties: { "^.*$": { type: "string" } },
+            },
+        },
+    };
+    const { admx, adml } = await generate(schema, ["Settings", "Paths_[name]"], { version: "140.3.0" });
+    assert.match(admx, /<multiText id="Settings_Input" valueName="Settings"/);
+    assert.equal(
+        string(adml, "Settings_Explain"),
+        `Settings per extension.\n\n*: All extensions.\n[name]: One extension.\n  Mode: The mode.\n\n${docsLink("settings")}\n`
+    );
+    // Open names which hold text stay a list of names and values.
+    assert.ok(admx.includes(`<list id="Paths_List" key="Software\\Policies\\Example\\Product\\Paths" explicitValue="true"/>`));
+
+    // From 153 on, the schema has to mark such an object with
+    // "contentMediaType".
+    await assert.rejects(generate(schema, ["Settings", "Paths_[name]"]), /The policy Settings can not be represented in the ADMX template/);
 });
 
 test("a free number is a number box with the limits of the schema, a dropdown has no valueName of its policy", async () => {

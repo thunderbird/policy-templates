@@ -9,7 +9,7 @@ import {
     ADMX_JSON_BOX_HEIGHT, ADMX_TITLE_LABELS, MOZILLA_ADML_PATH, MOZILLA_ADMX_PATH, MOZILLA_POLICY_TEMPLATES_BRANCH,
 } from "./constants.mjs";
 import {
-    getKindLabel, getPolicyData, getSchemaSettings, getSettingTree, hasFormat,
+    getKindLabel, getPolicyData, getSchemaOptions, getSchemaSettings, getSettingTree, hasFormat,
     withoutTrailingPeriod,
 } from "./schema_settings.mjs";
 import { ensureDir } from "./tools.mjs";
@@ -28,8 +28,8 @@ import pathUtils from "node:path";
  * @param {boolean} [texts.expandEnvVars] - Whether Windows expands environment
  *    variables in the value ("x-expand-env-vars").
  * @param {Object} [texts.fields] - The node of a JSON value, of a list of
- *    JSON values, or of a list entered as one JSON value, in the tree of the
- *    policy (see getSettingTree()), whose fields are listed.
+ *    JSON values, or of a list or an object entered as one JSON value, in the
+ *    tree of the policy (see getSettingTree()), whose fields are listed.
  * @param {boolean} [texts.link] - Whether to link to the documentation.
  * @param {string} branchDocsUrl - The URL of the documentation of the branch,
  *    see getPolicyDocsUrl().
@@ -294,7 +294,7 @@ class ADM_BUILDER {
             help: help ?? "",
             deprecated,
             expandEnvVars: !!setting?.expandEnvVars || controls.some(control => control.type == "REG_EXPAND_SZ"),
-            fields: treeNode?.json || treeNode?.jsonEntries || treeNode?.jsonList ? treeNode : undefined,
+            fields: treeNode?.json || treeNode?.jsonEntries || treeNode?.jsonList || treeNode?.jsonObject ? treeNode : undefined,
             link: true,
         }, context.docsUrl);
         const controlTexts = controls
@@ -940,9 +940,10 @@ class ADM_BUILDER {
         // All ADMX policies are collected first, to check that their names
         // are unique before any is created.
         const planned = [];
+        const schemaOptions = getSchemaOptions(template.version);
         for (const policyName of policyNames) {
             const plannedBefore = planned.length;
-            const { entries, texts: settingTexts } = getSchemaSettings(schema, policyName, l10n);
+            const { entries, texts: settingTexts } = getSchemaSettings(schema, policyName, l10n, schemaOptions);
             // The names of the policy and of its settings become the names of
             // its ADMX policies, which allow letters, digits and "_" only.
             // (The keys also hold the index of a list entry, and a
@@ -954,7 +955,7 @@ class ADM_BUILDER {
                 }
             }
             const gpoEntries = entries.map(entry => ({ ...entry, key: `${template.registryKey}\\${entry.key}` }));
-            const settingTree = getSettingTree(schema, policyName, l10n);
+            const settingTree = getSettingTree(schema, policyName, l10n, schemaOptions);
             const root = settingTexts.get(policyName);
             const policyData = {
                 deprecated: root?.deprecated,

@@ -4,7 +4,9 @@
  * checkDocumentation(), the rules of the documentation.
  */
 
-import { findForm, getForms, resolveRef } from "../../generator/modules/schema_settings.mjs";
+import {
+    findForm, getForms, getSchemaOptions, isJsonObject, resolveRef,
+} from "../../generator/modules/schema_settings.mjs";
 
 // The fields of the docs sections which are not part of the texts, see
 // checkDocumentation().
@@ -53,12 +55,16 @@ const isTextList = (node, items) => getTypes(node).length == 1 && getTypes(node)
  * has, policy and setting names (outside JSON values) of letters, digits and
  * "_" only, as they become part of ADMX policy names.
  *
- * @param {{schema: Object, l10n: SchemaL10n}} branch
+ * @param {{schema: Object, l10n: SchemaL10n, version: ?string}} branch
  * @returns {string[]} the problems
  */
-export function checkDocumentation({ schema, l10n }) {
+export function checkDocumentation({ schema, l10n, version }) {
     const problems = [];
     const resolve = node => resolveRef(schema, node);
+    // A JSON value, or an object which the ADMX template of the branch offers
+    // as one JSON value (see isJsonObject()).
+    const jsonObjects = !!version && getSchemaOptions(version).jsonObjects;
+    const isJsonValue = node => isJson(node) || (jsonObjects && isJsonObject(schema, node));
     const hasText = (node, field, where) => !!l10n.get(node, field, where);
 
     // Whether the example of a node (of a single form) can't be generated.
@@ -164,7 +170,7 @@ export function checkDocumentation({ schema, l10n }) {
         if ((isGroup || inJson || hasHelp) && !hasText(node, "description", where)) {
             problems.push(`${where}: missing description`);
         }
-        const childInJson = inJson || isJson(node);
+        const childInJson = inJson || isJsonValue(node);
         for (const [name, child] of children) {
             checkDescriptions(child, `${where}.${name}`, childInJson);
         }
@@ -206,7 +212,7 @@ export function checkDocumentation({ schema, l10n }) {
     // alternatives) can only have letters, digits and "_".
     function checkAdmxNames(node, where) {
         node = resolve(node);
-        if (!isObject(node) || isJson(node)) {
+        if (!isObject(node) || isJsonValue(node)) {
             return;
         }
         for (const [name, child] of Object.entries(node.properties ?? {})) {
@@ -271,7 +277,7 @@ export function checkDocumentation({ schema, l10n }) {
         }
         checkTexts(policy, name);
         const container = getContainer(resolved);
-        const inJson = isJson(resolved);
+        const inJson = isJsonValue(resolved);
         for (const [childName, child] of [
             ...Object.entries(container.properties ?? {}),
             ...Object.entries(container.patternProperties ?? {}),

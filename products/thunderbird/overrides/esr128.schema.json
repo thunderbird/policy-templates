@@ -846,7 +846,6 @@
           }
         }
       ],
-      "contentMediaType": "application/json",
       "x-category": "Extensions"
     },
     "ExtensionUpdate": {
@@ -996,7 +995,6 @@
           }
         }
       ],
-      "contentMediaType": "application/json",
       "x-category": "Security"
     },
     "HardwareAcceleration": {
@@ -1188,7 +1186,6 @@
           }
         }
       ],
-      "contentMediaType": "application/json",
       "x-category": "Security",
       "x-cck2-equivalent": "preferences",
       "x-preferences-affected": "Many"

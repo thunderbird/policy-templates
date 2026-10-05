@@ -13,6 +13,12 @@ export const DOWNLOAD_CACHE_FILE = pathUtils.join(GENERATOR_DIR_PATH, "download_
 // reaches its end of life.
 export const OLDEST_ESR = 128;
 
+// The first version whose policy engine parses a string as JSON where the
+// schema says "contentMediaType" (Bug 2044429: 154, uplifted to ESR 153).
+// Older schemas can only mark JSON values with the old type "JSON", which
+// changes what the code accepts.
+export const JSON_STRING_VERSION = 153;
+
 export const GITHUB_API_URL = "https://api.github.com";
 export const GITHUB_RAW_URL = "https://raw.githubusercontent.com";
 

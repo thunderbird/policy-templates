@@ -7,6 +7,7 @@ import { ContentError, InputError, ensureDir } from "./tools.mjs";
 import fs from "node:fs/promises";
 import pathUtils from "node:path";
 import { getPolicyAnchor } from "./docs_links.mjs";
+import { getSchemaOptions } from "./schema_settings.mjs";
 
 /**
  * Escape pipes, which may break markdown tables.
@@ -374,7 +375,9 @@ export async function generateOverview({ app, product, branches, main }, output)
  */
 export async function generateDocs(branchData, { app, branches, output }) {
     const { product, branch } = branchData;
-    const sections = deriveSections(branchData.schema, branchData.l10n, product.registryKey);
+    const sections = deriveSections(
+        branchData.schema, branchData.l10n, product.registryKey, getSchemaOptions(branchData.version)
+    );
     const branchList = await getBranchList({ app, product, branches });
     await writeOutput(output, branch, "README.md", dir => generatePolicyReadme(sections, branchData, branchList, app, dir));
 }

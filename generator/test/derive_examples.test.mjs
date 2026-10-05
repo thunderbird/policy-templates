@@ -172,6 +172,30 @@ test("a list of JSON values has one JSON value per entry in the GPO example", ()
     ]);
 });
 
+test("before 153, an object whose open names hold objects is one JSON value in the GPO example", () => {
+    const schema = structuredClone(SCHEMA);
+    schema.properties.Prefs = {
+        type: "object",
+        description: "Preferences.",
+        patternProperties: { "^.*$": { type: "object", description: "A preference.", properties: { Value: { type: "string" } } } },
+        examples: [{ "a.b": { Value: "x" } }],
+    };
+    const gpo = options => deriveSections(schema, L10N, BASE_KEY, options).Prefs.gpo.map(e => [e.key, e.type]);
+    assert.deepEqual(gpo({ jsonObjects: true }), [[`${BASE_KEY}\\Prefs`, "REG_MULTI_SZ"]]);
+    assert.deepEqual(gpo({}), [[`${BASE_KEY}\\Prefs\\a.b\\Value`, "REG_SZ"]]);
+});
+
+test("a JSON value of the old type JSON in a type list is one JSON value in the GPO example", () => {
+    const schema = structuredClone(SCHEMA);
+    schema.properties.Old = {
+        type: ["object", "JSON"],
+        description: "Old style.",
+        patternProperties: { "^.*$": { type: "object", properties: { Value: { type: "string" } } } },
+        examples: [{ "a.b": { Value: "x" } }],
+    };
+    assert.deepEqual(derive(schema).Old.gpo.map(e => [e.key, e.type]), [[`${BASE_KEY}\\Old`, "REG_MULTI_SZ"]]);
+});
+
 test("x-formats limits the examples", () => {
     const { WindowsFlag } = derive();
     assert.equal(WindowsFlag.gpo.length, 1);

@@ -10,6 +10,7 @@
  */
 
 import { CATCH_ALL_PATTERN, OPEN_NAME, getPatternLabel, getPatternNames } from "./compatibility.mjs";
+import { JSON_STRING_VERSION } from "./constants.mjs";
 
 // Placeholder for the index of a list entry, and for an open name, in the
 // registry keys of the settings.
@@ -40,7 +41,7 @@ export function resolveRef(schema, node) {
  * Whether a node is a JSON value: with "contentMediaType", or with the JSON
  * type of older schemas, also in a type list (["object", "JSON"]).
  */
-function isJsonNode(node) {
+export function isJsonNode(node) {
     return node?.contentMediaType == "application/json" || [node?.type].flat().includes("JSON");
 }
 
@@ -219,6 +220,43 @@ export function isJsonList(schema, node) {
 }
 
 /**
+ * Whether a setting is an object which the ADMX template can only offer as one
+ * JSON value: an object (which is no JSON value itself) where a setting under a
+ * pattern of names holds a list or an object (also as one of its forms, see
+ * getForms()). A list of names and values can't represent these. The whole
+ * object is then entered as JSON in a multi-line box (REG_MULTI_SZ), which the
+ * registry reader of the policy engine parses as JSON for any setting.
+ *
+ * Only for branches before JSON_STRING_VERSION (see getSchemaOptions()): their
+ * schemas can't mark such an object as JSON without changing what the code
+ * accepts. From that version on, a missing "contentMediaType" is a mistake of
+ * the schema, which is not covered up.
+ *
+ * @param {Object} schema - The schema, to resolve $refs.
+ * @param {Object} node - The node of the setting, resolved.
+ * @returns {boolean}
+ */
+export function isJsonObject(schema, node) {
+    const types = node?.type ? [node.type].flat() : [];
+    if (!types.includes("object") || !isPlainObject(node.patternProperties) || isJsonNode(node)) {
+        return false;
+    }
+    return Object.values(node.patternProperties).some(child => getForms(schema, resolveRef(schema, child))
+        .some(form => ["List", "Object"].includes(form.kind)));
+}
+
+/**
+ * The options of the functions which read the settings of a policy, for a
+ * branch of the given version: jsonObjects allows isJsonObject().
+ *
+ * @param {string} version - The version of the branch, e.g. "140.3.0".
+ * @returns {{jsonObjects: boolean}}
+ */
+export function getSchemaOptions(version) {
+    return { jsonObjects: Number(version.split(".")[0]) < JSON_STRING_VERSION };
+}
+
+/**
  * A setting of the policy schema of a branch (see loadBranch()).
  */
 class SchemaSetting {
@@ -348,9 +386,10 @@ const toDword = value => typeof value == "boolean"
  * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {string} policyName
  * @param {SchemaL10n} l10n - Resolves the texts given as Fluent messages.
+ * @param {Object} [options] - See getSchemaOptions().
  * @returns {{entries: Object[], texts: Map<string, Object>}}
  */
-export function getSchemaSettings(schema, policyName, l10n) {
+export function getSchemaSettings(schema, policyName, l10n, options = {}) {
     const entries = [];
     const texts = new Map();
 
@@ -441,9 +480,10 @@ export function getSchemaSettings(schema, policyName, l10n) {
             return;
         }
 
-        // A JSON value, and a list which can only be entered as one JSON value
-        // (see isJsonList()).
-        if (setting.isJson || isJsonList(setting.schema, setting.node)) {
+        // A JSON value, and a list or an object which can only be entered as
+        // one JSON value (see isJsonList() and isJsonObject()).
+        if (setting.isJson || isJsonList(setting.schema, setting.node)
+            || (options.jsonObjects && isJsonObject(setting.schema, setting.node))) {
             entry("REG_MULTI_SZ", "");
             return;
         }
@@ -632,9 +672,10 @@ function getBaseTypeLabel(setting) {
  * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {string} policyName
  * @param {SchemaL10n} l10n - Resolves the texts given as Fluent messages.
+ * @param {Object} [options] - See getSchemaOptions().
  * @returns {?Object} the node of the policy, null if it is not in the schema
  */
-export function getSettingTree(schema, policyName, l10n) {
+export function getSettingTree(schema, policyName, l10n, options = {}) {
     function build(setting, name, path, parentDeprecated) {
         if (!setting.node) {
             return null;
@@ -682,6 +723,9 @@ export function getSettingTree(schema, policyName, l10n) {
             // A list which the ADMX template offers as one JSON value, see
             // isJsonList().
             jsonList: isJsonList(schema, node),
+            // An object which the ADMX template offers as one JSON value, see
+            // isJsonObject().
+            jsonObject: !!options.jsonObjects && isJsonObject(schema, node),
             // Whether the setting accepts several forms, see getForms().
             severalForms: forms.length > 1,
             choices,
