@@ -662,3 +662,53 @@ test("a list of objects whose entries hold a list or an object is one JSON value
     // A list of objects with plain settings stays numbered sets.
     assert.match(admx, /<policy name="Flat_1"/);
 });
+
+test("a free number is a number box with the limits of the schema, a dropdown has no valueName of its policy", async () => {
+    const { admx, adml } = await generate(
+        {
+            properties: {
+                Timeout: { type: "number", description: "Seconds." },
+                Hours: { type: "integer", minimum: 1, maximum: 24 },
+                Restart: {
+                    type: "object",
+                    properties: { Time: { type: "object", properties: { Hour: { type: "number" }, Minute: { type: "number" } } } },
+                },
+                Version: { type: "number", oneOf: [{ const: 4, title: "SOCKS 4" }, { const: 5, title: "SOCKS 5" }] },
+                Flag: { type: "boolean" },
+            },
+        },
+        ["Timeout", "Hours", "Restart_Time", "Version", "Flag"]
+    );
+    const policy = name => admx.match(new RegExp(`<policy name="${name}"[^>]*>[\\s\\S]*?</policy>`))[0];
+    assert.match(policy("Timeout"), /<decimal id="Timeout_Number" valueName="Timeout" minValue="0" maxValue="2147483647"\/>/);
+    assert.match(policy("Hours"), /<decimal id="Hours_Number" valueName="Hours" minValue="1" maxValue="24"\/>/);
+    assert.match(adml, /<decimalTextBox refId="Timeout_Number">Timeout<\/decimalTextBox>/);
+    // In a group too.
+    assert.match(policy("Restart_Time"), /<decimal id="Restart_Time_Hour_Number" valueName="Hour"/);
+    // Only an on/off policy has a valueName of its own.
+    assert.doesNotMatch(policy("Timeout"), /<policy [^>]*valueName=/);
+    assert.doesNotMatch(policy("Version"), /<policy [^>]*valueName=/);
+    assert.match(policy("Version"), /<enum id="Version_Enum" valueName="Version">/);
+    assert.match(policy("Flag"), /<policy [^>]*valueName="Flag"/);
+});
+
+test("a list of names and values with x-expand-env-vars is expandable", async () => {
+    const { admx } = await generate(
+        {
+            properties: {
+                Devices: {
+                    type: "object",
+                    properties: {
+                        Add: {
+                            type: "object",
+                            patternProperties: { "^.*$": { type: "string", "x-expand-env-vars": true } },
+                        },
+                        Delete: { type: "array", items: { type: "string" } },
+                    },
+                },
+            },
+        },
+        ["Devices_Add_[name]", "Devices_Delete"]
+    );
+    assert.match(admx, /<list id="Devices_Add_List" key="Software\\Policies\\Example\\Product\\Devices\\Add" explicitValue="true" expandable="true"\/>/);
+});

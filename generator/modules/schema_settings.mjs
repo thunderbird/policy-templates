@@ -491,7 +491,12 @@ export function getSchemaSettings(schema, policyName, l10n) {
             return;
         }
         if (types.includes("number") || types.includes("integer")) {
-            entry("REG_DWORD", "0x0");
+            // A free number, with the limits of the schema if it has them.
+            entry("REG_DWORD", "0x0", {
+                number: true,
+                ...(typeof node.minimum == "number" && { minimum: node.minimum }),
+                ...(typeof node.maximum == "number" && { maximum: node.maximum }),
+            });
             return;
         }
         if (isPlainObject(node.properties) || isPlainObject(node.patternProperties)) {

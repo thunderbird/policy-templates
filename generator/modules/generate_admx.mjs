@@ -333,7 +333,10 @@ class ADM_BUILDER {
             explainText: this.getStringId(`${singleId}_Explain`, policyTexts.content),
             key: keyParts.join("\\"),
             ...(!isBooleanLike && { presentation: `$(presentation.${singleId})` }),
-            ...(entry.type == 'REG_DWORD' && { valueName }),
+            // Only an on/off policy writes its value itself (enabledValue and
+            // disabledValue). A control writes it with its element, and a
+            // valueName of the policy would write a second value to it.
+            ...(isBooleanLike && { valueName }),
         };
         if (!isBooleanLike) {
             this.addPresentation(`${singleId}`, "single", entry);
@@ -422,6 +425,8 @@ class ADM_BUILDER {
             case "REG_DWORD": {
                 if (isBooleanLikeEntry(entry)) {
                     rootElement.ele('checkBox', { refId: `${id}_Bool` }).txt(label);
+                } else if (entry.number) {
+                    rootElement.ele('decimalTextBox', { refId: `${id}_Number` }).txt(label);
                 } else {
                     rootElement.ele('dropdownList', { refId: `${id}_Enum` }).txt(label);
                 }
@@ -704,6 +709,20 @@ class ADM_BUILDER {
                             console.warn(`Unsupported root node: ${rootNodeName}`);
                             break;
                     }
+                } else if (entry.number) {
+                    // A free number: a number box with the limits of the
+                    // schema, else from 0 to the largest positive DWORD (the
+                    // default maximum of ADMX, 9999, is too small). A number
+                    // box can't hold negative numbers.
+                    const baseElement = rootNodeName === 'policy'
+                        ? rootElement.ele('elements')
+                        : rootElement
+                    baseElement.ele('decimal', {
+                        id: `${id}_Number`,
+                        valueName,
+                        minValue: String(Math.max(entry.minimum ?? 0, 0)),
+                        maxValue: String(entry.maximum ?? 2147483647),
+                    });
                 } else {
                     // If the provided root node is a <policy> node, we need to add
                     // an <elements> wrapper node.
