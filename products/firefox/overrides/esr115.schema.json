@@ -134,11 +134,12 @@
         },
         "PrivateBrowsing": {
           "type": "boolean",
-          "title": "Allow authentication in private browsing"
+          "title": "Allow authentication in private browsing",
+          "description": "Enables integrated authentication in private browsing."
         }
       },
       "description": "Configure sites that support integrated authentication.",
-      "x-help": "See [Integrated authentication](https://htmlpreview.github.io/?https://github.com/mdn/archived-content/blob/main/files/en-us/mozilla/integrated_authentication/raw.html) for more information.\n\n`PrivateBrowsing` enables integrated authentication in private browsing.",
+      "x-help": "See [Integrated authentication](https://htmlpreview.github.io/?https://github.com/mdn/archived-content/blob/main/files/en-us/mozilla/integrated_authentication/raw.html) for more information.",
       "examples": [
         {
           "SPNEGO": [
@@ -579,7 +580,8 @@
           "items": {
             "type": "origin"
           },
-          "title": "Allowed Sites"
+          "title": "Allowed Sites",
+          "description": "A list of origins (not domains) where cookies are always allowed. You must include http or https."
         },
         "AllowSession": {
           "type": "array",
@@ -587,7 +589,8 @@
           "items": {
             "type": "origin"
           },
-          "title": "Allowed Sites (Session Only)"
+          "title": "Allowed Sites (Session Only)",
+          "description": "A list of origins (not domains) where cookies are only allowed for the current session. You must include http or https."
         },
         "Block": {
           "type": "array",
@@ -595,11 +598,14 @@
           "items": {
             "type": "origin"
           },
-          "title": "Blocked Sites"
+          "title": "Blocked Sites",
+          "description": "A list of origins (not domains) where cookies are always blocked. You must include http or https."
         },
         "Default": {
           "type": "boolean",
-          "title": "Accept cookies from websites"
+          "title": "Accept cookies from websites",
+          "description": "Determines whether cookies are accepted at all. Use `Behavior` instead.",
+          "x-deprecated": true
         },
         "AcceptThirdParty": {
           "type": "string",
@@ -625,19 +631,26 @@
               "description": "Accept third-party cookies only from sites the user has visited."
             }
           ],
-          "title": "Accept third-party cookies"
+          "title": "Accept third-party cookies",
+          "description": "Determines how third-party cookies are handled. Use `Behavior` instead.",
+          "x-deprecated": true
         },
         "RejectTracker": {
           "type": "boolean",
-          "title": "Reject trackers"
+          "title": "Reject trackers",
+          "description": "Only rejects cookies for trackers. Use `Behavior` instead.",
+          "x-deprecated": true
         },
         "ExpireAtSessionEnd": {
           "type": "boolean",
-          "title": "Keep cookies until Firefox is closed"
+          "title": "Keep cookies until Firefox is closed",
+          "description": "Determines when cookies expire. Use [`SanitizeOnShutdown`](#sanitizeonshutdown) instead.",
+          "x-deprecated": true
         },
         "Locked": {
           "type": "boolean",
-          "title": "Do not allow preferences to be changed"
+          "title": "Do not allow preferences to be changed",
+          "description": "Prevents the user from changing cookie preferences."
         },
         "Behavior": {
           "type": "string",
@@ -681,7 +694,8 @@
               "description": "Reject cookies from known trackers and confine the remaining third-party cookies to the site that set them. This is Total Cookie Protection."
             }
           ],
-          "title": "Cookie Behavior"
+          "title": "Cookie Behavior",
+          "description": "Sets the default behavior for cookies based on the values below."
         },
         "BehaviorPrivateBrowsing": {
           "type": "string",
@@ -725,11 +739,11 @@
               "description": "Reject cookies from known trackers and confine the remaining third-party cookies to the site that set them. This is Total Cookie Protection."
             }
           ],
-          "title": "Cookie Behavior in private browsing"
+          "title": "Cookie Behavior in private browsing",
+          "description": "Sets the default behavior for cookies in private browsing based on the values below."
         }
       },
       "description": "Configure cookie preferences.",
-      "x-help": "`Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.\n\n`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.\n\n`Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.\n\n`Behavior` sets the default behavior for cookies based on the values below.\n\n`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.\n\n`Locked` prevents the user from changing cookie preferences.\n\n`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)\n\n`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)\n\n`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)\n\n`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown) instead)",
       "examples": [
         {
           "Allow": [
@@ -1055,16 +1069,18 @@
       "properties": {
         "InvalidCertificate": {
           "type": "boolean",
-          "title": "Prevent overriding certificate errors"
+          "title": "Prevent overriding certificate errors",
+          "description": "Prevents adding an exception when an invalid certificate is shown."
         },
         "SafeBrowsing": {
           "type": "boolean",
-          "title": "Prevent overriding safe browsing errors"
+          "title": "Prevent overriding safe browsing errors",
+          "description": "Prevents selecting \"ignore the risk\" and visiting a harmful site anyway."
         }
       },
       "title": "Prevent Bypassing Security Warnings",
       "description": "Prevent the user from bypassing security in certain cases.",
-      "x-help": "`InvalidCertificate` prevents adding an exception when an invalid certificate is shown.\n\n`SafeBrowsing` prevents selecting \"ignore the risk\" and visiting a harmful site anyway.\n\nThese policies only affect what happens when an error is shown, they do not affect any settings in preferences.",
+      "x-help": "These policies only affect what happens when an error is shown, they do not affect any settings in preferences.",
       "examples": [
         {
           "InvalidCertificate": true,
@@ -1210,26 +1226,30 @@
       "type": "object",
       "properties": {
         "Enabled": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Determines whether DNS over HTTPS is enabled."
         },
         "ProviderURL": {
           "type": "URLorEmpty",
-          "title": "Provider URL"
+          "title": "Provider URL",
+          "description": "A URL to another provider."
         },
         "ExcludedDomains": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Excluded Domains"
+          "title": "Excluded Domains",
+          "description": "Excludes domains from DNS over HTTPS."
         },
         "Locked": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Prevents the user from changing DNS over HTTPS preferences."
         }
       },
       "title": "DNS Over HTTPS",
       "description": "Configure DNS over HTTPS (DoH).",
-      "x-help": "`Enabled` determines whether DNS over HTTPS is enabled\n\n`ProviderURL` is a URL to another provider.\n\n`Locked` prevents the user from changing DNS over HTTPS preferences.\n\n`ExcludedDomains` excludes domains from DNS over HTTPS.\n\n`Fallback` determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.",
+      "x-help": "`Fallback` determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.",
       "examples": [
         {
           "Enabled": true,
@@ -1282,33 +1302,39 @@
       "properties": {
         "Value": {
           "type": "boolean",
-          "title": "Enabled"
+          "title": "Enabled",
+          "description": "If true, tracking protection is enabled by default in both the regular browser and private browsing. If false, tracking protection is disabled and locked in both."
         },
         "Locked": {
           "type": "boolean",
-          "title": "Do not allow tracking protection preferences to be changed"
+          "title": "Do not allow tracking protection preferences to be changed",
+          "description": "If true, users cannot change tracking protection values."
         },
         "Cryptomining": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "If true, cryptomining scripts on websites are blocked."
         },
         "Fingerprinting": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "If true, fingerprinting scripts on websites are blocked."
         },
         "EmailTracking": {
           "type": "boolean",
-          "title": "Email Tracking"
+          "title": "Email Tracking",
+          "description": "If true, hidden email tracking pixels and scripts on websites are blocked. (Firefox 112)"
         },
         "Exceptions": {
           "type": "array",
           "strict": false,
           "items": {
             "type": "origin"
-          }
+          },
+          "description": "Origins for which tracking protection is not enabled."
         }
       },
       "title": "Tracking Protection",
       "description": "Configure tracking protection.",
-      "x-help": "If this policy is not configured, tracking protection is not enabled by default in the browser, but it is enabled by default in private browsing and the user can change it.\n\nIf `Value` is set to false, tracking protection is disabled and locked in both the regular browser and private browsing.\n\nIf `Value` is set to true, tracking protection is enabled by default in both the regular browser and private browsing.\n\nIf `Locked` is set to true, users cannot change tracking protection values.\n\nIf `Cryptomining` is set to true, cryptomining scripts on websites are blocked.\n\nIf `Fingerprinting` is set to true, fingerprinting scripts on websites are blocked.\n\nIf `EmailTracking` is set to true, hidden email tracking pixels and scripts on websites are blocked. (Firefox 112)\n\nIf `SuspectedFingerprinting` is set to true, Firefox reduces the amount of information exposed to websites to protect against potential fingerprinting attempts. (Firefox 142, Firefox ESR 140.2)\n\n`Exceptions` are origins for which tracking protection is not enabled.\n\n`Category` can be either ```strict``` or ```standard```. If category is set, it overrides all other settings except `Exceptions`, `BaselineExceptions` and `ConvenienceExceptions`, and the user cannot change the category. (Firefox 142, Firefox ESR 140.2)\n\nIF `BaselineExceptions` is true, Firefox will automatically apply exceptions required to avoid major website breakage. (Firefox 145)\n\nIf `ConvenienceExceptions`is true, Firefox will apply exceptions automatically that are only required to fix minor issues and make convenience features available. (Firefox 145)\n\nNote: Users can change `BaselineExceptions` and `ConvenienceExceptions` even when `Category` is set to ```strict``` unless `Locked` is set to true. If `Locked` is set to true, the defaults are used unless a different value is specified in policy for `BaselineExceptions` and `ConvenienceExceptions`.",
+      "x-help": "If this policy is not configured, tracking protection is not enabled by default in the browser, but it is enabled by default in private browsing and the user can change it.\n\n`Category` can be either ```strict``` or ```standard```. If category is set, it overrides all other settings except `Exceptions`, `BaselineExceptions` and `ConvenienceExceptions`, and the user cannot change the category. (Firefox 142, Firefox ESR 140.2)\n\nNote: Users can change `BaselineExceptions` and `ConvenienceExceptions` even when `Category` is set to ```strict``` unless `Locked` is set to true. If `Locked` is set to true, the defaults are used unless a different value is specified in policy for `BaselineExceptions` and `ConvenienceExceptions`.",
       "examples": [
         {
           "Value": true,
@@ -1339,16 +1365,17 @@
       "properties": {
         "Enabled": {
           "type": "boolean",
-          "title": "Enable Encrypted Media Extensions"
+          "title": "Enable Encrypted Media Extensions",
+          "description": "If false, encrypted media extensions (like Widevine) are not downloaded by Firefox unless the user consents to installing them."
         },
         "Locked": {
           "type": "boolean",
-          "title": "Lock Encrypted Media Extensions"
+          "title": "Lock Encrypted Media Extensions",
+          "description": "If true and `Enabled` is false, Firefox will not download encrypted media extensions (like Widevine) or ask the user to install them."
         }
       },
       "title": "Encrypted Media Extensions",
       "description": "Enable or disable Encrypted Media Extensions and optionally lock it.",
-      "x-help": "If `Enabled` is set to false, encrypted media extensions (like Widevine) are not downloaded by Firefox unless the user consents to installing them.\n\nIf `Locked` is set to true and `Enabled` is set to false, Firefox will not download encrypted media extensions (like Widevine) or ask the user to install them.",
       "examples": [
         {
           "Enabled": true,
@@ -1400,25 +1427,28 @@
           "items": {
             "type": "string"
           },
-          "title": "Extensions to Install"
+          "title": "Extensions to Install",
+          "description": "A list of URLs or native paths for extensions to be installed."
         },
         "Uninstall": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Extensions to Uninstall"
+          "title": "Extensions to Uninstall",
+          "description": "A list of extension IDs that should be uninstalled if found."
         },
         "Locked": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Prevent extensions from being disabled or removed"
+          "title": "Prevent extensions from being disabled or removed",
+          "description": "A list of extension IDs that the user cannot disable or uninstall."
         }
       },
       "description": "Control the installation, uninstallation and locking of extensions.",
-      "x-help": "Note: The **[`ExtensionSettings`](#extensionsettings)** policy was added in Firefox 69. It provides additional functionality and is closer in compatibility to Chrome and Edge. It does not support native paths, though, so you'll have to use file:/// URLs. I'd recommend trying it before using this policy. Any future improvements will happen in that policy.\n\nWe will not, however, be removing this policy.\n\n`Install` is a list of URLs or native paths for extensions to be installed.\n\n`Uninstall` is a list of extension IDs that should be uninstalled if found.\n\n`Locked` is a list of extension IDs that the user cannot disable or uninstall.",
+      "x-help": "Note: The **[`ExtensionSettings`](#extensionsettings)** policy was added in Firefox 69. It provides additional functionality and is closer in compatibility to Chrome and Edge. It does not support native paths, though, so you'll have to use file:/// URLs. I'd recommend trying it before using this policy. Any future improvements will happen in that policy.\n\nWe will not, however, be removing this policy.",
       "examples": [
         {
           "Install": [
@@ -1857,10 +1887,12 @@
       "type": "object",
       "properties": {
         "URL": {
-          "type": "URL"
+          "type": "URL",
+          "description": "The default homepage."
         },
         "Locked": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Prevents the user from changing homepage preferences."
         },
         "Additional": {
           "type": "array",
@@ -1868,7 +1900,8 @@
           "items": {
             "type": "URL"
           },
-          "title": "Additional Homepages"
+          "title": "Additional Homepages",
+          "description": "Allows for more than one homepage."
         },
         "StartPage": {
           "type": "string",
@@ -1900,12 +1933,12 @@
               "description": "Start on the homepage and prevent the user from changing the startup page."
             }
           ],
-          "title": "Start Page"
+          "title": "Start Page",
+          "description": "How Firefox starts."
         }
       },
       "title": "Home page",
       "description": "Configure the default homepage and how Firefox starts.",
-      "x-help": "`URL` is the default homepage.\n\n`Locked` prevents the user from changing homepage preferences.\n\n`Additional` allows for more than one homepage.\n\n`StartPage` is how Firefox starts.",
       "examples": [
         {
           "URL": "http://example.com/",
@@ -1936,16 +1969,18 @@
           "items": {
             "type": "origin"
           },
-          "title": "Allowed Sites"
+          "title": "Allowed Sites",
+          "description": "A list of origins where extension installs are allowed."
         },
         "Default": {
           "type": "boolean",
-          "title": "Allow add-on installs from websites"
+          "title": "Allow add-on installs from websites",
+          "description": "Determines whether or not extension installs are allowed by default."
         }
       },
       "title": "Addons",
       "description": "Configure the default extension install policy as well as origins for extension installs are allowed.",
-      "x-help": "This policy does not override turning off all extension installs.\n\n`Allow` is a list of origins where extension installs are allowed.\n\n`Default` determines whether or not extension installs are allowed by default.",
+      "x-help": "This policy does not override turning off all extension installs.",
       "examples": [
         {
           "Allow": [
@@ -2243,16 +2278,18 @@
       "properties": {
         "Enabled": {
           "type": "boolean",
-          "title": "Enable PDF.js"
+          "title": "Enable PDF.js",
+          "description": "If false, the built-in PDF viewer is disabled."
         },
         "EnablePermissions": {
           "type": "boolean",
-          "title": "Enable Permissions"
+          "title": "Enable Permissions",
+          "description": "If true, the built-in PDF viewer will honor document permissions like preventing the copying of text."
         }
       },
       "title": "PDF.js",
       "description": "Disable or configure PDF.js, the built-in PDF viewer.",
-      "x-help": "If `Enabled` is set to false, the built-in PDF viewer is disabled.\n\nIf `EnablePermissions` is set to true, the built-in PDF viewer will honor document permissions like preventing the copying of text.\n\nNote: DisableBuiltinPDFViewer has not been deprecated. You can either continue to use it, or switch to using PDFjs->Enabled to disable the built-in PDF viewer. This new permission was added because we needed a place for PDFjs->EnabledPermissions.",
+      "x-help": "Note: DisableBuiltinPDFViewer has not been deprecated. You can either continue to use it, or switch to using PDFjs->Enabled to disable the built-in PDF viewer. This new permission was added because we needed a place for PDFjs->EnabledPermissions.",
       "examples": [
         {
           "Enabled": true,
@@ -2277,7 +2314,8 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Allowed Sites"
+              "title": "Allowed Sites",
+              "description": "A list of origins where the feature is allowed."
             },
             "Block": {
               "type": "array",
@@ -2285,13 +2323,16 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Blocked Sites"
+              "title": "Blocked Sites",
+              "description": "A list of origins where the feature is not allowed."
             },
             "BlockNewRequests": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Determines whether or not new requests can be made for the feature."
             },
             "Locked": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Prevents the user from changing preferences for the feature."
             }
           }
         },
@@ -2304,7 +2345,8 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Allowed Sites"
+              "title": "Allowed Sites",
+              "description": "A list of origins where the feature is allowed."
             },
             "Block": {
               "type": "array",
@@ -2312,13 +2354,16 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Blocked Sites"
+              "title": "Blocked Sites",
+              "description": "A list of origins where the feature is not allowed."
             },
             "BlockNewRequests": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Determines whether or not new requests can be made for the feature."
             },
             "Locked": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Prevents the user from changing preferences for the feature."
             }
           }
         },
@@ -2348,7 +2393,8 @@
                   "title": "Block audio and video",
                   "description": "Sites may not autoplay anything."
                 }
-              ]
+              ],
+              "description": "The default value for Autoplay. `block-audio-video` is not supported on Firefox ESR 68."
             },
             "Allow": {
               "type": "array",
@@ -2356,7 +2402,8 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Allowed Sites"
+              "title": "Allowed Sites",
+              "description": "A list of origins where the feature is allowed."
             },
             "Block": {
               "type": "array",
@@ -2364,10 +2411,12 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Blocked Sites"
+              "title": "Blocked Sites",
+              "description": "A list of origins where the feature is not allowed."
             },
             "Locked": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Prevents the user from changing preferences for the feature."
             }
           }
         },
@@ -2380,7 +2429,8 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Allowed Sites"
+              "title": "Allowed Sites",
+              "description": "A list of origins where the feature is allowed."
             },
             "Block": {
               "type": "array",
@@ -2388,13 +2438,16 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Blocked Sites"
+              "title": "Blocked Sites",
+              "description": "A list of origins where the feature is not allowed."
             },
             "BlockNewRequests": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Determines whether or not new requests can be made for the feature."
             },
             "Locked": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Prevents the user from changing preferences for the feature."
             }
           }
         },
@@ -2407,7 +2460,8 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Allowed Sites"
+              "title": "Allowed Sites",
+              "description": "A list of origins where the feature is allowed."
             },
             "Block": {
               "type": "array",
@@ -2415,13 +2469,16 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Blocked Sites"
+              "title": "Blocked Sites",
+              "description": "A list of origins where the feature is not allowed."
             },
             "BlockNewRequests": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Determines whether or not new requests can be made for the feature."
             },
             "Locked": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Prevents the user from changing preferences for the feature."
             }
           }
         },
@@ -2434,7 +2491,8 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Allowed Sites"
+              "title": "Allowed Sites",
+              "description": "A list of origins where the feature is allowed."
             },
             "Block": {
               "type": "array",
@@ -2442,20 +2500,23 @@
               "items": {
                 "type": "origin"
               },
-              "title": "Blocked Sites"
+              "title": "Blocked Sites",
+              "description": "A list of origins where the feature is not allowed."
             },
             "BlockNewRequests": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Determines whether or not new requests can be made for the feature."
             },
             "Locked": {
-              "type": "boolean"
+              "type": "boolean",
+              "description": "Prevents the user from changing preferences for the feature."
             }
           },
           "title": "Virtual Reality"
         }
       },
       "description": "Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.",
-      "x-help": "Because these are origins, not domains, entries with unique ports must be specified separately. This explicitly means that it is not possible to add wildcards. See examples below.\n\n`Allow` is a list of origins where the feature is allowed.\n\n`Block` is a list of origins where the feature is not allowed.\n\n`BlockNewRequests` determines whether or not new requests can be made for the feature.\n\n`Locked` prevents the user from changing preferences for the feature.\n\n`Default` specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.",
+      "x-help": "Because these are origins, not domains, entries with unique ports must be specified separately. This explicitly means that it is not possible to add wildcards. See examples below.",
       "examples": [
         {
           "Camera": {
@@ -2564,20 +2625,23 @@
           "items": {
             "type": "origin"
           },
-          "title": "Allowed Sites"
+          "title": "Allowed Sites",
+          "description": "A list of origins where popup-windows are allowed."
         },
         "Default": {
           "type": "boolean",
-          "title": "Block pop-ups from websites"
+          "title": "Block pop-ups from websites",
+          "description": "Determines whether or not pop-up windows are allowed by default."
         },
         "Locked": {
           "type": "boolean",
-          "title": "Do not allow preferences to be changed"
+          "title": "Do not allow preferences to be changed",
+          "description": "Prevents the user from changing pop-up preferences."
         }
       },
       "title": "Popups",
       "description": "Allow certain websites to display popups and be redirected by third-party frames.",
-      "x-help": "Configure the default pop-up window policy as well as origins for which pop-up windows are allowed.\n\n`Allow` is a list of origins where popup-windows are allowed.\n\n`Default` determines whether or not pop-up windows are allowed by default.\n\n`Locked` prevents the user from changing pop-up preferences.",
+      "x-help": "Configure the default pop-up window policy as well as origins for which pop-up windows are allowed.",
       "examples": [
         {
           "Allow": [
@@ -2615,7 +2679,8 @@
                 "number",
                 "boolean",
                 "string"
-              ]
+              ],
+              "description": "The value of the preference, which is the key."
             },
             "Status": {
               "type": "string",
@@ -2671,13 +2736,14 @@
                   "title": "String",
                   "description": "Store `Value` as a string."
                 }
-              ]
+              ],
+              "description": "The type of the preference (Firefox 123, Firefox ESR 115.8). This is especially useful if you are seeing 0 or 1 values being converted to booleans when set as user preferences."
             }
           }
         }
       },
       "description": "Set and lock preferences.",
-      "x-help": "**NOTE** On Windows, in order to use this policy, you must clear all settings in the old **Preferences (Deprecated)** section in group policy.\n\nPreviously you could only set and lock a subset of preferences. Starting with Firefox 81 and Firefox ESR 78.3 you can set many more preferences. You can also set default preferences, user preferences and you can clear preferences.\n\n**NOTE** There are too many preferences for us to provide documentation on them all. The source file [StaticPrefList.yaml](https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml) contains information on many of them.\n\nUsing the preference as the key, set the `Value` to the corresponding preference value.\n\n`Status` can be \"default\", \"locked\", \"user\" or \"clear\"\n\n* `\"default\"`: Read/Write: Settings appear as default even if factory default differs.\n* `\"locked\"`: Read-Only: Settings appear as default even if factory default differs.\n* `\"user\"`: Read/Write: Settings appear as changed if it differs from factory default.\n* `\"clear\"`: Read/Write: `Value` has no effect. Resets to factory defaults on each startup.\n\n`\"user\"` preferences persist across invocations of Firefox. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy. An example of this is ```toolkit.legacyUserProfileCustomizations.stylesheets```.\n\n`\"user\"` preferences persist even if the policy is removed, so if you need to remove them, you should use the clear policy.\n\nYou can also set the `Type` starting in Firefox 123 and Firefox ESR 115.8. It can be `number`, `boolean` or `string`. This is especially useful if you are seeing 0 or 1 values being converted to booleans when set as user preferences.\n\nSee the examples below for more detail.\n\nIMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.\n\nStatus",
+      "x-help": "**NOTE** On Windows, in order to use this policy, you must clear all settings in the old **Preferences (Deprecated)** section in group policy.\n\nPreviously you could only set and lock a subset of preferences. Starting with Firefox 81 and Firefox ESR 78.3 you can set many more preferences. You can also set default preferences, user preferences and you can clear preferences.\n\n**NOTE** There are too many preferences for us to provide documentation on them all. The source file [StaticPrefList.yaml](https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml) contains information on many of them.\n\n`\"user\"` preferences persist across invocations of Firefox. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy. An example of this is ```toolkit.legacyUserProfileCustomizations.stylesheets```.\n\n`\"user\"` preferences persist even if the policy is removed, so if you need to remove them, you should use the clear policy.\n\nSee the examples below for more detail.\n\nIMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.",
       "examples": [
         {
           "accessibility.force_disabled": {
@@ -2777,29 +2843,36 @@
               "description": "Use the proxy auto-configuration file at `AutoConfigURL`."
             }
           ],
-          "title": "Connection Type"
+          "title": "Connection Type",
+          "description": "The proxy method being used."
         },
         "Locked": {
           "type": "boolean",
-          "title": "Do not allow proxy settings to be changed"
+          "title": "Do not allow proxy settings to be changed",
+          "description": "Whether or not proxy settings can be changed."
         },
         "AutoConfigURL": {
           "type": "URLorEmpty",
-          "title": "Automatic proxy configuration URL"
+          "title": "Automatic proxy configuration URL",
+          "description": "A URL for proxy configuration (only used if Mode is autoConfig)."
         },
         "FTPProxy": {
-          "type": "string"
+          "type": "string",
+          "description": "The FTP proxy server."
         },
         "HTTPProxy": {
           "type": "string",
-          "title": "HTTP Proxy"
+          "title": "HTTP Proxy",
+          "description": "The HTTP proxy server."
         },
         "SSLProxy": {
           "type": "string",
-          "title": "HTTPS Proxy"
+          "title": "HTTPS Proxy",
+          "description": "The SSL proxy server."
         },
         "SOCKSProxy": {
-          "type": "string"
+          "type": "string",
+          "description": "The SOCKS proxy server."
         },
         "SOCKSVersion": {
           "type": "number",
@@ -2818,19 +2891,23 @@
               "title": "SOCKS v5",
               "description": "Use version 5 of the SOCKS protocol to reach `SOCKSProxy`."
             }
-          ]
+          ],
+          "description": "The SOCKS version (4 or 5)."
         },
         "UseHTTPProxyForAllProtocols": {
           "type": "boolean",
-          "title": "Use HTTP proxy for HTTPS"
+          "title": "Use HTTP proxy for HTTPS",
+          "description": "Whether or not the HTTP proxy should be used for all other proxies."
         },
         "Passthrough": {
           "type": "string",
-          "title": "Proxy Passthrough"
+          "title": "Proxy Passthrough",
+          "description": "A list of hostnames or IP addresses that will not be proxied. Use `<local>` to bypass proxying for all hostnames which do not contain periods."
         },
         "UseProxyForDNS": {
           "type": "boolean",
-          "title": "Proxy DNS when using SOCKS"
+          "title": "Proxy DNS when using SOCKS",
+          "description": "Use proxy DNS when using SOCKS v5."
         },
         "AutoLogin": {
           "type": "boolean",
@@ -2839,7 +2916,7 @@
       },
       "title": "Proxy Settings",
       "description": "Configure proxy settings.",
-      "x-help": "These settings correspond to the connection settings in Firefox preferences.\nTo specify ports, append them to the hostnames with a colon (:).\n\nUnless you lock this policy, changes the user already has in place will take effect.\n\n`Mode` is the proxy method being used.\n\n`Locked` is whether or not proxy settings can be changed.\n\n`HTTPProxy` is the HTTP proxy server.\n\n`UseHTTPProxyForAllProtocols` is whether or not the HTTP proxy should be used for all other proxies.\n\n`SSLProxy` is the SSL proxy server.\n\n`FTPProxy` is the FTP proxy server.\n\n`SOCKSProxy` is the SOCKS proxy server\n\n`SOCKSVersion` is the SOCKS version (4 or 5)\n\n`Passthrough` is list of hostnames or IP addresses that will not be proxied. Use `<local>` to bypass proxying for all hostnames which do not contain periods.\n\n`AutoConfigURL` is a  URL for proxy configuration (only used if Mode is autoConfig).\n\n`AutoLogin` means do not prompt for authentication if password is saved.\n\n`UseProxyForDNS` to use proxy DNS when using SOCKS v5.",
+      "x-help": "These settings correspond to the connection settings in Firefox preferences.\nTo specify ports, append them to the hostnames with a colon (:).\n\nUnless you lock this policy, changes the user already has in place will take effect.",
       "examples": [
         {
           "Mode": "autoConfig",
@@ -2912,14 +2989,18 @@
         },
         "Downloads": {
           "type": "boolean",
-          "title": "Download History"
+          "title": "Download History",
+          "description": "Part of History.",
+          "x-deprecated": true
         },
         "FormData": {
           "type": "boolean",
-          "title": "Form Data"
+          "title": "Form Data",
+          "description": "Form History."
         },
         "History": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Browsing History, Download History."
         },
         "Sessions": {
           "type": "boolean",
@@ -2931,15 +3012,18 @@
         },
         "OfflineApps": {
           "type": "boolean",
-          "title": "Offline Website Data"
+          "title": "Offline Website Data",
+          "description": "Part of Cookies.",
+          "x-deprecated": true
         },
         "Locked": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Prevents the user from changing these preferences."
         }
       },
       "title": "Clear data when browser is closed",
       "description": "Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.",
-      "x-help": "Clear data on shutdown.\n\nNote: Starting with Firefox 136, FormData and History have been separated again.\n\n`Cache`\n\n`Cookies`\n\n`Downloads` Download History (*Deprecated - part of History*)\n\n`FormData` Form History\n\n`History` Browsing History, Download History\n\n`Sessions` Active Logins\n\n`SiteSettings` Site Preferences\n\n`OfflineApps` Offline Website Data (*Deprecated - part of Cookies*)\n\n`Locked` prevents the user from changing these preferences.",
+      "x-help": "Note: Starting with Firefox 136, FormData and History have been separated again.",
       "examples": [
         {
           "Cache": true,
@@ -3306,36 +3390,44 @@
       "properties": {
         "WhatsNew": {
           "type": "boolean",
-          "title": "What's New"
+          "title": "What's New",
+          "description": "Remove the \"What's New\" icon and menuitem.",
+          "x-deprecated": true
         },
         "ExtensionRecommendations": {
           "type": "boolean",
-          "title": "Extension Recommendations"
+          "title": "Extension Recommendations",
+          "description": "If false, don't recommend extensions while the user is visiting web pages."
         },
         "FeatureRecommendations": {
           "type": "boolean",
-          "title": "Feature Recommendations"
+          "title": "Feature Recommendations",
+          "description": "If false, don't recommend browser features."
         },
         "UrlbarInterventions": {
           "type": "boolean",
-          "title": "Urlbar Interventions"
+          "title": "Urlbar Interventions",
+          "description": "If false, don't offer Firefox specific suggestions in the URL bar."
         },
         "SkipOnboarding": {
           "type": "boolean",
-          "title": "Skip Onboarding"
+          "title": "Skip Onboarding",
+          "description": "If true, don't show onboarding messages on the new tab page."
         },
         "MoreFromMozilla": {
           "type": "boolean",
-          "title": "More from Mozilla"
+          "title": "More from Mozilla",
+          "description": "If false, don't show the \"More from Mozilla\" section in Preferences. (Firefox 98)."
         },
         "Locked": {
           "type": "boolean",
-          "title": "Do not allow user messaging preferences to be changed"
+          "title": "Do not allow user messaging preferences to be changed",
+          "description": "Prevents the user from changing user messaging preferences."
         }
       },
       "title": "User Messaging",
       "description": "Prevent Firefox from messaging the user in certain situations.",
-      "x-help": "`WhatsNew` Remove the \"What's New\" icon and menuitem. (*Deprecated*)\n\n`ExtensionRecommendations` If false, don't recommend extensions while the user is visiting web pages.\n\n`FeatureRecommendations` If false, don't recommend browser features.\n\n`UrlbarInterventions` If false, don't offer Firefox specific suggestions in the URL bar.\n\n`SkipOnboarding` If true, don't show onboarding messages on the new tab page.\n\n`MoreFromMozilla` If false, don't show the \"More from Mozilla\" section in Preferences. (Firefox 98)\n\n`FirefoxLabs` If false, don't show the \"Firefox Labs\" section in Preferences. (Firefox 130.0.1)\n\n`Locked` prevents the user from changing user messaging preferences.",
+      "x-help": "`FirefoxLabs` If false, don't show the \"Firefox Labs\" section in Preferences. (Firefox 130.0.1)",
       "examples": [
         {
           "ExtensionRecommendations": false,
