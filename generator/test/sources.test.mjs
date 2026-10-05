@@ -6,7 +6,8 @@ import pathUtils from "node:path";
 import { test } from "node:test";
 import { promisify } from "node:util";
 
-import { LocalGitSource, WORKING_TREE, createSources } from "../modules/sources.mjs";
+import { GitHubSource, LocalGitSource, WORKING_TREE, createSources } from "../modules/sources.mjs";
+import { setDownloadCacheFile } from "../modules/tools.mjs";
 
 const execFileAsync = promisify(execFile);
 
@@ -55,6 +56,33 @@ test("--checkout is a local checkout of the product's repository, with no other 
         assert.ok(sources.app instanceof LocalGitSource);
         assert.deepEqual(Object.keys(sources).sort(), ["app", "mozilla", "product"]);
     } finally {
+        await fs.rm(dir, { recursive: true });
+    }
+});
+
+test("the history of a file is cached by the commit which last changed it, not by the head of the branch", async () => {
+    const dir = await fs.mkdtemp(pathUtils.join(os.tmpdir(), "cache-"));
+    const realFetch = globalThis.fetch;
+    const requests = [];
+    setDownloadCacheFile(pathUtils.join(dir, "cache.json"));
+    // The file was last changed in "c2", both heads come after it.
+    globalThis.fetch = async url => {
+        requests.push(url);
+        const query = new URL(url).searchParams;
+        const body = query.get("per_page") == "1" ? [{ sha: "c2" }] : [{ sha: "c2" }, { sha: "c1" }];
+        assert.ok(query.get("per_page") == "1" || query.get("sha") == "c2");
+        return new Response(JSON.stringify(body), { status: 200 });
+    };
+    try {
+        const source = new GitHubSource("example/repo");
+        assert.deepEqual(await source.getFileHistory("head1", "schema.json"), ["c2", "c1"]);
+        assert.deepEqual(await source.getFileHistory("head2", "schema.json"), ["c2", "c1"]);
+        // The full history is requested once, then only the last change.
+        assert.equal(requests.filter(url => new URL(url).searchParams.get("per_page") != "1").length, 1);
+        assert.equal(requests.length, 3);
+    } finally {
+        globalThis.fetch = realFetch;
+        setDownloadCacheFile(undefined);
         await fs.rm(dir, { recursive: true });
     }
 });

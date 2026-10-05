@@ -168,7 +168,7 @@ export class LocalGitSource {
  * branches and commits is requested from the GitHub API, files are downloaded
  * from raw.githubusercontent.com. Files and histories are cached, as the content
  * and the history of a file at a given commit never change. Only the list of
- * branches is requested on each run.
+ * branches and the commit which last changed a file are requested on each run.
  */
 export class GitHubSource {
     // Map of branch names to their commits, requested once.
@@ -237,8 +237,16 @@ export class GitHubSource {
     }
 
     async getFileHistory(commit, path) {
-        // The history of a given commit never changes and can be cached.
-        const query = `/commits?sha=${commit}&path=${encodeURIComponent(path)}`;
+        // The commit which last changed the file is requested on each run.
+        // The history up to it never changes and is cached, so it is only
+        // requested again when the file changes, not with each new commit of
+        // the branch.
+        const file = encodeURIComponent(path);
+        const [last] = await this.#api(`/commits?sha=${commit}&path=${file}&per_page=1`) ?? [];
+        if (!last) {
+            return [];
+        }
+        const query = `/commits?sha=${last.sha}&path=${file}`;
         const history = await readCachedValue(
             `${GITHUB_API_URL}/repos/${this.repository}${query}`,
             async () => JSON.stringify((await this.#apiAllPages(query)).map(e => e.sha))
