@@ -145,11 +145,11 @@ export function renderSettingTree(tree) {
 
 /**
  * Render the docs sections (see deriveSections()): per section its line in
- * the table of contents (its description) and its content, whose heading is
- * the name of the section followed by its title, if it adds to the name (see
- * isNewTitle()). A heading with
- * a title gets the id of the heading without it ({#…}, kramdown), so the
- * anchors don't depend on the titles.
+ * the table of contents ("Title: description") and its content, whose heading
+ * is the name of the section followed by its title. Both show the title only
+ * if it adds to the name (see isNewTitle()). A heading with a title gets the
+ * id of the heading without it ({#…}, kramdown), so the anchors don't depend
+ * on the titles, see getPolicyAnchor().
  *
  * @param {Object<string, Object>} policies - The sections by name.
  * @returns {Object<string, {toc: string, content: string[]}>}
@@ -159,7 +159,10 @@ export function generateReadmeMarkdown(policies) {
     const readmeData = {}
     for (let [key, value] of Object.entries(policies)) {
         readmeData[key] = {}
-        const summary = escape_pipes((value.summary ?? "").replace(/\s*\n\s*/g, " "));
+        const summary = escape_pipes([
+            isNewTitle(value.title, key) ? value.title : null,
+            value.summary?.replace(/\s*\n\s*/g, " "),
+        ].filter(Boolean).join(": "));
         readmeData[key].toc = `| **[\`${key.replaceAll("_", " -> ")
             }\`](#${getPolicyAnchor(key, value.title)})** | ${value.deprecated ? "**Deprecated.** " : ""}${summary}`;
 

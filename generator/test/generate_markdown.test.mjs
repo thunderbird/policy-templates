@@ -139,7 +139,7 @@ test("a setting with a title shows it after its type, unless it only repeats the
     assert.ok(lines.includes("`AllowNonFQDN` (object)"));
 });
 
-test("the table of contents shows the description, the heading the title", () => {
+test("the table of contents shows the title and the description, the heading the title", () => {
     const section = (fields) => ({ description: "", settingTree: { choices: null, children: [] }, json: null, gpo: [], plist: null, ...fields });
     const data = generateReadmeMarkdown({
         AppAutoUpdate: section({ title: "Automatic updates", summary: "Enable automatic updates.", description: "Enable automatic updates.\n\nMore." }),
@@ -149,12 +149,12 @@ test("the table of contents shows the description, the heading the title", () =>
         "3rdparty": section({ title: "Policies for Extensions", summary: "Managed storage." }),
         DisableTelemetry: section({ title: "Disable Telemetry", summary: "No telemetry." }),
     });
-    assert.equal(data.AppAutoUpdate.toc, "| **[`AppAutoUpdate`](#appautoupdate)** | Enable automatic updates.");
+    assert.equal(data.AppAutoUpdate.toc, "| **[`AppAutoUpdate`](#appautoupdate)** | Automatic updates: Enable automatic updates.");
     assert.equal(data.AppAutoUpdate.content[0], "## AppAutoUpdate: Automatic updates {#appautoupdate}");
     // kramdown ids must start with a letter, else the anchor is the one
     // kramdown generates from the whole heading.
     assert.equal(data["3rdparty"].content[0], "## 3rdparty: Policies for Extensions");
-    assert.equal(data["3rdparty"].toc, "| **[`3rdparty`](#3rdparty-policies-for-extensions)** | Managed storage.");
+    assert.equal(data["3rdparty"].toc, "| **[`3rdparty`](#3rdparty-policies-for-extensions)** | Policies for Extensions: Managed storage.");
     // Without a title, the heading is the name, and its anchor is the same.
     assert.equal(data.SearchEngines_Add.toc, "| **[`SearchEngines -> Add`](#searchengines--add)** | Add search engines \\| more.");
     assert.equal(data.SearchEngines_Add.content[0], "## SearchEngines | Add");
@@ -162,6 +162,7 @@ test("the table of contents shows the description, the heading the title", () =>
     // A title which only repeats the name is left out.
     assert.equal(data.Cookies.content[0], "## Cookies");
     assert.equal(data.DisableTelemetry.content[0], "## DisableTelemetry");
+    assert.equal(data.DisableTelemetry.toc, "| **[`DisableTelemetry`](#disabletelemetry)** | No telemetry.");
 });
 
 test("each CCK2 equivalent and each preference affected is shown as inline code", () => {
