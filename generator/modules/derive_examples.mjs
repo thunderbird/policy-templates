@@ -1,6 +1,6 @@
 import { CATCH_ALL_PATTERN, OPEN_NAME } from "./compatibility.mjs";
 import {
-    getExamples, getPolicyData, getSchemaSettings, getSettingTree, hasFormat, withoutTrailingPeriod,
+    getExamples, getPolicyData, getSchemaSettings, getSettingTree, hasFormat, isJsonList, withoutTrailingPeriod,
 } from "./schema_settings.mjs";
 
 // The fields of a docs section which are taken from the schema node of the
@@ -89,8 +89,11 @@ class SchemaPath {
         return names;
     }
 
+    // A JSON value, or a list which the ADMX template offers as one JSON value
+    // (see isJsonList()).
     get isJson() {
-        return this.node?.contentMediaType == "application/json" || this.node?.type == "JSON";
+        return this.node?.contentMediaType == "application/json" || this.node?.type == "JSON"
+            || isJsonList(this.schema, this.node);
     }
 }
 

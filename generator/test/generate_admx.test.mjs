@@ -623,3 +623,42 @@ test("a setting name with other characters than letters, digits and _ is an erro
     assert.match(admx, /<policy name="Json" /);
     assert.match(admx, /<policy name="Open" /);
 });
+
+test("a list of objects whose entries hold a list or an object is one JSON value, not numbered sets", async () => {
+    const { admx, adml } = await generate(
+        {
+            properties: {
+                Sites: {
+                    type: "array",
+                    description: "Policies for sites.",
+                    items: {
+                        type: "object",
+                        properties: {
+                            Match: { type: "array", items: { type: "string" }, description: "The sites." },
+                            Policies: {
+                                type: "object",
+                                description: "The policies.",
+                                properties: { Jit: { type: "boolean", description: "Disable the JIT." } },
+                            },
+                        },
+                    },
+                },
+                Flat: {
+                    type: "array",
+                    description: "Flat entries.",
+                    items: { type: "object", properties: { Name: { type: "string" }, Url: { type: "string" } } },
+                },
+            },
+        },
+        ["Sites", "Flat"]
+    );
+    assert.match(admx, /<policy name="Sites" [^>]*key="Software\\Policies\\Example\\Product"/);
+    assert.match(admx, /<multiText id="Sites_Input" valueName="Sites"/);
+    assert.doesNotMatch(admx, /<policy name="Sites_1"/);
+    assert.equal(
+        string(adml, "Sites_Explain"),
+        `Policies for sites.\n\nThe whole list is one value, as JSON.\n\nMatch: The sites.\nPolicies: The policies.\n  Jit: Disable the JIT.\n\n${docsLink("sites")}\n`
+    );
+    // A list of objects with plain settings stays numbered sets.
+    assert.match(admx, /<policy name="Flat_1"/);
+});

@@ -27,9 +27,9 @@ import pathUtils from "node:path";
  * @param {boolean} [texts.deprecated]
  * @param {boolean} [texts.expandEnvVars] - Whether Windows expands environment
  *    variables in the value ("x-expand-env-vars").
- * @param {Object} [texts.fields] - The node of a JSON value, or of a list of
- *    JSON values, in the tree of the policy (see getSettingTree()), whose
- *    fields are listed.
+ * @param {Object} [texts.fields] - The node of a JSON value, of a list of
+ *    JSON values, or of a list entered as one JSON value, in the tree of the
+ *    policy (see getSettingTree()), whose fields are listed.
  * @param {boolean} [texts.link] - Whether to link to the documentation.
  * @param {string} branchDocsUrl - The URL of the documentation of the branch,
  *    see getPolicyDocsUrl().
@@ -42,9 +42,12 @@ export function getExplainText(name, { help, deprecated, expandEnvVars, fields, 
         text = `${text.trimEnd()}\n\nEnvironment variables like %USERPROFILE% are expanded.\n`;
     }
     // A JSON value is entered as text, so its fields are listed. A list of
-    // JSON values has one value per line.
+    // JSON values has one value per line, a list entered as one JSON value
+    // (see isJsonList()) holds all entries.
     if (fields?.jsonEntries) {
         text = `${text.trimEnd()}\n\nEach line of the list is one entry, as JSON.\n`;
+    } else if (fields?.jsonList) {
+        text = `${text.trimEnd()}\n\nThe whole list is one value, as JSON.\n`;
     }
     const fieldLines = fields ? getFieldLines(fields, "") : [];
     if (fieldLines.length) {
@@ -291,7 +294,7 @@ class ADM_BUILDER {
             help: help ?? "",
             deprecated,
             expandEnvVars: !!setting?.expandEnvVars || controls.some(control => control.type == "REG_EXPAND_SZ"),
-            fields: treeNode?.json || treeNode?.jsonEntries ? treeNode : undefined,
+            fields: treeNode?.json || treeNode?.jsonEntries || treeNode?.jsonList ? treeNode : undefined,
             link: true,
         }, context.docsUrl);
         const controlTexts = controls

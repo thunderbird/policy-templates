@@ -92,6 +92,15 @@ test("a control which refers to an element of another type", async () => {
     }), [/<checkBox refId="Homepage_Input">.*refers to a <text> element.*expected <boolean>/]);
 });
 
+test("two elements of a policy with the same id", async () => {
+    assertProblems(await validateChanged({
+        admx: [[
+            `<text id="Homepage_Input" valueName="Homepage"/>`,
+            `<text id="Homepage_Input" valueName="Homepage"/>\n        <text id="Homepage_Input" valueName="Other"/>`,
+        ]],
+    }), [/Policy "Homepage" has two elements with the id "Homepage_Input"/]);
+});
+
 test("an element without control", async () => {
     assertProblems(await validateChanged({
         adml: [[`<listBox refId="Allow_List">Allow</listBox>`, ""]],

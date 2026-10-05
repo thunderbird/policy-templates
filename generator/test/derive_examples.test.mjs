@@ -303,3 +303,27 @@ test("a setting with several forms has an example of each form, the one with the
         { key: `${BASE_KEY}\\Menu`, type: "REG_DWORD", value: "0x1" },
     ]);
 });
+
+test("the Windows example of a list which the ADMX template offers as one JSON value is one REG_MULTI_SZ value", () => {
+    const schema = {
+        properties: {
+            Sites: {
+                type: "array",
+                description: "Policies for sites.",
+                items: {
+                    type: "object",
+                    properties: {
+                        Match: { type: "array", items: { type: "string" }, examples: [["*.example.com"]] },
+                        Policies: { type: "object", properties: { Jit: { type: "boolean" } } },
+                    },
+                },
+            },
+        },
+    };
+    const sections = deriveSections(schema, L10N, BASE_KEY);
+    assert.deepEqual(sections.Sites.gpo, [{
+        key: `${BASE_KEY}\\Sites`,
+        type: "REG_MULTI_SZ",
+        value: `[\n  {\n    "Match": ["*.example.com"],\n    "Policies": {\n      "Jit": true\n    }\n  }\n]`,
+    }]);
+});

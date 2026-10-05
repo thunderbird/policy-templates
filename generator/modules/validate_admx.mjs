@@ -152,6 +152,15 @@ function checkReferences(admxName, admx, admlName, adml) {
     }
     for (const policy of policies) {
         const name = policy.getAttribute("name");
+        // Each element of a policy needs an id of its own, which its control
+        // and its registry value are found by.
+        const ids = children(policy)
+            .filter(e => e.localName == "elements")
+            .flatMap(children)
+            .map(e => e.getAttribute("id"));
+        for (const id of duplicates(ids)) {
+            problem(admxName, `Policy "${name}" has two elements with the id "${id}".`);
+        }
         const policyElements = new Map(
             children(policy)
                 .filter(e => e.localName == "elements")

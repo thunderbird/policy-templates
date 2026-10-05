@@ -193,6 +193,32 @@ export function getKindLabel(kind) {
 }
 
 /**
+ * Whether a setting is a list which the ADMX template can only offer as one
+ * JSON value: a list of objects (which are no JSON values themselves) where a
+ * setting of an entry holds a list, an object or a JSON value (also as one of
+ * its forms, see getForms()). Numbered sets of the settings of the entries
+ * can't represent these. The whole list is then entered as JSON in a
+ * multi-line box (REG_MULTI_SZ), which the registry reader of the policy engine
+ * parses as JSON for any setting.
+ *
+ * @param {Object} schema - The schema, to resolve $refs.
+ * @param {Object} node - The node of the setting, resolved.
+ * @returns {boolean}
+ */
+export function isJsonList(schema, node) {
+    const types = node?.type ? [node.type].flat() : [];
+    if (!types.includes("array") || !node.items || isJsonNode(node)) {
+        return false;
+    }
+    const item = resolveRef(schema, node.items);
+    if (!item?.properties || isJsonNode(item)) {
+        return false;
+    }
+    return Object.values(item.properties).some(child => getForms(schema, resolveRef(schema, child))
+        .some(form => ["List", "Object", "Json"].includes(form.kind)));
+}
+
+/**
  * A setting of the policy schema of a branch (see loadBranch()).
  */
 class SchemaSetting {
@@ -415,7 +441,9 @@ export function getSchemaSettings(schema, policyName, l10n) {
             return;
         }
 
-        if (setting.isJson) {
+        // A JSON value, and a list which can only be entered as one JSON value
+        // (see isJsonList()).
+        if (setting.isJson || isJsonList(setting.schema, setting.node)) {
             entry("REG_MULTI_SZ", "");
             return;
         }
@@ -646,6 +674,9 @@ export function getSettingTree(schema, policyName, l10n) {
             // A list whose entries are JSON values (one per line in the ADMX
             // template).
             jsonEntries: container != setting && container.isJson,
+            // A list which the ADMX template offers as one JSON value, see
+            // isJsonList().
+            jsonList: isJsonList(schema, node),
             // Whether the setting accepts several forms, see getForms().
             severalForms: forms.length > 1,
             choices,
