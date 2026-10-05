@@ -2,5 +2,7 @@ node_modules
 download_cache.json
 # Local editor settings.
 .vscode/
+# Local notes, not published.
+*.md
 # The temporary build folders of update_all_policy_templates.js (<output>.temp).
 *.temp/
