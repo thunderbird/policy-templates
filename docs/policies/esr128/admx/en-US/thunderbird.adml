@@ -7,7 +7,7 @@
       <string id="3rdparty_Extensions">Managed storage of extensions</string>
       <string id="3rdparty_Extensions_Explain">The managed storage of each extension, one JSON object per extension ID, which the extension reads with browser.storage.managed.
 
-For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#3rdparty
+For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#3rdparty-policies-for-extensions
 </string>
       <string id="AppAutoUpdate">Automatic updates</string>
       <string id="AppAutoUpdate_Explain">Enable or disable automatic application update.
@@ -113,8 +113,8 @@ Detect captive portals, the login pages of networks in hotels or airports which 
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#captiveportal
 </string>
-      <string id="Certificates_Install">Install certificates into the Thunderbird certificate store</string>
-      <string id="Certificates_Install_Explain">Install certificates into the Thunderbird certificate store.
+      <string id="Certificates_Install">Certificates to install</string>
+      <string id="Certificates_Install_Explain">Adds certificates to the Thunderbird certificate store.
 
 If only a filename is specified, Thunderbird searches for the file in the following locations:
 
@@ -141,7 +141,7 @@ Environment variables like %USERPROFILE% are expanded.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#certificates
 </string>
-      <string id="Certificates_ImportEnterpriseRoots">Trust certificates that have been added to the operating system certificate store by a user or administrator</string>
+      <string id="Certificates_ImportEnterpriseRoots">Certificates of the operating system</string>
       <string id="Certificates_ImportEnterpriseRoots_Explain">Trust certificates that have been added to the operating system certificate store by a user or administrator.
 
 Note: This policy only works on Windows and macOS. For Linux discussion, see bug 1600509 (https://bugzilla.mozilla.org/show_bug.cgi?id=1600509).
@@ -151,12 +151,12 @@ See https://support.mozilla.org/kb/setting-certificate-authorities-firefox for m
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#certificates
 </string>
       <string id="Cookies_Allow">Sites which may always set cookies</string>
-      <string id="Cookies_Allow_Explain">A list of origins (not domains) where cookies are always allowed. You must include http or https.
+      <string id="Cookies_Allow_Explain">Cookies are always allowed for these origins (not domains). Each must include http or https.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#cookies
 </string>
       <string id="Cookies_Block">Sites which may never set cookies</string>
-      <string id="Cookies_Block_Explain">A list of origins (not domains) where cookies are always blocked. You must include http or https.
+      <string id="Cookies_Block_Explain">Cookies are always blocked for these origins (not domains). Each must include http or https.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#cookies
 </string>
@@ -400,7 +400,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#dnsoverhttps
 </string>
       <string id="DNSOverHTTPS_ProviderURL">DNS over HTTPS provider</string>
-      <string id="DNSOverHTTPS_ProviderURL_Explain">The URL of another DNS over HTTPS provider.
+      <string id="DNSOverHTTPS_ProviderURL_Explain">Replaces the default provider.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#dnsoverhttps
 </string>
@@ -419,19 +419,19 @@ Environment variables like %USERPROFILE% are expanded.
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#downloaddirectory
 </string>
       <string id="Extensions_Install">Extensions to install</string>
-      <string id="Extensions_Install_Explain">A list of URLs or native paths of extensions to be installed.
+      <string id="Extensions_Install_Explain">Each is given as URL or native path.
 
 Environment variables like %USERPROFILE% are expanded.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#extensions
 </string>
       <string id="Extensions_Uninstall">Extensions to uninstall</string>
-      <string id="Extensions_Uninstall_Explain">A list of extension IDs which are uninstalled if found.
+      <string id="Extensions_Uninstall_Explain">Each is given by its ID, and only uninstalled if it is installed.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#extensions
 </string>
       <string id="Extensions_Locked">Extensions which can't be disabled or removed</string>
-      <string id="Extensions_Locked_Explain">A list of extension IDs which the user can't disable or uninstall.
+      <string id="Extensions_Locked_Explain">Extensions the user can't disable or uninstall, by their IDs.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#extensions
 </string>
@@ -509,7 +509,7 @@ Control hardware acceleration.
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#hardwareacceleration
 </string>
       <string id="InstallAddonsPermission_Allow">Sites allowed to install extensions</string>
-      <string id="InstallAddonsPermission_Allow_Explain">A list of origins where extension installs are allowed.
+      <string id="InstallAddonsPermission_Allow_Explain">Extension installs are allowed for these origins.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#installaddonspermission
 </string>
@@ -675,7 +675,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#proxy
 </string>
       <string id="Proxy_AutoConfigURL">Automatic proxy configuration URL</string>
-      <string id="Proxy_AutoConfigURL_Explain">The URL of a proxy configuration file (only used if the proxy method is autoConfig).
+      <string id="Proxy_AutoConfigURL_Explain">Only used if the proxy method is autoConfig.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#proxy
 </string>
@@ -724,7 +724,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#proxy
 </string>
       <string id="Proxy_AutoLogin">Don't prompt for authentication if the password is saved</string>
-      <string id="Proxy_AutoLogin_Explain">Don't prompt for authentication if the password is saved. If the proxy requires authentication and its password is saved, Thunderbird logs in without asking. If that login fails, the user is asked again.
+      <string id="Proxy_AutoLogin_Explain">If the proxy requires authentication and its password is saved, Thunderbird logs in without asking. If that login fails, the user is asked again.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#proxy
 </string>
@@ -746,8 +746,8 @@ Note: This policy can also be a string, so that you can specify an empty value.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#requestedlocales
 </string>
-      <string id="SearchEngines_Add_1">Add new search engines (1)</string>
-      <string id="SearchEngines_Add_1_Explain">Add new search engines.
+      <string id="SearchEngines_Add_1">New search engines (1)</string>
+      <string id="SearchEngines_Add_1_Explain">Adds search engines to the built-in ones.
 
 Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
 
@@ -755,7 +755,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 Name: The name of the search engine (required).
 
-Icon URL: A URL for the icon to use.
+Icon URL: The icon to use.
 
 Alias: A keyword to use for the engine.
 
@@ -773,8 +773,8 @@ Suggestions URL: A search suggestions URL with {searchTerms} to substitute for t
 </string>
       <string id="SearchEngines_Add_1_Method_GET">GET</string>
       <string id="SearchEngines_Add_1_Method_POST">POST</string>
-      <string id="SearchEngines_Add_2">Add new search engines (2)</string>
-      <string id="SearchEngines_Add_2_Explain">Add new search engines.
+      <string id="SearchEngines_Add_2">New search engines (2)</string>
+      <string id="SearchEngines_Add_2_Explain">Adds search engines to the built-in ones.
 
 Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
 
@@ -782,7 +782,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 Name: The name of the search engine (required).
 
-Icon URL: A URL for the icon to use.
+Icon URL: The icon to use.
 
 Alias: A keyword to use for the engine.
 
@@ -800,8 +800,8 @@ Suggestions URL: A search suggestions URL with {searchTerms} to substitute for t
 </string>
       <string id="SearchEngines_Add_2_Method_GET">GET</string>
       <string id="SearchEngines_Add_2_Method_POST">POST</string>
-      <string id="SearchEngines_Add_3">Add new search engines (3)</string>
-      <string id="SearchEngines_Add_3_Explain">Add new search engines.
+      <string id="SearchEngines_Add_3">New search engines (3)</string>
+      <string id="SearchEngines_Add_3_Explain">Adds search engines to the built-in ones.
 
 Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
 
@@ -809,7 +809,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 Name: The name of the search engine (required).
 
-Icon URL: A URL for the icon to use.
+Icon URL: The icon to use.
 
 Alias: A keyword to use for the engine.
 
@@ -827,8 +827,8 @@ Suggestions URL: A search suggestions URL with {searchTerms} to substitute for t
 </string>
       <string id="SearchEngines_Add_3_Method_GET">GET</string>
       <string id="SearchEngines_Add_3_Method_POST">POST</string>
-      <string id="SearchEngines_Add_4">Add new search engines (4)</string>
-      <string id="SearchEngines_Add_4_Explain">Add new search engines.
+      <string id="SearchEngines_Add_4">New search engines (4)</string>
+      <string id="SearchEngines_Add_4_Explain">Adds search engines to the built-in ones.
 
 Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
 
@@ -836,7 +836,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 Name: The name of the search engine (required).
 
-Icon URL: A URL for the icon to use.
+Icon URL: The icon to use.
 
 Alias: A keyword to use for the engine.
 
@@ -854,8 +854,8 @@ Suggestions URL: A search suggestions URL with {searchTerms} to substitute for t
 </string>
       <string id="SearchEngines_Add_4_Method_GET">GET</string>
       <string id="SearchEngines_Add_4_Method_POST">POST</string>
-      <string id="SearchEngines_Add_5">Add new search engines (5)</string>
-      <string id="SearchEngines_Add_5_Explain">Add new search engines.
+      <string id="SearchEngines_Add_5">New search engines (5)</string>
+      <string id="SearchEngines_Add_5_Explain">Adds search engines to the built-in ones.
 
 Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
 
@@ -863,7 +863,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
 
 Name: The name of the search engine (required).
 
-Icon URL: A URL for the icon to use.
+Icon URL: The icon to use.
 
 Alias: A keyword to use for the engine.
 
@@ -881,29 +881,29 @@ Suggestions URL: A search suggestions URL with {searchTerms} to substitute for t
 </string>
       <string id="SearchEngines_Add_5_Method_GET">GET</string>
       <string id="SearchEngines_Add_5_Method_POST">POST</string>
-      <string id="SearchEngines_Remove">Hide built-in search engines</string>
-      <string id="SearchEngines_Remove_Explain">Hide built-in search engines.
+      <string id="SearchEngines_Remove">Hidden search engines</string>
+      <string id="SearchEngines_Remove_Explain">These built-in search engines are not offered to the user.
 
 The search engines are given by their names. They are hidden when the policy is applied for the first time and whenever the list changes.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#searchengines
 </string>
-      <string id="SearchEngines_Default">Set the default search engine</string>
-      <string id="SearchEngines_Default_Explain">Set the default search engine, which is used to search the web from Thunderbird.
+      <string id="SearchEngines_Default">Default search engine</string>
+      <string id="SearchEngines_Default_Explain">The search engine which is used to search the web from Thunderbird.
 
 The search engine is given by its name, either a built-in search engine or one added with Add. It is set when the policy is applied for the first time and whenever the name changes, so the user can choose another default search engine in the meantime.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#searchengines
 </string>
-      <string id="SearchEngines_DefaultPrivate">Set the default search engine for private browsing</string>
-      <string id="SearchEngines_DefaultPrivate_Explain">Set the default search engine for private browsing.
+      <string id="SearchEngines_DefaultPrivate">Default search engine for private browsing</string>
+      <string id="SearchEngines_DefaultPrivate_Explain">The search engine which is used in private browsing.
 
 This setting has no effect in Thunderbird.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/esr128/#searchengines
 </string>
-      <string id="SearchEngines_PreventInstalls">Prevent installing search engines from webpages</string>
-      <string id="SearchEngines_PreventInstalls_Explain">Prevent installing search engines from webpages.
+      <string id="SearchEngines_PreventInstalls">Prevent search engine installs</string>
+      <string id="SearchEngines_PreventInstalls_Explain">Webpages can't install search engines.
 
 This setting has no effect in Thunderbird.
 
@@ -953,7 +953,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
       <string id="cat_PDFjs">PDF.js</string>
       <string id="cat_Proxy">Proxy Settings</string>
       <string id="cat_SearchEngines">Search</string>
-      <string id="cat_SearchEngines_Add">Add new search engines</string>
+      <string id="cat_SearchEngines_Add">New search engines</string>
     </stringTable>
     <presentationTable>
       <presentation id="3rdparty_Extensions">
@@ -987,7 +987,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
         <checkBox refId="Authentication_AllowProxies_NTLM_Bool">Allow NTLM</checkBox>
       </presentation>
       <presentation id="Certificates_Install">
-        <listBox refId="Certificates_Install_List">Install certificates into the Thunderbird certificate store</listBox>
+        <listBox refId="Certificates_Install_List">Certificates to install</listBox>
       </presentation>
       <presentation id="Cookies_Allow">
         <listBox refId="Cookies_Allow_List">Sites which may always set cookies</listBox>
@@ -1220,7 +1220,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/polic
         </textBox>
       </presentation>
       <presentation id="SearchEngines_Remove">
-        <listBox refId="SearchEngines_Remove_List">Hide built-in search engines</listBox>
+        <listBox refId="SearchEngines_Remove_List">Hidden search engines</listBox>
       </presentation>
       <presentation id="SearchEngines_Default">
         <textBox refId="SearchEngines_Default_Input">

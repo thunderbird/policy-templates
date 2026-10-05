@@ -44,35 +44,35 @@ Installation:
 
 | Policy Name | Description
 |:--- |:--- |
-| **[`3rdparty`](#3rdparty)** | Provide configuration to WebExtensions, which they can read through the `storage.managed` API.
-| **[`AllowedDomainsForApps`](#alloweddomainsforapps)** | Define domains allowed to access Google Workspace.
+| **[`3rdparty`](#3rdparty-policies-for-extensions)** | Policies for Extensions: Provide configuration to WebExtensions, which they can read through the `storage.managed` API.
+| **[`AllowedDomainsForApps`](#alloweddomainsforapps)** | Define domains allowed to access Google Workspace: Users can only access Google Workspace with accounts from these domains.
 | **[`AllowFileSelectionDialogs`](#allowfileselectiondialogs)** | Enable or disable file selection dialogs.
-| **[`AppAutoUpdate`](#appautoupdate)** | Enable or disable automatic application update.
-| **[`AppUpdatePin`](#appupdatepin)** | Prevent Firefox from being updated beyond the specified version.
-| **[`AppUpdateURL`](#appupdateurl)** | Change the URL for application update if you are providing Firefox updates from a custom update server.
+| **[`AppAutoUpdate`](#appautoupdate)** | Application Autoupdate: Enable or disable automatic application update.
+| **[`AppUpdatePin`](#appupdatepin)** | Pin updates to a specific version: Prevent Firefox from being updated beyond the specified version.
+| **[`AppUpdateURL`](#appupdateurl)** | Custom Update URL: Change the URL for application update if you are providing Firefox updates from a custom update server.
 | **[`Authentication`](#authentication)** | Configure sites that support integrated authentication.
-| **[`AutofillAddressEnabled`](#autofilladdressenabled)** | Enables or disables autofill for addresses.
-| **[`AutofillCreditCardEnabled`](#autofillcreditcardenabled)** | Enables or disables autofill for payment methods.
+| **[`AutofillAddressEnabled`](#autofilladdressenabled)** | Enable autofill for addresses: Enables or disables autofill for addresses.
+| **[`AutofillCreditCardEnabled`](#autofillcreditcardenabled)** | Enable autofill for payment methods: Enables or disables autofill for payment methods.
 | **[`AutoLaunchProtocolsFromOrigins`](#autolaunchprotocolsfromorigins)** | Define a list of external protocols that can be used from listed origins without prompting the user.
-| **[`BackgroundAppUpdate`](#backgroundappupdate)** | Enable or disable automatic application update in the background, when the application is not running.
-| **[`BlockAboutAddons`](#blockaboutaddons)** | Block access to the Add-ons Manager ('about:addons').
-| **[`BlockAboutConfig`](#blockaboutconfig)** | Block access to 'about:config'.
-| **[`BlockAboutProfiles`](#blockaboutprofiles)** | Block access to About Profiles ('about:profiles').
-| **[`BlockAboutSupport`](#blockaboutsupport)** | Block access to Troubleshooting Information ('about:support').
-| **[`Bookmarks`](#bookmarks)** | Add bookmarks in either the bookmarks toolbar or menu. Use 'ManagedBookmarks' instead.
+| **[`BackgroundAppUpdate`](#backgroundappupdate)** | Background updater: Enable or disable automatic application update in the background, when the application is not running.
+| **[`BlockAboutAddons`](#blockaboutaddons)** | Block Add-ons Manager: Block access to the Add-ons Manager ('about:addons').
+| **[`BlockAboutConfig`](#blockaboutconfig)** | Block about:config: Block access to 'about:config'.
+| **[`BlockAboutProfiles`](#blockaboutprofiles)** | Block about:profiles: Block access to About Profiles ('about:profiles').
+| **[`BlockAboutSupport`](#blockaboutsupport)** | Block Troubleshooting Information: Block access to Troubleshooting Information ('about:support').
+| **[`Bookmarks`](#bookmarks)** | Add bookmarks in either the bookmarks toolbar or menu. Use `ManagedBookmarks` instead.
 | **[`CaptivePortal`](#captiveportal)** | Enable or disable the detection of captive portals.
 | **[`Certificates`](#certificates)** | Install and manage certificates.
-| **[`Certificates -> ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | Trust certificates that have been added to the operating system certificate store by a user or administrator.
-| **[`Certificates -> Install`](#certificates--install)** | Install certificates into the Firefox certificate store. If only a filename is specified, Firefox searches for the file in the following locations:
+| **[`Certificates › ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | Trust certificates that have been added to the operating system certificate store by a user or administrator.
+| **[`Certificates › Install`](#certificates--install)** | Install Certificates: Adds certificates to the Firefox certificate store.
 | **[`Containers`](#containers)** | Set policies related to Multi-Account Containers.
-| **[`ContentAnalysis`](#contentanalysis)** | Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
+| **[`ContentAnalysis`](#contentanalysis)** | Content Analysis (DLP): Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
 | **[`Cookies`](#cookies)** | Configure cookie preferences.
 | **[`DefaultDownloadDirectory`](#defaultdownloaddirectory)** | Set the default download directory.
 | **[`DisableAccounts`](#disableaccounts)** | Disable account-based services, including sync.
-| **[`DisableAppUpdate`](#disableappupdate)** | Turn off application updates within Firefox.
-| **[`DisableBuiltinPDFViewer`](#disablebuiltinpdfviewer)** | Disable the built in PDF viewer.
+| **[`DisableAppUpdate`](#disableappupdate)** | Disable Update: Turn off application updates within Firefox.
+| **[`DisableBuiltinPDFViewer`](#disablebuiltinpdfviewer)** | Disable Built-in PDF Viewer (PDF.js): Disable the built in PDF viewer.
 | **[`DisabledCiphers`](#disabledciphers)** | Disable specific cryptographic ciphers, listed below.
-| **[`DisableDefaultBrowserAgent`](#disabledefaultbrowseragent)** | Prevent the default browser agent from taking any actions.
+| **[`DisableDefaultBrowserAgent`](#disabledefaultbrowseragent)** | Disable the default browser agent: Prevent the default browser agent from taking any actions.
 | **[`DisableDeveloperTools`](#disabledevelopertools)** | Remove access to all developer tools.
 | **[`DisableEncryptedClientHello`](#disableencryptedclienthello)** | Disable the TLS Feature for Encrypted Client Hello.
 | **[`DisableFeedbackCommands`](#disablefeedbackcommands)** | Disable the menus for reporting sites (Submit Feedback, Report Deceptive Site).
@@ -82,83 +82,83 @@ Installation:
 | **[`DisableForgetButton`](#disableforgetbutton)** | Disable the "Forget" button.
 | **[`DisableFormHistory`](#disableformhistory)** | Turn off saving information on web forms and the search bar.
 | **[`DisableMasterPasswordCreation`](#disablemasterpasswordcreation)** | Remove the master password functionality.
-| **[`DisablePasswordReveal`](#disablepasswordreveal)** | Do not allow passwords to be shown in saved logins.
+| **[`DisablePasswordReveal`](#disablepasswordreveal)** | Hide passwords of saved logins: Do not allow passwords to be shown in saved logins.
 | **[`DisablePocket`](#disablepocket)** | Remove Pocket in the Firefox UI.
 | **[`DisablePrivateBrowsing`](#disableprivatebrowsing)** | Remove access to private browsing.
 | **[`DisableProfileImport`](#disableprofileimport)** | Remove the ability to import data from other browsers.
 | **[`DisableProfileRefresh`](#disableprofilerefresh)** | Disable the Refresh Firefox button on 'about:support' and 'support.mozilla.org', as well as the prompt that displays offering to refresh Firefox when you haven't used it in a while.
 | **[`DisableSafeMode`](#disablesafemode)** | Disable safe mode (Troubleshoot Mode) within the browser.
-| **[`DisableSecurityBypass`](#disablesecuritybypass)** | Prevent the user from bypassing security in certain cases.
+| **[`DisableSecurityBypass`](#disablesecuritybypass)** | Prevent Bypassing Security Warnings: Prevent the user from bypassing security in certain cases.
 | **[`DisableSetDesktopBackground`](#disablesetdesktopbackground)** | Remove the "Set As Desktop Background..." menuitem when right clicking on an image.
-| **[`DisableSystemAddonUpdate`](#disablesystemaddonupdate)** | Prevent system add-ons from being installed or updated.
+| **[`DisableSystemAddonUpdate`](#disablesystemaddonupdate)** | Disable System Addon Updates: Prevent system add-ons from being installed or updated.
 | **[`DisableTelemetry`](#disabletelemetry)** | Prevent the upload of telemetry data.
 | **[`DisableThirdPartyModuleBlocking`](#disablethirdpartymoduleblocking)** | Do not allow blocking third-party modules from the 'about:third-party' page.
 | **[`DisplayBookmarksToolbar`](#displaybookmarkstoolbar)** | Set the initial state of the bookmarks toolbar.
 | **[`DisplayMenuBar`](#displaymenubar)** | Set the state of the menubar.
 | **[`DNSOverHTTPS`](#dnsoverhttps)** | Configure DNS over HTTPS (DoH).
-| **[`DontCheckDefaultBrowser`](#dontcheckdefaultbrowser)** | Don't check if Firefox is the default browser at startup.
+| **[`DontCheckDefaultBrowser`](#dontcheckdefaultbrowser)** | Don't Check Default Browser: Don't check if Firefox is the default browser at startup.
 | **[`DownloadDirectory`](#downloaddirectory)** | Set and lock the download directory.
-| **[`EnableTrackingProtection`](#enabletrackingprotection)** | Configure tracking protection.
+| **[`EnableTrackingProtection`](#enabletrackingprotection)** | Tracking Protection: Configure tracking protection.
 | **[`EncryptedMediaExtensions`](#encryptedmediaextensions)** | Enable or disable Encrypted Media Extensions and optionally lock it.
-| **[`ExemptDomainFileTypePairsFromFileTypeDownloadWarnings`](#exemptdomainfiletypepairsfromfiletypedownloadwarnings)** | Disable warnings based on file extension for specific file types on domains.
+| **[`ExemptDomainFileTypePairsFromFileTypeDownloadWarnings`](#exemptdomainfiletypepairsfromfiletypedownloadwarnings)** | Disable warnings based on file extension for specific file types on domains: Downloads of these file types from these domains get no warnings based on their file extension.
 | **[`Extensions`](#extensions)** | Control the installation, uninstallation and locking of extensions.
-| **[`ExtensionSettings`](#extensionsettings)** | Manage all aspects of extensions.
+| **[`ExtensionSettings`](#extensionsettings)** | Extension Management: Manage all aspects of extensions.
 | **[`ExtensionUpdate`](#extensionupdate)** | Control extension updates.
 | **[`FirefoxHome`](#firefoxhome)** | Customize the Firefox Home page.
-| **[`FirefoxSuggest`](#firefoxsuggest)** | Customize Firefox Suggest (US only).
-| **[`GoToIntranetSiteForSingleWordEntryInAddressBar`](#gotointranetsiteforsinglewordentryinaddressbar)** | Whether to always go through the DNS server before sending a single word search string to a search engine.
+| **[`FirefoxSuggest`](#firefoxsuggest)** | Firefox Suggest (US only): Customize Firefox Suggest (US only).
+| **[`GoToIntranetSiteForSingleWordEntryInAddressBar`](#gotointranetsiteforsinglewordentryinaddressbar)** | Force direct intranet site navigation on single word entries in the address bar: Whether to always go through the DNS server before sending a single word search string to a search engine.
 | **[`Handlers`](#handlers)** | Configure default application handlers.
 | **[`HardwareAcceleration`](#hardwareacceleration)** | Control hardware acceleration.
 | **[`Homepage`](#homepage)** | Configure the default homepage and how Firefox starts.
 | **[`HttpAllowlist`](#httpallowlist)** | Configure sites that will not be upgraded to HTTPS.
-| **[`HttpsOnlyMode`](#httpsonlymode)** | Configure HTTPS-Only Mode.
-| **[`InstallAddonsPermission`](#installaddonspermission)** | Configure the default extension install policy as well as origins for extension installs are allowed.
+| **[`HttpsOnlyMode`](#httpsonlymode)** | HTTPS-Only Mode: Configure HTTPS-Only Mode.
+| **[`InstallAddonsPermission`](#installaddonspermission)** | Addons: Configure the default extension install policy as well as origins for extension installs are allowed.
 | **[`LegacyProfiles`](#legacyprofiles)** | Disable the feature enforcing a separate profile for each installation.
-| **[`LegacySameSiteCookieBehaviorEnabled`](#legacysamesitecookiebehaviorenabled)** | Enable default legacy SameSite cookie behavior setting.
-| **[`LegacySameSiteCookieBehaviorEnabledForDomainList`](#legacysamesitecookiebehaviorenabledfordomainlist)** | Revert to legacy SameSite behavior for cookies on specified sites.
+| **[`LegacySameSiteCookieBehaviorEnabled`](#legacysamesitecookiebehaviorenabled)** | Revert to legacy SameSite behavior: Enable default legacy SameSite cookie behavior setting.
+| **[`LegacySameSiteCookieBehaviorEnabledForDomainList`](#legacysamesitecookiebehaviorenabledfordomainlist)** | Domains with legacy SameSite behavior: Revert to legacy SameSite behavior for cookies on specified sites.
 | **[`LocalFileLinks`](#localfilelinks)** | Enable linking to local files by origin.
 | **[`ManagedBookmarks`](#managedbookmarks)** | Configures a list of bookmarks managed by an administrator that cannot be changed by the user.
-| **[`ManualAppUpdateOnly`](#manualappupdateonly)** | Switch to manual updates only.
+| **[`ManualAppUpdateOnly`](#manualappupdateonly)** | Manual Update Only: Switch to manual updates only.
 | **[`MicrosoftEntraSSO`](#microsoftentrasso)** | Allow single sign-on for Microsoft Entra accounts on macOS.
 | **[`NetworkPrediction`](#networkprediction)** | Enable or disable network prediction (DNS prefetching).
 | **[`NewTabPage`](#newtabpage)** | Enable or disable the New Tab page.
 | **[`NoDefaultBookmarks`](#nodefaultbookmarks)** | Disable the creation of default bookmarks.
 | **[`OfferToSaveLogins`](#offertosavelogins)** | Control whether or not Firefox offers to save passwords.
-| **[`OfferToSaveLoginsDefault`](#offertosaveloginsdefault)** | Sets the default value of 'signon.rememberSignons' without locking it.
-| **[`OverrideFirstRunPage`](#overridefirstrunpage)** | Override the first run page.
-| **[`OverridePostUpdatePage`](#overridepostupdatepage)** | Override the upgrade page.
-| **[`PasswordManagerEnabled`](#passwordmanagerenabled)** | Remove access to the password manager via preferences and blocks about:logins on Firefox 70.
+| **[`OfferToSaveLoginsDefault`](#offertosaveloginsdefault)** | Offer to save logins (default): Sets the default value of 'signon.rememberSignons' without locking it.
+| **[`OverrideFirstRunPage`](#overridefirstrunpage)** | Override the first run page: The page shown on the first run, instead of the built-in one.
+| **[`OverridePostUpdatePage`](#overridepostupdatepage)** | Override the upgrade page: The page shown after an upgrade, instead of the built-in one.
+| **[`PasswordManagerEnabled`](#passwordmanagerenabled)** | Password Manager: Remove access to the password manager via preferences and blocks about:logins on Firefox 70.
 | **[`PasswordManagerExceptions`](#passwordmanagerexceptions)** | Prevent Firefox from saving passwords for specific sites.
-| **[`PDFjs`](#pdfjs)** | Disable or configure PDF.js, the built-in PDF viewer.
+| **[`PDFjs`](#pdfjs)** | PDF.js: Disable or configure PDF.js, the built-in PDF viewer.
 | **[`Permissions`](#permissions)** | Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
-| **[`PictureInPicture`](#pictureinpicture)** | Enable or disable Picture-in-Picture as well as prevent the user from enabling or disabling it (Locked).
-| **[`PopupBlocking`](#popupblocking)** | Allow certain websites to display popups and be redirected by third-party frames.
-| **[`PostQuantumKeyAgreementEnabled`](#postquantumkeyagreementenabled)** | Enable post-quantum key agreement for TLS.
+| **[`PictureInPicture`](#pictureinpicture)** | Picture-in-Picture: Enable or disable Picture-in-Picture as well as prevent the user from enabling or disabling it (Locked).
+| **[`PopupBlocking`](#popupblocking)** | Popups: Allow certain websites to display popups and be redirected by third-party frames.
+| **[`PostQuantumKeyAgreementEnabled`](#postquantumkeyagreementenabled)** | Post-quantum key agreement: Enable post-quantum key agreement for TLS.
 | **[`Preferences`](#preferences)** | Set and lock preferences.
-| **[`PrimaryPassword`](#primarypassword)** | Require or prevent using a primary (formerly master) password.
-| **[`PrintingEnabled`](#printingenabled)** | Enable or disable printing.
+| **[`PrimaryPassword`](#primarypassword)** | Primary (Master) Password: Require or prevent using a primary (formerly master) password.
+| **[`PrintingEnabled`](#printingenabled)** | Printing: Enable or disable printing.
 | **[`PrivateBrowsingModeAvailability`](#privatebrowsingmodeavailability)** | Set availability of private browsing mode.
 | **[`PromptForDownloadLocation`](#promptfordownloadlocation)** | Ask where to save each file before downloading.
-| **[`Proxy`](#proxy)** | Configure proxy settings.
-| **[`RequestedLocales`](#requestedlocales)** | Set the list of requested locales for the application in order of preference.
-| **[`SanitizeOnShutdown`](#sanitizeonshutdown)** | Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
-| **[`SearchBar`](#searchbar)** | Set whether or not search bar is displayed.
-| **[`SearchEngines`](#searchengines)** | The following policies allow for configuring search engines in Firefox.
-| **[`SearchEngines -> Add`](#searchengines--add)** | Add new search engines. Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
-| **[`SearchSuggestEnabled`](#searchsuggestenabled)** | Enable search suggestions.
+| **[`Proxy`](#proxy)** | Proxy Settings: Configure proxy settings.
+| **[`RequestedLocales`](#requestedlocales)** | Requested locale: Set the list of requested locales for the application in order of preference.
+| **[`SanitizeOnShutdown`](#sanitizeonshutdown)** | Clear data when browser is closed: Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
+| **[`SearchBar`](#searchbar)** | Search bar location: Set whether or not search bar is displayed.
+| **[`SearchEngines`](#searchengines)** | Search: The following policies allow for configuring search engines in Firefox.
+| **[`SearchEngines › Add`](#searchengines--add)** | Add new search engines. Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
+| **[`SearchSuggestEnabled`](#searchsuggestenabled)** | Search Suggestions: Enable search suggestions.
 | **[`SecurityDevices`](#securitydevices)** | Install PKCS #11 modules.
-| **[`ShowHomeButton`](#showhomebutton)** | Show the home button on the toolbar.
-| **[`SSLVersionMax`](#sslversionmax)** | Set and lock the maximum version of TLS.
-| **[`SSLVersionMin`](#sslversionmin)** | Set and lock the minimum version of TLS.
-| **[`StartDownloadsInTempDirectory`](#startdownloadsintempdirectory)** | Force downloads to start off in a local, temporary location rather than the default download directory.
+| **[`ShowHomeButton`](#showhomebutton)** | Show Home button on toolbar: Show the home button on the toolbar.
+| **[`SSLVersionMax`](#sslversionmax)** | Maximum SSL version enabled: Set and lock the maximum version of TLS.
+| **[`SSLVersionMin`](#sslversionmin)** | Minimum SSL version enabled: Set and lock the minimum version of TLS.
+| **[`StartDownloadsInTempDirectory`](#startdownloadsintempdirectory)** | Start Downloads in Temporary Directory: Force downloads to start off in a local, temporary location rather than the default download directory.
 | **[`SupportMenu`](#supportmenu)** | Add a menuitem to the help menu for specifying support information.
-| **[`TranslateEnabled`](#translateenabled)** | Enable or disable webpage translation.
+| **[`TranslateEnabled`](#translateenabled)** | Enable webpage translation: Enable or disable webpage translation.
 | **[`UserMessaging`](#usermessaging)** | Prevent Firefox from messaging the user in certain situations.
 | **[`UseSystemPrintDialog`](#usesystemprintdialog)** | Use the system print dialog instead of the print preview window.
 | **[`WebsiteFilter`](#websitefilter)** | Block websites from being visited.
 | **[`WindowsSSO`](#windowssso)** | Allow Windows single sign-on for Microsoft, work, and school accounts.
 
-## 3rdparty: Policies for Extensions {#3rdparty}
+## 3rdparty: Policies for Extensions
 
 Provide configuration to WebExtensions, which they can read through the `storage.managed` API.
 
@@ -275,11 +275,11 @@ Software\Policies\Mozilla\Firefox\3rdparty\Extensions\{869A1003-0452-414C-9E4B-E
 
 ## AllowedDomainsForApps: Define domains allowed to access Google Workspace {#alloweddomainsforapps}
 
-Define domains allowed to access Google Workspace.
+Users can only access Google Workspace with accounts from these domains.
 
 This policy is based on the [Chrome policy](https://chromeenterprise.google/policies/#AllowedDomainsForApps) of the same name.
 
-If this policy is enabled, users can only access Google Workspace using accounts from the specified domains. If you want to allow Gmail, you can add ```consumer_accounts``` to the list.
+If you want to allow Gmail, you can add ```consumer_accounts``` to the list.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** N/A
@@ -322,7 +322,7 @@ Software\Policies\Mozilla\Firefox\AllowedDomainsForApps (REG_SZ) = managedfirefo
 |:--- | ---:| ---:|
 | `AllowedDomainsForApps` | 89.0 |  |
 
-## AllowFileSelectionDialogs: Allow File Selection Dialogs {#allowfileselectiondialogs}
+## AllowFileSelectionDialogs
 
 Enable or disable file selection dialogs.
 
@@ -516,13 +516,11 @@ Software\Policies\Mozilla\Firefox\AppUpdateURL (REG_SZ) = https://yoursite.com
 |:--- | ---:| ---:|
 | `AppUpdateURL` | 63.0 |  |
 
-## Authentication: Authentication {#authentication}
+## Authentication
 
 Configure sites that support integrated authentication.
 
 See [Integrated authentication](https://htmlpreview.github.io/?https://github.com/mdn/archived-content/blob/main/files/en-us/mozilla/integrated_authentication/raw.html) for more information.
-
-`PrivateBrowsing` enables integrated authentication in private browsing.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `network.negotiate-auth.trusted-uris`, `network.negotiate-auth.delegation-uris`, `network.automatic-ntlm-auth.trusted-uris`, `network.automatic-ntlm-auth.allow-non-fqdn`, `network.negotiate-auth.allow-non-fqdn`, `network.automatic-ntlm-auth.allow-proxies`, `network.negotiate-auth.allow-proxies`, `network.auth.private-browsing-sso`
@@ -531,11 +529,11 @@ See [Integrated authentication](https://htmlpreview.github.io/?https://github.co
 
 <div class="settings" markdown="1">
 
-`SPNEGO` SPNEGO (list of strings)
+`SPNEGO` (list of strings)
 
-`Delegated` Delegated (list of strings)
+`Delegated` (list of strings)
 
-`NTLM` NTLM (list of strings)
+`NTLM` (list of strings)
 
 `AllowNonFQDN` (object)
 - `SPNEGO` (boolean)
@@ -545,9 +543,10 @@ See [Integrated authentication](https://htmlpreview.github.io/?https://github.co
 - `SPNEGO` (boolean)
 - `NTLM` (boolean)
 
-`Locked` Do not allow authentication preferences to be changed (boolean)
+`Locked` (boolean) - Do not allow authentication preferences to be changed
 
-`PrivateBrowsing` Allow authentication in private browsing (boolean)
+`PrivateBrowsing` (boolean) - Allow authentication in private browsing
+> *Enables integrated authentication in private browsing.*
 
 </div>
 
@@ -737,7 +736,7 @@ Software\Policies\Mozilla\Firefox\AutofillCreditCardEnabled (REG_DWORD) = 0x0
 |:--- | ---:| ---:|
 | `AutofillCreditCardEnabled` | 125.0 |  |
 
-## AutoLaunchProtocolsFromOrigins: Auto Launch Protocols From Origins {#autolaunchprotocolsfromorigins}
+## AutoLaunchProtocolsFromOrigins
 
 Define a list of external protocols that can be used from listed origins without prompting the user.
 
@@ -1043,15 +1042,15 @@ Software\Policies\Mozilla\Firefox\BlockAboutSupport (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `BlockAboutSupport` | 60.0 |  |
 
-## Bookmarks: Bookmarks {#bookmarks}
+## Bookmarks
 
-Add bookmarks in either the bookmarks toolbar or menu. Use 'ManagedBookmarks' instead.
+Add bookmarks in either the bookmarks toolbar or menu. Use `ManagedBookmarks` instead.
 
-Note: [`ManagedBookmarks`](#managedbookmarks) is the new recommended way to add bookmarks. This policy will continue to be supported.
+This policy will continue to be supported.
 
-Add bookmarks in either the bookmarks toolbar or menu. Only `Title` and `URL` are required. If `Placement` is not specified, the bookmark will be placed on the toolbar. If `Folder` is specified, it is automatically created and bookmarks with the same folder name are grouped together.
+Only `Title` and `URL` are required. If `Placement` is not specified, the bookmark will be placed on the toolbar. If `Folder` is specified, it is automatically created and bookmarks with the same folder name are grouped together.
 
-If you want to clear all bookmarks set with this policy, you can set the value to an empty array (```[]```). This can be on Windows via the new Bookmarks (JSON) policy available with GPO and Intune.
+If you want to clear all bookmarks set with this policy, you can set the value to an empty array (```[]```). On Windows, this can be done with the Bookmarks (JSON) policy in Group Policy and Intune.
 
 **CCK2 Equivalent:** `bookmarks.toolbar`, `bookmarks.menu`\
 **Preferences Affected:** N/A
@@ -1067,7 +1066,7 @@ If you want to clear all bookmarks set with this policy, you can set the value t
 `Favicon` (string, URL)
 
 `Placement` (string: `toolbar` or `menu`)
-> *`toolbar`: Add the bookmark to the bookmarks toolbar.*\
+> *`toolbar`: Add the bookmark to the bookmarks toolbar.*<br>
 > *`menu`: Add the bookmark to the bookmarks menu.*
 
 `Folder` (string)
@@ -1129,7 +1128,7 @@ Software\Policies\Mozilla\Firefox\Bookmarks\1\Folder (REG_SZ) = FolderName
 |:--- | ---:| ---:|
 | `Bookmarks` | 60.0 |  |
 
-## CaptivePortal: Captive Portal {#captiveportal}
+## CaptivePortal
 
 Enable or disable the detection of captive portals.
 
@@ -1174,7 +1173,7 @@ Software\Policies\Mozilla\Firefox\CaptivePortal (REG_DWORD) = 0x0
 |:--- | ---:| ---:|
 | `CaptivePortal` | 67.0 |  |
 
-## Certificates: Certificates {#certificates}
+## Certificates
 
 Install and manage certificates.
 
@@ -1233,7 +1232,7 @@ Software\Policies\Mozilla\Firefox\Certificates\Install\2 (REG_EXPAND_SZ) = /home
 | `Certificates`<br>`Certificates_ImportEnterpriseRoots` | 61.0 |  |
 | `Certificates_Install` | 64.0 |  |
 
-## Certificates | ImportEnterpriseRoots: Import Enterprise Roots {#certificates--importenterpriseroots}
+## Certificates › ImportEnterpriseRoots
 
 Trust certificates that have been added to the operating system certificate store by a user or administrator.
 
@@ -1287,9 +1286,11 @@ Software\Policies\Mozilla\Firefox\Certificates\ImportEnterpriseRoots (REG_DWORD)
 |:--- | ---:| ---:|
 | `Certificates_ImportEnterpriseRoots` | 61.0 |  |
 
-## Certificates | Install: Install Certificates {#certificates--install}
+## Certificates › Install: Install Certificates {#certificates--install}
 
-Install certificates into the Firefox certificate store. If only a filename is specified, Firefox searches for the file in the following locations:
+Adds certificates to the Firefox certificate store.
+
+If only a filename is specified, Firefox searches for the file in the following locations:
 
 - Windows
   - %USERPROFILE%\AppData\Local\Mozilla\Certificates
@@ -1362,7 +1363,7 @@ Software\Policies\Mozilla\Firefox\Certificates\Install\2 (REG_EXPAND_SZ) = /home
 |:--- | ---:| ---:|
 | `Certificates_Install` | 64.0 |  |
 
-## Containers: Containers {#containers}
+## Containers
 
 Set policies related to Multi-Account Containers.
 
@@ -1447,46 +1448,7 @@ Software\Policies\Mozilla\Firefox\Containers\Default (REG_MULTI_SZ) =
 
 Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
 
-`AgentName` is the name of the DLP agent. This is used in dialogs and notifications about DLP operations. The default is "A DLP Agent".
-
-`AgentTimeout` is the timeout in number of seconds after a DLP request is sent to the agent. After this timeout, the request will be denied unless `TimeoutResult` is set to 1 or 2. The default is 300.
-
-`AllowUrlRegexList` is a space-separated list of regular expressions that indicates URLs for which DLP operations will always be allowed without consulting the agent. The default is "^about:(?!blank&#124;srcdoc).*", meaning that any pages that start with "about:" will be exempt from DLP except for "about:blank" and "about:srcdoc", as these can be controlled by web content.
-
-`BypassForSameTabOperations` indicates whether Firefox will automatically allow DLP requests whose data comes from the same tab and frame - for example, if data is copied to the clipboard and then pasted on the same page. The default is false.
-
-`ClientSignature` indicates the required signature of the DLP agent connected to the pipe. If this is a non-empty string and the DLP agent does not have a signature with a Subject Name that exactly matches this value, Firefox will not connect to the pipe. The default is the empty string.
-
-`DefaultResult` indicates the desired behavior for DLP requests if there is a problem connecting to the DLP agent. The default is 0.
-
-`DenyUrlRegexList` is a space-separated list of regular expressions that indicates URLs for which DLP operations will always be denied without consulting the agent. The default is the empty string.
-
-`Enabled` indicates whether Firefox should use DLP. Note that if this value is true and no DLP agent is running, all DLP requests will be denied unless `DefaultResult` is set to 1 or 2.
-
 `InterceptionPoints` controls settings for specific interception points.
-
-* The `Clipboard` entry controls clipboard operations for files and text.
-  * `Enabled` indicates whether clipboard operations should use DLP. The default is true.
-  * `PlainTextOnly` indicates whether to only analyze the text/plain format on the clipboard. If this
-    value is false, all formats will be analyzed, which some DLP agents may not expect. Regardless of
-    this value, files will be analyzed as usual. The default is true.
-* The `Download` entry controls download operations. (Added in Firefox 142, Firefox ESR 140.2)
-  * `Enabled` indicates whether download operations should use DLP. The default is false.
-* The `DragAndDrop` entry controls drag and drop operations for files and text.
-  * `Enabled` indicates whether drag and drop operations should use DLP. The default is true.
-  * `PlainTextOnly` indicates whether to only analyze the text/plain format in what is being dropped.
-    If this value is false, all formats will be analyzed, which some DLP agents may not expect.
-    Regardless of this value, files will be analyzed as usual. The default is true.
-* The `FileUpload` entry controls file upload operations for files chosen from the file picker.
-  * `Enabled` indicates whether file upload operations should use DLP. The default is true.
-* The `Print` entry controls print operation.
-  * `Enabled` indicates whether print operations should use DLP. The default is true.
-
-`IsPerUser` indicates whether the pipe the DLP agent has created is per-user or per-system. The default is true, meaning per-user.
-
-`PipePathName` is the name of the pipe the DLP agent has created and Firefox will connect to. The default is "path_user".
-
-`ShowBlockedResult` indicates whether Firefox should show a notification when a DLP request is denied. The default is true.
 
 `TimeoutResult` indicates the desired behavior for DLP requests if the DLP agent does not respond to a request in less than `AgentTimeout` seconds. The default is 0.
 
@@ -1497,27 +1459,38 @@ Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compati
 
 <div class="settings" markdown="1">
 
-`Enabled` Enabled (boolean)
+`Enabled` (boolean)
+> *Indicates whether Firefox should use DLP. Note that if this value is true and no DLP agent is running, all DLP requests will be denied unless `DefaultResult` is set to 1 or 2.*
 
-`PipePathName` Pipe Path Name (string)
+`PipePathName` (string)
+> *The name of the pipe the DLP agent has created and Firefox will connect to. The default is "path_user".*
 
-`AgentTimeout` Agent Timeout (number)
+`AgentTimeout` (number)
+> *The timeout in number of seconds after a DLP request is sent to the agent. After this timeout, the request will be denied unless `TimeoutResult` is set to 1 or 2. The default is 300.*
 
-`AllowUrlRegexList` Allow Url Regex List (string)
+`AllowUrlRegexList` (string)
+> *A space-separated list of regular expressions that indicates URLs for which DLP operations will always be allowed without consulting the agent. The default is "^about:(?!blank&#124;srcdoc).*", meaning that any pages that start with "about:" will be exempt from DLP except for "about:blank" and "about:srcdoc", as these can be controlled by web content.*
 
-`DenyUrlRegexList` Deny Url Regex List (string)
+`DenyUrlRegexList` (string)
+> *A space-separated list of regular expressions that indicates URLs for which DLP operations will always be denied without consulting the agent. The default is the empty string.*
 
-`AgentName` Agent Name (string)
+`AgentName` (string)
+> *The name of the DLP agent. This is used in dialogs and notifications about DLP operations. The default is "A DLP Agent".*
 
-`ClientSignature` Client Signature (string)
+`ClientSignature` (string)
+> *Indicates the required signature of the DLP agent connected to the pipe. If this is a non-empty string and the DLP agent does not have a signature with a Subject Name that exactly matches this value, Firefox will not connect to the pipe. The default is the empty string.*
 
-`IsPerUser` Is Per User (boolean)
+`IsPerUser` (boolean)
+> *Indicates whether the pipe the DLP agent has created is per-user or per-system. The default is true, meaning per-user.*
 
-`ShowBlockedResult` Show Blocked Result (boolean)
+`ShowBlockedResult` (boolean)
+> *Indicates whether Firefox should show a notification when a DLP request is denied. The default is true.*
 
-`DefaultResult` Default Result (number)
+`DefaultResult` (number)
+> *Indicates the desired behavior for DLP requests if there is a problem connecting to the DLP agent. The default is 0.*
 
-`BypassForSameTabOperations` Bypass For Same Tab Operations (boolean)
+`BypassForSameTabOperations` (boolean)
+> *Indicates whether Firefox will automatically allow DLP requests whose data comes from the same tab and frame - for example, if data is copied to the clipboard and then pasted on the same page. The default is false.*
 
 </div>
 
@@ -1598,29 +1571,9 @@ Software\Policies\Mozilla\Firefox\ContentAnalysis\ShowBlockedResult (REG_DWORD) 
 | `ContentAnalysis_AgentName`<br>`ContentAnalysis_ClientSignature`<br>`ContentAnalysis_BypassForSameTabOperations` | 126.0 |  |
 | `ContentAnalysis_DefaultResult` | 127.0 |  |
 
-## Cookies: Cookies {#cookies}
+## Cookies
 
 Configure cookie preferences.
-
-`Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.
-
-`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.
-
-`Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.
-
-`Behavior` sets the default behavior for cookies based on the values below.
-
-`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.
-
-`Locked` prevents the user from changing cookie preferences.
-
-`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)
-
-`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)
-
-`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)
-
-`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown) instead)
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `network.cookie.cookieBehavior`, `network.cookie.cookieBehavior.pbmode`, `network.cookie.lifetimePolicy`
@@ -1629,39 +1582,49 @@ Configure cookie preferences.
 
 <div class="settings" markdown="1">
 
-`Allow` Allowed Sites (list of origins)
+`Allow` (list of origins) - Allowed Sites
+> *Cookies are always allowed for these origins (not domains). Each must include http or https.*
 
-`AllowSession` Allowed Sites (Session Only) (list of origins)
+`AllowSession` (list of origins) - Allowed Sites (Session Only)
+> *Cookies are only allowed for the current session for these origins (not domains). Each must include http or https.*
 
-`Block` Blocked Sites (list of origins)
+`Block` (list of origins) - Blocked Sites
+> *Cookies are always blocked for these origins (not domains). Each must include http or https.*
 
-`Default` Accept cookies from websites (boolean)
+`Default` (boolean) - Accept cookies from websites **Deprecated.**
+> *Determines whether cookies are accepted at all. Use `Behavior` instead.*
 
-`AcceptThirdParty` Accept third-party cookies (string: `always`, `never` or `from-visited`)
-> *`always`: Accept all third-party cookies.*\
-> *`never`: Reject all third-party cookies.*\
+`AcceptThirdParty` (string: `always`, `never` or `from-visited`) - Accept third-party cookies **Deprecated.**
+> *Determines how third-party cookies are handled. Use `Behavior` instead.*<br>
+> *`always`: Accept all third-party cookies.*<br>
+> *`never`: Reject all third-party cookies.*<br>
 > *`from-visited`: Accept third-party cookies only from sites the user has visited.*
 
-`RejectTracker` Reject trackers (boolean)
+`RejectTracker` (boolean) - Reject trackers **Deprecated.**
+> *Only rejects cookies for trackers. Use `Behavior` instead.*
 
-`ExpireAtSessionEnd` Keep cookies until Firefox is closed (boolean)
+`ExpireAtSessionEnd` (boolean) - Keep cookies until Firefox is closed **Deprecated.**
+> *Determines when cookies expire. Use [`SanitizeOnShutdown`](#sanitizeonshutdown) instead.*
 
-`Locked` Do not allow preferences to be changed (boolean)
+`Locked` (boolean) - Do not allow preferences to be changed
+> *Prevents the user from changing cookie preferences.*
 
-`Behavior` Cookie Behavior (string: `accept`, `reject-foreign`, `reject`, `limit-foreign`, `reject-tracker` or `reject-tracker-and-partition-foreign`)
-> *`accept`: Accept cookies from every site, including third parties.*\
-> *`reject-foreign`: Reject every cookie set by a third party.*\
-> *`reject`: Reject cookies from every site.*\
-> *`limit-foreign`: Reject third-party cookies except from sites the user has visited.*\
-> *`reject-tracker`: Reject cookies set by sites identified as trackers.*\
+`Behavior` (string: `accept`, `reject-foreign`, `reject`, `limit-foreign`, `reject-tracker` or `reject-tracker-and-partition-foreign`) - Cookie Behavior
+> *Sets the default behavior for cookies.*<br>
+> *`accept`: Accept cookies from every site, including third parties.*<br>
+> *`reject-foreign`: Reject every cookie set by a third party.*<br>
+> *`reject`: Reject cookies from every site.*<br>
+> *`limit-foreign`: Reject third-party cookies except from sites the user has visited.*<br>
+> *`reject-tracker`: Reject cookies set by sites identified as trackers.*<br>
 > *`reject-tracker-and-partition-foreign`: Reject cookies from known trackers and confine the remaining third-party cookies to the site that set them. This is Total Cookie Protection.*
 
-`BehaviorPrivateBrowsing` Cookie Behavior in private browsing (string: `accept`, `reject-foreign`, `reject`, `limit-foreign`, `reject-tracker` or `reject-tracker-and-partition-foreign`)
-> *`accept`: Accept cookies from every site, including third parties.*\
-> *`reject-foreign`: Reject every cookie set by a third party.*\
-> *`reject`: Reject cookies from every site.*\
-> *`limit-foreign`: Reject third-party cookies except from sites the user has visited.*\
-> *`reject-tracker`: Reject cookies set by sites identified as trackers.*\
+`BehaviorPrivateBrowsing` (string: `accept`, `reject-foreign`, `reject`, `limit-foreign`, `reject-tracker` or `reject-tracker-and-partition-foreign`) - Cookie Behavior in private browsing
+> *Sets the default behavior for cookies in private browsing.*<br>
+> *`accept`: Accept cookies from every site, including third parties.*<br>
+> *`reject-foreign`: Reject every cookie set by a third party.*<br>
+> *`reject`: Reject cookies from every site.*<br>
+> *`limit-foreign`: Reject third-party cookies except from sites the user has visited.*<br>
+> *`reject-tracker`: Reject cookies set by sites identified as trackers.*<br>
 > *`reject-tracker-and-partition-foreign`: Reject cookies from known trackers and confine the remaining third-party cookies to the site that set them. This is Total Cookie Protection.*
 
 </div>
@@ -1731,7 +1694,7 @@ Software\Policies\Mozilla\Firefox\Cookies\BehaviorPrivateBrowsing (REG_SZ) = acc
 | `Cookies_RejectTracker` | 63.0 |  |
 | `Cookies_Behavior`<br>`Cookies_BehaviorPrivateBrowsing` | 96.0 |  |
 
-## DefaultDownloadDirectory: Default Download Directory {#defaultdownloaddirectory}
+## DefaultDownloadDirectory
 
 Set the default download directory.
 
@@ -1780,7 +1743,7 @@ Software\Policies\Mozilla\Firefox\DefaultDownloadDirectory (REG_EXPAND_SZ) = ${h
 |:--- | ---:| ---:|
 | `DefaultDownloadDirectory` | 68.0 |  |
 
-## DisableAccounts: Disable Accounts {#disableaccounts}
+## DisableAccounts
 
 Disable account-based services, including sync.
 
@@ -1919,7 +1882,7 @@ Software\Policies\Mozilla\Firefox\DisableBuiltinPDFViewer (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableBuiltinPDFViewer` | 61.0 |  |
 
-## DisabledCiphers: Disabled Ciphers {#disabledciphers}
+## DisabledCiphers
 
 Disable specific cryptographic ciphers, listed below.
 
@@ -1939,45 +1902,45 @@ This policy was updated in Firefox 78 to allow enabling ciphers as well. Setting
 
 <div class="settings" markdown="1">
 
-`TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256` TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (boolean)
+`TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256` (boolean)
 
-`TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256` TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 (boolean)
+`TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256` (boolean)
 
-`TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256` TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 (boolean)
+`TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256` (boolean)
 
-`TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256` TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (boolean)
+`TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256` (boolean)
 
-`TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 (boolean)
+`TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` (boolean)
 
-`TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384` TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (boolean)
+`TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384` (boolean)
 
-`TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA` TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (boolean)
+`TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA` (boolean)
 
-`TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA` TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA (boolean)
+`TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA` (boolean)
 
-`TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA` TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (boolean)
+`TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA` (boolean)
 
-`TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA` TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA (boolean)
+`TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA` (boolean)
 
-`TLS_DHE_RSA_WITH_AES_128_CBC_SHA` TLS_DHE_RSA_WITH_AES_128_CBC_SHA (boolean)
+`TLS_DHE_RSA_WITH_AES_128_CBC_SHA` (boolean)
 
-`TLS_DHE_RSA_WITH_AES_256_CBC_SHA` TLS_DHE_RSA_WITH_AES_256_CBC_SHA (boolean)
+`TLS_DHE_RSA_WITH_AES_256_CBC_SHA` (boolean)
 
-`TLS_RSA_WITH_AES_128_GCM_SHA256` TLS_RSA_WITH_AES_128_GCM_SHA256 (boolean)
+`TLS_RSA_WITH_AES_128_GCM_SHA256` (boolean)
 
-`TLS_RSA_WITH_AES_256_GCM_SHA384` TLS_RSA_WITH_AES_256_GCM_SHA384 (boolean)
+`TLS_RSA_WITH_AES_256_GCM_SHA384` (boolean)
 
-`TLS_RSA_WITH_AES_128_CBC_SHA` TLS_RSA_WITH_AES_128_CBC_SHA (boolean)
+`TLS_RSA_WITH_AES_128_CBC_SHA` (boolean)
 
-`TLS_RSA_WITH_AES_256_CBC_SHA` TLS_RSA_WITH_AES_256_CBC_SHA (boolean)
+`TLS_RSA_WITH_AES_256_CBC_SHA` (boolean)
 
-`TLS_RSA_WITH_3DES_EDE_CBC_SHA` TLS_RSA_WITH_3DES_EDE_CBC_SHA (boolean)
+`TLS_RSA_WITH_3DES_EDE_CBC_SHA` (boolean)
 
-`TLS_CHACHA20_POLY1305_SHA256` TLS_CHACHA20_POLY1305_SHA256 (boolean)
+`TLS_CHACHA20_POLY1305_SHA256` (boolean)
 
-`TLS_AES_128_GCM_SHA256` TLS_AES_128_GCM_SHA256 (boolean)
+`TLS_AES_128_GCM_SHA256` (boolean)
 
-`TLS_AES_256_GCM_SHA384` TLS_AES_256_GCM_SHA384 (boolean)
+`TLS_AES_256_GCM_SHA384` (boolean)
 
 </div>
 
@@ -2080,7 +2043,7 @@ Software\Policies\Mozilla\Firefox\DisableDefaultBrowserAgent (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableDefaultBrowserAgent` | 76.0 |  |
 
-## DisableDeveloperTools: Disable Developer Tools {#disabledevelopertools}
+## DisableDeveloperTools
 
 Remove access to all developer tools.
 
@@ -2125,7 +2088,7 @@ Software\Policies\Mozilla\Firefox\DisableDeveloperTools (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableDeveloperTools` | 60.0 |  |
 
-## DisableEncryptedClientHello: Disable Encrypted Client Hello {#disableencryptedclienthello}
+## DisableEncryptedClientHello
 
 Disable the TLS Feature for Encrypted Client Hello.
 
@@ -2172,7 +2135,7 @@ Software\Policies\Mozilla\Firefox\DisableEncryptedClientHello (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableEncryptedClientHello` | 127.0 |  |
 
-## DisableFeedbackCommands: Disable Feedback Commands {#disablefeedbackcommands}
+## DisableFeedbackCommands
 
 Disable the menus for reporting sites (Submit Feedback, Report Deceptive Site).
 
@@ -2217,7 +2180,7 @@ Software\Policies\Mozilla\Firefox\DisableFeedbackCommands (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableFeedbackCommands` | 61.0 |  |
 
-## DisableFirefoxAccounts: Disable Firefox Accounts {#disablefirefoxaccounts}
+## DisableFirefoxAccounts
 
 Disable Firefox Accounts integration (Sync).
 
@@ -2262,7 +2225,7 @@ Software\Policies\Mozilla\Firefox\DisableFirefoxAccounts (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableFirefoxAccounts` | 60.0 |  |
 
-## DisableFirefoxScreenshots: Disable Firefox Screenshots {#disablefirefoxscreenshots}
+## DisableFirefoxScreenshots
 
 Remove access to Firefox Screenshots.
 
@@ -2307,7 +2270,7 @@ Software\Policies\Mozilla\Firefox\DisableFirefoxScreenshots (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableFirefoxScreenshots` | 60.0 |  |
 
-## DisableFirefoxStudies: Disable Firefox Studies {#disablefirefoxstudies}
+## DisableFirefoxStudies
 
 Disable Firefox studies (Shield).
 
@@ -2352,7 +2315,7 @@ Software\Policies\Mozilla\Firefox\DisableFirefoxStudies (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableFirefoxStudies` | 60.0 |  |
 
-## DisableForgetButton: Disable Forget Button {#disableforgetbutton}
+## DisableForgetButton
 
 Disable the "Forget" button.
 
@@ -2397,7 +2360,7 @@ Software\Policies\Mozilla\Firefox\DisableForgetButton (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableForgetButton` | 61.0 |  |
 
-## DisableFormHistory: Disable Form History {#disableformhistory}
+## DisableFormHistory
 
 Turn off saving information on web forms and the search bar.
 
@@ -2442,7 +2405,7 @@ Software\Policies\Mozilla\Firefox\DisableFormHistory (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableFormHistory` | 60.0 |  |
 
-## DisableMasterPasswordCreation: Disable Master Password Creation {#disablemasterpasswordcreation}
+## DisableMasterPasswordCreation
 
 Remove the master password functionality.
 
@@ -2491,7 +2454,7 @@ Software\Policies\Mozilla\Firefox\DisableMasterPasswordCreation (REG_DWORD) = 0x
 |:--- | ---:| ---:|
 | `DisableMasterPasswordCreation` | 61.0 |  |
 
-## DisablePasswordReveal: Do not allow passwords to be revealed in saved logins {#disablepasswordreveal}
+## DisablePasswordReveal: Hide passwords of saved logins {#disablepasswordreveal}
 
 Do not allow passwords to be shown in saved logins.
 
@@ -2536,7 +2499,7 @@ Software\Policies\Mozilla\Firefox\DisablePasswordReveal (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisablePasswordReveal` | 71.0 |  |
 
-## DisablePocket: Disable Pocket {#disablepocket}
+## DisablePocket
 
 Remove Pocket in the Firefox UI.
 
@@ -2583,7 +2546,7 @@ Software\Policies\Mozilla\Firefox\DisablePocket (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisablePocket` | 60.0 |  |
 
-## DisablePrivateBrowsing: Disable Private Browsing {#disableprivatebrowsing}
+## DisablePrivateBrowsing
 
 Remove access to private browsing.
 
@@ -2630,7 +2593,7 @@ Software\Policies\Mozilla\Firefox\DisablePrivateBrowsing (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisablePrivateBrowsing` | 60.0 |  |
 
-## DisableProfileImport: Disable Profile Import {#disableprofileimport}
+## DisableProfileImport
 
 Remove the ability to import data from other browsers.
 
@@ -2675,7 +2638,7 @@ Software\Policies\Mozilla\Firefox\DisableProfileImport (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableProfileImport` | 61.0 |  |
 
-## DisableProfileRefresh: Disable Profile Refresh {#disableprofilerefresh}
+## DisableProfileRefresh
 
 Disable the Refresh Firefox button on 'about:support' and 'support.mozilla.org', as well as the prompt that displays offering to refresh Firefox when you haven't used it in a while.
 
@@ -2720,7 +2683,7 @@ Software\Policies\Mozilla\Firefox\DisableProfileRefresh (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableProfileRefresh` | 61.0 |  |
 
-## DisableSafeMode: Disable Safe Mode {#disablesafemode}
+## DisableSafeMode
 
 Disable safe mode (Troubleshoot Mode) within the browser.
 
@@ -2771,10 +2734,6 @@ Software\Policies\Mozilla\Firefox\DisableSafeMode (REG_DWORD) = 0x1
 
 Prevent the user from bypassing security in certain cases.
 
-`InvalidCertificate` prevents adding an exception when an invalid certificate is shown.
-
-`SafeBrowsing` prevents selecting "ignore the risk" and visiting a harmful site anyway.
-
 These policies only affect what happens when an error is shown, they do not affect any settings in preferences.
 
 **CCK2 Equivalent:** N/A\
@@ -2784,9 +2743,11 @@ These policies only affect what happens when an error is shown, they do not affe
 
 <div class="settings" markdown="1">
 
-`InvalidCertificate` Prevent overriding certificate errors (boolean)
+`InvalidCertificate` (boolean) - Prevent overriding certificate errors
+> *Prevents adding an exception when an invalid certificate is shown.*
 
-`SafeBrowsing` Prevent overriding safe browsing errors (boolean)
+`SafeBrowsing` (boolean) - Prevent overriding safe browsing errors
+> *Prevents selecting "ignore the risk" and visiting a harmful site anyway.*
 
 </div>
 
@@ -2829,7 +2790,7 @@ Software\Policies\Mozilla\Firefox\DisableSecurityBypass\SafeBrowsing (REG_DWORD)
 |:--- | ---:| ---:|
 | `DisableSecurityBypass`<br>`DisableSecurityBypass_InvalidCertificate`<br>`DisableSecurityBypass_SafeBrowsing` | 61.0 |  |
 
-## DisableSetDesktopBackground: Disable Set Desktop Background {#disablesetdesktopbackground}
+## DisableSetDesktopBackground
 
 Remove the "Set As Desktop Background..." menuitem when right clicking on an image.
 
@@ -2919,7 +2880,7 @@ Software\Policies\Mozilla\Firefox\DisableSystemAddonUpdate (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableSystemAddonUpdate` | 61.0 |  |
 
-## DisableTelemetry: Disable Telemetry {#disabletelemetry}
+## DisableTelemetry
 
 Prevent the upload of telemetry data.
 
@@ -2968,7 +2929,7 @@ Software\Policies\Mozilla\Firefox\DisableTelemetry (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisableTelemetry` | 61.0 |  |
 
-## DisableThirdPartyModuleBlocking: Disable Third Party Module Blocking {#disablethirdpartymoduleblocking}
+## DisableThirdPartyModuleBlocking
 
 Do not allow blocking third-party modules from the 'about:third-party' page.
 
@@ -3015,7 +2976,7 @@ Software\Policies\Mozilla\Firefox\DisableThirdPartyModuleBlocking (REG_DWORD) = 
 |:--- | ---:| ---:|
 | `DisableThirdPartyModuleBlocking` | 110.0 |  |
 
-## DisplayBookmarksToolbar: Display Bookmarks Toolbar {#displaybookmarkstoolbar}
+## DisplayBookmarksToolbar
 
 Set the initial state of the bookmarks toolbar.
 
@@ -3035,8 +2996,8 @@ A user can still change how it is displayed.
 <div class="settings" markdown="1">
 
 `DisplayBookmarksToolbar` (boolean or string: `always`, `never` or `newtab`)
-> *`always`: Show the bookmarks toolbar on every page.*\
-> *`never`: Hide the bookmarks toolbar.*\
+> *`always`: Show the bookmarks toolbar on every page.*<br>
+> *`never`: Hide the bookmarks toolbar.*<br>
 > *`newtab`: Show the bookmarks toolbar only on the New Tab page.*
 
 </div>
@@ -3083,7 +3044,7 @@ Software\Policies\Mozilla\Firefox\DisplayBookmarksToolbar (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisplayBookmarksToolbar` | 60.0 |  |
 
-## DisplayMenuBar: Display Menu Bar {#displaymenubar}
+## DisplayMenuBar
 
 Set the state of the menubar.
 
@@ -3103,9 +3064,9 @@ Set the state of the menubar.
 <div class="settings" markdown="1">
 
 `DisplayMenuBar` (boolean or string: `always`, `never`, `default-on` or `default-off`)
-> *`always`: The menu bar is shown and the user cannot hide it.*\
-> *`never`: The menu bar is hidden and the user cannot show it, including by pressing Alt.*\
-> *`default-on`: The menu bar starts visible and the user can hide it.*\
+> *`always`: The menu bar is shown and the user cannot hide it.*<br>
+> *`never`: The menu bar is hidden and the user cannot show it, including by pressing Alt.*<br>
+> *`default-on`: The menu bar starts visible and the user can hide it.*<br>
 > *`default-off`: The menu bar starts hidden and the user can show it.*
 
 </div>
@@ -3152,19 +3113,9 @@ Software\Policies\Mozilla\Firefox\DisplayMenuBar (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DisplayMenuBar` | 60.0 |  |
 
-## DNSOverHTTPS: DNS Over HTTPS {#dnsoverhttps}
+## DNSOverHTTPS
 
 Configure DNS over HTTPS (DoH).
-
-`Enabled` determines whether DNS over HTTPS is enabled
-
-`ProviderURL` is a URL to another provider.
-
-`Locked` prevents the user from changing DNS over HTTPS preferences.
-
-`ExcludedDomains` excludes domains from DNS over HTTPS.
-
-`Fallback` determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `network.trr.mode`, `network.trr.uri`
@@ -3173,15 +3124,20 @@ Configure DNS over HTTPS (DoH).
 
 <div class="settings" markdown="1">
 
-`Enabled` Enabled (boolean)
+`Enabled` (boolean)
+> *Determines whether DNS over HTTPS is enabled.*
 
-`ProviderURL` Provider URL (string, URL)
+`ProviderURL` (string, URL)
+> *Replaces the default provider.*
 
-`ExcludedDomains` Excluded Domains (list of strings)
+`ExcludedDomains` (list of strings)
+> *Excludes domains from DNS over HTTPS.*
 
-`Fallback` Fallback (boolean)
+`Fallback` (boolean)
+> *Determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.*
 
-`Locked` Locked (boolean)
+`Locked` (boolean)
+> *Prevents the user from changing DNS over HTTPS preferences.*
 
 </div>
 
@@ -3285,7 +3241,7 @@ Software\Policies\Mozilla\Firefox\DontCheckDefaultBrowser (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `DontCheckDefaultBrowser` | 60.0 |  |
 
-## DownloadDirectory: Download Directory {#downloaddirectory}
+## DownloadDirectory
 
 Set and lock the download directory.
 
@@ -3340,27 +3296,7 @@ Configure tracking protection.
 
 If this policy is not configured, tracking protection is not enabled by default in the browser, but it is enabled by default in private browsing and the user can change it.
 
-If `Value` is set to false, tracking protection is disabled and locked in both the regular browser and private browsing.
-
-If `Value` is set to true, tracking protection is enabled by default in both the regular browser and private browsing.
-
-If `Locked` is set to true, users cannot change tracking protection values.
-
-If `Cryptomining` is set to true, cryptomining scripts on websites are blocked.
-
-If `Fingerprinting` is set to true, fingerprinting scripts on websites are blocked.
-
-If `EmailTracking` is set to true, hidden email tracking pixels and scripts on websites are blocked. (Firefox 112)
-
-If `SuspectedFingerprinting` is set to true, Firefox reduces the amount of information exposed to websites to protect against potential fingerprinting attempts. (Firefox 142, Firefox ESR 140.2)
-
-`Exceptions` are origins for which tracking protection is not enabled.
-
 `Category` can be either ```strict``` or ```standard```. If category is set, it overrides all other settings except `Exceptions`, `BaselineExceptions` and `ConvenienceExceptions`, and the user cannot change the category. (Firefox 142, Firefox ESR 140.2)
-
-IF `BaselineExceptions` is true, Firefox will automatically apply exceptions required to avoid major website breakage. (Firefox 145)
-
-If `ConvenienceExceptions`is true, Firefox will apply exceptions automatically that are only required to fix minor issues and make convenience features available. (Firefox 145)
 
 Note: Users can change `BaselineExceptions` and `ConvenienceExceptions` even when `Category` is set to ```strict``` unless `Locked` is set to true. If `Locked` is set to true, the defaults are used unless a different value is specified in policy for `BaselineExceptions` and `ConvenienceExceptions`.
 
@@ -3371,17 +3307,23 @@ Note: Users can change `BaselineExceptions` and `ConvenienceExceptions` even whe
 
 <div class="settings" markdown="1">
 
-`Value` Enabled (boolean)
+`Value` (boolean) - Enabled
+> *If true, tracking protection is enabled by default in both the regular browser and private browsing. If false, tracking protection is disabled and locked in both.*
 
-`Locked` Do not allow tracking protection preferences to be changed (boolean)
+`Locked` (boolean) - Do not allow tracking protection preferences to be changed
+> *If true, users cannot change tracking protection values.*
 
-`Cryptomining` Cryptomining (boolean)
+`Cryptomining` (boolean)
+> *If true, cryptomining scripts on websites are blocked.*
 
-`Fingerprinting` Fingerprinting (boolean)
+`Fingerprinting` (boolean)
+> *If true, fingerprinting scripts on websites are blocked.*
 
-`EmailTracking` Email Tracking (boolean)
+`EmailTracking` (boolean)
+> *If true, hidden email tracking pixels and scripts on websites are blocked. (Firefox 112)*
 
-`Exceptions` Exceptions (list of origins)
+`Exceptions` (list of origins)
+> *Origins for which tracking protection is not enabled.*
 
 </div>
 
@@ -3445,13 +3387,9 @@ Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Exceptions\1 (REG_SZ)
 | `EnableTrackingProtection_EmailTracking` | 112.0 |  |
 | `EnableTrackingProtection_Exceptions` | 73.0 |  |
 
-## EncryptedMediaExtensions: Encrypted Media Extensions {#encryptedmediaextensions}
+## EncryptedMediaExtensions
 
 Enable or disable Encrypted Media Extensions and optionally lock it.
-
-If `Enabled` is set to false, encrypted media extensions (like Widevine) are not downloaded by Firefox unless the user consents to installing them.
-
-If `Locked` is set to true and `Enabled` is set to false, Firefox will not download encrypted media extensions (like Widevine) or ask the user to install them.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `media.eme.enabled`
@@ -3460,9 +3398,11 @@ If `Locked` is set to true and `Enabled` is set to false, Firefox will not downl
 
 <div class="settings" markdown="1">
 
-`Enabled` Enable Encrypted Media Extensions (boolean)
+`Enabled` (boolean) - Enable Encrypted Media Extensions
+> *If false, encrypted media extensions (like Widevine) are not downloaded by Firefox unless the user consents to installing them.*
 
-`Locked` Lock Encrypted Media Extensions (boolean)
+`Locked` (boolean) - Lock Encrypted Media Extensions
+> *If true and `Enabled` is false, Firefox will not download encrypted media extensions (like Widevine) or ask the user to install them.*
 
 </div>
 
@@ -3507,7 +3447,7 @@ Software\Policies\Mozilla\Firefox\EncryptedMediaExtensions\Locked (REG_DWORD) = 
 
 ## ExemptDomainFileTypePairsFromFileTypeDownloadWarnings: Disable warnings based on file extension for specific file types on domains {#exemptdomainfiletypepairsfromfiletypedownloadwarnings}
 
-Disable warnings based on file extension for specific file types on domains.
+Downloads of these file types from these domains get no warnings based on their file extension.
 
 This policy is based on the [Chrome policy](https://chromeenterprise.google/policies/#ExemptDomainFileTypePairsFromFileTypeDownloadWarnings) of the same name.
 
@@ -3576,19 +3516,13 @@ Software\Policies\Mozilla\Firefox\ExemptDomainFileTypePairsFromFileTypeDownloadW
 |:--- | ---:| ---:|
 | `ExemptDomainFileTypePairsFromFileTypeDownloadWarnings` | 102.0 |  |
 
-## Extensions: Extensions {#extensions}
+## Extensions
 
 Control the installation, uninstallation and locking of extensions.
 
 Note: The **[`ExtensionSettings`](#extensionsettings)** policy was added in Firefox 69. It provides additional functionality and is closer in compatibility to Chrome and Edge. It does not support native paths, though, so you'll have to use file:/// URLs. I'd recommend trying it before using this policy. Any future improvements will happen in that policy.
 
 We will not, however, be removing this policy.
-
-`Install` is a list of URLs or native paths for extensions to be installed.
-
-`Uninstall` is a list of extension IDs that should be uninstalled if found.
-
-`Locked` is a list of extension IDs that the user cannot disable or uninstall.
 
 **CCK2 Equivalent:** `addons`\
 **Preferences Affected:** N/A
@@ -3597,12 +3531,14 @@ We will not, however, be removing this policy.
 
 <div class="settings" markdown="1">
 
-`Install` Extensions to Install (list of strings)
-> *Environment variables like %USERPROFILE% are only expanded when the policy is set via Group Policy.*
+`Install` (list of strings) - Extensions to Install
+> *Each is given as URL or native path. Environment variables like %USERPROFILE% are only expanded when the policy is set via Group Policy.*
 
-`Uninstall` Extensions to Uninstall (list of strings)
+`Uninstall` (list of strings) - Extensions to Uninstall
+> *Each is given by its ID, and only uninstalled if it is installed.*
 
-`Locked` Prevent extensions from being disabled or removed (list of strings)
+`Locked` (list of strings) - Prevent extensions from being disabled or removed
+> *Extensions the user can't disable or uninstall, by their IDs.*
 
 </div>
 
@@ -3681,13 +3617,13 @@ The configuration for each extension is another dictionary that can contain the 
 
 `*` (object)
 - `installation_mode` (string: `allowed` or `blocked`)
-  > *`allowed`: Users can install extensions.*\
+  > *`allowed`: Users can install extensions.*<br>
   > *`blocked`: No extension can be installed. An extension with its own entry in this policy is exempt, whatever that entry says.*
 - `allowed_types` (list of strings: `extension`, `dictionary`, `locale`, `theme` or `sitepermission`)
-  > *`extension`: Ordinary browser extensions.*\
-  > *`dictionary`: Spell-checking dictionaries.*\
-  > *`locale`: Language packs that translate the Firefox interface.*\
-  > *`theme`: Themes that change the appearance of Firefox.*\
+  > *`extension`: Ordinary browser extensions.*<br>
+  > *`dictionary`: Spell-checking dictionaries.*<br>
+  > *`locale`: Language packs that translate the Firefox interface.*<br>
+  > *`theme`: Themes that change the appearance of Firefox.*<br>
   > *`sitepermission`: Add-ons that grant one site access to a restricted capability.*
 - `blocked_install_message` (string)
 - `install_sources` (list of strings)
@@ -3696,15 +3632,15 @@ The configuration for each extension is another dictionary that can contain the 
 
 `[name]` (object)
 - `installation_mode` (string: `allowed`, `blocked`, `force_installed` or `normal_installed`)
-  > *`allowed`: The extension may be installed, even when extensions are blocked by default.*\
-  > *`blocked`: The extension cannot be installed, and is uninstalled if already present.*\
-  > *`force_installed`: The extension is installed automatically and the user can neither disable nor remove it.*\
+  > *`allowed`: The extension may be installed, even when extensions are blocked by default.*<br>
+  > *`blocked`: The extension cannot be installed, and is uninstalled if already present.*<br>
+  > *`force_installed`: The extension is installed automatically and the user can neither disable nor remove it.*<br>
   > *`normal_installed`: The extension is installed automatically. The user can disable it but cannot remove it.*
 - `install_url` (string)
 - `blocked_install_message` (string)
 - `updates_disabled` (boolean)
 - `default_area` (string: `navbar` or `menupanel`)
-  > *`navbar`: Place the extension's button on the toolbar.*\
+  > *`navbar`: Place the extension's button on the toolbar.*<br>
   > *`menupanel`: Place the extension's button in the extensions panel instead of the toolbar.*
 - `temporarily_allow_weak_signatures` (boolean)
 - `private_browsing` (boolean)
@@ -3816,7 +3752,7 @@ Software\Policies\Mozilla\Firefox\ExtensionSettings (REG_MULTI_SZ) =
 | `ExtensionSettings_[name]_default_area` | 113.0 |  |
 | `ExtensionSettings_[name]_private_browsing` | 136.0, 128.8.0esr |  |
 
-## ExtensionUpdate: Extension Update {#extensionupdate}
+## ExtensionUpdate
 
 Control extension updates.
 
@@ -3861,7 +3797,7 @@ Software\Policies\Mozilla\Firefox\ExtensionUpdate (REG_DWORD) = 0x0
 |:--- | ---:| ---:|
 | `ExtensionUpdate` | 67.0 |  |
 
-## FirefoxHome: Firefox Home {#firefoxhome}
+## FirefoxHome
 
 Customize the Firefox Home page.
 
@@ -3872,13 +3808,13 @@ Customize the Firefox Home page.
 
 <div class="settings" markdown="1">
 
-`Search` Search (boolean)
+`Search` (boolean)
 
-`TopSites` Shortcuts (boolean)
+`TopSites` (boolean) - Shortcuts
 
-`SponsoredTopSites` Sponsored Shortcuts (boolean)
+`SponsoredTopSites` (boolean) - Sponsored Shortcuts
 
-`Highlights` Recent Activity (boolean)
+`Highlights` (boolean) - Recent Activity
 
 `Pocket` (boolean)
 
@@ -3886,7 +3822,7 @@ Customize the Firefox Home page.
 
 `Snippets` (boolean)
 
-`Locked` Do not allow preferences to be changed (boolean)
+`Locked` (boolean) - Do not allow preferences to be changed
 
 </div>
 
@@ -3967,13 +3903,13 @@ As of Firefox 146, `WebSuggestions` turns off Suggest completely.
 
 <div class="settings" markdown="1">
 
-`WebSuggestions` Suggestions from the web (boolean)
+`WebSuggestions` (boolean) - Suggestions from the web
 
-`SponsoredSuggestions` Suggestions from sponsors (boolean)
+`SponsoredSuggestions` (boolean) - Suggestions from sponsors
 
-`ImproveSuggest` Improve the Firefox Suggest experience (boolean)
+`ImproveSuggest` (boolean) - Improve the Firefox Suggest experience
 
-`Locked` Do not allow preferences to be changed (boolean)
+`Locked` (boolean) - Do not allow preferences to be changed
 
 </div>
 
@@ -4079,7 +4015,7 @@ Software\Policies\Mozilla\Firefox\GoToIntranetSiteForSingleWordEntryInAddressBar
 |:--- | ---:| ---:|
 | `GoToIntranetSiteForSingleWordEntryInAddressBar` | 104.0 |  |
 
-## Handlers: Handlers {#handlers}
+## Handlers
 
 Configure default application handlers.
 
@@ -4099,8 +4035,8 @@ Within each handler type, you specify the given mimeType/extension/scheme as a k
 `(mimeTypes|extensions|schemes)` (object)
 - `[name]` (object)
   - `action` (string: `saveToDisk`, `useHelperApp` or `useSystemDefault`)
-    > *`saveToDisk`: Download the file instead of opening it.*\
-    > *`useHelperApp`: Open the content with an application listed in `handlers`.*\
+    > *`saveToDisk`: Download the file instead of opening it.*<br>
+    > *`useHelperApp`: Open the content with an application listed in `handlers`.*<br>
     > *`useSystemDefault`: Open the content with the application the operating system associates with that type.*
   - `ask` (boolean)
   - `handlers` (list of objects)
@@ -4252,7 +4188,7 @@ Software\Policies\Mozilla\Firefox\Handlers (REG_MULTI_SZ) =
 |:--- | ---:| ---:|
 | `Handlers`<br>`Handlers_mimeTypes`<br>`Handlers_mimeTypes_[name]`<br>`Handlers_mimeTypes_[name]_action`<br>`Handlers_mimeTypes_[name]_ask`<br>`Handlers_mimeTypes_[name]_handlers`<br>`Handlers_extensions`<br>`Handlers_extensions_[name]`<br>`Handlers_extensions_[name]_action`<br>`Handlers_extensions_[name]_ask`<br>`Handlers_extensions_[name]_handlers`<br>`Handlers_schemes`<br>`Handlers_schemes_[name]`<br>`Handlers_schemes_[name]_action`<br>`Handlers_schemes_[name]_ask`<br>`Handlers_schemes_[name]_handlers` | 78.0 |  |
 
-## HardwareAcceleration: Hardware Acceleration {#hardwareacceleration}
+## HardwareAcceleration
 
 Control hardware acceleration.
 
@@ -4297,17 +4233,9 @@ Software\Policies\Mozilla\Firefox\HardwareAcceleration (REG_DWORD) = 0x0
 |:--- | ---:| ---:|
 | `HardwareAcceleration` | 62.0 |  |
 
-## Homepage: Home page {#homepage}
+## Homepage
 
 Configure the default homepage and how Firefox starts.
-
-`URL` is the default homepage.
-
-`Locked` prevents the user from changing homepage preferences.
-
-`Additional` allows for more than one homepage.
-
-`StartPage` is how Firefox starts.
 
 **CCK2 Equivalent:** `homePage`, `lockHomePage`\
 **Preferences Affected:** `browser.startup.homepage`, `browser.startup.page`
@@ -4317,15 +4245,19 @@ Configure the default homepage and how Firefox starts.
 <div class="settings" markdown="1">
 
 `URL` (string, URL)
+> *The default homepage.*
 
 `Locked` (boolean)
+> *Prevents the user from changing homepage preferences.*
 
-`Additional` Additional Homepages (list of URLs)
+`Additional` (list of URLs) - Additional Homepages
+> *Allows for more than one homepage.*
 
-`StartPage` Start Page (string: `none`, `homepage`, `previous-session` or `homepage-locked`)
-> *`none`: Start on a blank page.*\
-> *`homepage`: Start on the homepage.*\
-> *`previous-session`: Restore the windows and tabs open at the end of the previous session.*\
+`StartPage` (string: `none`, `homepage`, `previous-session` or `homepage-locked`)
+> *How Firefox starts.*<br>
+> *`none`: Start on a blank page.*<br>
+> *`homepage`: Start on the homepage.*<br>
+> *`previous-session`: Restore the windows and tabs open at the end of the previous session.*<br>
 > *`homepage-locked`: Start on the homepage and prevent the user from changing the startup page.*
 
 </div>
@@ -4382,7 +4314,7 @@ Software\Policies\Mozilla\Firefox\Homepage\StartPage (REG_SZ) = none
 | `Homepage`<br>`Homepage_URL`<br>`Homepage_Locked`<br>`Homepage_Additional` | 60.0 |  |
 | `Homepage_StartPage` | 64.0 |  |
 
-## HttpAllowlist: HTTP Allowlist {#httpallowlist}
+## HttpAllowlist
 
 Configure sites that will not be upgraded to HTTPS.
 
@@ -4445,9 +4377,9 @@ Configure HTTPS-Only Mode.
 <div class="settings" markdown="1">
 
 `HttpsOnlyMode` (string: `allowed`, `disallowed`, `enabled` or `force_enabled`)
-> *`allowed`: HTTPS-Only Mode is off by default and the user can turn it on.*\
-> *`disallowed`: HTTPS-Only Mode is off and the user cannot turn it on.*\
-> *`enabled`: HTTPS-Only Mode is on by default and the user can turn it off.*\
+> *`allowed`: HTTPS-Only Mode is off by default and the user can turn it on.*<br>
+> *`disallowed`: HTTPS-Only Mode is off and the user cannot turn it on.*<br>
+> *`enabled`: HTTPS-Only Mode is on by default and the user can turn it off.*<br>
 > *`force_enabled`: HTTPS-Only Mode is on and the user cannot turn it off.*
 
 </div>
@@ -4488,10 +4420,6 @@ Configure the default extension install policy as well as origins for extension 
 
 This policy does not override turning off all extension installs.
 
-`Allow` is a list of origins where extension installs are allowed.
-
-`Default` determines whether or not extension installs are allowed by default.
-
 **CCK2 Equivalent:** `permissions.install`\
 **Preferences Affected:** `xpinstall.enabled`, `browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons`, `browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features`
 
@@ -4499,9 +4427,11 @@ This policy does not override turning off all extension installs.
 
 <div class="settings" markdown="1">
 
-`Allow` Allowed Sites (list of origins)
+`Allow` (list of origins) - Allowed Sites
+> *Extension installs are allowed for these origins.*
 
-`Default` Allow add-on installs from websites (boolean)
+`Default` (boolean) - Allow add-on installs from websites
+> *Determines whether or not extension installs are allowed by default.*
 
 </div>
 
@@ -4548,7 +4478,7 @@ Software\Policies\Mozilla\Firefox\InstallAddonsPermission\Default (REG_DWORD) = 
 |:--- | ---:| ---:|
 | `InstallAddonsPermission`<br>`InstallAddonsPermission_Allow`<br>`InstallAddonsPermission_Default` | 61.0 |  |
 
-## LegacyProfiles: Legacy Profiles {#legacyprofiles}
+## LegacyProfiles
 
 Disable the feature enforcing a separate profile for each installation.
 
@@ -4646,7 +4576,7 @@ Software\Policies\Mozilla\Firefox\LegacySameSiteCookieBehaviorEnabled (REG_DWORD
 |:--- | ---:| ---:|
 | `LegacySameSiteCookieBehaviorEnabled` | 76.0 |  |
 
-## LegacySameSiteCookieBehaviorEnabledForDomainList: Revert to legacy SameSite behavior on specific domains {#legacysamesitecookiebehaviorenabledfordomainlist}
+## LegacySameSiteCookieBehaviorEnabledForDomainList: Domains with legacy SameSite behavior {#legacysamesitecookiebehaviorenabledfordomainlist}
 
 Revert to legacy SameSite behavior for cookies on specified sites.
 
@@ -4697,7 +4627,7 @@ Software\Policies\Mozilla\Firefox\LegacySameSiteCookieBehaviorEnabledForDomainLi
 |:--- | ---:| ---:|
 | `LegacySameSiteCookieBehaviorEnabledForDomainList` | 76.0 |  |
 
-## LocalFileLinks: Local File Links {#localfilelinks}
+## LocalFileLinks
 
 Enable linking to local files by origin.
 
@@ -4746,7 +4676,7 @@ Software\Policies\Mozilla\Firefox\LocalFileLinks\2 (REG_SZ) = http://example.edu
 |:--- | ---:| ---:|
 | `LocalFileLinks` | 68.0 |  |
 
-## ManagedBookmarks: Managed Bookmarks {#managedbookmarks}
+## ManagedBookmarks
 
 Configures a list of bookmarks managed by an administrator that cannot be changed by the user.
 
@@ -4928,7 +4858,7 @@ Software\Policies\Mozilla\Firefox\ManualAppUpdateOnly (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `ManualAppUpdateOnly` | 87.0 |  |
 
-## MicrosoftEntraSSO: Microsoft Entra SSO {#microsoftentrasso}
+## MicrosoftEntraSSO
 
 Allow single sign-on for Microsoft Entra accounts on macOS.
 
@@ -4975,7 +4905,7 @@ Software\Policies\Mozilla\Firefox\MicrosoftEntraSSO (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `MicrosoftEntraSSO` | 133.0, 128.5.0esr |  |
 
-## NetworkPrediction: Network Prediction {#networkprediction}
+## NetworkPrediction
 
 Enable or disable network prediction (DNS prefetching).
 
@@ -5020,7 +4950,7 @@ Software\Policies\Mozilla\Firefox\NetworkPrediction (REG_DWORD) = 0x0
 |:--- | ---:| ---:|
 | `NetworkPrediction` | 67.0 |  |
 
-## NewTabPage: New Tab Page {#newtabpage}
+## NewTabPage
 
 Enable or disable the New Tab page.
 
@@ -5065,7 +4995,7 @@ Software\Policies\Mozilla\Firefox\NewTabPage (REG_DWORD) = 0x0
 |:--- | ---:| ---:|
 | `NewTabPage` | 68.0 |  |
 
-## NoDefaultBookmarks: No Default Bookmarks {#nodefaultbookmarks}
+## NoDefaultBookmarks
 
 Disable the creation of default bookmarks.
 
@@ -5112,7 +5042,7 @@ Software\Policies\Mozilla\Firefox\NoDefaultBookmarks (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `NoDefaultBookmarks` | 61.0 |  |
 
-## OfferToSaveLogins: Offer to save logins {#offertosavelogins}
+## OfferToSaveLogins
 
 Control whether or not Firefox offers to save passwords.
 
@@ -5204,7 +5134,7 @@ Software\Policies\Mozilla\Firefox\OfferToSaveLoginsDefault (REG_DWORD) = 0x0
 
 ## OverrideFirstRunPage: Override the first run page {#overridefirstrunpage}
 
-Override the first run page.
+The page shown on the first run, instead of the built-in one.
 
 If the value is an empty string (""), the first run page is not displayed.
 
@@ -5253,7 +5183,7 @@ Software\Policies\Mozilla\Firefox\OverrideFirstRunPage (REG_SZ) = https://exampl
 
 ## OverridePostUpdatePage: Override the upgrade page {#overridepostupdatepage}
 
-Override the upgrade page.
+The page shown after an upgrade, instead of the built-in one.
 
 If the value is an empty string (""), no extra pages are displayed when Firefox is upgraded.
 
@@ -5343,7 +5273,7 @@ Software\Policies\Mozilla\Firefox\PasswordManagerEnabled (REG_DWORD) = 0x0
 |:--- | ---:| ---:|
 | `PasswordManagerEnabled` | 70.0 |  |
 
-## PasswordManagerExceptions: Password Manager Exceptions {#passwordmanagerexceptions}
+## PasswordManagerExceptions
 
 Prevent Firefox from saving passwords for specific sites.
 
@@ -5398,10 +5328,6 @@ Software\Policies\Mozilla\Firefox\PasswordManagerExceptions\2 (REG_SZ) = https:/
 
 Disable or configure PDF.js, the built-in PDF viewer.
 
-If `Enabled` is set to false, the built-in PDF viewer is disabled.
-
-If `EnablePermissions` is set to true, the built-in PDF viewer will honor document permissions like preventing the copying of text.
-
 Note: DisableBuiltinPDFViewer has not been deprecated. You can either continue to use it, or switch to using PDFjs->Enabled to disable the built-in PDF viewer. This new permission was added because we needed a place for PDFjs->EnabledPermissions.
 
 **CCK2 Equivalent:** N/A\
@@ -5411,9 +5337,11 @@ Note: DisableBuiltinPDFViewer has not been deprecated. You can either continue t
 
 <div class="settings" markdown="1">
 
-`Enabled` Enable PDF.js (boolean)
+`Enabled` (boolean) - Enable PDF.js
+> *If false, the built-in PDF viewer is disabled.*
 
-`EnablePermissions` Enable Permissions (boolean)
+`EnablePermissions` (boolean)
+> *If true, the built-in PDF viewer will honor document permissions like preventing the copying of text.*
 
 </div>
 
@@ -5456,21 +5384,11 @@ Software\Policies\Mozilla\Firefox\PDFjs\EnablePermissions (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `PDFjs`<br>`PDFjs_Enabled`<br>`PDFjs_EnablePermissions` | 77.0 |  |
 
-## Permissions: Permissions {#permissions}
+## Permissions
 
 Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.
 
 Because these are origins, not domains, entries with unique ports must be specified separately. This explicitly means that it is not possible to add wildcards. See examples below.
-
-`Allow` is a list of origins where the feature is allowed.
-
-`Block` is a list of origins where the feature is not allowed.
-
-`BlockNewRequests` determines whether or not new requests can be made for the feature.
-
-`Locked` prevents the user from changing preferences for the feature.
-
-`Default` specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `permissions.default.camera`, `permissions.default.microphone`, `permissions.default.geo`, `permissions.default.desktop-notification`, `media.autoplay.default`, `permissions.default.xr`, `permissions.default.screen`
@@ -5479,44 +5397,68 @@ Because these are origins, not domains, entries with unique ports must be specif
 
 <div class="settings" markdown="1">
 
-`Camera` Camera (object)
-- `Allow` Allowed Sites (list of origins)
-- `Block` Blocked Sites (list of origins)
+`Camera` (object)
+- `Allow` (list of origins) - Allowed Sites
+  > *The feature is allowed for these origins.*
+- `Block` (list of origins) - Blocked Sites
+  > *The feature is not allowed for these origins.*
 - `BlockNewRequests` (boolean)
+  > *Determines whether or not new requests can be made for the feature.*
 - `Locked` (boolean)
+  > *Prevents the user from changing preferences for the feature.*
 
-`Microphone` Microphone (object)
-- `Allow` Allowed Sites (list of origins)
-- `Block` Blocked Sites (list of origins)
+`Microphone` (object)
+- `Allow` (list of origins) - Allowed Sites
+  > *The feature is allowed for these origins.*
+- `Block` (list of origins) - Blocked Sites
+  > *The feature is not allowed for these origins.*
 - `BlockNewRequests` (boolean)
+  > *Determines whether or not new requests can be made for the feature.*
 - `Locked` (boolean)
+  > *Prevents the user from changing preferences for the feature.*
 
-`Autoplay` Autoplay (object)
+`Autoplay` (object)
 - `Default` (string: `allow-audio-video`, `block-audio` or `block-audio-video`)
-  > *`allow-audio-video`: Sites may autoplay both audio and video.*\
-  > *`block-audio`: Sites may autoplay video without sound, but not audio.*\
+  > *The default value for Autoplay. `block-audio-video` is not supported on Firefox ESR 68.*<br>
+  > *`allow-audio-video`: Sites may autoplay both audio and video.*<br>
+  > *`block-audio`: Sites may autoplay video without sound, but not audio.*<br>
   > *`block-audio-video`: Sites may not autoplay anything.*
-- `Allow` Allowed Sites (list of origins)
-- `Block` Blocked Sites (list of origins)
+- `Allow` (list of origins) - Allowed Sites
+  > *The feature is allowed for these origins.*
+- `Block` (list of origins) - Blocked Sites
+  > *The feature is not allowed for these origins.*
 - `Locked` (boolean)
+  > *Prevents the user from changing preferences for the feature.*
 
-`Location` Location (object)
-- `Allow` Allowed Sites (list of origins)
-- `Block` Blocked Sites (list of origins)
+`Location` (object)
+- `Allow` (list of origins) - Allowed Sites
+  > *The feature is allowed for these origins.*
+- `Block` (list of origins) - Blocked Sites
+  > *The feature is not allowed for these origins.*
 - `BlockNewRequests` (boolean)
+  > *Determines whether or not new requests can be made for the feature.*
 - `Locked` (boolean)
+  > *Prevents the user from changing preferences for the feature.*
 
-`Notifications` Notifications (object)
-- `Allow` Allowed Sites (list of origins)
-- `Block` Blocked Sites (list of origins)
+`Notifications` (object)
+- `Allow` (list of origins) - Allowed Sites
+  > *The feature is allowed for these origins.*
+- `Block` (list of origins) - Blocked Sites
+  > *The feature is not allowed for these origins.*
 - `BlockNewRequests` (boolean)
+  > *Determines whether or not new requests can be made for the feature.*
 - `Locked` (boolean)
+  > *Prevents the user from changing preferences for the feature.*
 
-`VirtualReality` Virtual Reality (object)
-- `Allow` Allowed Sites (list of origins)
-- `Block` Blocked Sites (list of origins)
+`VirtualReality` (object)
+- `Allow` (list of origins) - Allowed Sites
+  > *The feature is allowed for these origins.*
+- `Block` (list of origins) - Blocked Sites
+  > *The feature is not allowed for these origins.*
 - `BlockNewRequests` (boolean)
+  > *Determines whether or not new requests can be made for the feature.*
 - `Locked` (boolean)
+  > *Prevents the user from changing preferences for the feature.*
 
 </div>
 
@@ -5717,9 +5659,9 @@ Enable or disable Picture-in-Picture as well as prevent the user from enabling o
 
 <div class="settings" markdown="1">
 
-`Enabled` Enabled (boolean)
+`Enabled` (boolean)
 
-`Locked` Locked (boolean)
+`Locked` (boolean)
 
 </div>
 
@@ -5768,12 +5710,6 @@ Allow certain websites to display popups and be redirected by third-party frames
 
 Configure the default pop-up window policy as well as origins for which pop-up windows are allowed.
 
-`Allow` is a list of origins where popup-windows are allowed.
-
-`Default` determines whether or not pop-up windows are allowed by default.
-
-`Locked` prevents the user from changing pop-up preferences.
-
 **CCK2 Equivalent:** `permissions.popup`\
 **Preferences Affected:** `dom.disable_open_during_load`
 
@@ -5781,11 +5717,14 @@ Configure the default pop-up window policy as well as origins for which pop-up w
 
 <div class="settings" markdown="1">
 
-`Allow` Allowed Sites (list of origins)
+`Allow` (list of origins) - Allowed Sites
+> *Pop-up windows are allowed for these origins.*
 
-`Default` Block pop-ups from websites (boolean)
+`Default` (boolean) - Block pop-ups from websites
+> *Determines whether or not pop-up windows are allowed by default.*
 
-`Locked` Do not allow preferences to be changed (boolean)
+`Locked` (boolean) - Do not allow preferences to be changed
+> *Prevents the user from changing pop-up preferences.*
 
 </div>
 
@@ -5836,7 +5775,7 @@ Software\Policies\Mozilla\Firefox\PopupBlocking\Locked (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `PopupBlocking`<br>`PopupBlocking_Allow`<br>`PopupBlocking_Default`<br>`PopupBlocking_Locked` | 61.0 |  |
 
-## PostQuantumKeyAgreementEnabled: Enable post-quantum key agreement {#postquantumkeyagreementenabled}
+## PostQuantumKeyAgreementEnabled: Post-quantum key agreement {#postquantumkeyagreementenabled}
 
 Enable post-quantum key agreement for TLS.
 
@@ -5881,7 +5820,7 @@ Software\Policies\Mozilla\Firefox\PostQuantumKeyAgreementEnabled (REG_DWORD) = 0
 |:--- | ---:| ---:|
 | `PostQuantumKeyAgreementEnabled` | 127.0 |  |
 
-## Preferences: Preferences {#preferences}
+## Preferences
 
 Set and lock preferences.
 
@@ -5891,26 +5830,13 @@ Previously you could only set and lock a subset of preferences. Starting with Fi
 
 **NOTE** There are too many preferences for us to provide documentation on them all. The source file [StaticPrefList.yaml](https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml) contains information on many of them.
 
-Using the preference as the key, set the `Value` to the corresponding preference value.
-
-`Status` can be "default", "locked", "user" or "clear"
-
-* `"default"`: Read/Write: Settings appear as default even if factory default differs.
-* `"locked"`: Read-Only: Settings appear as default even if factory default differs.
-* `"user"`: Read/Write: Settings appear as changed if it differs from factory default.
-* `"clear"`: Read/Write: `Value` has no effect. Resets to factory defaults on each startup.
-
 `"user"` preferences persist across invocations of Firefox. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy. An example of this is ```toolkit.legacyUserProfileCustomizations.stylesheets```.
 
 `"user"` preferences persist even if the policy is removed, so if you need to remove them, you should use the clear policy.
 
-You can also set the `Type` starting in Firefox 123 and Firefox ESR 115.8. It can be `number`, `boolean` or `string`. This is especially useful if you are seeing 0 or 1 values being converted to booleans when set as user preferences.
-
 See the examples below for more detail.
 
 IMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.
-
-Status
 
 **CCK2 Equivalent:** `preferences`\
 **Preferences Affected:** Many
@@ -5921,14 +5847,16 @@ Status
 
 `[name]` (number, boolean, string or object)
 - `Value` (number, boolean or string)
+  > *The value of the preference, which is the key.*
 - `Status` (string: `default`, `locked`, `user` or `clear`)
-  > *`default`: Change the preference's default value. A value the user has already set still wins.*\
-  > *`locked`: Change the preference's default value and prevent the user from changing it.*\
-  > *`user`: Set the preference as though the user had set it, so the value is written to the profile.*\
+  > *`default`: Change the preference's default value. A value the user has already set still wins.*<br>
+  > *`locked`: Change the preference's default value and prevent the user from changing it.*<br>
+  > *`user`: Set the preference as though the user had set it, so the value is written to the profile.*<br>
   > *`clear`: Remove any value the user has set, reverting the preference to its default.*
 - `Type` (string: `number`, `boolean` or `string`)
-  > *`number`: Store `Value` as an integer. Set this explicitly for 0 and 1, which are otherwise stored as booleans.*\
-  > *`boolean`: Store `Value` as a boolean.*\
+  > *The type of the preference (Firefox 123, Firefox ESR 115.8). This is especially useful if you are seeing 0 or 1 values being converted to booleans when set as user preferences.*<br>
+  > *`number`: Store `Value` as an integer. Set this explicitly for 0 and 1, which are otherwise stored as booleans.*<br>
+  > *`boolean`: Store `Value` as a boolean.*<br>
   > *`string`: Store `Value` as a string.*
 
 </div>
@@ -6112,7 +6040,7 @@ Software\Policies\Mozilla\Firefox\PrintingEnabled (REG_DWORD) = 0x0
 |:--- | ---:| ---:|
 | `PrintingEnabled` | 120.0 |  |
 
-## PrivateBrowsingModeAvailability: Private Browsing Mode Availability {#privatebrowsingmodeavailability}
+## PrivateBrowsingModeAvailability
 
 Set availability of private browsing mode.
 
@@ -6130,8 +6058,8 @@ Note: This policy missed Firefox ESR 128.2, but it will be in Firefox ESR 128.3.
 <div class="settings" markdown="1">
 
 `PrivateBrowsingModeAvailability` (number: `0`, `1` or `2`)
-> *`0`: The user can open private windows.*\
-> *`1`: Private windows and 'about:privatebrowsing' are unavailable.*\
+> *`0`: The user can open private windows.*<br>
+> *`1`: Private windows and 'about:privatebrowsing' are unavailable.*<br>
 > *`2`: Every window is a private window.*
 
 </div>
@@ -6166,7 +6094,7 @@ Software\Policies\Mozilla\Firefox\PrivateBrowsingModeAvailability (REG_DWORD) = 
 |:--- | ---:| ---:|
 | `PrivateBrowsingModeAvailability` | 130.0, 128.3.0esr |  |
 
-## PromptForDownloadLocation: Prompt for download location {#promptfordownloadlocation}
+## PromptForDownloadLocation
 
 Ask where to save each file before downloading.
 
@@ -6220,30 +6148,6 @@ To specify ports, append them to the hostnames with a colon (:).
 
 Unless you lock this policy, changes the user already has in place will take effect.
 
-`Mode` is the proxy method being used.
-
-`Locked` is whether or not proxy settings can be changed.
-
-`HTTPProxy` is the HTTP proxy server.
-
-`UseHTTPProxyForAllProtocols` is whether or not the HTTP proxy should be used for all other proxies.
-
-`SSLProxy` is the SSL proxy server.
-
-`FTPProxy` is the FTP proxy server.
-
-`SOCKSProxy` is the SOCKS proxy server
-
-`SOCKSVersion` is the SOCKS version (4 or 5)
-
-`Passthrough` is list of hostnames or IP addresses that will not be proxied. Use `<local>` to bypass proxying for all hostnames which do not contain periods.
-
-`AutoConfigURL` is a  URL for proxy configuration (only used if Mode is autoConfig).
-
-`AutoLogin` means do not prompt for authentication if password is saved.
-
-`UseProxyForDNS` to use proxy DNS when using SOCKS v5.
-
 **CCK2 Equivalent:** `networkProxy*`\
 **Preferences Affected:** `network.proxy.type`, `network.proxy.autoconfig_url`, `network.proxy.socks_remote_dns`, `signon.autologin.proxy`, `network.proxy.socks_version`, `network.proxy.no_proxies_on`, `network.proxy.share_proxy_settings`, `network.proxy.http`, `network.proxy.http_port`, `network.proxy.ftp`, `network.proxy.ftp_port`, `network.proxy.ssl`, `network.proxy.ssl_port`, `network.proxy.socks`, `network.proxy.socks_port`
 
@@ -6251,36 +6155,47 @@ Unless you lock this policy, changes the user already has in place will take eff
 
 <div class="settings" markdown="1">
 
-`Mode` Connection Type (string: `none`, `system`, `manual`, `autoDetect` or `autoConfig`)
-> *`none`: Connect directly, without a proxy.*\
-> *`system`: Use the proxy configured in the operating system.*\
-> *`manual`: Use the proxy hosts given in `HTTPProxy`, `SSLProxy`, `FTPProxy`, and `SOCKSProxy`.*\
-> *`autoDetect`: Discover the proxy settings for this network automatically.*\
+`Mode` (string: `none`, `system`, `manual`, `autoDetect` or `autoConfig`) - Connection Type
+> *The proxy method being used.*<br>
+> *`none`: Connect directly, without a proxy.*<br>
+> *`system`: Use the proxy configured in the operating system.*<br>
+> *`manual`: Use the proxy hosts given in `HTTPProxy`, `SSLProxy`, `FTPProxy`, and `SOCKSProxy`.*<br>
+> *`autoDetect`: Discover the proxy settings for this network automatically.*<br>
 > *`autoConfig`: Use the proxy auto-configuration file at `AutoConfigURL`.*
 
-`Locked` Do not allow proxy settings to be changed (boolean)
+`Locked` (boolean) - Do not allow proxy settings to be changed
+> *Whether or not proxy settings can be changed.*
 
-`AutoConfigURL` Automatic proxy configuration URL (string, URL)
+`AutoConfigURL` (string, URL) - Automatic proxy configuration URL
+> *Only used if `Mode` is `autoConfig`.*
 
 `FTPProxy` (string)
+> *The FTP proxy server.*
 
-`HTTPProxy` HTTP Proxy (string)
+`HTTPProxy` (string)
+> *The HTTP proxy server.*
 
-`SSLProxy` HTTPS Proxy (string)
+`SSLProxy` (string) - HTTPS Proxy
+> *The SSL proxy server.*
 
 `SOCKSProxy` (string)
+> *The SOCKS proxy server.*
 
 `SOCKSVersion` (number: `4` or `5`)
-> *`4`: Use version 4 of the SOCKS protocol to reach `SOCKSProxy`.*\
+> *The SOCKS version (4 or 5).*<br>
+> *`4`: Use version 4 of the SOCKS protocol to reach `SOCKSProxy`.*<br>
 > *`5`: Use version 5 of the SOCKS protocol to reach `SOCKSProxy`.*
 
-`UseHTTPProxyForAllProtocols` Use HTTP proxy for HTTPS (boolean)
+`UseHTTPProxyForAllProtocols` (boolean) - Use HTTP proxy for HTTPS
+> *Whether or not the HTTP proxy should be used for all other proxies.*
 
-`Passthrough` Proxy Passthrough (string)
+`Passthrough` (string) - Proxy Passthrough
+> *These hostnames or IP addresses are not proxied. Use `<local>` to bypass proxying for all hostnames which do not contain periods.*
 
-`UseProxyForDNS` Proxy DNS when using SOCKS (boolean)
+`UseProxyForDNS` (boolean) - Proxy DNS when using SOCKS
+> *Use proxy DNS when using SOCKS v5.*
 
-`AutoLogin` Do not prompt for authentication if password is saved (boolean)
+`AutoLogin` (boolean) - Do not prompt for authentication if password is saved
 
 </div>
 
@@ -6432,27 +6347,7 @@ Software\Policies\Mozilla\Firefox\RequestedLocales (REG_SZ) = de,en-US
 
 Clear specified data on shutdown, such as History, Cookies, Logins, Cache, Form History, Site Preferences and Offline Website Data.
 
-Clear data on shutdown.
-
 Note: Starting with Firefox 136, FormData and History have been separated again.
-
-`Cache`
-
-`Cookies`
-
-`Downloads` Download History (*Deprecated - part of History*)
-
-`FormData` Form History
-
-`History` Browsing History, Download History
-
-`Sessions` Active Logins
-
-`SiteSettings` Site Preferences
-
-`OfflineApps` Offline Website Data (*Deprecated - part of Cookies*)
-
-`Locked` prevents the user from changing these preferences.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `privacy.sanitize.sanitizeOnShutdown`, `privacy.clearOnShutdown.cache`, `privacy.clearOnShutdown.cookies`, `privacy.clearOnShutdown.downloads`, `privacy.clearOnShutdown.formdata`, `privacy.clearOnShutdown.history`, `privacy.clearOnShutdown.sessions`, `privacy.clearOnShutdown.siteSettings`, `privacy.clearOnShutdown.offlineApps`, `privacy.clearOnShutdown_v2.historyFormDataAndDownloads`, `privacy.clearOnShutdown_v2.cookiesAndStorage`, `privacy.clearOnShutdown_v2.cache`, `privacy.clearOnShutdown_v2.siteSettings`, `privacy.clearOnShutdown_v2.formdata`
@@ -6463,23 +6358,28 @@ Note: Starting with Firefox 136, FormData and History have been separated again.
 
 `SanitizeOnShutdown` (boolean or object)
 
-`Cache` Cache (boolean)
+`Cache` (boolean)
 
-`Cookies` Cookies (boolean)
+`Cookies` (boolean)
 
-`Downloads` Download History (boolean)
+`Downloads` (boolean) - Download History **Deprecated.**
+> *Part of History.*
 
-`FormData` Form Data (boolean)
+`FormData` (boolean)
+> *Form History.*
 
-`History` History (boolean)
+`History` (boolean)
+> *Browsing History, Download History.*
 
-`Sessions` Active Logins (boolean)
+`Sessions` (boolean) - Active Logins
 
-`SiteSettings` Site Preferences (boolean)
+`SiteSettings` (boolean) - Site Preferences
 
-`OfflineApps` Offline Website Data (boolean)
+`OfflineApps` (boolean) - Offline Website Data **Deprecated.**
+> *Part of Cookies.*
 
-`Locked` Locked (boolean)
+`Locked` (boolean)
+> *Prevents the user from changing these preferences.*
 
 </div>
 
@@ -6568,7 +6468,7 @@ Set whether or not search bar is displayed.
 <div class="settings" markdown="1">
 
 `SearchBar` (string: `unified` or `separate`)
-> *`unified`: Search from the address bar, with no separate search box.*\
+> *`unified`: Search from the address bar, with no separate search box.*<br>
 > *`separate`: Add a search box to the toolbar, next to the address bar.*
 
 </div>
@@ -6616,15 +6516,15 @@ As of Firefox 139, this policy is available in all versions of Firefox.
 
 <div class="settings" markdown="1">
 
-`Default` Default Search Engine (string)
+`Default` (string) - Default Search Engine
 > *Set the default search engine.*
 
 `DefaultPrivate` (string)
 
-`PreventInstalls` Prevent Search Engine Installs (boolean)
+`PreventInstalls` (boolean) - Prevent Search Engine Installs
 > *Prevent installing search engines from webpages.*
 
-`Remove` Remove Search Engines (list of strings)
+`Remove` (list of strings) - Remove Search Engines
 > *Hide built-in search engines.*
 
 </div>
@@ -6707,7 +6607,7 @@ Software\Policies\Mozilla\Firefox\SearchEngines\PreventInstalls (REG_DWORD) = 0x
 | `SearchEngines_DefaultPrivate` | 71.0 |  |
 | `SearchEngines_Remove` | 62.0 |  |
 
-## SearchEngines | Add
+## SearchEngines › Add
 
 Add new search engines. Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.
 
@@ -6747,7 +6647,7 @@ Add new search engines. Although there are only five engines available in the AD
 `Encoding` (string)
 
 `Method` (string: `GET` or `POST`)
-> *`GET`: Send the search terms as part of the URL.*\
+> *`GET`: Send the search terms as part of the URL.*<br>
 > *`POST`: Send the search terms in the request body, using `PostData`.*
 
 `URLTemplate` (string)
@@ -6871,7 +6771,7 @@ Software\Policies\Mozilla\Firefox\SearchSuggestEnabled (REG_DWORD) = 0x0
 |:--- | ---:| ---:|
 | `SearchSuggestEnabled` | 68.0 |  |
 
-## SecurityDevices: Security Devices {#securitydevices}
+## SecurityDevices
 
 Install PKCS #11 modules.
 
@@ -6882,11 +6782,11 @@ Install PKCS #11 modules.
 
 <div class="settings" markdown="1">
 
-`Add` Add (object)
+`Add` (object)
 - `[name]` (string)
   > *Environment variables like %USERPROFILE% are only expanded when the policy is set via Group Policy.*
 
-`Delete` Delete (list of strings)
+`Delete` (list of strings)
 
 `[name]` (string)
 > *Environment variables like %USERPROFILE% are only expanded when the policy is set via Group Policy.*
@@ -7120,7 +7020,7 @@ Software\Policies\Mozilla\Firefox\StartDownloadsInTempDirectory (REG_DWORD) = 0x
 |:--- | ---:| ---:|
 | `StartDownloadsInTempDirectory` | 102.0 |  |
 
-## SupportMenu: Support Menu {#supportmenu}
+## SupportMenu
 
 Add a menuitem to the help menu for specifying support information.
 
@@ -7227,25 +7127,11 @@ Software\Policies\Mozilla\Firefox\TranslateEnabled (REG_DWORD) = 0x0
 |:--- | ---:| ---:|
 | `TranslateEnabled` | 126.0 |  |
 
-## UserMessaging: User Messaging {#usermessaging}
+## UserMessaging
 
 Prevent Firefox from messaging the user in certain situations.
 
-`WhatsNew` Remove the "What's New" icon and menuitem. (*Deprecated*)
-
-`ExtensionRecommendations` If false, don't recommend extensions while the user is visiting web pages.
-
-`FeatureRecommendations` If false, don't recommend browser features.
-
-`UrlbarInterventions` If false, don't offer Firefox specific suggestions in the URL bar.
-
-`SkipOnboarding` If true, don't show onboarding messages on the new tab page.
-
-`MoreFromMozilla` If false, don't show the "More from Mozilla" section in Preferences. (Firefox 98)
-
 `FirefoxLabs` If false, don't show the "Firefox Labs" section in Preferences. (Firefox 130.0.1)
-
-`Locked` prevents the user from changing user messaging preferences.
 
 **CCK2 Equivalent:** N/A\
 **Preferences Affected:** `browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons`, `browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features`, `browser.aboutwelcome.enabled`, `browser.preferences.moreFromMozilla`, `browser.preferences.experimental`
@@ -7254,19 +7140,26 @@ Prevent Firefox from messaging the user in certain situations.
 
 <div class="settings" markdown="1">
 
-`WhatsNew` What's New (boolean)
+`WhatsNew` (boolean) - What's New **Deprecated.**
+> *Remove the "What's New" icon and menuitem.*
 
-`ExtensionRecommendations` Extension Recommendations (boolean)
+`ExtensionRecommendations` (boolean)
+> *If false, don't recommend extensions while the user is visiting web pages.*
 
-`FeatureRecommendations` Feature Recommendations (boolean)
+`FeatureRecommendations` (boolean)
+> *If false, don't recommend browser features.*
 
-`UrlbarInterventions` Urlbar Interventions (boolean)
+`UrlbarInterventions` (boolean)
+> *If false, don't offer Firefox specific suggestions in the URL bar.*
 
-`SkipOnboarding` Skip Onboarding (boolean)
+`SkipOnboarding` (boolean)
+> *If true, don't show onboarding messages on the new tab page.*
 
-`MoreFromMozilla` More from Mozilla (boolean)
+`MoreFromMozilla` (boolean)
+> *If false, don't show the "More from Mozilla" section in Preferences. (Firefox 98).*
 
-`Locked` Do not allow user messaging preferences to be changed (boolean)
+`Locked` (boolean) - Do not allow user messaging preferences to be changed
+> *Prevents the user from changing user messaging preferences.*
 
 </div>
 
@@ -7328,7 +7221,7 @@ Software\Policies\Mozilla\Firefox\UserMessaging\Locked (REG_DWORD) = 0x1
 | `UserMessaging_SkipOnboarding` | 80.0 |  |
 | `UserMessaging_MoreFromMozilla` | 99.0 |  |
 
-## UseSystemPrintDialog: Use System Print Dialog {#usesystemprintdialog}
+## UseSystemPrintDialog
 
 Use the system print dialog instead of the print preview window.
 
@@ -7373,7 +7266,7 @@ Software\Policies\Mozilla\Firefox\UseSystemPrintDialog (REG_DWORD) = 0x1
 |:--- | ---:| ---:|
 | `UseSystemPrintDialog` | 102.0 |  |
 
-## WebsiteFilter: Website Filter {#websitefilter}
+## WebsiteFilter
 
 Block websites from being visited.
 
@@ -7445,7 +7338,7 @@ Software\Policies\Mozilla\Firefox\WebsiteFilter (REG_MULTI_SZ) =
 |:--- | ---:| ---:|
 | `WebsiteFilter`<br>`WebsiteFilter_Block`<br>`WebsiteFilter_Exceptions` | 61.0 |  |
 
-## WindowsSSO: Windows SSO {#windowssso}
+## WindowsSSO
 
 Allow Windows single sign-on for Microsoft, work, and school accounts.
 
