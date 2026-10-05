@@ -80,6 +80,11 @@ test("the explain text links to the documentation", () => {
         getExplainText("Certificates_Install", { help: "Install certificates.\n", link: true }, `${DOCS_URL}/policies/esr140`),
         `Install certificates.\n\nFor more information visit: ${DOCS_URL}/policies/esr140/#certificates--install\n`
     );
+    // A titled heading which starts with a digit has the id kramdown generates.
+    assert.equal(
+        getExplainText("3rdparty", { help: "Managed storage.\n", link: true, docsTitle: "Policies for Extensions" }, DOCS_URL),
+        `Managed storage.\n\nFor more information visit: ${DOCS_URL}/#3rdparty-policies-for-extensions\n`
+    );
 });
 
 test("the explain text of a deprecated setting starts with a note", () => {

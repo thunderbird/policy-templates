@@ -6,7 +6,7 @@ import { getBranchKind, preprocess } from "./product.mjs";
 import { ContentError, InputError, ensureDir } from "./tools.mjs";
 import fs from "node:fs/promises";
 import pathUtils from "node:path";
-import { getPolicyAnchor } from "./docs_links.mjs";
+import { getPolicyAnchor, isNewTitle } from "./docs_links.mjs";
 import { getSchemaOptions } from "./schema_settings.mjs";
 
 /**
@@ -61,8 +61,9 @@ const italic = line => `*${line.trim()}*`;
 /**
  * Get the description block of a setting: its description and the
  * descriptions of its values ("`value`: description"), as a blockquote of
- * italic lines with hard line breaks. An empty line of the description starts
- * a new paragraph. The site stylesheet (site/assets/css/settings.css of the
+ * italic lines separated by <br> (kramdown, which renders the docs on GitHub
+ * Pages, ignores a backslash after the closing "*", also with a space before
+ * it). An empty line of the description starts a new paragraph. The site stylesheet (site/assets/css/settings.css of the
  * product, copied into the docs) shows
  * the blockquotes inside the Settings as a plain indent.
  *
@@ -83,24 +84,8 @@ function descriptionLines({ description, choices }, indent) {
     }
     return paragraphs.flatMap((lines, index) => [
         ...(index ? [`${indent}>`] : []),
-        ...lines.map((line, i) => `${indent}> ${italic(line)}${i < lines.length - 1 ? "\\" : ""}`),
+        ...lines.map((line, i) => `${indent}> ${italic(line)}${i < lines.length - 1 ? "<br>" : ""}`),
     ]);
-}
-
-/**
- * Whether a title says more than the name of its setting, i.e. not only the
- * name again (ignoring case, spaces and "_", so "Disable Telemetry" doesn't
- * for DisableTelemetry). The docs leave out other titles, the ADMX template
- * still uses them as names.
- *
- * @param {?string} title
- * @param {string} name - The name of the setting, or the path of a section
- *    (e.g. "SearchEngines_Add"), whose last part counts too.
- * @returns {boolean}
- */
-function isNewTitle(title, name) {
-    const plain = text => text.replace(/[\s_|]/g, "").toLowerCase();
-    return !!title && plain(title) != plain(name) && plain(title) != plain(name.split("_").at(-1));
 }
 
 /**
@@ -176,11 +161,17 @@ export function generateReadmeMarkdown(policies) {
         readmeData[key] = {}
         const summary = escape_pipes((value.summary ?? "").replace(/\s*\n\s*/g, " "));
         readmeData[key].toc = `| **[\`${key.replaceAll("_", " -> ")
-            }\`](#${getPolicyAnchor(key)})** | ${value.deprecated ? "**Deprecated.** " : ""}${summary}`;
+            }\`](#${getPolicyAnchor(key, value.title)})** | ${value.deprecated ? "**Deprecated.** " : ""}${summary}`;
 
         const heading = key.replaceAll("_", " | ");
         readmeData[key].content = [
-            isNewTitle(value.title, key) ? `## ${heading}: ${value.title} {#${getPolicyAnchor(key)}}` : `## ${heading}`,
+            // A titled heading keeps the anchor of its name as kramdown id,
+            // which must start with a letter, see getPolicyAnchor().
+            !isNewTitle(value.title, key)
+                ? `## ${heading}`
+                : getPolicyAnchor(key) == getPolicyAnchor(key, value.title)
+                    ? `## ${heading}: ${value.title} {#${getPolicyAnchor(key)}}`
+                    : `## ${heading}: ${value.title}`,
             ``,
             ...(value.deprecated ? ["**Deprecated.**", ""] : []),
             // Each text is followed by a blank line.

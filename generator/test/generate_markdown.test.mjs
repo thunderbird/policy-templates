@@ -29,12 +29,12 @@ test("each setting is its name and type, followed by its description as a quoted
         "`*` (object)",
         "> *The defaults.*",
         "- `mode` (string: `on` or `off`)",
-        "  > *The mode.*\\",
+        "  > *The mode.*<br>",
         "  > *`on`: Turned on.*",
         "- `message` (string)",
         "",
         "`Locked` (boolean) **Deprecated.**",
-        "> *Locks it.*\\",
+        "> *Locks it.*<br>",
         "> *Really.*",
         ">",
         "> *Another paragraph.*",
@@ -146,10 +146,15 @@ test("the table of contents shows the description, the heading the title", () =>
         SearchEngines_Add: section({ title: null, summary: "Add search\nengines | more.", description: "Add search engines." }),
         Old: section({ title: null, summary: "Old.", deprecated: true }),
         Cookies: section({ title: "Cookies", summary: "Cookies." }),
+        "3rdparty": section({ title: "Policies for Extensions", summary: "Managed storage." }),
         DisableTelemetry: section({ title: "Disable Telemetry", summary: "No telemetry." }),
     });
     assert.equal(data.AppAutoUpdate.toc, "| **[`AppAutoUpdate`](#appautoupdate)** | Enable automatic updates.");
     assert.equal(data.AppAutoUpdate.content[0], "## AppAutoUpdate: Automatic updates {#appautoupdate}");
+    // kramdown ids must start with a letter, else the anchor is the one
+    // kramdown generates from the whole heading.
+    assert.equal(data["3rdparty"].content[0], "## 3rdparty: Policies for Extensions");
+    assert.equal(data["3rdparty"].toc, "| **[`3rdparty`](#3rdparty-policies-for-extensions)** | Managed storage.");
     // Without a title, the heading is the name, and its anchor is the same.
     assert.equal(data.SearchEngines_Add.toc, "| **[`SearchEngines -> Add`](#searchengines--add)** | Add search engines \\| more.");
     assert.equal(data.SearchEngines_Add.content[0], "## SearchEngines | Add");

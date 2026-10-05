@@ -35,11 +35,13 @@ const JSON_TEXT_MAX_LENGTH = 16384;
  *    JSON values, or of a list or an object entered as one JSON value, in the
  *    tree of the policy (see getSettingTree()), whose fields are listed.
  * @param {boolean} [texts.link] - Whether to link to the documentation.
+ * @param {?string} [texts.docsTitle] - The title of the docs section of the
+ *    policy, see getPolicyAnchor().
  * @param {string} branchDocsUrl - The URL of the documentation of the branch,
  *    see getPolicyDocsUrl().
  * @returns {string}
  */
-export function getExplainText(name, { help, deprecated, expandEnvVars, fields, link }, branchDocsUrl) {
+export function getExplainText(name, { help, deprecated, expandEnvVars, fields, link, docsTitle }, branchDocsUrl) {
     let text = (deprecated ? "Deprecated.\n\n" : "") + markdownToText(help ?? "");
     // Windows expands environment variables in REG_EXPAND_SZ values.
     if (expandEnvVars) {
@@ -58,7 +60,7 @@ export function getExplainText(name, { help, deprecated, expandEnvVars, fields, 
         text = `${text.trimEnd()}\n\n${fieldLines.join("\n")}\n`;
     }
     return link
-        ? `${text.trimEnd()}\n\nFor more information visit: ${getPolicyDocsUrl(name, branchDocsUrl)}\n`
+        ? `${text.trimEnd()}\n\nFor more information visit: ${getPolicyDocsUrl(name, branchDocsUrl, docsTitle)}\n`
         : text;
 }
 
@@ -300,6 +302,7 @@ class ADM_BUILDER {
             expandEnvVars: !!setting?.expandEnvVars || controls.some(control => control.type == "REG_EXPAND_SZ"),
             fields: treeNode?.json || treeNode?.jsonEntries || treeNode?.jsonList || treeNode?.jsonObject ? treeNode : undefined,
             link: true,
+            docsTitle: withoutTrailingPeriod(lookup(policyName.replaceAll("_", "/"))?.title ?? "") || null,
         }, context.docsUrl);
         const controlTexts = controls
             .filter(control => control.description)
