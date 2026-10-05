@@ -183,6 +183,17 @@ the working tree of the checkout: whatever is checked out, including
 uncommitted changes. For the other branches, the local branch is used if it
 exists, otherwise `origin/<branch>`.
 
+Reading from GitHub uses the GitHub API for the branches and the history of
+the schema. Without a token, GitHub allows 60 requests per hour, a run needs
+about 10. To raise the limit, set `GITHUB_TOKEN` to a token: a fine-grained
+personal access token with read-only access to public repositories and no
+permissions is enough. For example, with the token in a file only you can
+read:
+
+```bash
+GITHUB_TOKEN=$(cat ~/.config/github-readonly-token) node update_all_policy_templates.js …
+```
+
 ### 📄 The policy schemas
 
 The policy schema of a product lives in its repository (for Thunderbird,
