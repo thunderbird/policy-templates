@@ -1495,6 +1495,7 @@
       "patternProperties": {
         "^(?!Add$|Delete$).*$": {
           "type": "string",
+          "x-expand-env-vars": true,
           "description": "The older form of this policy, with the names of the devices to add directly in the policy.",
           "x-help": "It is still supported, but ignored if `Add` or `Delete` is used.",
           "title": "Add PKCS #11 modules (older form).",
@@ -1507,6 +1508,7 @@
           "patternProperties": {
             "^.*$": {
               "type": "string",
+              "x-expand-env-vars": true,
               "description": "The path of the library of one device, by the name of the device."
             }
           },

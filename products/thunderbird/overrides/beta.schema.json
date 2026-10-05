@@ -1680,6 +1680,7 @@
       "patternProperties": {
         "^(?!Add$|Delete$).*$": {
           "type": "string",
+          "x-expand-env-vars": true,
           "title": "Add PKCS #11 modules (older form).",
           "x-help": "It is still supported, but ignored if `Add` or `Delete` is used.",
           "x-deprecated": true,
@@ -1692,6 +1693,7 @@
           "patternProperties": {
             "^.*$": {
               "type": "string",
+              "x-expand-env-vars": true,
               "description": "The path of the library of one device, by the name of the device."
             }
           },
