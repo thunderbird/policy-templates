@@ -156,8 +156,8 @@ test("the table of contents shows the title and the description, the heading the
     assert.equal(data["3rdparty"].content[0], "## 3rdparty: Policies for Extensions");
     assert.equal(data["3rdparty"].toc, "| **[`3rdparty`](#3rdparty-policies-for-extensions)** | Policies for Extensions: Managed storage.");
     // Without a title, the heading is the name, and its anchor is the same.
-    assert.equal(data.SearchEngines_Add.toc, "| **[`SearchEngines -> Add`](#searchengines--add)** | Add search engines \\| more.");
-    assert.equal(data.SearchEngines_Add.content[0], "## SearchEngines | Add");
+    assert.equal(data.SearchEngines_Add.toc, "| **[`SearchEngines › Add`](#searchengines--add)** | Add search engines \\| more.");
+    assert.equal(data.SearchEngines_Add.content[0], "## SearchEngines › Add");
     assert.equal(data.Old.toc, "| **[`Old`](#old)** | **Deprecated.** Old.");
     // A title which only repeats the name is left out.
     assert.equal(data.Cookies.content[0], "## Cookies");

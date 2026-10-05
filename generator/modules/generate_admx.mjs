@@ -2,7 +2,7 @@ import { create } from 'xmlbuilder2';
 import fs from "node:fs/promises";
 
 import { OPEN_NAME } from "./compatibility.mjs";
-import { getPolicyDocsUrl } from "./docs_links.mjs";
+import { PATH_SEPARATOR, getPolicyDocsUrl } from "./docs_links.mjs";
 import { markdownToText } from "./markdown_to_text.mjs";
 import { writeOutput } from "./branches.mjs";
 import {
@@ -264,7 +264,7 @@ class ADM_BUILDER {
 
         // The name: the title, else the raw name of the policy, or the path of
         // the setting (no category shows the policy of a setting).
-        let title = withoutTrailingPeriod(setting?.title ?? path.join(" › "));
+        let title = withoutTrailingPeriod(setting?.title ?? path.join(PATH_SEPARATOR));
         if (slot) {
             title = `${title} (${slot})`;
         }

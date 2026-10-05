@@ -6,7 +6,7 @@ import { getBranchKind, preprocess } from "./product.mjs";
 import { ContentError, InputError, ensureDir } from "./tools.mjs";
 import fs from "node:fs/promises";
 import pathUtils from "node:path";
-import { getPolicyAnchor, isNewTitle } from "./docs_links.mjs";
+import { PATH_SEPARATOR, getPolicyAnchor, isNewTitle } from "./docs_links.mjs";
 import { getSchemaOptions } from "./schema_settings.mjs";
 
 /**
@@ -163,10 +163,10 @@ export function generateReadmeMarkdown(policies) {
             isNewTitle(value.title, key) ? value.title : null,
             value.summary?.replace(/\s*\n\s*/g, " "),
         ].filter(Boolean).join(": "));
-        readmeData[key].toc = `| **[\`${key.replaceAll("_", " -> ")
+        readmeData[key].toc = `| **[\`${key.replaceAll("_", PATH_SEPARATOR)
             }\`](#${getPolicyAnchor(key, value.title)})** | ${value.deprecated ? "**Deprecated.** " : ""}${summary}`;
 
-        const heading = key.replaceAll("_", " | ");
+        const heading = key.replaceAll("_", PATH_SEPARATOR);
         readmeData[key].content = [
             // A titled heading keeps the anchor of its name as kramdown id,
             // which must start with a letter, see getPolicyAnchor().

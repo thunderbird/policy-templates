@@ -6,6 +6,13 @@
 import GithubSlugger from 'github-slugger';
 
 /**
+ * The separator of the parts of a setting path in the docs and in the names
+ * of the ADMX template ("Certificates › Install"). Slugs drop it, so the
+ * anchors don't depend on it.
+ */
+export const PATH_SEPARATOR = " › ";
+
+/**
  * Whether a title says more than the name of its setting, i.e. not only the
  * name again (ignoring case, spaces and "_", so "Disable Telemetry" doesn't
  * for DisableTelemetry). The docs leave out other titles, the ADMX template
@@ -32,7 +39,7 @@ export function isNewTitle(title, name) {
  * @returns {string} e.g. "certificates--install"
  */
 export function getPolicyAnchor(name, title = null) {
-    const heading = name.replaceAll("_", " | ");
+    const heading = name.replaceAll("_", PATH_SEPARATOR);
     const anchor = new GithubSlugger().slug(heading);
     return /^[a-z]/i.test(anchor) || !isNewTitle(title, name)
         ? anchor
