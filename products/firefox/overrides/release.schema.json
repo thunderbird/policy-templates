@@ -795,7 +795,10 @@
       ]
     },
     "BrowserDataBackup": {
-      "type": "object",
+      "type": [
+        "boolean",
+        "object"
+      ],
       "x-category": "Security",
       "x-compatibility": {
         "firefox": {
@@ -885,6 +888,7 @@
         },
         "Install": {
           "type": "array",
+          "x-expand-env-vars": true,
           "items": {
             "type": "string"
           },
@@ -1090,10 +1094,6 @@
           "InterceptionPoints": {
             "Clipboard": {
               "Enabled": true,
-              "PlainTextOnly": true
-            },
-            "ClipboardCopy": {
-              "Enabled": false,
               "PlainTextOnly": true
             },
             "Download": {
@@ -1396,7 +1396,7 @@
           ]
         }
       },
-      "x-help": "`Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.\n\n`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.\n\n`Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.\n\n`Behavior` sets the default behavior for cookies based on the values below.\n\n`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.\n\n`Locked` prevents the user from changing cookie preferences.\n\n`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)\n\n`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)\n\n`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)\n\n`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown-selective) instead)",
+      "x-help": "`Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.\n\n`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.\n\n`Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.\n\n`Behavior` sets the default behavior for cookies based on the values below.\n\n`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.\n\n`Locked` prevents the user from changing cookie preferences.\n\n`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)\n\n`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)\n\n`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)\n\n`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown) instead)",
       "x-preferences-affected": [
         "network.cookie.cookieBehavior",
         "network.cookie.cookieBehavior.pbmode",
@@ -1425,6 +1425,7 @@
     },
     "DefaultDownloadDirectory": {
       "type": "string",
+      "x-expand-env-vars": true,
       "x-category": "Downloads",
       "x-compatibility": {
         "firefox": {
@@ -2225,22 +2226,29 @@
         "always"
       ],
       "x-help": "A user can still change how it is displayed.\n\n`always` means the bookmarks toolbar is always shown.\n\n`never` means the bookmarks toolbar is not shown.\n\n`newtab` means the bookmarks toolbar is only shown on the new tab page.",
-      "type": "string",
-      "oneOf": [
+      "anyOf": [
         {
-          "const": "always",
-          "title": "Always",
-          "description": "Show the bookmarks toolbar on every page."
+          "type": "boolean"
         },
         {
-          "const": "never",
-          "title": "Never",
-          "description": "Hide the bookmarks toolbar."
-        },
-        {
-          "const": "newtab",
-          "title": "New tab only",
-          "description": "Show the bookmarks toolbar only on the New Tab page."
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "always",
+              "title": "Always",
+              "description": "Show the bookmarks toolbar on every page."
+            },
+            {
+              "const": "never",
+              "title": "Never",
+              "description": "Hide the bookmarks toolbar."
+            },
+            {
+              "const": "newtab",
+              "title": "New tab only",
+              "description": "Show the bookmarks toolbar only on the New Tab page."
+            }
+          ]
         }
       ]
     },
@@ -2263,27 +2271,34 @@
         "always"
       ],
       "x-help": "`always` means the menubar is shown and cannot be hidden.\n\n`never` means the menubar is hidden and cannot be shown.\n\n`default-on` means the menubar is on by default but can be hidden.\n\n`default-off` means the menubar is off by default but can be shown.",
-      "type": "string",
-      "oneOf": [
+      "anyOf": [
         {
-          "const": "always",
-          "title": "Always shown",
-          "description": "The menu bar is shown and the user cannot hide it."
+          "type": "boolean"
         },
         {
-          "const": "never",
-          "title": "Always hidden",
-          "description": "The menu bar is hidden and the user cannot show it, including by pressing Alt."
-        },
-        {
-          "const": "default-on",
-          "title": "Shown by default",
-          "description": "The menu bar starts visible and the user can hide it."
-        },
-        {
-          "const": "default-off",
-          "title": "Hidden by default",
-          "description": "The menu bar starts hidden and the user can show it."
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "always",
+              "title": "Always shown",
+              "description": "The menu bar is shown and the user cannot hide it."
+            },
+            {
+              "const": "never",
+              "title": "Always hidden",
+              "description": "The menu bar is hidden and the user cannot show it, including by pressing Alt."
+            },
+            {
+              "const": "default-on",
+              "title": "Shown by default",
+              "description": "The menu bar starts visible and the user can hide it."
+            },
+            {
+              "const": "default-off",
+              "title": "Hidden by default",
+              "description": "The menu bar starts hidden and the user can show it."
+            }
+          ]
         }
       ],
       "x-cck2-equivalent": [
@@ -2371,6 +2386,7 @@
     },
     "DownloadDirectory": {
       "type": "string",
+      "x-expand-env-vars": true,
       "x-category": "Downloads",
       "x-compatibility": {
         "firefox": {
@@ -2597,6 +2613,7 @@
       "properties": {
         "Install": {
           "type": "array",
+          "x-expand-env-vars": true,
           "items": {
             "type": "string"
           }
@@ -4793,7 +4810,8 @@
         [
           "de",
           "en-US"
-        ]
+        ],
+        "de,en-US"
       ],
       "items": {
         "type": "string"
@@ -4801,7 +4819,10 @@
       "x-help": "It will cause the corresponding language pack to become active.\n\nNote: For Firefox 68, this can now be a string so that you can specify an empty value."
     },
     "SanitizeOnShutdown": {
-      "type": "object",
+      "type": [
+        "boolean",
+        "object"
+      ],
       "x-category": "Local data storage",
       "x-compatibility": {
         "firefox": {
@@ -4954,6 +4975,11 @@
           "PreventInstalls": false
         }
       ],
+      "x-cck2-equivalent": [
+        "defaultSearchEngine",
+        "disableSearchEngineInstall",
+        "removeDefaultSearchEngines"
+      ],
       "properties": {
         "Add": {
           "type": "array",
@@ -5013,30 +5039,21 @@
         },
         "Default": {
           "type": "string",
-          "description": "Set the default search engine.",
-          "x-cck2-equivalent": [
-            "defaultSearchEngine"
-          ]
+          "description": "Set the default search engine."
         },
         "DefaultPrivate": {
           "type": "string"
         },
         "PreventInstalls": {
           "type": "boolean",
-          "description": "Prevent installing search engines from webpages.",
-          "x-cck2-equivalent": [
-            "disableSearchEngineInstall"
-          ]
+          "description": "Prevent installing search engines from webpages."
         },
         "Remove": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Hide built-in search engines.",
-          "x-cck2-equivalent": [
-            "removeDefaultSearchEngines"
-          ]
+          "description": "Hide built-in search engines."
         }
       },
       "x-help": "As of Firefox 139, this policy is available in all versions of Firefox."
@@ -5099,7 +5116,8 @@
       ],
       "patternProperties": {
         "^(?!Add$|Delete$).*$": {
-          "type": "string"
+          "type": "string",
+          "x-expand-env-vars": true
         }
       },
       "properties": {
@@ -5107,7 +5125,8 @@
           "type": "object",
           "patternProperties": {
             "^.*$": {
-              "type": "string"
+              "type": "string",
+              "x-expand-env-vars": true
             }
           }
         },
@@ -5183,16 +5202,6 @@
             ],
             "Policies": {
               "HttpsOnly": true
-            }
-          },
-          {
-            "Match": [
-              "*.example.com"
-            ],
-            "Policies": {
-              "Container": {
-                "id": "work"
-              }
             }
           }
         ]

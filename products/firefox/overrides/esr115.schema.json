@@ -195,7 +195,10 @@
       ]
     },
     "AutoLaunchProtocolsFromOrigins": {
-      "type": "array",
+      "type": [
+        "array",
+        "JSON"
+      ],
       "items": {
         "type": "object",
         "properties": {
@@ -226,8 +229,7 @@
           }
         ]
       ],
-      "x-category": "Network security",
-      "contentMediaType": "application/json"
+      "x-category": "Network security"
     },
     "BackgroundAppUpdate": {
       "type": "boolean",
@@ -370,6 +372,7 @@
         },
         "Install": {
           "type": "array",
+          "x-expand-env-vars": true,
           "items": {
             "type": "string"
           },
@@ -396,7 +399,10 @@
       "type": "object",
       "properties": {
         "Default": {
-          "type": "array",
+          "type": [
+            "array",
+            "JSON"
+          ],
           "items": {
             "properties": {
               "name": {
@@ -493,7 +499,8 @@
                     "title": "Blue"
                   },
                   {
-                    "const": "turquoise"
+                    "const": "turquoise",
+                    "title": "Turquoise"
                   },
                   {
                     "const": "green",
@@ -520,14 +527,14 @@
                     "title": "Purple"
                   },
                   {
-                    "const": "toolbar"
+                    "const": "toolbar",
+                    "title": "Toolbar"
                   }
                 ]
               }
             },
             "type": "object"
-          },
-          "contentMediaType": "application/json"
+          }
         }
       },
       "description": "Set policies related to Multi-Account Containers.",
@@ -538,7 +545,7 @@
             {
               "name": "My container",
               "icon": "pet",
-              "color": "cyan"
+              "color": "blue"
             }
           ]
         }
@@ -694,7 +701,7 @@
         }
       },
       "description": "Configure cookie preferences.",
-      "x-help": "`Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.\n\n`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.\n\n`Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.\n\n`Behavior` sets the default behavior for cookies based on the values below.\n\n`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.\n\n`Locked` prevents the user from changing cookie preferences.\n\n`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)\n\n`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)\n\n`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)\n\n`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown-selective) instead)",
+      "x-help": "`Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.\n\n`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.\n\n`Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.\n\n`Behavior` sets the default behavior for cookies based on the values below.\n\n`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.\n\n`Locked` prevents the user from changing cookie preferences.\n\n`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)\n\n`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)\n\n`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)\n\n`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown) instead)",
       "examples": [
         {
           "Allow": [
@@ -720,6 +727,7 @@
     },
     "DefaultDownloadDirectory": {
       "type": "string",
+      "x-expand-env-vars": true,
       "description": "Set the default download directory.",
       "x-help": "You can use ${home} for the native home directory.",
       "examples": [
@@ -1066,7 +1074,15 @@
       "x-category": "Security"
     },
     "DisplayBookmarksToolbar": {
-      "type": "string",
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "enum": [
+        "always",
+        "never",
+        "newtab"
+      ],
       "description": "Set the initial state of the bookmarks toolbar.",
       "x-help": "A user can still change how it is displayed.\n\n`always` means the bookmarks toolbar is always shown.\n\n`never` means the bookmarks toolbar is not shown.\n\n`newtab` means the bookmarks toolbar is only shown on the new tab page.",
       "examples": [
@@ -1092,7 +1108,16 @@
       ]
     },
     "DisplayMenuBar": {
-      "type": "string",
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "enum": [
+        "always",
+        "never",
+        "default-on",
+        "default-off"
+      ],
       "description": "Set the state of the menubar.",
       "x-help": "`always` means the menubar is shown and cannot be hidden.\n\n`never` means the menubar is hidden and cannot be shown.\n\n`default-on` means the menubar is on by default but can be hidden.\n\n`default-off` means the menubar is off by default but can be shown.",
       "examples": [
@@ -1153,8 +1178,7 @@
           "Locked": true,
           "ExcludedDomains": [
             "example.com"
-          ],
-          "Fallback": true
+          ]
         }
       ],
       "x-category": "Network security",
@@ -1179,6 +1203,7 @@
     },
     "DownloadDirectory": {
       "type": "string",
+      "x-expand-env-vars": true,
       "description": "Set and lock the download directory.",
       "x-help": "You can use ${home} for the native home directory.",
       "examples": [
@@ -1226,13 +1251,9 @@
           "Cryptomining": true,
           "Fingerprinting": true,
           "EmailTracking": true,
-          "SuspectedFingerprinting": true,
-          "Category": "strict",
           "Exceptions": [
             "https://example.com"
-          ],
-          "BaselineExceptions": true,
-          "ConvenienceExceptions": true
+          ]
         }
       ],
       "x-category": "Network security",
@@ -1306,6 +1327,7 @@
       "properties": {
         "Install": {
           "type": "array",
+          "x-expand-env-vars": true,
           "items": {
             "type": "string"
           }
@@ -1345,7 +1367,10 @@
       ]
     },
     "ExtensionSettings": {
-      "type": "object",
+      "type": [
+        "object",
+        "JSON"
+      ],
       "properties": {
         "*": {
           "type": "object",
@@ -1518,8 +1543,7 @@
           }
         }
       ],
-      "x-category": "Extensions",
-      "contentMediaType": "application/json"
+      "x-category": "Extensions"
     },
     "ExtensionUpdate": {
       "type": "boolean",
@@ -1568,17 +1592,8 @@
           "SponsoredTopSites": true,
           "Highlights": true,
           "Pocket": true,
-          "Stories": true,
           "SponsoredPocket": true,
-          "SponsoredStories": true,
           "Snippets": true,
-          "Widgets": {
-            "Enabled": true,
-            "Blocked": [
-              "crossword",
-              "stocks"
-            ]
-          },
           "Locked": true
         }
       ],
@@ -1642,7 +1657,10 @@
       ]
     },
     "Handlers": {
-      "type": "object",
+      "type": [
+        "object",
+        "JSON"
+      ],
       "patternProperties": {
         "^(mimeTypes|extensions|schemes)$": {
           "type": "object",
@@ -1736,8 +1754,7 @@
           }
         }
       ],
-      "x-category": "Security",
-      "contentMediaType": "application/json"
+      "x-category": "Security"
     },
     "HardwareAcceleration": {
       "type": "boolean",
@@ -1950,7 +1967,10 @@
         },
         "type": "object"
       },
-      "type": "array",
+      "type": [
+        "array",
+        "JSON"
+      ],
       "description": "Configures a list of bookmarks managed by an administrator that cannot be changed by the user.",
       "x-help": "The bookmarks are only added as a button on the personal toolbar. They are not in the bookmarks folder.",
       "examples": [
@@ -1977,8 +1997,7 @@
           }
         ]
       ],
-      "x-category": "Bookmarks",
-      "contentMediaType": "application/json"
+      "x-category": "Bookmarks"
     },
     "ManualAppUpdateOnly": {
       "type": "boolean",
@@ -2376,16 +2395,6 @@
             ],
             "BlockNewRequests": true,
             "Locked": true
-          },
-          "ScreenShare": {
-            "Allow": [
-              "https://example.org"
-            ],
-            "Block": [
-              "https://example.edu"
-            ],
-            "BlockNewRequests": true,
-            "Locked": true
           }
         }
       ],
@@ -2460,7 +2469,10 @@
       ]
     },
     "Preferences": {
-      "type": "object",
+      "type": [
+        "object",
+        "JSON"
+      ],
       "patternProperties": {
         "^.*$": {
           "type": [
@@ -2556,7 +2568,6 @@
         }
       ],
       "x-category": "Security",
-      "contentMediaType": "application/json",
       "x-cck2-equivalent": [
         "preferences"
       ],
@@ -2740,12 +2751,16 @@
         [
           "de",
           "en-US"
-        ]
+        ],
+        "de,en-US"
       ],
       "x-category": "Miscellaneous"
     },
     "SanitizeOnShutdown": {
-      "type": "object",
+      "type": [
+        "boolean",
+        "object"
+      ],
       "properties": {
         "Cache": {
           "type": "boolean"
@@ -2836,6 +2851,11 @@
     "SearchEngines": {
       "enterprise_only": true,
       "type": "object",
+      "x-cck2-equivalent": [
+        "defaultSearchEngine",
+        "disableSearchEngineInstall",
+        "removeDefaultSearchEngines"
+      ],
       "properties": {
         "Add": {
           "type": "array",
@@ -2899,30 +2919,21 @@
         },
         "Default": {
           "type": "string",
-          "description": "Set the default search engine.",
-          "x-cck2-equivalent": [
-            "defaultSearchEngine"
-          ]
+          "description": "Set the default search engine."
         },
         "DefaultPrivate": {
           "type": "string"
         },
         "PreventInstalls": {
           "type": "boolean",
-          "description": "Prevent installing search engines from webpages.",
-          "x-cck2-equivalent": [
-            "disableSearchEngineInstall"
-          ]
+          "description": "Prevent installing search engines from webpages."
         },
         "Remove": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Hide built-in search engines.",
-          "x-cck2-equivalent": [
-            "removeDefaultSearchEngines"
-          ]
+          "description": "Hide built-in search engines."
         }
       },
       "description": "The following policies allow for configuring search engines in Firefox.",
@@ -2968,7 +2979,8 @@
       "type": "object",
       "patternProperties": {
         "^.*$": {
-          "type": "string"
+          "type": "string",
+          "x-expand-env-vars": true
         }
       },
       "properties": {
@@ -2976,7 +2988,8 @@
           "type": "object",
           "patternProperties": {
             "^.*$": {
-              "type": "string"
+              "type": "string",
+              "x-expand-env-vars": true
             }
           }
         },
@@ -3162,7 +3175,6 @@
           "UrlbarInterventions": false,
           "SkipOnboarding": true,
           "MoreFromMozilla": true,
-          "FirefoxLabs": false,
           "Locked": true
         }
       ],
@@ -3187,7 +3199,10 @@
       ]
     },
     "WebsiteFilter": {
-      "type": "object",
+      "type": [
+        "object",
+        "JSON"
+      ],
       "properties": {
         "Block": {
           "type": "array",
@@ -3214,8 +3229,7 @@
           ]
         }
       ],
-      "x-category": "Browsing restrictions",
-      "contentMediaType": "application/json"
+      "x-category": "Browsing restrictions"
     },
     "WindowsSSO": {
       "type": "boolean",

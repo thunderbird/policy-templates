@@ -608,7 +608,10 @@
       ]
     },
     "BrowserDataBackup": {
-      "type": "object",
+      "type": [
+        "boolean",
+        "object"
+      ],
       "properties": {
         "AllowBackup": {
           "type": "boolean"
@@ -651,6 +654,7 @@
         },
         "Install": {
           "type": "array",
+          "x-expand-env-vars": true,
           "items": {
             "type": "string"
           },
@@ -674,7 +678,10 @@
       "x-category": "Certificate management"
     },
     "ClearOnShutdown": {
-      "type": "object",
+      "type": [
+        "boolean",
+        "object"
+      ],
       "properties": {
         "BrowsingHistoryAndDownloads": {
           "type": "boolean"
@@ -697,10 +704,7 @@
         {
           "BrowsingHistoryAndDownloads": true,
           "CookiesAndStorage": true,
-          "Cache": true,
-          "Exceptions": [
-            "https://example.com"
-          ]
+          "Cache": true
         }
       ],
       "x-category": "Local data storage"
@@ -976,10 +980,6 @@
               "Enabled": true,
               "PlainTextOnly": true
             },
-            "ClipboardCopy": {
-              "Enabled": false,
-              "PlainTextOnly": true
-            },
             "Download": {
               "Enabled": false
             },
@@ -1182,7 +1182,7 @@
         }
       },
       "description": "Configure cookie preferences.",
-      "x-help": "`Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.\n\n`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.\n\n`Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.\n\n`Behavior` sets the default behavior for cookies based on the values below.\n\n`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.\n\n`Locked` prevents the user from changing cookie preferences.\n\n`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)\n\n`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)\n\n`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)\n\n`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown-selective) instead)",
+      "x-help": "`Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.\n\n`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.\n\n`Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.\n\n`Behavior` sets the default behavior for cookies based on the values below.\n\n`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.\n\n`Locked` prevents the user from changing cookie preferences.\n\n`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)\n\n`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)\n\n`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)\n\n`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown) instead)",
       "examples": [
         {
           "Allow": [
@@ -1216,6 +1216,7 @@
     },
     "DefaultDownloadDirectory": {
       "type": "string",
+      "x-expand-env-vars": true,
       "description": "Set the default download directory.",
       "x-help": "You can use ${home} for the native home directory.",
       "examples": [
@@ -1640,22 +1641,17 @@
         "always"
       ],
       "x-category": "Bookmarks",
-      "type": "string",
-      "oneOf": [
+      "anyOf": [
         {
-          "const": "always",
-          "title": "Always",
-          "description": "Show the bookmarks toolbar on every page."
+          "type": "boolean"
         },
         {
-          "const": "never",
-          "title": "Never",
-          "description": "Hide the bookmarks toolbar."
-        },
-        {
-          "const": "newtab",
-          "title": "New tab only",
-          "description": "Show the bookmarks toolbar only on the New Tab page."
+          "type": "string",
+          "enum": [
+            "always",
+            "never",
+            "newtab"
+          ]
         }
       ]
     },
@@ -1666,27 +1662,18 @@
         "always"
       ],
       "x-category": "Browser UI",
-      "type": "string",
-      "oneOf": [
+      "anyOf": [
         {
-          "const": "always",
-          "title": "Always shown",
-          "description": "The menu bar is shown and the user cannot hide it."
+          "type": "boolean"
         },
         {
-          "const": "never",
-          "title": "Always hidden",
-          "description": "The menu bar is hidden and the user cannot show it, including by pressing Alt."
-        },
-        {
-          "const": "default-on",
-          "title": "Shown by default",
-          "description": "The menu bar starts visible and the user can hide it."
-        },
-        {
-          "const": "default-off",
-          "title": "Hidden by default",
-          "description": "The menu bar starts hidden and the user can show it."
+          "type": "string",
+          "enum": [
+            "always",
+            "never",
+            "default-on",
+            "default-off"
+          ]
         }
       ],
       "x-cck2-equivalent": [
@@ -1750,6 +1737,7 @@
     },
     "DownloadDirectory": {
       "type": "string",
+      "x-expand-env-vars": true,
       "description": "Set and lock the download directory.",
       "x-help": "You can use ${home} for the native home directory.",
       "examples": [
@@ -1904,6 +1892,7 @@
       "properties": {
         "Install": {
           "type": "array",
+          "x-expand-env-vars": true,
           "items": {
             "type": "string"
           }
@@ -3673,12 +3662,16 @@
         [
           "de",
           "en-US"
-        ]
+        ],
+        "de,en-US"
       ],
       "x-category": "Miscellaneous"
     },
     "SanitizeOnShutdown": {
-      "type": "object",
+      "type": [
+        "boolean",
+        "object"
+      ],
       "properties": {
         "Cache": {
           "type": "boolean"
@@ -3774,6 +3767,11 @@
     },
     "SearchEngines": {
       "type": "object",
+      "x-cck2-equivalent": [
+        "defaultSearchEngine",
+        "disableSearchEngineInstall",
+        "removeDefaultSearchEngines"
+      ],
       "properties": {
         "Add": {
           "type": "array",
@@ -3837,30 +3835,21 @@
         },
         "Default": {
           "type": "string",
-          "description": "Set the default search engine.",
-          "x-cck2-equivalent": [
-            "defaultSearchEngine"
-          ]
+          "description": "Set the default search engine."
         },
         "DefaultPrivate": {
           "type": "string"
         },
         "PreventInstalls": {
           "type": "boolean",
-          "description": "Prevent installing search engines from webpages.",
-          "x-cck2-equivalent": [
-            "disableSearchEngineInstall"
-          ]
+          "description": "Prevent installing search engines from webpages."
         },
         "Remove": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Hide built-in search engines.",
-          "x-cck2-equivalent": [
-            "removeDefaultSearchEngines"
-          ]
+          "description": "Hide built-in search engines."
         }
       },
       "description": "The following policies allow for configuring search engines in Firefox.",
@@ -3906,7 +3895,8 @@
       "type": "object",
       "patternProperties": {
         "^(?!Add$|Delete$).*$": {
-          "type": "string"
+          "type": "string",
+          "x-expand-env-vars": true
         }
       },
       "properties": {
@@ -3914,7 +3904,8 @@
           "type": "object",
           "patternProperties": {
             "^.*$": {
-              "type": "string"
+              "type": "string",
+              "x-expand-env-vars": true
             }
           }
         },
@@ -4003,24 +3994,6 @@
             ],
             "Policies": {
               "DisableJit": true
-            }
-          },
-          {
-            "Match": [
-              "*.example.net"
-            ],
-            "Policies": {
-              "HttpsOnly": true
-            }
-          },
-          {
-            "Match": [
-              "*.example.com"
-            ],
-            "Policies": {
-              "Container": {
-                "id": "work"
-              }
             }
           }
         ]
