@@ -335,7 +335,7 @@ export async function generatePolicyReadme(sections, branchData, branches, app, 
  */
 export async function generateOverview({ app, product, branches, main }, output) {
     if (!branches.includes("main")) {
-        throw new InputError("The overview needs the main branch (its compatibility data), add it to --branches.");
+        throw new InputError("The overview needs the main branch (its compatibility data), which the product's repository doesn't have.");
     }
     main ??= await loadBranch({ app, product, branch: "main" });
     const branchList = await getBranchList({ app, product, branches });

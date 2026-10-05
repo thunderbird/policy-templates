@@ -1,41 +1,43 @@
 /**
  * Generate the Markdown docs, the Windows templates and the macOS template of
- * the given branches of a product, and the overview of all templates: all of
- * generate_docs.js, generate_admx.js, generate_plist.js and
- * generate_overview.js in one run, which loads the data of each branch only
- * once. The files of the product's site/ folder are added unchanged.
+ * all branches of a product (main, beta, release and the ESR branches from
+ * OLDEST_ESR on, see getSupportedBranches()) (what generate_docs.js, generate_admx.js
+ * and generate_plist.js do for one branch), loading the data of each branch
+ * only once, and the overview of all templates. The files of the product's
+ * site/ folder are added unchanged.
  *
  * Everything is built in a temporary folder next to the target (<output>.temp)
  * first. Only if the whole run succeeded, it replaces the whole target, which
- * then has exactly the given branches, so a failed run leaves the target as
- * it was. The temporary folder is deleted when the run ends, however it ends.
+ * then has exactly these branches, so a failed run leaves the target as it
+ * was. The temporary folder is deleted when the run ends, however it ends.
  */
 
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import pathUtils from "node:path";
 
-import { runTool } from "./modules/branches.mjs";
+import { runAllBranches } from "./modules/branches.mjs";
 import { generateWindowsTemplates } from "./modules/generate_admx.mjs";
 import { generateDocs, generateOverview } from "./modules/generate_markdown.mjs";
 import { generateMacTemplate } from "./modules/generate_plist.mjs";
 import { InputError, ensureDir } from "./modules/tools.mjs";
 
 let main;
-await runTool({
+await runAllBranches({
     usage: `
 Usage:
 
     node update_all_policy_templates.js [options]
 
-All of the target (--output) is replaced: it then has the overview, the given
-branches (main is required, for the overview) and the files of the product's
-site/ folder.
+It builds all branches of the product's repository: main, beta, release and
+the ESR branches from OLDEST_ESR (constants.mjs) on. All of the target
+(--output) is replaced: it then has the overview, these branches and the
+files of the product's site/ folder.
 
 Options:`,
     async prepare(output, branches) {
         if (!branches.includes("main")) {
-            throw new InputError("The overview needs the main branch (its compatibility data), add it to --branches.");
+            throw new InputError("The overview needs the main branch (its compatibility data), which the product's repository doesn't have.");
         }
         const buildDir = `${pathUtils.resolve(output)}.temp`;
         // Left over by a run which was killed hard (kill -9), which can't

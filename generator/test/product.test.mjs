@@ -6,7 +6,8 @@ import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { formatBranchName } from "../modules/branches.mjs";
-import { getBranchKind, getChannelLabel, getSchemaFile, loadProduct, parseBranches, preprocess } from "../modules/product.mjs";
+import { OLDEST_ESR } from "../modules/constants.mjs";
+import { getBranchKind, getChannelLabel, getSchemaFile, loadProduct, parseBranch, parseBranches, preprocess } from "../modules/product.mjs";
 import { ContentError, InputError } from "../modules/tools.mjs";
 
 const PRODUCT_DIR = pathUtils.join(pathUtils.dirname(fileURLToPath(import.meta.url)), "fixtures", "product");
@@ -68,6 +69,13 @@ test("--branches is required and takes full branch names only", async () => {
     assert.deepEqual(parseBranches("main, beta,esr140,main", product), ["main", "beta", "esr140"]);
     assert.throws(() => parseBranches("main,140", product), /Unknown branch "140"/);
     assert.throws(() => parseBranches("esr", product), /Unknown branch "esr"/);
+    // A single tool takes exactly one branch.
+    assert.equal(parseBranch(" esr140 ", product), "esr140");
+    assert.throws(() => parseBranch(undefined, product), /--branch is required/);
+    assert.throws(() => parseBranch("main,beta", product), /--branch takes one branch, not a list/);
+    assert.throws(() => parseBranch("140", product), /Unknown branch "140"/);
+    // ESR branches older than OLDEST_ESR aren't built.
+    assert.throws(() => parseBranch(`esr${OLDEST_ESR - 1}`, product), /older than the oldest ESR of the docs/);
 });
 
 test("the name of a branch is the brand name, the channel label and the version", async () => {

@@ -6,6 +6,13 @@ const GENERATOR_DIR_PATH = pathUtils.join(import.meta.dirname, "..");
 
 export const DOWNLOAD_CACHE_FILE = pathUtils.join(GENERATOR_DIR_PATH, "download_cache.json");
 
+// The oldest ESR branch of the docs: older ESR branches of the product's
+// repository are neither built nor used for the compatibility (backports),
+// and policies removed before this version aren't listed. Old ESR branches
+// stay in the repository after their end of life, so raise it when an ESR
+// reaches its end of life.
+export const OLDEST_ESR = 128;
+
 export const GITHUB_API_URL = "https://api.github.com";
 export const GITHUB_RAW_URL = "https://raw.githubusercontent.com";
 

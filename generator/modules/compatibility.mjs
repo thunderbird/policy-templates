@@ -311,6 +311,22 @@ export function addSupportedSince(compatData, { branch, release, esrs }) {
 }
 
 /**
+ * Remove the policies (and settings) which were removed before a version from
+ * compatibility data, e.g. before the oldest ESR branch of the docs.
+ *
+ * @param {CompatibilityData} compatData - Object returned by
+ *    buildCompatibilityData(), changed in place.
+ * @param {number} version - The major version, e.g. 128.
+ */
+export function dropRemovedBefore(compatData, version) {
+    for (const [name, { max }] of Object.entries(compatData)) {
+        if (max && parseInt(max) < version) {
+            delete compatData[name];
+        }
+    }
+}
+
+/**
  * Retrieves and groups policy compatibility information.
  *
  * This function organizes entries of the given compatibility data to determine

@@ -1,6 +1,6 @@
 /**
- * Generate the macOS template (<output>/policies/<branch>/plist/: the plist file) of
- * the branches of a product from their policy schema.
+ * Generate the macOS template (<output>/policies/<branch>/plist/: the plist
+ * file) of a branch of a product from its policy schema.
  */
 
 import { runTool } from "./modules/branches.mjs";

@@ -73,7 +73,7 @@ schema and remove the `$comment`.
 - After changes to the product's schemas, and from time to time to notice
   changes in the product's repository:
   `node check_schemas.js --product-config=../products/thunderbird
-  --branches=main,beta,release,esr153,esr140,esr128,esr115 --checkout=<path>`.
+  --branches=main,beta,release,esr153,esr140,esr128 --checkout=<path>`.
 - To validate the templates of a docs folder: `node validate_templates.js
   --product-config=../products/thunderbird --output=../docs`.
 

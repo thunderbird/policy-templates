@@ -1,6 +1,6 @@
 /**
  * Generate the Windows templates (<output>/policies/<branch>/admx/: the ADMX
- * and ADML files) of the branches of a product from their policy schema.
+ * and ADML files) of a branch of a product from its policy schema.
  */
 
 import { runTool } from "./modules/branches.mjs";

@@ -1,11 +1,13 @@
 import {
     addSupportedSince,
     buildCompatibilityData,
+    dropRemovedBefore,
     getCompatibilityInformation,
     getSchemaRevisions,
 } from "./compatibility.mjs";
 import { SchemaL10n } from "./l10n.mjs";
-import { getChannelLabel, getSchemaFile, loadProduct, parseBranches } from "./product.mjs";
+import { getChannelLabel, getSchemaFile, loadProduct, parseBranch, parseBranches } from "./product.mjs";
+import { OLDEST_ESR } from "./constants.mjs";
 import { SOURCE_OPTIONS, SOURCE_USAGE, createSources } from "./sources.mjs";
 import { InputError, ensureDir, runCommandLine } from "./tools.mjs";
 
@@ -106,6 +108,35 @@ export function getBranchList({ app, product, branches }) {
 }
 
 /**
+ * Get the branches of the product's repository the docs are built for: main,
+ * beta, release and the ESR branches from OLDEST_ESR on, sorted as in the
+ * overview (other branches, e.g. autoland, are left out).
+ *
+ * @param {LocalGitSource|GitHubSource} app - The product's source.
+ * @returns {Promise<string[]>} e.g. ["main", "beta", "release", "esr153", "esr140"]
+ */
+export async function getSupportedBranches(app) {
+    return (await app.listBranches())
+        .filter(branch => ["main", "beta", "release"].includes(branch) || isSupportedEsr(branch))
+        .sort((a, b) => {
+            const [a1, a2] = getBranchSortKey(a);
+            const [b1, b2] = getBranchSortKey(b);
+            return a1 - b1 || a2 - b2 || a.localeCompare(b);
+        });
+}
+
+/**
+ * Whether a branch is an ESR branch from OLDEST_ESR on.
+ *
+ * @param {string} branch
+ * @returns {boolean}
+ */
+function isSupportedEsr(branch) {
+    const esr = branch.match(/^esr(\d+)$/);
+    return !!esr && Number(esr[1]) >= OLDEST_ESR;
+}
+
+/**
  * Sort key for branches: main, beta, release, then ESRs (newest first).
  *
  * @param {string} branch
@@ -121,18 +152,16 @@ function getBranchSortKey(branch) {
 }
 
 /**
- * Get the ESR branches of the product's repository, sorted by version. Their
- * history tells which policies were backported.
+ * Get the ESR branches of the product's repository from OLDEST_ESR on, sorted
+ * by version. Their history tells which policies were backported.
  *
  * @param {LocalGitSource|GitHubSource} app - The product's source.
- * @returns {Promise<string[]>} e.g. ["esr115", "esr128", "esr140"]
+ * @returns {Promise<string[]>} e.g. ["esr128", "esr140", "esr153"]
  */
 async function getEsrBranches(app) {
     return (await app.listBranches())
-        .map(branch => branch.match(/^esr(\d+)$/))
-        .filter(Boolean)
-        .sort((a, b) => Number(a[1]) - Number(b[1]))
-        .map(match => match[0]);
+        .filter(isSupportedEsr)
+        .sort((a, b) => Number(a.slice(3)) - Number(b.slice(3)));
 }
 
 /**
@@ -196,7 +225,9 @@ export async function loadBranch({ app, product, branch }) {
 
     // Find supported policies. The version in which a policy became supported
     // is based on the release branch, backports are found in the ESR branches.
+    // Policies removed before OLDEST_ESR are of no branch of the docs.
     const compatData = buildCompatibilityData(await getSchemaRevisions(app, commit, product.source));
+    dropRemovedBefore(compatData, OLDEST_ESR);
     const esrs = [];
     for (const esrBranch of await getEsrBranches(app)) {
         esrs.push({
@@ -278,16 +309,59 @@ export const BRANCHES_USAGE = `
    --branches=list    - The branches, separated by commas (required), e.g.
                         "main,beta,release,esr140".`;
 
+export const BRANCH_OPTION = { "branch": { type: "string" } };
+
+export const BRANCH_USAGE = `
+   --branch=name      - The branch (required), e.g. "main", "release" or
+                        "esr140".`;
+
+const OUTPUT_USAGE = `
+   --output=path      - The docs folder to write to (required). The files of
+                        each branch go to <path>/policies/<branch>/.`;
+
 /**
- * Run a generator tool on the command line: for each requested branch, load
- * its data and generate the given outputs into a docs folder (the branches go
- * to its policies/ folder).
+ * Run a generator tool on the command line: load the data of the given branch
+ * (--branch) and generate the given outputs into a docs folder (the branch
+ * goes to its policies/ folder).
  *
  * @param {Object} params
- * @param {string} params.usage - The description of the tool and its own
- *    options. The common options are added.
- * @param {Object} [params.options] - Further options (parseArgs format), which
- *    can only be used with a single branch.
+ * @param {string} params.usage - The description of the tool. The common
+ *    options are added.
+ * @param {function(BranchData, Object, Object, string): Promise} params.outputs -
+ *    Each called with the data of the branch, the option values, the sources
+ *    (see createSources(), plus the branches of the run: the branch) and the
+ *    docs folder.
+ */
+export async function runTool({ usage, outputs }) {
+    const fullUsage = `${usage}${OUTPUT_USAGE}${BRANCH_USAGE}
+${SOURCE_USAGE}
+`;
+    await runCommandLine(fullUsage, async () => {
+        const { values } = parseArgs({
+            options: { ...SOURCE_OPTIONS, ...BRANCH_OPTION, "output": { type: "string" } },
+        });
+        if (!values.output) {
+            throw new InputError("--output is required.");
+        }
+        const product = await loadProduct(values["product-config"]);
+        const branch = parseBranch(values.branch, product);
+        const sources = await createSources(values, product);
+        const branchData = await loadBranch({ ...sources, branch });
+        for (const generate of outputs) {
+            await generate(branchData, values, { ...sources, branches: [branch] }, values.output);
+        }
+    });
+}
+
+/**
+ * Run the wrapper on the command line: for each branch of the product's
+ * repository the docs are built for (see getSupportedBranches()), load its
+ * data and generate the given outputs into a docs folder (the branches go to
+ * its policies/ folder).
+ *
+ * @param {Object} params
+ * @param {string} params.usage - The description of the wrapper. The common
+ *    options are added.
  * @param {function(BranchData, Object, Object, string): Promise} params.outputs -
  *    Each called with the data of the branch, the option values, the sources
  *    (see createSources(), plus the branches of the run) and the docs folder.
@@ -297,31 +371,20 @@ export const BRANCHES_USAGE = `
  * @param {function(Object): Promise} [params.finish] - Called after all
  *    branches with { values, sources, branches, output, buildDir }.
  */
-export async function runTool({ usage, options = {}, outputs, prepare, finish }) {
-    const fullUsage = `${usage}
-   --output=path      - The docs folder to write to (required). The files of
-                        each branch go to <path>/policies/<branch>/.${BRANCHES_USAGE}
+export async function runAllBranches({ usage, outputs, prepare, finish }) {
+    const fullUsage = `${usage}${OUTPUT_USAGE}
 ${SOURCE_USAGE}
 `;
     await runCommandLine(fullUsage, async () => {
         const { values } = parseArgs({
-            options: {
-                ...SOURCE_OPTIONS,
-                ...BRANCHES_OPTION,
-                "output": { type: "string" },
-                ...options,
-            },
+            options: { ...SOURCE_OPTIONS, "output": { type: "string" } },
         });
         if (!values.output) {
             throw new InputError("--output is required.");
         }
-        const { sources, branches } = await parseCommonOptions(values);
-        for (const option of Object.keys(options)) {
-            if (values[option] && branches.length != 1) {
-                throw new InputError(`--${option} can only be used with a single branch.`);
-            }
-        }
-
+        const product = await loadProduct(values["product-config"]);
+        const sources = await createSources(values, product);
+        const branches = await getSupportedBranches(sources.app);
         const buildDir = prepare ? await prepare(values.output, branches) : values.output;
         for (const branch of branches) {
             console.log(`Processing ${branch}`);

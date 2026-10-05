@@ -20,6 +20,7 @@ import pathUtils from "node:path";
 import { pathToFileURL } from "node:url";
 import yaml from "yaml";
 
+import { OLDEST_ESR } from "./constants.mjs";
 import { ContentError, InputError } from "./tools.mjs";
 
 const TEMPLATES = { overview: "overview.md", branch: "branch.md" };
@@ -304,6 +305,29 @@ export function getChannelLabel(product, branch) {
         throw new InputError(`Unknown branch "${branch}": the branches are main, beta, release and esr<version>.`);
     }
     return product.channels[branch];
+}
+
+/**
+ * Parse the value of --branch: one full branch name.
+ *
+ * @param {string} value
+ * @param {Product} product
+ * @returns {string}
+ */
+export function parseBranch(value, product) {
+    const branch = value?.trim();
+    if (!branch) {
+        throw new InputError("--branch is required, e.g. --branch=main.");
+    }
+    if (branch.includes(",")) {
+        throw new InputError(`--branch takes one branch, not a list: "${branch}".`);
+    }
+    getChannelLabel(product, branch);
+    const esr = branch.match(/^esr(\d+)$/);
+    if (esr && Number(esr[1]) < OLDEST_ESR) {
+        throw new InputError(`The branch ${branch} is older than the oldest ESR of the docs (OLDEST_ESR = ${OLDEST_ESR} in constants.mjs).`);
+    }
+    return branch;
 }
 
 /**

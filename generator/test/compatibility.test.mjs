@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { buildCompatibilityData, getCompatibilityInformation } from "../modules/compatibility.mjs";
+import { buildCompatibilityData, dropRemovedBefore, getCompatibilityInformation } from "../modules/compatibility.mjs";
 
 test("settings with a name chosen by the admin are named [name]", () => {
     const revision = {
@@ -70,4 +70,14 @@ test("policies with the same versions are grouped", () => {
         getCompatibilityInformation(compatData, { distinct: true }).map(e => [e.policies, e.first, e.last]),
         [[["A", "D"], "78.0", ""], [["B"], "115.0", ""], [["C"], "78.0", "128.0"]]
     );
+});
+
+test("policies removed before a version are dropped, later ones are kept", () => {
+    const compatData = {
+        Old: { min: "68.0", max: "89.0" },
+        Recent: { min: "102.0", max: "130.0" },
+        Current: { min: "115.0" },
+    };
+    dropRemovedBefore(compatData, 128);
+    assert.deepEqual(Object.keys(compatData), ["Recent", "Current"]);
 });

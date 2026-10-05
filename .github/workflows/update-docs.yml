@@ -23,9 +23,6 @@ jobs:
   update-docs:
     runs-on: ubuntu-latest
     env:
-      # The branches of both products. Edit when an ESR branch is added or
-      # dropped.
-      BRANCHES: main,beta,release,esr153,esr140,esr128,esr115
       PUBLISH: ${{ github.event_name == 'schedule' || inputs.publish }}
     steps:
       - uses: actions/checkout@v4
@@ -54,8 +51,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           # Thunderbird first: its run replaces all of docs/.
-          node generator/update_all_policy_templates.js --product-config=products/thunderbird --output=docs --branches="$BRANCHES"
-          node generator/update_all_policy_templates.js --product-config=products/firefox --output=docs/firefox --branches="$BRANCHES"
+          node generator/update_all_policy_templates.js --product-config=products/thunderbird --output=docs
+          node generator/update_all_policy_templates.js --product-config=products/firefox --output=docs/firefox
 
       - name: Commit the changed docs
         if: env.PUBLISH == 'true'

@@ -19,14 +19,17 @@ https://thunderbird.github.io/policy-templates/
   - Beta (`beta`)
   - Daily (`main`)
 
-  Each output has its own tool, as their inputs differ:
+  Each output of a branch has its own tool, as their inputs differ:
 
   | Tool | Output (in the `--output` folder) | Inputs |
   |---|---|---|
   | `generate_docs.js` | `policies/<branch>/README.md` | policy schema, Fluent files |
   | `generate_admx.js` | `policies/<branch>/admx/` (ADMX/ADML) | policy schema, Fluent files |
   | `generate_plist.js` | `policies/<branch>/plist/` (plist) | policy schema |
-  | `generate_overview.js` | `README.md` (the list of branches and the compatibility table) | the given branches, main's compatibility data |
+
+  The wrapper `update_all_policy_templates.js` runs all three for each branch
+  of the product's repository (see below), and adds the overview (`README.md`: the list of the branches and
+  main's compatibility table).
 
   The policy schema holds all the documentation of each policy: its texts,
   examples, the preferences it affects and its CCK2 equivalent. The history of the
@@ -142,28 +145,30 @@ npm install
 
 ### ▶️ Run the Script
 
-All tools take the product folder (`--product-config=<folder>`), the docs
-folder to write to (`--output=<folder>`) and the branches
-(`--branches=<list>`, full branch names separated by commas). All three are
-required. To generate all outputs (Markdown docs, Windows and macOS templates,
-the overview):
+All tools take the product folder (`--product-config=<folder>`) and the docs
+folder to write to (`--output=<folder>`), each single tool also one branch
+(`--branch=<name>`). All are required. The wrapper builds all branches of the
+product's repository: `main`, `beta`, `release` and the ESR branches from
+`OLDEST_ESR` (in `generator/modules/constants.mjs`) on. Old ESR branches stay
+in the repository after their end of life, so raise the constant then. To
+generate all outputs (Markdown docs, Windows and macOS templates, the
+overview):
 
 ```bash
-node update_all_policy_templates.js --product-config=../products/thunderbird --output=../docs --branches=main,beta,release,esr153,esr140,esr128,esr115 --checkout=/path/to/comm
+node update_all_policy_templates.js --product-config=../products/thunderbird --output=../docs --checkout=/path/to/comm
 ```
 
 It builds everything in a temporary folder next to the target (`docs.temp/`)
 first. Only if the whole run succeeded, it replaces the **whole** target,
-which then has exactly the given branches, the overview (which lists them, so
-`main` is required for its compatibility data) and the files of the product's
-`site/` folder. A failed run leaves the target as it was.
+which then has exactly these branches, the overview (which lists them) and
+the files of the product's `site/` folder. A failed run leaves the target as it was.
 
-To generate a single output, use its tool (`generate_docs.js`,
-`generate_admx.js`, `generate_plist.js` or `generate_overview.js`). These
-tools replace their part in the target without protection:
+To generate a single output of one branch, use its tool (`generate_docs.js`,
+`generate_admx.js` or `generate_plist.js`). These tools replace their part in
+the target without protection:
 
 ```bash
-node generate_admx.js --product-config=../products/thunderbird --output=../docs --branches=esr140
+node generate_admx.js --product-config=../products/thunderbird --output=../docs --branch=esr140
 ```
 
 By default, the product's files are read from GitHub (`source.repository`
@@ -197,10 +202,8 @@ checks the rules of the documentation.
 ### 🔄 Automatic updates
 
 The workflow `.github/workflows/update-docs.yml` regenerates the docs every
-day at 04:00 UTC, Thunderbird into `docs/` and Firefox into `docs/firefox/`,
-reading the products from GitHub, and commits `docs/` if it changed. The
-branches it generates are listed in the workflow (`BRANCHES`): edit them when
-an ESR branch is added or dropped.
+day at 04:00 UTC, reading the products from GitHub, and commits `docs/` if it
+changed. It builds all branches of each product, from `OLDEST_ESR` on.
 
 It can also be started by hand (Actions › Update the docs › Run workflow).
 With "publish" off, it doesn't commit, but uploads the generated `docs/` as an
