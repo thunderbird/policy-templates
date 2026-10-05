@@ -434,7 +434,6 @@
         }
       },
       "x-restart-required": true,
-      "title": "Authentication",
       "description": "Configure sites that support integrated authentication.",
       "examples": [
         {
@@ -467,22 +466,19 @@
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "SPNEGO"
+          }
         },
         "Delegated": {
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "Delegated"
+          }
         },
         "NTLM": {
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "NTLM"
+          }
         },
         "AllowNonFQDN": {
           "type": "object",
@@ -805,7 +801,6 @@
         }
       },
       "x-restart-required": true,
-      "title": "Bookmarks",
       "description": "Add bookmarks in either the bookmarks toolbar or menu. Use 'ManagedBookmarks' instead.",
       "examples": [
         [
@@ -937,7 +932,6 @@
         }
       },
       "x-restart-required": true,
-      "title": "Certificates",
       "description": "Install and manage certificates.",
       "examples": [
         {
@@ -1077,7 +1071,6 @@
         }
       },
       "x-restart-required": true,
-      "title": "Containers",
       "description": "Set policies related to Multi-Account Containers.",
       "examples": [
         {
@@ -1267,8 +1260,7 @@
       ],
       "properties": {
         "Enabled": {
-          "type": "boolean",
-          "title": "Enabled"
+          "type": "boolean"
         },
         "PipePathName": {
           "type": "string",
@@ -1419,7 +1411,6 @@
         }
       },
       "x-restart-required": false,
-      "title": "Cookies",
       "description": "Configure cookie preferences.",
       "examples": [
         {
@@ -1798,84 +1789,64 @@
       ],
       "properties": {
         "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+          "type": "boolean"
         },
         "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+          "type": "boolean"
         },
         "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256"
+          "type": "boolean"
         },
         "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"
+          "type": "boolean"
         },
         "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+          "type": "boolean"
         },
         "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+          "type": "boolean"
         },
         "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_DHE_RSA_WITH_AES_256_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_DHE_RSA_WITH_AES_256_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_RSA_WITH_AES_128_GCM_SHA256": {
-          "type": "boolean",
-          "title": "TLS_RSA_WITH_AES_128_GCM_SHA256"
+          "type": "boolean"
         },
         "TLS_RSA_WITH_AES_256_GCM_SHA384": {
-          "type": "boolean",
-          "title": "TLS_RSA_WITH_AES_256_GCM_SHA384"
+          "type": "boolean"
         },
         "TLS_RSA_WITH_AES_128_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_RSA_WITH_AES_128_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_RSA_WITH_AES_256_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_RSA_WITH_AES_256_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_RSA_WITH_3DES_EDE_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_CHACHA20_POLY1305_SHA256": {
-          "type": "boolean",
-          "title": "TLS_CHACHA20_POLY1305_SHA256"
+          "type": "boolean"
         },
         "TLS_AES_128_GCM_SHA256": {
-          "type": "boolean",
-          "title": "TLS_AES_128_GCM_SHA256"
+          "type": "boolean"
         },
         "TLS_AES_256_GCM_SHA384": {
-          "type": "boolean",
-          "title": "TLS_AES_256_GCM_SHA384"
+          "type": "boolean"
         }
       },
       "x-help": "**Preferences Affected:** `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_rsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_ecdsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_256_sha`, `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.deprecated.rsa_des_ede3_sha`, `security.tls13.chacha20_poly1305_sha256`, `security.tls13.aes_128_gcm_sha256`, `security.tls13.aes_256_gcm_sha384`\n\n---\n**Note:**\n\nThis policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.\n\n---"
@@ -2633,8 +2604,7 @@
       ],
       "properties": {
         "Enabled": {
-          "type": "boolean",
-          "title": "Enabled"
+          "type": "boolean"
         },
         "ProviderURL": {
           "$ref": "#/definitions/urlOrEmpty",
@@ -2670,12 +2640,10 @@
             "firefox_enterprise": {
               "version_added": "149"
             }
-          },
-          "title": "Fallback"
+          }
         },
         "Locked": {
-          "type": "boolean",
-          "title": "Locked"
+          "type": "boolean"
         }
       },
       "x-help": "`Enabled` determines whether DNS over HTTPS is enabled\n\n`ProviderURL` is a URL to another provider.\n\n`Locked` prevents the user from changing DNS over HTTPS preferences.\n\n`ExcludedDomains` excludes domains from DNS over HTTPS.\n\n`Fallback` determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider.",
@@ -2793,8 +2761,7 @@
             "firefox_enterprise": {
               "version_added": "149"
             }
-          },
-          "title": "Cryptomining"
+          }
         },
         "Fingerprinting": {
           "type": "boolean",
@@ -2808,8 +2775,7 @@
             "firefox_enterprise": {
               "version_added": "149"
             }
-          },
-          "title": "Fingerprinting"
+          }
         },
         "EmailTracking": {
           "type": "boolean",
@@ -2856,8 +2822,7 @@
           },
           "items": {
             "$ref": "#/definitions/origin"
-          },
-          "title": "Exceptions"
+          }
         },
         "Category": {
           "type": "string",
@@ -3026,7 +2991,6 @@
         }
       },
       "x-restart-required": true,
-      "title": "Extensions",
       "description": "Control the installation, uninstallation and locking of extensions.",
       "examples": [
         {
@@ -3366,8 +3330,7 @@
       ],
       "properties": {
         "Search": {
-          "type": "boolean",
-          "title": "Search"
+          "type": "boolean"
         },
         "Weather": {
           "type": "boolean",
@@ -3381,8 +3344,7 @@
             "firefox_enterprise": {
               "version_added": "152"
             }
-          },
-          "title": "Weather"
+          }
         },
         "TopSites": {
           "type": "boolean",
@@ -3423,8 +3385,7 @@
               "version_added": "149"
             },
             "notes": "Replaces the `Pocket` property."
-          },
-          "title": "Stories"
+          }
         },
         "SponsoredPocket": {
           "type": "boolean",
@@ -3498,8 +3459,7 @@
               },
               "title": "Blocked widgets"
             }
-          },
-          "title": "Widgets"
+          }
         },
         "Locked": {
           "type": "boolean",
@@ -3597,8 +3557,7 @@
       ],
       "properties": {
         "Chatbot": {
-          "type": "boolean",
-          "title": "Chatbot"
+          "type": "boolean"
         },
         "SmartWindow": {
           "type": "boolean"
@@ -3612,8 +3571,7 @@
           "title": "Tab Groups"
         },
         "Enabled": {
-          "type": "boolean",
-          "title": "Enabled"
+          "type": "boolean"
         },
         "Locked": {
           "type": "boolean",
@@ -3671,7 +3629,6 @@
         }
       },
       "x-restart-required": true,
-      "title": "Handlers",
       "description": "Configure default application handlers.",
       "examples": [
         {
@@ -4179,8 +4136,7 @@
       ],
       "properties": {
         "Enabled": {
-          "type": "boolean",
-          "title": "Enabled"
+          "type": "boolean"
         },
         "BlockTrackers": {
           "type": "boolean",
@@ -4198,8 +4154,7 @@
           "title": "Skip Domains"
         },
         "Locked": {
-          "type": "boolean",
-          "title": "Locked"
+          "type": "boolean"
         }
       }
     },
@@ -4648,7 +4603,6 @@
         }
       },
       "x-restart-required": true,
-      "title": "Permissions",
       "description": "Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.",
       "examples": [
         {
@@ -4749,8 +4703,7 @@
             "Locked": {
               "type": "boolean"
             }
-          },
-          "title": "Camera"
+          }
         },
         "Microphone": {
           "type": "object",
@@ -4775,8 +4728,7 @@
             "Locked": {
               "type": "boolean"
             }
-          },
-          "title": "Microphone"
+          }
         },
         "Autoplay": {
           "type": "object",
@@ -4830,8 +4782,7 @@
             "Locked": {
               "type": "boolean"
             }
-          },
-          "title": "Autoplay"
+          }
         },
         "Location": {
           "type": "object",
@@ -4856,8 +4807,7 @@
             "Locked": {
               "type": "boolean"
             }
-          },
-          "title": "Location"
+          }
         },
         "Notifications": {
           "type": "object",
@@ -4882,8 +4832,7 @@
             "Locked": {
               "type": "boolean"
             }
-          },
-          "title": "Notifications"
+          }
         },
         "VirtualReality": {
           "type": "object",
@@ -4996,12 +4945,10 @@
       ],
       "properties": {
         "Enabled": {
-          "type": "boolean",
-          "title": "Enabled"
+          "type": "boolean"
         },
         "Locked": {
-          "type": "boolean",
-          "title": "Locked"
+          "type": "boolean"
         }
       },
       "x-preferences-affected": [
@@ -5100,7 +5047,6 @@
         }
       },
       "x-restart-required": true,
-      "title": "Preferences",
       "description": "Set and lock preferences.",
       "examples": [
         {
@@ -5551,12 +5497,10 @@
       ],
       "properties": {
         "Cache": {
-          "type": "boolean",
-          "title": "Cache"
+          "type": "boolean"
         },
         "Cookies": {
-          "type": "boolean",
-          "title": "Cookies"
+          "type": "boolean"
         },
         "Downloads": {
           "type": "boolean",
@@ -5567,8 +5511,7 @@
           "title": "Form Data"
         },
         "History": {
-          "type": "boolean",
-          "title": "History"
+          "type": "boolean"
         },
         "Sessions": {
           "type": "boolean",
@@ -5594,8 +5537,7 @@
             "firefox_enterprise": {
               "version_added": "149"
             }
-          },
-          "title": "Locked"
+          }
         },
         "Exceptions": {
           "type": "array",
@@ -5612,8 +5554,7 @@
           },
           "items": {
             "$ref": "#/definitions/origin"
-          },
-          "title": "Exceptions"
+          }
         }
       },
       "x-help": "Clear data on shutdown.\n\nNote: Starting with Firefox 136, FormData and History have been separated again.\n\n`Cache`\n\n`Cookies`\n\n`Downloads` Download History (*Deprecated - part of History*)\n\n`FormData` Form History\n\n`History` Browsing History, Download History\n\n`Sessions` Active Logins\n\n`SiteSettings` Site Preferences\n\n`OfflineApps` Offline Website Data (*Deprecated - part of Cookies*)\n\n`Locked` prevents the user from changing these preferences.",
@@ -5896,8 +5837,7 @@
               "type": "string",
               "x-expand-env-vars": true
             }
-          },
-          "title": "Add"
+          }
         },
         "Delete": {
           "type": "array",
@@ -5914,8 +5854,7 @@
           },
           "items": {
             "type": "string"
-          },
-          "title": "Delete"
+          }
         }
       },
       "x-cck2-equivalent": [

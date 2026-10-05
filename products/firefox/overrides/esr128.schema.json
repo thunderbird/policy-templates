@@ -104,22 +104,19 @@
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "SPNEGO"
+          }
         },
         "Delegated": {
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "Delegated"
+          }
         },
         "NTLM": {
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "NTLM"
+          }
         },
         "AllowNonFQDN": {
           "type": "object",
@@ -152,7 +149,6 @@
           "title": "Allow authentication in private browsing"
         }
       },
-      "title": "Authentication",
       "description": "Configure sites that support integrated authentication.",
       "x-help": "See [Integrated authentication](https://htmlpreview.github.io/?https://github.com/mdn/archived-content/blob/main/files/en-us/mozilla/integrated_authentication/raw.html) for more information.\n\n`PrivateBrowsing` enables integrated authentication in private browsing.",
       "examples": [
@@ -360,7 +356,6 @@
           "URL"
         ]
       },
-      "title": "Bookmarks",
       "description": "Add bookmarks in either the bookmarks toolbar or menu. Use 'ManagedBookmarks' instead.",
       "x-help": "Note: [`ManagedBookmarks`](#managedbookmarks) is the new recommended way to add bookmarks. This policy will continue to be supported.\n\nAdd bookmarks in either the bookmarks toolbar or menu. Only `Title` and `URL` are required. If `Placement` is not specified, the bookmark will be placed on the toolbar. If `Folder` is specified, it is automatically created and bookmarks with the same folder name are grouped together.\n\nIf you want to clear all bookmarks set with this policy, you can set the value to an empty array (```[]```). This can be on Windows via the new Bookmarks (JSON) policy available with GPO and Intune.",
       "examples": [
@@ -418,7 +413,6 @@
           ]
         }
       },
-      "title": "Certificates",
       "description": "Install and manage certificates.",
       "examples": [
         {
@@ -573,7 +567,6 @@
           }
         }
       },
-      "title": "Containers",
       "description": "Set policies related to Multi-Account Containers.",
       "x-help": "Set policies related to [containers](https://addons.mozilla.org/firefox/addon/multi-account-containers/).\n\nCurrently you can set the initial set of containers.\n\nFor each container, you can specify the name, icon, and color.",
       "examples": [
@@ -593,8 +586,7 @@
       "type": "object",
       "properties": {
         "Enabled": {
-          "type": "boolean",
-          "title": "Enabled"
+          "type": "boolean"
         },
         "PipePathName": {
           "type": "string",
@@ -836,7 +828,6 @@
           "title": "Cookie Behavior in private browsing"
         }
       },
-      "title": "Cookies",
       "description": "Configure cookie preferences.",
       "x-help": "`Allow` is a list of origins (not domains) where cookies are always allowed. You must include http or https.\n\n`AllowSession` is a list of origins (not domains) where cookies are only allowed for the current session. You must include http or https.\n\n`Block` is a list of origins (not domains) where cookies are always blocked. You must include http or https.\n\n`Behavior` sets the default behavior for cookies based on the values below.\n\n`BehaviorPrivateBrowsing` sets the default behavior for cookies in private browsing based on the values below.\n\n`Locked` prevents the user from changing cookie preferences.\n\n`Default` determines whether cookies are accepted at all. (*Deprecated*. Use `Behavior` instead)\n\n`AcceptThirdParty` determines how third-party cookies are handled. (*Deprecated*. Use `Behavior` instead)\n\n`RejectTracker` only rejects cookies for trackers. (*Deprecated*. Use `Behavior` instead)\n\n`ExpireAtSessionEnd` determines when cookies expire. (*Deprecated*. Use [`SanitizeOnShutdown`](#sanitizeonshutdown) instead)",
       "examples": [
@@ -915,84 +906,64 @@
       "type": "object",
       "properties": {
         "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+          "type": "boolean"
         },
         "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+          "type": "boolean"
         },
         "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256"
+          "type": "boolean"
         },
         "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"
+          "type": "boolean"
         },
         "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+          "type": "boolean"
         },
         "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+          "type": "boolean"
         },
         "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_DHE_RSA_WITH_AES_128_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_DHE_RSA_WITH_AES_256_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_DHE_RSA_WITH_AES_256_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_RSA_WITH_AES_128_GCM_SHA256": {
-          "type": "boolean",
-          "title": "TLS_RSA_WITH_AES_128_GCM_SHA256"
+          "type": "boolean"
         },
         "TLS_RSA_WITH_AES_256_GCM_SHA384": {
-          "type": "boolean",
-          "title": "TLS_RSA_WITH_AES_256_GCM_SHA384"
+          "type": "boolean"
         },
         "TLS_RSA_WITH_AES_128_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_RSA_WITH_AES_128_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_RSA_WITH_AES_256_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_RSA_WITH_AES_256_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_RSA_WITH_3DES_EDE_CBC_SHA": {
-          "type": "boolean",
-          "title": "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+          "type": "boolean"
         },
         "TLS_CHACHA20_POLY1305_SHA256": {
-          "type": "boolean",
-          "title": "TLS_CHACHA20_POLY1305_SHA256"
+          "type": "boolean"
         },
         "TLS_AES_128_GCM_SHA256": {
-          "type": "boolean",
-          "title": "TLS_AES_128_GCM_SHA256"
+          "type": "boolean"
         },
         "TLS_AES_256_GCM_SHA384": {
-          "type": "boolean",
-          "title": "TLS_AES_256_GCM_SHA384"
+          "type": "boolean"
         }
       },
       "title": "Disabled Ciphers",
@@ -1371,8 +1342,7 @@
       "type": "object",
       "properties": {
         "Enabled": {
-          "type": "boolean",
-          "title": "Enabled"
+          "type": "boolean"
         },
         "ProviderURL": {
           "type": "URLorEmpty",
@@ -1386,12 +1356,10 @@
           "title": "Excluded Domains"
         },
         "Fallback": {
-          "type": "boolean",
-          "title": "Fallback"
+          "type": "boolean"
         },
         "Locked": {
-          "type": "boolean",
-          "title": "Locked"
+          "type": "boolean"
         }
       },
       "title": "DNS Over HTTPS",
@@ -1457,12 +1425,10 @@
           "title": "Do not allow tracking protection preferences to be changed"
         },
         "Cryptomining": {
-          "type": "boolean",
-          "title": "Cryptomining"
+          "type": "boolean"
         },
         "Fingerprinting": {
-          "type": "boolean",
-          "title": "Fingerprinting"
+          "type": "boolean"
         },
         "EmailTracking": {
           "type": "boolean",
@@ -1473,8 +1439,7 @@
           "strict": false,
           "items": {
             "type": "origin"
-          },
-          "title": "Exceptions"
+          }
         }
       },
       "title": "Tracking Protection",
@@ -1588,7 +1553,6 @@
           "title": "Prevent extensions from being disabled or removed"
         }
       },
-      "title": "Extensions",
       "description": "Control the installation, uninstallation and locking of extensions.",
       "x-help": "Note: The **[`ExtensionSettings`](#extensionsettings)** policy was added in Firefox 69. It provides additional functionality and is closer in compatibility to Chrome and Edge. It does not support native paths, though, so you'll have to use file:/// URLs. I'd recommend trying it before using this policy. Any future improvements will happen in that policy.\n\nWe will not, however, be removing this policy.\n\n`Install` is a list of URLs or native paths for extensions to be installed.\n\n`Uninstall` is a list of extension IDs that should be uninstalled if found.\n\n`Locked` is a list of extension IDs that the user cannot disable or uninstall.",
       "examples": [
@@ -1815,8 +1779,7 @@
       "type": "object",
       "properties": {
         "Search": {
-          "type": "boolean",
-          "title": "Search"
+          "type": "boolean"
         },
         "TopSites": {
           "type": "boolean",
@@ -1985,7 +1948,6 @@
           }
         }
       },
-      "title": "Handlers",
       "description": "Configure default application handlers.",
       "x-help": "This policy is based on the internal format of `handlers.json`.\n\nYou can configure handlers based on a mime type (`mimeTypes`), a file's extension (`extensions`), or a protocol (`schemes`).\n\nWithin each handler type, you specify the given mimeType/extension/scheme as a key and use the following subkeys to describe how it is handled.",
       "examples": [
@@ -2546,8 +2508,7 @@
             "Locked": {
               "type": "boolean"
             }
-          },
-          "title": "Camera"
+          }
         },
         "Microphone": {
           "type": "object",
@@ -2574,8 +2535,7 @@
             "Locked": {
               "type": "boolean"
             }
-          },
-          "title": "Microphone"
+          }
         },
         "Autoplay": {
           "type": "object",
@@ -2624,8 +2584,7 @@
             "Locked": {
               "type": "boolean"
             }
-          },
-          "title": "Autoplay"
+          }
         },
         "Location": {
           "type": "object",
@@ -2652,8 +2611,7 @@
             "Locked": {
               "type": "boolean"
             }
-          },
-          "title": "Location"
+          }
         },
         "Notifications": {
           "type": "object",
@@ -2680,8 +2638,7 @@
             "Locked": {
               "type": "boolean"
             }
-          },
-          "title": "Notifications"
+          }
         },
         "VirtualReality": {
           "type": "object",
@@ -2712,7 +2669,6 @@
           "title": "Virtual Reality"
         }
       },
-      "title": "Permissions",
       "description": "Set permissions associated with camera, microphone, location, notifications, autoplay, and virtual reality.",
       "x-help": "Because these are origins, not domains, entries with unique ports must be specified separately. This explicitly means that it is not possible to add wildcards. See examples below.\n\n`Allow` is a list of origins where the feature is allowed.\n\n`Block` is a list of origins where the feature is not allowed.\n\n`BlockNewRequests` determines whether or not new requests can be made for the feature.\n\n`Locked` prevents the user from changing preferences for the feature.\n\n`Default` specifies the default value for Autoplay. block-audio-video is not supported on Firefox ESR 68.",
       "examples": [
@@ -2795,12 +2751,10 @@
       "type": "object",
       "properties": {
         "Enabled": {
-          "type": "boolean",
-          "title": "Enabled"
+          "type": "boolean"
         },
         "Locked": {
-          "type": "boolean",
-          "title": "Locked"
+          "type": "boolean"
         }
       },
       "title": "Picture-in-Picture",
@@ -2950,7 +2904,6 @@
           }
         }
       },
-      "title": "Preferences",
       "description": "Set and lock preferences.",
       "x-help": "**NOTE** On Windows, in order to use this policy, you must clear all settings in the old **Preferences (Deprecated)** section in group policy.\n\nPreviously you could only set and lock a subset of preferences. Starting with Firefox 81 and Firefox ESR 78.3 you can set many more preferences. You can also set default preferences, user preferences and you can clear preferences.\n\n**NOTE** There are too many preferences for us to provide documentation on them all. The source file [StaticPrefList.yaml](https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml) contains information on many of them.\n\nUsing the preference as the key, set the `Value` to the corresponding preference value.\n\n`Status` can be \"default\", \"locked\", \"user\" or \"clear\"\n\n* `\"default\"`: Read/Write: Settings appear as default even if factory default differs.\n* `\"locked\"`: Read-Only: Settings appear as default even if factory default differs.\n* `\"user\"`: Read/Write: Settings appear as changed if it differs from factory default.\n* `\"clear\"`: Read/Write: `Value` has no effect. Resets to factory defaults on each startup.\n\n`\"user\"` preferences persist across invocations of Firefox. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy. An example of this is ```toolkit.legacyUserProfileCustomizations.stylesheets```.\n\n`\"user\"` preferences persist even if the policy is removed, so if you need to remove them, you should use the clear policy.\n\nYou can also set the `Type` starting in Firefox 123 and Firefox ESR 115.8. It can be `number`, `boolean` or `string`. This is especially useful if you are seeing 0 or 1 values being converted to booleans when set as user preferences.\n\nSee the examples below for more detail.\n\nIMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.\n\nStatus",
       "examples": [
@@ -3212,12 +3165,10 @@
       ],
       "properties": {
         "Cache": {
-          "type": "boolean",
-          "title": "Cache"
+          "type": "boolean"
         },
         "Cookies": {
-          "type": "boolean",
-          "title": "Cookies"
+          "type": "boolean"
         },
         "Downloads": {
           "type": "boolean",
@@ -3228,8 +3179,7 @@
           "title": "Form Data"
         },
         "History": {
-          "type": "boolean",
-          "title": "History"
+          "type": "boolean"
         },
         "Sessions": {
           "type": "boolean",
@@ -3244,8 +3194,7 @@
           "title": "Offline Website Data"
         },
         "Locked": {
-          "type": "boolean",
-          "title": "Locked"
+          "type": "boolean"
         }
       },
       "title": "Clear data when browser is closed",
@@ -3456,15 +3405,13 @@
               "type": "string",
               "x-expand-env-vars": true
             }
-          },
-          "title": "Add"
+          }
         },
         "Delete": {
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "Delete"
+          }
         }
       },
       "title": "Security Devices",
