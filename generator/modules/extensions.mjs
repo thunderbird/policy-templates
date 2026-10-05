@@ -9,8 +9,8 @@
  *  - branch: the branch being rendered ("main" for the overview),
  *  - branches: all branches of the run, sorted as in the overview, as
  *    [{ branch, name, version, docsUrl }],
- *  - schema(locale = "en-US"): the policy schema of the branch (the
- *    product's, see loadBranch()), with every Fluent ID ("x-description-l10n-id") replaced by its
+ *  - schema(locale = "en-US"): the policy schema of the branch (its
+ *    override, see loadBranch()), with every Fluent ID ("x-description-l10n-id") replaced by its
  *    text ("description") in the given locale: the translation the branch
  *    ships, from the commit of the l10n repository which the branch pins for
  *    the locale (l10n.changesets in product.yaml),

@@ -31,13 +31,15 @@ https://thunderbird.github.io/policy-templates/
   of the product's repository (see below), and adds the overview (`README.md`: the list of the branches and
   main's compatibility table).
 
-  The policy schema holds all the documentation of each policy: its texts,
-  examples, the preferences it affects and its CCK2 equivalent. The history of the
-  schema determines in which version each policy became supported: the version
-  of the release branch (or of the branch itself, if the policy is not yet
-  released), plus the ESR version if the policy was backported to an ESR branch.
-  The Windows (GPO) and macOS (plist) examples are derived from the
-  `policies.json` examples of each policy.
+  The policy schema of a branch (the override in the product folder, see
+  below) holds all the documentation of each policy: its texts, examples, the
+  preferences it affects and its CCK2 equivalent. The history of the schema
+  in the product's repository determines in which version each policy became
+  supported: the version of the release branch (or of the branch itself, if
+  the policy is not yet released), plus the ESR version if the policy was
+  backported to an ESR branch. The examples of all formats (`policies.json`,
+  Windows GPO, macOS plist) come from the same examples, hand-written or
+  generated from the schema (see the notes below).
 
   The Thunderbird ADMX template is placed in the "Mozilla" category, which is
   defined by Mozilla's `mozilla.admx`. Its latest version (and the matching
@@ -68,9 +70,9 @@ https://thunderbird.github.io/policy-templates/
 │   │                      # overview) and branch.md (the page of a branch).
 │   ├── extensions/        # JavaScript called by the templates (see below),
 │   │                      # e.g. compatibility_table.mjs, the overview's
-│   │                      # compatibility table with the Firefox column.
-│   └── site/              # Files copied unchanged into the docs (the site
-│                          # stylesheet).
+│   │                      # compatibility table.
+│   └── site/              # Files copied unchanged into the docs (e.g. the
+│                          # site stylesheet).
 └── tools/                 # Helpers to maintain the overrides and check the
                            # outputs, run by hand (see its README).
 ```
@@ -122,10 +124,10 @@ it is. The context is a fixed set of plain, frozen data (see
   call asks the server whether the content changed (ETag / Last-Modified),
   and the cached content is used if not, or if the server can't be reached.
 
-Thunderbird's `compatibility_table` builds the overview's table with the
-Firefox column and the policies which only Firefox supports. It reads
-Firefox's policy schema with `cachedFetch()`. Without such an extension,
-`__compatibility__` gives the table of the product's own compatibility.
+A product can build the overview's compatibility table with an extension,
+e.g. with further columns (see Thunderbird's `compatibility_table`). Without
+such an extension, `__compatibility__` gives the table of the product's own
+compatibility.
 
 ## 🛠️ Setup & Usage
 
@@ -183,21 +185,21 @@ exists, otherwise `origin/<branch>`.
 
 ### 📄 The policy schemas
 
-The product folder is the authority for the policy schemas: every branch has
-its full schema in `overrides/<branch>.schema.json`, with its structure
-(policies, settings, types, values) and its documentation (texts, examples,
-hints). The generator uses it instead of the schema of the product's
-repository, and a branch without one is an error. Texts may be the IDs of
+The policy schema of a product lives in its repository (for Thunderbird,
+comm). The product folder overrides it: every branch has a full schema in
+`overrides/<branch>.schema.json`, with its structure (policies, settings,
+types, values) and its documentation (texts, examples, hints), which the
+generator uses instead of the schema of the product's repository. So the
+generator can work with any schema, independent of the repository's state.
+A branch without an override is an error. Texts may be the IDs of
 Fluent messages (e.g. `x-description-l10n-id`), resolved with the Fluent files
 of the branch in the product's repository (`source.fluent`). Where a branch
 behaves differently from main, its schema says why in a `$comment`.
 
 The product's repository still gives the version of each branch, its Fluent
 files and its compatibility data (from the history of its schema,
-`source.schema`). To notice what changes there, e.g. a new policy,
-[`tools/check_schemas.js`](tools/README.md) compares each schema of the
-product folder with the repository's schema of the branch (the drift), and
-checks the rules of the documentation.
+`source.schema`). [`tools/check_schemas.js`](tools/README.md) checks the
+schemas of the product folder against the rules of the documentation.
 
 ### 🔄 Automatic updates
 
@@ -217,17 +219,19 @@ workflow enables itself again at the end of every run.
 
 ### ✅ Validation
 
-Every generated ADMX/ADML template is validated before it is written: against the
-official schemas of Microsoft (`generator/schemas/admx/`, see its README), and
-by checking the references between the ADMX and the ADML file (strings,
-presentations, categories, supportedOn definitions). A run with invalid
-templates fails, and the previous files are kept. This applies to every
-output: a tool only replaces its part of the branch folder if it succeeded.
+Every generated ADMX/ADML template is validated right after it is written:
+against the official schemas of Microsoft (`generator/schemas/admx/`, see its
+README), and by checking the references between the ADMX and the ADML file
+(strings, presentations, categories, supportedOn definitions). A run with
+invalid templates fails. The wrapper builds into a temporary folder, so then
+the previous docs are kept. The single tools replace their part without that
+protection.
 
 To validate existing templates (e.g. all branches of a docs folder), use
 `tools/validate_templates.js` (see [`tools/`](tools/README.md)).
 
-To run the tests of the validation:
+To run the tests of the generator (the validation included), in
+`generator/`:
 
 ```bash
 npm test
@@ -266,9 +270,9 @@ npm test
   strings). Refer to the
   [format specification](https://github.com/thunderbird/thunderbird-desktop/blob/main/mail/components/enterprisepolicies/documentation/README.md)
   for details.
-- The ADMX template is generated from the **policy schema**
-  (`policies-schema.json`) alone, using the fields of Firefox's schema where
-  possible: every setting of the schema becomes part of the template. Its
+- The ADMX template is generated from the **policy schema** of the branch
+  (its override): every setting of the schema becomes part of the template.
+  Only the versions (`supportedOn`) come from the compatibility data. Its
   `title` names the ADMX policy (else its raw name) and labels its control
   where `ADMX_TITLE_LABELS` says so (see below), its `description` followed by
   its `x-help` is the help text (a setting without both takes them from the
@@ -306,11 +310,13 @@ npm test
   policy right above it, and the name matches the docs and `policies.json`.
   Without a `title`, every control shows the name.
 - A JSON value (e.g. `ExtensionSettings`) is a multi-line box in the ADMX
-  template, with the name of its setting as a line of text above it (such a box
-  has no label of its own) and a height of `ADMX_JSON_BOX_HEIGHT` lines.
-- The macOS template (plist) is generated from the **policy schema** alone:
-  every supported policy with the format `plist` (see `x-formats`), with the
-  first of its `examples`.
+  template, with the label of its control (see above) as a line of text above
+  it (such a box has no label of its own) and a height of
+  `ADMX_JSON_BOX_HEIGHT` lines.
+- The macOS template (plist) is generated from the **policy schema** of the
+  branch: every supported policy with the format `plist` (see `x-formats`),
+  with its example (the first hand-written one, else generated from the
+  schema).
 
 ## License
 

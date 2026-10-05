@@ -14,27 +14,15 @@ be run from any folder.
 
 | Tool | What it does |
 |---|---|
-| `check_schemas.js` | Checks the product's policy schemas of the given branches: the drift from the product's repository and the rules of the documentation. Exits with code 1 on problems. |
+| `check_schemas.js` | Checks the product's policy schemas of the given branches against the rules of the documentation. Exits with code 1 on problems. |
 | `validate_templates.js` | Validates generated ADMX/ADML files (the given folders, or all branches of a docs folder with `--output`). |
 
 ## The product's policy schemas
 
-The product folder holds the full policy schema of every branch
-(`overrides/<branch>.schema.json`), the authority for the docs and the
-templates. The schema in the product's repository (e.g. comm) keeps changing,
-and `check_schemas.js` reports what it has and the product's schema of the
-branch doesn't (the drift):
-
-- a policy, a setting or a definition which is missing;
-- a key of a setting which is missing, e.g. a new `enum`, or a `description`
-  that was added upstream;
-- a different value of a key which defines what a setting accepts (`type`,
-  `enum`, `pattern`, `$ref`, …), or a value of a choice (`oneOf` with `const`)
-  which is missing.
-
-Different texts, examples and hints are not drift: the product's schemas are
-the authority for them. Where a product's schema differs on purpose (e.g.
-Firefox's single form of its union types), the drift is reported each time.
+The product folder holds an override of the policy schema of every branch
+(`overrides/<branch>.schema.json`), which the generator uses instead of the
+schema in the product's repository. `check_schemas.js` checks these files
+against the rules of the documentation.
 
 Where a branch behaves differently from main, its schema keeps its own texts
 and says why in a `$comment`, e.g.:
@@ -70,8 +58,7 @@ schema and remove the `$comment`.
 
 ### When to run
 
-- After changes to the product's schemas, and from time to time to notice
-  changes in the product's repository:
+- After changes to the product's schemas:
   `node check_schemas.js --product-config=../products/thunderbird
   --branches=main,beta,release,esr153,esr140,esr128 --checkout=<path>`.
 - To validate the templates of a docs folder: `node validate_templates.js

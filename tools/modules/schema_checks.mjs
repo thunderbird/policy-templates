@@ -1,9 +1,7 @@
 /**
  * Checks of the product's policy schemas (overrides/<branch>.schema.json in
  * the product folder), used by the tools in this folder, not by the generator:
- * - checkDocumentation(): the rules of the documentation,
- * - findDrift(): what the schema of the product's repository (e.g. comm) has
- *   and the product's file doesn't, e.g. a new policy upstream.
+ * checkDocumentation(), the rules of the documentation.
  */
 
 import { findForm, getForms, resolveRef } from "../../generator/modules/schema_settings.mjs";
@@ -42,7 +40,8 @@ const isTextList = (node, items) => getTypes(node).length == 1 && getTypes(node)
 
 /**
  * Check the documentation of a branch against the rules of the policy schema
- * (the same as comm's test_policy_documentation.js): hand-written examples
+ * (most of them the same as comm's test_policy_documentation.js, see
+ * tools/README.md): hand-written examples
  * exactly where they can't be generated (of a setting with several forms, an
  * example of each form which can't be generated), a description on every setting
  * which groups other settings, on every setting inside a JSON value and on
@@ -297,68 +296,4 @@ export function checkDocumentation({ schema, l10n }) {
         findNestedFormats(rest, name);
     }
     return problems;
-}
-
-// The keys which define what a setting accepts. A different value of one of
-// them upstream is drift; other keys (texts, examples, "x-" hints) may differ,
-// the product's files are the authority for them.
-const STRUCTURE_KEYS = [
-    "type", "enum", "const", "pattern", "$ref", "required", "additionalProperties",
-    "contentMediaType", "minimum", "maximum", "format",
-];
-// The keys whose values are schema nodes, walked by findDrift().
-const NODE_MAPS = ["properties", "patternProperties", "definitions"];
-
-/**
- * Find what the schema of the product's repository has and the product's own
- * schema of the branch doesn't:
- * - a node (a policy, a setting, a definition) which is missing,
- * - a key of a node which is missing (e.g. a new "enum", or a "description"),
- * - a different value of a key which defines what a setting accepts (see
- *   STRUCTURE_KEYS), e.g. a new value of an "enum". The values of the choices
- *   ("oneOf" with "const") are compared, not their texts.
- *
- * @param {Object} params
- * @param {Object} params.upstream - The schema of the product's repository.
- * @param {Object} params.ours - The product's schema of the branch.
- * @returns {string[]} the differences
- */
-export function findDrift({ upstream, ours }) {
-    const found = [];
-    const constValues = node => (node.oneOf ?? []).filter(choice => "const" in choice).map(choice => choice.const);
-
-    function compare(up, own, where) {
-        for (const [key, value] of Object.entries(up)) {
-            if (!(key in own)) {
-                found.push(`${where}: missing "${key}"`);
-                continue;
-            }
-            if (NODE_MAPS.includes(key) && isObject(value)) {
-                for (const [name, child] of Object.entries(value)) {
-                    const childWhere = key == "properties" ? `${where}.${name}`.replace(/^\./, "")
-                        : `${where}.<${name}>`.replace(/^\./, "");
-                    if (!(name in own[key])) {
-                        found.push(`${childWhere}: missing`);
-                    } else if (isObject(child) && isObject(own[key][name])) {
-                        compare(child, own[key][name], childWhere);
-                    } else if (!same(child, own[key][name])) {
-                        // Not a node, e.g. a misplaced "required" list in
-                        // "properties" of an old schema.
-                        found.push(`${childWhere}: is ${JSON.stringify(own[key][name])}, upstream ${JSON.stringify(child)}`);
-                    }
-                }
-            } else if (key == "items" && isObject(value) && isObject(own.items)) {
-                compare(value, own.items, `${where}[]`);
-            } else if (key == "oneOf" && Array.isArray(value)) {
-                const missing = constValues(up).filter(v => !constValues(own).some(o => same(o, v)));
-                if (missing.length) {
-                    found.push(`${where}: missing values ${missing.map(v => JSON.stringify(v)).join(", ")}`);
-                }
-            } else if (STRUCTURE_KEYS.includes(key) && !same(value, own[key])) {
-                found.push(`${where}: "${key}" is ${JSON.stringify(own[key])}, upstream ${JSON.stringify(value)}`);
-            }
-        }
-    }
-    compare(upstream, ours, "");
-    return found.map(entry => entry.replace(/^: /, "(root): "));
 }

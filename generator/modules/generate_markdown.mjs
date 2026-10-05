@@ -61,7 +61,8 @@ const italic = line => `*${line.trim()}*`;
  * Get the description block of a setting: its description and the
  * descriptions of its values ("`value`: description"), as a blockquote of
  * italic lines with hard line breaks. An empty line of the description starts
- * a new paragraph. The site stylesheet (docs/assets/css/settings.css) shows
+ * a new paragraph. The site stylesheet (site/assets/css/settings.css of the
+ * product, copied into the docs) shows
  * the blockquotes inside the Settings as a plain indent.
  *
  * @param {Object} node - With `description` and `choices` (both optional).
@@ -275,7 +276,8 @@ export async function generatePolicyReadme(sections, branchData, branches, app, 
     let details = [];
     let printed_main_policies = [];
     let skipped_main_policies = [];
-    // Loop over all policies found in the policy schema file and rebuild the readme.
+    // Loop over the supported policies (from the compatibility data) and
+    // rebuild the readme from their sections.
     for (let policy of supportedPolicyNames) {
         // Get the policy header from its section.
         if (readmeData[policy]) {

@@ -83,7 +83,7 @@ export async function loadProduct(dir) {
         throw new InputError(`${file} has "plist" as a string, use "plist.domain" instead.`);
     }
     // The name of the product folder is the file name and the prefix of the
-    // ADMX template, like firefox.admx.
+    // ADMX template (e.g. thunderbird.admx).
     const name = pathUtils.basename(pathUtils.resolve(dir));
     if (!/^[a-z][a-z0-9-]*$/.test(name)) {
         throw new InputError(`The product folder "${name}" can not be used as the name of the ADMX template: use lowercase letters, digits and "-".`);

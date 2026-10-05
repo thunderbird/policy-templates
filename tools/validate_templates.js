@@ -1,6 +1,6 @@
 /**
  * Validate generated ADMX/ADML templates against the official schemas and check
- * the references between them (see modules/validate_admx.mjs).
+ * the references between them (see generator/modules/validate_admx.mjs).
  */
 
 import { loadProduct } from "../generator/modules/product.mjs";

@@ -182,22 +182,6 @@ async function getBranchCompatibilityData(app, product, branch) {
 }
 
 /**
- * Read the policy schema of a commit of the product's repository
- * (source.schema in product.yaml): not the product's own schema of the branch
- * (see loadBranch()), but the one it is compared with, e.g. by the drift check
- * of tools/check_schemas.js.
- *
- * @param {LocalGitSource|GitHubSource} app - The product's source.
- * @param {Product} product
- * @param {string} commit
- * @returns {Promise<?Object>} null if the commit has no schema
- */
-export async function readRepositorySchema(app, product, commit) {
-    const text = await app.readFile(commit, product.source.schema);
-    return text === null ? null : commentJson.parse(text);
-}
-
-/**
  * Load what the docs and templates of a branch are generated from.
  *
  * @param {Object} params
@@ -217,9 +201,10 @@ export async function readRepositorySchema(app, product, commit) {
  *    - supportedPolicies: the supported policies grouped by version.
  */
 export async function loadBranch({ app, product, branch }) {
-    // The product's own schema of the branch, the authority for the docs and
-    // the templates. The product's repository gives the version, the Fluent
-    // files and the compatibility (the history of its schema).
+    // The override of the branch's schema (the product folder), used instead
+    // of the schema of the product's repository. The product's repository
+    // gives the version, the Fluent files and the compatibility (the history
+    // of its schema).
     const schema = commentJson.parse(await fs.readFile(await getSchemaFile(product, branch), "utf8"));
     const commit = await resolveBranch(app, branch);
 
@@ -289,8 +274,8 @@ export async function writeOutput(output, branch, part, build) {
 }
 
 /**
- * Parse the options which all tools have: the product (--product-config), the
- * branches (--branches) and the sources, see SOURCE_OPTIONS.
+ * Parse the product (--product-config), a list of branches (--branches) and
+ * the sources (see SOURCE_OPTIONS), as tools/check_schemas.js takes them.
  *
  * @param {Object} values - The values returned by util.parseArgs().
  * @returns {Promise<{product: Product, branches: string[], sources: Object}>}

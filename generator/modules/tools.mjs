@@ -118,7 +118,7 @@ export async function writePrettyJSONFile(filePath, json) {
  * @param {function} producer - async function returning the value (a string)
  *    for the given key, or null if there is none (which is not cached)
  *
- * @returns {string} the value
+ * @returns {?string} the value, null if the producer has none
  */
 export async function readCachedValue(key, producer) {
     await loadDownloadCache();

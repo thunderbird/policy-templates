@@ -550,8 +550,8 @@ class ADM_BUILDER {
     }
 
     /**
-     * Groups GPO entries into categories based on the structure of their registry key
-     * paths. 
+     * Groups GPO entries into lists, groups and single entries, based on the
+     * structure of their registry key paths.
      * 
      * examples for list entries (below the product's registry key):
      * - InstallAddonsPermission\Allow\1
@@ -847,8 +847,10 @@ class ADM_BUILDER {
     }
 
     /**
-     * Generates an ADML <stringTable> XML fragment from a Map of strings.
+     * Generates the ADML file: its string table and its presentation table,
+     * from the strings and presentations collected by generateAdmx().
      *
+     * @param {AdmxTemplate} template - For the revision.
      * @returns {string} - The formatted XML string of the ADML content.
      */
     generateAdml(template) {
@@ -1155,9 +1157,11 @@ class ADM_BUILDER {
  * @property {string} version - The version of the branch, e.g. "140.3.0".
  * @property {string} docsUrl - The URL of the documentation of the branch.
  * @property {string} registryKey - The registry key of the product's
- *    policies (registry-key in product.yaml).
+ *    policies (admx.registry-key in product.yaml).
  * @property {{file: string, namespace: string, prefix: string}} admx - The
- *    identity of the ADMX template (admx in product.yaml).
+ *    identity of the ADMX template: its namespace (admx.namespace in
+ *    product.yaml), and its file name and prefix (the name of the product
+ *    folder).
  */
 
 /**

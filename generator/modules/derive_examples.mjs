@@ -46,8 +46,9 @@ class SchemaPath {
         this.schema = schema;
         this.rawNode = rawNode ?? null;
         this.node = resolveRef(schema, rawNode) ?? null;
-        // Like in the ADMX template, a text value is REG_EXPAND_SZ if it or a
-        // parent has "x-expand-env-vars".
+        // A text value is REG_EXPAND_SZ if it or a parent has
+        // "x-expand-env-vars". (The ADMX template only passes the flag on to
+        // the entries of a list, not to the settings of an object.)
         this.expandable = expandable || !!rawNode?.["x-expand-env-vars"] || !!this.node?.["x-expand-env-vars"];
     }
 
@@ -345,7 +346,7 @@ function getSectionNames(texts) {
  * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {SchemaL10n} l10n - Resolves the texts given as Fluent messages.
  * @param {string} registryKey - The registry key of the product's policies
- *    (registry-key in product.yaml), for the GPO examples.
+ *    (admx.registry-key in product.yaml), for the GPO examples.
  * @returns {Object<string, Object>} the sections by name, e.g.
  *    "SearchEngines_Add"
  */

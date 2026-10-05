@@ -1,6 +1,7 @@
 # The identity of the product, the same for all its brandings (Daily, Beta,
-# release, ESR). Names come from the product's brand.ftl; the branches to
-# generate and the target folder are command-line flags (--branches, --output).
+# release, ESR). Names come from the product's brand.ftl; the target folder is
+# a command-line flag (--output), and the branch of a single tool too
+# (--branch). The wrapper builds all branches of the product's repository.
 
 # Where the product's sources are: the repository on GitHub (used without a
 # local checkout, see --checkout), and the paths of the inputs inside it.

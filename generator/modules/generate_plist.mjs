@@ -22,8 +22,8 @@ function sortKeysRecursively(value) {
 
 /**
  * Build the macOS template: a plist file with every supported policy of the
- * branch with the format "plist" (see "x-formats"), each with the first of its
- * "examples" in the policy schema.
+ * branch with the format "plist" (see "x-formats"), each with its example (see
+ * getExample(): the first hand-written one, else generated from the schema).
  *
  * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {string[]} supportedPolicyNames - Flattened names of the supported

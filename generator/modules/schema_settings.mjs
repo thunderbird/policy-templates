@@ -1,7 +1,7 @@
 /**
- * The settings of a policy, read from the policy schema, for the ADMX
- * template: the registry values each setting needs, and the texts of each
- * setting. Texts are the standard "title" and "description" keywords of JSON
+ * The settings of a policy, read from the policy schema: the registry values
+ * each setting needs for the ADMX template, the texts of each setting, the
+ * tree of the settings and the examples for the docs and the plist template. Texts are the standard "title" and "description" keywords of JSON
  * Schema, the long help text "x-help", and the titles of the choices of
  * "oneOf". Each is either plain English or a Fluent message (see l10n.mjs).
  * Further: "x-deprecated", and "x-expand-env-vars" for values in which
@@ -929,7 +929,7 @@ export function getPolicyData(schema, policyName) {
     const find = field => Array.isArray(node?.[field]) ? node[field] : undefined;
     return {
         formats: find("x-formats"),
-        // The category the policy is listed under, like in Firefox's schema.
+        // The category the policy is listed under.
         category: typeof node?.["x-category"] == "string" && node["x-category"] ? node["x-category"] : undefined,
     };
 }
