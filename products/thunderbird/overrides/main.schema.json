@@ -231,7 +231,7 @@
           "type": "boolean",
           "description": "Trust certificates that have been added to the operating system certificate store by a user or administrator.",
           "x-help": "Note: This policy only works on Windows and macOS. For Linux discussion, see [bug 1600509](https://bugzilla.mozilla.org/show_bug.cgi?id=1600509).\n\nSee https://support.mozilla.org/kb/setting-certificate-authorities-firefox for more detail.",
-          "title": "Trust certificates that have been added to the operating system certificate store by a user or administrator."
+          "title": "Certificates of the operating system"
         },
         "Install": {
           "x-cck2-equivalent": ["certs.ca"],
@@ -240,9 +240,9 @@
             "type": "string"
           },
           "x-expand-env-vars": true,
-          "description": "Install certificates into the Thunderbird certificate store.",
+          "description": "Adds certificates to the Thunderbird certificate store.",
           "x-help": "If only a filename is specified, Thunderbird searches for the file in the following locations:\n\n- Windows\n  - %USERPROFILE%\\AppData\\Local\\Mozilla\\Certificates\n  - %USERPROFILE%\\AppData\\Roaming\\Mozilla\\Certificates\n- macOS\n  - /Library/Application Support/Mozilla/Certificates\n  - ~/Library/Application Support/Mozilla/Certificates\n- Linux\n  - /usr/lib/mozilla/certificates\n  - /usr/lib64/mozilla/certificates\n  - ~/.mozilla/certificates\n\nA fully qualified path can be used, including UNC paths. You should use the native path style for your operating system.\n\nIf you are specifying the path in the policies.json file on Windows, you need to escape your backslashes (`\\\\`) which means that for UNC paths, you need to escape both (`\\\\\\\\`). If you use group policy, you only need one backslash.\n\nCertificates are installed using the trust string `CT,CT,`.\n\nBinary (DER) and ASCII (PEM) certificates are both supported.",
-          "title": "Install certificates into the Thunderbird certificate store.",
+          "title": "Certificates to install",
           "examples": [["cert1.der", "/home/username/cert2.pem"]],
           "x-examples-gpo": [["cert1.der", "C:\\Users\\username\\cert2.pem"]]
         }
@@ -541,9 +541,8 @@
     "DisablePasswordReveal": {
       "x-category": "Password manager",
       "type": "boolean",
-      "title": "Do not allow passwords to be revealed in saved logins",
-      "x-description-l10n-id": "policy-DisablePasswordReveal",
-      "x-help": "Do not allow passwords to be shown in saved logins."
+      "title": "Hide passwords of saved logins",
+      "x-description-l10n-id": "policy-DisablePasswordReveal"
     },
 
     "DisableQRExport": {
@@ -688,7 +687,7 @@
             "type": "string"
           },
           "title": "Extensions to install",
-          "description": "Extensions to install, each as URL or native path.",
+          "description": "Each is given as URL or native path.",
           "x-expand-env-vars": true,
           "examples": [
             [
@@ -703,7 +702,7 @@
             "type": "string"
           },
           "title": "Extensions to uninstall",
-          "description": "Extensions to uninstall if found, by their IDs.",
+          "description": "Each is given by its ID, and only uninstalled if it is installed.",
           "examples": [["bad_addon_id@mozilla.org"]]
         },
         "Locked": {
@@ -1378,7 +1377,7 @@
         "AutoLogin": {
           "type": "boolean",
           "title": "Don't prompt for authentication if the password is saved",
-          "description": "Don't prompt for authentication if the password is saved. If the proxy requires authentication and its password is saved, Thunderbird logs in without asking. If that login fails, the user is asked again."
+          "description": "If the proxy requires authentication and its password is saved, Thunderbird logs in without asking. If that login fails, the user is asked again."
         }
       },
       "title": "Proxy Settings",
@@ -1476,31 +1475,31 @@
               }
             }
           },
-          "description": "Add new search engines.",
+          "description": "Adds search engines to the built-in ones.",
           "x-help": "Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.",
-          "title": "Add new search engines."
+          "title": "New search engines"
         },
         "Default": {
           "x-cck2-equivalent": ["defaultSearchEngine"],
           "type": "string",
-          "description": "Set the default search engine, which is used to search the web from Thunderbird.",
+          "description": "The search engine which is used to search the web from Thunderbird.",
           "x-help": "The search engine is given by its name, either a built-in search engine or one added with Add. It is set when the policy is applied for the first time and whenever the name changes, so the user can choose another default search engine in the meantime.",
-          "title": "Set the default search engine.",
+          "title": "Default search engine",
           "examples": ["NAME_OF_SEARCH_ENGINE"]
         },
         "DefaultPrivate": {
           "type": "string",
-          "description": "Set the default search engine for private browsing.",
+          "description": "The search engine which is used in private browsing.",
           "x-help": "This setting has no effect in Thunderbird.",
-          "title": "Set the default search engine for private browsing.",
+          "title": "Default search engine for private browsing",
           "examples": ["NAME_OF_SEARCH_ENGINE"]
         },
         "PreventInstalls": {
           "x-cck2-equivalent": ["disableSearchEngineInstall"],
           "type": "boolean",
-          "description": "Prevent installing search engines from webpages.",
+          "description": "Webpages can't install search engines.",
           "x-help": "This setting has no effect in Thunderbird.",
-          "title": "Prevent installing search engines from webpages."
+          "title": "Prevent search engine installs"
         },
         "Remove": {
           "x-cck2-equivalent": [
@@ -1510,9 +1509,9 @@
           "items": {
             "type": "string"
           },
-          "description": "Hide built-in search engines.",
+          "description": "These built-in search engines are not offered to the user.",
           "x-help": "The search engines are given by their names. They are hidden when the policy is applied for the first time and whenever the list changes.",
-          "title": "Hide built-in search engines.",
+          "title": "Hidden search engines",
           "examples": [["NAME_OF_SEARCH_ENGINE"]]
         }
       },

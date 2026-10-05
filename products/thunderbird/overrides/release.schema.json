@@ -265,7 +265,7 @@
       "properties": {
         "ImportEnterpriseRoots": {
           "type": "boolean",
-          "title": "Trust certificates that have been added to the operating system certificate store by a user or administrator.",
+          "title": "Certificates of the operating system",
           "x-help": "Note: This policy only works on Windows and macOS. For Linux discussion, see [bug 1600509](https://bugzilla.mozilla.org/show_bug.cgi?id=1600509).\n\nSee https://support.mozilla.org/kb/setting-certificate-authorities-firefox for more detail.",
           "description": "Trust certificates that have been added to the operating system certificate store by a user or administrator.",
           "x-preferences-affected": [
@@ -277,7 +277,7 @@
           "items": {
             "type": "string"
           },
-          "title": "Install certificates into the Thunderbird certificate store.",
+          "title": "Certificates to install",
           "x-help": "If only a filename is specified, Thunderbird searches for the file in the following locations:\n\n- Windows\n  - %USERPROFILE%\\AppData\\Local\\Mozilla\\Certificates\n  - %USERPROFILE%\\AppData\\Roaming\\Mozilla\\Certificates\n- macOS\n  - /Library/Application Support/Mozilla/Certificates\n  - ~/Library/Application Support/Mozilla/Certificates\n- Linux\n  - /usr/lib/mozilla/certificates\n  - /usr/lib64/mozilla/certificates\n  - ~/.mozilla/certificates\n\nA fully qualified path can be used, including UNC paths. You should use the native path style for your operating system.\n\nIf you are specifying the path in the policies.json file on Windows, you need to escape your backslashes (`\\\\`) which means that for UNC paths, you need to escape both (`\\\\\\\\`). If you use group policy, you only need one backslash.\n\nCertificates are installed using the trust string `CT,CT,`.\n\nBinary (DER) and ASCII (PEM) certificates are both supported.",
           "x-expand-env-vars": true,
           "examples": [
@@ -292,7 +292,7 @@
               "C:\\Users\\username\\cert2.pem"
             ]
           ],
-          "description": "Install certificates into the Thunderbird certificate store.",
+          "description": "Adds certificates to the Thunderbird certificate store.",
           "x-cck2-equivalent": [
             "certs.ca"
           ]
@@ -607,8 +607,7 @@
     },
     "DisablePasswordReveal": {
       "type": "boolean",
-      "title": "Do not allow passwords to be revealed in saved logins",
-      "x-help": "Do not allow passwords to be shown in saved logins.",
+      "title": "Hide passwords of saved logins",
       "description": "Do not allow passwords to be revealed in saved logins.",
       "x-category": "Password manager"
     },
@@ -761,7 +760,7 @@
             "type": "string"
           },
           "title": "Extensions to install",
-          "description": "Extensions to install, each as URL or native path.",
+          "description": "Each is given as URL or native path.",
           "x-expand-env-vars": true,
           "examples": [
             [
@@ -776,7 +775,7 @@
             "type": "string"
           },
           "title": "Extensions to uninstall",
-          "description": "Extensions to uninstall if found, by their IDs.",
+          "description": "Each is given by its ID, and only uninstalled if it is installed.",
           "examples": [
             [
               "bad_addon_id@mozilla.org"
@@ -1507,7 +1506,7 @@
         "AutoLogin": {
           "type": "boolean",
           "title": "Don't prompt for authentication if the password is saved",
-          "description": "Don't prompt for authentication if the password is saved. If the proxy requires authentication and its password is saved, Thunderbird logs in without asking. If that login fails, the user is asked again."
+          "description": "If the proxy requires authentication and its password is saved, Thunderbird logs in without asking. If that login fails, the user is asked again."
         }
       },
       "title": "Proxy Settings",
@@ -1648,39 +1647,39 @@
               }
             }
           },
-          "title": "Add new search engines.",
+          "title": "New search engines",
           "x-help": "Although there are only five engines available in the ADMX template, there is no limit. To add more in the ADMX template, you can duplicate the XML.",
-          "description": "Add new search engines.",
+          "description": "Adds search engines to the built-in ones.",
           "x-cck2-equivalent": [
             "searchplugins"
           ]
         },
         "Default": {
           "type": "string",
-          "title": "Set the default search engine.",
+          "title": "Default search engine",
           "x-help": "The search engine is given by its name, either a built-in search engine or one added with Add. It is set when the policy is applied for the first time and whenever the name changes, so the user can choose another default search engine in the meantime.",
           "examples": [
             "NAME_OF_SEARCH_ENGINE"
           ],
-          "description": "Set the default search engine, which is used to search the web from Thunderbird.",
+          "description": "The search engine which is used to search the web from Thunderbird.",
           "x-cck2-equivalent": [
             "defaultSearchEngine"
           ]
         },
         "DefaultPrivate": {
           "type": "string",
-          "title": "Set the default search engine for private browsing.",
+          "title": "Default search engine for private browsing",
           "x-help": "This setting has no effect in Thunderbird.",
           "examples": [
             "NAME_OF_SEARCH_ENGINE"
           ],
-          "description": "Set the default search engine for private browsing."
+          "description": "The search engine which is used in private browsing."
         },
         "PreventInstalls": {
           "type": "boolean",
-          "title": "Prevent installing search engines from webpages.",
+          "title": "Prevent search engine installs",
           "x-help": "This setting has no effect in Thunderbird.",
-          "description": "Prevent installing search engines from webpages.",
+          "description": "Webpages can't install search engines.",
           "x-cck2-equivalent": [
             "disableSearchEngineInstall"
           ]
@@ -1690,14 +1689,14 @@
           "items": {
             "type": "string"
           },
-          "title": "Hide built-in search engines.",
+          "title": "Hidden search engines",
           "x-help": "The search engines are given by their names. They are hidden when the policy is applied for the first time and whenever the list changes.",
           "examples": [
             [
               "NAME_OF_SEARCH_ENGINE"
             ]
           ],
-          "description": "Hide built-in search engines.",
+          "description": "These built-in search engines are not offered to the user.",
           "x-cck2-equivalent": [
             "removeDefaultSearchEngines (removed all built-in engines)"
           ]

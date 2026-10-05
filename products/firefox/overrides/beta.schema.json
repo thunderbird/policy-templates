@@ -334,11 +334,11 @@
       },
       "x-restart-required": true,
       "title": "Define domains allowed to access Google Workspace",
-      "description": "Define domains allowed to access Google Workspace.",
+      "description": "Users can only access Google Workspace with accounts from these domains.",
       "examples": [
         "managedfirefox.com,example.com"
       ],
-      "x-help": "This policy is based on the [Chrome policy](https://chromeenterprise.google/policies/#AllowedDomainsForApps) of the same name.\n\nIf this policy is enabled, users can only access Google Workspace using accounts from the specified domains. If you want to allow Gmail, you can add ```consumer_accounts``` to the list."
+      "x-help": "This policy is based on the [Chrome policy](https://chromeenterprise.google/policies/#AllowedDomainsForApps) of the same name.\n\nIf you want to allow Gmail, you can add ```consumer_accounts``` to the list."
     },
     "AllowFileSelectionDialogs": {
       "type": "boolean",
@@ -990,7 +990,7 @@
             "type": "string"
           },
           "title": "Install Certificates",
-          "description": "Install certificates into the Firefox certificate store. If only a filename is specified, Firefox searches for the file in the following locations:",
+          "description": "Adds certificates to the Firefox certificate store. If only a filename is specified, Firefox searches for the file in the following locations:",
           "x-help": "- Windows\n  - %USERPROFILE%\\AppData\\Local\\Mozilla\\Certificates\n  - %USERPROFILE%\\AppData\\Roaming\\Mozilla\\Certificates\n- macOS\n  - /Library/Application Support/Mozilla/Certificates\n  - ~/Library/Application Support/Mozilla/Certificates\n- Linux\n  - /usr/lib/mozilla/certificates\n  - /usr/lib64/mozilla/certificates\n  - ~/.mozilla/certificates\n\nStarting with Firefox 65, Firefox 60.5 ESR, a fully qualified path can be used, including UNC paths. You should use the native path style for your operating system. We do not support using %USERPROFILE% or other environment variables on Windows.\n\nIf you are specifying the path in the policies.json file on Windows, you need to escape your backslashes (`\\\\`) which means that for UNC paths, you need to escape both (`\\\\\\\\`). If you use group policy, you only need one backslash.\n\nCertificates are installed using the trust string `CT,CT,`.\n\nBinary (DER) and ASCII (PEM) certificates are both supported.",
           "x-cck2-equivalent": [
             "certs.ca"
@@ -2192,7 +2192,7 @@
         }
       },
       "x-restart-required": true,
-      "title": "Do not allow passwords to be revealed in saved logins",
+      "title": "Hide passwords of saved logins",
       "description": "Do not allow passwords to be shown in saved logins.",
       "examples": [
         true
@@ -3020,7 +3020,7 @@
       },
       "x-restart-required": true,
       "title": "Disable warnings based on file extension for specific file types on domains",
-      "description": "Disable warnings based on file extension for specific file types on domains.",
+      "description": "Downloads of these file types from these domains get no warnings based on their file extension.",
       "examples": [
         [
           {
@@ -3085,7 +3085,7 @@
             "type": "string"
           },
           "title": "Extensions to Install",
-          "description": "Extensions to install, each as URL or native path."
+          "description": "Each is given as URL or native path."
         },
         "Uninstall": {
           "type": "array",
@@ -3093,7 +3093,7 @@
             "type": "string"
           },
           "title": "Extensions to Uninstall",
-          "description": "Extensions to uninstall if found, by their IDs."
+          "description": "Each is given by its ID, and only uninstalled if it is installed."
         },
         "Locked": {
           "type": "array",
@@ -4140,7 +4140,7 @@
         }
       },
       "x-restart-required": true,
-      "title": "Revert to legacy SameSite behavior on specific domains",
+      "title": "Domains with legacy SameSite behavior",
       "description": "Revert to legacy SameSite behavior for cookies on specified sites.",
       "examples": [
         [
@@ -4535,7 +4535,7 @@
       },
       "x-restart-required": true,
       "title": "Override the first run page",
-      "description": "Override the first run page.",
+      "description": "The page shown on the first run, instead of the built-in one.",
       "examples": [
         "https://example.org"
       ],
@@ -4563,7 +4563,7 @@
       },
       "x-restart-required": true,
       "title": "Override the upgrade page",
-      "description": "Override the upgrade page.",
+      "description": "The page shown after an upgrade, instead of the built-in one.",
       "examples": [
         "http://example.org"
       ],
@@ -5136,7 +5136,7 @@
         }
       },
       "x-restart-required": true,
-      "title": "Enable post-quantum key agreement",
+      "title": "Post-quantum key agreement",
       "description": "Enable post-quantum key agreement for TLS.",
       "examples": [
         false
