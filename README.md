@@ -247,12 +247,13 @@ npm test
   a section, and so has every setting with an `x-help` of its own (e.g.
   `SearchEngines_Add`, `SecurityDevices_[name]` for the settings with open
   names). Its line in the table of contents shows the `description`, its
-  heading the name followed by the `title` (if it has one, the anchor stays
-  the one of the name), its text the
+  heading the name followed by the `title` (if it adds to the name, not only
+  repeating it, and the anchor stays the one of the name), its text the
   `description` followed by the `x-help`, then its settings which have no
   section of their own, as blocks following the nesting of the schema (also
-  inside JSON values): each with its title, its type (including its values),
-  its `description` and its own settings as a nested list. The ADMX template lists the fields of a
+  inside JSON values): each with its type (including its values), its title
+  (if it adds to the name), its `description` and its own settings as a
+  nested list. The ADMX template lists the fields of a
   JSON value in its help text the same way. The examples are generated from
   the schema: booleans `true`, a choice its first value, objects and lists
   from their settings. Hand-written `examples`

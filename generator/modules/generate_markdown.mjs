@@ -88,8 +88,25 @@ function descriptionLines({ description, choices }, indent) {
 }
 
 /**
- * Get the lines of a setting: "`name` Title (type)" (the title if it has one),
- * its description block, and its own settings as a nested list.
+ * Whether a title says more than the name of its setting, i.e. not only the
+ * name again (ignoring case, spaces and "_", so "Disable Telemetry" doesn't
+ * for DisableTelemetry). The docs leave out other titles, the ADMX template
+ * still uses them as names.
+ *
+ * @param {?string} title
+ * @param {string} name - The name of the setting, or the path of a section
+ *    (e.g. "SearchEngines_Add"), whose last part counts too.
+ * @returns {boolean}
+ */
+function isNewTitle(title, name) {
+    const plain = text => text.replace(/[\s_|]/g, "").toLowerCase();
+    return !!title && plain(title) != plain(name) && plain(title) != plain(name.split("_").at(-1));
+}
+
+/**
+ * Get the lines of a setting: "`name` (type) - Title" (the title if it adds to
+ * the name, see isNewTitle()), its description block, and its own settings as
+ * a nested list.
  *
  * @param {Object} node - See getSectionTree().
  * @param {string} indent - The indentation of the line.
@@ -99,7 +116,7 @@ function descriptionLines({ description, choices }, indent) {
 function settingLines(node, indent, bullet) {
     const continuation = indent + " ".repeat(bullet.length);
     return [
-        `${indent}${bullet}\`${node.name}\`${node.title ? ` ${node.title}` : ""}${node.type ? ` (${node.type})` : ""}${node.deprecated ? " **Deprecated.**" : ""}`,
+        `${indent}${bullet}\`${node.name}\`${node.type ? ` (${node.type})` : ""}${isNewTitle(node.title, node.name) ? ` - ${node.title}` : ""}${node.deprecated ? " **Deprecated.**" : ""}`,
         ...descriptionLines(node, continuation),
         ...(node.children ?? []).flatMap(child => settingLines(child, continuation, "- ")),
     ];
@@ -107,7 +124,7 @@ function settingLines(node, indent, bullet) {
 
 /**
  * Render the settings of a docs section under a "Settings" heading, as blocks:
- * each setting with "`name` (type)", its description block and its own
+ * each setting with "`name` (type) - Title", its description block and its own
  * settings as a nested list, each block followed by a blank line. A section
  * whose setting has no settings of its own shows the setting itself, one
  * whose setting accepts several forms (e.g. "boolean or object") shows it
@@ -144,7 +161,8 @@ export function renderSettingTree(tree) {
 /**
  * Render the docs sections (see deriveSections()): per section its line in
  * the table of contents (its description) and its content, whose heading is
- * the name of the section followed by its title, if it has one. A heading with
+ * the name of the section followed by its title, if it adds to the name (see
+ * isNewTitle()). A heading with
  * a title gets the id of the heading without it ({#…}, kramdown), so the
  * anchors don't depend on the titles.
  *
@@ -162,7 +180,7 @@ export function generateReadmeMarkdown(policies) {
 
         const heading = key.replaceAll("_", " | ");
         readmeData[key].content = [
-            value.title ? `## ${heading}: ${value.title} {#${getPolicyAnchor(key)}}` : `## ${heading}`,
+            isNewTitle(value.title, key) ? `## ${heading}: ${value.title} {#${getPolicyAnchor(key)}}` : `## ${heading}`,
             ``,
             ...(value.deprecated ? ["**Deprecated.**", ""] : []),
             // Each text is followed by a blank line.

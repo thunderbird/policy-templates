@@ -122,9 +122,21 @@ test("the compatibility table shows the versions of the product", () => {
     ]);
 });
 
-test("a setting with a title shows it after its name", () => {
-    const tree = { choices: null, children: [node("Mode", "The mode.", [], { title: "Proxy method", type: "string" })] };
-    assert.deepEqual(renderSettingTree(tree).slice(4, 6), ["`Mode` Proxy method (string)", "> *The mode.*"]);
+test("a setting with a title shows it after its type, unless it only repeats the name", () => {
+    const tree = {
+        choices: null,
+        children: [
+            node("Mode", "The mode.", [], { title: "Proxy method", type: "string" }),
+            node("Locked", null, [], { type: "boolean", deprecated: true }),
+            node("SPNEGO", null, [], { title: "SPNEGO", type: "list of strings" }),
+            node("AllowNonFQDN", null, [], { title: "Allow Non FQDN", type: "object" }),
+        ],
+    };
+    const lines = renderSettingTree(tree);
+    assert.deepEqual(lines.slice(4, 6), ["`Mode` (string) - Proxy method", "> *The mode.*"]);
+    assert.ok(lines.includes("`Locked` (boolean) **Deprecated.**"));
+    assert.ok(lines.includes("`SPNEGO` (list of strings)"));
+    assert.ok(lines.includes("`AllowNonFQDN` (object)"));
 });
 
 test("the table of contents shows the description, the heading the title", () => {
@@ -133,6 +145,8 @@ test("the table of contents shows the description, the heading the title", () =>
         AppAutoUpdate: section({ title: "Automatic updates", summary: "Enable automatic updates.", description: "Enable automatic updates.\n\nMore." }),
         SearchEngines_Add: section({ title: null, summary: "Add search\nengines | more.", description: "Add search engines." }),
         Old: section({ title: null, summary: "Old.", deprecated: true }),
+        Cookies: section({ title: "Cookies", summary: "Cookies." }),
+        DisableTelemetry: section({ title: "Disable Telemetry", summary: "No telemetry." }),
     });
     assert.equal(data.AppAutoUpdate.toc, "| **[`AppAutoUpdate`](#appautoupdate)** | Enable automatic updates.");
     assert.equal(data.AppAutoUpdate.content[0], "## AppAutoUpdate: Automatic updates {#appautoupdate}");
@@ -140,6 +154,9 @@ test("the table of contents shows the description, the heading the title", () =>
     assert.equal(data.SearchEngines_Add.toc, "| **[`SearchEngines -> Add`](#searchengines--add)** | Add search engines \\| more.");
     assert.equal(data.SearchEngines_Add.content[0], "## SearchEngines | Add");
     assert.equal(data.Old.toc, "| **[`Old`](#old)** | **Deprecated.** Old.");
+    // A title which only repeats the name is left out.
+    assert.equal(data.Cookies.content[0], "## Cookies");
+    assert.equal(data.DisableTelemetry.content[0], "## DisableTelemetry");
 });
 
 test("each CCK2 equivalent and each preference affected is shown as inline code", () => {
