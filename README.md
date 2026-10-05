@@ -279,10 +279,19 @@ npm test
   resolved with the Fluent files of the branch (see `source.fluent` in
   `product.yaml`). Policies whose `x-formats` don't include `gpo`
   are left out.
-- Categories of the ADMX template: each policy is placed in the category
-  named by its `x-category` (as in Firefox's schema, e.g. "Network
-  security"), and a policy which becomes several ADMX policies gets its own
-  category inside it (e.g. "Network security › Proxy").
+- Folders (categories) of the ADMX template: they follow the shape of the
+  schema. The ADMX policies of a policy with several settings sit in a folder
+  of the policy (e.g. `Proxy`), nested for deeper settings (e.g.
+  `Permissions` › `Permissions_Camera`), and the slots of a list of objects in
+  a folder of the list. A policy with a single ADMX policy sits directly in
+  the product's folder (`thunderbird`). The id of a folder is its setting
+  path, which is part of the OMA-URIs of its policies (Intune), so a folder
+  only changes when the shape of a policy changes. `x-category` is only the
+  category of the docs, as in Firefox's schema.
+- Names of the folders: the `title` of the policy or setting, else its name.
+  To translate a folder, give its title as a Fluent message
+  (`x-title-l10n-id`), like any other title. A new text gets a new Fluent ID,
+  while the id of the folder stays.
 - Labels of the ADMX controls (a design decision, switched with
   `ADMX_TITLE_LABELS` in `generator/modules/constants.mjs`): a list box and a
   control in a group (several settings in one ADMX policy, e.g. the

@@ -916,8 +916,9 @@ export const FORMATS = ["gpo", "plist", "json"];
  * Get the formats and the category of a policy from the schema: "x-formats"
  * (the formats the policy is used with: "gpo" for the Windows templates,
  * "plist" for the macOS template, "json" for policies.json files, all formats
- * if not given), and "x-category" (the category it is listed under, like in
- * Firefox's schema). The examples of a policy come from getExample().
+ * if not given) and "x-category" (the category it is listed under in the
+ * docs, like in Firefox's schema). The examples of a policy come from
+ * getExample().
  *
  * @param {Object} schema - The policy schema of the branch, see loadBranch().
  * @param {string} policyName

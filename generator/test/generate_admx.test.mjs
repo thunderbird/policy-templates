@@ -302,13 +302,13 @@ test("every setting of the schema is part of the template, with its texts", asyn
             "Url", "UrlOrEmpty", "NotEmpty", "Code", "OldUrl", "OldUrlOrEmpty", "Locales", "Old"]
     );
 
-    // Names: the title (also from Fluent), else the raw name, never the
-    // description.
+    // Names: the title (also from Fluent), else the raw name of a policy or
+    // the path of a setting, never the description.
     assert.equal(string(adml, "Auth_Sites"), "Sites allowed to authenticate");
     assert.equal(string(adml, "Auth_Locked"), "Lock it");
-    assert.equal(string(adml, "Auth_Mode"), "Mode");
-    assert.equal(string(adml, "Auth_Delegated"), "Delegated");
-    assert.equal(string(adml, "Search_Add_2"), "Add (2)");
+    assert.equal(string(adml, "Auth_Mode"), "Auth › Mode");
+    assert.equal(string(adml, "Auth_Delegated"), "Auth › Delegated");
+    assert.equal(string(adml, "Search_Add_2"), "Search › Add (2)");
     assert.equal(string(adml, "Folder"), "A folder");
     assert.equal(string(adml, "Old"), "Old (deprecated)");
 
@@ -352,12 +352,11 @@ test("every setting of the schema is part of the template, with its texts", asyn
     assert.match(admx, /<text id="OldUrlOrEmpty_Input" valueName="OldUrlOrEmpty"\/>/);
     assert.match(admx, /<list id="Locales_List" key="Software\\Policies\\Example\\Product\\Locales" valuePrefix=""\/>/);
 
-    // A setting with several ADMX policies gets a category, nested in the
-    // category of its parent setting.
-    assert.equal(parentCategory(admx, "policy", "Auth_Locked"), "Auth_category");
-    assert.equal(parentCategory(admx, "policy", "Search_Add_1"), "Search_Add_category");
-    assert.equal(parentCategory(admx, "category", "Search_Add_category"), "Search_category");
-    assert.equal(parentCategory(admx, "policy", "Folder"), "product_category");
+    // The folders follow the setting paths, see the test of folders.
+    assert.equal(parentCategory(admx, "policy", "Auth_Locked"), "Auth");
+    assert.equal(parentCategory(admx, "policy", "Search_Add_1"), "Search_Add");
+    assert.equal(parentCategory(admx, "category", "Search_Add"), "Search");
+    assert.equal(parentCategory(admx, "policy", "Folder"), "product");
 });
 
 test("help texts in the schema must not contain tables", async () => {
@@ -434,37 +433,52 @@ test("a JSON value has its name above its box, and a taller box", async () => {
     assert.match(adml, /<presentation id="Settings">\s*<text>Settings<\/text>\s*<multiTextBox refId="Settings_Input" defaultHeight="12"\/>/);
 });
 
-test("a policy is placed in the category of its x-category, with its own category inside", async () => {
+test("an ADMX policy is placed in the folders of its setting path, named by their titles", async () => {
     const { admx, adml } = await generate(
         {
             properties: {
                 Proxy: {
                     type: "object",
+                    title: "Proxy settings.",
                     "x-category": "Network security",
                     properties: { Locked: { type: "boolean" }, HTTPProxy: { type: "string" } },
                 },
-                Authentication: {
+                Permissions: {
                     type: "object",
-                    "x-category": "Authentication",
-                    properties: { Locked: { type: "boolean" }, NTLM: { type: "boolean" } },
+                    properties: {
+                        Camera: { type: "object", title: "Camera", properties: { Allow: { type: "array", items: { type: "string" } }, Locked: { type: "boolean" } } },
+                    },
                 },
-                Flag: { type: "boolean", "x-category": "Network security" },
-                Plain: { type: "boolean" },
+                Plain: { type: "boolean", "x-category": "Network security" },
             },
         },
-        ["Proxy_Locked", "Proxy_HTTPProxy", "Authentication_Locked", "Authentication_NTLM", "Flag", "Plain"]
+        ["Proxy_Locked", "Proxy_HTTPProxy", "Permissions_Camera_Allow", "Permissions_Camera_Locked", "Plain"]
     );
-    // The category of the policy, with the category of its settings inside.
-    assert.equal(parentCategory(admx, "category", "cat_Network_security"), "product_category");
-    assert.equal(string(adml, "cat_Network_security"), "Network security");
-    assert.equal(parentCategory(admx, "category", "Proxy_category"), "cat_Network_security");
-    assert.equal(parentCategory(admx, "policy", "Proxy_HTTPProxy"), "Proxy_category");
-    assert.equal(parentCategory(admx, "policy", "Flag"), "cat_Network_security");
-    // Not nested in a category of the same name.
-    assert.equal(parentCategory(admx, "policy", "Authentication_NTLM"), "cat_Authentication");
-    assert.equal(admx.includes('name="Authentication_category"'), false);
-    // Without x-category, at the top level.
-    assert.equal(parentCategory(admx, "policy", "Plain"), "product_category");
+    // A folder per policy with several settings, its id the setting path,
+    // named by its title (without the period), below the product's folder.
+    assert.equal(parentCategory(admx, "policy", "Proxy_HTTPProxy"), "Proxy");
+    assert.equal(parentCategory(admx, "category", "Proxy"), "product");
+    assert.equal(string(adml, "cat_Proxy"), "Proxy settings");
+    // Nested for deeper settings, the name of a setting without title is its
+    // name.
+    assert.equal(parentCategory(admx, "policy", "Permissions_Camera_Allow"), "Permissions_Camera");
+    assert.equal(parentCategory(admx, "category", "Permissions_Camera"), "Permissions");
+    assert.equal(string(adml, "cat_Permissions_Camera"), "Camera");
+    assert.equal(string(adml, "cat_Permissions"), "Permissions");
+    // A policy with a single ADMX policy sits in the product's folder.
+    // x-category is the category of the docs.
+    assert.equal(parentCategory(admx, "policy", "Plain"), "product");
+});
+
+test("a new setting doesn't move the ADMX policies of a policy", async () => {
+    const schema = settings => ({ properties: { Proxy: { type: "object", properties: settings } } });
+    const before = await generate(schema({ Locked: { type: "boolean" }, Mode: { type: "string" } }), ["Proxy_Locked", "Proxy_Mode"]);
+    const after = await generate(
+        schema({ Locked: { type: "boolean" }, Mode: { type: "string" }, Port: { type: "string" } }),
+        ["Proxy_Locked", "Proxy_Mode", "Proxy_Port"]
+    );
+    assert.equal(parentCategory(before.admx, "policy", "Proxy_Mode"), "Proxy");
+    assert.equal(parentCategory(after.admx, "policy", "Proxy_Mode"), "Proxy");
 });
 
 test("a setting of several forms gets one ADMX policy per form, the others with the kind as suffix", async () => {
@@ -481,12 +495,12 @@ test("a setting of several forms gets one ADMX policy per form, the others with 
         },
         ["Locales"]
     );
-    // The list keeps the plain name, the text is added, both in the same
-    // category.
+    // The list keeps the plain name, the text is added, both in the product's
+    // folder.
     assert.match(admx, /<list id="Locales_List" key="Software\\Policies\\Example\\Product\\Locales" valuePrefix=""\/>/);
     assert.match(admx, /<text id="LocalesString_Input" valueName="Locales"\/>/);
-    assert.equal(parentCategory(admx, "policy", "Locales"), "cat_Misc");
-    assert.equal(parentCategory(admx, "policy", "LocalesString"), "cat_Misc");
+    assert.equal(parentCategory(admx, "policy", "Locales"), "product");
+    assert.equal(parentCategory(admx, "policy", "LocalesString"), "product");
     assert.equal(string(adml, "LocalesString"), "Locales (string)");
     assert.equal(string(adml, "LocalesString_Explain"), `The locales.\n\n${docsLink("locales")}\n`);
 });
@@ -534,9 +548,10 @@ test("a boolean or object setting gets the boolean and the ADMX policies of its 
     assert.match(admx, /<policy name="Sanitize" [^>]*valueName="Sanitize">/);
     assert.match(admx, /<policy name="Sanitize_Cache" /);
     assert.match(admx, /<policy name="Sanitize_Cookies" /);
-    // The forms share the category of the setting.
-    assert.equal(parentCategory(admx, "policy", "Sanitize"), "Sanitize_category");
-    assert.equal(parentCategory(admx, "policy", "Sanitize_Cache"), "Sanitize_category");
+    // The boolean form sits in the product's folder, the settings of the
+    // object form in the folder of the policy.
+    assert.equal(parentCategory(admx, "policy", "Sanitize"), "product");
+    assert.equal(parentCategory(admx, "policy", "Sanitize_Cache"), "Sanitize");
     assert.equal(string(adml, "Sanitize"), "Sanitize");
 });
 
@@ -585,4 +600,26 @@ test("the ADMX policy of a form gets the description of its alternative, and is 
     assert.equal(string(adml, "LocalesString"), "Locales (string) (deprecated)");
     assert.match(string(adml, "LocalesString_Explain"), /The locales\.\n\nAn empty text clears them\./);
     assert.equal(string(adml, "Locales"), "Locales");
+});
+
+test("a setting name with other characters than letters, digits and _ is an error, except inside JSON and as open name", async () => {
+    await assert.rejects(
+        generate({ properties: { Policy: { type: "object", properties: { "Allow-List": { type: "string" } } } } }, ["Policy"]),
+        /The setting Policy.Allow-List can't be part of an ADMX policy name/
+    );
+    const { admx } = await generate(
+        {
+            properties: {
+                Json: {
+                    type: "object",
+                    contentMediaType: "application/json",
+                    properties: { "Allow-List": { type: "string" } },
+                },
+                Open: { type: "object", patternProperties: { "^.*$": { type: "string" } } },
+            },
+        },
+        ["Json", "Open_[name]"]
+    );
+    assert.match(admx, /<policy name="Json" /);
+    assert.match(admx, /<policy name="Open" /);
 });

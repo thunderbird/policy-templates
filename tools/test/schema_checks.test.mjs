@@ -92,6 +92,38 @@ test("a setting with several forms needs an example of each form which can't be 
     ]);
 });
 
+test("policy and setting names outside JSON values only have letters, digits and _", () => {
+    const schema = {
+        properties: {
+            Policy: {
+                type: "object",
+                description: "P.",
+                "x-category": "Misc",
+                properties: {
+                    "Allow-List": { type: "string", examples: ["a"] },
+                    Open: {
+                        type: "object",
+                        description: "O.",
+                        patternProperties: { "^.*$": { type: "string" } },
+                        examples: [{ "*": "a" }],
+                    },
+                },
+            },
+            Json: {
+                type: "object",
+                contentMediaType: "application/json",
+                description: "J.",
+                "x-category": "Misc",
+                properties: { "Allow-List": { type: "boolean", description: "A." } },
+            },
+            "Mac-Only": { type: "boolean", description: "M.", "x-category": "Misc", "x-formats": ["plist"] },
+        },
+    };
+    assert.deepEqual(checkDocumentation({ schema, l10n: L10N }), [
+        "Policy.Allow-List: the name can't be part of an ADMX policy name",
+    ]);
+});
+
 test("the preferences affected and the CCK2 equivalent are only on docs sections, as a string or a list of strings", () => {
     const schema = {
         properties: {

@@ -50,8 +50,9 @@ const isTextList = (node, items) => getTypes(node).length == 1 && getTypes(node)
  * value of a choice, "x-formats" only on policies, an "x-category" on every
  * policy, "x-preferences-affected" and "x-cck2-equivalent" only on the nodes
  * of docs sections (a policy, or a setting with an x-help) and as a string or
- * a list of strings, and examples which only use settings and values the
- * branch has.
+ * a list of strings, examples which only use settings and values the branch
+ * has, policy and setting names (outside JSON values) of letters, digits and
+ * "_" only, as they become part of ADMX policy names.
  *
  * @param {{schema: Object, l10n: SchemaL10n}} branch
  * @returns {string[]} the problems
@@ -201,6 +202,28 @@ export function checkDocumentation({ schema, l10n }) {
         }
     }
 
+    // The policy and setting names which become part of ADMX policy names
+    // (the fixed settings outside JSON values, also of list entries and of
+    // alternatives) can only have letters, digits and "_".
+    function checkAdmxNames(node, where) {
+        node = resolve(node);
+        if (!isObject(node) || isJson(node)) {
+            return;
+        }
+        for (const [name, child] of Object.entries(node.properties ?? {})) {
+            if (!/^[A-Za-z0-9_]+$/.test(name)) {
+                problems.push(`${where}.${name}: the name can't be part of an ADMX policy name`);
+            }
+            checkAdmxNames(child, `${where}.${name}`);
+        }
+        if (isObject(node.items)) {
+            checkAdmxNames(node.items, where);
+        }
+        for (const alternative of [...(node.anyOf ?? []), ...(node.oneOf ?? [])]) {
+            checkAdmxNames(alternative, where);
+        }
+    }
+
     function findNestedFormats(node, where) {
         if (!isObject(node) && !Array.isArray(node)) {
             return;
@@ -256,10 +279,17 @@ export function checkDocumentation({ schema, l10n }) {
         ]) {
             checkDescriptions(child, `${name}.${childName}`, inJson);
         }
-        if (!(typeof resolved["x-category"] == "string" && resolved["x-category"])) {
+        const category = resolved["x-category"];
+        if (!(typeof category == "string" && category)) {
             problems.push(`${name}: missing x-category`);
         }
         const { "x-formats": formats, ...rest } = policy;
+        if (!Array.isArray(formats) || formats.includes("gpo")) {
+            if (!/^[A-Za-z0-9_]+$/.test(name)) {
+                problems.push(`${name}: the name can't be part of an ADMX policy name`);
+            }
+            checkAdmxNames(policy, name);
+        }
         if (formats !== undefined && !(Array.isArray(formats) && formats.length
             && formats.every(format => ["gpo", "plist", "json"].includes(format)))) {
             problems.push(`${name}: x-formats should be a non-empty list of gpo, plist, json`);

@@ -64,6 +64,9 @@ schema and remove the `$comment`.
 - `x-preferences-affected` and `x-cck2-equivalent` only on the nodes of docs
   sections, as a string or a list of strings.
 - Examples which use a setting or a value the branch doesn't have.
+- Policy and setting names (outside JSON values, of policies with the format
+  `gpo`) with other characters than letters, digits and `_`: they become part
+  of ADMX policy names, as in comm's test.
 
 ### When to run
 

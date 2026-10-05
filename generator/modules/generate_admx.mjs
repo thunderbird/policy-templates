@@ -9,7 +9,8 @@ import {
     ADMX_JSON_BOX_HEIGHT, ADMX_TITLE_LABELS, MOZILLA_ADML_PATH, MOZILLA_ADMX_PATH, MOZILLA_POLICY_TEMPLATES_BRANCH,
 } from "./constants.mjs";
 import {
-    getKindLabel, getPolicyData, getSchemaSettings, getSettingTree, hasFormat, withoutTrailingPeriod,
+    getKindLabel, getPolicyData, getSchemaSettings, getSettingTree, hasFormat,
+    withoutTrailingPeriod,
 } from "./schema_settings.mjs";
 import { ensureDir } from "./tools.mjs";
 import { formatProblems, validateAdmx } from "./validate_admx.mjs";
@@ -96,29 +97,23 @@ function getControlLabel(settingTexts, path, kind, name = path.at(-1)) {
 }
 
 /**
- * Get the levels of the category of an ADMX policy: the category of its policy
- * ("x-category", like in Firefox's schema), and inside it the categories of
- * the settings which create more than one ADMX policy (e.g. Proxy). A setting
- * category with the same name as the policy's category is left out (the
- * category Authentication isn't nested in the category Authentication).
+ * Get the folders (categories) of an ADMX policy: one for each setting above
+ * it in its setting path, so the ADMX policies of a policy's settings sit in
+ * the folder of the policy (Proxy_Mode in Proxy), nested for deeper settings
+ * (Permissions_Camera_Allow in Permissions › Permissions_Camera). The slots of
+ * a list of objects also sit in a folder of the list. A policy with a single
+ * ADMX policy, and each form of it, sits in the root. The folders only depend
+ * on the shape of the schema, so they only change when the shape of a policy
+ * changes: their ids are part of the OMA-URIs of the policies (Intune).
  *
- * @param {string} [policyCategory] - The "x-category" of the policy.
- * @param {string[]} settingPath - The path of the setting categories, e.g.
- *    ["SearchEngines", "Add"], empty if the policy has none.
- * @returns {?Array<{id: string, name: string}>} the levels from the top, null
- *    for the top level
+ * @param {string[]} path - The setting path of the ADMX policy.
+ * @param {boolean} [slot] - Whether the ADMX policy is a slot of a list.
+ * @returns {string[][]} the setting paths of the folders, from the top
  */
-function getPolicyCategory(policyCategory, settingPath) {
-    const levels = [];
-    if (policyCategory) {
-        levels.push({ id: `cat_${policyCategory.replace(/[^A-Za-z0-9]+/g, "_")}`, name: policyCategory });
-    }
-    settingPath.forEach((name, i) => {
-        if (i > 0 || name != policyCategory) {
-            levels.push({ id: `${settingPath.slice(0, i + 1).join("_")}_category`, name });
-        }
-    });
-    return levels.length ? levels : null;
+function getFolders(path, slot = false) {
+    const settings = path.filter(part => !/^\d+$/.test(part));
+    const depth = slot ? settings.length : settings.length - 1;
+    return Array.from({ length: depth }, (_, i) => settings.slice(0, i + 1));
 }
 
 function getTemplateRevision(template) {
@@ -258,8 +253,9 @@ class ADM_BUILDER {
         const openTexts = openName ? lookup(`${key}/${OPEN_NAME}`) : null;
         const setting = (openTexts?.title ? openTexts : null) || lookup(key);
 
-        // The name: the title, else the raw name of the setting.
-        let title = withoutTrailingPeriod(setting?.title ?? path.at(-1));
+        // The name: the title, else the raw name of the policy, or the path of
+        // the setting (no category shows the policy of a setting).
+        let title = withoutTrailingPeriod(setting?.title ?? path.join(" › "));
         if (slot) {
             title = `${title} (${slot})`;
         }
@@ -830,18 +826,18 @@ class ADM_BUILDER {
     }
 
     /**
-     * Place an ADMX policy in its category, and add each level of the category
-     * to the categories table.
+     * Place an ADMX policy in its innermost folder, and add its folders to the
+     * categories table.
      *
      * @param {Object} params
-     * @param {?Array<{id: string, name: string}>} params.category - The levels
-     *    of the category, from the top, see getPolicyCategory(); null for the
-     *    top level.
+     * @param {Array<{id: string, name: string}>} params.category - The folders
+     *    of the ADMX policy, from the top (see getFolders()), empty for the
+     *    root.
      * @param {Object} params.rootElement - The policy element.
      */
     handleCategoryEntry({ category, rootElement }) {
         let parent = this.rootCategory;
-        for (const { id, name } of category ?? []) {
+        for (const { id, name } of category) {
             if (!this.CATEGORIES.has(id)) {
                 this.CATEGORIES.set(id, { name, parent });
             }
@@ -892,7 +888,7 @@ class ADM_BUILDER {
      */
     generateAdmx(template, supportedPolicies, schema, l10n) {
         this.registryKey = template.registryKey;
-        this.rootCategory = `${template.admx.prefix}_category`;
+        this.rootCategory = template.admx.prefix;
         const namespace = {
             revision: getTemplateRevision(template),
             schemaVersion: "1.0",
@@ -917,12 +913,22 @@ class ADM_BUILDER {
             .filter(policyName => hasFormat(getPolicyData(schema, policyName), "gpo"))
             .sort((a, b) => a.localeCompare(b));
 
-        // All ADMX policies are collected first, since their categories
-        // depend on how many ADMX policies each setting creates.
+        // All ADMX policies are collected first, to check that their names
+        // are unique before any is created.
         const planned = [];
         for (const policyName of policyNames) {
             const plannedBefore = planned.length;
             const { entries, texts: settingTexts } = getSchemaSettings(schema, policyName, l10n);
+            // The names of the policy and of its settings become the names of
+            // its ADMX policies, which allow letters, digits and "_" only.
+            // (The keys also hold the index of a list entry, and a
+            // placeholder for open names, which are entered as values.)
+            for (const { key } of entries) {
+                const parts = key.split("\\");
+                if (parts.some(part => !/^[A-Za-z0-9_]+$/.test(part))) {
+                    throw new Error(`The setting ${parts.join(".")} can't be part of an ADMX policy name: only letters, digits and "_" are possible.`);
+                }
+            }
             const gpoEntries = entries.map(entry => ({ ...entry, key: `${template.registryKey}\\${entry.key}` }));
             const settingTree = getSettingTree(schema, policyName, l10n);
             const root = settingTexts.get(policyName);
@@ -932,6 +938,13 @@ class ADM_BUILDER {
             const texts = (path, options) => this.getPolicyTexts(
                 { settingTexts, settingTree, docsUrl: template.docsUrl }, policyName, policyData, path, options
             );
+            // The folders of an ADMX policy (see getFolders()), each named by
+            // the title of its setting (which may come from Fluent, see
+            // SchemaL10n), else by the name of the setting.
+            const folders = (path, slot = false) => getFolders(path, slot).map(settingPath => ({
+                id: settingPath.join("_"),
+                name: withoutTrailingPeriod(settingTexts.get(settingPath.join("/"))?.title ?? settingPath.at(-1)),
+            }));
 
             const { lists, groups, singles } = this.groupByEntriesByKeyType(
                 gpoEntries.filter(e => !e.explicitName)
@@ -951,10 +964,10 @@ class ADM_BUILDER {
                 const entry = { ...(entries.find(e => e.type == "REG_EXPAND_SZ") ?? entries[0]), label: getControlLabel(settingTexts, path, "list") };
                 planned.push({
                     name: listId,
-                    baseName: listId,
                     type: "list",
                     types: entries.map(e => e.type),
                     path,
+                    folders: folders(path),
                     create: category => this.handleListEntry(
                         texts(path, { openName: true }),
                         listId,
@@ -984,10 +997,10 @@ class ADM_BUILDER {
                     const json = entries[0].type == "REG_MULTI_SZ";
                     planned.push({
                         name: listId,
-                        baseName: withoutSuffix(listId, form),
                         type: "list",
                         types: entries.map(e => e.type),
                         path,
+                        folders: folders(path),
                         create: category => this.handleListEntry(
                             texts(path, { form }),
                             listId,
@@ -1004,10 +1017,10 @@ class ADM_BUILDER {
                     for (let i = 1; i < 6; i++) {
                         planned.push({
                             name: `${listId}_${i}`,
-                            baseName: `${withoutSuffix(listId, form)}_${i}`,
                             type: "group",
                             types: entries.map(e => e.type),
                             path,
+                            folders: folders(path, true),
                             create: category => this.handleGroupEntry(
                                 texts(path, { slot: i, controls, form }),
                                 `${listId}_${i}`,
@@ -1029,10 +1042,10 @@ class ADM_BUILDER {
                 const form = entries[0].form;
                 planned.push({
                     name: groupId,
-                    baseName: withoutSuffix(groupId, form),
                     type: "group",
                     types: entries.map(e => e.type),
                     path,
+                    folders: folders(path),
                     create: category => this.handleGroupEntry(
                         texts(path, { controls, form }),
                         groupId,
@@ -1049,10 +1062,10 @@ class ADM_BUILDER {
                 const singleId = entry.normalizedKeyParts.join("_");
                 planned.push({
                     name: `${singleId}${entry.form?.suffix ?? ""}`,
-                    baseName: singleId,
                     type: "single",
                     types: [entry.type],
                     path: entry.normalizedKeyParts,
+                    folders: folders(entry.normalizedKeyParts),
                     create: category => this.handleSingleEntry(
                         texts(entry.normalizedKeyParts, { form: entry.form }),
                         `${singleId}${entry.form?.suffix ?? ""}`,
@@ -1082,24 +1095,9 @@ class ADM_BUILDER {
             names.add(name);
         }
 
-        // A setting which creates more than one ADMX policy gets its own
-        // category, nested in the category of its parent setting. The forms
-        // of a setting count as one (see getForms()), so that a new form
-        // doesn't move the ADMX policies of the setting.
-        const counts = new Map();
-        for (const { path, baseName } of planned) {
-            for (let i = 1; i <= path.length; i++) {
-                const prefix = path.slice(0, i).join("\\");
-                counts.set(prefix, (counts.get(prefix) ?? new Set()).add(baseName));
-            }
-        }
-        for (const { name, type, types, path, create } of planned) {
-            let depth = 0;
-            while (depth < path.length && counts.get(path.slice(0, depth + 1).join("\\")).size > 1) {
-                depth++;
-            }
-            const category = getPolicyCategory(getPolicyData(schema, path[0]).category, path.slice(0, depth));
-            const policyFragment = create(category);
+        // Each ADMX policy is placed in its folders, see getFolders().
+        for (const { name, type, types, folders, create } of planned) {
+            const policyFragment = create(folders);
             if (policyFragment) {
                 policyNodes.push({ name, type, types, node: policyFragment.root() });
             }
@@ -1128,10 +1126,12 @@ class ADM_BUILDER {
             ref: 'Mozilla:Cat_Mozilla'
         })
 
+        // The folders (see getFolders()). Their strings get a prefix, as the
+        // string table also holds the names of the ADMX policies.
         for (const [id, { name, parent }] of this.CATEGORIES) {
             categoriesNode.ele('category', {
                 name: id,
-                displayName: this.getStringId(id, name)
+                displayName: this.getStringId(`cat_${id}`, name)
             }).ele('parentCategory', {
                 ref: parent
             });
