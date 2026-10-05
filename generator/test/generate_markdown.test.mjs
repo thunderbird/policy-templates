@@ -141,3 +141,14 @@ test("the table of contents shows the description, the heading the title", () =>
     assert.equal(data.SearchEngines_Add.content[0], "## SearchEngines | Add");
     assert.equal(data.Old.toc, "| **[`Old`](#old)** | **Deprecated.** Old.");
 });
+
+test("each CCK2 equivalent and each preference affected is shown as inline code", () => {
+    const section = (fields) => ({ description: "", settingTree: { choices: null, children: [] }, json: null, gpo: [], plist: null, ...fields });
+    const data = generateReadmeMarkdown({
+        Search: section({ cck2Equivalent: ["defaultSearchEngine", "removeDefaultSearchEngines"], preferencesAffected: ["a.b", "c.d"] }),
+        Single: section({ cck2Equivalent: "disableAboutConfig" }),
+    });
+    assert.ok(data.Search.content.includes("**CCK2 Equivalent:** `defaultSearchEngine`, `removeDefaultSearchEngines`\\"));
+    assert.ok(data.Search.content.includes("**Preferences Affected:** `a.b`, `c.d`"));
+    assert.ok(data.Single.content.includes("**CCK2 Equivalent:** `disableAboutConfig`\\"));
+});

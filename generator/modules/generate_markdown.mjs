@@ -166,7 +166,10 @@ export function generateReadmeMarkdown(policies) {
             ...(value.deprecated ? ["**Deprecated.**", ""] : []),
             // Each text is followed by a blank line.
             ...(value.description ? [...value.description.trimEnd().split("\n"), ""] : []),
-            `**CCK2 Equivalent:** ${value.cck2Equivalent ? `\`${value.cck2Equivalent}\`` : "N/A"}\\`,
+            `**CCK2 Equivalent:** ${value.cck2Equivalent
+                ? [value.cck2Equivalent].flat().map(e => `\`${e}\``).join(", ")
+                : "N/A"
+            }\\`,
             `**Preferences Affected:** ${Array.isArray(value.preferencesAffected)
                 ? value.preferencesAffected.map(e => `\`${e}\``).join(", ")
                 : value.preferencesAffected ?? "N/A"
