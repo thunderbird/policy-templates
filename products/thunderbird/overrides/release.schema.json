@@ -1509,6 +1509,10 @@
       },
       "x-help": "The corresponding language packs become active.\n\nNote: This policy can also be a string, so that you can specify an empty value.",
       "examples": [
+        [
+          "de",
+          "en-US"
+        ],
         "de,en-US"
       ],
       "description": "Set the list of requested locales for the application in order of preference.",

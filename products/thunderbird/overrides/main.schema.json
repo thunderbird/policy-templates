@@ -1360,7 +1360,7 @@
       },
       "x-description-l10n-id": "policy-RequestedLocales",
       "x-help": "The corresponding language packs become active.\n\nNote: This policy can also be a string, so that you can specify an empty value.",
-      "examples": ["de,en-US"]
+      "examples": [["de", "en-US"], "de,en-US"]
     },
 
     "SearchEngines": {
