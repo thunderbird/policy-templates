@@ -270,3 +270,36 @@ test("the CCK2 equivalent and the preferences affected are taken from the node o
     assert.deepEqual(Path.cck2Equivalent, ["path"]);
     assert.equal(Flag.preferencesAffected, undefined);
 });
+
+test("a setting with several forms has an example of each form, the one with the plain ADMX name first", () => {
+    const schema = {
+        properties: {
+            Locales: {
+                type: ["string", "array"],
+                items: { type: "string" },
+                description: "The locales.",
+                examples: ["de,en-US", ["de", "en-US"]],
+            },
+            Menu: {
+                description: "The menu bar.",
+                anyOf: [{ type: "boolean" }, { type: "string", enum: ["always", "never"] }],
+                examples: ["never"],
+            },
+        },
+    };
+    const sections = deriveSections(schema, L10N, BASE_KEY);
+    assert.deepEqual(sections.Locales.gpo, [
+        { key: `${BASE_KEY}\\Locales\\1`, type: "REG_SZ", value: "de" },
+        { key: `${BASE_KEY}\\Locales\\2`, type: "REG_SZ", value: "en-US" },
+        { key: `${BASE_KEY}\\Locales`, type: "REG_SZ", value: "de,en-US" },
+    ]);
+    assert.equal(
+        sections.Locales.json,
+        `{\n  "policies": {\n    "Locales": ["de", "en-US"]\n  }\n}\n\n{\n  "policies": {\n    "Locales": "de,en-US"\n  }\n}`
+    );
+    // A form without example of its own gets a generated one.
+    assert.deepEqual(sections.Menu.gpo, [
+        { key: `${BASE_KEY}\\Menu`, type: "REG_SZ", value: "never" },
+        { key: `${BASE_KEY}\\Menu`, type: "REG_DWORD", value: "0x1" },
+    ]);
+});

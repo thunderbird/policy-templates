@@ -49,9 +49,9 @@ test("hand-written examples are used, also next to a $ref and for the GPO format
     assert.deepEqual(getExample(SCHEMA, ["Paths"], { format: "gpo" }), ["C:\\a", "C:\\b"]);
 });
 
-test("strings without example and of several types the first one get the placeholder", () => {
+test("strings without example get the placeholder, of several forms the one with the plain ADMX name", () => {
     assert.equal(getExample(SCHEMA, ["Text"]), STRING_PLACEHOLDER);
-    assert.equal(getExample(SCHEMA, ["Locales"]), STRING_PLACEHOLDER);
+    assert.deepEqual(getExample(SCHEMA, ["Locales"]), [STRING_PLACEHOLDER]);
     assert.deepEqual(getExample(SCHEMA, ["Open"]), { [NAME_PLACEHOLDER_EXAMPLE]: true });
 });
 

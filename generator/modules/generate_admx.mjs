@@ -8,7 +8,9 @@ import { writeOutput } from "./branches.mjs";
 import {
     ADMX_JSON_BOX_HEIGHT, ADMX_TITLE_LABELS, MOZILLA_ADML_PATH, MOZILLA_ADMX_PATH, MOZILLA_POLICY_TEMPLATES_BRANCH,
 } from "./constants.mjs";
-import { getPolicyData, getSchemaSettings, getSettingTree, hasFormat, withoutTrailingPeriod } from "./schema_settings.mjs";
+import {
+    getKindLabel, getPolicyData, getSchemaSettings, getSettingTree, hasFormat, withoutTrailingPeriod,
+} from "./schema_settings.mjs";
 import { ensureDir } from "./tools.mjs";
 import { formatProblems, validateAdmx } from "./validate_admx.mjs";
 import pathUtils from "node:path";
@@ -242,9 +244,12 @@ class ADM_BUILDER {
      * @param {number} [options.slot] - The number of a slot of a structured list.
      * @param {Object[]} [options.controls] - The controls of the ADMX policy,
      *    whose descriptions are added to the explain text.
+     * @param {Object} [options.form] - The form of the setting, if it has
+     *    several (see getForms()): a form with a name suffix gets its kind in
+     *    the name, and the description of its alternative in the help.
      * @returns {{toc: string, content: string}}
      */
-    getPolicyTexts(context, policyName, policyData, path, { openName = false, slot = null, controls = [] } = {}) {
+    getPolicyTexts(context, policyName, policyData, path, { openName = false, slot = null, controls = [], form = null } = {}) {
         const lookup = key => context.settingTexts.get(key);
         const key = path.join("/");
         // A list of open names stands for the open name if it has a title
@@ -258,7 +263,10 @@ class ADM_BUILDER {
         if (slot) {
             title = `${title} (${slot})`;
         }
-        const deprecated = !!(setting?.deprecated || policyData.deprecated);
+        if (form?.suffix) {
+            title = `${title} (${getKindLabel(form.kind)})`;
+        }
+        const deprecated = !!(setting?.deprecated || policyData.deprecated || form?.deprecated);
         if (deprecated) {
             title = `${title} (deprecated)`;
         }
@@ -271,6 +279,9 @@ class ADM_BUILDER {
             const texts = i == path.length ? setting : lookup(path.slice(0, i).join("/"));
             const paragraphs = [texts?.description, texts?.help].filter(Boolean).map(text => text.trim());
             help = paragraphs.length ? paragraphs.join("\n\n") : null;
+        }
+        if (form?.description) {
+            help = [help, form.description.trim()].filter(Boolean).join("\n\n");
         }
 
         // The help text, and a link to the documentation of the policy.
@@ -311,10 +322,9 @@ class ADM_BUILDER {
         });
     }
 
-    handleSingleEntry(policyTexts, entry, supportedPolicies) {
+    handleSingleEntry(policyTexts, singleId, entry, supportedPolicies, supportedPoliciesId = singleId) {
         const keyParts = entry.key.split("\\");
         const valueName = keyParts.pop();
-        const singleId = entry.normalizedKeyParts.join("_");
 
         const isBooleanLike = isBooleanLikeEntry(entry);
         const policyAttrs = {
@@ -337,7 +347,7 @@ class ADM_BUILDER {
         })
         if (!this.handleSupportEntry({
             supportedPolicies,
-            id: singleId,
+            id: supportedPoliciesId,
             rootElement: policyFragment
         })) {
             // Unsupported, skip.
@@ -404,6 +414,11 @@ class ADM_BUILDER {
     handlePresentationEntry({ rootElement, id, entry, mode }) {
         // The label of a control, see getControlLabel().
         const label = entry.label ?? entry.key.split("\\").at(-1);
+        // The values of several forms in one dropdown.
+        if (entry.items) {
+            rootElement.ele('dropdownList', { refId: `${id}_Enum` }).txt(label);
+            return;
+        }
         switch (entry.type) {
             case "REG_DWORD": {
                 if (isBooleanLikeEntry(entry)) {
@@ -584,7 +599,8 @@ class ADM_BUILDER {
                 // * [ 'Certificates', 'Install', '1' ]
                 // * [ 'SearchEngines', 'Add', '1', 'Name' ]
                 // Group list items by cutting before the list index.
-                const listBase = cutArrayBeforeFirstNumericElement(entry.normalizedKeyParts).join("_");
+                const listBase = cutArrayBeforeFirstNumericElement(entry.normalizedKeyParts).join("_")
+                    + (entry.form?.suffix ?? "");
                 if (!lists.has(listBase)) {
                     lists.set(listBase, []);
                 }
@@ -602,7 +618,7 @@ class ADM_BUILDER {
             // * [ 'Authentication', 'AllowNonFQDN', 'SPNEGO' ]
             // * [ 'Authentication', 'AllowNonFQDN', 'NTLM' ]
             // Group items by removing the last element.
-            const groupBase = entry.normalizedKeyParts.slice(0, -1).join("_");
+            const groupBase = entry.normalizedKeyParts.slice(0, -1).join("_") + (entry.form?.suffix ?? "");
             if (!groups.has(groupBase)) {
                 groups.set(groupBase, []);
             }
@@ -640,6 +656,25 @@ class ADM_BUILDER {
      */
     handleValueEntry({ entry, valueName, id, rootElement }) {
         const rootNodeName = rootElement.node.nodeName;
+        // The values of several forms in one dropdown, each item with its
+        // own registry type.
+        if (entry.items) {
+            const baseElement = rootNodeName === 'policy'
+                ? rootElement.ele('elements')
+                : rootElement
+            const enumElem = baseElement.ele('enum', { id: `${id}_Enum`, valueName });
+            for (const item of entry.items) {
+                const value = enumElem
+                    .ele('item', { displayName: this.getStringId(`${id}_${item.value}`, item.title) })
+                    .ele('value');
+                if (item.type == "REG_DWORD") {
+                    value.ele('decimal', { value: parseInt(item.value, 0) });
+                } else {
+                    value.ele('string').txt(item.value);
+                }
+            }
+            return;
+        }
         switch (entry.type) {
             case 'REG_DWORD': {
                 if (isBooleanLikeEntry(entry)) {
@@ -886,6 +921,7 @@ class ADM_BUILDER {
         // depend on how many ADMX policies each setting creates.
         const planned = [];
         for (const policyName of policyNames) {
+            const plannedBefore = planned.length;
             const { entries, texts: settingTexts } = getSchemaSettings(schema, policyName, l10n);
             const gpoEntries = entries.map(entry => ({ ...entry, key: `${template.registryKey}\\${entry.key}` }));
             const settingTree = getSettingTree(schema, policyName, l10n);
@@ -915,6 +951,7 @@ class ADM_BUILDER {
                 const entry = { ...(entries.find(e => e.type == "REG_EXPAND_SZ") ?? entries[0]), label: getControlLabel(settingTexts, path, "list") };
                 planned.push({
                     name: listId,
+                    baseName: listId,
                     type: "list",
                     types: entries.map(e => e.type),
                     path,
@@ -930,10 +967,15 @@ class ADM_BUILDER {
                 });
             }
 
+            // The name of an ADMX policy without the suffix of its form (see
+            // getForms()), for its compatibility.
+            const withoutSuffix = (name, form) => form?.suffix ? name.slice(0, -form.suffix.length) : name;
+
             // 1. Handle lists.
             for (const [listId, entries] of lists) {
                 const listBaseKey = this.findBaseKey(entries.map(e => e.key));
                 const path = this.getRelativeKeyParts(listBaseKey);
+                const form = entries[0].form;
                 if (entries.length === 1) {
                     // Simple REG_SZ/REG_EXPAND_SZ List, or a list of JSON
                     // values (REG_MULTI_SZ), entered as one JSON value per
@@ -942,15 +984,17 @@ class ADM_BUILDER {
                     const json = entries[0].type == "REG_MULTI_SZ";
                     planned.push({
                         name: listId,
+                        baseName: withoutSuffix(listId, form),
                         type: "list",
                         types: entries.map(e => e.type),
                         path,
                         create: category => this.handleListEntry(
-                            texts(path),
+                            texts(path, { form }),
                             listId,
                             listBaseKey,
                             { ...entries[0], label: json ? `${label} (one JSON value per line)` : label, category },
-                            supportedPolicies
+                            supportedPolicies,
+                            withoutSuffix(listId, form)
                         ),
                     });
                 } else {
@@ -960,16 +1004,17 @@ class ADM_BUILDER {
                     for (let i = 1; i < 6; i++) {
                         planned.push({
                             name: `${listId}_${i}`,
+                            baseName: `${withoutSuffix(listId, form)}_${i}`,
                             type: "group",
                             types: entries.map(e => e.type),
                             path,
                             create: category => this.handleGroupEntry(
-                                texts(path, { slot: i, controls }),
+                                texts(path, { slot: i, controls, form }),
                                 `${listId}_${i}`,
                                 `${listBaseKey}\\${i}`,
                                 controls.map(e => ({ ...e, category })),
                                 supportedPolicies,
-                                `${listId}`
+                                withoutSuffix(listId, form)
                             ),
                         });
                     }
@@ -981,53 +1026,76 @@ class ADM_BUILDER {
                 const groupBaseKey = this.findBaseKey(entries.map(e => e.key));
                 const path = this.getRelativeKeyParts(groupBaseKey);
                 const controls = this.withControlTexts(settingTexts, path, entries);
+                const form = entries[0].form;
                 planned.push({
                     name: groupId,
+                    baseName: withoutSuffix(groupId, form),
                     type: "group",
                     types: entries.map(e => e.type),
                     path,
                     create: category => this.handleGroupEntry(
-                        texts(path, { controls }),
+                        texts(path, { controls, form }),
                         groupId,
                         groupBaseKey,
                         controls.map(e => ({ ...e, category })),
-                        supportedPolicies
+                        supportedPolicies,
+                        withoutSuffix(groupId, form)
                     ),
                 });
             }
 
             // 3. Handle single entries
             for (const entry of singles) {
+                const singleId = entry.normalizedKeyParts.join("_");
                 planned.push({
-                    name: entry.normalizedKeyParts.join("_"),
+                    name: `${singleId}${entry.form?.suffix ?? ""}`,
+                    baseName: singleId,
                     type: "single",
                     types: [entry.type],
                     path: entry.normalizedKeyParts,
                     create: category => this.handleSingleEntry(
-                        texts(entry.normalizedKeyParts),
+                        texts(entry.normalizedKeyParts, { form: entry.form }),
+                        `${singleId}${entry.form?.suffix ?? ""}`,
                         {
                             ...entry,
                             label: getControlLabel(settingTexts, entry.normalizedKeyParts, "single", entry.key.split("\\").at(-1)),
                             category,
                         },
-                        supportedPolicies
+                        supportedPolicies,
+                        singleId
                     ),
                 });
             }
+
+            if (planned.length == plannedBefore) {
+                throw new Error(`The policy ${policyName} can not be represented in the ADMX template.`);
+            }
+        }
+
+        // The name of an ADMX policy is its identity, see getNameSuffix() for
+        // the names of the forms of a setting.
+        const names = new Set();
+        for (const { name } of planned) {
+            if (names.has(name)) {
+                throw new Error(`Two ADMX policies would be named ${name}.`);
+            }
+            names.add(name);
         }
 
         // A setting which creates more than one ADMX policy gets its own
-        // category, nested in the category of its parent setting.
+        // category, nested in the category of its parent setting. The forms
+        // of a setting count as one (see getForms()), so that a new form
+        // doesn't move the ADMX policies of the setting.
         const counts = new Map();
-        for (const { path } of planned) {
+        for (const { path, baseName } of planned) {
             for (let i = 1; i <= path.length; i++) {
                 const prefix = path.slice(0, i).join("\\");
-                counts.set(prefix, (counts.get(prefix) ?? 0) + 1);
+                counts.set(prefix, (counts.get(prefix) ?? new Set()).add(baseName));
             }
         }
         for (const { name, type, types, path, create } of planned) {
             let depth = 0;
-            while (depth < path.length && counts.get(path.slice(0, depth + 1).join("\\")) > 1) {
+            while (depth < path.length && counts.get(path.slice(0, depth + 1).join("\\")).size > 1) {
                 depth++;
             }
             const category = getPolicyCategory(getPolicyData(schema, path[0]).category, path.slice(0, depth));

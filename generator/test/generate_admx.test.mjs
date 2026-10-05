@@ -466,3 +466,123 @@ test("a policy is placed in the category of its x-category, with its own categor
     // Without x-category, at the top level.
     assert.equal(parentCategory(admx, "policy", "Plain"), "product_category");
 });
+
+test("a setting of several forms gets one ADMX policy per form, the others with the kind as suffix", async () => {
+    const { admx, adml } = await generate(
+        {
+            properties: {
+                Locales: {
+                    type: ["string", "array"],
+                    items: { type: "string" },
+                    description: "The locales.",
+                    "x-category": "Misc",
+                },
+            },
+        },
+        ["Locales"]
+    );
+    // The list keeps the plain name, the text is added, both in the same
+    // category.
+    assert.match(admx, /<list id="Locales_List" key="Software\\Policies\\Example\\Product\\Locales" valuePrefix=""\/>/);
+    assert.match(admx, /<text id="LocalesString_Input" valueName="Locales"\/>/);
+    assert.equal(parentCategory(admx, "policy", "Locales"), "cat_Misc");
+    assert.equal(parentCategory(admx, "policy", "LocalesString"), "cat_Misc");
+    assert.equal(string(adml, "LocalesString"), "Locales (string)");
+    assert.equal(string(adml, "LocalesString_Explain"), `The locales.\n\n${docsLink("locales")}\n`);
+});
+
+test("forms which all have a fixed set of values are one dropdown, each value with its own registry type", async () => {
+    const { admx, adml } = await generate(
+        {
+            properties: {
+                Menu: {
+                    description: "The menu bar.",
+                    anyOf: [
+                        { type: "boolean", description: "The old form.", "x-deprecated": true },
+                        { type: "string", oneOf: [{ const: "always", title: "Always shown" }, { const: "never", title: "Never shown" }] },
+                    ],
+                },
+            },
+        },
+        ["Menu"]
+    );
+    const policy = admx.match(/<policy name="Menu"[\s\S]*?<\/policy>/)[0];
+    assert.match(policy, /<enum id="Menu_Enum" valueName="Menu">/);
+    assert.match(policy, /<item displayName="\$\(string.Menu_always\)">\s*<value>\s*<string>always<\/string>/);
+    assert.match(policy, /<item displayName="\$\(string.Menu_0x1\)">\s*<value>\s*<decimal value="1"\/>/);
+    assert.match(policy, /<item displayName="\$\(string.Menu_0x0\)">\s*<value>\s*<decimal value="0"\/>/);
+    assert.equal(string(adml, "Menu_always"), "Always shown");
+    assert.equal(string(adml, "Menu_0x1"), "true");
+    assert.match(adml, /<dropdownList refId="Menu_Enum">Menu<\/dropdownList>/);
+    assert.doesNotMatch(admx, /<policy name="Menu_/);
+});
+
+test("a boolean or object setting gets the boolean and the ADMX policies of its settings", async () => {
+    const { admx, adml } = await generate(
+        {
+            properties: {
+                Sanitize: {
+                    type: ["boolean", "object"],
+                    description: "Clear data.",
+                    "x-category": "Privacy",
+                    properties: { Cache: { type: "boolean" }, Cookies: { type: "boolean" }, Except: { type: "string" } },
+                },
+            },
+        },
+        ["Sanitize", "Sanitize_Cache", "Sanitize_Cookies", "Sanitize_Except"]
+    );
+    assert.match(admx, /<policy name="Sanitize" [^>]*valueName="Sanitize">/);
+    assert.match(admx, /<policy name="Sanitize_Cache" /);
+    assert.match(admx, /<policy name="Sanitize_Cookies" /);
+    // The forms share the category of the setting.
+    assert.equal(parentCategory(admx, "policy", "Sanitize"), "Sanitize_category");
+    assert.equal(parentCategory(admx, "policy", "Sanitize_Cache"), "Sanitize_category");
+    assert.equal(string(adml, "Sanitize"), "Sanitize");
+});
+
+test("alternatives of one kind are a single form", async () => {
+    const { admx } = await generate(
+        { properties: { Url: { type: "string", anyOf: [{ format: "moz-url" }, { maxLength: 0 }] } } },
+        ["Url"]
+    );
+    assert.match(admx, /<text id="Url_Input" valueName="Url"\/>/);
+    assert.doesNotMatch(admx, /UrlString/);
+});
+
+test("two forms of the same kind, a policy without ADMX policy, and two ADMX policies of one name are errors", async () => {
+    await assert.rejects(
+        generate({ properties: { Two: { anyOf: [{ type: "string" }, { type: "string", format: "moz-url" }, { type: "boolean" }] } } }, ["Two"]),
+        /The setting Two in the policy schema accepts two forms of the kind String/
+    );
+    await assert.rejects(
+        generate({ properties: { Empty: { type: "object" } } }, ["Empty"]),
+        /The policy Empty can not be represented in the ADMX template/
+    );
+    await assert.rejects(
+        generate(
+            { properties: { Foo: { type: ["string", "array"], items: { type: "string" } }, FooString: { type: "string" } } },
+            ["Foo", "FooString"]
+        ),
+        /Two ADMX policies would be named FooString/
+    );
+});
+
+test("the ADMX policy of a form gets the description of its alternative, and is marked if it is deprecated", async () => {
+    const { adml } = await generate(
+        {
+            properties: {
+                Locales: {
+                    description: "The locales.",
+                    anyOf: [
+                        { type: "array", items: { type: "string" } },
+                        { type: "string", description: "An empty text clears them.", "x-deprecated": true },
+                    ],
+                },
+            },
+        },
+        ["Locales"]
+    );
+    assert.equal(string(adml, "LocalesString"), "Locales (string) (deprecated)");
+    assert.match(string(adml, "LocalesString_Explain"), /The locales\.\n\nAn empty text clears them\./);
+    assert.equal(string(adml, "Locales"), "Locales");
+});

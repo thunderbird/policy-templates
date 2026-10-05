@@ -79,6 +79,23 @@ test("the choices of a list are the choices of its entries", () => {
     assert.deepEqual(tree.children, []);
 });
 
+test("a setting with several forms lists the types of its forms, and the settings and choices of its forms", () => {
+    const schema = {
+        properties: {
+            Locales: { type: ["string", "array"], items: { type: "string" } },
+            Menu: { anyOf: [{ type: "string", oneOf: [{ const: "always" }, { const: "never" }] }, { type: "boolean" }] },
+            Sanitize: { type: ["boolean", "object"], properties: { Cache: { type: "boolean" } } },
+        },
+    };
+    assert.equal(getSettingTree(schema, "Locales", L10N).type, "string or list of strings");
+    const menu = getSettingTree(schema, "Menu", L10N);
+    assert.equal(menu.type, "boolean or string: `always` or `never`");
+    assert.deepEqual(menu.choices.map(choice => choice.value), ["always", "never"]);
+    const sanitize = getSettingTree(schema, "Sanitize", L10N);
+    assert.equal(sanitize.type, "boolean or object");
+    assert.deepEqual(sanitize.children.map(child => child.name), ["Cache"]);
+});
+
 test("a policy which is not in the schema has no tree", () => {
     assert.equal(getSettingTree(SCHEMA, "Unknown", L10N), null);
 });

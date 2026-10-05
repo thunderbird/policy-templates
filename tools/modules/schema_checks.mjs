@@ -6,7 +6,7 @@
  *   and the product's file doesn't, e.g. a new policy upstream.
  */
 
-import { resolveRef } from "../../generator/modules/schema_settings.mjs";
+import { findForm, getForms, resolveRef } from "../../generator/modules/schema_settings.mjs";
 
 // The fields of the docs sections which are not part of the texts, see
 // checkDocumentation().
@@ -15,6 +15,8 @@ const SECTION_FIELDS = ["x-preferences-affected", "x-cck2-equivalent"];
 const FREE_TEXT_TYPES = ["string", "URL", "URLorEmpty", "origin"];
 
 const isObject = value => !!value && typeof value == "object" && !Array.isArray(value);
+// A JSON value, also with the JSON type of older schemas (["object", "JSON"]).
+const isJson = node => node?.contentMediaType == "application/json" || [node?.type].flat().includes("JSON");
 const same = (a, b) => JSON.stringify(a) == JSON.stringify(b);
 
 /**
@@ -41,7 +43,8 @@ const isTextList = (node, items) => getTypes(node).length == 1 && getTypes(node)
 /**
  * Check the documentation of a branch against the rules of the policy schema
  * (the same as comm's test_policy_documentation.js): hand-written examples
- * exactly where they can't be generated, a description on every setting
+ * exactly where they can't be generated (of a setting with several forms, an
+ * example of each form which can't be generated), a description on every setting
  * which groups other settings, on every setting inside a JSON value and on
  * every setting with an x-help (which must not repeat it), a title on every
  * value of a choice, "x-formats" only on policies, an "x-category" on every
@@ -58,18 +61,29 @@ export function checkDocumentation({ schema, l10n }) {
     const resolve = node => resolveRef(schema, node);
     const hasText = (node, field, where) => !!l10n.get(node, field, where);
 
+    // Whether the example of a node (of a single form) can't be generated.
+    const needsExample = node => !!node.patternProperties || isFreeText(node) || isTextList(node, resolve(node.items));
+
     function checkExamples(node, where, covered) {
         node = resolve(node);
         const own = Array.isArray(node.examples) && !!node.examples.length;
-        const needsExample = !!node.patternProperties || isFreeText(node) || isTextList(node, resolve(node.items));
+        const forms = getForms(schema, node);
         if (node["x-examples-gpo"] && !own) {
             problems.push(`${where}: x-examples-gpo without examples`);
         }
         if (own && covered) {
             problems.push(`${where}: needless example, a setting above it has examples`);
-        } else if (own && !needsExample) {
+        } else if (own && !forms.some(form => needsExample(form.node))) {
             problems.push(`${where}: needless example, it can be generated`);
-        } else if (!own && !covered && needsExample) {
+        } else if (!covered && forms.length > 1) {
+            // Of a setting with several forms, each form which can't be
+            // generated needs an example of its own.
+            for (const form of forms.filter(form => needsExample(form.node))) {
+                if (!(node.examples ?? []).some(example => findForm(forms, example) == form)) {
+                    problems.push(`${where}: missing example of the ${form.kind} form`);
+                }
+            }
+        } else if (!own && !covered && needsExample(node)) {
             problems.push(`${where}: missing example`);
         }
         for (const field of ["examples", "x-examples-gpo"]) {
@@ -80,14 +94,17 @@ export function checkDocumentation({ schema, l10n }) {
             }
         }
         const childCovered = covered || own || !!node.patternProperties;
-        for (const [name, child] of Object.entries(node.properties ?? {})) {
-            checkExamples(child, `${where}.${name}`, childCovered);
-        }
-        for (const [pattern, child] of Object.entries(node.patternProperties ?? {})) {
-            checkExamples(child, `${where}.<${pattern}>`, childCovered);
-        }
-        if (isObject(node.items)) {
-            checkExamples(node.items, `${where}[]`, childCovered);
+        // The settings of the forms (a type list keeps them on the node).
+        for (const container of forms.length > 1 ? forms.map(form => form.node) : [node]) {
+            for (const [name, child] of Object.entries(container.properties ?? {})) {
+                checkExamples(child, `${where}.${name}`, childCovered);
+            }
+            for (const [pattern, child] of Object.entries(container.patternProperties ?? {})) {
+                checkExamples(child, `${where}.<${pattern}>`, childCovered);
+            }
+            if (isObject(container.items)) {
+                checkExamples(container.items, `${where}[]`, childCovered);
+            }
         }
     }
 
@@ -95,6 +112,15 @@ export function checkDocumentation({ schema, l10n }) {
     function findUnknownParts(value, node, path) {
         node = resolve(node);
         const found = [];
+        // Of a setting with several forms, the form of the value.
+        const forms = getForms(schema, node);
+        if (forms.length > 1) {
+            const form = findForm(forms, value);
+            if (!form) {
+                return [`uses a value of none of the forms${path && ` at ${path}`}`];
+            }
+            node = form.node;
+        }
         const values = getValues(node);
         if (values && !values.some(allowed => same(allowed, value))) {
             found.push(`uses the unknown value ${JSON.stringify(value)}${path && ` at ${path}`}`);
@@ -115,9 +141,19 @@ export function checkDocumentation({ schema, l10n }) {
         return found;
     }
 
+    // The node which holds the settings of a node: the entries of a list, the
+    // object form of a setting with several forms.
+    function getContainer(node) {
+        const forms = getForms(schema, node);
+        const structured = forms.length > 1
+            ? forms.find(form => form.kind == "Object")?.node ?? forms.find(form => form.kind == "List")?.node ?? node
+            : node;
+        return [structured.type].flat().includes("array") && isObject(structured.items) ? resolve(structured.items) : structured;
+    }
+
     function checkDescriptions(node, where, inJson) {
         node = resolve(node);
-        const container = node.type == "array" && isObject(node.items) ? resolve(node.items) : node;
+        const container = getContainer(node);
         const children = [
             ...Object.entries(container.properties ?? {}),
             ...Object.entries(container.patternProperties ?? {}),
@@ -128,7 +164,7 @@ export function checkDocumentation({ schema, l10n }) {
         if ((isGroup || inJson || hasHelp) && !hasText(node, "description", where)) {
             problems.push(`${where}: missing description`);
         }
-        const childInJson = inJson || node.contentMediaType == "application/json";
+        const childInJson = inJson || isJson(node);
         for (const [name, child] of children) {
             checkDescriptions(child, `${where}.${name}`, childInJson);
         }
@@ -147,7 +183,9 @@ export function checkDocumentation({ schema, l10n }) {
         if (description && help && firstSentence(help) == firstSentence(description)) {
             problems.push(`${where}: x-help repeats the description`);
         }
-        for (const choice of node.oneOf ?? []) {
+        // The choices of the node, and those of its alternatives.
+        const choices = [node, ...(node.anyOf ?? []).map(resolve)].flatMap(choiceNode => choiceNode?.oneOf ?? []);
+        for (const choice of choices) {
             if ("const" in choice && !l10n.get(choice, "title", `${where}=${choice.const}`)) {
                 problems.push(`${where}=${JSON.stringify(choice.const)}: value without title`);
             }
@@ -210,8 +248,8 @@ export function checkDocumentation({ schema, l10n }) {
             problems.push(`${name}: missing description`);
         }
         checkTexts(policy, name);
-        const container = resolved.type == "array" && isObject(resolved.items) ? resolve(resolved.items) : resolved;
-        const inJson = resolved.contentMediaType == "application/json";
+        const container = getContainer(resolved);
+        const inJson = isJson(resolved);
         for (const [childName, child] of [
             ...Object.entries(container.properties ?? {}),
             ...Object.entries(container.patternProperties ?? {}),

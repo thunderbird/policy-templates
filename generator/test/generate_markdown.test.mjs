@@ -91,6 +91,22 @@ test("a section whose setting has no settings shows the setting itself", () => {
     ]);
 });
 
+test("a section whose setting accepts several forms shows it above its settings", () => {
+    const tree = {
+        name: "Sanitize",
+        type: "boolean or object",
+        severalForms: true,
+        choices: null,
+        children: [node("Cache", "Clear the cache.", [], { type: "boolean" })],
+    };
+    assert.deepEqual(renderSettingTree(tree).slice(4, -3), [
+        "`Sanitize` (boolean or object)",
+        "",
+        "`Cache` (boolean)",
+        "> *Clear the cache.*",
+    ]);
+});
+
 test("the compatibility table shows the versions of the product", () => {
     const entries = [
         { first: "78.0", last: "115.0", policies: ["Old"] },

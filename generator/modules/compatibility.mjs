@@ -142,6 +142,15 @@ function getPatternAlternatives(pattern) {
  */
 function extractFlatPolicyNamesFromPolicySchema(data) {
     let properties = [];
+    // The settings of the alternatives of a setting with several forms are
+    // its settings.
+    for (let key of ["anyOf", "oneOf"]) {
+        for (let alternative of Array.isArray(data[key]) ? data[key] : []) {
+            if (alternative && typeof alternative == "object") {
+                properties.push(...extractFlatPolicyNamesFromPolicySchema(alternative));
+            }
+        }
+    }
     for (let key of ["properties", "patternProperties"]) {
         if (data[key]) {
             for (let [pattern, entry] of Object.entries(data[key])) {

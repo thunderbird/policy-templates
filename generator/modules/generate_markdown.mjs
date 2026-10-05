@@ -107,12 +107,14 @@ function settingLines(node, indent, bullet) {
  * Render the settings of a docs section under a "Settings" heading, as blocks:
  * each setting with "`name` (type)", its description block and its own
  * settings as a nested list, each block followed by a blank line. A section
- * whose setting has no settings of its own shows the setting itself. The
+ * whose setting has no settings of its own shows the setting itself, one
+ * whose setting accepts several forms (e.g. "boolean or object") shows it
+ * above its settings. The
  * blocks are wrapped in a <div class="settings">, for the site stylesheet
  * (the blank lines around them let all renderers parse the Markdown inside).
  *
- * @param {?{name: string, type: string, choices: ?Object[], children: Object[]}} tree -
- *    See getSectionTree().
+ * @param {?{name: string, type: string, severalForms: boolean, choices: ?Object[],
+ *    children: Object[]}} tree - See getSectionTree().
  * @returns {string[]} the lines
  */
 export function renderSettingTree(tree) {
@@ -121,6 +123,7 @@ export function renderSettingTree(tree) {
     }
     const blocks = tree.children.length
         ? [
+            ...(tree.severalForms ? [settingLines({ name: tree.name, type: tree.type }, "", "")] : []),
             ...(tree.choices ? [[...descriptionLines({ choices: tree.choices }, "")]] : []),
             ...tree.children.map(child => settingLines(child, "", "")),
         ]

@@ -54,6 +54,44 @@ test("the rules of the documentation are checked", () => {
     ]);
 });
 
+test("a setting with several forms needs an example of each form which can't be generated", () => {
+    const schema = {
+        properties: {
+            Locales: {
+                type: ["string", "array"],
+                items: { type: "string" },
+                description: "L.",
+                examples: ["de"],
+                "x-category": "Misc",
+            },
+            Both: {
+                type: ["string", "array"],
+                items: { type: "string" },
+                description: "B.",
+                examples: [["de"], "de", 5],
+                "x-category": "Misc",
+            },
+            Menu: {
+                anyOf: [{ type: "boolean" }, { type: "string", oneOf: [{ const: "always", title: "Always" }, { const: "never" }] }],
+                description: "M.",
+                "x-category": "Misc",
+            },
+            Old: {
+                type: ["object", "JSON"],
+                description: "O.",
+                properties: { Field: { type: "boolean" } },
+                "x-category": "Misc",
+            },
+        },
+    };
+    assert.deepEqual(checkDocumentation({ schema, l10n: L10N }), [
+        "Locales: missing example of the List form",
+        "Both: examples[2] uses a value of none of the forms",
+        "Menu=\"never\": value without title",
+        "Old.Field: missing description",
+    ]);
+});
+
 test("the preferences affected and the CCK2 equivalent are only on docs sections, as a string or a list of strings", () => {
     const schema = {
         properties: {

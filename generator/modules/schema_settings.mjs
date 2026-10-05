@@ -37,6 +37,162 @@ export function resolveRef(schema, node) {
 }
 
 /**
+ * Whether a node is a JSON value: with "contentMediaType", or with the JSON
+ * type of older schemas, also in a type list (["object", "JSON"]).
+ */
+function isJsonNode(node) {
+    return node?.contentMediaType == "application/json" || [node?.type].flat().includes("JSON");
+}
+
+// The kinds of the forms of a setting, see getForms(), in the order in which
+// they get the plain name of the setting in the ADMX template. An object form
+// is named after its settings, so it never needs the plain name.
+const FORM_KINDS = ["Json", "List", "Enum", "Boolean", "String", "Number", "Object"];
+
+// The type words of the kinds, for the docs and the ADMX template.
+const KIND_LABELS = {
+    Json: "JSON", List: "list", Enum: "choice", Boolean: "boolean", String: "string", Number: "number", Object: "object",
+};
+
+// The keywords of a node which belong to one type only, see getForms().
+const TYPE_KEYWORDS = {
+    array: ["items"],
+    object: ["properties", "patternProperties", "additionalProperties", "required"],
+    choice: ["enum", "oneOf"],
+    string: ["pattern", "format", "minLength", "maxLength"],
+};
+const KEYWORDS_OF_TYPE = {
+    array: ["array"],
+    object: ["object"],
+    string: ["choice", "string"],
+    number: ["choice"],
+    integer: ["choice"],
+    boolean: [],
+};
+// The texts (also given as Fluent IDs) and the examples of a node, which stay
+// with the setting when it is split into its forms.
+const TEXT_KEYWORDS = ["title", "description", "x-help", "x-deprecated", "examples", "x-examples-gpo"];
+const isTextKeyword = key => TEXT_KEYWORDS.includes(key) || key.endsWith("-l10n-id");
+
+/**
+ * The kind of a node with a single form, see FORM_KINDS, null if it has none.
+ */
+function getKind(node) {
+    if (isJsonNode(node)) {
+        return "Json";
+    }
+    const types = node?.type ? [node.type].flat() : [];
+    if (types.includes("array")) {
+        return "List";
+    }
+    if (node?.enum || node?.oneOf?.every(choice => "const" in choice)) {
+        return "Enum";
+    }
+    if (types.includes("boolean")) {
+        return "Boolean";
+    }
+    if (types.some(type => STRING_TYPES.includes(type)) || node?.format) {
+        return "String";
+    }
+    if (types.includes("number") || types.includes("integer")) {
+        return "Number";
+    }
+    if (types.includes("object") || node?.properties || node?.patternProperties) {
+        return "Object";
+    }
+    return null;
+}
+
+/**
+ * Get the forms of a setting: a setting which accepts values of different
+ * kinds (a type list like ["string", "array"], or anyOf/oneOf with
+ * alternatives of different kinds) has one form per alternative, any other
+ * setting a single form. Each form has its kind (see FORM_KINDS), its position
+ * in the schema, its node without texts and examples, the node of its
+ * alternative with its texts (anyOf/oneOf only), and whether the alternative
+ * is deprecated. The node of a form from a type list keeps only the keywords
+ * of its type. The forms are sorted by FORM_KINDS. A JSON value and
+ * alternatives of a single kind (e.g. "urlOrEmpty") are a single form.
+ *
+ * @param {Object} schema - The schema, to resolve $refs.
+ * @param {Object} node - The node, resolved.
+ * @returns {Array<{kind: ?string, index?: number, node: Object,
+ *    textNode?: ?Object, deprecated?: boolean}>}
+ */
+export function getForms(schema, node) {
+    if (!node || isJsonNode(node)) {
+        return [{ kind: getKind(node), node }];
+    }
+    const types = node.type ? [node.type].flat() : [];
+    const alternatives = node.anyOf ?? (node.oneOf?.every(choice => "const" in choice) ? null : node.oneOf);
+    let forms;
+    if (types.length > 1) {
+        forms = types.map(type => {
+            const own = KEYWORDS_OF_TYPE[type] ?? ["string"];
+            const formNode = Object.fromEntries(Object.entries(node).filter(([key]) =>
+                !isTextKeyword(key) && !Object.entries(TYPE_KEYWORDS).some(([group, keys]) => keys.includes(key) && !own.includes(group))
+            ));
+            return { kind: getKind({ ...formNode, type }), node: { ...formNode, type } };
+        });
+    } else if (alternatives && !node.type) {
+        forms = alternatives.map(alternative => {
+            const resolved = resolveRef(schema, alternative);
+            return { kind: getKind(resolved), node: resolved };
+        });
+    } else {
+        return [{ kind: getKind(node), node }];
+    }
+    // Alternatives of a single kind are one form, e.g. a URL or an empty
+    // string.
+    if (new Set(forms.map(form => form.kind)).size == 1) {
+        return [{ kind: forms[0].kind, node }];
+    }
+    // The texts of an alternative are its own, the setting keeps its texts.
+    return forms
+        .map(({ kind, node: formNode }, index) => ({
+            kind,
+            index,
+            node: Object.fromEntries(Object.entries(formNode).filter(([key]) => !isTextKeyword(key))),
+            textNode: types.length > 1 ? null : formNode,
+            deprecated: !!formNode["x-deprecated"],
+        }))
+        .sort((a, b) => FORM_KINDS.indexOf(a.kind) - FORM_KINDS.indexOf(b.kind));
+}
+
+/**
+ * The suffix of the ADMX names of a form, see getForms(): the first form which
+ * writes the value or key of the setting itself keeps the plain name, the
+ * others get their kind appended, e.g. RequestedLocalesString ("_" only
+ * separates the settings of a path, and a form is no setting). Object forms
+ * are named after their settings.
+ *
+ * @param {Object[]} forms - The forms of the setting, sorted.
+ * @param {Object} form
+ * @returns {string}
+ */
+function getNameSuffix(forms, form) {
+    if (form.kind == "Object") {
+        return "";
+    }
+    const plain = forms.find(other => other.kind != "Object");
+    return form == plain ? "" : form.kind;
+}
+
+// Whether a form has a fixed set of values, so that the forms can be offered
+// in one dropdown.
+const isFinite = form => form.kind == "Boolean" || form.kind == "Enum";
+
+/**
+ * The type word of the kind of a form, e.g. "string", see KIND_LABELS.
+ *
+ * @param {string} kind
+ * @returns {string}
+ */
+export function getKindLabel(kind) {
+    return KIND_LABELS[kind];
+}
+
+/**
  * A setting of the policy schema of a branch (see loadBranch()).
  */
 class SchemaSetting {
@@ -72,7 +228,7 @@ class SchemaSetting {
     }
 
     get isJson() {
-        return this.node?.contentMediaType == "application/json" || this.node?.type == "JSON";
+        return isJsonNode(this.node);
     }
 
     // A prose field, plain or from its Fluent message.
@@ -172,35 +328,92 @@ export function getSchemaSettings(schema, policyName, l10n) {
     const entries = [];
     const texts = new Map();
 
-    function walk(setting, { keyParts, path, required, expandable, deprecated, listEntry = false }) {
+    // A form (see getForms()) is walked like a setting of its own, at the
+    // path of the setting (formRoot), and its entries carry the form.
+    function walk(setting, { keyParts, path, required, expandable, deprecated, listEntry = false, form = null, formRoot = false }) {
         if (!setting.node) {
             return;
         }
         const where = path.join(".");
-        deprecated = deprecated || !!setting.field("x-deprecated");
-        const title = setting.text("title", where);
-        const description = setting.text("description", where);
-        const help = setting.text("x-help", where);
-        // The texts are the help texts of the ADMX template, which are shown
-        // as plain text.
-        for (const [field, text] of [["description", description], ["x-help", help]]) {
-            if (/^\s*(\||```)/m.test(text ?? "")) {
-                throw new Error(`The ${field} of ${where} in the policy schema contains a table or a code block.`);
+        // The texts of a form are the texts of its setting.
+        if (!formRoot) {
+            deprecated = deprecated || !!setting.field("x-deprecated");
+            const title = setting.text("title", where);
+            const description = setting.text("description", where);
+            const help = setting.text("x-help", where);
+            // The texts are the help texts of the ADMX template, which are
+            // shown as plain text.
+            for (const [field, text] of [["description", description], ["x-help", help]]) {
+                if (/^\s*(\||```)/m.test(text ?? "")) {
+                    throw new Error(`The ${field} of ${where} in the policy schema contains a table or a code block.`);
+                }
             }
+            const expandEnvVars = setting.expandEnvVars;
+            if (title || description || help || deprecated || expandEnvVars) {
+                texts.set(path.join("/"), { title, description, help, deprecated, expandEnvVars });
+            }
+            expandable = expandable || expandEnvVars;
         }
-        const expandEnvVars = setting.expandEnvVars;
-        if (title || description || help || deprecated || expandEnvVars) {
-            texts.set(path.join("/"), { title, description, help, deprecated, expandEnvVars });
-        }
-        expandable = expandable || expandEnvVars;
         const key = keyParts.join("\\");
         const entry = (type, value, extra = {}) => entries.push({
             key,
             type,
             value,
             ...(required && { required: true }),
+            ...(form && { form }),
             ...extra,
         });
+
+        // A setting which accepts values of different kinds: one dropdown if
+        // each kind has a fixed set of values, else each form on its own.
+        const forms = formRoot ? [] : getForms(setting.schema, setting.node);
+        if (forms.length > 1 && forms.some(form => !form.kind)) {
+            throw new Error(`The setting ${where} in the policy schema has a form of unknown kind.`);
+        }
+        // Without a kind of its own, a form could not be named apart.
+        const kinds = forms.map(form => form.kind);
+        const twice = kinds.find((kind, i) => kinds.indexOf(kind) != i);
+        if (twice) {
+            throw new Error(`The setting ${where} in the policy schema accepts two forms of the kind ${twice}, which can't be named apart.`);
+        }
+        if (forms.length > 1 && forms.every(isFinite)) {
+            const items = forms.flatMap(({ kind, node }) => {
+                if (kind == "Boolean") {
+                    return [true, false].map(value => ({ value: toDword(value), type: "REG_DWORD", title: String(value) }));
+                }
+                return new SchemaSetting(setting.schema, setting.l10n, node).getChoices(where).map(({ value, title }) => ({
+                    value: typeof value == "number" ? toDword(value) : String(value),
+                    type: typeof value == "number" ? "REG_DWORD" : "REG_SZ",
+                    title: title ?? String(value),
+                }));
+            });
+            entry(items.every(item => item.type == "REG_DWORD") ? "REG_DWORD" : "REG_SZ", items.map(item => item.value).join(" | "), { items });
+            return;
+        }
+        if (forms.length > 1) {
+            for (const formOf of forms) {
+                const count = entries.length;
+                walk(new SchemaSetting(setting.schema, setting.l10n, formOf.node), {
+                    keyParts,
+                    path,
+                    required,
+                    expandable,
+                    deprecated: deprecated || formOf.deprecated,
+                    listEntry,
+                    form: {
+                        kind: formOf.kind,
+                        suffix: getNameSuffix(forms, formOf),
+                        description: (formOf.textNode && setting.l10n.get(formOf.textNode, "description", where)) || undefined,
+                        deprecated: formOf.deprecated,
+                    },
+                    formRoot: true,
+                });
+                if (entries.length == count) {
+                    throw new Error(`The ${getKindLabel(formOf.kind)} form of ${where} can not be represented in an ADMX template.`);
+                }
+            }
+            return;
+        }
 
         if (setting.isJson) {
             entry("REG_MULTI_SZ", "");
@@ -225,7 +438,7 @@ export function getSchemaSettings(schema, policyName, l10n) {
                     });
                 }
             } else {
-                walk(item, { keyParts: [...keyParts, LIST_ENTRY], path, required, expandable, deprecated, listEntry: true });
+                walk(item, { keyParts: [...keyParts, LIST_ENTRY], path, required, expandable, deprecated, listEntry: true, form });
             }
             return;
         }
@@ -340,7 +553,9 @@ function getTypeLabel(setting, choices) {
 }
 
 /**
- * Get the type of a setting without its values, see getTypeLabel().
+ * Get the type of a setting without its values, see getTypeLabel(). Of a
+ * setting with several forms, the types of its forms in the order of the
+ * schema, the choice last (its values follow the type).
  *
  * @param {SchemaSetting} setting
  * @returns {string}
@@ -349,6 +564,13 @@ function getBaseTypeLabel(setting) {
     const node = setting.node;
     if (setting.isJson) {
         return "JSON";
+    }
+    const forms = getForms(setting.schema, node);
+    if (forms.length > 1) {
+        const ordered = forms.toSorted((a, b) => a.index - b.index);
+        const labels = [...ordered.filter(form => form.kind != "Enum"), ...ordered.filter(form => form.kind == "Enum")]
+            .map(form => getBaseTypeLabel(new SchemaSetting(setting.schema, setting.l10n, form.node)));
+        return `${labels.slice(0, -1).join(", ")} or ${labels.at(-1)}`;
     }
     const types = setting.types.map(type => ["URL", "URLorEmpty", "origin"].includes(type) ? "string" : type);
     if (types.length > 1) {
@@ -387,8 +609,16 @@ export function getSettingTree(schema, policyName, l10n) {
         const node = setting.node;
         const where = path.join(".");
         const deprecated = parentDeprecated || !!setting.field("x-deprecated");
+        // Of a setting with several forms, the settings and the choices are
+        // those of its object, list or choice form.
+        const forms = getForms(schema, node);
+        const formSetting = kind => forms.filter(form => form.kind == kind)
+            .map(form => new SchemaSetting(schema, l10n, form.node))[0];
+        const structured = forms.length > 1
+            ? formSetting("Object") ?? formSetting("List") ?? formSetting("Enum") ?? setting
+            : setting;
         // The settings of a list are the settings of its entries.
-        const container = setting.types.includes("array") && node.items ? setting.item() : setting;
+        const container = structured.types.includes("array") && structured.node.items ? structured.item() : structured;
         const children = [];
         for (const key of Object.keys(container.node?.properties ?? {})) {
             children.push(build(container.child(key), key, [...path, key], deprecated));
@@ -416,6 +646,8 @@ export function getSettingTree(schema, policyName, l10n) {
             // A list whose entries are JSON values (one per line in the ADMX
             // template).
             jsonEntries: container != setting && container.isJson,
+            // Whether the setting accepts several forms, see getForms().
+            severalForms: forms.length > 1,
             choices,
             children: children.filter(Boolean),
         };
@@ -480,7 +712,12 @@ function generateExample(schema, node, format) {
     if ("const" in node) {
         return node.const;
     }
-    // Of several alternatives, the first one.
+    // Of several forms, the first one (see getForms()).
+    const forms = getForms(schema, node);
+    if (forms.length > 1) {
+        return generateExample(schema, forms[0].node, format);
+    }
+    // Of several alternatives of one kind, the first one.
     const alternatives = node.anyOf ?? (node.oneOf?.every(c => "const" in c) ? null : node.oneOf);
     if (alternatives && !node.type) {
         return generateExample(schema, resolveRef(schema, alternatives[0]), format);
@@ -562,15 +799,7 @@ function getValuePart(value, node, schema, path) {
  * @returns {any} undefined if the policy or setting is not in the schema
  */
 export function getExample(schema, path, { format } = {}) {
-    // The nodes along the path.
-    const nodes = [resolveRef(schema, schema?.properties?.[path[0]])];
-    for (const name of path.slice(1)) {
-        const parent = nodes.at(-1);
-        const child = name == OPEN_NAME
-            ? Object.entries(parent?.patternProperties ?? {}).find(([pattern]) => CATCH_ALL_PATTERN.test(pattern))?.[1]
-            : parent?.properties?.[name];
-        nodes.push(child && resolveRef(schema, child));
-    }
+    const nodes = getNodes(schema, path);
     if (!nodes.at(-1)) {
         return undefined;
     }
@@ -591,6 +820,93 @@ export function getExample(schema, path, { format } = {}) {
         return { [NAME_PLACEHOLDER_EXAMPLE]: generateExample(schema, nodes.at(-1), format) };
     }
     return generateExample(schema, nodes.at(-1), format);
+}
+
+/**
+ * The nodes along a setting path, resolved: the policy, then its settings.
+ *
+ * @param {Object} schema
+ * @param {string[]} path - The policy name, followed by the setting names.
+ * @returns {Array<?Object>}
+ */
+function getNodes(schema, path) {
+    const nodes = [resolveRef(schema, schema?.properties?.[path[0]])];
+    for (const name of path.slice(1)) {
+        const parent = nodes.at(-1);
+        // The settings of a setting with several forms are those of its
+        // object form.
+        const container = getForms(schema, parent).find(form => form.kind == "Object")?.node ?? parent;
+        const child = name == OPEN_NAME
+            ? Object.entries(container?.patternProperties ?? {}).find(([pattern]) => CATCH_ALL_PATTERN.test(pattern))?.[1]
+            : container?.properties?.[name];
+        nodes.push(child && resolveRef(schema, child));
+    }
+    return nodes;
+}
+
+/**
+ * The form of a setting which a value has, see getForms(): a list, a boolean,
+ * a number, a string, one of the values of a choice, or an object.
+ *
+ * @param {Object[]} forms - The forms of the setting.
+ * @param {any} value
+ * @returns {?Object} the form, null if the value has none of them
+ */
+export function findForm(forms, value) {
+    return forms.find(({ kind, node }) => {
+        switch (kind) {
+            case "Json":
+                return typeof value == "object" && value !== null;
+            case "List":
+                return Array.isArray(value);
+            case "Enum": {
+                const values = node.oneOf?.map(choice => choice.const) ?? node.enum ?? [];
+                return values.some(allowed => JSON.stringify(allowed) == JSON.stringify(value));
+            }
+            case "Boolean":
+                return typeof value == "boolean";
+            case "String":
+                return typeof value == "string";
+            case "Number":
+                return typeof value == "number";
+            case "Object":
+                return isPlainObject(value);
+        }
+        return false;
+    }) ?? null;
+}
+
+/**
+ * Get the examples of a policy or of one of its settings for the docs: of a
+ * setting with several forms (see getForms()), one per form, the first
+ * hand-written example of that form (of the setting, else of the alternative),
+ * else one generated from the form. Of any
+ * other setting, and of a setting whose example is part of the hand-written
+ * example of a setting above it, the one example of getExample().
+ *
+ * @param {Object} schema - The policy schema of the branch, see loadBranch().
+ * @param {string[]} path - The policy name, followed by the setting names.
+ * @param {Object} [options]
+ * @param {string} [options.format] - "gpo" for the Windows (GPO) variant.
+ * @returns {any[]} empty if the policy or setting is not in the schema
+ */
+export function getExamples(schema, path, { format } = {}) {
+    const nodes = getNodes(schema, path);
+    const node = nodes.at(-1);
+    if (!node) {
+        return [];
+    }
+    const forms = path.at(-1) == OPEN_NAME ? [] : getForms(schema, node);
+    if (forms.length < 2 || nodes.slice(0, -1).some(above => getOwnExamples(above, format))) {
+        return [getExample(schema, path, { format })];
+    }
+    const own = getOwnExamples(node, format) ?? [];
+    return forms.map(form => {
+        // The examples of the setting, and those of the alternative.
+        const example = [...own, ...(getOwnExamples(form.textNode, format) ?? [])]
+            .find(value => findForm(forms, value) == form);
+        return example !== undefined ? example : generateExample(schema, form.node, format);
+    });
 }
 
 // The formats of the "x-formats" hint of a policy.

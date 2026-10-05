@@ -1,6 +1,6 @@
 import { CATCH_ALL_PATTERN, OPEN_NAME } from "./compatibility.mjs";
 import {
-    getExample, getPolicyData, getSchemaSettings, getSettingTree, hasFormat, withoutTrailingPeriod,
+    getExamples, getPolicyData, getSchemaSettings, getSettingTree, hasFormat, withoutTrailingPeriod,
 } from "./schema_settings.mjs";
 
 // The fields of a docs section which are taken from the schema node of the
@@ -259,7 +259,7 @@ function withEnvVarsNote(text, { expandEnvVars }, separator) {
  *
  * @param {Object} node - A node of the tree of the policy.
  * @param {string[]} sections - The setting paths of all docs sections, joined by "/".
- * @returns {{name: string, type: string, choices: ?Object[], children: Object[]}}
+ * @returns {{name: string, type: string, severalForms: boolean, choices: ?Object[], children: Object[]}}
  */
 function getSectionTree(node, sections) {
     const convert = (child, parentDeprecated) => ({
@@ -273,6 +273,7 @@ function getSectionTree(node, sections) {
     return {
         name: node.name,
         type: node.type,
+        severalForms: node.severalForms,
         choices: node.choices?.some(choice => choice.description) ? node.choices : null,
         children: node.children
             .filter(child => !sections.includes(child.path.join("/")))
@@ -334,7 +335,8 @@ function getSectionNames(texts) {
  * choices given by the schema. The example of a section is the example of its
  * policy or setting (e.g. SearchEngines_Add), see getExample(): generated from
  * the schema and the hand-written examples of its settings ("x-examples-gpo"
- * for the GPO example, e.g. with Windows paths). The "x-formats" of a policy
+ * for the GPO example, e.g. with Windows paths). A setting with several forms
+ * has one example per form, see getExamples(). The "x-formats" of a policy
  * limit the examples.
  *
  * Each section has: `title`, `summary`, `description`, `deprecated`, `settingTree`,
@@ -370,21 +372,25 @@ export function deriveSections(schema, l10n, registryKey) {
         }
 
         const policyData = getPolicyData(schema, path[0]);
-        const example = {
-            json: wrapExample(path, getExample(schema, path)),
-            gpo: wrapExample(path, getExample(schema, path, { format: "gpo" })),
+        // One example per form of the setting, see getExamples().
+        const examples = {
+            json: getExamples(schema, path).map(value => wrapExample(path, value)),
+            gpo: getExamples(schema, path, { format: "gpo" }).map(value => wrapExample(path, value)),
         };
-        example.plist = example.json;
+        examples.plist = examples.json;
 
         // Only the examples of the formats of the policy (see "x-formats").
+        // The examples of the forms follow each other.
         policy.gpo = hasFormat(policyData, "gpo")
-            ? Object.entries(example.gpo).flatMap(([key, value]) => toGpo(value, {
+            ? examples.gpo.flatMap(example => Object.entries(example).flatMap(([key, value]) => toGpo(value, {
                 key: `${registryKey}\\${key}`,
                 schemaPath: SchemaPath.forPolicy(schema, key),
-            }))
+            })))
             : [];
-        policy.plist = hasFormat(policyData, "plist") ? toPlist(example.plist) : null;
-        policy.json = hasFormat(policyData, "json") ? toJson({ policies: example.json }) : null;
+        policy.plist = hasFormat(policyData, "plist") ? examples.plist.map(example => toPlist(example)).join("\n\n") : null;
+        policy.json = hasFormat(policyData, "json")
+            ? examples.json.map(example => toJson({ policies: example })).join("\n\n")
+            : null;
     }
     return policies;
 }

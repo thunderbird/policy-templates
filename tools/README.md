@@ -58,6 +58,9 @@ schema and remove the `$comment`.
   settings, on every setting inside a JSON value and on every setting with an
   `x-help` (which must not repeat it), a title on every value of a choice,
   `x-formats` only on policies, an `x-category` on every policy.
+- Of a setting with several forms (e.g. `RequestedLocales`, a string or a
+  list), an example of each form which can't be generated. comm's test doesn't
+  check the forms.
 - `x-preferences-affected` and `x-cck2-equivalent` only on the nodes of docs
   sections, as a string or a list of strings.
 - Examples which use a setting or a value the branch doesn't have.
