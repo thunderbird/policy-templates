@@ -31,6 +31,7 @@
           "title": "Managed storage of extensions"
         }
       },
+      "title": "Policies for Extensions",
       "description": "Set policies that WebExtensions can access via chrome.storage.managed.",
       "x-help": "Each entry is the managed storage of one extension, which the extension reads with `browser.storage.managed` and uses as its settings. For more information, see [Adding policy support to your extension](https://extensionworkshop.com/documentation/enterprise/enterprise-development/#how-to-add-policy).",
       "x-category": "Security"
@@ -47,6 +48,7 @@
     },
     "AppUpdatePin": {
       "type": "string",
+      "title": "Pin updates to a specific version",
       "description": "Prevent Thunderbird from being updated beyond the specified version.",
       "x-help": "You can specify the version as `xx.` and Thunderbird will be updated with all minor versions, but will not be updated beyond the major version.\n\nYou can also specify the version as `xx.xx` and Thunderbird will be updated with all patch versions, but will not be updated beyond the minor version.\n\nYou should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, Thunderbird will update beyond that version.",
       "examples": [
@@ -56,6 +58,7 @@
     },
     "AppUpdateURL": {
       "type": "URL",
+      "title": "Custom Update URL",
       "description": "Set custom app update URL.",
       "x-help": "Change the URL for application update if you are providing Thunderbird updates from a custom update server.",
       "examples": [
@@ -152,6 +155,7 @@
           "description": "Enables integrated authentication in private browsing."
         }
       },
+      "title": "Authentication",
       "description": "Configure integrated authentication for websites that support it.",
       "x-help": "See [Integrated authentication](https://htmlpreview.github.io/?https://github.com/mdn/archived-content/blob/main/files/en-us/mozilla/integrated_authentication/raw.html) for more information.",
       "x-category": "Authentication",
@@ -182,6 +186,7 @@
     },
     "BlockAboutAddons": {
       "type": "boolean",
+      "title": "Block Add-ons Manager",
       "description": "Block access to the Add-ons Manager (about:addons).",
       "x-help": "Users can no longer open it to install, remove, enable or disable add-ons, or to change their options. Add-ons can still be managed with the Extensions and ExtensionSettings policies.\n\nIf this policy is disabled or not configured, the Add-ons Manager is available.",
       "x-category": "Extensions",
@@ -191,6 +196,7 @@
     },
     "BlockAboutConfig": {
       "type": "boolean",
+      "title": "Block about:config",
       "description": "Block access to the about:config page.",
       "x-help": "Block access to about:config.",
       "x-category": "Security",
@@ -200,6 +206,7 @@
     },
     "BlockAboutProfiles": {
       "type": "boolean",
+      "title": "Block about:profiles",
       "description": "Block access to the about:profiles page.",
       "x-help": "Block access to About Profiles (about:profiles).",
       "x-category": "Security",
@@ -209,6 +216,7 @@
     },
     "BlockAboutSupport": {
       "type": "boolean",
+      "title": "Block Troubleshooting Information",
       "description": "Block access to the about:support page.",
       "x-help": "Block access to Troubleshooting Information (about:support).",
       "x-category": "Security",
@@ -264,6 +272,7 @@
           ]
         }
       },
+      "title": "Certificates",
       "description": "Add certificates or use built-in certificates.",
       "x-category": "Certificate management"
     },
@@ -342,6 +351,7 @@
           "description": "Prevents the user from changing cookie preferences."
         }
       },
+      "title": "Cookies",
       "description": "Allow or deny websites to set cookies.",
       "x-help": "Configure cookie preferences.",
       "x-category": "Network security",
@@ -352,6 +362,7 @@
     },
     "DefaultDownloadDirectory": {
       "type": "string",
+      "title": "Default Download Directory",
       "description": "Set the default download directory.",
       "x-help": "You can use ${home} for the native home directory.",
       "x-expand-env-vars": true,
@@ -369,6 +380,7 @@
     },
     "DisableAppUpdate": {
       "type": "boolean",
+      "title": "Disable Update",
       "description": "Prevent Thunderbird from updating.",
       "x-help": "Turn off application updates within Thunderbird.",
       "x-category": "Device update settings",
@@ -378,6 +390,7 @@
     },
     "DisableBuiltinPDFViewer": {
       "type": "boolean",
+      "title": "Disable Built-in PDF Viewer (PDF.js)",
       "description": "Disable PDF.js, the built-in PDF viewer in Thunderbird.",
       "x-help": "Disable the built in PDF viewer. PDF files are downloaded and sent externally.",
       "$comment": "On this branch the policy sets and locks pdfjs.disabled, which disables PDF.js completely. Main only sends PDF files to the operating system (Bug 2062510).",
@@ -461,6 +474,7 @@
           "title": "Disable TLS_RSA_WITH_3DES_EDE_CBC_SHA"
         }
       },
+      "title": "Disabled Ciphers",
       "description": "Disable ciphers.",
       "x-help": "Disable specific cryptographic ciphers.",
       "x-category": "Network security",
@@ -486,6 +500,7 @@
     },
     "DisableDeveloperTools": {
       "type": "boolean",
+      "title": "Disable Developer Tools",
       "description": "Block access to the developer tools.",
       "x-help": "Remove access to all developer tools.",
       "x-category": "Security",
@@ -509,6 +524,7 @@
     },
     "DisablePasswordReveal": {
       "type": "boolean",
+      "title": "Do not allow passwords to be revealed in saved logins",
       "description": "Meant to prevent passwords from being revealed in saved logins. In this version, this policy has no effect.",
       "x-help": "Meant to prevent passwords from being shown in saved logins. In this version, this policy has no effect, because the saved passwords dialog of Thunderbird does not check it.",
       "$comment": "On this branch the saved passwords dialog doesn't check the policy, so it has no effect. Main checks it (Bug 2058522).",
@@ -538,6 +554,7 @@
           "description": "Prevents selecting \"ignore the risk\" and visiting a harmful site anyway."
         }
       },
+      "title": "Prevent Bypassing Security Warnings",
       "description": "Prevent the user from bypassing certain security warnings.",
       "x-help": "Prevent the user from bypassing security in certain cases.\n\nThese policies only affect what happens when an error is shown. They do not affect any settings in preferences.",
       "x-category": "Certificate management",
@@ -548,12 +565,14 @@
     },
     "DisableSystemAddonUpdate": {
       "type": "boolean",
+      "title": "Disable System Addon Updates",
       "description": "Prevent Thunderbird from installing and updating system add-ons.",
       "x-help": "Prevent system add-ons from being installed or updated.",
       "x-category": "Device update settings"
     },
     "DisableTelemetry": {
       "type": "boolean",
+      "title": "Disable Telemetry",
       "description": "Turn off Telemetry.",
       "x-help": "Prevent the upload of telemetry data.\n\nLocal storage of telemetry data is disabled as well.\n\nMozilla recommends that you do not disable telemetry. Information collected through telemetry helps us build a better product for businesses like yours.",
       "x-category": "Miscellaneous",
@@ -601,6 +620,7 @@
           "description": "Prevents the user from changing DNS over HTTPS preferences."
         }
       },
+      "title": "DNS Over HTTPS",
       "description": "Configure DNS over HTTPS.",
       "x-help": "With DNS over HTTPS, host names are resolved through an encrypted connection to a DNS over HTTPS provider, instead of the DNS resolver of the operating system. The user can change these settings, unless the Locked setting is used.",
       "x-category": "Network security",
@@ -612,6 +632,7 @@
     },
     "DownloadDirectory": {
       "type": "string",
+      "title": "Download Directory",
       "description": "Set and lock the download directory.",
       "x-help": "You can use ${home} for the native home directory.",
       "x-expand-env-vars": true,
@@ -673,6 +694,7 @@
           ]
         }
       },
+      "title": "Extensions",
       "description": "Install, uninstall or lock extensions. The Install option takes URLs or paths as parameters. The Uninstall and Locked options take extension IDs.",
       "x-help": "Control the installation, uninstallation and locking of extensions.\n\nWe strongly recommend that you use the **[`ExtensionSettings`](#extensionsettings)** policy. It has the same functionality and adds more. It does not support native paths, though, so you'll have to use file:/// URLs.",
       "x-category": "Extensions",
@@ -822,6 +844,7 @@
           "description": "The settings of one extension, by its ID. They take precedence over the default settings."
         }
       },
+      "title": "Extension Management",
       "description": "Manage all aspects of extension installation.",
       "x-help": "Manage all aspects of extensions. This policy is based heavily on the [Chrome policy](https://dev.chromium.org/administrators/policy-list-3/extension-settings-full) of the same name.\n\nThis policy maps an extension ID to its configuration. With an extension ID, the configuration will be applied to the specified extension only. A default configuration can be set for the special ID \"*\", which will apply to all extensions that don't have a custom configuration set in this policy.\n\nTo obtain an extension ID, install the extension and go to about:support. You will see the ID in the Extensions section.\n\nInstalling a theme makes it the default.",
       "examples": [
@@ -925,6 +948,7 @@
           "description": "How content is matched: by its MIME type (`mimeTypes`), by the extension of its file name (`extensions`), or by its protocol (`schemes`)."
         }
       },
+      "title": "Handlers",
       "description": "Configure default application handlers.",
       "x-help": "This policy is based on the internal format of `handlers.json`.\n\nYou can configure handlers based on a mime type (`mimeTypes`), a file's extension (`extensions`), or a protocol (`schemes`).\n\nWithin each handler type, you specify the given mimeType/extension/scheme as a key.",
       "examples": [
@@ -1031,6 +1055,7 @@
           "description": "Determines whether or not extension installs are allowed by default."
         }
       },
+      "title": "Addons",
       "description": "Allow certain websites to install add-ons.",
       "x-help": "Configure the default extension install policy and the origins from which extensions can be installed. This policy does not override turning off all extension installs.",
       "x-category": "Extensions",
@@ -1043,6 +1068,7 @@
     },
     "ManualAppUpdateOnly": {
       "type": "boolean",
+      "title": "Manual Update Only",
       "description": "Allow manual updates only and do not notify the user about updates.",
       "x-help": "Switch to manual updates only.\n\nIf this policy is enabled:\n\n1. The user will never be prompted to install updates.\n2. Thunderbird will not check for updates in the background, though it will check automatically when an update UI is displayed (such as the one in the About dialog). This check will be used to show \"Update to version X\" in the UI, but will not automatically download the update or prompt the user to update in any other way.\n3. The update UI will work as expected, unlike when using DisableAppUpdate.\n\nThis policy is primarily intended for advanced end users, not for enterprises, but it is available via GPO.",
       "x-category": "Device update settings"
@@ -1086,6 +1112,7 @@
     },
     "PasswordManagerEnabled": {
       "type": "boolean",
+      "title": "Password Manager",
       "description": "Enable saving passwords to the password manager.",
       "x-help": "Remove access to the password manager via the settings, and block about:logins.",
       "x-category": "Password manager",
@@ -1109,6 +1136,7 @@
           "$comment": "On this branch pdfjs.enablePermissions is set from !Enabled, so the value of EnablePermissions is ignored. Main uses its value (Bug 2062510)."
         }
       },
+      "title": "PDF.js",
       "description": "Disable or configure PDF.js, the built-in PDF viewer in Thunderbird.",
       "x-help": "Disable or configure PDF.js, the built-in PDF viewer.\n\nNote: DisableBuiltinPDFViewer has not been deprecated. You can either continue to use it, or switch to using PDFjs->Enabled to disable the built-in PDF viewer.",
       "x-category": "Printing",
@@ -1172,6 +1200,7 @@
           "description": "One preference, by its name, as an object with `Value` and `Status`. A value alone (e.g. `true`) sets and locks the default value of the preference."
         }
       },
+      "title": "Preferences",
       "description": "Set and lock the value for a subset of preferences.",
       "x-help": "Set and lock preferences.\n\nYou can also set default preferences and user preferences, and clear the user value of a preference.\n\nUsing the preference as the key, set the `Value` to the corresponding preference value.\n\nDefault preferences can be modified by the user.\n\nIf a value is locked, it is also set as the default.\n\nUser preferences persist across invocations of Thunderbird. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy.\n\nUser preferences persist even if the policy is removed, so if you need to remove them, set their `Status` to `clear`.\n\nIMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.\n\nOnly these preferences can be set:\n\n- `accessibility.*`\n- `app.update.*` (except `app.update.channel`, `app.update.lastUpdateTime` and `app.update.migrated`)\n- `browser.*`\n- `calendar.*`\n- `chat.*`\n- `datareporting.policy.*`\n- `dom.*`\n- `extensions.*`\n- `general.autoScroll*`\n- `general.smoothScroll*`\n- `geo.*`\n- `gfx.*`\n- `intl.*`\n- `layers.*`\n- `layout.*`\n- `mail.*`\n- `mailnews.*`\n- `media.*`\n- `network.*`\n- `pdfjs.*`\n- `places.*`\n- `print.*`\n- `security.default_personal_cert`\n- `security.insecure_connection_text.enabled`\n- `security.insecure_connection_text.pbmode.enabled`\n- `security.insecure_field_warning.contextual.enabled`\n- `security.mixed_content.block_active_content`\n- `security.osclientcerts.autoload`\n- `security.ssl.errorReporting.enabled`\n- `security.tls.hello_downgrade_check`\n- `security.tls.version.enable-deprecated`\n- `security.warn_submit_secure_to_insecure`\n- `signon.*`\n- `spellchecker.*`\n- `ui.*`\n- `widget.*`",
       "examples": [
@@ -1192,6 +1221,7 @@
     },
     "PrimaryPassword": {
       "type": "boolean",
+      "title": "Primary (Master) Password",
       "description": "Require or prevent using a Primary Password.",
       "x-help": "Require or prevent using a primary (formerly master) password.\n\nIf this value is true, a primary password is required. If this value is false, it works the same as if [`DisableMasterPasswordCreation`](#disablemasterpasswordcreation) was true and removes the primary password functionality.\n\nIf both DisableMasterPasswordCreation and PrimaryPassword are used, DisableMasterPasswordCreation takes precedence.",
       "x-category": "Password manager",
@@ -1201,6 +1231,7 @@
     },
     "PromptForDownloadLocation": {
       "type": "boolean",
+      "title": "Prompt for download location",
       "description": "Ask where to save files when downloading.",
       "x-help": "Ask where to save each file before downloading.",
       "x-category": "Downloads",
@@ -1342,6 +1373,7 @@
           "description": "Don't prompt for authentication if the password is saved. If the proxy requires authentication and its password is saved, Thunderbird logs in without asking. If that login fails, the user is asked again."
         }
       },
+      "title": "Proxy Settings",
       "description": "Configure proxy settings.",
       "x-help": "These settings correspond to the connection settings in Thunderbird preferences.\nTo specify ports, append them to the hostnames with a colon (:).\n\nUnless you lock this policy, changes the user already has in place will take effect.",
       "$comment": "On this branch Locked sets and locks the proxy prefs. Main only sets them as defaults (Bug 2062510).",
@@ -1373,6 +1405,7 @@
       "items": {
         "type": "string"
       },
+      "title": "Requested locale",
       "description": "Set the list of requested locales for the application in order of preference.",
       "x-help": "The corresponding language packs become active.\n\nNote: This policy can also be a string, so that you can specify an empty value.",
       "examples": [
@@ -1539,6 +1572,7 @@
           ]
         }
       },
+      "title": "Search",
       "description": "Configure search engine settings.",
       "x-help": "This policy is only available on the Extended Support Release (ESR) version.",
       "$comment": "On this branch SearchEngines is enterprise_only, which Gecko only applies in ESR builds. Main has no such limit.",
@@ -1552,6 +1586,7 @@
         "tls1.2",
         "tls1.3"
       ],
+      "title": "Maximum SSL version enabled",
       "description": "Set the maximum SSL version.",
       "x-help": "Set and lock the maximum version of TLS. (Thunderbird defaults to a maximum of TLS 1.3.)",
       "oneOf": [
@@ -1585,6 +1620,7 @@
         "tls1.2",
         "tls1.3"
       ],
+      "title": "Minimum SSL version enabled",
       "description": "Set the minimum SSL version.",
       "x-help": "Set and lock the minimum version of TLS. (Thunderbird defaults to a minimum of TLS 1.2.)",
       "oneOf": [
