@@ -357,8 +357,8 @@
           "URL"
         ]
       },
-      "description": "Add bookmarks in either the bookmarks toolbar or menu. Use 'ManagedBookmarks' instead.",
-      "x-help": "Note: [`ManagedBookmarks`](#managedbookmarks) is the new recommended way to add bookmarks. This policy will continue to be supported.\n\nAdd bookmarks in either the bookmarks toolbar or menu. Only `Title` and `URL` are required. If `Placement` is not specified, the bookmark will be placed on the toolbar. If `Folder` is specified, it is automatically created and bookmarks with the same folder name are grouped together.\n\nIf you want to clear all bookmarks set with this policy, you can set the value to an empty array (```[]```). This can be on Windows via the new Bookmarks (JSON) policy available with GPO and Intune.",
+      "description": "Add bookmarks in either the bookmarks toolbar or menu. Use `ManagedBookmarks` instead.",
+      "x-help": "This policy will continue to be supported.\n\nOnly `Title` and `URL` are required. If `Placement` is not specified, the bookmark will be placed on the toolbar. If `Folder` is specified, it is automatically created and bookmarks with the same folder name are grouped together.\n\nIf you want to clear all bookmarks set with this policy, you can set the value to an empty array (```[]```). On Windows, this can be done with the Bookmarks (JSON) policy in Group Policy and Intune.",
       "examples": [
         [
           {
@@ -785,7 +785,7 @@
             "type": "origin"
           },
           "title": "Allowed Sites",
-          "description": "A list of origins (not domains) where cookies are always allowed. You must include http or https."
+          "description": "Cookies are always allowed for these origins (not domains). Each must include http or https."
         },
         "AllowSession": {
           "type": "array",
@@ -794,7 +794,7 @@
             "type": "origin"
           },
           "title": "Allowed Sites (Session Only)",
-          "description": "A list of origins (not domains) where cookies are only allowed for the current session. You must include http or https."
+          "description": "Cookies are only allowed for the current session for these origins (not domains). Each must include http or https."
         },
         "Block": {
           "type": "array",
@@ -803,7 +803,7 @@
             "type": "origin"
           },
           "title": "Blocked Sites",
-          "description": "A list of origins (not domains) where cookies are always blocked. You must include http or https."
+          "description": "Cookies are always blocked for these origins (not domains). Each must include http or https."
         },
         "Default": {
           "type": "boolean",
@@ -899,7 +899,7 @@
             }
           ],
           "title": "Cookie Behavior",
-          "description": "Sets the default behavior for cookies based on the values below."
+          "description": "Sets the default behavior for cookies."
         },
         "BehaviorPrivateBrowsing": {
           "type": "string",
@@ -944,7 +944,7 @@
             }
           ],
           "title": "Cookie Behavior in private browsing",
-          "description": "Sets the default behavior for cookies in private browsing based on the values below."
+          "description": "Sets the default behavior for cookies in private browsing."
         }
       },
       "description": "Configure cookie preferences.",
@@ -1468,7 +1468,7 @@
         "ProviderURL": {
           "type": "URLorEmpty",
           "title": "Provider URL",
-          "description": "A URL to another provider."
+          "description": "Replaces the default provider."
         },
         "ExcludedDomains": {
           "type": "array",
@@ -1595,7 +1595,7 @@
             }
           ],
           "title": "Tracking Protection Mode",
-          "description": "Can be either ```strict``` or ```standard```. If category is set, it overrides all other settings except `Exceptions`, `BaselineExceptions` and `ConvenienceExceptions`, and the user cannot change the category. (Firefox 142, Firefox ESR 140.2)."
+          "description": "If set, it overrides all other settings except `Exceptions`, `BaselineExceptions` and `ConvenienceExceptions`, and the user cannot change the category."
         }
       },
       "title": "Tracking Protection",
@@ -1696,7 +1696,7 @@
             "type": "string"
           },
           "title": "Extensions to Install",
-          "description": "A list of URLs or native paths for extensions to be installed."
+          "description": "Extensions to install, each as URL or native path."
         },
         "Uninstall": {
           "type": "array",
@@ -1704,7 +1704,7 @@
             "type": "string"
           },
           "title": "Extensions to Uninstall",
-          "description": "A list of extension IDs that should be uninstalled if found."
+          "description": "Extensions to uninstall if found, by their IDs."
         },
         "Locked": {
           "type": "array",
@@ -1712,7 +1712,7 @@
             "type": "string"
           },
           "title": "Prevent extensions from being disabled or removed",
-          "description": "A list of extension IDs that the user cannot disable or uninstall."
+          "description": "Extensions the user can't disable or uninstall, by their IDs."
         }
       },
       "description": "Control the installation, uninstallation and locking of extensions.",
@@ -2362,7 +2362,7 @@
             "type": "origin"
           },
           "title": "Allowed Sites",
-          "description": "A list of origins where extension installs are allowed."
+          "description": "Extension installs are allowed for these origins."
         },
         "Default": {
           "type": "boolean",
@@ -2720,7 +2720,7 @@
                 "type": "origin"
               },
               "title": "Allowed Sites",
-              "description": "A list of origins where the feature is allowed."
+              "description": "The feature is allowed for these origins."
             },
             "Block": {
               "type": "array",
@@ -2729,7 +2729,7 @@
                 "type": "origin"
               },
               "title": "Blocked Sites",
-              "description": "A list of origins where the feature is not allowed."
+              "description": "The feature is not allowed for these origins."
             },
             "BlockNewRequests": {
               "type": "boolean",
@@ -2751,7 +2751,7 @@
                 "type": "origin"
               },
               "title": "Allowed Sites",
-              "description": "A list of origins where the feature is allowed."
+              "description": "The feature is allowed for these origins."
             },
             "Block": {
               "type": "array",
@@ -2760,7 +2760,7 @@
                 "type": "origin"
               },
               "title": "Blocked Sites",
-              "description": "A list of origins where the feature is not allowed."
+              "description": "The feature is not allowed for these origins."
             },
             "BlockNewRequests": {
               "type": "boolean",
@@ -2808,7 +2808,7 @@
                 "type": "origin"
               },
               "title": "Allowed Sites",
-              "description": "A list of origins where the feature is allowed."
+              "description": "The feature is allowed for these origins."
             },
             "Block": {
               "type": "array",
@@ -2817,7 +2817,7 @@
                 "type": "origin"
               },
               "title": "Blocked Sites",
-              "description": "A list of origins where the feature is not allowed."
+              "description": "The feature is not allowed for these origins."
             },
             "Locked": {
               "type": "boolean",
@@ -2835,7 +2835,7 @@
                 "type": "origin"
               },
               "title": "Allowed Sites",
-              "description": "A list of origins where the feature is allowed."
+              "description": "The feature is allowed for these origins."
             },
             "Block": {
               "type": "array",
@@ -2844,7 +2844,7 @@
                 "type": "origin"
               },
               "title": "Blocked Sites",
-              "description": "A list of origins where the feature is not allowed."
+              "description": "The feature is not allowed for these origins."
             },
             "BlockNewRequests": {
               "type": "boolean",
@@ -2866,7 +2866,7 @@
                 "type": "origin"
               },
               "title": "Allowed Sites",
-              "description": "A list of origins where the feature is allowed."
+              "description": "The feature is allowed for these origins."
             },
             "Block": {
               "type": "array",
@@ -2875,7 +2875,7 @@
                 "type": "origin"
               },
               "title": "Blocked Sites",
-              "description": "A list of origins where the feature is not allowed."
+              "description": "The feature is not allowed for these origins."
             },
             "BlockNewRequests": {
               "type": "boolean",
@@ -2897,7 +2897,7 @@
                 "type": "origin"
               },
               "title": "Allowed Sites",
-              "description": "A list of origins where the feature is allowed."
+              "description": "The feature is allowed for these origins."
             },
             "Block": {
               "type": "array",
@@ -2906,7 +2906,7 @@
                 "type": "origin"
               },
               "title": "Blocked Sites",
-              "description": "A list of origins where the feature is not allowed."
+              "description": "The feature is not allowed for these origins."
             },
             "BlockNewRequests": {
               "type": "boolean",
@@ -2929,7 +2929,7 @@
                 "type": "origin"
               },
               "title": "Allowed Sites",
-              "description": "A list of origins where the feature is allowed."
+              "description": "The feature is allowed for these origins."
             },
             "Block": {
               "type": "array",
@@ -2938,7 +2938,7 @@
                 "type": "origin"
               },
               "title": "Blocked Sites",
-              "description": "A list of origins where the feature is not allowed."
+              "description": "The feature is not allowed for these origins."
             },
             "BlockNewRequests": {
               "type": "boolean",
@@ -3073,7 +3073,7 @@
             "type": "origin"
           },
           "title": "Allowed Sites",
-          "description": "A list of origins where popup-windows are allowed."
+          "description": "Pop-up windows are allowed for these origins."
         },
         "Default": {
           "type": "boolean",
@@ -3346,7 +3346,7 @@
         "AutoConfigURL": {
           "type": "URLorEmpty",
           "title": "Automatic proxy configuration URL",
-          "description": "A URL for proxy configuration (only used if Mode is autoConfig)."
+          "description": "Only used if `Mode` is `autoConfig`."
         },
         "FTPProxy": {
           "type": "string",
@@ -3394,7 +3394,7 @@
         "Passthrough": {
           "type": "string",
           "title": "Proxy Passthrough",
-          "description": "A list of hostnames or IP addresses that will not be proxied. Use `<local>` to bypass proxying for all hostnames which do not contain periods."
+          "description": "These hostnames or IP addresses are not proxied. Use `<local>` to bypass proxying for all hostnames which do not contain periods."
         },
         "UseProxyForDNS": {
           "type": "boolean",

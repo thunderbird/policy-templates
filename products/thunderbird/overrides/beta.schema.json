@@ -310,7 +310,7 @@
             "$ref": "#/definitions/origin"
           },
           "title": "Sites which may always set cookies",
-          "description": "A list of origins (not domains) where cookies are always allowed. You must include http or https.",
+          "description": "Cookies are always allowed for these origins (not domains). Each must include http or https.",
           "examples": [
             [
               "http://example.org/"
@@ -323,7 +323,7 @@
             "$ref": "#/definitions/origin"
           },
           "title": "Sites which may never set cookies",
-          "description": "A list of origins (not domains) where cookies are always blocked. You must include http or https.",
+          "description": "Cookies are always blocked for these origins (not domains). Each must include http or https.",
           "examples": [
             [
               "http://example.edu/"
@@ -433,7 +433,7 @@
     "DisableCommunity": {
       "type": "boolean",
       "description": "Don’t show community features in the UI (such as Donate, Get Involved, Share Ideas etc.)",
-      "x-help": "Don’t show community features in the UI (such as Donate, Get Involved, Share Ideas etc.). This also turns off the start page in the message pane, and hides the button to sign in with a Thundermail account when setting up an account.\n\nIf this policy is disabled or not configured, these features are shown.",
+      "x-help": "This also turns off the start page in the message pane, and hides the button to sign in with a Thundermail account when setting up an account.\n\nIf this policy is disabled or not configured, these features are shown.",
       "x-category": "Miscellaneous",
       "title": "Hide community features",
       "x-preferences-affected": [
@@ -699,7 +699,7 @@
         "ProviderURL": {
           "$ref": "#/definitions/urlOrEmpty",
           "title": "DNS over HTTPS provider",
-          "description": "The URL of another DNS over HTTPS provider.",
+          "description": "Replaces the default provider.",
           "examples": [
             "https://dns.example.com/dns-query"
           ]
@@ -761,7 +761,7 @@
             "type": "string"
           },
           "title": "Extensions to install",
-          "description": "A list of URLs or native paths of extensions to be installed.",
+          "description": "Extensions to install, each as URL or native path.",
           "x-expand-env-vars": true,
           "examples": [
             [
@@ -776,7 +776,7 @@
             "type": "string"
           },
           "title": "Extensions to uninstall",
-          "description": "A list of extension IDs which are uninstalled if found.",
+          "description": "Extensions to uninstall if found, by their IDs.",
           "examples": [
             [
               "bad_addon_id@mozilla.org"
@@ -789,7 +789,7 @@
             "type": "string"
           },
           "title": "Extensions which can't be disabled or removed",
-          "description": "A list of extension IDs which the user can't disable or uninstall.",
+          "description": "Extensions the user can't disable or uninstall, by their IDs.",
           "examples": [
             [
               "addon_id@mozilla.org"
@@ -938,7 +938,7 @@
             },
             "update_url": {
               "$ref": "#/definitions/url",
-              "description": "The URL of an update manifest, which is used to update the extension instead of the update URL of the extension itself."
+              "description": "An update manifest to update the extension with, instead of the extension's own update URL."
             },
             "private_browsing": {
               "type": "boolean",
@@ -1179,7 +1179,7 @@
             "$ref": "#/definitions/origin"
           },
           "title": "Sites allowed to install extensions",
-          "description": "A list of origins where extension installs are allowed.",
+          "description": "Extension installs are allowed for these origins.",
           "examples": [
             [
               "http://example.org/",
@@ -1426,7 +1426,7 @@
         "AutoConfigURL": {
           "$ref": "#/definitions/urlOrEmpty",
           "title": "Automatic proxy configuration URL",
-          "description": "The URL of a proxy configuration file (only used if the proxy method is `autoConfig`).",
+          "description": "Only used if the proxy method is `autoConfig`.",
           "examples": [
             "https://proxy.example.com/proxy.pac"
           ]
@@ -1575,7 +1575,7 @@
               "IconURL": {
                 "$ref": "#/definitions/urlOrEmpty",
                 "title": "Icon URL",
-                "description": "A URL for the icon to use.",
+                "description": "The icon to use.",
                 "examples": [
                   "https://www.example.org/favicon.ico"
                 ]
