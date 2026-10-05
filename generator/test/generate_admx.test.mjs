@@ -180,6 +180,57 @@ test("the help text of a JSON value lists its fields", async () => {
     );
 });
 
+test("a JSON value whose text the policy engine parses also gets a one-line text box", async () => {
+    const policy = (marker) => ({
+        type: "object",
+        ...marker,
+        title: "Settings",
+        description: "Settings as JSON.",
+        "x-category": "Extensions",
+        properties: { mode: { type: "string", description: "The mode." } },
+    });
+    const schema = (marker) => ({
+        properties: {
+            Settings: policy(marker),
+            Sites: {
+                type: "array",
+                description: "Policies for sites.",
+                items: {
+                    type: "object",
+                    properties: {
+                        Policies: { type: "object", description: "The policies.", properties: { Jit: { type: "boolean" } } },
+                    },
+                },
+            },
+        },
+    });
+    const cmt = { contentMediaType: "application/json" };
+    const jsonType = { type: ["object", "JSON"] };
+
+    // From 153 on, the policy engine parses a text where the schema says
+    // "contentMediaType".
+    const { admx, adml } = await generate(schema(cmt), ["Settings", "Sites"]);
+    const oneLine = admx.match(/<policy name="SettingsOneLine" [^>]*>[\s\S]*?<\/policy>/)?.[0];
+    assert.ok(oneLine);
+    assert.match(oneLine, /key="Software\\Policies\\Example\\Product"/);
+    assert.match(oneLine, /<text id="SettingsOneLine_Input" valueName="Settings" maxLength="16384"\/>/);
+    // Next to the multi-line box.
+    assert.equal(parentCategory(admx, "policy", "SettingsOneLine"), "product");
+    assert.equal(parentCategory(admx, "policy", "Settings"), "product");
+    assert.equal(string(adml, "SettingsOneLine"), "Settings (one JSON line)");
+    assert.equal(string(adml, "SettingsOneLine_Explain"), string(adml, "Settings_Explain"));
+    assert.match(adml, /<presentation id="SettingsOneLine">\s*<textBox refId="SettingsOneLine_Input">/);
+    // A list entered as one JSON value has no marker, so no text is parsed.
+    assert.doesNotMatch(admx, /SitesOneLine/);
+    // The old type "JSON" is no longer understood.
+    assert.doesNotMatch((await generate(schema(jsonType), ["Settings", "Sites"])).admx, /OneLine/);
+
+    // Before 153, only the old type "JSON" parses a text.
+    const old = { version: "140.3.0" };
+    assert.match((await generate(schema(jsonType), ["Settings", "Sites"], old)).admx, /<policy name="SettingsOneLine"/);
+    assert.doesNotMatch((await generate(schema(cmt), ["Settings", "Sites"], old)).admx, /OneLine/);
+});
+
 test("a list of JSON values is one list box with one value per line, not numbered sets", async () => {
     const engine = (json) => ({
         type: "object",
@@ -690,6 +741,8 @@ test("before 153, an object whose open names hold lists or objects is one JSON v
     };
     const { admx, adml } = await generate(schema, ["Settings", "Paths_[name]"], { version: "140.3.0" });
     assert.match(admx, /<multiText id="Settings_Input" valueName="Settings"/);
+    // Without a marker, the policy engine parses no text.
+    assert.doesNotMatch(admx, /OneLine/);
     assert.equal(
         string(adml, "Settings_Explain"),
         `Settings per extension.\n\n*: All extensions.\n[name]: One extension.\n  Mode: The mode.\n\n${docsLink("settings")}\n`

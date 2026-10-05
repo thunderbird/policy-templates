@@ -16,6 +16,10 @@ import { ensureDir } from "./tools.mjs";
 import { formatProblems, validateAdmx } from "./validate_admx.mjs";
 import pathUtils from "node:path";
 
+// The maximum length of a JSON value, in a multi-line box or on one line (the
+// same as in Mozilla's Firefox template).
+const JSON_TEXT_MAX_LENGTH = 16384;
+
 /**
  * Get the explain text of an ADMX policy for the ADML: its help text as plain
  * text (after a note, if it is deprecated), and optionally a link to the
@@ -765,6 +769,7 @@ class ADM_BUILDER {
                         valueName,
                         ...(entry.type === 'REG_EXPAND_SZ' && { expandable: true }),
                         ...(entry.required && { required: true }),
+                        ...(entry.maxLength && { maxLength: String(entry.maxLength) }),
                     };
                     baseElement.ele('text', textAttrs);
                 } else {
@@ -793,7 +798,7 @@ class ADM_BUILDER {
                 const multiTextAttrs = {
                     id: `${id}_Input`,
                     valueName,
-                    maxLength: '16384', // hardcoded, could be made configurable
+                    maxLength: String(JSON_TEXT_MAX_LENGTH),
                 };
                 baseElement
                     .ele('multiText', multiTextAttrs);
@@ -1085,24 +1090,45 @@ class ADM_BUILDER {
             // 3. Handle single entries
             for (const entry of singles) {
                 const singleId = entry.normalizedKeyParts.join("_");
+                const name = `${singleId}${entry.form?.suffix ?? ""}`;
+                const label = getControlLabel(settingTexts, entry.normalizedKeyParts, "single", entry.key.split("\\").at(-1));
                 planned.push({
-                    name: `${singleId}${entry.form?.suffix ?? ""}`,
+                    name,
                     type: "single",
                     types: [entry.type],
                     path: entry.normalizedKeyParts,
                     folders: folders(entry.normalizedKeyParts),
                     create: category => this.handleSingleEntry(
                         texts(entry.normalizedKeyParts, { form: entry.form }),
-                        `${singleId}${entry.form?.suffix ?? ""}`,
-                        {
-                            ...entry,
-                            label: getControlLabel(settingTexts, entry.normalizedKeyParts, "single", entry.key.split("\\").at(-1)),
-                            category,
-                        },
+                        name,
+                        { ...entry, label, category },
                         supportedPolicies,
                         singleId
                     ),
                 });
+                // A JSON value whose text the policy engine parses (see
+                // getSchemaSettings()) also gets a text box, which writes the
+                // same value as REG_SZ, for tools which can't write multi-line
+                // values (e.g. Intune).
+                if (entry.oneLine) {
+                    planned.push({
+                        name: `${name}OneLine`,
+                        type: "single",
+                        types: ["REG_SZ"],
+                        path: entry.normalizedKeyParts,
+                        folders: folders(entry.normalizedKeyParts),
+                        create: category => {
+                            const policyTexts = texts(entry.normalizedKeyParts, { form: entry.form });
+                            return this.handleSingleEntry(
+                                { ...policyTexts, toc: `${policyTexts.toc} (one JSON line)` },
+                                `${name}OneLine`,
+                                { ...entry, type: "REG_SZ", value: "", maxLength: JSON_TEXT_MAX_LENGTH, label, category },
+                                supportedPolicies,
+                                singleId
+                            );
+                        },
+                    });
+                }
             }
 
             if (planned.length == plannedBefore) {

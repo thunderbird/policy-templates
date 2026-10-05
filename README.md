@@ -312,7 +312,9 @@ npm test
 - A JSON value (e.g. `ExtensionSettings`) is a multi-line box in the ADMX
   template, with the label of its control (see above) as a line of text above
   it (such a box has no label of its own) and a height of
-  `ADMX_JSON_BOX_HEIGHT` lines.
+  `ADMX_JSON_BOX_HEIGHT` lines. Where the policy engine of the branch parses
+  a JSON text, it also gets a one-line text box (`<name>OneLine`), for tools
+  which can't write multi-line values, such as Intune.
 - The macOS template (plist) is generated from the **policy schema** of the
   branch: every supported policy with the format `plist` (see `x-formats`),
   with its example (the first hand-written one, else generated from the

@@ -247,13 +247,32 @@ export function isJsonObject(schema, node) {
 
 /**
  * The options of the functions which read the settings of a policy, for a
- * branch of the given version: jsonObjects allows isJsonObject().
+ * branch of the given version: jsonObjects allows isJsonObject(), jsonStrings
+ * says that the policy engine parses a text as JSON where the schema says
+ * "contentMediaType" (else where it has the old type "JSON").
  *
  * @param {string} version - The version of the branch, e.g. "140.3.0".
- * @returns {{jsonObjects: boolean}}
+ * @returns {{jsonObjects: boolean, jsonStrings: boolean}}
  */
 export function getSchemaOptions(version) {
-    return { jsonObjects: Number(version.split(".")[0]) < JSON_STRING_VERSION };
+    const major = Number(version.split(".")[0]);
+    return { jsonObjects: major < JSON_STRING_VERSION, jsonStrings: major >= JSON_STRING_VERSION };
+}
+
+/**
+ * Whether the policy engine of a branch parses a text (a one-line REG_SZ) as
+ * the JSON value of a node. The validator before JSON_STRING_VERSION does so
+ * for the old type "JSON" (also in a type list), the one from that version on
+ * only for "contentMediaType". Each knows only its own marker.
+ *
+ * @param {Object} node - The node of the setting, resolved.
+ * @param {Object} options - See getSchemaOptions().
+ * @returns {boolean}
+ */
+function parsesJsonText(node, options) {
+    return options.jsonStrings
+        ? node?.contentMediaType == "application/json"
+        : [node?.type].flat().includes("JSON");
 }
 
 /**
@@ -481,10 +500,13 @@ export function getSchemaSettings(schema, policyName, l10n, options = {}) {
         }
 
         // A JSON value, and a list or an object which can only be entered as
-        // one JSON value (see isJsonList() and isJsonObject()).
+        // one JSON value (see isJsonList() and isJsonObject()). A JSON value
+        // whose text the policy engine parses also gets a one-line variant in
+        // the ADMX template, for tools which can't write multi-line values
+        // (e.g. Intune).
         if (setting.isJson || isJsonList(setting.schema, setting.node)
             || (options.jsonObjects && isJsonObject(setting.schema, setting.node))) {
-            entry("REG_MULTI_SZ", "");
+            entry("REG_MULTI_SZ", "", setting.isJson && parsesJsonText(setting.node, options) ? { oneLine: true } : {});
             return;
         }
         const node = setting.node;
