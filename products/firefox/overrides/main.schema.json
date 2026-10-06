@@ -384,7 +384,7 @@
       "examples": [
         false
       ],
-      "x-help": "If set to true, application updates are installed without user approval within Firefox. The operating system might still require approval.\n\nIf set to false, application updates are downloaded but the user can choose when to install the update.\n\nIf you have disabled updates via `DisableAppUpdate`, this policy has no effect.",
+      "x-help": "If set to true, application updates are installed without user approval within { -brand-short-name }. The operating system might still require approval.\n\nIf set to false, application updates are downloaded but the user can choose when to install the update.\n\nIf you have disabled updates via `DisableAppUpdate`, this policy has no effect.",
       "x-preferences-affected": [
         "app.update.auto"
       ]
@@ -405,11 +405,11 @@
       },
       "x-restart-required": true,
       "title": "Pin updates to a specific version",
-      "description": "Prevent Firefox from being updated beyond the specified version.",
+      "description": "Prevent { -brand-short-name } from being updated beyond the specified version.",
       "examples": [
         "106."
       ],
-      "x-help": "You can specify the version as ```xx.``` and Firefox will be updated with all minor versions, but will not be updated beyond the major version.\n\nYou can also specify the version as ```xx.xx.``` and Firefox will be updated with all patch versions, but will not be updated beyond the minor version.\n\nNote: The value MUST end in a dot(.).\n\nYou should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, Firefox will update beyond that version."
+      "x-help": "You can specify the version as ```xx.``` and { -brand-short-name } will be updated with all minor versions, but will not be updated beyond the major version.\n\nYou can also specify the version as ```xx.xx.``` and { -brand-short-name } will be updated with all patch versions, but will not be updated beyond the minor version.\n\nNote: The value MUST end in a dot(.).\n\nYou should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, { -brand-short-name } will update beyond that version."
     },
     "AppUpdateURL": {
       "x-category": "Device update settings",
@@ -426,7 +426,7 @@
       },
       "x-restart-required": true,
       "title": "Custom Update URL",
-      "description": "Change the URL for application update if you are providing Firefox updates from a custom update server.",
+      "description": "Change the URL for application update if you are providing { -brand-short-name } updates from a custom update server.",
       "examples": [
         "https://yoursite.com"
       ],
@@ -990,8 +990,8 @@
             "type": "string"
           },
           "title": "Install Certificates",
-          "description": "Adds certificates to the Firefox certificate store.",
-          "x-help": "If only a filename is specified, Firefox searches for the file in the following locations:\n\n- Windows\n  - %USERPROFILE%\\AppData\\Local\\Mozilla\\Certificates\n  - %USERPROFILE%\\AppData\\Roaming\\Mozilla\\Certificates\n- macOS\n  - /Library/Application Support/Mozilla/Certificates\n  - ~/Library/Application Support/Mozilla/Certificates\n- Linux\n  - /usr/lib/mozilla/certificates\n  - /usr/lib64/mozilla/certificates\n  - ~/.mozilla/certificates\n\nStarting with Firefox 65, Firefox 60.5 ESR, a fully qualified path can be used, including UNC paths. You should use the native path style for your operating system. We do not support using %USERPROFILE% or other environment variables on Windows.\n\nIf you are specifying the path in the policies.json file on Windows, you need to escape your backslashes (`\\\\`) which means that for UNC paths, you need to escape both (`\\\\\\\\`). If you use group policy, you only need one backslash.\n\nCertificates are installed using the trust string `CT,CT,`.\n\nBinary (DER) and ASCII (PEM) certificates are both supported.",
+          "description": "Adds certificates to the { -brand-short-name } certificate store.",
+          "x-help": "If only a filename is specified, { -brand-short-name } searches for the file in the following locations:\n\n- Windows\n  - %USERPROFILE%\\AppData\\Local\\Mozilla\\Certificates\n  - %USERPROFILE%\\AppData\\Roaming\\Mozilla\\Certificates\n- macOS\n  - /Library/Application Support/Mozilla/Certificates\n  - ~/Library/Application Support/Mozilla/Certificates\n- Linux\n  - /usr/lib/mozilla/certificates\n  - /usr/lib64/mozilla/certificates\n  - ~/.mozilla/certificates\n\nStarting with { -brand-short-name } 65, { -brand-short-name } 60.5 ESR, a fully qualified path can be used, including UNC paths. You should use the native path style for your operating system. We do not support using %USERPROFILE% or other environment variables on Windows.\n\nIf you are specifying the path in the policies.json file on Windows, you need to escape your backslashes (`\\\\`) which means that for UNC paths, you need to escape both (`\\\\\\\\`). If you use group policy, you only need one backslash.\n\nCertificates are installed using the trust string `CT,CT,`.\n\nBinary (DER) and ASCII (PEM) certificates are both supported.",
           "x-cck2-equivalent": [
             "certs.ca"
           ]
@@ -1553,7 +1553,7 @@
         },
         "ExpireAtSessionEnd": {
           "type": "boolean",
-          "title": "Keep cookies until Firefox is closed",
+          "title": "Keep cookies until { -brand-short-name } is closed",
           "description": "Determines when cookies expire. Use [`SanitizeOnShutdown`](#sanitizeonshutdown) instead.",
           "x-deprecated": true
         },
@@ -1783,7 +1783,7 @@
       },
       "x-restart-required": true,
       "title": "Disable Update",
-      "description": "Turn off application updates within Firefox.",
+      "description": "Turn off application updates within { -brand-short-name }.",
       "examples": [
         true
       ],
@@ -1811,7 +1811,7 @@
       "examples": [
         true
       ],
-      "x-help": "PDF files are downloaded and sent externally.\n\nNote: As of Firefox 140, this policy no longer completely disables PDF.js; it changes the handler to send PDF files to the operating system. Embedded PDF files are shown in the browser. If you need to completely disable PDF.js, you can use the [`PDFjs`](#pdfjs) policy.",
+      "x-help": "PDF files are downloaded and sent externally.\n\nNote: As of { -brand-short-name } 140, this policy no longer completely disables PDF.js; it changes the handler to send PDF files to the operating system. Embedded PDF files are shown in the browser. If you need to completely disable PDF.js, you can use the [`PDFjs`](#pdfjs) policy.",
       "x-cck2-equivalent": [
         "disablePDFjs"
       ]
@@ -1903,7 +1903,7 @@
           "type": "boolean"
         }
       },
-      "x-help": "**Preferences Affected:** `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_rsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_ecdsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_256_sha`, `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.deprecated.rsa_des_ede3_sha`, `security.tls13.chacha20_poly1305_sha256`, `security.tls13.aes_128_gcm_sha256`, `security.tls13.aes_256_gcm_sha384`\n\n---\n**Note:**\n\nThis policy was updated in Firefox 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.\n\n---"
+      "x-help": "**Preferences Affected:** `security.ssl3.ecdhe_rsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_aes_128_gcm_sha256`, `security.ssl3.ecdhe_ecdsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_rsa_chacha20_poly1305_sha256`, `security.ssl3.ecdhe_ecdsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_256_gcm_sha384`, `security.ssl3.ecdhe_rsa_aes_128_sha`, `security.ssl3.ecdhe_ecdsa_aes_128_sha`, `security.ssl3.ecdhe_rsa_aes_256_sha`, `security.ssl3.ecdhe_ecdsa_aes_256_sha`, `security.ssl3.dhe_rsa_aes_128_sha`, `security.ssl3.dhe_rsa_aes_256_sha`, `security.ssl3.rsa_aes_128_gcm_sha256`, `security.ssl3.rsa_aes_256_gcm_sha384`, `security.ssl3.rsa_aes_128_sha`, `security.ssl3.rsa_aes_256_sha`, `security.ssl3.deprecated.rsa_des_ede3_sha`, `security.tls13.chacha20_poly1305_sha256`, `security.tls13.aes_128_gcm_sha256`, `security.tls13.aes_256_gcm_sha384`\n\n---\n**Note:**\n\nThis policy was updated in { -brand-short-name } 78 to allow enabling ciphers as well. Setting the value to true disables the cipher, setting the value to false enables the cipher. Previously setting the value to true or false disabled the cipher.\n\n---"
     },
     "DisableDefaultBrowserAgent": {
       "type": "boolean",
@@ -2473,7 +2473,7 @@
       "examples": [
         true
       ],
-      "x-help": "As of Firefox 83 and Firefox ESR 78.5, local storage of telemetry data is disabled as well.\n\nMozilla recommends that you do not disable telemetry. Information collected through telemetry helps us build a better product for businesses like yours.",
+      "x-help": "As of { -brand-short-name } 83 and { -brand-short-name } ESR 78.5, local storage of telemetry data is disabled as well.\n\nMozilla recommends that you do not disable telemetry. Information collected through telemetry helps us build a better product for businesses like yours.",
       "x-cck2-equivalent": [
         "disableTelemetry"
       ],
@@ -2700,7 +2700,7 @@
               "version_added": "149"
             }
           },
-          "description": "Determines whether or not Firefox will use your default DNS resolver if there is a problem with the secure DNS provider."
+          "description": "Determines whether or not { -brand-short-name } will use your default DNS resolver if there is a problem with the secure DNS provider."
         },
         "Locked": {
           "type": "boolean",
@@ -3104,7 +3104,7 @@
           "description": "Extensions the user can't disable or uninstall, by their IDs."
         }
       },
-      "x-help": "Note: The **[`ExtensionSettings`](#extensionsettings)** policy was added in Firefox 69. It provides additional functionality and is closer in compatibility to Chrome and Edge. It does not support native paths, though, so you'll have to use file:/// URLs. I'd recommend trying it before using this policy. Any future improvements will happen in that policy.\n\nWe will not, however, be removing this policy.",
+      "x-help": "Note: The **[`ExtensionSettings`](#extensionsettings)** policy was added in { -brand-short-name } 69. It provides additional functionality and is closer in compatibility to Chrome and Edge. It does not support native paths, though, so you'll have to use file:/// URLs. I'd recommend trying it before using this policy. Any future improvements will happen in that policy.\n\nWe will not, however, be removing this policy.",
       "x-cck2-equivalent": [
         "addons"
       ]
@@ -3187,12 +3187,12 @@
                   {
                     "const": "locale",
                     "title": "Language pack",
-                    "description": "Language packs that translate the Firefox interface."
+                    "description": "Language packs that translate the { -brand-short-name } interface."
                   },
                   {
                     "const": "theme",
                     "title": "Theme",
-                    "description": "Themes that change the appearance of Firefox."
+                    "description": "Themes that change the appearance of { -brand-short-name }."
                   },
                   {
                     "const": "sitepermission",
@@ -4366,7 +4366,7 @@
       "examples": [
         true
       ],
-      "x-help": "If this policy is enabled:\n 1. The user will never be prompted to install updates\n 2. Firefox will not check for updates in the background, though it will check automatically when an update UI is displayed (such as the one in the About dialog). This check will be used to show \"Update to version X\" in the UI, but will not automatically download the update or prompt the user to update in any other way.\n 3. The update UI will work as expected, unlike when using DisableAppUpdate.\n\nThis policy is primarily intended for advanced end users, not for enterprises, but it is available via GPO."
+      "x-help": "If this policy is enabled:\n 1. The user will never be prompted to install updates\n 2. { -brand-short-name } will not check for updates in the background, though it will check automatically when an update UI is displayed (such as the one in the About dialog). This check will be used to show \"Update to version X\" in the UI, but will not automatically download the update or prompt the user to update in any other way.\n 3. The update UI will work as expected, unlike when using DisableAppUpdate.\n\nThis policy is primarily intended for advanced end users, not for enterprises, but it is available via GPO."
     },
     "MicrosoftEntraSSO": {
       "type": "boolean",
@@ -4483,7 +4483,7 @@
       },
       "x-restart-required": true,
       "title": "Offer to save logins",
-      "description": "Control whether or not Firefox offers to save passwords.",
+      "description": "Control whether or not { -brand-short-name } offers to save passwords.",
       "examples": [
         false
       ],
@@ -4595,7 +4595,7 @@
       },
       "x-restart-required": true,
       "title": "Password Manager",
-      "description": "Remove access to the password manager via preferences and blocks about:logins on Firefox 70.",
+      "description": "Remove access to the password manager via preferences and blocks about:logins on { -brand-short-name } 70.",
       "examples": [
         false
       ],
@@ -5243,12 +5243,12 @@
                   "description": "Store `Value` as a string."
                 }
               ],
-              "description": "The type of the preference (Firefox 123, Firefox ESR 115.8). This is especially useful if you are seeing 0 or 1 values being converted to booleans when set as user preferences."
+              "description": "The type of the preference ({ -brand-short-name } 123, { -brand-short-name } ESR 115.8). This is especially useful if you are seeing 0 or 1 values being converted to booleans when set as user preferences."
             }
           }
         }
       },
-      "x-help": "**NOTE** On Windows, in order to use this policy, you must clear all settings in the old **Preferences (Deprecated)** section in group policy.\n\nPreviously you could only set and lock a subset of preferences. Starting with Firefox 81 and Firefox ESR 78.3 you can set many more preferences. You can also set default preferences, user preferences and you can clear preferences.\n\n**NOTE** There are too many preferences for us to provide documentation on them all. The source file [StaticPrefList.yaml](https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml) contains information on many of them.\n\n`\"user\"` preferences persist across invocations of Firefox. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy. An example of this is ```toolkit.legacyUserProfileCustomizations.stylesheets```.\n\n`\"user\"` preferences persist even if the policy is removed, so if you need to remove them, you should use the clear policy.\n\nSee the examples below for more detail.\n\nIMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.",
+      "x-help": "**NOTE** On Windows, in order to use this policy, you must clear all settings in the old **Preferences (Deprecated)** section in group policy.\n\nPreviously you could only set and lock a subset of preferences. Starting with { -brand-short-name } 81 and { -brand-short-name } ESR 78.3 you can set many more preferences. You can also set default preferences, user preferences and you can clear preferences.\n\n**NOTE** There are too many preferences for us to provide documentation on them all. The source file [StaticPrefList.yaml](https://searchfox.org/mozilla-central/source/modules/libpref/init/StaticPrefList.yaml) contains information on many of them.\n\n`\"user\"` preferences persist across invocations of { -brand-short-name }. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy. An example of this is ```toolkit.legacyUserProfileCustomizations.stylesheets```.\n\n`\"user\"` preferences persist even if the policy is removed, so if you need to remove them, you should use the clear policy.\n\nSee the examples below for more detail.\n\nIMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.",
       "x-cck2-equivalent": [
         "preferences"
       ],
@@ -5496,7 +5496,7 @@
           "title": "Do not prompt for authentication if password is saved"
         }
       },
-      "x-help": "These settings correspond to the connection settings in Firefox preferences.\nTo specify ports, append them to the hostnames with a colon (:).\n\nUnless you lock this policy, changes the user already has in place will take effect.",
+      "x-help": "These settings correspond to the connection settings in { -brand-short-name } preferences.\nTo specify ports, append them to the hostnames with a colon (:).\n\nUnless you lock this policy, changes the user already has in place will take effect.",
       "x-cck2-equivalent": [
         "networkProxy*"
       ],
@@ -5591,7 +5591,7 @@
       "items": {
         "type": "string"
       },
-      "x-help": "It will cause the corresponding language pack to become active.\n\nNote: For Firefox 68, this can now be a string so that you can specify an empty value."
+      "x-help": "It will cause the corresponding language pack to become active.\n\nNote: For { -brand-short-name } 68, this can now be a string so that you can specify an empty value."
     },
     "SanitizeOnShutdown": {
       "type": [
@@ -5763,7 +5763,7 @@
       },
       "x-restart-required": true,
       "title": "Search",
-      "description": "The following policies allow for configuring search engines in Firefox.",
+      "description": "The following policies allow for configuring search engines in { -brand-short-name }.",
       "examples": [
         {
           "Default": "Example1",
@@ -5888,7 +5888,7 @@
           "description": "Hide built-in search engines."
         }
       },
-      "x-help": "As of Firefox 139, this policy is available in all versions of Firefox."
+      "x-help": "As of { -brand-short-name } 139, this policy is available in all versions of { -brand-short-name }."
     },
     "SearchSuggestEnabled": {
       "type": "boolean",
@@ -6184,7 +6184,7 @@
           "title": "TLS 1.3"
         }
       ],
-      "x-help": "(Firefox defaults to a maximum of TLS 1.3.)",
+      "x-help": "({ -brand-short-name } defaults to a maximum of TLS 1.3.)",
       "x-preferences-affected": [
         "security.tls.version.max"
       ]
@@ -6227,7 +6227,7 @@
           "title": "TLS 1.3"
         }
       ],
-      "x-help": "(Firefox defaults to a minimum of TLS 1.2.)",
+      "x-help": "({ -brand-short-name } defaults to a minimum of TLS 1.2.)",
       "x-preferences-affected": [
         "security.tls.version.min"
       ]

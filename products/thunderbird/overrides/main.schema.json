@@ -65,7 +65,7 @@
       "type": "string",
       "title": "Pin updates to a specific version",
       "description": "{ policy-AppUpdatePin }",
-      "x-help": "You can specify the version as `xx.` and Thunderbird will be updated with all minor versions, but will not be updated beyond the major version.\n\nYou can also specify the version as `xx.xx` and Thunderbird will be updated with all patch versions, but will not be updated beyond the minor version.\n\nYou should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, Thunderbird will update beyond that version.",
+      "x-help": "You can specify the version as `xx.` and { -brand-short-name } will be updated with all minor versions, but will not be updated beyond the major version.\n\nYou can also specify the version as `xx.xx` and { -brand-short-name } will be updated with all patch versions, but will not be updated beyond the minor version.\n\nYou should specify a version that exists or is guaranteed to exist. If you specify a version that doesn't end up existing, { -brand-short-name } will update beyond that version.",
       "examples": ["106."]
     },
 
@@ -75,7 +75,7 @@
       "$ref": "#/definitions/url",
       "title": "Custom Update URL",
       "description": "{ policy-AppUpdateURL }",
-      "x-help": "Change the URL for application update if you are providing Thunderbird updates from a custom update server.",
+      "x-help": "Change the URL for application update if you are providing { -brand-short-name } updates from a custom update server.",
       "examples": ["https://yoursite.com"]
     },
 
@@ -108,7 +108,7 @@
             "type": "string"
           },
           "title": "Sites allowed to receive delegated credentials",
-          "description": "Websites to which Thunderbird may delegate the authorization of the user.",
+          "description": "Websites to which { -brand-short-name } may delegate the authorization of the user.",
           "examples": [["mydomain.com", "https://myotherdomain.com"]]
         },
         "NTLM": {
@@ -173,7 +173,7 @@
       "title": "Background updates",
       "type": "boolean",
       "description": "{ policy-BackgroundAppUpdate2 }",
-      "x-help": "Install application updates in the background, also when Thunderbird is not running (only on Windows). If this policy is enabled, updates may be installed in the background without asking the user (the operating system might still ask for approval). If it is disabled, no updates are installed while Thunderbird is not running. In both cases, the user can't change the setting. If updates are turned off with `DisableAppUpdate`, or automatic updates with `AppAutoUpdate`, this policy has no effect. If background updates don't run, check the [requirements in this support article](https://support.mozilla.org/en-US/kb/enable-background-updates-thunderbird-windows).",
+      "x-help": "Install application updates in the background, also when { -brand-short-name } is not running (only on Windows). If this policy is enabled, updates may be installed in the background without asking the user (the operating system might still ask for approval). If it is disabled, no updates are installed while { -brand-short-name } is not running. In both cases, the user can't change the setting. If updates are turned off with `DisableAppUpdate`, or automatic updates with `AppAutoUpdate`, this policy has no effect. If background updates don't run, check the [requirements in this support article](https://support.mozilla.org/en-US/kb/enable-background-updates-thunderbird-windows).",
       "x-formats": ["gpo", "json"]
     },
 
@@ -240,8 +240,8 @@
             "type": "string"
           },
           "x-expand-env-vars": true,
-          "description": "Adds certificates to the Thunderbird certificate store.",
-          "x-help": "If only a filename is specified, Thunderbird searches for the file in the following locations:\n\n- Windows\n  - %USERPROFILE%\\AppData\\Local\\Mozilla\\Certificates\n  - %USERPROFILE%\\AppData\\Roaming\\Mozilla\\Certificates\n- macOS\n  - /Library/Application Support/Mozilla/Certificates\n  - ~/Library/Application Support/Mozilla/Certificates\n- Linux\n  - /usr/lib/mozilla/certificates\n  - /usr/lib64/mozilla/certificates\n  - ~/.mozilla/certificates\n\nA fully qualified path can be used, including UNC paths. You should use the native path style for your operating system.\n\nIf you are specifying the path in the policies.json file on Windows, you need to escape your backslashes (`\\\\`) which means that for UNC paths, you need to escape both (`\\\\\\\\`). If you use group policy, you only need one backslash.\n\nCertificates are installed using the trust string `CT,CT,`.\n\nBinary (DER) and ASCII (PEM) certificates are both supported.",
+          "description": "Adds certificates to the { -brand-short-name } certificate store.",
+          "x-help": "If only a filename is specified, { -brand-short-name } searches for the file in the following locations:\n\n- Windows\n  - %USERPROFILE%\\AppData\\Local\\Mozilla\\Certificates\n  - %USERPROFILE%\\AppData\\Roaming\\Mozilla\\Certificates\n- macOS\n  - /Library/Application Support/Mozilla/Certificates\n  - ~/Library/Application Support/Mozilla/Certificates\n- Linux\n  - /usr/lib/mozilla/certificates\n  - /usr/lib64/mozilla/certificates\n  - ~/.mozilla/certificates\n\nA fully qualified path can be used, including UNC paths. You should use the native path style for your operating system.\n\nIf you are specifying the path in the policies.json file on Windows, you need to escape your backslashes (`\\\\`) which means that for UNC paths, you need to escape both (`\\\\\\\\`). If you use group policy, you only need one backslash.\n\nCertificates are installed using the trust string `CT,CT,`.\n\nBinary (DER) and ASCII (PEM) certificates are both supported.",
           "title": "Certificates to install",
           "examples": [["cert1.der", "/home/username/cert2.pem"]],
           "x-examples-gpo": [["cert1.der", "C:\\Users\\username\\cert2.pem"]]
@@ -345,7 +345,7 @@
       "type": "boolean",
       "title": "Disable Update",
       "description": "{ policy-DisableAppUpdate }",
-      "x-help": "Turn off application updates within Thunderbird."
+      "x-help": "Turn off application updates within { -brand-short-name }."
     },
 
     "DisableBuiltinPDFViewer": {
@@ -761,12 +761,12 @@
                   {
                     "const": "locale",
                     "title": "Language pack",
-                    "description": "Language packs that translate the Thunderbird interface."
+                    "description": "Language packs that translate the { -brand-short-name } interface."
                   },
                   {
                     "const": "theme",
                     "title": "Theme",
-                    "description": "Themes that change the appearance of Thunderbird."
+                    "description": "Themes that change the appearance of { -brand-short-name }."
                   }
                 ]
               },
@@ -1096,7 +1096,7 @@
       "type": "boolean",
       "title": "Manual Update Only",
       "description": "{ policy-ManualAppUpdateOnly }",
-      "x-help": "Switch to manual updates only.\n\nIf this policy is enabled:\n\n1. The user will never be prompted to install updates.\n2. Thunderbird will not check for updates in the background, though it will check automatically when an update UI is displayed (such as the one in the About dialog). This check will be used to show \"Update to version X\" in the UI, but will not automatically download the update or prompt the user to update in any other way.\n3. The update UI will work as expected, unlike when using DisableAppUpdate.\n\nThis policy is primarily intended for advanced end users, not for enterprises, but it is available via GPO."
+      "x-help": "Switch to manual updates only.\n\nIf this policy is enabled:\n\n1. The user will never be prompted to install updates.\n2. { -brand-short-name } will not check for updates in the background, though it will check automatically when an update UI is displayed (such as the one in the About dialog). This check will be used to show \"Update to version X\" in the UI, but will not automatically download the update or prompt the user to update in any other way.\n3. The update UI will work as expected, unlike when using DisableAppUpdate.\n\nThis policy is primarily intended for advanced end users, not for enterprises, but it is available via GPO."
     },
 
     "NetworkPrediction": {
@@ -1108,7 +1108,7 @@
       "title": "Network prediction (DNS prefetching)",
       "type": "boolean",
       "description": "{ policy-NetworkPrediction }",
-      "x-help": "With network prediction, Thunderbird resolves the host names of links in advance, so they load faster.\n\nIf this policy is enabled, network prediction is turned on. If it is disabled, network prediction is turned off. In both cases, the user can't change the setting. If this policy is not configured, the user can change the setting."
+      "x-help": "With network prediction, { -brand-short-name } resolves the host names of links in advance, so they load faster.\n\nIf this policy is enabled, network prediction is turned on. If it is disabled, network prediction is turned off. In both cases, the user can't change the setting. If this policy is not configured, the user can change the setting."
     },
 
     "OfferToSaveLogins": {
@@ -1118,7 +1118,7 @@
       "title": "Offer to save passwords",
       "type": "boolean",
       "description": "{ policy-OfferToSaveLogins }",
-      "x-help": "Control whether or not Thunderbird offers to save passwords."
+      "x-help": "Control whether or not { -brand-short-name } offers to save passwords."
     },
 
     "OfferToSaveLoginsDefault": {
@@ -1209,7 +1209,7 @@
         }
       },
       "description": "{ policy-Preferences }",
-      "x-help": "Set and lock preferences.\n\nYou can also set default preferences and user preferences, and clear the user value of a preference.\n\nUsing the preference as the key, set the `Value` to the corresponding preference value.\n\nDefault preferences can be modified by the user.\n\nIf a value is locked, it is also set as the default.\n\nUser preferences persist across invocations of Thunderbird. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy.\n\nUser preferences persist even if the policy is removed, so if you need to remove them, set their `Status` to `clear`.\n\nIMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.\n\nOnly these preferences can be set:\n\n- `accessibility.*`\n- `app.update.*` (except `app.update.channel`, `app.update.lastUpdateTime` and `app.update.migrated`)\n- `browser.*`\n- `calendar.*`\n- `chat.*`\n- `datareporting.policy.*`\n- `dom.*`\n- `extensions.*`\n- `general.autoScroll*`\n- `general.smoothScroll*`\n- `geo.*`\n- `gfx.*`\n- `intl.*`\n- `layers.*`\n- `layout.*`\n- `mail.*`\n- `mailnews.*`\n- `media.*`\n- `network.*`\n- `pdfjs.*`\n- `places.*`\n- `print.*`\n- `security.default_personal_cert`\n- `security.insecure_connection_text.enabled`\n- `security.insecure_connection_text.pbmode.enabled`\n- `security.insecure_field_warning.contextual.enabled`\n- `security.mixed_content.block_active_content`\n- `security.osclientcerts.autoload`\n- `security.ssl.errorReporting.enabled`\n- `security.tls.hello_downgrade_check`\n- `security.tls.version.enable-deprecated`\n- `security.warn_submit_secure_to_insecure`\n- `signon.*`\n- `spellchecker.*`\n- `ui.*`\n- `widget.*`",
+      "x-help": "Set and lock preferences.\n\nYou can also set default preferences and user preferences, and clear the user value of a preference.\n\nUsing the preference as the key, set the `Value` to the corresponding preference value.\n\nDefault preferences can be modified by the user.\n\nIf a value is locked, it is also set as the default.\n\nUser preferences persist across invocations of { -brand-short-name }. It is the equivalent of a user setting the preference. They are most useful when a preference is needed very early in startup so it can't be set as default by policy.\n\nUser preferences persist even if the policy is removed, so if you need to remove them, set their `Status` to `clear`.\n\nIMPORTANT: Make sure you're only setting a particular preference using this mechanism and not some other way.\n\nOnly these preferences can be set:\n\n- `accessibility.*`\n- `app.update.*` (except `app.update.channel`, `app.update.lastUpdateTime` and `app.update.migrated`)\n- `browser.*`\n- `calendar.*`\n- `chat.*`\n- `datareporting.policy.*`\n- `dom.*`\n- `extensions.*`\n- `general.autoScroll*`\n- `general.smoothScroll*`\n- `geo.*`\n- `gfx.*`\n- `intl.*`\n- `layers.*`\n- `layout.*`\n- `mail.*`\n- `mailnews.*`\n- `media.*`\n- `network.*`\n- `pdfjs.*`\n- `places.*`\n- `print.*`\n- `security.default_personal_cert`\n- `security.insecure_connection_text.enabled`\n- `security.insecure_connection_text.pbmode.enabled`\n- `security.insecure_field_warning.contextual.enabled`\n- `security.mixed_content.block_active_content`\n- `security.osclientcerts.autoload`\n- `security.ssl.errorReporting.enabled`\n- `security.tls.hello_downgrade_check`\n- `security.tls.version.enable-deprecated`\n- `security.warn_submit_secure_to_insecure`\n- `signon.*`\n- `spellchecker.*`\n- `ui.*`\n- `widget.*`",
       "examples": [
         {
           "accessibility.force_disabled": {
@@ -1377,12 +1377,12 @@
         "AutoLogin": {
           "type": "boolean",
           "title": "Don't prompt for authentication if the password is saved",
-          "description": "If the proxy requires authentication and its password is saved, Thunderbird logs in without asking. If that login fails, the user is asked again."
+          "description": "If the proxy requires authentication and its password is saved, { -brand-short-name } logs in without asking. If that login fails, the user is asked again."
         }
       },
       "title": "Proxy Settings",
       "description": "{ policy-Proxy }",
-      "x-help": "These settings correspond to the connection settings in Thunderbird preferences.\nTo specify ports, append them to the hostnames with a colon (:).\n\nThe settings are defaults: settings the user already changed take effect, and the user can change them, also if `Locked` is true."
+      "x-help": "These settings correspond to the connection settings in { -brand-short-name } preferences.\nTo specify ports, append them to the hostnames with a colon (:).\n\nThe settings are defaults: settings the user already changed take effect, and the user can change them, also if `Locked` is true."
     },
 
     "RequestedLocales": {
@@ -1482,7 +1482,7 @@
         "Default": {
           "x-cck2-equivalent": ["defaultSearchEngine"],
           "type": "string",
-          "description": "The search engine which is used to search the web from Thunderbird.",
+          "description": "The search engine which is used to search the web from { -brand-short-name }.",
           "x-help": "The search engine is given by its name, either a built-in search engine or one added with Add. It is set when the policy is applied for the first time and whenever the name changes, so the user can choose another default search engine in the meantime.",
           "title": "Default search engine",
           "examples": ["NAME_OF_SEARCH_ENGINE"]
@@ -1490,7 +1490,7 @@
         "DefaultPrivate": {
           "type": "string",
           "description": "The search engine which is used in private browsing.",
-          "x-help": "This setting has no effect in Thunderbird.",
+          "x-help": "This setting has no effect in { -brand-short-name }.",
           "title": "Default search engine for private browsing",
           "examples": ["NAME_OF_SEARCH_ENGINE"]
         },
@@ -1498,7 +1498,7 @@
           "x-cck2-equivalent": ["disableSearchEngineInstall"],
           "type": "boolean",
           "description": "Webpages can't install search engines.",
-          "x-help": "This setting has no effect in Thunderbird.",
+          "x-help": "This setting has no effect in { -brand-short-name }.",
           "title": "Prevent search engine installs"
         },
         "Remove": {
@@ -1576,7 +1576,7 @@
       "type": "string",
       "title": "Maximum SSL version enabled",
       "description": "{ policy-SSLVersionMax }",
-      "x-help": "Set and lock the maximum version of TLS. (Thunderbird defaults to a maximum of TLS 1.3.)",
+      "x-help": "Set and lock the maximum version of TLS. ({ -brand-short-name } defaults to a maximum of TLS 1.3.)",
       "oneOf": [
         {
           "const": "tls1",
@@ -1603,7 +1603,7 @@
       "type": "string",
       "title": "Minimum SSL version enabled",
       "description": "{ policy-SSLVersionMin }",
-      "x-help": "Set and lock the minimum version of TLS. (Thunderbird defaults to a minimum of TLS 1.2.)",
+      "x-help": "Set and lock the minimum version of TLS. ({ -brand-short-name } defaults to a minimum of TLS 1.2.)",
       "oneOf": [
         {
           "const": "tls1",
