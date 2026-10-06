@@ -111,7 +111,8 @@ it is. The context is a fixed set of plain, frozen data (see
 - `branch`: the branch being rendered (`"main"` for the overview);
 - `branches`: all branches of the run as `{ branch, name, version, docsUrl }`;
 - `schema(locale = "en-US")`: the product's policy schema of the branch, with
-  the Fluent IDs replaced by their texts in the given locale.
+  the Fluent references in its texts replaced by their texts in the given
+  locale.
   Other locales are the translations the branch ships: read from the
   product's l10n repository at the commit which the branch pins for the
   locale (`l10n.changesets` in `product.yaml`, e.g.
@@ -202,9 +203,10 @@ comm). The product folder overrides it: every branch has a full schema in
 types, values) and its documentation (texts, examples, hints), which the
 generator uses instead of the schema of the product's repository. So the
 generator can work with any schema, independent of the repository's state.
-A branch without an override is an error. Texts may be the IDs of
-Fluent messages (e.g. `x-description-l10n-id`), resolved with the Fluent files
-of the branch in the product's repository (`source.fluent`). Where a branch
+A branch without an override is an error. Texts may reference Fluent
+messages and terms (e.g. `"{ policy-Proxy }"`, `"{ -brand-short-name }"`),
+resolved with the Fluent files of the branch in the product's repository
+(`source.fluent`). Where a branch
 behaves differently from main, its schema says why in a `$comment`.
 
 The product's repository still gives the version of each branch, its Fluent
@@ -293,10 +295,12 @@ npm test
   deprecated settings, and `x-expand-env-vars: true` marks values in which
   Windows expands environment variables (`REG_EXPAND_SZ`). Their help text says
   so in the ADMX template, and the Markdown docs note that this only works via
-  Group Policy. Each text field `X` is either plain English, or the
-  ID of a Fluent message in `x-X-l10n-id` (`x-help-l10n-id` for `x-help`),
-  resolved with the Fluent files of the branch (see `source.fluent` in
-  `product.yaml`). Policies whose `x-formats` don't include `gpo`
+  Group Policy. Each text field is English, and may reference Fluent
+  messages and terms as Fluent writes them: `{ policy-Proxy }` for a message,
+  `{ -brand-short-name }` for a term, with one space inside each brace. They
+  are resolved with the Fluent files of the branch (see `source.fluent` in
+  `product.yaml`), and an unknown reference is an error. Braces without these
+  spaces (e.g. `{searchTerms}`) are plain text. Policies whose `x-formats` don't include `gpo`
   are left out.
 - Folders (categories) of the ADMX template: they follow the shape of the
   schema. The ADMX policies of a policy with several settings sit in a folder
@@ -308,9 +312,9 @@ npm test
   only changes when the shape of a policy changes. `x-category` is only the
   category of the docs, as in Firefox's schema.
 - Names of the folders: the `title` of the policy or setting, else its name.
-  To translate a folder, give its title as a Fluent message
-  (`x-title-l10n-id`), like any other title. A new text gets a new Fluent ID,
-  while the id of the folder stays.
+  To translate a folder, let its title reference a Fluent message
+  (`"title": "{ policy-Proxy-title }"`), like any other title. A new text
+  gets a new Fluent ID, while the id of the folder stays.
 - Labels of the ADMX controls (a design decision, switched with
   `ADMX_TITLE_LABELS` in `generator/modules/constants.mjs`): a list box and a
   control in a group (several settings in one ADMX policy, e.g. the

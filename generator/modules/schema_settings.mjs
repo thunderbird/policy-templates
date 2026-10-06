@@ -70,10 +70,10 @@ const KEYWORDS_OF_TYPE = {
     integer: ["choice"],
     boolean: [],
 };
-// The texts (also given as Fluent IDs) and the examples of a node, which stay
-// with the setting when it is split into its forms.
+// The texts and the examples of a node, which stay with the setting when it is
+// split into its forms.
 const TEXT_KEYWORDS = ["title", "description", "x-help", "x-deprecated", "examples", "x-examples-gpo"];
-const isTextKeyword = key => TEXT_KEYWORDS.includes(key) || key.endsWith("-l10n-id");
+const isTextKeyword = key => TEXT_KEYWORDS.includes(key);
 
 /**
  * The kind of a node with a single form, see FORM_KINDS, null if it has none.

@@ -1,23 +1,19 @@
 /**
  * The prose fields of the policy schema (e.g. "title", "description",
- * "x-help") are either plain English, or a pointer to a Fluent message: the
- * field "x-<field>-l10n-id" (for "x-help": "x-help-l10n-id") holds the ID of
- * the message, which is resolved with the given Fluent files. IDs are always
- * explicit, nothing is derived from the names of the settings.
+ * "x-help") are English, and may reference Fluent messages and terms of the
+ * given Fluent files, written as Fluent writes placeables: "{ policy-Proxy }"
+ * for a message, "{ -brand-short-name }" for a term, with one space inside
+ * each brace. The references are replaced by their texts. Braces without these
+ * spaces (e.g. "{searchTerms}" or "${home}") are plain text.
  */
 
 import { FluentBundle, FluentResource } from "@fluent/bundle";
 
 /**
- * Get the name of the field which points to a Fluent message, e.g.
- * "x-description-l10n-id" for "description" and "x-help-l10n-id" for "x-help".
- *
- * @param {string} field
- * @returns {string}
+ * A reference to a Fluent message ("{ policy-Proxy }") or term
+ * ("{ -brand-short-name }") in a text of the schema.
  */
-export function getL10nIdField(field) {
-    return `${field.startsWith("x-") ? field : `x-${field}`}-l10n-id`;
-}
+export const FLUENT_REFERENCE = /\{ (-?[a-zA-Z][\w-]*) \}/g;
 
 export class SchemaL10n {
     /**
@@ -43,8 +39,8 @@ export class SchemaL10n {
     }
 
     /**
-     * Get a prose field of a schema node, as plain English or resolved from
-     * its Fluent message.
+     * Get a prose field of a schema node, with its Fluent references replaced
+     * by their texts.
      *
      * @param {Object} node - The schema node.
      * @param {string} field - The field, e.g. "description".
@@ -52,32 +48,59 @@ export class SchemaL10n {
      * @returns {string|undefined}
      */
     get(node, field, where) {
-        const idField = getL10nIdField(field);
-        const plain = node?.[field];
-        const id = node?.[idField];
-        if (plain !== undefined && id !== undefined) {
-            throw new Error(`${where} has both ${field} and ${idField} in the policy schema.`);
+        const idField = `${field.startsWith("x-") ? field : `x-${field}`}-l10n-id`;
+        if (node?.[idField] !== undefined) {
+            throw new Error(`${where} has ${idField}, write "{ ${node[idField]} }" in its ${field} instead.`);
         }
-        if (id === undefined) {
-            return plain;
+        const text = node?.[field];
+        return typeof text == "string" ? this.resolve(text, `${field} of ${where}`) : text;
+    }
+
+    /**
+     * Replace the Fluent references of a text by their texts.
+     *
+     * @param {string} text
+     * @param {string} where - The text, for error messages.
+     * @returns {string}
+     */
+    resolve(text, where) {
+        return text.replace(FLUENT_REFERENCE, (_, id) => this.reference(id, where));
+    }
+
+    /**
+     * Get the text of a Fluent message ("policy-Proxy") or term
+     * ("-brand-short-name"). A term is formatted through a message of its
+     * own, as Fluent only formats messages.
+     *
+     * @param {string} id
+     * @param {string} where - The text, for error messages.
+     * @returns {string}
+     */
+    reference(id, where) {
+        let message = this.bundle.getMessage(id);
+        if (id.startsWith("-")) {
+            const termId = `generator-term${id}`;
+            if (!this.bundle.hasMessage(termId)) {
+                this.bundle.addResource(new FluentResource(`${termId} = { ${id} }\n`));
+            }
+            message = this.bundle.getMessage(termId);
         }
-        const message = this.bundle.getMessage(id);
         if (this.fallback && !message?.value) {
-            return this.fallback.get(node, field, where);
+            return this.fallback.reference(id, where);
         }
         if (!message) {
-            throw new Error(`The Fluent message ${id} of ${idField} of ${where} does not exist.`);
+            throw new Error(`The Fluent message ${id} of the ${where} does not exist.`);
         }
         if (!message.value) {
-            throw new Error(`The Fluent message ${id} of ${idField} of ${where} has no value.`);
+            throw new Error(`The Fluent message ${id} of the ${where} has no value.`);
         }
         const errors = [];
         const text = this.bundle.formatPattern(message.value, null, errors);
         if (errors.length && this.fallback) {
-            return this.fallback.get(node, field, where);
+            return this.fallback.reference(id, where);
         }
         if (errors.length) {
-            throw new Error(`The Fluent message ${id} of ${where} can not be formatted: ${errors[0].message}`);
+            throw new Error(`The Fluent ${id.startsWith("-") ? "term" : "message"} ${id} of the ${where} can not be formatted: ${errors[0].message}`);
         }
         return text;
     }
@@ -90,15 +113,6 @@ export class SchemaL10n {
      * @returns {string}
      */
     term(name) {
-        const id = `generator-term-${name}`;
-        if (!this.bundle.hasMessage(id)) {
-            this.bundle.addResource(new FluentResource(`${id} = { -${name} }\n`));
-        }
-        const errors = [];
-        const text = this.bundle.formatPattern(this.bundle.getMessage(id).value, null, errors);
-        if (errors.length) {
-            throw new Error(`The Fluent term -${name} can not be formatted: ${errors[0].message}`);
-        }
-        return text;
+        return this.reference(`-${name}`, "generator");
     }
 }

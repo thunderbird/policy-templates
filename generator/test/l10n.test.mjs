@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { getL10nIdField, SchemaL10n } from "../modules/l10n.mjs";
+import { SchemaL10n } from "../modules/l10n.mjs";
 
 const l10n = new SchemaL10n([
     { name: "brand.ftl", source: "-brand-short-name = Thunderbird\n" },
@@ -20,25 +20,24 @@ const l10n = new SchemaL10n([
     },
 ]);
 
-test("the field of a Fluent message ID", () => {
-    assert.equal(getL10nIdField("title"), "x-title-l10n-id");
-    assert.equal(getL10nIdField("description"), "x-description-l10n-id");
-    assert.equal(getL10nIdField("x-help"), "x-help-l10n-id");
-});
-
-test("plain English fields are used as they are", () => {
+test("plain English fields are used as they are, also with braces which are no references", () => {
     assert.equal(l10n.get({ description: "Plain text." }, "description", "Test"), "Plain text.");
     assert.equal(l10n.get({}, "description", "Test"), undefined);
+    // Without a space inside the braces, they are text.
+    const text = "The URL with {searchTerms}, in ${home}, for `{1234-abcd}`.";
+    assert.equal(l10n.get({ description: text }, "description", "Test"), text);
 });
 
-test("Fluent message IDs are resolved, with terms", () => {
+test("Fluent messages and terms in a text are replaced by their texts", () => {
+    assert.equal(l10n.get({ description: "{ policy-Update }" }, "description", "Test"), "Prevent Thunderbird from updating.");
+    assert.equal(l10n.get({ "x-help": "{ policy-Help }" }, "x-help", "Test"), "First paragraph.\n\nSecond paragraph.");
     assert.equal(
-        l10n.get({ "x-description-l10n-id": "policy-Update" }, "description", "Test"),
-        "Prevent Thunderbird from updating."
+        l10n.get({ title: "Keep cookies until { -brand-short-name } is closed" }, "title", "Test"),
+        "Keep cookies until Thunderbird is closed"
     );
     assert.equal(
-        l10n.get({ "x-help-l10n-id": "policy-Help" }, "x-help", "Test"),
-        "First paragraph.\n\nSecond paragraph."
+        l10n.get({ description: "{ -brand-short-name }: { policy-Update }" }, "description", "Test"),
+        "Thunderbird: Prevent Thunderbird from updating."
     );
 });
 
@@ -52,23 +51,31 @@ test("a localization resolves its messages and terms, and falls back to the Engl
         { name: "brand.ftl", source: "-brand-short-name = Donnervogel\n" },
         { name: "policies.ftl", source: "policy-Update = { -brand-short-name } nicht aktualisieren.\n" },
     ], { locale: "de", fallback: l10n });
-    assert.equal(de.get({ "x-description-l10n-id": "policy-Update" }, "description", "Test"), "Donnervogel nicht aktualisieren.");
-    assert.equal(de.get({ "x-help-l10n-id": "policy-Help" }, "x-help", "Test"), "First paragraph.\n\nSecond paragraph.");
+    assert.equal(de.get({ description: "{ policy-Update }" }, "description", "Test"), "Donnervogel nicht aktualisieren.");
+    // Each reference falls back on its own.
+    assert.equal(
+        de.get({ "x-help": "{ -brand-short-name }: { policy-Help }" }, "x-help", "Test"),
+        "Donnervogel: First paragraph.\n\nSecond paragraph."
+    );
     assert.equal(de.get({ description: "Plain." }, "description", "Test"), "Plain.");
 });
 
 test("errors", () => {
     assert.throws(
-        () => l10n.get({ description: "Plain.", "x-description-l10n-id": "policy-Update" }, "description", "Test"),
-        /Test has both description and x-description-l10n-id/
+        () => l10n.get({ "x-description-l10n-id": "policy-Update" }, "description", "Test"),
+        /Test has x-description-l10n-id, write "\{ policy-Update \}" in its description instead/
     );
     assert.throws(
-        () => l10n.get({ "x-title-l10n-id": "policy-Unknown" }, "title", "Test.Setting"),
-        /The Fluent message policy-Unknown of x-title-l10n-id of Test.Setting does not exist/
+        () => l10n.get({ title: "{ policy-Unknown }" }, "title", "Test.Setting"),
+        /The Fluent message policy-Unknown of the title of Test.Setting does not exist/
     );
     assert.throws(
-        () => l10n.get({ "x-title-l10n-id": "policy-NoValue" }, "title", "Test"),
-        /The Fluent message policy-NoValue of x-title-l10n-id of Test has no value/
+        () => l10n.get({ title: "{ -brand-unknown-name }" }, "title", "Test"),
+        /The Fluent term -brand-unknown-name of the title of Test can not be formatted/
+    );
+    assert.throws(
+        () => l10n.get({ title: "{ policy-NoValue }" }, "title", "Test"),
+        /The Fluent message policy-NoValue of the title of Test has no value/
     );
     // A message defined twice (a broken message is skipped by the parser and
     // reported as missing when it is used).

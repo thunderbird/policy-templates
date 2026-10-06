@@ -292,7 +292,7 @@ test("every setting of the schema is part of the template, with its texts", asyn
             properties: {
                 Auth: {
                     type: "object",
-                    "x-description-l10n-id": "policy-Auth",
+                    description: "{ policy-Auth }",
                     "x-help": "Long **help** of the policy.",
                     properties: {
                         Sites: {
@@ -309,13 +309,13 @@ test("every setting of the schema is part of the template, with its texts", asyn
                                 NTLM: { type: "boolean" },
                             },
                         },
-                        Locked: { type: "boolean", "x-title-l10n-id": "policy-auth-locked", "x-help-l10n-id": "policy-auth-help" },
+                        Locked: { type: "boolean", title: "{ policy-auth-locked }", "x-help": "{ policy-auth-help }" },
                         Mode: {
                             type: "string",
                             description: "The mode.",
                             oneOf: [
                                 { const: "none", title: "No mode" },
-                                { const: "manual", "x-title-l10n-id": "policy-mode-manual" },
+                                { const: "manual", title: "{ policy-mode-manual }" },
                                 { const: "auto" },
                             ],
                         },
@@ -427,8 +427,8 @@ test("help texts in the schema must not contain tables", async () => {
 
 test("unknown Fluent messages are an error", async () => {
     await assert.rejects(
-        generate({ properties: { Flag: { type: "boolean", "x-description-l10n-id": "policy-Unknown" } } }, ["Flag"]),
-        /The Fluent message policy-Unknown of x-description-l10n-id of Flag does not exist/
+        generate({ properties: { Flag: { type: "boolean", description: "{ policy-Unknown }" } } }, ["Flag"]),
+        /The Fluent message policy-Unknown of the description of Flag does not exist/
     );
 });
 

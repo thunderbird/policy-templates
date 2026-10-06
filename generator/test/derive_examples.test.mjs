@@ -44,7 +44,7 @@ const SCHEMA = {
         },
         Auth: {
             type: "object",
-            "x-description-l10n-id": "policy-Auth",
+            description: "{ policy-Auth }",
             "x-help": "Help of Auth.",
             properties: {
                 Sites: { type: "array", items: { type: "string" }, description: "The sites." },

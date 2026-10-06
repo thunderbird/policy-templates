@@ -44,8 +44,8 @@ async function getMain(product) {
         version: "153.0a1",
         schema: {
             properties: {
-                Flag: { type: "boolean", "x-description-l10n-id": "policy-Flag" },
-                Other: { type: "boolean", "x-description-l10n-id": "policy-Other" },
+                Flag: { type: "boolean", description: "{ policy-Flag }" },
+                Other: { type: "boolean", description: "{ policy-Other }" },
                 Plain: { type: "boolean", description: "Plain text." },
             },
         },
@@ -118,7 +118,7 @@ test("errors of extensions", async () => {
     });
 });
 
-test("schema(locale) resolves the Fluent IDs in the locale pinned by the branch, with the English texts as fallback", async () => {
+test("schema(locale) resolves the Fluent references in the locale pinned by the branch, with the English texts as fallback", async () => {
     const product = await loadProduct(PRODUCT_DIR);
     const context = getExtensionContext(await getMain(product), [], APP);
     const en = await context.schema();

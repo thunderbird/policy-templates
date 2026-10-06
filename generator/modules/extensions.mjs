@@ -10,8 +10,9 @@
  *  - branches: all branches of the run, sorted as in the overview, as
  *    [{ branch, name, version, docsUrl }],
  *  - schema(locale = "en-US"): the policy schema of the branch (its
- *    override, see loadBranch()), with every Fluent ID ("x-description-l10n-id") replaced by its
- *    text ("description") in the given locale: the translation the branch
+ *    override, see loadBranch()), with every Fluent reference in its texts
+ *    ("{ policy-Proxy }", "{ -brand-short-name }") replaced by its text
+ *    in the given locale: the translation the branch
  *    ships, from the commit of the l10n repository which the branch pins for
  *    the locale (l10n.changesets in product.yaml),
  *  - compatibility: the product's own compatibility, one row per flat policy
@@ -22,10 +23,10 @@
 
 import { GITHUB_RAW_URL } from "./constants.mjs";
 import { getCompatibilityInformation } from "./compatibility.mjs";
-import { SchemaL10n, getL10nIdField } from "./l10n.mjs";
+import { SchemaL10n } from "./l10n.mjs";
 import { ContentError, readCachedUrl, readRevalidatedUrl } from "./tools.mjs";
 
-// The text fields which may be given as Fluent IDs.
+// The text fields, which may reference Fluent messages and terms.
 const TEXT_FIELDS = ["title", "description", "x-help"];
 
 function deepFreeze(value) {
@@ -86,7 +87,8 @@ async function getLocaleL10n(branchData, locale, app) {
 }
 
 /**
- * Replace the Fluent IDs of the text fields of all nodes by their texts.
+ * Replace the Fluent references in the text fields of all nodes by their
+ * texts.
  *
  * @param {any} node - Modified in place.
  * @param {SchemaL10n} l10n
@@ -101,10 +103,8 @@ function resolveTexts(node, l10n, where) {
         return;
     }
     for (const field of TEXT_FIELDS) {
-        const idField = getL10nIdField(field);
-        if (idField in node) {
+        if (typeof node[field] == "string") {
             node[field] = l10n.get(node, field, where);
-            delete node[idField];
         }
     }
     for (const [key, child] of Object.entries(node)) {
