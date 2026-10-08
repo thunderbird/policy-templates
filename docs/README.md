@@ -7,7 +7,7 @@ are deploying.
 
  * [Thunderbird Daily 159.0a1](policies/main)
  * [Thunderbird Beta 158.0](policies/beta)
- * [Thunderbird 157.0.2](policies/release)
+ * [Thunderbird 158.0](policies/release)
  * [Thunderbird ESR 153.4.1](policies/esr153)
  * [Thunderbird ESR 140.17.0](policies/esr140)
  * [Thunderbird ESR 128.14.0](policies/esr128)

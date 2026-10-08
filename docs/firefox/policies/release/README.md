@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Firefox 157.0.1
+## Enterprise policy descriptions and templates for Firefox 158.0
 
 Policies can be specified by creating a file called `policies.json`:
 * Windows: create a directory called `distribution` where `firefox.exe` is
@@ -66,6 +66,7 @@ Installation:
 | **[`Certificates`](#certificates)** | Install and manage certificates.
 | **[`Certificates › ImportEnterpriseRoots`](#certificates--importenterpriseroots)** | Trust certificates that have been added to the operating system certificate store by a user or administrator.
 | **[`Certificates › Install`](#certificates--install)** | Install Certificates: Adds certificates to the Firefox certificate store.
+| **[`ClearOnShutdown`](#clearonshutdown)** | Clear Data on Shutdown: Clear browsing data when the browser closes. Only the named categories are enforced.
 | **[`CNSA2KeyAgreementEnabled`](#cnsa2keyagreementenabled)** | Enable CNSA 2.0 key agreement: Enable the CNSA 2.0 ML-KEM-1024 key agreement for TLS.
 | **[`Containers`](#containers)** | Set policies related to Multi-Account Containers.
 | **[`ContentAnalysis`](#contentanalysis)** | Content Analysis (DLP): Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compatible with the Google Chrome Content Analysis Connector Agent SDK.
@@ -1588,6 +1589,95 @@ Software\Policies\Mozilla\Firefox\Certificates\Install\2 (REG_EXPAND_SZ) = /home
 |:--- | ---:| ---:|
 | `Certificates_Install` | 64.0 |  |
 
+## ClearOnShutdown: Clear Data on Shutdown {#clearonshutdown}
+
+Clear browsing data when the browser closes. Only the named categories are enforced.
+
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** N/A
+
+### Settings
+
+<div class="settings" markdown="1">
+
+`ClearOnShutdown` (boolean or object)
+
+`BrowsingHistoryAndDownloads` (boolean)
+
+`CookiesAndStorage` (boolean)
+
+`Cache` (boolean)
+
+`FormData` (boolean)
+
+`SiteSettings` (boolean)
+
+`Exceptions` (list of origins)
+
+</div>
+
+### Examples
+
+#### Windows (GPO)
+```
+Software\Policies\Mozilla\Firefox\ClearOnShutdown (REG_DWORD) = 0x1
+Software\Policies\Mozilla\Firefox\ClearOnShutdown\BrowsingHistoryAndDownloads (REG_DWORD) = 0x1
+Software\Policies\Mozilla\Firefox\ClearOnShutdown\CookiesAndStorage (REG_DWORD) = 0x1
+Software\Policies\Mozilla\Firefox\ClearOnShutdown\Cache (REG_DWORD) = 0x1
+Software\Policies\Mozilla\Firefox\ClearOnShutdown\Exceptions\1 (REG_SZ) = https://example.com
+```
+
+#### macOS
+```
+<dict>
+  <key>ClearOnShutdown</key>
+  <true/>
+</dict>
+
+<dict>
+  <key>ClearOnShutdown</key>
+  <dict>
+    <key>BrowsingHistoryAndDownloads</key>
+    <true/>
+    <key>CookiesAndStorage</key>
+    <true/>
+    <key>Cache</key>
+    <true/>
+    <key>Exceptions</key>
+    <array>
+      <string>https://example.com</string>
+    </array>
+  </dict>
+</dict>
+```
+
+#### policies.json
+```
+{
+  "policies": {
+    "ClearOnShutdown": true
+  }
+}
+
+{
+  "policies": {
+    "ClearOnShutdown": {
+      "BrowsingHistoryAndDownloads": true,
+      "CookiesAndStorage": true,
+      "Cache": true,
+      "Exceptions": ["https://example.com"]
+    }
+  }
+}
+```
+
+### Compatibility
+
+| Policy/Property Name | Firefox | Removed after |
+|:--- | ---:| ---:|
+| `ClearOnShutdown`<br>`ClearOnShutdown_BrowsingHistoryAndDownloads`<br>`ClearOnShutdown_CookiesAndStorage`<br>`ClearOnShutdown_Cache`<br>`ClearOnShutdown_FormData`<br>`ClearOnShutdown_SiteSettings` | 158.0, 153.5.0esr |  |
+| `ClearOnShutdown_Exceptions` | 158.0 |  |
+
 ## CNSA2KeyAgreementEnabled: Enable CNSA 2.0 key agreement {#cnsa2keyagreementenabled}
 
 Enable the CNSA 2.0 ML-KEM-1024 key agreement for TLS.
@@ -1771,6 +1861,9 @@ Configure Firefox to use an agent for Data Loss Prevention (DLP) that is compati
     > *Indicates whether clipboard operations should use DLP. The default is true.*
   - `PlainTextOnly` (boolean)
     > *Indicates whether to only analyze the text/plain format on the clipboard. If this value is false, all formats will be analyzed, which some DLP agents may not expect. Regardless of this value, files will be analyzed as usual. The default is true.*
+- `ClipboardCopy` (object)
+  - `Enabled` (boolean)
+  - `PlainTextOnly` (boolean)
 - `Download` (object)
   > *Controls download operations. (Firefox 142, Firefox ESR 140.2)*
   - `Enabled` (boolean)
@@ -1806,6 +1899,8 @@ Software\Policies\Mozilla\Firefox\ContentAnalysis\DenyUrlRegexList (REG_SZ) = ht
 Software\Policies\Mozilla\Firefox\ContentAnalysis\Enabled (REG_DWORD) = 0x1
 Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\Clipboard\Enabled (REG_DWORD) = 0x1
 Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\Clipboard\PlainTextOnly (REG_DWORD) = 0x1
+Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\ClipboardCopy\Enabled (REG_DWORD) = 0x0
+Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\ClipboardCopy\PlainTextOnly (REG_DWORD) = 0x1
 Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\Download\Enabled (REG_DWORD) = 0x0
 Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\DragAndDrop\Enabled (REG_DWORD) = 0x1
 Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\DragAndDrop\PlainTextOnly (REG_DWORD) = 0x1
@@ -1845,6 +1940,13 @@ Software\Policies\Mozilla\Firefox\ContentAnalysis\TimeoutResult (REG_DWORD) = 0x
       <dict>
         <key>Enabled</key>
         <true/>
+        <key>PlainTextOnly</key>
+        <true/>
+      </dict>
+      <key>ClipboardCopy</key>
+      <dict>
+        <key>Enabled</key>
+        <false/>
         <key>PlainTextOnly</key>
         <true/>
       </dict>
@@ -1903,6 +2005,10 @@ Software\Policies\Mozilla\Firefox\ContentAnalysis\TimeoutResult (REG_DWORD) = 0x
           "Enabled": true,
           "PlainTextOnly": true
         },
+        "ClipboardCopy": {
+          "Enabled": false,
+          "PlainTextOnly": true
+        },
         "Download": {
           "Enabled": false
         },
@@ -1937,6 +2043,7 @@ Software\Policies\Mozilla\Firefox\ContentAnalysis\TimeoutResult (REG_DWORD) = 0x
 | `ContentAnalysis_DefaultResult` | 127.0 |  |
 | `ContentAnalysis_TimeoutResult`<br>`ContentAnalysis_InterceptionPoints_Clipboard_PlainTextOnly`<br>`ContentAnalysis_InterceptionPoints_DragAndDrop_PlainTextOnly` | 137.0 |  |
 | `ContentAnalysis_InterceptionPoints`<br>`ContentAnalysis_InterceptionPoints_Clipboard`<br>`ContentAnalysis_InterceptionPoints_Clipboard_Enabled`<br>`ContentAnalysis_InterceptionPoints_DragAndDrop`<br>`ContentAnalysis_InterceptionPoints_DragAndDrop_Enabled`<br>`ContentAnalysis_InterceptionPoints_FileUpload`<br>`ContentAnalysis_InterceptionPoints_FileUpload_Enabled`<br>`ContentAnalysis_InterceptionPoints_Print`<br>`ContentAnalysis_InterceptionPoints_Print_Enabled` | 134.0 |  |
+| `ContentAnalysis_InterceptionPoints_ClipboardCopy`<br>`ContentAnalysis_InterceptionPoints_ClipboardCopy_Enabled`<br>`ContentAnalysis_InterceptionPoints_ClipboardCopy_PlainTextOnly` | 158.0 |  |
 | `ContentAnalysis_InterceptionPoints_Download`<br>`ContentAnalysis_InterceptionPoints_Download_Enabled` | 141.0, 140.2.0esr |  |
 
 ## Cookies
@@ -3919,10 +4026,10 @@ Note: Users can change `BaselineExceptions` and `ConvenienceExceptions` even whe
 > *If true, fingerprinting scripts on websites are blocked.*
 
 `EmailTracking` (boolean)
-> *If true, hidden email tracking pixels and scripts on websites are blocked. (Firefox 112)*
+> *If true, hidden email tracking pixels and scripts on websites are blocked.*
 
 `SuspectedFingerprinting` (boolean)
-> *If true, Firefox reduces the amount of information exposed to websites to protect against potential fingerprinting attempts. (Firefox 142, Firefox ESR 140.2)*
+> *If true, Firefox reduces the amount of information exposed to websites to protect against potential fingerprinting attempts.*
 
 `Exceptions` (list of origins)
 > *Origins for which tracking protection is not enabled.*
@@ -3933,10 +4040,10 @@ Note: Users can change `BaselineExceptions` and `ConvenienceExceptions` even whe
 > *`strict`: Apply the strict Enhanced Tracking Protection level, which blocks more trackers and may break some sites.*
 
 `BaselineExceptions` (boolean)
-> *If true, Firefox will automatically apply exceptions required to avoid major website breakage. (Firefox 145)*
+> *If true, Firefox will automatically apply exceptions required to avoid major website breakage.*
 
 `ConvenienceExceptions` (boolean)
-> *If true, Firefox will apply exceptions automatically that are only required to fix minor issues and make convenience features available. (Firefox 145)*
+> *If true, Firefox will apply exceptions automatically that are only required to fix minor issues and make convenience features available.*
 
 </div>
 
@@ -7905,6 +8012,9 @@ Fine grained control over policies for specific sites.
 - `DisableJit` (boolean)
 - `HttpsOnly` (boolean)
 - `DisableServiceWorkers` (boolean)
+- `Container` (object)
+  - `id` (string)
+  - `ephemeral` (boolean)
 
 </div>
 
@@ -7930,6 +8040,14 @@ Software\Policies\Mozilla\Firefox\SitePolicies (REG_MULTI_SZ) =
     "Match": ["*.example.net"],
     "Policies": {
       "HttpsOnly": true
+    }
+  },
+  {
+    "Match": ["*.example.com"],
+    "Policies": {
+      "Container": {
+        "id": "work"
+      }
     }
   }
 ]
@@ -7973,6 +8091,20 @@ Software\Policies\Mozilla\Firefox\SitePolicies (REG_MULTI_SZ) =
         <true/>
       </dict>
     </dict>
+    <dict>
+      <key>Match</key>
+      <array>
+        <string>*.example.com</string>
+      </array>
+      <key>Policies</key>
+      <dict>
+        <key>Container</key>
+        <dict>
+          <key>id</key>
+          <string>work</string>
+        </dict>
+      </dict>
+    </dict>
   </array>
 </dict>
 ```
@@ -7998,6 +8130,14 @@ Software\Policies\Mozilla\Firefox\SitePolicies (REG_MULTI_SZ) =
         "Match": ["*.example.net"],
         "Policies": {
           "HttpsOnly": true
+        }
+      },
+      {
+        "Match": ["*.example.com"],
+        "Policies": {
+          "Container": {
+            "id": "work"
+          }
         }
       }
     ]

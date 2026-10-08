@@ -401,8 +401,8 @@ If this policy is disabled or not configured, filters can forward messages.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/main/#disablemessageforwardingfilters
 </string>
-      <string id="DisablePasswordReveal">Hide passwords of saved logins</string>
-      <string id="DisablePasswordReveal_Explain">Do not allow passwords to be revealed in saved logins.
+      <string id="DisablePasswordReveal">Hide passwords of saved logins and password fields</string>
+      <string id="DisablePasswordReveal_Explain">Do not allow passwords to be revealed in saved logins or password fields.
 
 For more information visit: https://thunderbird.github.io/policy-templates/policies/main/#disablepasswordreveal
 </string>

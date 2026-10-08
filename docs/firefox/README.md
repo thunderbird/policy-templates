@@ -9,7 +9,7 @@ Firefox you are deploying.
 
  * [Firefox Nightly 159.0a1](policies/main)
  * [Firefox Beta 158.0](policies/beta)
- * [Firefox 157.0.1](policies/release)
+ * [Firefox 158.0](policies/release)
  * [Firefox ESR 153.5.0](policies/esr153)
  * [Firefox ESR 140.17.1](policies/esr140)
  * [Firefox ESR 128.14.1](policies/esr128)

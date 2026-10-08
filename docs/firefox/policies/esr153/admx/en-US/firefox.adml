@@ -2543,7 +2543,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/firef
       <string id="SUPPORTED_ID_13">Firefox 60.0 - *</string>
       <string id="SUPPORTED_ID_14">Firefox 146.0 - *</string>
       <string id="SUPPORTED_ID_15">Firefox 64.0 - *</string>
-      <string id="SUPPORTED_ID_16">Firefox 153.5.0esr - *</string>
+      <string id="SUPPORTED_ID_16">Firefox 158.0, 153.5.0esr - *</string>
       <string id="SUPPORTED_ID_17">Firefox 113.0 - *</string>
       <string id="SUPPORTED_ID_18">Firefox 134.0 - *</string>
       <string id="SUPPORTED_ID_19">Firefox 141.0 - *</string>

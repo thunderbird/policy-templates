@@ -1465,7 +1465,7 @@ Block access to the developer tools.
 Remove access to all developer tools.
 
 **CCK2 Equivalent:** `removeDeveloperTools`\
-**Preferences Affected:** `devtools.policy.disabled`, `devtools.chrome.enabled`
+**Preferences Affected:** `devtools.policy.disabled`, `devtools.chrome.enabled`, `remote.policy.disabled`
 
 ### Settings
 

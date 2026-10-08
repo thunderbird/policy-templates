@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitionResources revision="157.0001" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+<policyDefinitionResources revision="158.0000" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
   <displayName/>
   <description/>
   <resources>
@@ -380,6 +380,41 @@ See https://support.mozilla.org/kb/setting-certificate-authorities-firefox for m
 
 For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#certificates
 </string>
+      <string id="ClearOnShutdown_Exceptions">ClearOnShutdown › Exceptions</string>
+      <string id="ClearOnShutdown_Exceptions_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
+
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#clearonshutdown
+</string>
+      <string id="ClearOnShutdown">Clear Data on Shutdown</string>
+      <string id="ClearOnShutdown_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
+
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#clearonshutdown
+</string>
+      <string id="ClearOnShutdown_BrowsingHistoryAndDownloads">ClearOnShutdown › BrowsingHistoryAndDownloads</string>
+      <string id="ClearOnShutdown_BrowsingHistoryAndDownloads_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
+
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#clearonshutdown
+</string>
+      <string id="ClearOnShutdown_CookiesAndStorage">ClearOnShutdown › CookiesAndStorage</string>
+      <string id="ClearOnShutdown_CookiesAndStorage_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
+
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#clearonshutdown
+</string>
+      <string id="ClearOnShutdown_Cache">ClearOnShutdown › Cache</string>
+      <string id="ClearOnShutdown_Cache_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
+
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#clearonshutdown
+</string>
+      <string id="ClearOnShutdown_FormData">ClearOnShutdown › FormData</string>
+      <string id="ClearOnShutdown_FormData_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
+
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#clearonshutdown
+</string>
+      <string id="ClearOnShutdown_SiteSettings">ClearOnShutdown › SiteSettings</string>
+      <string id="ClearOnShutdown_SiteSettings_Explain">Clear browsing data when the browser closes. Only the named categories are enforced.
+
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#clearonshutdown
+</string>
       <string id="CNSA2KeyAgreementEnabled">Enable CNSA 2.0 key agreement</string>
       <string id="CNSA2KeyAgreementEnabled_Explain">Enable the CNSA 2.0 ML-KEM-1024 key agreement for TLS.
 
@@ -423,6 +458,11 @@ For more information visit: https://thunderbird.github.io/policy-templates/firef
 Enabled: Indicates whether clipboard operations should use DLP. The default is true.
 
 PlainTextOnly: Indicates whether to only analyze the text/plain format on the clipboard. If this value is false, all formats will be analyzed, which some DLP agents may not expect. Regardless of this value, files will be analyzed as usual. The default is true.
+</string>
+      <string id="ContentAnalysis_InterceptionPoints_ClipboardCopy">ContentAnalysis › InterceptionPoints › ClipboardCopy</string>
+      <string id="ContentAnalysis_InterceptionPoints_ClipboardCopy_Explain">Controls settings for specific interception points.
+
+For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#contentanalysis
 </string>
       <string id="ContentAnalysis_InterceptionPoints_Download">ContentAnalysis › InterceptionPoints › Download</string>
       <string id="ContentAnalysis_InterceptionPoints_Download_Explain">Controls download operations. (Firefox 142, Firefox ESR 140.2)
@@ -1107,12 +1147,12 @@ For more information visit: https://thunderbird.github.io/policy-templates/firef
 For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_EmailTracking">Email Tracking</string>
-      <string id="EnableTrackingProtection_EmailTracking_Explain">If true, hidden email tracking pixels and scripts on websites are blocked. (Firefox 112)
+      <string id="EnableTrackingProtection_EmailTracking_Explain">If true, hidden email tracking pixels and scripts on websites are blocked.
 
 For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_SuspectedFingerprinting">Suspected Fingerprinting</string>
-      <string id="EnableTrackingProtection_SuspectedFingerprinting_Explain">If true, Firefox reduces the amount of information exposed to websites to protect against potential fingerprinting attempts. (Firefox 142, Firefox ESR 140.2)
+      <string id="EnableTrackingProtection_SuspectedFingerprinting_Explain">If true, Firefox reduces the amount of information exposed to websites to protect against potential fingerprinting attempts.
 
 For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#enabletrackingprotection
 </string>
@@ -1124,12 +1164,12 @@ For more information visit: https://thunderbird.github.io/policy-templates/firef
       <string id="EnableTrackingProtection_Category_standard">Standard</string>
       <string id="EnableTrackingProtection_Category_strict">Strict</string>
       <string id="EnableTrackingProtection_BaselineExceptions">Baseline Exceptions</string>
-      <string id="EnableTrackingProtection_BaselineExceptions_Explain">If true, Firefox will automatically apply exceptions required to avoid major website breakage. (Firefox 145)
+      <string id="EnableTrackingProtection_BaselineExceptions_Explain">If true, Firefox will automatically apply exceptions required to avoid major website breakage.
 
 For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#enabletrackingprotection
 </string>
       <string id="EnableTrackingProtection_ConvenienceExceptions">Convenience Exceptions</string>
-      <string id="EnableTrackingProtection_ConvenienceExceptions_Explain">If true, Firefox will apply exceptions automatically that are only required to fix minor issues and make convenience features available. (Firefox 145)
+      <string id="EnableTrackingProtection_ConvenienceExceptions_Explain">If true, Firefox will apply exceptions automatically that are only required to fix minor issues and make convenience features available.
 
 For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#enabletrackingprotection
 </string>
@@ -2359,6 +2399,9 @@ Policies
   DisableJit
   HttpsOnly
   DisableServiceWorkers
+  Container
+    id
+    ephemeral
 
 For more information visit: https://thunderbird.github.io/policy-templates/firefox/policies/release/#sitepolicies
 </string>
@@ -2535,59 +2578,61 @@ For more information visit: https://thunderbird.github.io/policy-templates/firef
       <string id="SUPPORTED_ID_14">Firefox 60.0 - *</string>
       <string id="SUPPORTED_ID_15">Firefox 146.0 - *</string>
       <string id="SUPPORTED_ID_16">Firefox 64.0 - *</string>
-      <string id="SUPPORTED_ID_17">Firefox 154.0 - *</string>
-      <string id="SUPPORTED_ID_18">Firefox 113.0 - *</string>
-      <string id="SUPPORTED_ID_19">Firefox 134.0 - *</string>
-      <string id="SUPPORTED_ID_20">Firefox 141.0, 140.2.0esr - *</string>
-      <string id="SUPPORTED_ID_21">Firefox 126.0 - *</string>
-      <string id="SUPPORTED_ID_22">Firefox 138.0 - *</string>
-      <string id="SUPPORTED_ID_23">Firefox 127.0 - *</string>
-      <string id="SUPPORTED_ID_24">Firefox 137.0 - *</string>
-      <string id="SUPPORTED_ID_25">Firefox 79.0 - *</string>
-      <string id="SUPPORTED_ID_26">Firefox 96.0 - *</string>
-      <string id="SUPPORTED_ID_27">Firefox 154.0, 153.1.0esr - *</string>
-      <string id="SUPPORTED_ID_28">Firefox 68.0 - *</string>
-      <string id="SUPPORTED_ID_29">Firefox 151.0 - *</string>
-      <string id="SUPPORTED_ID_30">Firefox 119.0 - *</string>
-      <string id="SUPPORTED_ID_31">Firefox 76.0 - *</string>
-      <string id="SUPPORTED_ID_32">Firefox 97.0 - *</string>
-      <string id="SUPPORTED_ID_33">Firefox 138.0, 128.10.0esr - *</string>
-      <string id="SUPPORTED_ID_34">Firefox 155.0 - *</string>
-      <string id="SUPPORTED_ID_35">Firefox 148.0 - *</string>
-      <string id="SUPPORTED_ID_36">Firefox 153.0 - *</string>
-      <string id="SUPPORTED_ID_37">Firefox 110.0 - *</string>
-      <string id="SUPPORTED_ID_38">Firefox 73.0 - *</string>
-      <string id="SUPPORTED_ID_39">Firefox 70.0 - *</string>
-      <string id="SUPPORTED_ID_40">Firefox 112.0 - *</string>
-      <string id="SUPPORTED_ID_41">Firefox 142.0, 140.1.0esr - *</string>
-      <string id="SUPPORTED_ID_42">Firefox 141.0, 140.1.0esr - *</string>
-      <string id="SUPPORTED_ID_43">Firefox 143.0 - *</string>
-      <string id="SUPPORTED_ID_44">Firefox 77.0 - *</string>
-      <string id="SUPPORTED_ID_45">Firefox 156.0, 153.3.0esr - *</string>
-      <string id="SUPPORTED_ID_46">Firefox 152.0, 140.12.0esr - *</string>
-      <string id="SUPPORTED_ID_47">Firefox 95.0 - *</string>
-      <string id="SUPPORTED_ID_48">Firefox 118.0 - *</string>
-      <string id="SUPPORTED_ID_49">Firefox 144.0, 140.4.0esr - *</string>
-      <string id="SUPPORTED_ID_50">Firefox 104.0 - *</string>
-      <string id="SUPPORTED_ID_51">Firefox 62.0 - *</string>
-      <string id="SUPPORTED_ID_52">Firefox 154.0, 153.0esr - *</string>
-      <string id="SUPPORTED_ID_53">Firefox 144.0 - *</string>
-      <string id="SUPPORTED_ID_54">Firefox 82.0 - *</string>
-      <string id="SUPPORTED_ID_55">Firefox 87.0 - *</string>
-      <string id="SUPPORTED_ID_56">Firefox 133.0, 128.5.0esr - *</string>
-      <string id="SUPPORTED_ID_57">Firefox 101.0 - *</string>
-      <string id="SUPPORTED_ID_58">Firefox 74.0 - *</string>
-      <string id="SUPPORTED_ID_59">Firefox 81.0 - *</string>
-      <string id="SUPPORTED_ID_60">Firefox 142.0, 140.2.0esr - *</string>
-      <string id="SUPPORTED_ID_61">Firefox 80.0 - *</string>
-      <string id="SUPPORTED_ID_62">Firefox 120.0 - *</string>
-      <string id="SUPPORTED_ID_63">Firefox 130.0, 128.3.0esr - *</string>
-      <string id="SUPPORTED_ID_64">Firefox 114.0 - *</string>
-      <string id="SUPPORTED_ID_65">Firefox 139.0 - *</string>
-      <string id="SUPPORTED_ID_66">Firefox 66.0 - *</string>
-      <string id="SUPPORTED_ID_67">Firefox 99.0 - *</string>
-      <string id="SUPPORTED_ID_68">Firefox 131.0 - *</string>
-      <string id="SUPPORTED_ID_69">Firefox 91.0 - *</string>
+      <string id="SUPPORTED_ID_17">Firefox 158.0 - *</string>
+      <string id="SUPPORTED_ID_18">Firefox 158.0, 153.5.0esr - *</string>
+      <string id="SUPPORTED_ID_19">Firefox 154.0 - *</string>
+      <string id="SUPPORTED_ID_20">Firefox 113.0 - *</string>
+      <string id="SUPPORTED_ID_21">Firefox 134.0 - *</string>
+      <string id="SUPPORTED_ID_22">Firefox 141.0, 140.2.0esr - *</string>
+      <string id="SUPPORTED_ID_23">Firefox 126.0 - *</string>
+      <string id="SUPPORTED_ID_24">Firefox 138.0 - *</string>
+      <string id="SUPPORTED_ID_25">Firefox 127.0 - *</string>
+      <string id="SUPPORTED_ID_26">Firefox 137.0 - *</string>
+      <string id="SUPPORTED_ID_27">Firefox 79.0 - *</string>
+      <string id="SUPPORTED_ID_28">Firefox 96.0 - *</string>
+      <string id="SUPPORTED_ID_29">Firefox 154.0, 153.1.0esr - *</string>
+      <string id="SUPPORTED_ID_30">Firefox 68.0 - *</string>
+      <string id="SUPPORTED_ID_31">Firefox 151.0 - *</string>
+      <string id="SUPPORTED_ID_32">Firefox 119.0 - *</string>
+      <string id="SUPPORTED_ID_33">Firefox 76.0 - *</string>
+      <string id="SUPPORTED_ID_34">Firefox 97.0 - *</string>
+      <string id="SUPPORTED_ID_35">Firefox 138.0, 128.10.0esr - *</string>
+      <string id="SUPPORTED_ID_36">Firefox 155.0 - *</string>
+      <string id="SUPPORTED_ID_37">Firefox 148.0 - *</string>
+      <string id="SUPPORTED_ID_38">Firefox 153.0 - *</string>
+      <string id="SUPPORTED_ID_39">Firefox 110.0 - *</string>
+      <string id="SUPPORTED_ID_40">Firefox 73.0 - *</string>
+      <string id="SUPPORTED_ID_41">Firefox 70.0 - *</string>
+      <string id="SUPPORTED_ID_42">Firefox 112.0 - *</string>
+      <string id="SUPPORTED_ID_43">Firefox 142.0, 140.1.0esr - *</string>
+      <string id="SUPPORTED_ID_44">Firefox 141.0, 140.1.0esr - *</string>
+      <string id="SUPPORTED_ID_45">Firefox 143.0 - *</string>
+      <string id="SUPPORTED_ID_46">Firefox 77.0 - *</string>
+      <string id="SUPPORTED_ID_47">Firefox 156.0, 153.3.0esr - *</string>
+      <string id="SUPPORTED_ID_48">Firefox 152.0, 140.12.0esr - *</string>
+      <string id="SUPPORTED_ID_49">Firefox 95.0 - *</string>
+      <string id="SUPPORTED_ID_50">Firefox 118.0 - *</string>
+      <string id="SUPPORTED_ID_51">Firefox 144.0, 140.4.0esr - *</string>
+      <string id="SUPPORTED_ID_52">Firefox 104.0 - *</string>
+      <string id="SUPPORTED_ID_53">Firefox 62.0 - *</string>
+      <string id="SUPPORTED_ID_54">Firefox 154.0, 153.0esr - *</string>
+      <string id="SUPPORTED_ID_55">Firefox 144.0 - *</string>
+      <string id="SUPPORTED_ID_56">Firefox 82.0 - *</string>
+      <string id="SUPPORTED_ID_57">Firefox 87.0 - *</string>
+      <string id="SUPPORTED_ID_58">Firefox 133.0, 128.5.0esr - *</string>
+      <string id="SUPPORTED_ID_59">Firefox 101.0 - *</string>
+      <string id="SUPPORTED_ID_60">Firefox 74.0 - *</string>
+      <string id="SUPPORTED_ID_61">Firefox 81.0 - *</string>
+      <string id="SUPPORTED_ID_62">Firefox 142.0, 140.2.0esr - *</string>
+      <string id="SUPPORTED_ID_63">Firefox 80.0 - *</string>
+      <string id="SUPPORTED_ID_64">Firefox 120.0 - *</string>
+      <string id="SUPPORTED_ID_65">Firefox 130.0, 128.3.0esr - *</string>
+      <string id="SUPPORTED_ID_66">Firefox 114.0 - *</string>
+      <string id="SUPPORTED_ID_67">Firefox 139.0 - *</string>
+      <string id="SUPPORTED_ID_68">Firefox 66.0 - *</string>
+      <string id="SUPPORTED_ID_69">Firefox 99.0 - *</string>
+      <string id="SUPPORTED_ID_70">Firefox 131.0 - *</string>
+      <string id="SUPPORTED_ID_71">Firefox 91.0 - *</string>
       <string id="firefox">Mozilla Firefox</string>
       <string id="cat_3rdparty">Policies for Extensions</string>
       <string id="cat_AIControls">AI Controls</string>
@@ -2595,6 +2640,7 @@ For more information visit: https://thunderbird.github.io/policy-templates/firef
       <string id="cat_Bookmarks">Bookmarks</string>
       <string id="cat_BrowserDataBackup">Browser Data Backup</string>
       <string id="cat_Certificates">Certificates</string>
+      <string id="cat_ClearOnShutdown">Clear Data on Shutdown</string>
       <string id="cat_Containers">Containers</string>
       <string id="cat_ContentAnalysis">Content Analysis (DLP)</string>
       <string id="cat_ContentAnalysis_InterceptionPoints">Interception Points</string>
@@ -2787,6 +2833,9 @@ For more information visit: https://thunderbird.github.io/policy-templates/firef
       <presentation id="Certificates_Install">
         <listBox refId="Certificates_Install_List">Install Certificates</listBox>
       </presentation>
+      <presentation id="ClearOnShutdown_Exceptions">
+        <listBox refId="ClearOnShutdown_Exceptions_List">Exceptions</listBox>
+      </presentation>
       <presentation id="Containers_Default">
         <text>Default</text>
         <multiTextBox refId="Containers_Default_Input" defaultHeight="12"/>
@@ -2799,6 +2848,10 @@ For more information visit: https://thunderbird.github.io/policy-templates/firef
       <presentation id="ContentAnalysis_InterceptionPoints_Clipboard">
         <checkBox refId="ContentAnalysis_InterceptionPoints_Clipboard_Enabled_Bool">Enabled</checkBox>
         <checkBox refId="ContentAnalysis_InterceptionPoints_Clipboard_PlainTextOnly_Bool">PlainTextOnly</checkBox>
+      </presentation>
+      <presentation id="ContentAnalysis_InterceptionPoints_ClipboardCopy">
+        <checkBox refId="ContentAnalysis_InterceptionPoints_ClipboardCopy_Enabled_Bool">Enabled</checkBox>
+        <checkBox refId="ContentAnalysis_InterceptionPoints_ClipboardCopy_PlainTextOnly_Bool">PlainTextOnly</checkBox>
       </presentation>
       <presentation id="ContentAnalysis_InterceptionPoints_Download">
         <checkBox refId="ContentAnalysis_InterceptionPoints_Download_Enabled_Bool">Enabled</checkBox>

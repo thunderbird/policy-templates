@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<policyDefinitions revision="157.0001" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+<policyDefinitions revision="158.0000" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
   <policyNamespaces>
     <target prefix="firefox" namespace="Mozilla.Policies.Firefox"/>
     <using prefix="Mozilla" namespace="Mozilla.Policies"/>
   </policyNamespaces>
-  <resources minRequiredRevision="157.0001"/>
+  <resources minRequiredRevision="158.0000"/>
   <supportedOn>
     <definitions>
       <definition name="SUPPORTED_ID_0" displayName="$(string.SUPPORTED_ID_0)"/>
@@ -77,6 +77,8 @@
       <definition name="SUPPORTED_ID_67" displayName="$(string.SUPPORTED_ID_67)"/>
       <definition name="SUPPORTED_ID_68" displayName="$(string.SUPPORTED_ID_68)"/>
       <definition name="SUPPORTED_ID_69" displayName="$(string.SUPPORTED_ID_69)"/>
+      <definition name="SUPPORTED_ID_70" displayName="$(string.SUPPORTED_ID_70)"/>
+      <definition name="SUPPORTED_ID_71" displayName="$(string.SUPPORTED_ID_71)"/>
     </definitions>
   </supportedOn>
   <categories>
@@ -99,6 +101,9 @@
       <parentCategory ref="firefox"/>
     </category>
     <category name="Certificates" displayName="$(string.cat_Certificates)">
+      <parentCategory ref="firefox"/>
+    </category>
+    <category name="ClearOnShutdown" displayName="$(string.cat_ClearOnShutdown)">
       <parentCategory ref="firefox"/>
     </category>
     <category name="Containers" displayName="$(string.cat_Containers)">
@@ -803,9 +808,76 @@
         <list id="Certificates_Install_List" key="Software\Policies\Mozilla\Firefox\Certificates\Install" valuePrefix="" expandable="true"/>
       </elements>
     </policy>
+    <policy name="ClearOnShutdown" class="Both" displayName="$(string.ClearOnShutdown)" explainText="$(string.ClearOnShutdown_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="ClearOnShutdown">
+      <parentCategory ref="firefox"/>
+      <supportedOn ref="SUPPORTED_ID_18"/>
+      <enabledValue>
+        <decimal value="1"/>
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0"/>
+      </disabledValue>
+    </policy>
+    <policy name="ClearOnShutdown_BrowsingHistoryAndDownloads" class="Both" displayName="$(string.ClearOnShutdown_BrowsingHistoryAndDownloads)" explainText="$(string.ClearOnShutdown_BrowsingHistoryAndDownloads_Explain)" key="Software\Policies\Mozilla\Firefox\ClearOnShutdown" valueName="BrowsingHistoryAndDownloads">
+      <parentCategory ref="ClearOnShutdown"/>
+      <supportedOn ref="SUPPORTED_ID_18"/>
+      <enabledValue>
+        <decimal value="1"/>
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0"/>
+      </disabledValue>
+    </policy>
+    <policy name="ClearOnShutdown_Cache" class="Both" displayName="$(string.ClearOnShutdown_Cache)" explainText="$(string.ClearOnShutdown_Cache_Explain)" key="Software\Policies\Mozilla\Firefox\ClearOnShutdown" valueName="Cache">
+      <parentCategory ref="ClearOnShutdown"/>
+      <supportedOn ref="SUPPORTED_ID_18"/>
+      <enabledValue>
+        <decimal value="1"/>
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0"/>
+      </disabledValue>
+    </policy>
+    <policy name="ClearOnShutdown_CookiesAndStorage" class="Both" displayName="$(string.ClearOnShutdown_CookiesAndStorage)" explainText="$(string.ClearOnShutdown_CookiesAndStorage_Explain)" key="Software\Policies\Mozilla\Firefox\ClearOnShutdown" valueName="CookiesAndStorage">
+      <parentCategory ref="ClearOnShutdown"/>
+      <supportedOn ref="SUPPORTED_ID_18"/>
+      <enabledValue>
+        <decimal value="1"/>
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0"/>
+      </disabledValue>
+    </policy>
+    <policy name="ClearOnShutdown_Exceptions" class="Both" displayName="$(string.ClearOnShutdown_Exceptions)" explainText="$(string.ClearOnShutdown_Exceptions_Explain)" presentation="$(presentation.ClearOnShutdown_Exceptions)" key="Software\Policies\Mozilla\Firefox\ClearOnShutdown\Exceptions">
+      <parentCategory ref="ClearOnShutdown"/>
+      <supportedOn ref="SUPPORTED_ID_17"/>
+      <elements>
+        <list id="ClearOnShutdown_Exceptions_List" key="Software\Policies\Mozilla\Firefox\ClearOnShutdown\Exceptions" valuePrefix=""/>
+      </elements>
+    </policy>
+    <policy name="ClearOnShutdown_FormData" class="Both" displayName="$(string.ClearOnShutdown_FormData)" explainText="$(string.ClearOnShutdown_FormData_Explain)" key="Software\Policies\Mozilla\Firefox\ClearOnShutdown" valueName="FormData">
+      <parentCategory ref="ClearOnShutdown"/>
+      <supportedOn ref="SUPPORTED_ID_18"/>
+      <enabledValue>
+        <decimal value="1"/>
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0"/>
+      </disabledValue>
+    </policy>
+    <policy name="ClearOnShutdown_SiteSettings" class="Both" displayName="$(string.ClearOnShutdown_SiteSettings)" explainText="$(string.ClearOnShutdown_SiteSettings_Explain)" key="Software\Policies\Mozilla\Firefox\ClearOnShutdown" valueName="SiteSettings">
+      <parentCategory ref="ClearOnShutdown"/>
+      <supportedOn ref="SUPPORTED_ID_18"/>
+      <enabledValue>
+        <decimal value="1"/>
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0"/>
+      </disabledValue>
+    </policy>
     <policy name="CNSA2KeyAgreementEnabled" class="Both" displayName="$(string.CNSA2KeyAgreementEnabled)" explainText="$(string.CNSA2KeyAgreementEnabled_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="CNSA2KeyAgreementEnabled">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_17"/>
+      <supportedOn ref="SUPPORTED_ID_19"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -815,21 +887,21 @@
     </policy>
     <policy name="Containers_Default" class="Both" displayName="$(string.Containers_Default)" explainText="$(string.Containers_Default_Explain)" key="Software\Policies\Mozilla\Firefox\Containers" presentation="$(presentation.Containers_Default)">
       <parentCategory ref="Containers"/>
-      <supportedOn ref="SUPPORTED_ID_18"/>
+      <supportedOn ref="SUPPORTED_ID_20"/>
       <elements>
         <multiText id="Containers_Default_Input" valueName="Default" maxLength="16384"/>
       </elements>
     </policy>
     <policy name="Containers_DefaultOneLine" class="Both" displayName="$(string.Containers_DefaultOneLine)" explainText="$(string.Containers_DefaultOneLine_Explain)" key="Software\Policies\Mozilla\Firefox\Containers" presentation="$(presentation.Containers_DefaultOneLine)">
       <parentCategory ref="Containers"/>
-      <supportedOn ref="SUPPORTED_ID_18"/>
+      <supportedOn ref="SUPPORTED_ID_20"/>
       <elements>
         <text id="Containers_DefaultOneLine_Input" valueName="Default" maxLength="16384"/>
       </elements>
     </policy>
     <policy name="ContentAnalysis_AgentName" class="Both" displayName="$(string.ContentAnalysis_AgentName)" explainText="$(string.ContentAnalysis_AgentName_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis" presentation="$(presentation.ContentAnalysis_AgentName)">
       <parentCategory ref="ContentAnalysis"/>
-      <supportedOn ref="SUPPORTED_ID_21"/>
+      <supportedOn ref="SUPPORTED_ID_23"/>
       <elements>
         <text id="ContentAnalysis_AgentName_Input" valueName="AgentName"/>
       </elements>
@@ -850,7 +922,7 @@
     </policy>
     <policy name="ContentAnalysis_BypassForSameTabOperations" class="Both" displayName="$(string.ContentAnalysis_BypassForSameTabOperations)" explainText="$(string.ContentAnalysis_BypassForSameTabOperations_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis" valueName="BypassForSameTabOperations">
       <parentCategory ref="ContentAnalysis"/>
-      <supportedOn ref="SUPPORTED_ID_21"/>
+      <supportedOn ref="SUPPORTED_ID_23"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -860,14 +932,14 @@
     </policy>
     <policy name="ContentAnalysis_ClientSignature" class="Both" displayName="$(string.ContentAnalysis_ClientSignature)" explainText="$(string.ContentAnalysis_ClientSignature_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis" presentation="$(presentation.ContentAnalysis_ClientSignature)">
       <parentCategory ref="ContentAnalysis"/>
-      <supportedOn ref="SUPPORTED_ID_21"/>
+      <supportedOn ref="SUPPORTED_ID_23"/>
       <elements>
         <text id="ContentAnalysis_ClientSignature_Input" valueName="ClientSignature"/>
       </elements>
     </policy>
     <policy name="ContentAnalysis_DefaultResult" class="Both" displayName="$(string.ContentAnalysis_DefaultResult)" explainText="$(string.ContentAnalysis_DefaultResult_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis" presentation="$(presentation.ContentAnalysis_DefaultResult)">
       <parentCategory ref="ContentAnalysis"/>
-      <supportedOn ref="SUPPORTED_ID_23"/>
+      <supportedOn ref="SUPPORTED_ID_25"/>
       <elements>
         <decimal id="ContentAnalysis_DefaultResult_Number" valueName="DefaultResult" minValue="0" maxValue="2147483647"/>
       </elements>
@@ -891,7 +963,7 @@
     </policy>
     <policy name="ContentAnalysis_InterceptionPoints_Clipboard" class="Both" displayName="$(string.ContentAnalysis_InterceptionPoints_Clipboard)" explainText="$(string.ContentAnalysis_InterceptionPoints_Clipboard_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\Clipboard" presentation="$(presentation.ContentAnalysis_InterceptionPoints_Clipboard)">
       <parentCategory ref="ContentAnalysis_InterceptionPoints"/>
-      <supportedOn ref="SUPPORTED_ID_19"/>
+      <supportedOn ref="SUPPORTED_ID_21"/>
       <elements>
         <boolean id="ContentAnalysis_InterceptionPoints_Clipboard_Enabled_Bool" valueName="Enabled">
           <trueValue>
@@ -911,9 +983,31 @@
         </boolean>
       </elements>
     </policy>
+    <policy name="ContentAnalysis_InterceptionPoints_ClipboardCopy" class="Both" displayName="$(string.ContentAnalysis_InterceptionPoints_ClipboardCopy)" explainText="$(string.ContentAnalysis_InterceptionPoints_ClipboardCopy_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\ClipboardCopy" presentation="$(presentation.ContentAnalysis_InterceptionPoints_ClipboardCopy)">
+      <parentCategory ref="ContentAnalysis_InterceptionPoints"/>
+      <supportedOn ref="SUPPORTED_ID_17"/>
+      <elements>
+        <boolean id="ContentAnalysis_InterceptionPoints_ClipboardCopy_Enabled_Bool" valueName="Enabled">
+          <trueValue>
+            <decimal value="1"/>
+          </trueValue>
+          <falseValue>
+            <decimal value="0"/>
+          </falseValue>
+        </boolean>
+        <boolean id="ContentAnalysis_InterceptionPoints_ClipboardCopy_PlainTextOnly_Bool" valueName="PlainTextOnly">
+          <trueValue>
+            <decimal value="1"/>
+          </trueValue>
+          <falseValue>
+            <decimal value="0"/>
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
     <policy name="ContentAnalysis_InterceptionPoints_Download" class="Both" displayName="$(string.ContentAnalysis_InterceptionPoints_Download)" explainText="$(string.ContentAnalysis_InterceptionPoints_Download_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\Download" presentation="$(presentation.ContentAnalysis_InterceptionPoints_Download)">
       <parentCategory ref="ContentAnalysis_InterceptionPoints"/>
-      <supportedOn ref="SUPPORTED_ID_20"/>
+      <supportedOn ref="SUPPORTED_ID_22"/>
       <elements>
         <boolean id="ContentAnalysis_InterceptionPoints_Download_Enabled_Bool" valueName="Enabled">
           <trueValue>
@@ -927,7 +1021,7 @@
     </policy>
     <policy name="ContentAnalysis_InterceptionPoints_DragAndDrop" class="Both" displayName="$(string.ContentAnalysis_InterceptionPoints_DragAndDrop)" explainText="$(string.ContentAnalysis_InterceptionPoints_DragAndDrop_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\DragAndDrop" presentation="$(presentation.ContentAnalysis_InterceptionPoints_DragAndDrop)">
       <parentCategory ref="ContentAnalysis_InterceptionPoints"/>
-      <supportedOn ref="SUPPORTED_ID_19"/>
+      <supportedOn ref="SUPPORTED_ID_21"/>
       <elements>
         <boolean id="ContentAnalysis_InterceptionPoints_DragAndDrop_Enabled_Bool" valueName="Enabled">
           <trueValue>
@@ -949,7 +1043,7 @@
     </policy>
     <policy name="ContentAnalysis_InterceptionPoints_FileUpload" class="Both" displayName="$(string.ContentAnalysis_InterceptionPoints_FileUpload)" explainText="$(string.ContentAnalysis_InterceptionPoints_FileUpload_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\FileUpload" presentation="$(presentation.ContentAnalysis_InterceptionPoints_FileUpload)">
       <parentCategory ref="ContentAnalysis_InterceptionPoints"/>
-      <supportedOn ref="SUPPORTED_ID_19"/>
+      <supportedOn ref="SUPPORTED_ID_21"/>
       <elements>
         <boolean id="ContentAnalysis_InterceptionPoints_FileUpload_Enabled_Bool" valueName="Enabled">
           <trueValue>
@@ -963,7 +1057,7 @@
     </policy>
     <policy name="ContentAnalysis_InterceptionPoints_Print" class="Both" displayName="$(string.ContentAnalysis_InterceptionPoints_Print)" explainText="$(string.ContentAnalysis_InterceptionPoints_Print_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis\InterceptionPoints\Print" presentation="$(presentation.ContentAnalysis_InterceptionPoints_Print)">
       <parentCategory ref="ContentAnalysis_InterceptionPoints"/>
-      <supportedOn ref="SUPPORTED_ID_19"/>
+      <supportedOn ref="SUPPORTED_ID_21"/>
       <elements>
         <boolean id="ContentAnalysis_InterceptionPoints_Print_Enabled_Bool" valueName="Enabled">
           <trueValue>
@@ -987,7 +1081,7 @@
     </policy>
     <policy name="ContentAnalysis_MaxConnectionsCount" class="Both" displayName="$(string.ContentAnalysis_MaxConnectionsCount)" explainText="$(string.ContentAnalysis_MaxConnectionsCount_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis" presentation="$(presentation.ContentAnalysis_MaxConnectionsCount)">
       <parentCategory ref="ContentAnalysis"/>
-      <supportedOn ref="SUPPORTED_ID_22"/>
+      <supportedOn ref="SUPPORTED_ID_24"/>
       <elements>
         <decimal id="ContentAnalysis_MaxConnectionsCount_Number" valueName="MaxConnectionsCount" minValue="0" maxValue="2147483647"/>
       </elements>
@@ -1011,7 +1105,7 @@
     </policy>
     <policy name="ContentAnalysis_TimeoutResult" class="Both" displayName="$(string.ContentAnalysis_TimeoutResult)" explainText="$(string.ContentAnalysis_TimeoutResult_Explain)" key="Software\Policies\Mozilla\Firefox\ContentAnalysis" presentation="$(presentation.ContentAnalysis_TimeoutResult)">
       <parentCategory ref="ContentAnalysis"/>
-      <supportedOn ref="SUPPORTED_ID_24"/>
+      <supportedOn ref="SUPPORTED_ID_26"/>
       <elements>
         <decimal id="ContentAnalysis_TimeoutResult_Number" valueName="TimeoutResult" minValue="0" maxValue="2147483647"/>
       </elements>
@@ -1048,14 +1142,14 @@
     </policy>
     <policy name="Cookies_AllowSession" class="Both" displayName="$(string.Cookies_AllowSession)" explainText="$(string.Cookies_AllowSession_Explain)" presentation="$(presentation.Cookies_AllowSession)" key="Software\Policies\Mozilla\Firefox\Cookies\AllowSession">
       <parentCategory ref="Cookies"/>
-      <supportedOn ref="SUPPORTED_ID_25"/>
+      <supportedOn ref="SUPPORTED_ID_27"/>
       <elements>
         <list id="Cookies_AllowSession_List" key="Software\Policies\Mozilla\Firefox\Cookies\AllowSession" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Cookies_Behavior" class="Both" displayName="$(string.Cookies_Behavior)" explainText="$(string.Cookies_Behavior_Explain)" key="Software\Policies\Mozilla\Firefox\Cookies" presentation="$(presentation.Cookies_Behavior)">
       <parentCategory ref="Cookies"/>
-      <supportedOn ref="SUPPORTED_ID_26"/>
+      <supportedOn ref="SUPPORTED_ID_28"/>
       <elements>
         <enum id="Cookies_Behavior_Enum" valueName="Behavior">
           <item displayName="$(string.Cookies_Behavior_accept)">
@@ -1098,7 +1192,7 @@
     </policy>
     <policy name="Cookies_BehaviorPrivateBrowsing" class="Both" displayName="$(string.Cookies_BehaviorPrivateBrowsing)" explainText="$(string.Cookies_BehaviorPrivateBrowsing_Explain)" key="Software\Policies\Mozilla\Firefox\Cookies" presentation="$(presentation.Cookies_BehaviorPrivateBrowsing)">
       <parentCategory ref="Cookies"/>
-      <supportedOn ref="SUPPORTED_ID_26"/>
+      <supportedOn ref="SUPPORTED_ID_28"/>
       <elements>
         <enum id="Cookies_BehaviorPrivateBrowsing_Enum" valueName="BehaviorPrivateBrowsing">
           <item displayName="$(string.Cookies_BehaviorPrivateBrowsing_accept)">
@@ -1188,7 +1282,7 @@
     </policy>
     <policy name="DefaultBrowserSettingEnabled" class="Both" displayName="$(string.DefaultBrowserSettingEnabled)" explainText="$(string.DefaultBrowserSettingEnabled_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="DefaultBrowserSettingEnabled">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_27"/>
+      <supportedOn ref="SUPPORTED_ID_29"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1198,14 +1292,14 @@
     </policy>
     <policy name="DefaultDownloadDirectory" class="Both" displayName="$(string.DefaultDownloadDirectory)" explainText="$(string.DefaultDownloadDirectory_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.DefaultDownloadDirectory)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <elements>
         <text id="DefaultDownloadDirectory_Input" valueName="DefaultDownloadDirectory" expandable="true"/>
       </elements>
     </policy>
     <policy name="DefaultSerialGuardSetting" class="Both" displayName="$(string.DefaultSerialGuardSetting)" explainText="$(string.DefaultSerialGuardSetting_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.DefaultSerialGuardSetting)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_29"/>
+      <supportedOn ref="SUPPORTED_ID_31"/>
       <elements>
         <enum id="DefaultSerialGuardSetting_Enum" valueName="DefaultSerialGuardSetting">
           <item displayName="$(string.DefaultSerialGuardSetting_2)">
@@ -1223,7 +1317,7 @@
     </policy>
     <policy name="DisableAccounts" class="Both" displayName="$(string.DisableAccounts)" explainText="$(string.DisableAccounts_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="DisableAccounts">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_30"/>
+      <supportedOn ref="SUPPORTED_ID_32"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1253,7 +1347,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_AES_128_GCM_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_AES_128_GCM_SHA256)" explainText="$(string.DisabledCiphers_TLS_AES_128_GCM_SHA256_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_AES_128_GCM_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_33"/>
+      <supportedOn ref="SUPPORTED_ID_35"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1263,7 +1357,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_AES_256_GCM_SHA384" class="Both" displayName="$(string.DisabledCiphers_TLS_AES_256_GCM_SHA384)" explainText="$(string.DisabledCiphers_TLS_AES_256_GCM_SHA384_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_AES_256_GCM_SHA384">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_33"/>
+      <supportedOn ref="SUPPORTED_ID_35"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1273,7 +1367,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_CHACHA20_POLY1305_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_CHACHA20_POLY1305_SHA256)" explainText="$(string.DisabledCiphers_TLS_CHACHA20_POLY1305_SHA256_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_CHACHA20_POLY1305_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_33"/>
+      <supportedOn ref="SUPPORTED_ID_35"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1283,7 +1377,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA)" explainText="$(string.DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_DHE_RSA_WITH_AES_128_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1293,7 +1387,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA)" explainText="$(string.DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_DHE_RSA_WITH_AES_256_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1303,7 +1397,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA)" explainText="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_32"/>
+      <supportedOn ref="SUPPORTED_ID_34"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1313,7 +1407,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256)" explainText="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1323,7 +1417,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA)" explainText="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_32"/>
+      <supportedOn ref="SUPPORTED_ID_34"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1333,7 +1427,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384)" explainText="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_32"/>
+      <supportedOn ref="SUPPORTED_ID_34"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1343,7 +1437,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256)" explainText="$(string.DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_32"/>
+      <supportedOn ref="SUPPORTED_ID_34"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1353,7 +1447,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA)" explainText="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1363,7 +1457,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256)" explainText="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1373,7 +1467,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA)" explainText="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1383,7 +1477,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384)" explainText="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_32"/>
+      <supportedOn ref="SUPPORTED_ID_34"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1393,7 +1487,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256)" explainText="$(string.DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_32"/>
+      <supportedOn ref="SUPPORTED_ID_34"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1403,7 +1497,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA)" explainText="$(string.DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_RSA_WITH_3DES_EDE_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1413,7 +1507,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA)" explainText="$(string.DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_RSA_WITH_AES_128_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1423,7 +1517,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256" class="Both" displayName="$(string.DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256)" explainText="$(string.DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_RSA_WITH_AES_128_GCM_SHA256">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_25"/>
+      <supportedOn ref="SUPPORTED_ID_27"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1433,7 +1527,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA" class="Both" displayName="$(string.DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA)" explainText="$(string.DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_RSA_WITH_AES_256_CBC_SHA">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1443,7 +1537,7 @@
     </policy>
     <policy name="DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384" class="Both" displayName="$(string.DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384)" explainText="$(string.DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384_Explain)" key="Software\Policies\Mozilla\Firefox\DisabledCiphers" valueName="TLS_RSA_WITH_AES_256_GCM_SHA384">
       <parentCategory ref="DisabledCiphers"/>
-      <supportedOn ref="SUPPORTED_ID_25"/>
+      <supportedOn ref="SUPPORTED_ID_27"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1453,7 +1547,7 @@
     </policy>
     <policy name="DisableDefaultBrowserAgent" class="Both" displayName="$(string.DisableDefaultBrowserAgent)" explainText="$(string.DisableDefaultBrowserAgent_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="DisableDefaultBrowserAgent">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1473,7 +1567,7 @@
     </policy>
     <policy name="DisableEncryptedClientHello" class="Both" displayName="$(string.DisableEncryptedClientHello)" explainText="$(string.DisableEncryptedClientHello_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="DisableEncryptedClientHello">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_23"/>
+      <supportedOn ref="SUPPORTED_ID_25"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1543,7 +1637,7 @@
     </policy>
     <policy name="DisableLaunchOnLogin" class="Both" displayName="$(string.DisableLaunchOnLogin)" explainText="$(string.DisableLaunchOnLogin_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="DisableLaunchOnLogin">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_34"/>
+      <supportedOn ref="SUPPORTED_ID_36"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1613,7 +1707,7 @@
     </policy>
     <policy name="DisableRemoteImprovements" class="Both" displayName="$(string.DisableRemoteImprovements)" explainText="$(string.DisableRemoteImprovements_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="DisableRemoteImprovements">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_35"/>
+      <supportedOn ref="SUPPORTED_ID_37"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1623,7 +1717,7 @@
     </policy>
     <policy name="DisableRemoteSettingsAndAcceptSecurityConsequences" class="Both" displayName="$(string.DisableRemoteSettingsAndAcceptSecurityConsequences)" explainText="$(string.DisableRemoteSettingsAndAcceptSecurityConsequences_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="DisableRemoteSettingsAndAcceptSecurityConsequences">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_36"/>
+      <supportedOn ref="SUPPORTED_ID_38"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1693,7 +1787,7 @@
     </policy>
     <policy name="DisableThirdPartyModuleBlocking" class="Both" displayName="$(string.DisableThirdPartyModuleBlocking)" explainText="$(string.DisableThirdPartyModuleBlocking_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="DisableThirdPartyModuleBlocking">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_37"/>
+      <supportedOn ref="SUPPORTED_ID_39"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1828,14 +1922,14 @@
     </policy>
     <policy name="DownloadDirectory" class="Both" displayName="$(string.DownloadDirectory)" explainText="$(string.DownloadDirectory_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.DownloadDirectory)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <elements>
         <text id="DownloadDirectory_Input" valueName="DownloadDirectory" expandable="true"/>
       </elements>
     </policy>
     <policy name="EnableTrackingProtection_BaselineExceptions" class="Both" displayName="$(string.EnableTrackingProtection_BaselineExceptions)" explainText="$(string.EnableTrackingProtection_BaselineExceptions_Explain)" key="Software\Policies\Mozilla\Firefox\EnableTrackingProtection" valueName="BaselineExceptions">
       <parentCategory ref="EnableTrackingProtection"/>
-      <supportedOn ref="SUPPORTED_ID_43"/>
+      <supportedOn ref="SUPPORTED_ID_45"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1845,7 +1939,7 @@
     </policy>
     <policy name="EnableTrackingProtection_Category" class="Both" displayName="$(string.EnableTrackingProtection_Category)" explainText="$(string.EnableTrackingProtection_Category_Explain)" key="Software\Policies\Mozilla\Firefox\EnableTrackingProtection" presentation="$(presentation.EnableTrackingProtection_Category)">
       <parentCategory ref="EnableTrackingProtection"/>
-      <supportedOn ref="SUPPORTED_ID_42"/>
+      <supportedOn ref="SUPPORTED_ID_44"/>
       <elements>
         <enum id="EnableTrackingProtection_Category_Enum" valueName="Category">
           <item displayName="$(string.EnableTrackingProtection_Category_standard)">
@@ -1863,7 +1957,7 @@
     </policy>
     <policy name="EnableTrackingProtection_ConvenienceExceptions" class="Both" displayName="$(string.EnableTrackingProtection_ConvenienceExceptions)" explainText="$(string.EnableTrackingProtection_ConvenienceExceptions_Explain)" key="Software\Policies\Mozilla\Firefox\EnableTrackingProtection" valueName="ConvenienceExceptions">
       <parentCategory ref="EnableTrackingProtection"/>
-      <supportedOn ref="SUPPORTED_ID_43"/>
+      <supportedOn ref="SUPPORTED_ID_45"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1873,7 +1967,7 @@
     </policy>
     <policy name="EnableTrackingProtection_Cryptomining" class="Both" displayName="$(string.EnableTrackingProtection_Cryptomining)" explainText="$(string.EnableTrackingProtection_Cryptomining_Explain)" key="Software\Policies\Mozilla\Firefox\EnableTrackingProtection" valueName="Cryptomining">
       <parentCategory ref="EnableTrackingProtection"/>
-      <supportedOn ref="SUPPORTED_ID_39"/>
+      <supportedOn ref="SUPPORTED_ID_41"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1883,7 +1977,7 @@
     </policy>
     <policy name="EnableTrackingProtection_EmailTracking" class="Both" displayName="$(string.EnableTrackingProtection_EmailTracking)" explainText="$(string.EnableTrackingProtection_EmailTracking_Explain)" key="Software\Policies\Mozilla\Firefox\EnableTrackingProtection" valueName="EmailTracking">
       <parentCategory ref="EnableTrackingProtection"/>
-      <supportedOn ref="SUPPORTED_ID_40"/>
+      <supportedOn ref="SUPPORTED_ID_42"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1893,14 +1987,14 @@
     </policy>
     <policy name="EnableTrackingProtection_Exceptions" class="Both" displayName="$(string.EnableTrackingProtection_Exceptions)" explainText="$(string.EnableTrackingProtection_Exceptions_Explain)" presentation="$(presentation.EnableTrackingProtection_Exceptions)" key="Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Exceptions">
       <parentCategory ref="EnableTrackingProtection"/>
-      <supportedOn ref="SUPPORTED_ID_38"/>
+      <supportedOn ref="SUPPORTED_ID_40"/>
       <elements>
         <list id="EnableTrackingProtection_Exceptions_List" key="Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Exceptions" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="EnableTrackingProtection_Fingerprinting" class="Both" displayName="$(string.EnableTrackingProtection_Fingerprinting)" explainText="$(string.EnableTrackingProtection_Fingerprinting_Explain)" key="Software\Policies\Mozilla\Firefox\EnableTrackingProtection" valueName="Fingerprinting">
       <parentCategory ref="EnableTrackingProtection"/>
-      <supportedOn ref="SUPPORTED_ID_39"/>
+      <supportedOn ref="SUPPORTED_ID_41"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1920,7 +2014,7 @@
     </policy>
     <policy name="EnableTrackingProtection_SuspectedFingerprinting" class="Both" displayName="$(string.EnableTrackingProtection_SuspectedFingerprinting)" explainText="$(string.EnableTrackingProtection_SuspectedFingerprinting_Explain)" key="Software\Policies\Mozilla\Firefox\EnableTrackingProtection" valueName="SuspectedFingerprinting">
       <parentCategory ref="EnableTrackingProtection"/>
-      <supportedOn ref="SUPPORTED_ID_41"/>
+      <supportedOn ref="SUPPORTED_ID_43"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1940,7 +2034,7 @@
     </policy>
     <policy name="EncryptedMediaExtensions_Enabled" class="Both" displayName="$(string.EncryptedMediaExtensions_Enabled)" explainText="$(string.EncryptedMediaExtensions_Enabled_Explain)" key="Software\Policies\Mozilla\Firefox\EncryptedMediaExtensions" valueName="Enabled">
       <parentCategory ref="EncryptedMediaExtensions"/>
-      <supportedOn ref="SUPPORTED_ID_44"/>
+      <supportedOn ref="SUPPORTED_ID_46"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1950,7 +2044,7 @@
     </policy>
     <policy name="EncryptedMediaExtensions_Locked" class="Both" displayName="$(string.EncryptedMediaExtensions_Locked)" explainText="$(string.EncryptedMediaExtensions_Locked_Explain)" key="Software\Policies\Mozilla\Firefox\EncryptedMediaExtensions" valueName="Locked">
       <parentCategory ref="EncryptedMediaExtensions"/>
-      <supportedOn ref="SUPPORTED_ID_44"/>
+      <supportedOn ref="SUPPORTED_ID_46"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -1988,14 +2082,14 @@
     </policy>
     <policy name="ExtensionSettings" class="Both" displayName="$(string.ExtensionSettings)" explainText="$(string.ExtensionSettings_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.ExtensionSettings)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <elements>
         <multiText id="ExtensionSettings_Input" valueName="ExtensionSettings" maxLength="16384"/>
       </elements>
     </policy>
     <policy name="ExtensionSettingsOneLine" class="Both" displayName="$(string.ExtensionSettingsOneLine)" explainText="$(string.ExtensionSettingsOneLine_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.ExtensionSettingsOneLine)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <elements>
         <text id="ExtensionSettingsOneLine_Input" valueName="ExtensionSettings" maxLength="16384"/>
       </elements>
@@ -2012,7 +2106,7 @@
     </policy>
     <policy name="FirefoxHome_Highlights" class="Both" displayName="$(string.FirefoxHome_Highlights)" explainText="$(string.FirefoxHome_Highlights_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="Highlights">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2022,7 +2116,7 @@
     </policy>
     <policy name="FirefoxHome_Locked" class="Both" displayName="$(string.FirefoxHome_Locked)" explainText="$(string.FirefoxHome_Locked_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="Locked">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2032,7 +2126,7 @@
     </policy>
     <policy name="FirefoxHome_Pocket" class="Both" displayName="$(string.FirefoxHome_Pocket)" explainText="$(string.FirefoxHome_Pocket_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="Pocket">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2042,7 +2136,7 @@
     </policy>
     <policy name="FirefoxHome_Search" class="Both" displayName="$(string.FirefoxHome_Search)" explainText="$(string.FirefoxHome_Search_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="Search">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2052,7 +2146,7 @@
     </policy>
     <policy name="FirefoxHome_Snippets" class="Both" displayName="$(string.FirefoxHome_Snippets)" explainText="$(string.FirefoxHome_Snippets_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="Snippets">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2062,7 +2156,7 @@
     </policy>
     <policy name="FirefoxHome_SponsoredPocket" class="Both" displayName="$(string.FirefoxHome_SponsoredPocket)" explainText="$(string.FirefoxHome_SponsoredPocket_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="SponsoredPocket">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_47"/>
+      <supportedOn ref="SUPPORTED_ID_49"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2072,7 +2166,7 @@
     </policy>
     <policy name="FirefoxHome_SponsoredStories" class="Both" displayName="$(string.FirefoxHome_SponsoredStories)" explainText="$(string.FirefoxHome_SponsoredStories_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="SponsoredStories">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_41"/>
+      <supportedOn ref="SUPPORTED_ID_43"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2082,7 +2176,7 @@
     </policy>
     <policy name="FirefoxHome_SponsoredTopSites" class="Both" displayName="$(string.FirefoxHome_SponsoredTopSites)" explainText="$(string.FirefoxHome_SponsoredTopSites_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="SponsoredTopSites">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_47"/>
+      <supportedOn ref="SUPPORTED_ID_49"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2092,7 +2186,7 @@
     </policy>
     <policy name="FirefoxHome_Stories" class="Both" displayName="$(string.FirefoxHome_Stories)" explainText="$(string.FirefoxHome_Stories_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="Stories">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_41"/>
+      <supportedOn ref="SUPPORTED_ID_43"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2102,7 +2196,7 @@
     </policy>
     <policy name="FirefoxHome_TopSites" class="Both" displayName="$(string.FirefoxHome_TopSites)" explainText="$(string.FirefoxHome_TopSites_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="TopSites">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2112,7 +2206,7 @@
     </policy>
     <policy name="FirefoxHome_Weather" class="Both" displayName="$(string.FirefoxHome_Weather)" explainText="$(string.FirefoxHome_Weather_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome" valueName="Weather">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_46"/>
+      <supportedOn ref="SUPPORTED_ID_48"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2122,7 +2216,7 @@
     </policy>
     <policy name="FirefoxHome_Widgets" class="Both" displayName="$(string.FirefoxHome_Widgets)" explainText="$(string.FirefoxHome_Widgets_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxHome\Widgets" presentation="$(presentation.FirefoxHome_Widgets)">
       <parentCategory ref="FirefoxHome"/>
-      <supportedOn ref="SUPPORTED_ID_45"/>
+      <supportedOn ref="SUPPORTED_ID_47"/>
       <elements>
         <boolean id="FirefoxHome_Widgets_Enabled_Bool" valueName="Enabled">
           <trueValue>
@@ -2136,14 +2230,14 @@
     </policy>
     <policy name="FirefoxHome_Widgets_Blocked" class="Both" displayName="$(string.FirefoxHome_Widgets_Blocked)" explainText="$(string.FirefoxHome_Widgets_Blocked_Explain)" presentation="$(presentation.FirefoxHome_Widgets_Blocked)" key="Software\Policies\Mozilla\Firefox\FirefoxHome\Widgets\Blocked">
       <parentCategory ref="FirefoxHome_Widgets"/>
-      <supportedOn ref="SUPPORTED_ID_45"/>
+      <supportedOn ref="SUPPORTED_ID_47"/>
       <elements>
         <list id="FirefoxHome_Widgets_Blocked_List" key="Software\Policies\Mozilla\Firefox\FirefoxHome\Widgets\Blocked" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="FirefoxSuggest_ImproveSuggest" class="Both" displayName="$(string.FirefoxSuggest_ImproveSuggest)" explainText="$(string.FirefoxSuggest_ImproveSuggest_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxSuggest" valueName="ImproveSuggest">
       <parentCategory ref="FirefoxSuggest"/>
-      <supportedOn ref="SUPPORTED_ID_48"/>
+      <supportedOn ref="SUPPORTED_ID_50"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2153,7 +2247,7 @@
     </policy>
     <policy name="FirefoxSuggest_Locked" class="Both" displayName="$(string.FirefoxSuggest_Locked)" explainText="$(string.FirefoxSuggest_Locked_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxSuggest" valueName="Locked">
       <parentCategory ref="FirefoxSuggest"/>
-      <supportedOn ref="SUPPORTED_ID_48"/>
+      <supportedOn ref="SUPPORTED_ID_50"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2173,7 +2267,7 @@
     </policy>
     <policy name="FirefoxSuggest_SponsoredSuggestions" class="Both" displayName="$(string.FirefoxSuggest_SponsoredSuggestions)" explainText="$(string.FirefoxSuggest_SponsoredSuggestions_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxSuggest" valueName="SponsoredSuggestions">
       <parentCategory ref="FirefoxSuggest"/>
-      <supportedOn ref="SUPPORTED_ID_48"/>
+      <supportedOn ref="SUPPORTED_ID_50"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2183,7 +2277,7 @@
     </policy>
     <policy name="FirefoxSuggest_WebSuggestions" class="Both" displayName="$(string.FirefoxSuggest_WebSuggestions)" explainText="$(string.FirefoxSuggest_WebSuggestions_Explain)" key="Software\Policies\Mozilla\Firefox\FirefoxSuggest" valueName="WebSuggestions">
       <parentCategory ref="FirefoxSuggest"/>
-      <supportedOn ref="SUPPORTED_ID_48"/>
+      <supportedOn ref="SUPPORTED_ID_50"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2193,7 +2287,7 @@
     </policy>
     <policy name="GenerativeAI_Chatbot" class="Both" displayName="$(string.GenerativeAI_Chatbot)" explainText="$(string.GenerativeAI_Chatbot_Explain)" key="Software\Policies\Mozilla\Firefox\GenerativeAI" valueName="Chatbot">
       <parentCategory ref="GenerativeAI"/>
-      <supportedOn ref="SUPPORTED_ID_49"/>
+      <supportedOn ref="SUPPORTED_ID_51"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2203,7 +2297,7 @@
     </policy>
     <policy name="GenerativeAI_Enabled" class="Both" displayName="$(string.GenerativeAI_Enabled)" explainText="$(string.GenerativeAI_Enabled_Explain)" key="Software\Policies\Mozilla\Firefox\GenerativeAI" valueName="Enabled">
       <parentCategory ref="GenerativeAI"/>
-      <supportedOn ref="SUPPORTED_ID_49"/>
+      <supportedOn ref="SUPPORTED_ID_51"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2213,7 +2307,7 @@
     </policy>
     <policy name="GenerativeAI_LinkPreviews" class="Both" displayName="$(string.GenerativeAI_LinkPreviews)" explainText="$(string.GenerativeAI_LinkPreviews_Explain)" key="Software\Policies\Mozilla\Firefox\GenerativeAI" valueName="LinkPreviews">
       <parentCategory ref="GenerativeAI"/>
-      <supportedOn ref="SUPPORTED_ID_49"/>
+      <supportedOn ref="SUPPORTED_ID_51"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2223,7 +2317,7 @@
     </policy>
     <policy name="GenerativeAI_Locked" class="Both" displayName="$(string.GenerativeAI_Locked)" explainText="$(string.GenerativeAI_Locked_Explain)" key="Software\Policies\Mozilla\Firefox\GenerativeAI" valueName="Locked">
       <parentCategory ref="GenerativeAI"/>
-      <supportedOn ref="SUPPORTED_ID_49"/>
+      <supportedOn ref="SUPPORTED_ID_51"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2243,7 +2337,7 @@
     </policy>
     <policy name="GenerativeAI_TabGroups" class="Both" displayName="$(string.GenerativeAI_TabGroups)" explainText="$(string.GenerativeAI_TabGroups_Explain)" key="Software\Policies\Mozilla\Firefox\GenerativeAI" valueName="TabGroups">
       <parentCategory ref="GenerativeAI"/>
-      <supportedOn ref="SUPPORTED_ID_49"/>
+      <supportedOn ref="SUPPORTED_ID_51"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2253,7 +2347,7 @@
     </policy>
     <policy name="GoToIntranetSiteForSingleWordEntryInAddressBar" class="Both" displayName="$(string.GoToIntranetSiteForSingleWordEntryInAddressBar)" explainText="$(string.GoToIntranetSiteForSingleWordEntryInAddressBar_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="GoToIntranetSiteForSingleWordEntryInAddressBar">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_50"/>
+      <supportedOn ref="SUPPORTED_ID_52"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2277,7 +2371,7 @@
     </policy>
     <policy name="HardwareAcceleration" class="Both" displayName="$(string.HardwareAcceleration)" explainText="$(string.HardwareAcceleration_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="HardwareAcceleration">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2304,7 +2398,7 @@
     </policy>
     <policy name="Homepage_NewTabOnRestore" class="Both" displayName="$(string.Homepage_NewTabOnRestore)" explainText="$(string.Homepage_NewTabOnRestore_Explain)" key="Software\Policies\Mozilla\Firefox\Homepage" valueName="NewTabOnRestore">
       <parentCategory ref="Homepage"/>
-      <supportedOn ref="SUPPORTED_ID_52"/>
+      <supportedOn ref="SUPPORTED_ID_54"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2349,14 +2443,14 @@
     </policy>
     <policy name="HttpAllowlist" class="Both" displayName="$(string.HttpAllowlist)" explainText="$(string.HttpAllowlist_Explain)" presentation="$(presentation.HttpAllowlist)" key="Software\Policies\Mozilla\Firefox\HttpAllowlist">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_23"/>
+      <supportedOn ref="SUPPORTED_ID_25"/>
       <elements>
         <list id="HttpAllowlist_List" key="Software\Policies\Mozilla\Firefox\HttpAllowlist" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="HttpsOnlyMode" class="Both" displayName="$(string.HttpsOnlyMode)" explainText="$(string.HttpsOnlyMode_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.HttpsOnlyMode)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_23"/>
+      <supportedOn ref="SUPPORTED_ID_25"/>
       <elements>
         <enum id="HttpsOnlyMode_Enum" valueName="HttpsOnlyMode">
           <item displayName="$(string.HttpsOnlyMode_allowed)">
@@ -2401,7 +2495,7 @@
     </policy>
     <policy name="IPProtectionAvailable" class="Both" displayName="$(string.IPProtectionAvailable)" explainText="$(string.IPProtectionAvailable_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="IPProtectionAvailable">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_29"/>
+      <supportedOn ref="SUPPORTED_ID_31"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2421,7 +2515,7 @@
     </policy>
     <policy name="LegacySameSiteCookieBehaviorEnabled" class="Both" displayName="$(string.LegacySameSiteCookieBehaviorEnabled)" explainText="$(string.LegacySameSiteCookieBehaviorEnabled_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="LegacySameSiteCookieBehaviorEnabled">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2431,21 +2525,21 @@
     </policy>
     <policy name="LegacySameSiteCookieBehaviorEnabledForDomainList" class="Both" displayName="$(string.LegacySameSiteCookieBehaviorEnabledForDomainList)" explainText="$(string.LegacySameSiteCookieBehaviorEnabledForDomainList_Explain)" presentation="$(presentation.LegacySameSiteCookieBehaviorEnabledForDomainList)" key="Software\Policies\Mozilla\Firefox\LegacySameSiteCookieBehaviorEnabledForDomainList">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <elements>
         <list id="LegacySameSiteCookieBehaviorEnabledForDomainList_List" key="Software\Policies\Mozilla\Firefox\LegacySameSiteCookieBehaviorEnabledForDomainList" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="LocalFileLinks" class="Both" displayName="$(string.LocalFileLinks)" explainText="$(string.LocalFileLinks_Explain)" presentation="$(presentation.LocalFileLinks)" key="Software\Policies\Mozilla\Firefox\LocalFileLinks">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <elements>
         <list id="LocalFileLinks_List" key="Software\Policies\Mozilla\Firefox\LocalFileLinks" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="LocalNetworkAccess_BlockTrackers" class="Both" displayName="$(string.LocalNetworkAccess_BlockTrackers)" explainText="$(string.LocalNetworkAccess_BlockTrackers_Explain)" key="Software\Policies\Mozilla\Firefox\LocalNetworkAccess" valueName="BlockTrackers">
       <parentCategory ref="LocalNetworkAccess"/>
-      <supportedOn ref="SUPPORTED_ID_53"/>
+      <supportedOn ref="SUPPORTED_ID_55"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2455,7 +2549,7 @@
     </policy>
     <policy name="LocalNetworkAccess_Enabled" class="Both" displayName="$(string.LocalNetworkAccess_Enabled)" explainText="$(string.LocalNetworkAccess_Enabled_Explain)" key="Software\Policies\Mozilla\Firefox\LocalNetworkAccess" valueName="Enabled">
       <parentCategory ref="LocalNetworkAccess"/>
-      <supportedOn ref="SUPPORTED_ID_53"/>
+      <supportedOn ref="SUPPORTED_ID_55"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2465,7 +2559,7 @@
     </policy>
     <policy name="LocalNetworkAccess_EnablePrompting" class="Both" displayName="$(string.LocalNetworkAccess_EnablePrompting)" explainText="$(string.LocalNetworkAccess_EnablePrompting_Explain)" key="Software\Policies\Mozilla\Firefox\LocalNetworkAccess" valueName="EnablePrompting">
       <parentCategory ref="LocalNetworkAccess"/>
-      <supportedOn ref="SUPPORTED_ID_53"/>
+      <supportedOn ref="SUPPORTED_ID_55"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2475,7 +2569,7 @@
     </policy>
     <policy name="LocalNetworkAccess_Locked" class="Both" displayName="$(string.LocalNetworkAccess_Locked)" explainText="$(string.LocalNetworkAccess_Locked_Explain)" key="Software\Policies\Mozilla\Firefox\LocalNetworkAccess" valueName="Locked">
       <parentCategory ref="LocalNetworkAccess"/>
-      <supportedOn ref="SUPPORTED_ID_53"/>
+      <supportedOn ref="SUPPORTED_ID_55"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2492,21 +2586,21 @@
     </policy>
     <policy name="ManagedBookmarks" class="Both" displayName="$(string.ManagedBookmarks)" explainText="$(string.ManagedBookmarks_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.ManagedBookmarks)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_54"/>
+      <supportedOn ref="SUPPORTED_ID_56"/>
       <elements>
         <multiText id="ManagedBookmarks_Input" valueName="ManagedBookmarks" maxLength="16384"/>
       </elements>
     </policy>
     <policy name="ManagedBookmarksOneLine" class="Both" displayName="$(string.ManagedBookmarksOneLine)" explainText="$(string.ManagedBookmarksOneLine_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.ManagedBookmarksOneLine)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_54"/>
+      <supportedOn ref="SUPPORTED_ID_56"/>
       <elements>
         <text id="ManagedBookmarksOneLine_Input" valueName="ManagedBookmarks" maxLength="16384"/>
       </elements>
     </policy>
     <policy name="ManualAppUpdateOnly" class="Both" displayName="$(string.ManualAppUpdateOnly)" explainText="$(string.ManualAppUpdateOnly_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="ManualAppUpdateOnly">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_55"/>
+      <supportedOn ref="SUPPORTED_ID_57"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2516,7 +2610,7 @@
     </policy>
     <policy name="MicrosoftEntraSSO" class="Both" displayName="$(string.MicrosoftEntraSSO)" explainText="$(string.MicrosoftEntraSSO_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="MicrosoftEntraSSO">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_56"/>
+      <supportedOn ref="SUPPORTED_ID_58"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2536,7 +2630,7 @@
     </policy>
     <policy name="NewTabPage" class="Both" displayName="$(string.NewTabPage)" explainText="$(string.NewTabPage_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="NewTabPage">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2566,7 +2660,7 @@
     </policy>
     <policy name="OfferToSaveLoginsDefault" class="Both" displayName="$(string.OfferToSaveLoginsDefault)" explainText="$(string.OfferToSaveLoginsDefault_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="OfferToSaveLoginsDefault">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_39"/>
+      <supportedOn ref="SUPPORTED_ID_41"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2590,7 +2684,7 @@
     </policy>
     <policy name="PasswordManagerEnabled" class="Both" displayName="$(string.PasswordManagerEnabled)" explainText="$(string.PasswordManagerEnabled_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="PasswordManagerEnabled">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_39"/>
+      <supportedOn ref="SUPPORTED_ID_41"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2600,14 +2694,14 @@
     </policy>
     <policy name="PasswordManagerExceptions" class="Both" displayName="$(string.PasswordManagerExceptions)" explainText="$(string.PasswordManagerExceptions_Explain)" presentation="$(presentation.PasswordManagerExceptions)" key="Software\Policies\Mozilla\Firefox\PasswordManagerExceptions">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_57"/>
+      <supportedOn ref="SUPPORTED_ID_59"/>
       <elements>
         <list id="PasswordManagerExceptions_List" key="Software\Policies\Mozilla\Firefox\PasswordManagerExceptions" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="PDFjs_Enabled" class="Both" displayName="$(string.PDFjs_Enabled)" explainText="$(string.PDFjs_Enabled_Explain)" key="Software\Policies\Mozilla\Firefox\PDFjs" valueName="Enabled">
       <parentCategory ref="PDFjs"/>
-      <supportedOn ref="SUPPORTED_ID_44"/>
+      <supportedOn ref="SUPPORTED_ID_46"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2617,7 +2711,7 @@
     </policy>
     <policy name="PDFjs_EnablePermissions" class="Both" displayName="$(string.PDFjs_EnablePermissions)" explainText="$(string.PDFjs_EnablePermissions_Explain)" key="Software\Policies\Mozilla\Firefox\PDFjs" valueName="EnablePermissions">
       <parentCategory ref="PDFjs"/>
-      <supportedOn ref="SUPPORTED_ID_44"/>
+      <supportedOn ref="SUPPORTED_ID_46"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2627,7 +2721,7 @@
     </policy>
     <policy name="Permissions_Autoplay" class="Both" displayName="$(string.Permissions_Autoplay)" explainText="$(string.Permissions_Autoplay_Explain)" key="Software\Policies\Mozilla\Firefox\Permissions\Autoplay" presentation="$(presentation.Permissions_Autoplay)">
       <parentCategory ref="Permissions"/>
-      <supportedOn ref="SUPPORTED_ID_58"/>
+      <supportedOn ref="SUPPORTED_ID_60"/>
       <elements>
         <enum id="Permissions_Autoplay_Default_Enum" valueName="Default">
           <item displayName="$(string.Permissions_Autoplay_Default_allow_audio_video)">
@@ -2658,21 +2752,21 @@
     </policy>
     <policy name="Permissions_Autoplay_Allow" class="Both" displayName="$(string.Permissions_Autoplay_Allow)" explainText="$(string.Permissions_Autoplay_Allow_Explain)" presentation="$(presentation.Permissions_Autoplay_Allow)" key="Software\Policies\Mozilla\Firefox\Permissions\Autoplay\Allow">
       <parentCategory ref="Permissions_Autoplay"/>
-      <supportedOn ref="SUPPORTED_ID_58"/>
+      <supportedOn ref="SUPPORTED_ID_60"/>
       <elements>
         <list id="Permissions_Autoplay_Allow_List" key="Software\Policies\Mozilla\Firefox\Permissions\Autoplay\Allow" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_Autoplay_Block" class="Both" displayName="$(string.Permissions_Autoplay_Block)" explainText="$(string.Permissions_Autoplay_Block_Explain)" presentation="$(presentation.Permissions_Autoplay_Block)" key="Software\Policies\Mozilla\Firefox\Permissions\Autoplay\Block">
       <parentCategory ref="Permissions_Autoplay"/>
-      <supportedOn ref="SUPPORTED_ID_58"/>
+      <supportedOn ref="SUPPORTED_ID_60"/>
       <elements>
         <list id="Permissions_Autoplay_Block_List" key="Software\Policies\Mozilla\Firefox\Permissions\Autoplay\Block" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_Camera" class="Both" displayName="$(string.Permissions_Camera)" explainText="$(string.Permissions_Camera_Explain)" key="Software\Policies\Mozilla\Firefox\Permissions\Camera" presentation="$(presentation.Permissions_Camera)">
       <parentCategory ref="Permissions"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <boolean id="Permissions_Camera_BlockNewRequests_Bool" valueName="BlockNewRequests">
           <trueValue>
@@ -2694,21 +2788,21 @@
     </policy>
     <policy name="Permissions_Camera_Allow" class="Both" displayName="$(string.Permissions_Camera_Allow)" explainText="$(string.Permissions_Camera_Allow_Explain)" presentation="$(presentation.Permissions_Camera_Allow)" key="Software\Policies\Mozilla\Firefox\Permissions\Camera\Allow">
       <parentCategory ref="Permissions_Camera"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <list id="Permissions_Camera_Allow_List" key="Software\Policies\Mozilla\Firefox\Permissions\Camera\Allow" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_Camera_Block" class="Both" displayName="$(string.Permissions_Camera_Block)" explainText="$(string.Permissions_Camera_Block_Explain)" presentation="$(presentation.Permissions_Camera_Block)" key="Software\Policies\Mozilla\Firefox\Permissions\Camera\Block">
       <parentCategory ref="Permissions_Camera"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <list id="Permissions_Camera_Block_List" key="Software\Policies\Mozilla\Firefox\Permissions\Camera\Block" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_Location" class="Both" displayName="$(string.Permissions_Location)" explainText="$(string.Permissions_Location_Explain)" key="Software\Policies\Mozilla\Firefox\Permissions\Location" presentation="$(presentation.Permissions_Location)">
       <parentCategory ref="Permissions"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <boolean id="Permissions_Location_BlockNewRequests_Bool" valueName="BlockNewRequests">
           <trueValue>
@@ -2730,21 +2824,21 @@
     </policy>
     <policy name="Permissions_Location_Allow" class="Both" displayName="$(string.Permissions_Location_Allow)" explainText="$(string.Permissions_Location_Allow_Explain)" presentation="$(presentation.Permissions_Location_Allow)" key="Software\Policies\Mozilla\Firefox\Permissions\Location\Allow">
       <parentCategory ref="Permissions_Location"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <list id="Permissions_Location_Allow_List" key="Software\Policies\Mozilla\Firefox\Permissions\Location\Allow" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_Location_Block" class="Both" displayName="$(string.Permissions_Location_Block)" explainText="$(string.Permissions_Location_Block_Explain)" presentation="$(presentation.Permissions_Location_Block)" key="Software\Policies\Mozilla\Firefox\Permissions\Location\Block">
       <parentCategory ref="Permissions_Location"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <list id="Permissions_Location_Block_List" key="Software\Policies\Mozilla\Firefox\Permissions\Location\Block" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_Microphone" class="Both" displayName="$(string.Permissions_Microphone)" explainText="$(string.Permissions_Microphone_Explain)" key="Software\Policies\Mozilla\Firefox\Permissions\Microphone" presentation="$(presentation.Permissions_Microphone)">
       <parentCategory ref="Permissions"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <boolean id="Permissions_Microphone_BlockNewRequests_Bool" valueName="BlockNewRequests">
           <trueValue>
@@ -2766,21 +2860,21 @@
     </policy>
     <policy name="Permissions_Microphone_Allow" class="Both" displayName="$(string.Permissions_Microphone_Allow)" explainText="$(string.Permissions_Microphone_Allow_Explain)" presentation="$(presentation.Permissions_Microphone_Allow)" key="Software\Policies\Mozilla\Firefox\Permissions\Microphone\Allow">
       <parentCategory ref="Permissions_Microphone"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <list id="Permissions_Microphone_Allow_List" key="Software\Policies\Mozilla\Firefox\Permissions\Microphone\Allow" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_Microphone_Block" class="Both" displayName="$(string.Permissions_Microphone_Block)" explainText="$(string.Permissions_Microphone_Block_Explain)" presentation="$(presentation.Permissions_Microphone_Block)" key="Software\Policies\Mozilla\Firefox\Permissions\Microphone\Block">
       <parentCategory ref="Permissions_Microphone"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <list id="Permissions_Microphone_Block_List" key="Software\Policies\Mozilla\Firefox\Permissions\Microphone\Block" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_Notifications" class="Both" displayName="$(string.Permissions_Notifications)" explainText="$(string.Permissions_Notifications_Explain)" key="Software\Policies\Mozilla\Firefox\Permissions\Notifications" presentation="$(presentation.Permissions_Notifications)">
       <parentCategory ref="Permissions"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <boolean id="Permissions_Notifications_BlockNewRequests_Bool" valueName="BlockNewRequests">
           <trueValue>
@@ -2802,21 +2896,21 @@
     </policy>
     <policy name="Permissions_Notifications_Allow" class="Both" displayName="$(string.Permissions_Notifications_Allow)" explainText="$(string.Permissions_Notifications_Allow_Explain)" presentation="$(presentation.Permissions_Notifications_Allow)" key="Software\Policies\Mozilla\Firefox\Permissions\Notifications\Allow">
       <parentCategory ref="Permissions_Notifications"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <list id="Permissions_Notifications_Allow_List" key="Software\Policies\Mozilla\Firefox\Permissions\Notifications\Allow" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_Notifications_Block" class="Both" displayName="$(string.Permissions_Notifications_Block)" explainText="$(string.Permissions_Notifications_Block_Explain)" presentation="$(presentation.Permissions_Notifications_Block)" key="Software\Policies\Mozilla\Firefox\Permissions\Notifications\Block">
       <parentCategory ref="Permissions_Notifications"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <list id="Permissions_Notifications_Block_List" key="Software\Policies\Mozilla\Firefox\Permissions\Notifications\Block" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_ScreenShare" class="Both" displayName="$(string.Permissions_ScreenShare)" explainText="$(string.Permissions_ScreenShare_Explain)" key="Software\Policies\Mozilla\Firefox\Permissions\ScreenShare" presentation="$(presentation.Permissions_ScreenShare)">
       <parentCategory ref="Permissions"/>
-      <supportedOn ref="SUPPORTED_ID_60"/>
+      <supportedOn ref="SUPPORTED_ID_62"/>
       <elements>
         <boolean id="Permissions_ScreenShare_BlockNewRequests_Bool" valueName="BlockNewRequests">
           <trueValue>
@@ -2838,21 +2932,21 @@
     </policy>
     <policy name="Permissions_ScreenShare_Allow" class="Both" displayName="$(string.Permissions_ScreenShare_Allow)" explainText="$(string.Permissions_ScreenShare_Allow_Explain)" presentation="$(presentation.Permissions_ScreenShare_Allow)" key="Software\Policies\Mozilla\Firefox\Permissions\ScreenShare\Allow">
       <parentCategory ref="Permissions_ScreenShare"/>
-      <supportedOn ref="SUPPORTED_ID_60"/>
+      <supportedOn ref="SUPPORTED_ID_62"/>
       <elements>
         <list id="Permissions_ScreenShare_Allow_List" key="Software\Policies\Mozilla\Firefox\Permissions\ScreenShare\Allow" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_ScreenShare_Block" class="Both" displayName="$(string.Permissions_ScreenShare_Block)" explainText="$(string.Permissions_ScreenShare_Block_Explain)" presentation="$(presentation.Permissions_ScreenShare_Block)" key="Software\Policies\Mozilla\Firefox\Permissions\ScreenShare\Block">
       <parentCategory ref="Permissions_ScreenShare"/>
-      <supportedOn ref="SUPPORTED_ID_60"/>
+      <supportedOn ref="SUPPORTED_ID_62"/>
       <elements>
         <list id="Permissions_ScreenShare_Block_List" key="Software\Policies\Mozilla\Firefox\Permissions\ScreenShare\Block" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_VirtualReality" class="Both" displayName="$(string.Permissions_VirtualReality)" explainText="$(string.Permissions_VirtualReality_Explain)" key="Software\Policies\Mozilla\Firefox\Permissions\VirtualReality" presentation="$(presentation.Permissions_VirtualReality)">
       <parentCategory ref="Permissions"/>
-      <supportedOn ref="SUPPORTED_ID_59"/>
+      <supportedOn ref="SUPPORTED_ID_61"/>
       <elements>
         <boolean id="Permissions_VirtualReality_BlockNewRequests_Bool" valueName="BlockNewRequests">
           <trueValue>
@@ -2874,14 +2968,14 @@
     </policy>
     <policy name="Permissions_VirtualReality_Allow" class="Both" displayName="$(string.Permissions_VirtualReality_Allow)" explainText="$(string.Permissions_VirtualReality_Allow_Explain)" presentation="$(presentation.Permissions_VirtualReality_Allow)" key="Software\Policies\Mozilla\Firefox\Permissions\VirtualReality\Allow">
       <parentCategory ref="Permissions_VirtualReality"/>
-      <supportedOn ref="SUPPORTED_ID_59"/>
+      <supportedOn ref="SUPPORTED_ID_61"/>
       <elements>
         <list id="Permissions_VirtualReality_Allow_List" key="Software\Policies\Mozilla\Firefox\Permissions\VirtualReality\Allow" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="Permissions_VirtualReality_Block" class="Both" displayName="$(string.Permissions_VirtualReality_Block)" explainText="$(string.Permissions_VirtualReality_Block_Explain)" presentation="$(presentation.Permissions_VirtualReality_Block)" key="Software\Policies\Mozilla\Firefox\Permissions\VirtualReality\Block">
       <parentCategory ref="Permissions_VirtualReality"/>
-      <supportedOn ref="SUPPORTED_ID_59"/>
+      <supportedOn ref="SUPPORTED_ID_61"/>
       <elements>
         <list id="Permissions_VirtualReality_Block_List" key="Software\Policies\Mozilla\Firefox\Permissions\VirtualReality\Block" valuePrefix=""/>
       </elements>
@@ -2935,7 +3029,7 @@
     </policy>
     <policy name="PostQuantumKeyAgreementEnabled" class="Both" displayName="$(string.PostQuantumKeyAgreementEnabled)" explainText="$(string.PostQuantumKeyAgreementEnabled_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="PostQuantumKeyAgreementEnabled">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_23"/>
+      <supportedOn ref="SUPPORTED_ID_25"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2945,21 +3039,21 @@
     </policy>
     <policy name="Preferences" class="Both" displayName="$(string.Preferences)" explainText="$(string.Preferences_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.Preferences)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <elements>
         <multiText id="Preferences_Input" valueName="Preferences" maxLength="16384"/>
       </elements>
     </policy>
     <policy name="PreferencesOneLine" class="Both" displayName="$(string.PreferencesOneLine)" explainText="$(string.PreferencesOneLine_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.PreferencesOneLine)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <elements>
         <text id="PreferencesOneLine_Input" valueName="Preferences" maxLength="16384"/>
       </elements>
     </policy>
     <policy name="PrimaryPassword" class="Both" displayName="$(string.PrimaryPassword)" explainText="$(string.PrimaryPassword_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="PrimaryPassword">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_61"/>
+      <supportedOn ref="SUPPORTED_ID_63"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2969,7 +3063,7 @@
     </policy>
     <policy name="PrintingEnabled" class="Both" displayName="$(string.PrintingEnabled)" explainText="$(string.PrintingEnabled_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="PrintingEnabled">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_62"/>
+      <supportedOn ref="SUPPORTED_ID_64"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -2979,7 +3073,7 @@
     </policy>
     <policy name="PrivateBrowsingModeAvailability" class="Both" displayName="$(string.PrivateBrowsingModeAvailability)" explainText="$(string.PrivateBrowsingModeAvailability_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.PrivateBrowsingModeAvailability)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_63"/>
+      <supportedOn ref="SUPPORTED_ID_65"/>
       <elements>
         <enum id="PrivateBrowsingModeAvailability_Enum" valueName="PrivateBrowsingModeAvailability">
           <item displayName="$(string.PrivateBrowsingModeAvailability_0)">
@@ -3002,7 +3096,7 @@
     </policy>
     <policy name="PromptForDownloadLocation" class="Both" displayName="$(string.PromptForDownloadLocation)" explainText="$(string.PromptForDownloadLocation_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="PromptForDownloadLocation">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3184,7 +3278,7 @@
     </policy>
     <policy name="SanitizeOnShutdown_Cache" class="Both" displayName="$(string.SanitizeOnShutdown_Cache)" explainText="$(string.SanitizeOnShutdown_Cache_Explain)" key="Software\Policies\Mozilla\Firefox\SanitizeOnShutdown" valueName="Cache">
       <parentCategory ref="SanitizeOnShutdown"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3194,7 +3288,7 @@
     </policy>
     <policy name="SanitizeOnShutdown_Cookies" class="Both" displayName="$(string.SanitizeOnShutdown_Cookies)" explainText="$(string.SanitizeOnShutdown_Cookies_Explain)" key="Software\Policies\Mozilla\Firefox\SanitizeOnShutdown" valueName="Cookies">
       <parentCategory ref="SanitizeOnShutdown"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3204,7 +3298,7 @@
     </policy>
     <policy name="SanitizeOnShutdown_Downloads" class="Both" displayName="$(string.SanitizeOnShutdown_Downloads)" explainText="$(string.SanitizeOnShutdown_Downloads_Explain)" key="Software\Policies\Mozilla\Firefox\SanitizeOnShutdown" valueName="Downloads">
       <parentCategory ref="SanitizeOnShutdown"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3214,14 +3308,14 @@
     </policy>
     <policy name="SanitizeOnShutdown_Exceptions" class="Both" displayName="$(string.SanitizeOnShutdown_Exceptions)" explainText="$(string.SanitizeOnShutdown_Exceptions_Explain)" presentation="$(presentation.SanitizeOnShutdown_Exceptions)" key="Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\Exceptions">
       <parentCategory ref="SanitizeOnShutdown"/>
-      <supportedOn ref="SUPPORTED_ID_27"/>
+      <supportedOn ref="SUPPORTED_ID_29"/>
       <elements>
         <list id="SanitizeOnShutdown_Exceptions_List" key="Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\Exceptions" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="SanitizeOnShutdown_FormData" class="Both" displayName="$(string.SanitizeOnShutdown_FormData)" explainText="$(string.SanitizeOnShutdown_FormData_Explain)" key="Software\Policies\Mozilla\Firefox\SanitizeOnShutdown" valueName="FormData">
       <parentCategory ref="SanitizeOnShutdown"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3231,7 +3325,7 @@
     </policy>
     <policy name="SanitizeOnShutdown_History" class="Both" displayName="$(string.SanitizeOnShutdown_History)" explainText="$(string.SanitizeOnShutdown_History_Explain)" key="Software\Policies\Mozilla\Firefox\SanitizeOnShutdown" valueName="History">
       <parentCategory ref="SanitizeOnShutdown"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3251,7 +3345,7 @@
     </policy>
     <policy name="SanitizeOnShutdown_OfflineApps" class="Both" displayName="$(string.SanitizeOnShutdown_OfflineApps)" explainText="$(string.SanitizeOnShutdown_OfflineApps_Explain)" key="Software\Policies\Mozilla\Firefox\SanitizeOnShutdown" valueName="OfflineApps">
       <parentCategory ref="SanitizeOnShutdown"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3261,7 +3355,7 @@
     </policy>
     <policy name="SanitizeOnShutdown_Sessions" class="Both" displayName="$(string.SanitizeOnShutdown_Sessions)" explainText="$(string.SanitizeOnShutdown_Sessions_Explain)" key="Software\Policies\Mozilla\Firefox\SanitizeOnShutdown" valueName="Sessions">
       <parentCategory ref="SanitizeOnShutdown"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3271,7 +3365,7 @@
     </policy>
     <policy name="SanitizeOnShutdown_SiteSettings" class="Both" displayName="$(string.SanitizeOnShutdown_SiteSettings)" explainText="$(string.SanitizeOnShutdown_SiteSettings_Explain)" key="Software\Policies\Mozilla\Firefox\SanitizeOnShutdown" valueName="SiteSettings">
       <parentCategory ref="SanitizeOnShutdown"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3453,14 +3547,14 @@
     </policy>
     <policy name="SearchEngines_Remove" class="Both" displayName="$(string.SearchEngines_Remove)" explainText="$(string.SearchEngines_Remove_Explain)" presentation="$(presentation.SearchEngines_Remove)" key="Software\Policies\Mozilla\Firefox\SearchEngines\Remove">
       <parentCategory ref="SearchEngines"/>
-      <supportedOn ref="SUPPORTED_ID_51"/>
+      <supportedOn ref="SUPPORTED_ID_53"/>
       <elements>
         <list id="SearchEngines_Remove_List" key="Software\Policies\Mozilla\Firefox\SearchEngines\Remove" valuePrefix=""/>
       </elements>
     </policy>
     <policy name="SearchSuggestEnabled" class="Both" displayName="$(string.SearchSuggestEnabled)" explainText="$(string.SearchSuggestEnabled_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="SearchSuggestEnabled">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_28"/>
+      <supportedOn ref="SUPPORTED_ID_30"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3477,14 +3571,14 @@
     </policy>
     <policy name="SecurityDevices_Add" class="Both" displayName="$(string.SecurityDevices_Add)" explainText="$(string.SecurityDevices_Add_Explain)" presentation="$(presentation.SecurityDevices_Add)" key="Software\Policies\Mozilla\Firefox\SecurityDevices\Add">
       <parentCategory ref="SecurityDevices"/>
-      <supportedOn ref="SUPPORTED_ID_64"/>
+      <supportedOn ref="SUPPORTED_ID_66"/>
       <elements>
         <list id="SecurityDevices_Add_List" key="Software\Policies\Mozilla\Firefox\SecurityDevices\Add" explicitValue="true" expandable="true"/>
       </elements>
     </policy>
     <policy name="SecurityDevices_Delete" class="Both" displayName="$(string.SecurityDevices_Delete)" explainText="$(string.SecurityDevices_Delete_Explain)" presentation="$(presentation.SecurityDevices_Delete)" key="Software\Policies\Mozilla\Firefox\SecurityDevices\Delete">
       <parentCategory ref="SecurityDevices"/>
-      <supportedOn ref="SUPPORTED_ID_64"/>
+      <supportedOn ref="SUPPORTED_ID_66"/>
       <elements>
         <list id="SecurityDevices_Delete_List" key="Software\Policies\Mozilla\Firefox\SecurityDevices\Delete" valuePrefix=""/>
       </elements>
@@ -3508,7 +3602,7 @@
     </policy>
     <policy name="SkipTermsOfUse" class="Both" displayName="$(string.SkipTermsOfUse)" explainText="$(string.SkipTermsOfUse_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="SkipTermsOfUse">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_65"/>
+      <supportedOn ref="SUPPORTED_ID_67"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3518,7 +3612,7 @@
     </policy>
     <policy name="SSLVersionMax" class="Both" displayName="$(string.SSLVersionMax)" explainText="$(string.SSLVersionMax_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.SSLVersionMax)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_66"/>
+      <supportedOn ref="SUPPORTED_ID_68"/>
       <elements>
         <enum id="SSLVersionMax_Enum" valueName="SSLVersionMax">
           <item displayName="$(string.SSLVersionMax_tls1)">
@@ -3546,7 +3640,7 @@
     </policy>
     <policy name="SSLVersionMin" class="Both" displayName="$(string.SSLVersionMin)" explainText="$(string.SSLVersionMin_Explain)" key="Software\Policies\Mozilla\Firefox" presentation="$(presentation.SSLVersionMin)">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_66"/>
+      <supportedOn ref="SUPPORTED_ID_68"/>
       <elements>
         <enum id="SSLVersionMin_Enum" valueName="SSLVersionMin">
           <item displayName="$(string.SSLVersionMin_tls1)">
@@ -3605,7 +3699,7 @@
     </policy>
     <policy name="TranslateEnabled" class="Both" displayName="$(string.TranslateEnabled)" explainText="$(string.TranslateEnabled_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="TranslateEnabled">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_21"/>
+      <supportedOn ref="SUPPORTED_ID_23"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3635,7 +3729,7 @@
     </policy>
     <policy name="UserMessaging_FirefoxLabs" class="Both" displayName="$(string.UserMessaging_FirefoxLabs)" explainText="$(string.UserMessaging_FirefoxLabs_Explain)" key="Software\Policies\Mozilla\Firefox\UserMessaging" valueName="FirefoxLabs">
       <parentCategory ref="UserMessaging"/>
-      <supportedOn ref="SUPPORTED_ID_68"/>
+      <supportedOn ref="SUPPORTED_ID_70"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3655,7 +3749,7 @@
     </policy>
     <policy name="UserMessaging_MoreFromMozilla" class="Both" displayName="$(string.UserMessaging_MoreFromMozilla)" explainText="$(string.UserMessaging_MoreFromMozilla_Explain)" key="Software\Policies\Mozilla\Firefox\UserMessaging" valueName="MoreFromMozilla">
       <parentCategory ref="UserMessaging"/>
-      <supportedOn ref="SUPPORTED_ID_67"/>
+      <supportedOn ref="SUPPORTED_ID_69"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3665,7 +3759,7 @@
     </policy>
     <policy name="UserMessaging_SkipOnboarding" class="Both" displayName="$(string.UserMessaging_SkipOnboarding)" explainText="$(string.UserMessaging_SkipOnboarding_Explain)" key="Software\Policies\Mozilla\Firefox\UserMessaging" valueName="SkipOnboarding">
       <parentCategory ref="UserMessaging"/>
-      <supportedOn ref="SUPPORTED_ID_61"/>
+      <supportedOn ref="SUPPORTED_ID_63"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3675,7 +3769,7 @@
     </policy>
     <policy name="UserMessaging_UrlbarInterventions" class="Both" displayName="$(string.UserMessaging_UrlbarInterventions)" explainText="$(string.UserMessaging_UrlbarInterventions_Explain)" key="Software\Policies\Mozilla\Firefox\UserMessaging" valueName="UrlbarInterventions">
       <parentCategory ref="UserMessaging"/>
-      <supportedOn ref="SUPPORTED_ID_31"/>
+      <supportedOn ref="SUPPORTED_ID_33"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3705,7 +3799,7 @@
     </policy>
     <policy name="VisualSearchEnabled" class="Both" displayName="$(string.VisualSearchEnabled)" explainText="$(string.VisualSearchEnabled_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="VisualSearchEnabled">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_53"/>
+      <supportedOn ref="SUPPORTED_ID_55"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3729,7 +3823,7 @@
     </policy>
     <policy name="WindowsSSO" class="Both" displayName="$(string.WindowsSSO)" explainText="$(string.WindowsSSO_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="WindowsSSO">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_69"/>
+      <supportedOn ref="SUPPORTED_ID_71"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>
@@ -3739,7 +3833,7 @@
     </policy>
     <policy name="XSLTEnabled" class="Both" displayName="$(string.XSLTEnabled)" explainText="$(string.XSLTEnabled_Explain)" key="Software\Policies\Mozilla\Firefox" valueName="XSLTEnabled">
       <parentCategory ref="firefox"/>
-      <supportedOn ref="SUPPORTED_ID_29"/>
+      <supportedOn ref="SUPPORTED_ID_31"/>
       <enabledValue>
         <decimal value="1"/>
       </enabledValue>

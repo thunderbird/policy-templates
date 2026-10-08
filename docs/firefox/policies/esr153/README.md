@@ -1658,7 +1658,7 @@ Software\Policies\Mozilla\Firefox\ClearOnShutdown\Cache (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `ClearOnShutdown`<br>`ClearOnShutdown_BrowsingHistoryAndDownloads`<br>`ClearOnShutdown_CookiesAndStorage`<br>`ClearOnShutdown_Cache`<br>`ClearOnShutdown_FormData`<br>`ClearOnShutdown_SiteSettings` | 153.5.0esr |  |
+| `ClearOnShutdown`<br>`ClearOnShutdown_BrowsingHistoryAndDownloads`<br>`ClearOnShutdown_CookiesAndStorage`<br>`ClearOnShutdown_Cache`<br>`ClearOnShutdown_FormData`<br>`ClearOnShutdown_SiteSettings` | 158.0, 153.5.0esr |  |
 
 ## Containers
 

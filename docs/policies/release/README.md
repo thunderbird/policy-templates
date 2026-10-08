@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Thunderbird 157.0.2
+## Enterprise policy descriptions and templates for Thunderbird 158.0
 
 Policies can be specified by creating a file called `policies.json`:
 * Windows: place the file in a directory called `distribution` in the same
@@ -1465,7 +1465,7 @@ Block access to the developer tools.
 Remove access to all developer tools.
 
 **CCK2 Equivalent:** `removeDeveloperTools`\
-**Preferences Affected:** `devtools.policy.disabled`, `devtools.chrome.enabled`
+**Preferences Affected:** `devtools.policy.disabled`, `devtools.chrome.enabled`, `remote.policy.disabled`
 
 ### Settings
 
@@ -2304,7 +2304,7 @@ Installing a theme makes it the default.
   > *`force_installed`: The extension is installed automatically and the user can neither disable nor remove it.*<br>
   > *`normal_installed`: The extension is installed automatically. The user can disable it but cannot remove it.*
 - `install_url` (string)
-  > *The URL from which the extension is installed with `force_installed` and `normal_installed`, e.g. from addons.thunderbird.net or a `file:///` URL. Without it, the extension is installed from addons.thunderbird.net.*
+  > *The URL from which the extension is installed with `force_installed` and `normal_installed`, e.g. from addons.thunderbird.net or a `file:///` URL. Without it, the extension is installed from `update_url`, else from addons.thunderbird.net.*
 - `blocked_install_message` (string)
   > *A message shown to the user when the installation of this extension is blocked.*
 - `updates_disabled` (boolean)

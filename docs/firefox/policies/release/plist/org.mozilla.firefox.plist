@@ -157,6 +157,19 @@
         <string>/home/username/cert2.pem</string>
       </array>
     </dict>
+    <key>ClearOnShutdown</key>
+    <dict>
+      <key>BrowsingHistoryAndDownloads</key>
+      <true/>
+      <key>Cache</key>
+      <true/>
+      <key>CookiesAndStorage</key>
+      <true/>
+      <key>Exceptions</key>
+      <array>
+        <string>https://example.com</string>
+      </array>
+    </dict>
     <key>CNSA2KeyAgreementEnabled</key>
     <true/>
     <key>Containers</key>
@@ -197,6 +210,13 @@
         <dict>
           <key>Enabled</key>
           <true/>
+          <key>PlainTextOnly</key>
+          <true/>
+        </dict>
+        <key>ClipboardCopy</key>
+        <dict>
+          <key>Enabled</key>
+          <false/>
           <key>PlainTextOnly</key>
           <true/>
         </dict>
@@ -987,6 +1007,20 @@
         <dict>
           <key>HttpsOnly</key>
           <true/>
+        </dict>
+      </dict>
+      <dict>
+        <key>Match</key>
+        <array>
+          <string>*.example.com</string>
+        </array>
+        <key>Policies</key>
+        <dict>
+          <key>Container</key>
+          <dict>
+            <key>id</key>
+            <string>work</string>
+          </dict>
         </dict>
       </dict>
     </array>

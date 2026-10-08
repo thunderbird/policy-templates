@@ -71,7 +71,7 @@ Installation:
 | **[`DisableFileLink`](#disablefilelink)** | Disable the Filelink feature.
 | **[`DisableMasterPasswordCreation`](#disablemasterpasswordcreation)** | Prevent creating a primary password: If true, a master password can’t be created.
 | **[`DisableMessageForwardingFilters`](#disablemessageforwardingfilters)** | Prevent message filters from automatically forwarding messages.
-| **[`DisablePasswordReveal`](#disablepasswordreveal)** | Hide passwords of saved logins: Do not allow passwords to be revealed in saved logins.
+| **[`DisablePasswordReveal`](#disablepasswordreveal)** | Hide passwords of saved logins and password fields: Do not allow passwords to be revealed in saved logins or password fields.
 | **[`DisableQRExport`](#disableqrexport)** | Disable QR Code Export: Disable the generation of the QR code to export account settings and credentials.
 | **[`DisableSafeMode`](#disablesafemode)** | Disable the feature to restart in Safe Mode. Note: the Shift key to enter Safe Mode can only be disabled on Windows using Group Policy.
 | **[`DisableSecurityBypass`](#disablesecuritybypass)** | Prevent Bypassing Security Warnings: Prevent the user from bypassing certain security warnings.
@@ -1706,12 +1706,12 @@ Software\Policies\Mozilla\Thunderbird\DisableMessageForwardingFilters (REG_DWORD
 |:--- | ---:| ---:|
 | `DisableMessageForwardingFilters` | 156.0 |  |
 
-## DisablePasswordReveal: Hide passwords of saved logins {#disablepasswordreveal}
+## DisablePasswordReveal: Hide passwords of saved logins and password fields {#disablepasswordreveal}
 
-Do not allow passwords to be revealed in saved logins.
+Do not allow passwords to be revealed in saved logins or password fields.
 
 **CCK2 Equivalent:** N/A\
-**Preferences Affected:** N/A
+**Preferences Affected:** `layout.forms.reveal-password-button.enabled`
 
 ### Settings
 
