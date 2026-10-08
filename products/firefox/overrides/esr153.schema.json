@@ -4,13 +4,13 @@
   "definitions": {
     "url": {
       "type": "string",
-      "format": "uri"
+      "format": "moz-url"
     },
     "urlOrEmpty": {
       "type": "string",
       "anyOf": [
         {
-          "format": "uri"
+          "format": "moz-url"
         },
         {
           "maxLength": 0
@@ -19,7 +19,7 @@
     },
     "origin": {
       "type": "string",
-      "format": "uri",
+      "format": "moz-url",
       "pattern": "^([Ff][Ii][Ll][Ee]://.*|[Hh][Tt][Tt][Pp][Ss]?://[^/]+/?)$"
     }
   },
@@ -2260,7 +2260,9 @@
               "type": "boolean"
             },
             "update_url": {
-              "$ref": "#/definitions/url"
+              "type": "string",
+              "format": "moz-url",
+              "pattern": "^[^%]*(?:%[0-9A-Fa-f]{2}[^%]*)*$"
             },
             "default_area": {
               "type": "string",
