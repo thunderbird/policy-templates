@@ -540,9 +540,10 @@
 
     "DisablePasswordReveal": {
       "x-category": "Password manager",
+      "x-preferences-affected": ["layout.forms.reveal-password-button.enabled"],
       "type": "boolean",
-      "title": "Hide passwords of saved logins",
-      "description": "{ policy-DisablePasswordReveal }"
+      "title": "Hide passwords of saved logins and password fields",
+      "description": "{ policy-DisablePasswordReveal2 }"
     },
 
     "DisableQRExport": {

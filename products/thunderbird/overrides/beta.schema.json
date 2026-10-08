@@ -4,13 +4,13 @@
   "definitions": {
     "url": {
       "type": "string",
-      "format": "uri"
+      "format": "moz-url"
     },
     "urlOrEmpty": {
       "type": "string",
       "anyOf": [
         {
-          "format": "uri"
+          "format": "moz-url"
         },
         {
           "maxLength": 0
@@ -19,7 +19,7 @@
     },
     "origin": {
       "type": "string",
-      "format": "uri",
+      "format": "moz-url",
       "pattern": "^([Ff][Ii][Ll][Ee]://.*|[Hh][Tt][Tt][Pp][Ss]?://[^/]+/?)$"
     }
   },
@@ -562,7 +562,8 @@
       ],
       "x-preferences-affected": [
         "devtools.policy.disabled",
-        "devtools.chrome.enabled"
+        "devtools.chrome.enabled",
+        "remote.policy.disabled"
       ]
     },
     "DisableExperimentalFeatures": {
@@ -936,7 +937,9 @@
               "description": "If true, the extension is not updated automatically."
             },
             "update_url": {
-              "$ref": "#/definitions/url",
+              "type": "string",
+              "format": "moz-url",
+              "pattern": "^[^%]*(?:%[0-9A-Fa-f]{2}[^%]*)*$",
               "description": "An update manifest to update the extension with, instead of the extension's own update URL."
             },
             "private_browsing": {
