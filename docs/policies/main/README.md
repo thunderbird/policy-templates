@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Thunderbird Daily 159.0a1
+## Enterprise policy descriptions and templates for Thunderbird Daily 160.0a1
 
 **These policies are in active development and might contain changes that do
 not work with current release or ESR versions of Thunderbird.**

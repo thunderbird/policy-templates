@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Firefox ESR 153.5.0
+## Enterprise policy descriptions and templates for Firefox ESR 153.6.0
 
 Policies can be specified by creating a file called `policies.json`:
 * Windows: create a directory called `distribution` where `firefox.exe` is

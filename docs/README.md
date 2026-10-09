@@ -5,8 +5,8 @@ releases, but they may contain policies which older releases don't support. We
 suggest using the templates which correspond to the version of Thunderbird you
 are deploying.
 
- * [Thunderbird Daily 159.0a1](policies/main)
- * [Thunderbird Beta 158.0](policies/beta)
+ * [Thunderbird Daily 160.0a1](policies/main)
+ * [Thunderbird Beta 159.0](policies/beta)
  * [Thunderbird 158.0](policies/release)
  * [Thunderbird ESR 153.4.1](policies/esr153)
  * [Thunderbird ESR 140.17.0](policies/esr140)

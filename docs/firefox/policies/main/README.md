@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Firefox Nightly 159.0a1
+## Enterprise policy descriptions and templates for Firefox Nightly 160.0a1
 
 **These policies are in active development and may contain changes that do not
 work with current versions of Firefox.**

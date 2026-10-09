@@ -7,10 +7,10 @@ with older releases, but they may contain policies which older releases don't
 support. We suggest using the templates which correspond to the version of
 Firefox you are deploying.
 
- * [Firefox Nightly 159.0a1](policies/main)
- * [Firefox Beta 158.0](policies/beta)
+ * [Firefox Nightly 160.0a1](policies/main)
+ * [Firefox Beta 159.0](policies/beta)
  * [Firefox 158.0](policies/release)
- * [Firefox ESR 153.5.0](policies/esr153)
+ * [Firefox ESR 153.6.0](policies/esr153)
  * [Firefox ESR 140.17.1](policies/esr140)
  * [Firefox ESR 128.14.1](policies/esr128)
 
