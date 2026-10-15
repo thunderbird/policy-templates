@@ -39,20 +39,58 @@ jobs:
 
       # The files the generator downloaded, e.g. the history of the policy
       # schemas: each run starts from the cache of the last one.
-      - uses: actions/cache@v4
+      - name: Restore the download cache
+        uses: actions/cache/restore@v4
         with:
           path: generator/download_cache.json
           key: download-cache-${{ github.run_id }}
           restore-keys: download-cache-
 
+      # The clones of the commit graphs of the products' repositories (only
+      # commits, no files), see generator/modules/commit_graph.mjs. The
+      # generator updates them, or clones them again if they are missing or
+      # invalid.
+      - name: Restore the git cache
+        uses: actions/cache/restore@v4
+        with:
+          path: generator/git-cache
+          key: git-cache
+
       - name: Generate the docs
         env:
           # Raises the limit of the GitHub API, see generator/modules/sources.mjs.
-          GITHUB_TOKEN: ${{ github.token }}
+          # A read-only token of a user allows 5000 requests per hour, the
+          # token of the workflow 1000.
+          GITHUB_TOKEN: ${{ secrets.READONLY_API_TOKEN || github.token }}
         run: |
           # Thunderbird first: its run replaces all of docs/.
           node generator/update_all_policy_templates.js --product-config=products/thunderbird --output=docs
           node generator/update_all_policy_templates.js --product-config=products/firefox --output=docs/firefox
+
+      # Saved also if the generation failed (e.g. at the limit of the GitHub
+      # API), so the next run continues from there.
+      - name: Save the download cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: generator/download_cache.json
+          key: download-cache-${{ github.run_id }}
+
+      # A cache entry can't be replaced: the previous one is deleted, so only
+      # one copy of the git cache is kept.
+      - name: Delete the previous git cache
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh cache delete git-cache --repo "${{ github.repository }}" || echo "No git cache to delete."
+
+      - name: Save the git cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: generator/git-cache
+          key: git-cache
 
       - name: Commit the changed docs
         if: env.PUBLISH == 'true'
