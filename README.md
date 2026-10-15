@@ -187,23 +187,18 @@ shallow clone is refused (run `git fetch --unshallow` in it), and without a
 branch `main` (local or `origin/main`) a warning is shown, as uplifts merged
 into other branches can't be found then.
 
-The version in which a policy became available comes from the history of the
-schema. The merges of the release process (e.g. "Promote beta to release")
-take their whole content from the newer line, so `git log` and the GitHub API
-never visit the older line with its uplifts and dot releases. The generator
-therefore also reads the history from the heads of these lines: the parents
-of the merges on the branch which are not part of `main`
-(`generator/modules/commit_graph.mjs`). Reading from GitHub, it keeps a clone
-of the commit graph of the product's repository in `generator/git-cache/`:
-commits only, no files (Thunderbird about 55 MB, Firefox about 380 MB). It
-is created on the first run, and updated and checked on each run; it can be
-deleted at any time.
+The version in which a policy became available comes from the complete
+history of the schema, see [HISTORY.md](HISTORY.md). Reading from GitHub, the
+generator keeps a clone of the commit graph of the product's repository in
+`generator/git-cache/` (commits only, no files; Thunderbird about 55 MB,
+Firefox about 380 MB). It is created on the first run, and updated and
+checked on each run; it can be deleted at any time.
 
 The histories of the schema are requested from the GitHub API. Without a
 token, GitHub allows 60 requests per hour. The first run needs about 120
-requests for Thunderbird and about 600 for Firefox (about 25 minutes, the
-API is slow for a repository of that size); the histories are cached in
-`generator/download_cache.json`, so later runs only need a few requests.
+requests for Thunderbird and about 600 for Firefox (13 minutes for both in
+CI); the histories are cached in `generator/download_cache.json`, so later
+runs only need a few requests.
 To raise the limit, set `GITHUB_TOKEN` to a token: a fine-grained personal
 access token with read-only access to public repositories and no permissions
 is enough (5000 requests per hour). For example, with the token in a file
