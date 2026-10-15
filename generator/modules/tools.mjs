@@ -170,7 +170,12 @@ async function loadDownloadCache() {
 }
 
 async function writeDownloadCache() {
-    await writePrettyJSONFile(downloadCacheFile, Array.from(DOWNLOAD_CACHE.entries()));
+    // Write a new file and replace the cache file with it, so an interrupted
+    // write (e.g. a full disk) does not leave a broken cache file, which would
+    // be read as an empty cache.
+    const tempFile = `${downloadCacheFile}.tmp`;
+    await writePrettyJSONFile(tempFile, Array.from(DOWNLOAD_CACHE.entries()));
+    await fs.rename(tempFile, downloadCacheFile);
 }
 
 /**

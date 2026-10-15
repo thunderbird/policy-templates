@@ -1,5 +1,6 @@
 node_modules
 download_cache.json
+download_cache.json.tmp
 # The local clones of the commit graphs of the products' repositories.
 git-cache/
 # Local editor settings.
