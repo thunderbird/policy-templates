@@ -4,9 +4,27 @@ import os from "node:os";
 import pathUtils from "node:path";
 import { test } from "node:test";
 
-import { readRevalidatedUrl, setDownloadCacheFile } from "../modules/tools.mjs";
+import { getCachedValue, readRevalidatedUrl, setCachedValues, setDownloadCacheFile } from "../modules/tools.mjs";
 
 const URL = "https://example.org/file.json";
+
+test("overlapping writes of the cache keep all values", async () => {
+    const dir = await fs.mkdtemp(pathUtils.join(os.tmpdir(), "cache-"));
+    const file = pathUtils.join(dir, "cache.json");
+    try {
+        setDownloadCacheFile(file);
+        await Promise.all(Array.from({ length: 50 }, (_, i) => setCachedValues([[`key${i}`, `value${i}`]])));
+        // Read back from the file, without temporary files left.
+        setDownloadCacheFile(file);
+        for (let i = 0; i < 50; i++) {
+            assert.equal(await getCachedValue(`key${i}`), `value${i}`);
+        }
+        assert.deepEqual(await fs.readdir(dir), ["cache.json"]);
+    } finally {
+        setDownloadCacheFile(undefined);
+        await fs.rm(dir, { recursive: true, force: true });
+    }
+});
 
 /**
  * Run a test with a fresh cache file and a stubbed fetch(), which answers

@@ -4,6 +4,7 @@ import { DOWNLOAD_CACHE_FILE } from "./constants.mjs";
 
 // The cached values, read from the cache file on first use.
 let DOWNLOAD_CACHE = null;
+let DOWNLOAD_CACHE_LOADING = null;
 let downloadCacheFile = DOWNLOAD_CACHE_FILE;
 
 /**
@@ -15,6 +16,7 @@ let downloadCacheFile = DOWNLOAD_CACHE_FILE;
 export function setDownloadCacheFile(path) {
     downloadCacheFile = path ?? DOWNLOAD_CACHE_FILE;
     DOWNLOAD_CACHE = null;
+    DOWNLOAD_CACHE_LOADING = null;
 }
 
 /**
@@ -158,24 +160,38 @@ export async function setCachedValues(entries) {
 }
 
 async function loadDownloadCache() {
-    if (!DOWNLOAD_CACHE) {
-        try {
-            DOWNLOAD_CACHE = new Map(JSON.parse(await fs.readFile(downloadCacheFile, "utf-8")));
-        } catch (ex) {
-            // Cache file does not yet exist.
-            DOWNLOAD_CACHE = new Map();
-        }
+    // The file is read once: calls during the read wait for it, instead of
+    // each creating its own cache.
+    if (!DOWNLOAD_CACHE_LOADING) {
+        DOWNLOAD_CACHE_LOADING = (async () => {
+            try {
+                return new Map(JSON.parse(await fs.readFile(downloadCacheFile, "utf-8")));
+            } catch (ex) {
+                // Cache file does not yet exist.
+                return new Map();
+            }
+        })();
     }
+    DOWNLOAD_CACHE = await DOWNLOAD_CACHE_LOADING;
     return DOWNLOAD_CACHE;
 }
 
-async function writeDownloadCache() {
+// The pending writes of the cache file, which run one after another.
+let cacheWrites = Promise.resolve();
+
+function writeDownloadCache() {
     // Write a new file and replace the cache file with it, so an interrupted
     // write (e.g. a full disk) does not leave a broken cache file, which would
-    // be read as an empty cache.
-    const tempFile = `${downloadCacheFile}.tmp`;
-    await writePrettyJSONFile(tempFile, Array.from(DOWNLOAD_CACHE.entries()));
-    await fs.rename(tempFile, downloadCacheFile);
+    // be read as an empty cache. Writes may be requested while another one is
+    // running: they run one after another, each with the whole cache at the
+    // time it runs, so the last one includes all values.
+    const write = async () => {
+        const tempFile = `${downloadCacheFile}.tmp`;
+        await writePrettyJSONFile(tempFile, Array.from(DOWNLOAD_CACHE.entries()));
+        await fs.rename(tempFile, downloadCacheFile);
+    };
+    cacheWrites = cacheWrites.then(write, write);
+    return cacheWrites;
 }
 
 /**
