@@ -1,7 +1,26 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { buildCompatibilityData, dropRemovedBefore, getCompatibilityInformation } from "../modules/compatibility.mjs";
+import {
+    buildCompatibilityData, dropRemovedBefore, getCompatibilityInformation, getSchemaRevisions,
+} from "../modules/compatibility.mjs";
+
+test("revisions without a schema or with an invalid schema are skipped", async () => {
+    const files = {
+        "valid:schema.json": '{ "properties": { "Policy": {} } }',
+        "valid:version.txt": "91.0\n",
+        "broken:schema.json": '{ "properties": {\n<<<<<<< local\n} }',
+        "broken:version.txt": "60.0\n",
+        "removed:version.txt": "50.0\n",
+    };
+    const source = {
+        description: "test",
+        getFileHistory: async () => ["removed", "broken", "valid"],
+        readFile: async (commit, path) => files[`${commit}:${path}`] ?? null,
+    };
+    const revisions = await getSchemaRevisions(source, "head", { schema: "schema.json", version: "version.txt" });
+    assert.deepEqual(revisions.map(r => [r.revision, r.version]), [["valid", "91.0"]]);
+});
 
 test("settings with a name chosen by the admin are named [name]", () => {
     const revision = {

@@ -201,7 +201,20 @@ export function getSchemaRevisions(source, commit, paths) {
 async function readSchemaRevisions(source, commit, paths) {
     let revisions = [];
     for (let revision of await source.getFileHistory(commit, paths.schema)) {
-        let data = commentJson.parse(await source.readFile(revision, paths.schema));
+        // Skip revisions which removed the schema, or whose schema is broken
+        // (e.g. a Firefox uplift of 2018 committed with conflict markers,
+        // fixed in a later commit): they were never a valid schema.
+        const text = await source.readFile(revision, paths.schema);
+        if (text === null) {
+            continue;
+        }
+        let data;
+        try {
+            data = commentJson.parse(text);
+        } catch (ex) {
+            console.warn(` !! Skipping the invalid schema of revision ${revision}: ${ex.message}`);
+            continue;
+        }
         data.version = (await source.readFile(revision, paths.version)).trim();
         data.revision = revision;
         revisions.push(data);
