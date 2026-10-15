@@ -486,7 +486,7 @@ Software\Policies\Mozilla\Thunderbird\BackgroundAppUpdate (REG_DWORD) = 0x1
 
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
-| `BackgroundAppUpdate` | 92.0 |  |
+| `BackgroundAppUpdate` | 91.0 |  |
 
 ## BlockAboutAddons: Block Add-ons Manager {#blockaboutaddons}
 
@@ -1146,7 +1146,7 @@ Software\Policies\Mozilla\Thunderbird\DisableBuiltinPDFViewer (REG_DWORD) = 0x1
 
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
-| `DisableBuiltinPDFViewer` | 92.0 |  |
+| `DisableBuiltinPDFViewer` | 91.0 |  |
 
 ## DisabledCiphers
 
@@ -1296,7 +1296,7 @@ Software\Policies\Mozilla\Thunderbird\DisabledCiphers\TLS_RSA_WITH_3DES_EDE_CBC_
 |:--- | ---:| ---:|
 | `DisabledCiphers`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA`<br>`DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA`<br>`DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA`<br>`DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA`<br>`DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA`<br>`DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA` | 76.0 |  |
 | `DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA` | 102.0 |  |
-| `DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384` | 92.0 |  |
+| `DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384` | 91.0 |  |
 
 ## DisableDeveloperTools
 
@@ -1726,7 +1726,7 @@ Software\Policies\Mozilla\Thunderbird\DNSOverHTTPS\Locked (REG_DWORD) = 0x1
 
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
-| `DNSOverHTTPS`<br>`DNSOverHTTPS_Enabled`<br>`DNSOverHTTPS_ProviderURL`<br>`DNSOverHTTPS_ExcludedDomains`<br>`DNSOverHTTPS_Locked` | 92.0 |  |
+| `DNSOverHTTPS`<br>`DNSOverHTTPS_Enabled`<br>`DNSOverHTTPS_ProviderURL`<br>`DNSOverHTTPS_ExcludedDomains`<br>`DNSOverHTTPS_Locked` | 91.0 |  |
 
 ## DownloadDirectory
 
@@ -1999,7 +1999,7 @@ Software\Policies\Mozilla\Thunderbird\ExtensionSettings (REG_MULTI_SZ) =
 |:--- | ---:| ---:|
 | `ExtensionSettings`<br>`ExtensionSettings_[name]`<br>`ExtensionSettings_[name]_blocked_install_message` | 68.0 |  |
 | `ExtensionSettings_*`<br>`ExtensionSettings_*_installation_mode`<br>`ExtensionSettings_*_allowed_types`<br>`ExtensionSettings_*_blocked_install_message`<br>`ExtensionSettings_*_install_sources`<br>`ExtensionSettings_*_restricted_domains`<br>`ExtensionSettings_[name]_installation_mode`<br>`ExtensionSettings_[name]_install_url` | 89.0 |  |
-| `ExtensionSettings_[name]_updates_disabled` | 92.0 |  |
+| `ExtensionSettings_[name]_updates_disabled` | 91.0 |  |
 | `ExtensionSettings_[name]_private_browsing` | 136.0, 128.8.0esr |  |
 
 ## ExtensionUpdate: Automatic extension updates {#extensionupdate}
@@ -2228,7 +2228,7 @@ Software\Policies\Mozilla\Thunderbird\Handlers (REG_MULTI_SZ) =
 
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
-| `Handlers`<br>`Handlers_mimeTypes`<br>`Handlers_mimeTypes_[name]`<br>`Handlers_mimeTypes_[name]_action`<br>`Handlers_mimeTypes_[name]_ask`<br>`Handlers_mimeTypes_[name]_handlers`<br>`Handlers_extensions`<br>`Handlers_extensions_[name]`<br>`Handlers_extensions_[name]_action`<br>`Handlers_extensions_[name]_ask`<br>`Handlers_extensions_[name]_handlers`<br>`Handlers_schemes`<br>`Handlers_schemes_[name]`<br>`Handlers_schemes_[name]_action`<br>`Handlers_schemes_[name]_ask`<br>`Handlers_schemes_[name]_handlers` | 92.0 |  |
+| `Handlers`<br>`Handlers_mimeTypes`<br>`Handlers_mimeTypes_[name]`<br>`Handlers_mimeTypes_[name]_action`<br>`Handlers_mimeTypes_[name]_ask`<br>`Handlers_mimeTypes_[name]_handlers`<br>`Handlers_extensions`<br>`Handlers_extensions_[name]`<br>`Handlers_extensions_[name]_action`<br>`Handlers_extensions_[name]_ask`<br>`Handlers_extensions_[name]_handlers`<br>`Handlers_schemes`<br>`Handlers_schemes_[name]`<br>`Handlers_schemes_[name]_action`<br>`Handlers_schemes_[name]_ask`<br>`Handlers_schemes_[name]_handlers` | 91.0 |  |
 
 ## HardwareAcceleration: Use hardware acceleration {#hardwareacceleration}
 
@@ -2394,7 +2394,7 @@ Software\Policies\Mozilla\Thunderbird\ManualAppUpdateOnly (REG_DWORD) = 0x1
 
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
-| `ManualAppUpdateOnly` | 92.0 |  |
+| `ManualAppUpdateOnly` | 91.0 |  |
 
 ## NetworkPrediction: Network prediction (DNS prefetching) {#networkprediction}
 
@@ -2443,7 +2443,7 @@ Software\Policies\Mozilla\Thunderbird\NetworkPrediction (REG_DWORD) = 0x1
 
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
-| `NetworkPrediction` | 92.0 |  |
+| `NetworkPrediction` | 91.0 |  |
 
 ## OfferToSaveLogins: Offer to save passwords {#offertosavelogins}
 
@@ -2490,7 +2490,7 @@ Software\Policies\Mozilla\Thunderbird\OfferToSaveLogins (REG_DWORD) = 0x1
 
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
-| `OfferToSaveLogins` | 92.0 |  |
+| `OfferToSaveLogins` | 91.0 |  |
 
 ## OfferToSaveLoginsDefault: Offer to save passwords by default {#offertosaveloginsdefault}
 
@@ -2537,7 +2537,7 @@ Software\Policies\Mozilla\Thunderbird\OfferToSaveLoginsDefault (REG_DWORD) = 0x1
 
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
-| `OfferToSaveLoginsDefault` | 92.0 |  |
+| `OfferToSaveLoginsDefault` | 91.0 |  |
 
 ## PasswordManagerEnabled: Password Manager {#passwordmanagerenabled}
 
@@ -2646,7 +2646,7 @@ Software\Policies\Mozilla\Thunderbird\PDFjs\EnablePermissions (REG_DWORD) = 0x1
 
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
-| `PDFjs`<br>`PDFjs_Enabled`<br>`PDFjs_EnablePermissions` | 92.0 |  |
+| `PDFjs`<br>`PDFjs_Enabled`<br>`PDFjs_EnablePermissions` | 91.0 |  |
 
 ## Preferences
 
@@ -2790,7 +2790,7 @@ Software\Policies\Mozilla\Thunderbird\Preferences (REG_MULTI_SZ) =
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
 | `Preferences` | 68.0 |  |
-| `Preferences_[name]`<br>`Preferences_[name]_Value`<br>`Preferences_[name]_Status` | 92.0 |  |
+| `Preferences_[name]`<br>`Preferences_[name]_Value`<br>`Preferences_[name]_Status` | 91.0 |  |
 
 ## PrimaryPassword: Primary (Master) Password {#primarypassword}
 
@@ -2841,7 +2841,7 @@ Software\Policies\Mozilla\Thunderbird\PrimaryPassword (REG_DWORD) = 0x1
 
 | Policy/Property Name | Thunderbird | Removed after |
 |:--- | ---:| ---:|
-| `PrimaryPassword` | 92.0 |  |
+| `PrimaryPassword` | 91.0 |  |
 
 ## PromptForDownloadLocation
 

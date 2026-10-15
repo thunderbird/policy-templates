@@ -516,7 +516,7 @@ Software\Policies\Mozilla\Firefox\AppUpdateURL (REG_SZ) = https://yoursite.com
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `AppUpdateURL` | 63.0 |  |
+| `AppUpdateURL` | 62.0 |  |
 
 ## Authentication
 
@@ -639,10 +639,11 @@ Software\Policies\Mozilla\Firefox\Authentication\PrivateBrowsing (REG_DWORD) = 0
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `Authentication`<br>`Authentication_SPNEGO`<br>`Authentication_Delegated`<br>`Authentication_NTLM` | 61.0 |  |
-| `Authentication_AllowNonFQDN`<br>`Authentication_AllowNonFQDN_SPNEGO`<br>`Authentication_AllowNonFQDN_NTLM` | 63.0 |  |
-| `Authentication_AllowProxies`<br>`Authentication_AllowProxies_SPNEGO`<br>`Authentication_AllowProxies_NTLM`<br>`Authentication_Locked` | 71.0 |  |
-| `Authentication_PrivateBrowsing` | 78.0 |  |
+| `Authentication`<br>`Authentication_SPNEGO`<br>`Authentication_Delegated`<br>`Authentication_NTLM` | 60.0 |  |
+| `Authentication_AllowNonFQDN`<br>`Authentication_AllowNonFQDN_SPNEGO`<br>`Authentication_AllowNonFQDN_NTLM` | 62.0 |  |
+| `Authentication_AllowProxies`<br>`Authentication_AllowProxies_SPNEGO`<br>`Authentication_AllowProxies_NTLM` | 70.0 |  |
+| `Authentication_Locked` | 71.0 |  |
+| `Authentication_PrivateBrowsing` | 77.0 |  |
 
 ## AutofillAddressEnabled: Enable autofill for addresses {#autofilladdressenabled}
 
@@ -1231,7 +1232,7 @@ Software\Policies\Mozilla\Firefox\Certificates\Install\2 (REG_EXPAND_SZ) = /home
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `Certificates`<br>`Certificates_ImportEnterpriseRoots` | 61.0 |  |
+| `Certificates`<br>`Certificates_ImportEnterpriseRoots` | 60.0 |  |
 | `Certificates_Install` | 64.0 |  |
 
 ## Certificates › ImportEnterpriseRoots
@@ -1286,7 +1287,7 @@ Software\Policies\Mozilla\Firefox\Certificates\ImportEnterpriseRoots (REG_DWORD)
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `Certificates_ImportEnterpriseRoots` | 61.0 |  |
+| `Certificates_ImportEnterpriseRoots` | 60.0 |  |
 
 ## Certificates › Install: Install Certificates {#certificates--install}
 
@@ -1788,11 +1789,10 @@ Software\Policies\Mozilla\Firefox\Cookies\BehaviorPrivateBrowsing (REG_SZ) = acc
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `Cookies`<br>`Cookies_Allow`<br>`Cookies_Block` | 60.0 |  |
+| `Cookies`<br>`Cookies_Allow`<br>`Cookies_Block`<br>`Cookies_Default`<br>`Cookies_AcceptThirdParty`<br>`Cookies_ExpireAtSessionEnd`<br>`Cookies_Locked` | 60.0 |  |
 | `Cookies_AllowSession` | 79.0 |  |
-| `Cookies_Default`<br>`Cookies_AcceptThirdParty`<br>`Cookies_ExpireAtSessionEnd`<br>`Cookies_Locked` | 61.0 |  |
 | `Cookies_RejectTracker` | 63.0 |  |
-| `Cookies_Behavior`<br>`Cookies_BehaviorPrivateBrowsing` | 96.0 |  |
+| `Cookies_Behavior`<br>`Cookies_BehaviorPrivateBrowsing` | 95.0 |  |
 
 ## DefaultDownloadDirectory
 
@@ -1980,7 +1980,7 @@ Software\Policies\Mozilla\Firefox\DisableBuiltinPDFViewer (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableBuiltinPDFViewer` | 61.0 |  |
+| `DisableBuiltinPDFViewer` | 60.0 |  |
 
 ## DisabledCiphers
 
@@ -2091,7 +2091,7 @@ Software\Policies\Mozilla\Firefox\DisabledCiphers\TLS_ECDHE_RSA_WITH_CHACHA20_PO
 |:--- | ---:| ---:|
 | `DisabledCiphers`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA`<br>`DisabledCiphers_TLS_DHE_RSA_WITH_AES_128_CBC_SHA`<br>`DisabledCiphers_TLS_DHE_RSA_WITH_AES_256_CBC_SHA`<br>`DisabledCiphers_TLS_RSA_WITH_AES_128_CBC_SHA`<br>`DisabledCiphers_TLS_RSA_WITH_AES_256_CBC_SHA`<br>`DisabledCiphers_TLS_RSA_WITH_3DES_EDE_CBC_SHA` | 76.0 |  |
 | `DisabledCiphers_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`<br>`DisabledCiphers_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA`<br>`DisabledCiphers_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA` | 97.0 |  |
-| `DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384` | 79.0 |  |
+| `DisabledCiphers_TLS_RSA_WITH_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_RSA_WITH_AES_256_GCM_SHA384` | 78.0 |  |
 | `DisabledCiphers_TLS_CHACHA20_POLY1305_SHA256`<br>`DisabledCiphers_TLS_AES_128_GCM_SHA256`<br>`DisabledCiphers_TLS_AES_256_GCM_SHA384` | 138.0 |  |
 
 ## DisableDefaultBrowserAgent: Disable the default browser agent {#disabledefaultbrowseragent}
@@ -2141,7 +2141,7 @@ Software\Policies\Mozilla\Firefox\DisableDefaultBrowserAgent (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableDefaultBrowserAgent` | 76.0 |  |
+| `DisableDefaultBrowserAgent` | 75.0 |  |
 
 ## DisableDeveloperTools
 
@@ -2278,7 +2278,7 @@ Software\Policies\Mozilla\Firefox\DisableFeedbackCommands (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableFeedbackCommands` | 61.0 |  |
+| `DisableFeedbackCommands` | 60.0 |  |
 
 ## DisableFirefoxAccounts
 
@@ -2458,7 +2458,7 @@ Software\Policies\Mozilla\Firefox\DisableForgetButton (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableForgetButton` | 61.0 |  |
+| `DisableForgetButton` | 60.0 |  |
 
 ## DisableFormHistory
 
@@ -2552,7 +2552,7 @@ Software\Policies\Mozilla\Firefox\DisableMasterPasswordCreation (REG_DWORD) = 0x
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableMasterPasswordCreation` | 61.0 |  |
+| `DisableMasterPasswordCreation` | 60.0 |  |
 
 ## DisablePasswordReveal: Hide passwords of saved logins {#disablepasswordreveal}
 
@@ -2736,7 +2736,7 @@ Software\Policies\Mozilla\Firefox\DisableProfileImport (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableProfileImport` | 61.0 |  |
+| `DisableProfileImport` | 60.0 |  |
 
 ## DisableProfileRefresh
 
@@ -2781,7 +2781,7 @@ Software\Policies\Mozilla\Firefox\DisableProfileRefresh (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableProfileRefresh` | 61.0 |  |
+| `DisableProfileRefresh` | 60.0 |  |
 
 ## DisableSafeMode
 
@@ -2828,7 +2828,7 @@ Software\Policies\Mozilla\Firefox\DisableSafeMode (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableSafeMode` | 61.0 |  |
+| `DisableSafeMode` | 60.0 |  |
 
 ## DisableSecurityBypass: Prevent Bypassing Security Warnings {#disablesecuritybypass}
 
@@ -2888,7 +2888,7 @@ Software\Policies\Mozilla\Firefox\DisableSecurityBypass\SafeBrowsing (REG_DWORD)
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableSecurityBypass`<br>`DisableSecurityBypass_InvalidCertificate`<br>`DisableSecurityBypass_SafeBrowsing` | 61.0 |  |
+| `DisableSecurityBypass`<br>`DisableSecurityBypass_InvalidCertificate`<br>`DisableSecurityBypass_SafeBrowsing` | 60.0 |  |
 
 ## DisableSetDesktopBackground
 
@@ -2933,7 +2933,7 @@ Software\Policies\Mozilla\Firefox\DisableSetDesktopBackground (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableSetDesktopBackground` | 61.0 |  |
+| `DisableSetDesktopBackground` | 60.0 |  |
 
 ## DisableSystemAddonUpdate: Disable System Addon Updates {#disablesystemaddonupdate}
 
@@ -2978,7 +2978,7 @@ Software\Policies\Mozilla\Firefox\DisableSystemAddonUpdate (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableSystemAddonUpdate` | 61.0 |  |
+| `DisableSystemAddonUpdate` | 60.0 |  |
 
 ## DisableTelemetry
 
@@ -3027,7 +3027,7 @@ Software\Policies\Mozilla\Firefox\DisableTelemetry (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DisableTelemetry` | 61.0 |  |
+| `DisableTelemetry` | 60.0 |  |
 
 ## DisableThirdPartyModuleBlocking
 
@@ -3292,7 +3292,7 @@ Software\Policies\Mozilla\Firefox\DNSOverHTTPS\Fallback (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `DNSOverHTTPS`<br>`DNSOverHTTPS_Enabled`<br>`DNSOverHTTPS_ProviderURL`<br>`DNSOverHTTPS_Locked` | 64.0 |  |
+| `DNSOverHTTPS`<br>`DNSOverHTTPS_Enabled`<br>`DNSOverHTTPS_ProviderURL`<br>`DNSOverHTTPS_Locked` | 63.0 |  |
 | `DNSOverHTTPS_ExcludedDomains` | 75.0 |  |
 | `DNSOverHTTPS_Fallback` | 124.0 |  |
 
@@ -3496,7 +3496,7 @@ Software\Policies\Mozilla\Firefox\EnableTrackingProtection\Exceptions\1 (REG_SZ)
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `EnableTrackingProtection`<br>`EnableTrackingProtection_Value`<br>`EnableTrackingProtection_Locked` | 61.0 |  |
+| `EnableTrackingProtection`<br>`EnableTrackingProtection_Value`<br>`EnableTrackingProtection_Locked` | 60.0 |  |
 | `EnableTrackingProtection_Cryptomining`<br>`EnableTrackingProtection_Fingerprinting` | 70.0 |  |
 | `EnableTrackingProtection_EmailTracking` | 112.0 |  |
 | `EnableTrackingProtection_SuspectedFingerprinting` | 142.0, 140.1.0esr |  |
@@ -3707,7 +3707,7 @@ Software\Policies\Mozilla\Firefox\Extensions\Locked\1 (REG_SZ) = addon_id@mozill
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `Extensions`<br>`Extensions_Install`<br>`Extensions_Uninstall`<br>`Extensions_Locked` | 61.0 |  |
+| `Extensions`<br>`Extensions_Install`<br>`Extensions_Uninstall`<br>`Extensions_Locked` | 60.0 |  |
 
 ## ExtensionSettings: Extension Management {#extensionsettings}
 
@@ -4020,7 +4020,7 @@ Software\Policies\Mozilla\Firefox\FirefoxHome\Locked (REG_DWORD) = 0x1
 | `FirefoxHome`<br>`FirefoxHome_Search`<br>`FirefoxHome_TopSites`<br>`FirefoxHome_Highlights`<br>`FirefoxHome_Pocket`<br>`FirefoxHome_Snippets`<br>`FirefoxHome_Locked` | 68.0 |  |
 | `FirefoxHome_Weather` | 152.0, 140.12.0esr |  |
 | `FirefoxHome_SponsoredTopSites`<br>`FirefoxHome_SponsoredPocket` | 95.0 |  |
-| `FirefoxHome_Stories`<br>`FirefoxHome_SponsoredStories` | 142.0, 140.1.0esr |  |
+| `FirefoxHome_Stories`<br>`FirefoxHome_SponsoredStories` | 140.0.4, 140.1.0esr |  |
 
 ## FirefoxSuggest: Firefox Suggest (US only) {#firefoxsuggest}
 
@@ -4687,7 +4687,7 @@ Software\Policies\Mozilla\Firefox\InstallAddonsPermission\Default (REG_DWORD) = 
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `InstallAddonsPermission`<br>`InstallAddonsPermission_Allow`<br>`InstallAddonsPermission_Default` | 61.0 |  |
+| `InstallAddonsPermission`<br>`InstallAddonsPermission_Allow`<br>`InstallAddonsPermission_Default` | 60.0 |  |
 
 ## LegacyProfiles
 
@@ -4738,7 +4738,7 @@ Software\Policies\Mozilla\Firefox\LegacyProfiles (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `LegacyProfiles` | 71.0 |  |
+| `LegacyProfiles` | 70.0 |  |
 
 ## LegacySameSiteCookieBehaviorEnabled: Revert to legacy SameSite behavior {#legacysamesitecookiebehaviorenabled}
 
@@ -5114,7 +5114,7 @@ Software\Policies\Mozilla\Firefox\MicrosoftEntraSSO (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `MicrosoftEntraSSO` | 133.0 |  |
+| `MicrosoftEntraSSO` | 132.0.1 |  |
 
 ## NetworkPrediction
 
@@ -5251,7 +5251,7 @@ Software\Policies\Mozilla\Firefox\NoDefaultBookmarks (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `NoDefaultBookmarks` | 61.0 |  |
+| `NoDefaultBookmarks` | 60.0 |  |
 
 ## OfferToSaveLogins
 
@@ -5296,7 +5296,7 @@ Software\Policies\Mozilla\Firefox\OfferToSaveLogins (REG_DWORD) = 0x0
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `OfferToSaveLogins` | 61.0 |  |
+| `OfferToSaveLogins` | 60.0 |  |
 
 ## OfferToSaveLoginsDefault: Offer to save logins (default) {#offertosaveloginsdefault}
 
@@ -5390,7 +5390,7 @@ Software\Policies\Mozilla\Firefox\OverrideFirstRunPage (REG_SZ) = https://exampl
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `OverrideFirstRunPage` | 61.0 |  |
+| `OverrideFirstRunPage` | 60.0 |  |
 
 ## OverridePostUpdatePage: Override the upgrade page {#overridepostupdatepage}
 
@@ -5437,7 +5437,7 @@ Software\Policies\Mozilla\Firefox\OverridePostUpdatePage (REG_SZ) = http://examp
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `OverridePostUpdatePage` | 61.0 |  |
+| `OverridePostUpdatePage` | 60.0 |  |
 
 ## PasswordManagerEnabled: Password Manager {#passwordmanagerenabled}
 
@@ -5892,7 +5892,7 @@ Software\Policies\Mozilla\Firefox\Permissions\ScreenShare\Locked (REG_DWORD) = 0
 | `Permissions`<br>`Permissions_Camera`<br>`Permissions_Camera_Allow`<br>`Permissions_Camera_Block`<br>`Permissions_Camera_BlockNewRequests`<br>`Permissions_Camera_Locked`<br>`Permissions_Microphone`<br>`Permissions_Microphone_Allow`<br>`Permissions_Microphone_Block`<br>`Permissions_Microphone_BlockNewRequests`<br>`Permissions_Microphone_Locked`<br>`Permissions_Location`<br>`Permissions_Location_Allow`<br>`Permissions_Location_Block`<br>`Permissions_Location_BlockNewRequests`<br>`Permissions_Location_Locked`<br>`Permissions_Notifications`<br>`Permissions_Notifications_Allow`<br>`Permissions_Notifications_Block`<br>`Permissions_Notifications_BlockNewRequests`<br>`Permissions_Notifications_Locked` | 62.0 |  |
 | `Permissions_Autoplay`<br>`Permissions_Autoplay_Allow`<br>`Permissions_Autoplay_Block` | 74.0 |  |
 | `Permissions_Autoplay_Default`<br>`Permissions_Autoplay_Locked` | 76.0 |  |
-| `Permissions_VirtualReality`<br>`Permissions_VirtualReality_Allow`<br>`Permissions_VirtualReality_Block`<br>`Permissions_VirtualReality_BlockNewRequests`<br>`Permissions_VirtualReality_Locked` | 81.0 |  |
+| `Permissions_VirtualReality`<br>`Permissions_VirtualReality_Allow`<br>`Permissions_VirtualReality_Block`<br>`Permissions_VirtualReality_BlockNewRequests`<br>`Permissions_VirtualReality_Locked` | 80.0 |  |
 | `Permissions_ScreenShare`<br>`Permissions_ScreenShare_Allow`<br>`Permissions_ScreenShare_Block`<br>`Permissions_ScreenShare_BlockNewRequests`<br>`Permissions_ScreenShare_Locked` | 142.0, 140.2.0esr |  |
 
 ## PictureInPicture: Picture-in-Picture {#pictureinpicture}
@@ -6020,7 +6020,7 @@ Software\Policies\Mozilla\Firefox\PopupBlocking\Locked (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `PopupBlocking`<br>`PopupBlocking_Allow`<br>`PopupBlocking_Default`<br>`PopupBlocking_Locked` | 61.0 |  |
+| `PopupBlocking`<br>`PopupBlocking_Allow`<br>`PopupBlocking_Default`<br>`PopupBlocking_Locked` | 60.0 |  |
 
 ## PostQuantumKeyAgreementEnabled: Post-quantum key agreement {#postquantumkeyagreementenabled}
 
@@ -6190,7 +6190,7 @@ Software\Policies\Mozilla\Firefox\Preferences (REG_MULTI_SZ) =
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
 | `Preferences` | 68.0 |  |
-| `Preferences_[name]`<br>`Preferences_[name]_Value`<br>`Preferences_[name]_Status` | 82.0 |  |
+| `Preferences_[name]`<br>`Preferences_[name]_Value`<br>`Preferences_[name]_Status` | 81.0 |  |
 | `Preferences_[name]_Type` | 123.0 |  |
 
 ## PrimaryPassword: Primary (Master) Password {#primarypassword}
@@ -6240,7 +6240,7 @@ Software\Policies\Mozilla\Firefox\PrimaryPassword (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `PrimaryPassword` | 80.0 |  |
+| `PrimaryPassword` | 79.0 |  |
 
 ## PrintingEnabled: Printing {#printingenabled}
 
@@ -6523,7 +6523,7 @@ Software\Policies\Mozilla\Firefox\Proxy\UseProxyForDNS (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `Proxy`<br>`Proxy_Mode`<br>`Proxy_Locked`<br>`Proxy_AutoConfigURL`<br>`Proxy_FTPProxy`<br>`Proxy_HTTPProxy`<br>`Proxy_SSLProxy`<br>`Proxy_SOCKSProxy`<br>`Proxy_SOCKSVersion`<br>`Proxy_UseHTTPProxyForAllProtocols`<br>`Proxy_Passthrough`<br>`Proxy_UseProxyForDNS`<br>`Proxy_AutoLogin` | 61.0 |  |
+| `Proxy`<br>`Proxy_Mode`<br>`Proxy_Locked`<br>`Proxy_AutoConfigURL`<br>`Proxy_FTPProxy`<br>`Proxy_HTTPProxy`<br>`Proxy_SSLProxy`<br>`Proxy_SOCKSProxy`<br>`Proxy_SOCKSVersion`<br>`Proxy_UseHTTPProxyForAllProtocols`<br>`Proxy_Passthrough`<br>`Proxy_UseProxyForDNS`<br>`Proxy_AutoLogin` | 60.0 |  |
 
 ## RequestedLocales: Requested locale {#requestedlocales}
 
@@ -6699,9 +6699,9 @@ Software\Policies\Mozilla\Firefox\SanitizeOnShutdown\Locked (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `SanitizeOnShutdown` | 61.0 |  |
+| `SanitizeOnShutdown` | 60.0 |  |
 | `SanitizeOnShutdown_Cache`<br>`SanitizeOnShutdown_Cookies`<br>`SanitizeOnShutdown_Downloads`<br>`SanitizeOnShutdown_FormData`<br>`SanitizeOnShutdown_History`<br>`SanitizeOnShutdown_Sessions`<br>`SanitizeOnShutdown_SiteSettings`<br>`SanitizeOnShutdown_OfflineApps` | 68.0 |  |
-| `SanitizeOnShutdown_Locked` | 75.0 |  |
+| `SanitizeOnShutdown_Locked` | 74.0 |  |
 
 ## SearchBar: Search bar location {#searchbar}
 
@@ -6748,7 +6748,7 @@ Software\Policies\Mozilla\Firefox\SearchBar (REG_SZ) = unified
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `SearchBar` | 61.0 |  |
+| `SearchBar` | 60.0 |  |
 
 ## SearchEngines: Search {#searchengines}
 
@@ -6850,7 +6850,7 @@ Software\Policies\Mozilla\Firefox\SearchEngines\PreventInstalls (REG_DWORD) = 0x
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `SearchEngines`<br>`SearchEngines_Add`<br>`SearchEngines_Default`<br>`SearchEngines_PreventInstalls` | 61.0 |  |
+| `SearchEngines`<br>`SearchEngines_Add`<br>`SearchEngines_Default`<br>`SearchEngines_PreventInstalls` | 60.0 |  |
 | `SearchEngines_DefaultPrivate` | 71.0 |  |
 | `SearchEngines_Remove` | 62.0 |  |
 
@@ -6971,7 +6971,7 @@ Software\Policies\Mozilla\Firefox\SearchEngines\Add\1\SuggestURLTemplate (REG_SZ
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `SearchEngines_Add` | 61.0 |  |
+| `SearchEngines_Add` | 60.0 |  |
 
 ## SearchSuggestEnabled: Search Suggestions {#searchsuggestenabled}
 
@@ -7173,7 +7173,7 @@ Software\Policies\Mozilla\Firefox\SkipTermsOfUse (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `SkipTermsOfUse` | 139.0 |  |
+| `SkipTermsOfUse` | 138.0 |  |
 
 ## SSLVersionMax: Maximum SSL version enabled {#sslversionmax}
 
@@ -7515,11 +7515,10 @@ Software\Policies\Mozilla\Firefox\UserMessaging\Locked (REG_DWORD) = 0x1
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `UserMessaging`<br>`UserMessaging_WhatsNew`<br>`UserMessaging_ExtensionRecommendations`<br>`UserMessaging_FeatureRecommendations`<br>`UserMessaging_Locked` | 75.0 |  |
-| `UserMessaging_UrlbarInterventions` | 76.0 |  |
-| `UserMessaging_SkipOnboarding` | 80.0 |  |
-| `UserMessaging_MoreFromMozilla` | 99.0 |  |
-| `UserMessaging_FirefoxLabs` | 131.0 |  |
+| `UserMessaging`<br>`UserMessaging_WhatsNew`<br>`UserMessaging_ExtensionRecommendations`<br>`UserMessaging_FeatureRecommendations`<br>`UserMessaging_UrlbarInterventions`<br>`UserMessaging_Locked` | 75.0 |  |
+| `UserMessaging_SkipOnboarding` | 79.0 |  |
+| `UserMessaging_MoreFromMozilla` | 98.0 |  |
+| `UserMessaging_FirefoxLabs` | 130.0.1 |  |
 | `UserMessaging_SkipTermsOfUse` | 138.0 | 138.0 |
 
 ## UseSystemPrintDialog
@@ -7637,7 +7636,7 @@ Software\Policies\Mozilla\Firefox\WebsiteFilter (REG_MULTI_SZ) =
 
 | Policy/Property Name | Firefox | Removed after |
 |:--- | ---:| ---:|
-| `WebsiteFilter`<br>`WebsiteFilter_Block`<br>`WebsiteFilter_Exceptions` | 61.0 |  |
+| `WebsiteFilter`<br>`WebsiteFilter_Block`<br>`WebsiteFilter_Exceptions` | 60.0 |  |
 
 ## WindowsSSO
 
