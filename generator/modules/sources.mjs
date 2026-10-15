@@ -3,7 +3,8 @@ import fs from "node:fs/promises";
 import pathUtils from "node:path";
 import { promisify } from "node:util";
 
-import { CommitGraph, getSideParents } from "./commit_graph.mjs";
+import { getSideParents } from "./common/side_parents.mjs";
+import { TreelessClone } from "./common/treeless_clone.mjs";
 import {
     GITHUB_API_URL, GITHUB_RAW_URL, GIT_CACHE_DIR, MOZILLA_POLICY_TEMPLATES_REPOSITORY,
 } from "./constants.mjs";
@@ -157,7 +158,7 @@ export class LocalGitSource {
     /**
      * Get the commits in the history of the given commit which modified the
      * given file, including the lines merged in from outside of main (see
-     * commit_graph.mjs).
+     * common/side_parents.mjs).
      *
      * @param {string} commit
      * @param {string} path - Path of the file inside the repository.
@@ -207,29 +208,20 @@ export class LocalGitSource {
 }
 
 /**
- * Read files and their history from a GitHub repository. Files are downloaded
- * from raw.githubusercontent.com, the histories of files are requested from
- * the GitHub API. With the commit graph of the repository (see
- * commit_graph.mjs), the branches are read from it, and the history of a file
- * includes the lines merged in from outside of main. Files and histories are
- * cached, as the content and the history of a file at a given commit never
- * change.
+ * Read files from a GitHub repository, without their history: the branches
+ * are requested from the GitHub API, files are downloaded from
+ * raw.githubusercontent.com (cached). Used for Mozilla's base ADMX/ADML files.
  */
 export class GitHubSource {
-    // Map of branch names to their commits, requested once (without a commit
-    // graph).
+    // Map of branch names to their commits, requested once.
     #branches = null;
-    #graph = null;
 
     /**
-     * @param {string} repository - The repository, e.g. "thunderbird/thunderbird-desktop".
-     * @param {Object} [options]
-     * @param {CommitGraph} [options.graph] - The commit graph of the repository.
+     * @param {string} repository - The repository, e.g. "mozilla/policy-templates".
      */
-    constructor(repository, { graph = null } = {}) {
+    constructor(repository) {
         this.repository = repository;
         this.description = `https://github.com/${repository}`;
-        this.#graph = graph;
     }
 
     async init() {
@@ -279,112 +271,37 @@ export class GitHubSource {
     }
 
     async listBranches() {
-        if (this.#graph) {
-            return this.#graph.listBranches();
-        }
         return [...(await this.#getBranches()).keys()];
     }
 
     async resolveBranch(name) {
-        if (this.#graph) {
-            return this.#graph.resolveBranch(name);
-        }
         return (await this.#getBranches()).get(name) ?? null;
-    }
-
-    /**
-     * Get the commits in the history of the given commit which modified the
-     * given file. With a commit graph, the lines merged in from outside of
-     * main are included (see commit_graph.mjs).
-     *
-     * @param {string} commit
-     * @param {string} path - Path of the file inside the repository.
-     * @returns {Promise<string[]>}
-     */
-    async getFileHistory(commit, path) {
-        const starts = [
-            commit,
-            ...this.#graph ? await this.#graph.getSideParents(commit, MAIN_BRANCH) : [],
-        ];
-        const history = new Set();
-        for (const start of starts) {
-            for (const sha of await this.#getSimplifiedHistory(start, path)) {
-                history.add(sha);
-            }
-        }
-        return [...history];
-    }
-
-    /**
-     * Get the history of a file as the GitHub API returns it: following only
-     * one parent at merges whose result equals that parent.
-     *
-     * The history from a commit never changes, and from a commit of it on, it
-     * is the same for every start. So it is cached as links: for each commit,
-     * the next one of the history. A request stops at the first commit whose
-     * link is known, the rest of the history is known already.
-     *
-     * @param {string} start - The commit to start from.
-     * @param {string} path - Path of the file inside the repository.
-     * @returns {Promise<string[]>} newest first
-     */
-    async #getSimplifiedHistory(start, path) {
-        const key = (kind, sha) => `${GITHUB_API_URL}/repos/${this.repository}/history-${kind}/${sha}/${path}`;
-        let first = await getCachedValue(key("first", start));
-        if (first === undefined) {
-            first = await this.#requestSimplifiedHistory(start, path, key);
-        }
-        const history = [];
-        for (let sha = first; sha; sha = await getCachedValue(key("next", sha))) {
-            history.push(sha);
-        }
-        return history;
-    }
-
-    /**
-     * Request the history of a file until a known commit, and store it as
-     * links, see #getSimplifiedHistory().
-     *
-     * @returns {Promise<string>} the first commit of the history, "" if there
-     *    is none
-     */
-    async #requestSimplifiedHistory(start, path, key) {
-        const perPage = 100;
-        const file = encodeURIComponent(path);
-        const links = [];
-        let first = "";
-        let previous = null;
-        let known = false;
-        for (let page = 1; !known; page++) {
-            const data = await this.#api(`/commits?sha=${start}&path=${file}&per_page=${perPage}&page=${page}`) ?? [];
-            for (const { sha } of data) {
-                if (previous) {
-                    links.push([key("next", previous), sha]);
-                } else {
-                    first = sha;
-                }
-                previous = sha;
-                if (await getCachedValue(key("next", sha)) !== undefined) {
-                    known = true;
-                    break;
-                }
-            }
-            if (data.length < perPage) {
-                break;
-            }
-        }
-        // The end of the history, unless it continues with a known commit.
-        if (previous && !known) {
-            links.push([key("next", previous), ""]);
-        }
-        links.push([key("first", start), first]);
-        await setCachedValues(links);
-        return first;
     }
 
     async readFile(commit, path) {
         return readCachedUrl(`${GITHUB_RAW_URL}/${this.repository}/${commit}/${path}`);
     }
+}
+
+/**
+ * Open the product's repository on GitHub: a treeless clone of its commit
+ * graph in GIT_CACHE_DIR, with the histories of files from the GitHub API and
+ * the files from raw.githubusercontent.com, both cached in the download cache
+ * (see common/treeless_clone.mjs and HISTORY.md).
+ *
+ * @param {string} repository - The repository, e.g. "thunderbird/thunderbird-desktop".
+ * @returns {Promise<TreelessClone>}
+ */
+export function openProductRepository(repository) {
+    return TreelessClone.open(
+        `https://github.com/${repository}.git`,
+        pathUtils.join(GIT_CACHE_DIR, `${repository.replace("/", "__")}.git`),
+        {
+            repository,
+            cache: { get: getCachedValue, set: setCachedValues },
+            readUrl: readCachedUrl,
+        }
+    );
 }
 
 /**
@@ -394,18 +311,22 @@ export class GitHubSource {
  *
  * @param {Object} options - The values returned by util.parseArgs().
  * @param {Product} product - See loadProduct().
- * @returns {Promise<{app: LocalGitSource|GitHubSource, mozilla: GitHubSource, product: Product}>}
+ * @returns {Promise<{app: LocalGitSource|TreelessClone, mozilla: GitHubSource, product: Product}>}
  */
 export async function createSources(options, product) {
-    const repository = product.source.repository;
     const app = options.checkout
-        ? new LocalGitSource(options.checkout)
-        : new GitHubSource(repository, {
-            graph: await CommitGraph.open(
-                `https://github.com/${repository}.git`,
-                pathUtils.join(GIT_CACHE_DIR, `${repository.replace("/", "__")}.git`)
-            ),
-        });
+        ? await new LocalGitSource(options.checkout).init()
+        : await openProductRepository(product.source.repository);
     const mozilla = new GitHubSource(MOZILLA_POLICY_TEMPLATES_REPOSITORY);
-    return { app: await app.init(), mozilla: await mozilla.init(), product };
+    return { app, mozilla: await mozilla.init(), product };
+}
+
+/**
+ * Release the sources created by createSources() (e.g. the git process of a
+ * BloblessClone, which would keep the generator from exiting).
+ *
+ * @param {{app: LocalGitSource|TreelessClone}} sources
+ */
+export function closeSources(sources) {
+    sources.app.close?.();
 }

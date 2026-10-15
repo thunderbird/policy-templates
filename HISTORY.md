@@ -37,7 +37,7 @@ late.
 The lines merged in this way are not part of `main`. Their heads are the
 parents (besides the first) of the merges on the branch which are not part of
 `main`: the **side parents** (`getSideParents()` in
-[generator/modules/commit_graph.mjs](generator/modules/commit_graph.mjs)). The
+[generator/modules/common/side_parents.mjs](generator/modules/common/side_parents.mjs)). The
 complete history of the schema is the **union of the plain histories** from
 the branch and from each side parent. Merges whose content equals one of their
 parents are not needed: they add no content of their own and never have a
@@ -45,9 +45,30 @@ lower version. Nothing depends on tag names, commit messages or the product.
 
 ## Shared with webext-annotated-schemas-generator, and where it differs
 
-Both generators use the same concept, and both have a `getSideParents()` with
-the same logic. They differ in where the commit graph and the plain histories
-come from:
+Both generators use the same concept and the same code. The `common` folder
+(`generator/modules/common/` here, `modules/common/` in
+webext-annotated-schemas-generator) holds the code shared between the two
+repositories. There is no shared package: the copies are kept identical by
+hand, check them with
+`diff -r webext-annotated-schemas-generator/modules/common policy-templates/generator/modules/common`.
+
+| file | contents |
+|---|---|
+| `side_parents.mjs` | `getSideParents()`, the concept above |
+| `cached_clone.mjs` | what both kinds of clones share: open, check and update the cached clone, commit-graph, branches and refs, the starting points of a history, and the common interface `HistorySource` |
+| `blobless_clone.mjs` | `BloblessClone`: histories and files read locally; `fetchSingleRevision()` for a single revision of a large repository |
+| `treeless_clone.mjs` | `TreelessClone`: histories from the GitHub API, files downloaded; the cache and the download are passed in by the generator |
+
+Both clones have the same interface (`HistorySource` in `cached_clone.mjs`),
+so a generator switches from one to the other by changing only the call to
+open the repository: `TreelessClone.open(url, dir, { cache, readUrl })` here
+(`openProductRepository()` in `generator/modules/sources.mjs`),
+`BloblessClone.open(url, dir)` in the other generator. The tests of the
+shared code are here, `generator/test/common.test.mjs`, for both kinds of
+clones (the other repository has no test framework).
+
+The generators differ in where the commit graph and the plain histories come
+from:
 
 | | policy-templates | webext-annotated-schemas-generator |
 |---|---|---|

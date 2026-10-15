@@ -46,7 +46,7 @@ function deepFreeze(value) {
  *
  * @param {BranchData} branchData - See loadBranch().
  * @param {string} locale
- * @param {LocalGitSource|GitHubSource} app - The product's source, to read the
+ * @param {LocalGitSource|TreelessClone} app - The product's source, to read the
  *    changesets file of the branch.
  * @returns {Promise<SchemaL10n>}
  */
@@ -117,7 +117,7 @@ function resolveTexts(node, l10n, where) {
  *
  * @param {BranchData} branchData - See loadBranch().
  * @param {Object[]} branches - See getBranchList().
- * @param {LocalGitSource|GitHubSource} app - The product's source.
+ * @param {LocalGitSource|TreelessClone} app - The product's source.
  * @returns {Object}
  */
 export function getExtensionContext(branchData, branches, app) {

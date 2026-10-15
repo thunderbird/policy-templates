@@ -280,7 +280,7 @@ export function generateReadmeCompatibilityTable(compatInfo, productName) {
  *    deriveSections().
  * @param {BranchData} branchData - See loadBranch().
  * @param {Object[]} branches - The branches of the run, see getBranchList().
- * @param {LocalGitSource|GitHubSource} app - The product's source.
+ * @param {LocalGitSource|TreelessClone} app - The product's source.
  * @param {string} output_dir - Path to save the generated README file.
  */
 export async function generatePolicyReadme(sections, branchData, branches, app, output_dir) {
@@ -344,7 +344,7 @@ export async function generatePolicyReadme(sections, branchData, branches, app, 
  * branches and gives a compatibility overview based on the main branch.
  *
  * @param {Object} params
- * @param {LocalGitSource|GitHubSource} params.app - The product's source.
+ * @param {LocalGitSource|TreelessClone} params.app - The product's source.
  * @param {Product} params.product - See loadProduct().
  * @param {string[]} params.branches - The branches to list, including main.
  * @param {BranchData} [params.main] - The data of the main branch, loaded if
@@ -381,7 +381,7 @@ export async function generateOverview({ app, product, branches, main }, output)
  *
  * @param {BranchData} branchData - See loadBranch().
  * @param {Object} options
- * @param {LocalGitSource|GitHubSource} options.app - The product's source.
+ * @param {LocalGitSource|TreelessClone} options.app - The product's source.
  * @param {string[]} options.branches - The branches of the run.
  * @param {string} options.output - The docs folder, see writeOutput().
  */

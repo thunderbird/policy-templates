@@ -10,7 +10,7 @@ import { parseArgs } from "node:util";
 
 import { checkDocumentation } from "./modules/schema_checks.mjs";
 import { BRANCHES_OPTION, BRANCHES_USAGE, loadBranch, parseCommonOptions } from "../generator/modules/branches.mjs";
-import { SOURCE_OPTIONS, SOURCE_USAGE } from "../generator/modules/sources.mjs";
+import { SOURCE_OPTIONS, SOURCE_USAGE, closeSources } from "../generator/modules/sources.mjs";
 import { runCommandLine } from "../generator/modules/tools.mjs";
 
 const usage = `
@@ -29,14 +29,18 @@ await runCommandLine(usage, async () => {
     });
     const { sources, branches } = await parseCommonOptions(values);
     let failed = false;
-    for (const branch of branches) {
-        const branchData = await loadBranch({ ...sources, branch });
-        const problems = checkDocumentation(branchData);
-        console.log(`${branch}: ${problems.length} documentation problems`);
-        for (const problem of problems) {
-            console.log(` - ${problem}`);
+    try {
+        for (const branch of branches) {
+            const branchData = await loadBranch({ ...sources, branch });
+            const problems = checkDocumentation(branchData);
+            console.log(`${branch}: ${problems.length} documentation problems`);
+            for (const problem of problems) {
+                console.log(` - ${problem}`);
+            }
+            failed ||= problems.length > 0;
         }
-        failed ||= problems.length > 0;
+    } finally {
+        closeSources(sources);
     }
     if (failed) {
         process.exit(1);

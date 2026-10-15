@@ -8,7 +8,7 @@ import {
 import { SchemaL10n } from "./l10n.mjs";
 import { getChannelLabel, getSchemaFile, loadProduct, parseBranch, parseBranches } from "./product.mjs";
 import { OLDEST_ESR } from "./constants.mjs";
-import { SOURCE_OPTIONS, SOURCE_USAGE, createSources } from "./sources.mjs";
+import { SOURCE_OPTIONS, SOURCE_USAGE, closeSources, createSources } from "./sources.mjs";
 import { InputError, ensureDir, runCommandLine } from "./tools.mjs";
 
 import commentJson from "comment-json";
@@ -19,7 +19,7 @@ import { parseArgs } from "node:util";
 /**
  * Resolve a branch of the product's source.
  *
- * @param {LocalGitSource|GitHubSource} app - The product's source.
+ * @param {LocalGitSource|TreelessClone} app - The product's source.
  * @param {string} branch
  * @returns {Promise<string>} the commit
  */
@@ -35,7 +35,7 @@ async function resolveBranch(app, branch) {
  * Load the Fluent files of the product (source.fluent in product.yaml) of a
  * commit. Files which the commit doesn't have are skipped.
  *
- * @param {LocalGitSource|GitHubSource} app - The product's source.
+ * @param {LocalGitSource|TreelessClone} app - The product's source.
  * @param {Product} product
  * @param {string} commit
  * @returns {Promise<SchemaL10n>}
@@ -65,7 +65,7 @@ export function formatBranchName(product, branch, brandName, version) {
  * Get the name and the version of a branch, e.g. "Thunderbird ESR 140.17.0"
  * and "140.17.0", without loading all its data.
  *
- * @param {LocalGitSource|GitHubSource} app - The product's source.
+ * @param {LocalGitSource|TreelessClone} app - The product's source.
  * @param {Product} product
  * @param {string} branch
  * @returns {Promise<{name: string, version: string}>}
@@ -85,7 +85,7 @@ const BRANCH_LISTS = new Map();
  * URLs of their docs. Built once per run and set of branches.
  *
  * @param {Object} params
- * @param {LocalGitSource|GitHubSource} params.app - The product's source.
+ * @param {LocalGitSource|TreelessClone} params.app - The product's source.
  * @param {Product} params.product
  * @param {string[]} params.branches
  * @returns {Promise<{branch: string, name: string, version: string, docsUrl: string}[]>}
@@ -112,7 +112,7 @@ export function getBranchList({ app, product, branches }) {
  * beta, release and the ESR branches from OLDEST_ESR on, sorted as in the
  * overview (other branches, e.g. autoland, are left out).
  *
- * @param {LocalGitSource|GitHubSource} app - The product's source.
+ * @param {LocalGitSource|TreelessClone} app - The product's source.
  * @returns {Promise<string[]>} e.g. ["main", "beta", "release", "esr153", "esr140"]
  */
 export async function getSupportedBranches(app) {
@@ -155,7 +155,7 @@ function getBranchSortKey(branch) {
  * Get the ESR branches of the product's repository from OLDEST_ESR on, sorted
  * by version. Their history tells which policies were backported.
  *
- * @param {LocalGitSource|GitHubSource} app - The product's source.
+ * @param {LocalGitSource|TreelessClone} app - The product's source.
  * @returns {Promise<string[]>} e.g. ["esr128", "esr140", "esr153"]
  */
 async function getEsrBranches(app) {
@@ -168,7 +168,7 @@ async function getEsrBranches(app) {
  * Get the compatibility data of a branch, based on the history of its policy
  * schema file.
  *
- * @param {LocalGitSource|GitHubSource} app - The product's source.
+ * @param {LocalGitSource|TreelessClone} app - The product's source.
  * @param {Product} product
  * @param {string} branch
  * @returns {Promise<CompatibilityData|null>} null if the branch does not exist
@@ -185,7 +185,7 @@ async function getBranchCompatibilityData(app, product, branch) {
  * Load what the docs and templates of a branch are generated from.
  *
  * @param {Object} params
- * @param {LocalGitSource|GitHubSource} params.app - The product's source.
+ * @param {LocalGitSource|TreelessClone} params.app - The product's source.
  * @param {Product} params.product - See loadProduct().
  * @param {string} params.branch - The branch, e.g. "main", "release" or "esr140".
  *
@@ -331,9 +331,13 @@ ${SOURCE_USAGE}
         const product = await loadProduct(values["product-config"]);
         const branch = parseBranch(values.branch, product);
         const sources = await createSources(values, product);
-        const branchData = await loadBranch({ ...sources, branch });
-        for (const generate of outputs) {
-            await generate(branchData, values, { ...sources, branches: [branch] }, values.output);
+        try {
+            const branchData = await loadBranch({ ...sources, branch });
+            for (const generate of outputs) {
+                await generate(branchData, values, { ...sources, branches: [branch] }, values.output);
+            }
+        } finally {
+            closeSources(sources);
         }
     });
 }
@@ -369,15 +373,19 @@ ${SOURCE_USAGE}
         }
         const product = await loadProduct(values["product-config"]);
         const sources = await createSources(values, product);
-        const branches = await getSupportedBranches(sources.app);
-        const buildDir = prepare ? await prepare(values.output, branches) : values.output;
-        for (const branch of branches) {
-            console.log(`Processing ${branch}`);
-            const branchData = await loadBranch({ ...sources, branch });
-            for (const generate of outputs) {
-                await generate(branchData, values, { ...sources, branches }, buildDir);
+        try {
+            const branches = await getSupportedBranches(sources.app);
+            const buildDir = prepare ? await prepare(values.output, branches) : values.output;
+            for (const branch of branches) {
+                console.log(`Processing ${branch}`);
+                const branchData = await loadBranch({ ...sources, branch });
+                for (const generate of outputs) {
+                    await generate(branchData, values, { ...sources, branches }, buildDir);
+                }
             }
+            await finish?.({ values, sources, branches, output: values.output, buildDir });
+        } finally {
+            closeSources(sources);
         }
-        await finish?.({ values, sources, branches, output: values.output, buildDir });
     });
 }

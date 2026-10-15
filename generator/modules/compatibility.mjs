@@ -181,7 +181,7 @@ const SCHEMA_REVISIONS_CACHE = new Map();
  * Get all revisions of the product's policy schema file in the history of the
  * given commit, newest first.
  *
- * @param {LocalGitSource|GitHubSource} source - The product's source.
+ * @param {LocalGitSource|TreelessClone} source - The product's source.
  * @param {string} commit - The commit to read the history from.
  * @param {Object} paths - The paths of the files in the source, see the
  *    source of loadProduct().
@@ -200,6 +200,9 @@ export function getSchemaRevisions(source, commit, paths) {
 
 async function readSchemaRevisions(source, commit, paths) {
     let revisions = [];
+    // Fetch all revisions of the files at once where this helps (a blobless
+    // clone, see common/blobless_clone.mjs); a local checkout has them.
+    await source.prefetchHistory?.([commit], [paths.schema, paths.version]);
     for (let revision of await source.getFileHistory(commit, paths.schema)) {
         // Skip revisions which removed the schema, or whose schema is broken
         // (e.g. a Firefox uplift of 2018 committed with conflict markers,

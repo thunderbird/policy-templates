@@ -7,7 +7,7 @@ const GENERATOR_DIR_PATH = pathUtils.join(import.meta.dirname, "..");
 export const DOWNLOAD_CACHE_FILE = pathUtils.join(GENERATOR_DIR_PATH, "download_cache.json");
 
 // The local clones of the commit graphs of the products' repositories (only
-// commits, no files), see commit_graph.mjs.
+// commits, no files), see common/treeless_clone.mjs.
 export const GIT_CACHE_DIR = pathUtils.join(GENERATOR_DIR_PATH, "git-cache");
 
 // The oldest ESR branch of the docs: older ESR branches of the product's
