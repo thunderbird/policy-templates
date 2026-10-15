@@ -1,5 +1,7 @@
 node_modules
 download_cache.json
+# The local clones of the commit graphs of the products' repositories.
+git-cache/
 # Local editor settings.
 .vscode/
 # Local notes, not published.

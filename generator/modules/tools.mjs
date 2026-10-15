@@ -133,6 +133,30 @@ export async function readCachedValue(key, producer) {
     return DOWNLOAD_CACHE.get(key);
 }
 
+/**
+ * Get a value from DOWNLOAD_CACHE.
+ *
+ * @param {string} key
+ * @returns {Promise<string|undefined>} the value, undefined if it is not cached
+ */
+export async function getCachedValue(key) {
+    await loadDownloadCache();
+    return DOWNLOAD_CACHE.get(key);
+}
+
+/**
+ * Store values in DOWNLOAD_CACHE, the cache file is written once.
+ *
+ * @param {[string, string][]} entries - The keys and their values.
+ */
+export async function setCachedValues(entries) {
+    await loadDownloadCache();
+    for (const [key, value] of entries) {
+        DOWNLOAD_CACHE.set(key, value);
+    }
+    await writeDownloadCache();
+}
+
 async function loadDownloadCache() {
     if (!DOWNLOAD_CACHE) {
         try {

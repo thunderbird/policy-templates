@@ -6,6 +6,7 @@ import pathUtils from "node:path";
 import { test } from "node:test";
 import { promisify } from "node:util";
 
+import { CommitGraph } from "../modules/commit_graph.mjs";
 import { GitHubSource, LocalGitSource, WORKING_TREE, createSources } from "../modules/sources.mjs";
 import { setDownloadCacheFile } from "../modules/tools.mjs";
 
@@ -117,29 +118,99 @@ test("--checkout is a local checkout of the product's repository, with no other 
     }
 });
 
-test("the history of a file is cached by the commit which last changed it, not by the head of the branch", async () => {
-    const dir = await fs.mkdtemp(pathUtils.join(os.tmpdir(), "cache-"));
+/**
+ * Replace fetch by an implementation of the GitHub API's file history
+ * (/commits?sha=&path=), answered with plain git log of a local repository,
+ * which follows the same parents at merges.
+ *
+ * @param {function} git - Runs git in the local repository.
+ * @param {string[]} requests - Receives the requested URLs.
+ * @returns {function} restores fetch
+ */
+function mockHistoryApi(git, requests) {
     const realFetch = globalThis.fetch;
-    const requests = [];
-    setDownloadCacheFile(pathUtils.join(dir, "cache.json"));
-    // The file was last changed in "c2", both heads come after it.
     globalThis.fetch = async url => {
         requests.push(url);
         const query = new URL(url).searchParams;
-        const body = query.get("per_page") == "1" ? [{ sha: "c2" }] : [{ sha: "c2" }, { sha: "c1" }];
-        assert.ok(query.get("per_page") == "1" || query.get("sha") == "c2");
+        const size = Number(query.get("per_page"));
+        const page = Number(query.get("page"));
+        const log = (await git("rev-list", query.get("sha"), "--", query.get("path"))).split("\n").filter(Boolean);
+        const body = log.slice((page - 1) * size, page * size).map(sha => ({ sha }));
         return new Response(JSON.stringify(body), { status: 200 });
     };
-    try {
-        const source = new GitHubSource("example/repo");
-        assert.deepEqual(await source.getFileHistory("head1", "schema.json"), ["c2", "c1"]);
-        assert.deepEqual(await source.getFileHistory("head2", "schema.json"), ["c2", "c1"]);
-        // The full history is requested once, then only the last change.
-        assert.equal(requests.filter(url => new URL(url).searchParams.get("per_page") != "1").length, 1);
-        assert.equal(requests.length, 3);
-    } finally {
+    return () => {
         globalThis.fetch = realFetch;
+    };
+}
+
+test("the file history of a GitHub repository includes lines merged in from outside of main", async () => {
+    const dir = await fs.mkdtemp(pathUtils.join(os.tmpdir(), "sources-"));
+    const repo = pathUtils.join(dir, "repo");
+    await fs.mkdir(repo);
+    setDownloadCacheFile(pathUtils.join(dir, "cache.json"));
+    const requests = [];
+    let restoreFetch = () => {};
+    try {
+        const { git, uplift, landing } = await createReleaseRepository(repo);
+        // Allow the treeless clone of the commit graph from the local repository.
+        await git("config", "uploadpack.allowFilter", "true");
+        restoreFetch = mockHistoryApi(git, requests);
+
+        const graph = await CommitGraph.open(`file://${repo}`, pathUtils.join(dir, "graph.git"));
+        const source = new GitHubSource("example/repo", { graph });
+        assert.deepEqual((await source.listBranches()).sort(), ["main", "promote", "release"]);
+        const release = await source.resolveBranch("release");
+        assert.equal(release, await git("rev-parse", "release"));
+
+        const history = await source.getFileHistory(release, "schema.json");
+        assert.ok(history.includes(uplift));
+        assert.ok(history.includes(landing));
+
+        // Opening the commit graph again updates the existing clone.
+        await CommitGraph.open(`file://${repo}`, pathUtils.join(dir, "graph.git"));
+        assert.equal(await graph.resolveBranch("release"), release);
+    } finally {
+        restoreFetch();
         setDownloadCacheFile(undefined);
-        await fs.rm(dir, { recursive: true });
+        await fs.rm(dir, { recursive: true, force: true });
+    }
+});
+
+test("file histories are cached, and a request stops at the first known commit", async () => {
+    const dir = await fs.mkdtemp(pathUtils.join(os.tmpdir(), "cache-"));
+    setDownloadCacheFile(pathUtils.join(dir, "cache.json"));
+    const git = async (...args) => (await execFileAsync("git", [
+        "-C", dir, "-c", "user.name=Test", "-c", "user.email=test@example.com", ...args,
+    ])).stdout.trim();
+    const requests = [];
+    let restoreFetch = () => {};
+    try {
+        // A linear history with five changes of the file.
+        await git("init", "--quiet", "--initial-branch=main");
+        const commits = [];
+        for (let i = 1; i <= 5; i++) {
+            await fs.writeFile(pathUtils.join(dir, "schema.json"), `${i}\n`);
+            await git("add", "schema.json");
+            await git("commit", "--quiet", "-m", `change ${i}`);
+            commits.push(await git("rev-parse", "HEAD"));
+        }
+        restoreFetch = mockHistoryApi(git, requests);
+
+        const source = new GitHubSource("example/repo");
+        assert.deepEqual(await source.getFileHistory(commits[2], "schema.json"), commits.slice(0, 3).reverse());
+        assert.equal(requests.length, 1);
+
+        // From the head: the history continues with a known commit, the rest
+        // comes from the cache.
+        assert.deepEqual(await source.getFileHistory(commits[4], "schema.json"), [...commits].reverse());
+        assert.equal(requests.length, 2);
+
+        // Cached, also for a new source.
+        assert.deepEqual(await new GitHubSource("example/repo").getFileHistory(commits[4], "schema.json"), [...commits].reverse());
+        assert.equal(requests.length, 2);
+    } finally {
+        restoreFetch();
+        setDownloadCacheFile(undefined);
+        await fs.rm(dir, { recursive: true, force: true });
     }
 });

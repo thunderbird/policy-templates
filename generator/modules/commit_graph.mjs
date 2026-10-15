@@ -14,6 +14,13 @@
  * each of these heads. Only the commit graph is needed to find them, no files.
  */
 
+import { execFile } from "node:child_process";
+import fs from "node:fs/promises";
+import pathUtils from "node:path";
+import { promisify } from "node:util";
+
+const execFileAsync = promisify(execFile);
+
 /**
  * Get the heads of the lines merged into the history of a commit from outside
  * of main: the parents (besides the first) of the merges in the history of the
@@ -38,4 +45,122 @@ export async function getSideParents(git, commit, main) {
         }
     }
     return [...sideParents];
+}
+
+/**
+ * A local clone of the commit graph of a repository: commits only, without
+ * folders and files (a treeless clone), which keeps it small even for large
+ * repositories. It is used as a cache: a valid clone is updated, anything else
+ * (missing, broken, cloned from another repository, update failed) is removed
+ * and cloned again.
+ */
+export class CommitGraph {
+    /**
+     * @param {string} dir - Path of the local bare clone.
+     */
+    constructor(dir) {
+        this.dir = dir;
+    }
+
+    async #git(args) {
+        const { stdout } = await execFileAsync("git", [`--git-dir=${this.dir}`, ...args], {
+            maxBuffer: 256 * 1024 * 1024,
+        });
+        return stdout;
+    }
+
+    /**
+     * Open the local clone of the commit graph of a repository, cloning or
+     * updating it as needed.
+     *
+     * @param {string} url - URL of the repository.
+     * @param {string} dir - Path of the local bare clone.
+     * @returns {Promise<CommitGraph>}
+     */
+    static async open(url, dir) {
+        const graph = new CommitGraph(dir);
+        if (!await graph.#update(url)) {
+            await graph.#clone(url);
+        }
+        // Speeds up the graph queries. Without it, they are only slower.
+        try {
+            await graph.#git(["commit-graph", "write", "--reachable"]);
+        } catch (ex) {
+            console.warn(` !! Writing the commit-graph of ${dir} failed: ${ex.message}`);
+        }
+        return graph;
+    }
+
+    /**
+     * Update a valid clone of the given repository.
+     *
+     * @returns {Promise<boolean>} false if there is no valid clone or the
+     *    update failed
+     */
+    async #update(url) {
+        try {
+            const isBare = await this.#git(["rev-parse", "--is-bare-repository"]);
+            const origin = await this.#git(["remote", "get-url", "origin"]);
+            if (isBare.trim() != "true" || origin.trim() != url) {
+                return false;
+            }
+        } catch {
+            return false;
+        }
+        try {
+            console.log(` - updating the commit graph in ${this.dir}`);
+            await this.#git(["fetch", "--quiet", "--prune", "--no-tags", "origin"]);
+            return true;
+        } catch (ex) {
+            console.warn(` !! Updating the commit graph failed: ${ex.message}`);
+            return false;
+        }
+    }
+
+    async #clone(url) {
+        console.log(` - cloning the commit graph of ${url} into ${this.dir}`);
+        await fs.rm(this.dir, { recursive: true, force: true });
+        await fs.mkdir(pathUtils.dirname(this.dir), { recursive: true });
+        await execFileAsync("git", [
+            "clone", "--quiet", "--bare", "--filter=tree:0", "--no-tags", url, this.dir,
+        ]);
+        // A bare clone has no fetch refspec, the branches are updated in place.
+        await this.#git(["config", "remote.origin.fetch", "+refs/heads/*:refs/heads/*"]);
+    }
+
+    /**
+     * Get the names of all branches.
+     *
+     * @returns {Promise<string[]>}
+     */
+    async listBranches() {
+        const refs = await this.#git(["for-each-ref", "--format=%(refname:short)", "refs/heads/"]);
+        return refs.split("\n").filter(Boolean);
+    }
+
+    /**
+     * Resolve a branch to a commit.
+     *
+     * @param {string} name - Name of the branch, e.g. "esr140".
+     * @returns {Promise<string|null>} the commit, or null if the branch does
+     *    not exist
+     */
+    async resolveBranch(name) {
+        try {
+            return (await this.#git(["rev-parse", "--verify", "--quiet", `refs/heads/${name}^{commit}`])).trim();
+        } catch {
+            return null;
+        }
+    }
+
+    /**
+     * See getSideParents().
+     *
+     * @param {string} commit
+     * @param {string} mainBranch - Name of the main branch, e.g. "main".
+     * @returns {Promise<string[]>}
+     */
+    getSideParents(commit, mainBranch) {
+        return getSideParents(args => this.#git(args), commit, `refs/heads/${mainBranch}`);
+    }
 }
