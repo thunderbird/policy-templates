@@ -182,7 +182,10 @@ changes, use `--checkout=<path>` (for Thunderbird, the `comm/` checkout).
 The branch `main` is then
 the working tree of the checkout: whatever is checked out, including
 uncommitted changes. For the other branches, the local branch is used if it
-exists, otherwise `origin/<branch>`.
+exists, otherwise `origin/<branch>`. The checkout needs the full history: a
+shallow clone is refused (run `git fetch --unshallow` in it), and without a
+branch `main` (local or `origin/main`) a warning is shown, as uplifts merged
+into other branches can't be found then.
 
 The version in which a policy became available comes from the history of the
 schema. The merges of the release process (e.g. "Promote beta to release")

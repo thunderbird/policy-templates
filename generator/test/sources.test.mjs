@@ -106,6 +106,22 @@ test("the file history of a release branch includes lines merged in from outside
     }
 });
 
+test("a shallow clone can't be used as local checkout", async () => {
+    const dir = await fs.mkdtemp(pathUtils.join(os.tmpdir(), "sources-"));
+    const repo = pathUtils.join(dir, "repo");
+    const shallow = pathUtils.join(dir, "shallow");
+    await fs.mkdir(repo);
+    try {
+        await createReleaseRepository(repo);
+        await execFileAsync("git", ["clone", "--quiet", "--depth=1", `file://${repo}`, shallow]);
+        await assert.rejects(new LocalGitSource(shallow).init(), /is a shallow clone/);
+        // The full repository can be used.
+        await new LocalGitSource(repo).init();
+    } finally {
+        await fs.rm(dir, { recursive: true, force: true });
+    }
+});
+
 test("--checkout is a local checkout of the product's repository, with no other source of the product", async () => {
     const dir = await fs.mkdtemp(pathUtils.join(os.tmpdir(), "sources-"));
     try {

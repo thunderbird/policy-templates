@@ -69,7 +69,9 @@ export class LocalGitSource {
     }
 
     /**
-     * Verify that the local folder is a git repository.
+     * Verify that the local folder is a git repository whose history can be
+     * used: it must not be a shallow clone, and it should have a main branch
+     * (see getFileHistory()).
      *
      * @returns {Promise<LocalGitSource>}
      */
@@ -80,6 +82,19 @@ export class LocalGitSource {
             throw new InputError(ex.code == "ENOENT"
                 ? "The git command is not available."
                 : `${this.dir} is not a git repository.`
+            );
+        }
+        if ((await this.#git(["rev-parse", "--is-shallow-repository"])).trim() == "true") {
+            throw new InputError(
+                `${this.dir} is a shallow clone, its history is incomplete and the versions in which ` +
+                `policies became available would be wrong. Run "git fetch --unshallow" in it, or ` +
+                `omit --checkout to read the product from GitHub.`
+            );
+        }
+        if (!await this.#getMainRef()) {
+            console.warn(
+                ` !! ${this.dir} has no branch "${MAIN_BRANCH}" (neither local nor origin): uplifts ` +
+                `merged into other branches can't be found, their versions may be too late.`
             );
         }
         return this;
