@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import pathUtils from "node:path";
 import { promisify } from "node:util";
 
+import { getSideParents } from "./commit_graph.mjs";
 import { GITHUB_API_URL, GITHUB_RAW_URL, MOZILLA_POLICY_TEMPLATES_REPOSITORY } from "./constants.mjs";
 import { InputError, readCachedUrl, readCachedValue } from "./tools.mjs";
 
@@ -31,8 +32,10 @@ export const SOURCE_USAGE = `
    Mozilla's base ADMX/ADML files are always read from
    https://github.com/${MOZILLA_POLICY_TEMPLATES_REPOSITORY}.`;
 
-// The branch of a local checkout which is read from its working tree.
-const WORKING_TREE_BRANCH = "main";
+// The main branch of the product's repository. In a local checkout, it is read
+// from the working tree.
+const MAIN_BRANCH = "main";
+const WORKING_TREE_BRANCH = MAIN_BRANCH;
 
 /**
  * The "commit" of the working tree of a local checkout: what is checked out,
@@ -116,8 +119,25 @@ export class LocalGitSource {
     }
 
     /**
+     * Get the ref of the main branch: the local branch, else the remote one.
+     *
+     * @returns {Promise<string|null>} null if there is no main branch
+     */
+    async #getMainRef() {
+        for (const ref of [`refs/heads/${MAIN_BRANCH}`, `refs/remotes/origin/${MAIN_BRANCH}`]) {
+            try {
+                await this.#git(["rev-parse", "--verify", "--quiet", ref]);
+                return ref;
+            } catch {
+            }
+        }
+        return null;
+    }
+
+    /**
      * Get the commits in the history of the given commit which modified the
-     * given file, newest first.
+     * given file, including the lines merged in from outside of main (see
+     * commit_graph.mjs).
      *
      * @param {string} commit
      * @param {string} path - Path of the file inside the repository.
@@ -129,7 +149,10 @@ export class LocalGitSource {
         if (commit == WORKING_TREE) {
             return [WORKING_TREE, ...await this.getFileHistory("HEAD", path)];
         }
-        const log = await this.#git(["rev-list", commit, "--", path]);
+        const main = await this.#getMainRef();
+        const sideParents = main ? await getSideParents(args => this.#git(args), commit, main) : [];
+        // A single walk from all commits returns the union of their histories.
+        const log = await this.#git(["rev-list", commit, ...sideParents, "--", path]);
         return log.split("\n").filter(Boolean);
     }
 

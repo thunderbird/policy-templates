@@ -48,6 +48,63 @@ test("in a local checkout, main is the working tree", async () => {
     }
 });
 
+/**
+ * Create a repository like the ones of the products: a policy "New" landed on
+ * main for version 92 and was uplifted to the 91 line, which was then merged
+ * into the 92 line on merge day, taking the whole content of the 92 line (like
+ * "Promote beta to release"). The file history of the release branch only
+ * includes the uplift if the merged in line is walked as well.
+ *
+ * @param {string} dir
+ * @returns {Promise<{git: function, uplift: string, landing: string}>}
+ */
+async function createReleaseRepository(dir) {
+    const git = async (...args) => (await execFileAsync("git", [
+        "-C", dir, "-c", "user.name=Test", "-c", "user.email=test@example.com", ...args,
+    ])).stdout.trim();
+    const commit = async (version, policies, message) => {
+        await fs.writeFile(pathUtils.join(dir, "version.txt"), `${version}\n`);
+        await fs.writeFile(pathUtils.join(dir, "schema.json"), JSON.stringify({ properties: policies }));
+        await git("add", "version.txt", "schema.json");
+        await git("commit", "--quiet", "-m", message);
+        return git("rev-parse", "HEAD");
+    };
+    await git("init", "--quiet", "--initial-branch=main");
+    await commit("91.0a1", { Old: {} }, "base");
+    await git("checkout", "--quiet", "-b", "release");
+    const uplift = await commit("91.0", { Old: {}, New: {} }, "uplift of New to 91");
+    await git("checkout", "--quiet", "main");
+    const landing = await commit("92.0a1", { Old: {}, New: {} }, "New lands on main");
+    // Merge day: the release branch continues with the content of the 92 line.
+    await git("checkout", "--quiet", "-b", "promote");
+    await git("merge", "--quiet", "-s", "ours", "-m", "Promote beta to release", "release");
+    await git("branch", "--quiet", "-f", "release", "promote");
+    await git("checkout", "--quiet", "main");
+    return { git, uplift, landing };
+}
+
+test("the file history of a release branch includes lines merged in from outside of main", async () => {
+    const dir = await fs.mkdtemp(pathUtils.join(os.tmpdir(), "sources-"));
+    try {
+        const { git, uplift, landing } = await createReleaseRepository(dir);
+        // Plain git log does not walk the merged in 91 line.
+        assert.ok(!(await git("rev-list", "release", "--", "schema.json")).includes(uplift));
+
+        const source = await new LocalGitSource(dir).init();
+        const release = await source.resolveBranch("release");
+        const history = await source.getFileHistory(release, "schema.json");
+        assert.ok(history.includes(uplift));
+        assert.ok(history.includes(landing));
+        assert.equal((await source.readFile(uplift, "version.txt")).trim(), "91.0");
+
+        // Main has no lines merged in from outside of main.
+        const main = await source.getFileHistory(await source.resolveBranch("main"), "schema.json");
+        assert.ok(!main.includes(uplift));
+    } finally {
+        await fs.rm(dir, { recursive: true, force: true });
+    }
+});
+
 test("--checkout is a local checkout of the product's repository, with no other source of the product", async () => {
     const dir = await fs.mkdtemp(pathUtils.join(os.tmpdir(), "sources-"));
     try {
