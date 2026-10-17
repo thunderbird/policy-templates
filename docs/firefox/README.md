@@ -156,6 +156,7 @@ supports it, and when it was removed.
 | `DisableForgetButton` | 60.0 |  |
 | `DisableFormHistory` | 60.0 |  |
 | `DisableLaunchOnLogin` | 155.0 |  |
+| `DisableMacOSUserPolicies` | 160.0 |  |
 | `DisableMasterPasswordCreation` | 60.0 |  |
 | `DisablePasswordReveal` | 71.0 |  |
 | `DisablePocket` | 60.0 |  |
