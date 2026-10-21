@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Thunderbird 158.0.1
+## Enterprise policy descriptions and templates for Thunderbird 158.0.2
 
 Policies can be specified by creating a file called `policies.json`:
 * Windows: place the file in a directory called `distribution` in the same
