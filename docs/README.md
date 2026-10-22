@@ -7,7 +7,7 @@ are deploying.
 
  * [Thunderbird Daily 160.0a1](policies/main)
  * [Thunderbird Beta 159.0](policies/beta)
- * [Thunderbird 158.0.2](policies/release)
+ * [Thunderbird 159.0](policies/release)
  * [Thunderbird ESR 153.5.2](policies/esr153)
  * [Thunderbird ESR 140.17.0](policies/esr140)
  * [Thunderbird ESR 128.14.0](policies/esr128)
@@ -97,7 +97,7 @@ supports it, when it was removed, and whether Firefox supports it.
 | `DisableForgetButton` | ❌ |  | ✅ |
 | `DisableFormHistory` | ❌ |  | ✅ |
 | `DisableLaunchOnLogin` | ❌ |  | ✅ |
-| `DisableMacOSUserPolicies` | ❌ |  | ✅ |
+| `DisableMacOSUserPolicies` | 160.0 |  | ✅ |
 | `DisableMasterPasswordCreation` | 68.0 |  | ✅ |
 | `DisableMessageForwardingFilters` | 156.0 |  | ❌ |
 | `DisablePasswordReveal` | 78.0 |  | ✅ |
