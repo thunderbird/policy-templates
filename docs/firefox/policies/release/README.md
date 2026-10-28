@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Firefox 159.0
+## Enterprise policy descriptions and templates for Firefox 159.0.1
 
 Policies can be specified by creating a file called `policies.json`:
 * Windows: create a directory called `distribution` where `firefox.exe` is
