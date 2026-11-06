@@ -1,4 +1,4 @@
-## Enterprise policy descriptions and templates for Thunderbird Beta 160.0
+## Enterprise policy descriptions and templates for Thunderbird Beta 161.0
 
 Policies can be specified by creating a file called `policies.json`:
 * Windows: place the file in a directory called `distribution` in the same
