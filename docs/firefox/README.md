@@ -26,6 +26,9 @@ supports it, and when it was removed.
 | `3rdparty_Extensions` | 67.0 |  |
 | `3rdparty_Extensions_[name]` | 67.0 |  |
 | `AIControls` | 149.0.2 |  |
+| `AIControls_CustomWidgets` | 162.0 |  |
+| `AIControls_CustomWidgets_Locked` | 162.0 |  |
+| `AIControls_CustomWidgets_Value` | 162.0 |  |
 | `AIControls_Default` | 149.0.2 |  |
 | `AIControls_Default_Locked` | 149.0.2 |  |
 | `AIControls_Default_Value` | 149.0.2 |  |

@@ -429,6 +429,7 @@ Software\Policies\Mozilla\Firefox\AIControls\Translations\Locked (REG_DWORD) = 0
 |:--- | ---:| ---:|
 | `AIControls`<br>`AIControls_Default`<br>`AIControls_Default_Value`<br>`AIControls_Default_Locked`<br>`AIControls_Translations`<br>`AIControls_Translations_Value`<br>`AIControls_Translations_Locked`<br>`AIControls_PDFAltText`<br>`AIControls_PDFAltText_Value`<br>`AIControls_PDFAltText_Locked`<br>`AIControls_SmartTabGroups`<br>`AIControls_SmartTabGroups_Value`<br>`AIControls_SmartTabGroups_Locked`<br>`AIControls_LinkPreviewKeyPoints`<br>`AIControls_LinkPreviewKeyPoints_Value`<br>`AIControls_LinkPreviewKeyPoints_Locked`<br>`AIControls_SidebarChatbot`<br>`AIControls_SidebarChatbot_Value`<br>`AIControls_SidebarChatbot_Locked`<br>`AIControls_SmartWindow`<br>`AIControls_SmartWindow_Value`<br>`AIControls_SmartWindow_Locked` | 149.0.2 |  |
 | `AIControls_SpeechRecognition`<br>`AIControls_SpeechRecognition_Value`<br>`AIControls_SpeechRecognition_Locked` | 157.0 |  |
+| `AIControls_CustomWidgets`<br>`AIControls_CustomWidgets_Value`<br>`AIControls_CustomWidgets_Locked` | 162.0 |  |
 
 ## AllowedDomainsForApps: Define domains allowed to access Google Workspace {#alloweddomainsforapps}
 
