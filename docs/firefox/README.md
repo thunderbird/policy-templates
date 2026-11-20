@@ -7,10 +7,10 @@ with older releases, but they may contain policies which older releases don't
 support. We suggest using the templates which correspond to the version of
 Firefox you are deploying.
 
- * [Firefox Nightly 162.0a1](policies/main)
- * [Firefox Beta 161.0](policies/beta)
+ * [Firefox Nightly 163.0a1](policies/main)
+ * [Firefox Beta 162.0](policies/beta)
  * [Firefox 161.0](policies/release)
- * [Firefox ESR 153.8.0](policies/esr153)
+ * [Firefox ESR 153.9.0](policies/esr153)
  * [Firefox ESR 140.17.1](policies/esr140)
  * [Firefox ESR 128.14.1](policies/esr128)
 
@@ -159,7 +159,7 @@ supports it, and when it was removed.
 | `DisableForgetButton` | 60.0 |  |
 | `DisableFormHistory` | 60.0 |  |
 | `DisableLaunchOnLogin` | 155.0 |  |
-| `DisableMacOSUserPolicies` | 160.0 |  |
+| `DisableMacOSUserPolicies` | 160.0, 153.9.0esr |  |
 | `DisableMasterPasswordCreation` | 60.0 |  |
 | `DisablePasswordReveal` | 71.0 |  |
 | `DisablePocket` | 60.0 |  |
